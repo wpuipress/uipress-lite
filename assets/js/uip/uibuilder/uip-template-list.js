@@ -1,4 +1,5 @@
 const { __, _x, _n, _nx } = wp.i18n;
+<<<<<<< HEAD
 export default {
   data() {
     return {
@@ -396,6 +397,406 @@ export default {
     },
   },
   template: `
+=======
+export function moduleData() {
+  return {
+    data: function () {
+      return {
+        templates: [],
+        page: 1,
+        totalPages: 0,
+        totalFound: 0,
+        loading: false,
+        initialLoading: true,
+        selectAll: false,
+        showWelcome: true,
+        search: '',
+        strings: {
+          status: __('Status', 'uipress-lite'),
+          forRoles: __('Roles and users', 'uipress-lite'),
+          excludes: __('Excludes', 'uipress-lite'),
+          modified: __('Modified', 'uipress-lite'),
+          name: __('Name', 'uipress-lite'),
+          type: __('Type', 'uipress-lite'),
+          active: __('Active', 'uipress-lite'),
+          draft: __('Draft', 'uipress-lite'),
+          results: __('results', 'uipress-lite'),
+          searchTemplates: __('Search templates...', 'uipress-lite'),
+          templateDuplicated: __('Template duplicated', 'uipress-lite'),
+          templateDeleted: __('Template deleted', 'uipress-lite'),
+          deleteSelected: __('Delete selected', 'uipress-lite'),
+          uiBuilder: __('uiBuilder', 'uipress-lite'),
+          newTemplate: __('New template', 'uipress-lite'),
+          welcomeTotheUibuilder: __("It's a little quiet!", 'uipress-lite'),
+          welcomeMeta: __('Create a new template to get started with uiBuilder or check out the docs', 'uipress-lite'),
+          viewDocs: __('View docs', 'uipress-lite'),
+          editTemplate: __('Edit template', 'uipress-lite'),
+          duplicateTemplate: __('Duplicate template', 'uipress-lite'),
+          deleteTemplate: __('Delete template', 'uipress-lite'),
+          version: __('version', 'uipress-lite'),
+          tools: __('Tools', 'uipress-lite'),
+          settings: __('Site settings', 'uipress-lite'),
+          phpErrorLog: __('PHP error log', 'uipress-lite'),
+          roleEditor: __('Role editor', 'uipress-lite'),
+          pro: __('pro', 'uipress-lite'),
+          uiTemplate: __('UI template', 'uipress-lite'),
+          uiTemplates: __('UI templates', 'uipress-lite'),
+          adminPage: __('Admin page', 'uipress-lite'),
+          loginPage: __('Login page', 'uipress-lite'),
+          frontEndToolbar: __('Frontend toolbar', 'uipress-lite'),
+          setupWizard: __('Setup wizard', 'uipress-lite'),
+          globalExport: __('Global export', 'uipress-lite'),
+          templateType: __('New template', 'uipress-lite'),
+          userInterface: __('User interface', 'uipress-lite'),
+          edit: __('Edit', 'uipress-lite'),
+          duplicate: __('Duplicate', 'uipress-lite'),
+          noTemplatesYet: __('No templates yet!', 'uipress-lite'),
+          welcomeTov32: __('Welcome to version 3.2!', 'uipress-lite'),
+          globalImport: __('Global import', 'uipress-lite'),
+          siteSync: __('Remote sync', 'uipress-lite'),
+        },
+        activeTableTab: 'all',
+        tabletabs: [
+          {
+            name: 'all',
+            label: __('All templates', 'uipress-lite'),
+          },
+          {
+            name: 'active',
+            label: __('Active', 'uipress-lite'),
+          },
+          {
+            name: 'drafts',
+            label: __('Drafts', 'uipress-lite'),
+          },
+          {
+            name: 'templates',
+            label: __('UI Templates', 'uipress-lite'),
+          },
+          {
+            name: 'pages',
+            label: __('Admin pages', 'uipress-lite'),
+          },
+          {
+            name: 'toolbar',
+            label: __('Frontend toolbars', 'uipress-lite'),
+          },
+        ],
+        tabbedTemplateTypes: {
+          all: {
+            value: 'all',
+            label: __('All', 'uipress-lite'),
+          },
+          templates: {
+            value: 'templates',
+            label: __('UI Templates', 'uipress-lite'),
+          },
+          pages: {
+            value: 'pages',
+            label: __('Admin pages', 'uipress-lite'),
+          },
+          toolbar: {
+            value: 'toolbar',
+            label: __('Toolbars', 'uipress-lite'),
+          },
+        },
+        activeSwitchOptions: {
+          draft: {
+            value: 'draft',
+            label: __('Draft', 'uipress-lite'),
+          },
+          publish: {
+            value: 'publish',
+            label: __('Active', 'uipress-lite'),
+          },
+        },
+        templateTypes: {
+          templates: {
+            value: 'ui-template',
+            label: __('UI Templates', 'uipress-lite'),
+            icon: 'space_dashboard',
+          },
+          pages: {
+            value: 'ui-admin-page',
+            label: __('Admin pages', 'uipress-lite'),
+            icon: 'article',
+          },
+          toolbar: {
+            value: 'ui-front-template',
+            label: __('Toolbars', 'uipress-lite'),
+            icon: 'build',
+          },
+        },
+      };
+    },
+    inject: ['uipData', 'router', 'uipress', 'uipMediaLibrary'],
+    mounted: function () {
+      let query = this.$route.query;
+
+      if (query) {
+        if (query.page) {
+          this.page = parseInt(query.page);
+        }
+
+        if (query.search) {
+          this.search = query.search;
+        }
+      }
+
+      this.getTemplates();
+      this.enqueueAdminBarStyles();
+
+      if (this.uipData.userPrefs.supressWelcome) {
+        this.showWelcome = false;
+      }
+
+      if (window.parent) {
+        window.parent.postMessage({ eventName: 'uip_exit_fullscreen' }, '*');
+      }
+    },
+    watch: {
+      search: {
+        handler(newValue, oldValue) {
+          this.page = 1;
+          this.pushQueries();
+          this.getTemplates();
+        },
+        deep: true,
+      },
+      selectAll: {
+        handler(newValue, oldValue) {
+          this.selectAllItems(newValue);
+        },
+        deep: true,
+      },
+      activeTableTab: {
+        handler(newValue, oldValue) {
+          this.getTemplates();
+        },
+      },
+    },
+    computed: {
+      returnTableData() {
+        this.templates.sort((a, b) => b.status.localeCompare(a.status));
+        return this.templates;
+        //return [];
+      },
+      toggleSelect() {
+        return this.templates;
+      },
+      returnPage() {
+        let self = this;
+        return self.page;
+      },
+      returnSelected() {
+        let self = this;
+        let count = 0;
+
+        for (const item of self.templates) {
+          if (item.selected) {
+            count += 1;
+          }
+        }
+
+        return count;
+      },
+      returnSelectedIDs() {
+        let self = this;
+        let ids = [];
+
+        for (const item of self.templates) {
+          if (item.selected) {
+            ids.push(item.id);
+          }
+        }
+
+        return JSON.stringify(ids);
+      },
+    },
+    methods: {
+      enqueueAdminBarStyles() {
+        let styleblock = document.querySelector('link[href*="load-styles.php?"]');
+        if (styleblock) {
+          if (document.documentElement.hasAttribute('uip-core-app')) {
+            return;
+          }
+
+          let href = styleblock.href;
+          if (!href.includes('admin-bar,')) {
+            href = styleblock.href.replace('admin-menu,', 'admin-menu,admin-bar,');
+            styleblock.href = href;
+          }
+        }
+      },
+      selectAllItems(value) {
+        let self = this;
+
+        for (const item of self.templates) {
+          item.selected = value;
+        }
+      },
+      pushQueries() {
+        this.$router.push({
+          query: { search: this.search, page: this.page },
+        });
+      },
+      getTemplates() {
+        let self = this;
+        if (self.loading == true) {
+          return;
+        }
+        self.loading = true;
+
+        let formData = new FormData();
+        formData.append('action', 'uip_get_ui_templates');
+        formData.append('security', uip_ajax.security);
+        formData.append('page', self.returnPage);
+        formData.append('search', self.search);
+        formData.append('filter', self.activeTableTab);
+
+        self.uipress.callServer(uip_ajax.ajax_url, formData).then((response) => {
+          self.templates = response.templates;
+          self.totalPages = response.totalPages;
+          self.totalFound = response.totalFound;
+          self.loading = false;
+          self.initialLoading = false;
+        });
+      },
+      duplicateTemplate(id) {
+        let self = this;
+
+        let formData = new FormData();
+        formData.append('action', 'uip_duplicate_ui_template');
+        formData.append('security', uip_ajax.security);
+        formData.append('id', id);
+
+        self.uipress.callServer(uip_ajax.ajax_url, formData).then((response) => {
+          if (response.error) {
+            self.uipress.notify(response.message, '', 'error', true);
+            return;
+          }
+          self.uipress.notify(self.strings.templateDuplicated, '', 'success', true);
+          self.getTemplates();
+        });
+      },
+      /**
+       * Deletes templates
+       * @since 3.0.0
+       */
+      deleteTemplate(ids) {
+        let self = this;
+
+        let formData = new FormData();
+        formData.append('action', 'uip_delete_ui_template');
+        formData.append('security', uip_ajax.security);
+        formData.append('templateids', ids);
+
+        self.uipress.callServer(uip_ajax.ajax_url, formData).then((response) => {
+          if (response.error) {
+            self.uipress.notify(response.message, '', 'error', true);
+            return;
+          }
+          self.uipress.notify(response.message, '', 'success', true);
+
+          let index = self.templates.findIndex((item) => item.id === ids);
+
+          if (index !== -1) {
+            self.templates.splice(index, 1);
+          }
+        });
+      },
+      /**
+       * Creates new draft ui template
+       * @since 3.0.0
+       */
+      createNewUI(templateType) {
+        let self = this;
+
+        let formData = new FormData();
+        formData.append('action', 'uip_create_new_ui_template');
+        formData.append('security', uip_ajax.security);
+        formData.append('templateType', templateType);
+
+        self.uipress.callServer(uip_ajax.ajax_url, formData).then((response) => {
+          self.router.push('/uibuilder/' + response.id + '/');
+        });
+      },
+      /**
+       * Confirms the deletion of template
+       * @since 3.0.0
+       */
+      confirmDelete(id) {
+        let self = this;
+        self.uipress
+          .confirm(__('Are you sure you want to delete this template?', 'uipress-lite'), __("Deleted templates can't be recovered", 'uipress-lite'), __('Delete', 'uipress-lite'))
+          .then((response) => {
+            if (response) {
+              self.deleteTemplate(id);
+            }
+          });
+      },
+      confirmDeleteMultiple(id) {
+        let self = this;
+        self.uipress
+          .confirm(__('Are you sure you want to multiple templates?', 'uipress-lite'), __("Deleted templates can't be recovered", 'uipress-lite'), __('Delete', 'uipress-lite'))
+          .then((response) => {
+            if (response) {
+              self.deleteTemplate(id);
+            }
+          });
+      },
+      editLayout(id) {
+        let self = this;
+        self.router.push('/uibuilder/' + id + '/');
+      },
+      goBack() {
+        if (this.page > 1) {
+          this.page = this.page - 1;
+          this.pushQueries();
+          this.getTemplates();
+        }
+      },
+      goForward() {
+        if (this.page < this.totalPages) {
+          this.page = this.page + 1;
+
+          this.pushQueries();
+          this.getTemplates();
+        }
+      },
+      componentExists(name) {
+        if (this.$root._.appContext.components[name]) {
+          return true;
+        } else {
+          return false;
+        }
+      },
+      generateVal(stat) {
+        if (stat == 'publish') {
+          return true;
+        }
+        return false;
+      },
+      updateItemStatus(item) {
+        let self = this;
+
+        let formData = new FormData();
+        formData.append('action', 'uip_update_ui_template_status');
+        formData.append('security', uip_ajax.security);
+        formData.append('templateid', item.id);
+        formData.append('status', item.status);
+
+        self.uipress.callServer(uip_ajax.ajax_url, formData).then((response) => {
+          if (response.error) {
+            self.uipress.notify(response.message, '', 'error', true);
+            return;
+          }
+          self.uipress.notify(response.message, '', 'success', true);
+        });
+      },
+    },
+    template: `
+>>>>>>> main
     
     
   <div class="uip-padding-m uip-background-default uip-body-font uip-text-normal uip-app-frame uip-border-box uip-overflow-auto" style="min-height: calc(100vh - 32px); max-height: calc(100vh - 32px)">
@@ -728,4 +1129,10 @@ export default {
      
       
 	</div>`,
+<<<<<<< HEAD
 };
+=======
+  };
+  return compData;
+}
+>>>>>>> main

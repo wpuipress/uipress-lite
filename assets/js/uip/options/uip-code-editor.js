@@ -1,4 +1,5 @@
 const { __, _x, _n, _nx } = wp.i18n;
+<<<<<<< HEAD
 
 import '../../libs/ace-editor.min.js';
 import '../../libs/ace-editor-css.min.js';
@@ -7,6 +8,8 @@ import '../../libs/ace-editor-html.min.js';
 import '../../libs/ace-theme-dracular.min.js';
 import '../../libs/ace-editor-beautify.min.js';
 
+=======
+>>>>>>> main
 export function moduleData() {
   return {
     props: {
@@ -33,6 +36,7 @@ export function moduleData() {
     inject: ['uipress'],
     mounted: function () {
       let self = this;
+<<<<<<< HEAD
       self.beautify = ace.require('ace/ext/beautify');
       self.editor = ace.edit(this.$refs.codeeditor);
       self.editor.setTheme('ace/theme/dracula');
@@ -73,6 +77,27 @@ export function moduleData() {
 
       self.beautify.beautify(self.editor.session);
 
+=======
+      self.editor = ace.edit(this.$refs.codeeditor);
+      self.editor.setTheme('ace/theme/dracula');
+
+      if (self.language == 'css') {
+        let cssMode = ace.require('ace/mode/css').Mode;
+        self.editor.session.setMode(new cssMode());
+      }
+      if (self.language == 'javascript') {
+        let jsMode = ace.require('ace/mode/javascript').Mode;
+        self.editor.session.setMode(new jsMode());
+      }
+      if (self.language == 'html') {
+        let jsMode = ace.require('ace/mode/html').Mode;
+        self.editor.session.setMode('ace/mode/html');
+      }
+
+      let thisCode = structuredClone(self.option);
+      self.editor.setValue(thisCode, -1);
+
+>>>>>>> main
       self.editor.session.on('change', function (delta) {
         let val = self.editor.getValue();
         self.finalVal = val;

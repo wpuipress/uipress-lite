@@ -5,10 +5,6 @@ if (!defined('ABSPATH')) {
 
 class uipress_compiler
 {
-  public function __construct()
-  {
-  }
-
   /**
    * Loads UiPress Classes and plugins
    * @since 3.0.0
