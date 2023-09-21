@@ -81,8 +81,6 @@ import * as UIbuilderPreview from './uibuilder/uip-ui-preview.min.js?ver=3.2.12'
 import * as UIbuilderblocksList from './uibuilder/uip-builder-blocks-list.min.js?ver=3.2.12';
 import * as UIbuilderDropArea from './uibuilder/uip-builder-drop-area.min.js?ver=3.2.12';
 import * as UIbuilderLibrary from './uibuilder/uip-template-library.min.js?ver=3.2.12';
-
-import UIbuilderVariablesList from './uibuilder/uip-builder-variables.min.js?ver=3.2.12';
 import * as UIbuilderSavePattern from './uibuilder/uip-save-pattern.min.js?ver=3.2.12';
 import * as UIbuilderDynamicDataWatcher from './uibuilder/uip-dynamic-data-watcher.min.js?ver=3.2.12';
 
@@ -109,8 +107,7 @@ import * as UIbuilderModal from './modules/uip-modal.min.js?ver=3.2.12';
 import * as UIfloatingPanel from './modules/uip-floating-panel.min.js?ver=3.1.12';
 
 //Option components
-import * as UIbuilderImageSelect from './options/uip-image-select.min.js?ver=3.2.12';
-import * as UIbuilderInlineImageSelect from './options/uip-inline-image-select.min.js?ver=3.2.12';
+import UIbuilderInlineImageSelect from './options/uip-inline-image-select.min.js?ver=3.2.12';
 import * as UIbuilderBackgroundPosition from './options/uip-background-position.min.js?ver=3.2.12';
 import * as UIbuilderSwitch from './options/uip-switch-select.min.js?ver=3.2.12';
 import * as UIbuilderValueUnits from './options/uip-value-units.min.js?ver=3.2.12';
@@ -307,7 +304,6 @@ uipUiBuilderApp.component('uip-offcanvas', UIbuilderOffcanvas.moduleData());
 uipUiBuilderApp.component('uip-save-button', UIbuilderSaveButton.moduleData());
 uipUiBuilderApp.component('dynamic-data-list', UIbuilderDynamicList.moduleData());
 uipUiBuilderApp.component('dropdown', UIbuilderDropdown);
-uipUiBuilderApp.component('list-variables', UIbuilderVariablesList);
 uipUiBuilderApp.component('saveaspattern', UIbuilderSavePattern.moduleData());
 uipUiBuilderApp.component('uip-chart', UIbuilderChart.moduleData());
 uipUiBuilderApp.component('uip-modal', UIbuilderModal.moduleData());
@@ -322,7 +318,6 @@ uipUiBuilderApp.component('uip-error-log', UIToolsErrroLog.moduleData());
 uipUiBuilderApp.component('uip-draggable', VueDraggableNext);
 
 //OPTION MODS
-uipUiBuilderApp.component('image-select', UIbuilderImageSelect.moduleData());
 uipUiBuilderApp.component('background-position', UIbuilderBackgroundPosition.moduleData());
 uipUiBuilderApp.component('switch-select', UIbuilderSwitch.moduleData());
 uipUiBuilderApp.component('value-units', UIbuilderValueUnits.moduleData());
@@ -367,7 +362,7 @@ uipUiBuilderApp.component('array-list', UIbuilderArrayList.moduleData());
 uipUiBuilderApp.component('uip-select-post-types', UIbuilderSelectPostTypes.moduleData());
 uipUiBuilderApp.component('flex-layout', UIbuilderFlexLayout.moduleData());
 uipUiBuilderApp.component('style-designer', UIbuilderStyles.moduleData());
-uipUiBuilderApp.component('inline-image-select', UIbuilderInlineImageSelect.moduleData());
+uipUiBuilderApp.component('inline-image-select', UIbuilderInlineImageSelect);
 uipUiBuilderApp.component('query-builder', UIbuilderQueryBuilder.moduleData());
 uipUiBuilderApp.component('uip-effects', UIbuilderEffects.moduleData());
 

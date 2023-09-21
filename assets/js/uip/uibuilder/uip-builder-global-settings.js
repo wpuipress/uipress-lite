@@ -3,8 +3,12 @@
  * @since 3.0.0
  */
 const { __, _x, _n, _nx } = wp.i18n;
+import { defineAsyncComponent } from '../../libs/vue-esm-dev.js';
 export default {
-  data: function () {
+  components: {
+    globalVariables: defineAsyncComponent(() => import('./uip-builder-variables.min.js?ver=3.2.12')),
+  },
+  data() {
     return {
       loading: false,
       globalSettings: {},
@@ -417,7 +421,7 @@ export default {
                       </template>
                       
                       <template v-if="group.name == 'theme'">
-                        <list-variables></list-variables>
+                        <globalVariables/>
                       </template>
                       <!--End loop through group settings -->
                     </div>

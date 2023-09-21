@@ -39,6 +39,7 @@ export function moduleData() {
         strings: {
           users: __('Users', 'uipress-lite'),
           roles: __('Roles', 'uipress-lite'),
+          roleSelect: __('Role select', 'uipress-lite'),
         },
         ui: {
           dropOpen: false,
@@ -209,26 +210,28 @@ export function moduleData() {
     },
     template: `
     
-    <dropdown pos="left center" class="uip-w-100p" triggerClass="uip-w-100p">
+    <dropdown pos="left center" class="uip-w-100p" ref="userDropdown">
     
       <template v-slot:trigger>
       
         <div class="uip-padding-xxs uip-background-muted uip-border-rounder uip-w-100p uip-max-w-400 uip-cursor-pointer uip-border-box" :class="{'uip-active-outline' : ui.dropOpen}"> 
           <div class="uip-flex uip-flex-center">
-          <div class="uip-flex-grow uip-margin-right-s" v-if="selectedOptions.length < 1">
-            <div>
-            <span class="uip-text-muted">{{placeHolder}}...</span>
-            </div>
-          </div>
-          <div v-else class="uip-flex-grow uip-flex uip-flex-row uip-row-gap-xxs uip-gap-xxs uip-margin-right-s uip-flex-wrap">
-            <template v-for="(item, index) in selectedOptions">
-              <div class=" uip-padding-left-xxs uip-padding-right-xxs uip-background-highlight uip-border-rounder uip-border uip-flex uip-gap-xxs uip-flex-center uip-shadow-small">
-                <span class="uip-text-s">{{item.name}}</span>
-                <a @click="removeByIndex(index)" class="uip-link-muted uip-no-underline uip-icon">close</a>
+          
+            <div class="uip-flex-grow uip-margin-right-s" v-if="selectedOptions.length < 1">
+              <div>
+              <span class="uip-text-muted">{{placeHolder}}...</span>
               </div>
-            </template>
-          </div>
-          <span class="uip-icon uip-text-muted">add</span>
+            </div>
+            
+            <div v-else class="uip-flex-grow uip-flex uip-flex-row uip-row-gap-xxs uip-gap-xxs uip-margin-right-s uip-flex-wrap">
+              <template v-for="(item, index) in selectedOptions">
+                <div class=" uip-padding-left-xxs uip-padding-right-xxs uip-background-highlight uip-border-rounder uip-border uip-flex uip-gap-xxs uip-flex-center uip-shadow-small">
+                  <span class="uip-text-s">{{item.name}}</span>
+                  <a @click="removeByIndex(index)" class="uip-link-muted uip-no-underline uip-icon">close</a>
+                </div>
+              </template>
+            </div>
+            <span class="uip-icon uip-text-muted">add</span>
           </div>
         </div>
       
@@ -238,22 +241,30 @@ export function moduleData() {
       
         {{maybeQueryUsersRoles('')}}
       
-        <div class="uip-flex uip-flex-column uip-row-gap-s uip-padding-xs">
+        <div class="uip-flex uip-flex-column uip-row-gap-s uip-padding-s uip-w-240">
+        
+          <div class="uip-flex uip-flex-between uip-flex-center">
+            <div class="uip-text-emphasis uip-text-bold uip-text-s">{{strings.roleSelect}}</div>
+            <div @click="$refs.userDropdown.close()"
+            class="uip-flex uip-flex-center uip-flex-middle uip-padding-xxs uip-link-muted hover:uip-background-muted uip-border-rounder">
+              <span class="uip-icon">close</span>
+            </div>
+          </div>
           
           <toggle-switch :options="switchOptions" :activeValue="activeTab" :dontAccentActive="true" :returnValue="function(data){ activeTab = data}"></toggle-switch>
           
-          <div class="uip-flex uip-background-default uip-flex-center uip-w-200">
+          <div class="uip-flex uip-background-muted uip-border-rounder uip-padding-xxs uip-flex-center">
             <span class="uip-icon uip-text-muted uip-margin-right-xs">search</span>
             <input class="uip-blank-input uip-flex-grow uip-text-s" type="search"  
             :placeholder="searchPlaceHolder" v-model="thisSearchInput" autofocus>
           </div>
           
           
-          <div v-if="loading" class="uip-padding-s uip-flex uip-flex-center uip-flex-middle">
+          <div v-if="loading" class="uip-padding-s uip-flex uip-flex-center uip-flex-middle uip-h-200">
             <loading-chart></loading-chart>
           </div>
           
-          <div class="uip-max-h-280 uip-overflow-auto" v-if="formattedOptions.length > 0">
+          <div class="uip-max-h-200" style="overflow:auto" v-if="formattedOptions.length > 0">
             
             <!--Roles-->
             <template v-if="!loading && activeTab == 'roles'" v-for="option in formattedRoles">
