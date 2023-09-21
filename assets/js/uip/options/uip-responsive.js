@@ -68,11 +68,7 @@ export function moduleData() {
         <div class="uip-grid-col-1-3">
         
           <div class="uip-text-muted uip-flex uip-flex-center">
-<<<<<<< HEAD
             <div class="uip-flex uip-gap-xs uip-flex-center uip-text-s">
-=======
-            <div class="uip-flex uip-gap-xs uip-flex-center">
->>>>>>> main
               <div class="uip-icon uip-icon-medium">smartphone</div>
               <div class="">{{strings.mobile}}</div>
             </div>
@@ -89,11 +85,7 @@ export function moduleData() {
         <div class="uip-grid-col-1-3">
         
           <div class="uip-text-muted uip-flex uip-flex-center">
-<<<<<<< HEAD
             <div class="uip-flex uip-gap-xs uip-flex-center uip-text-s">
-=======
-            <div class="uip-flex uip-gap-xs uip-flex-center">
->>>>>>> main
               <div class="uip-icon uip-icon-medium">tablet</div>
               <div class="">{{strings.tablet}}</div>
             </div>
@@ -110,11 +102,7 @@ export function moduleData() {
         <div class="uip-grid-col-1-3">
         
           <div class="uip-text-muted uip-flex uip-flex-center">
-<<<<<<< HEAD
             <div class="uip-flex uip-gap-xs uip-flex-center uip-text-s">
-=======
-            <div class="uip-flex uip-gap-xs uip-flex-center">
->>>>>>> main
               <div class="uip-icon uip-icon-medium">desktop_windows</div>
               <div class="">{{strings.desktop}}</div>
             </div>

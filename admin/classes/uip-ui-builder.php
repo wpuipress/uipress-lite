@@ -107,29 +107,7 @@ class uip_ui_builder extends uip_app
       //Loads translator
       wp_enqueue_script('uip-translations', uip_plugin_url . 'assets/js/uip/uip-translations.min.js', ['wp-i18n'], uip_plugin_version);
       wp_set_script_translations('uip-translations', 'uipress-lite', dirname(dirname(plugin_dir_path(__FILE__))) . '/languages/');
-<<<<<<< HEAD
     }
-=======
-      //load vue
-      //wp_enqueue_script('uip-vue', uip_plugin_url . 'assets/js/libs/vuejs.min.js', ['wp-i18n'], uip_plugin_version);
-      //wp_enqueue_script('uip-vue', uip_plugin_url . 'assets/js/libs/vue-dev.js', ['wp-i18n'], uip_plugin_version);
-      //wp_enqueue_script('uip-vue-router', uip_plugin_url . 'assets/js/libs/vue-router.min.js', ['uip-vue'], uip_plugin_version);
-    }
-
-    //wp_enqueue_script('uip-color-picker', uip_plugin_url . 'assets/js/libs/uip-color-picker.min.js', ['uip-vue'], uip_plugin_version);
-    //wp_enqueue_script('uip-sortable', uip_plugin_url . 'assets/js/libs/sortable.js', ['uip-vue'], uip_plugin_version);
-    //wp_enqueue_script('uip-daggable', uip_plugin_url . 'assets/js/libs/vue-draggable.js', ['uip-vue'], uip_plugin_version);
-    //wp_enqueue_script('uip-quill', uip_plugin_url . 'assets/js/libs/quill.min.js', [], uip_plugin_version);
-    wp_enqueue_script('uip-ace', uip_plugin_url . 'assets/js/libs/ace-editor.min.js', [], uip_plugin_version);
-    wp_enqueue_script('uip-ace-theme', uip_plugin_url . 'assets/js/libs/ace-editor-dracular.min.js', ['uip-ace'], uip_plugin_version);
-    wp_enqueue_script('uip-ace-mode-css', uip_plugin_url . 'assets/js/libs/ace-editor-css.min.js', ['uip-ace'], uip_plugin_version);
-    wp_enqueue_script('uip-ace-mode-js', uip_plugin_url . 'assets/js/libs/ace-editor-javascript.min.js', ['uip-ace'], uip_plugin_version);
-    wp_enqueue_script('uip-ace-mode-html', uip_plugin_url . 'assets/js/libs/ace-editor-html.min.js', ['uip-ace'], uip_plugin_version);
-    //Load UiPress ui builder
-
-    //Load styles
-    //Load UIP icons
->>>>>>> main
   }
 
   /**
