@@ -1,222 +1,221 @@
 const { __, _x, _n, _nx } = wp.i18n;
-export function moduleData() {
-  return {
-    props: {
-      args: Object,
-      triggerClass: String, // Allows custom classes to be set on the trigger container
-    },
-    data: function () {
-      return {
-        modelOpen: true,
-        themeLoading: false,
-        themes: [],
-        saving: false,
-        finished: false,
-        strings: {
-          setupWizard: __('Setup wizard', 'uipress-lite'),
-          previous: __('Previous', 'uipress-lite'),
-          next: __('Next', 'uipress-lite'),
-          finish: __('Finish', 'uipress-lite'),
-          siteLogo: __('Site logo', 'uipress-lite'),
-          siteLogoDarkMode: __('Site logo dark mode'),
-          appliesTo: __('Applies to', 'uipress-lite'),
-          excludes: __('Excludes', 'uipress-lite'),
-          selectUsersAndRoles: __('Select users and roles', 'uipress-lite'),
-          searchUsersAndRoles: __('Search users and roles', 'uipress-lite'),
-          loginLogo: __('Login logo', 'uipress-lite'),
-          loginBackground: __('Login background', 'uipress-lite'),
-          enableLoginTheme: __('Enable login theme', 'uipress-lite'),
-          setupComplete: __('Setup complete!', 'uipress-lite'),
-          finishedDescription: __('Settings from the wizard have been saved to your site. If you chose a admin template you will need to reload the page to use it.'),
-          newAdmin: __('Refresh admin', 'uipress-lite'),
-          close: __('Exit', 'uipress-lite'),
-          lightMode: __('Light mode', 'uipress-lite'),
-          darkMode: __('Dark mode', 'uipress-lite'),
+export default {
+  props: {
+    args: Object,
+    triggerClass: String, // Allows custom classes to be set on the trigger container
+  },
+  data() {
+    return {
+      modelOpen: true,
+      themeLoading: false,
+      themes: [],
+      saving: false,
+      finished: false,
+      strings: {
+        setupWizard: __('Setup wizard', 'uipress-lite'),
+        previous: __('Previous', 'uipress-lite'),
+        next: __('Next', 'uipress-lite'),
+        finish: __('Finish', 'uipress-lite'),
+        siteLogo: __('Site logo', 'uipress-lite'),
+        siteLogoDarkMode: __('Site logo dark mode'),
+        appliesTo: __('Applies to', 'uipress-lite'),
+        excludes: __('Excludes', 'uipress-lite'),
+        selectUsersAndRoles: __('Select users and roles', 'uipress-lite'),
+        searchUsersAndRoles: __('Search users and roles', 'uipress-lite'),
+        loginLogo: __('Login logo', 'uipress-lite'),
+        loginBackground: __('Login background', 'uipress-lite'),
+        enableLoginTheme: __('Enable login theme', 'uipress-lite'),
+        setupComplete: __('Setup complete!', 'uipress-lite'),
+        finishedDescription: __('Settings from the wizard have been saved to your site. If you chose a admin template you will need to reload the page to use it.'),
+        newAdmin: __('Refresh admin', 'uipress-lite'),
+        close: __('Exit', 'uipress-lite'),
+        lightMode: __('Light mode', 'uipress-lite'),
+        darkMode: __('Dark mode', 'uipress-lite'),
+      },
+      currentStep: 1,
+      steps: [
+        {
+          key: 1,
+          title: __('Site logo', 'uipress-lite'),
+          description: __('Choose a logo for the admin area.', 'uipress-lite'),
         },
-        currentStep: 1,
-        steps: [
-          {
-            key: 1,
-            title: __('Site logo', 'uipress-lite'),
-            description: __('Choose a logo for the admin area.', 'uipress-lite'),
-          },
-          {
-            key: 2,
-            title: __('Template', 'uipress-lite'),
-            description: __('Choose a template for the admin area. This can be editied after the intiial setup.', 'uipress-lite'),
-          },
-          {
-            key: 3,
-            title: __('Theme styles', 'uipress-lite'),
-            description: __('Choose your colors and styles to run through the admin area.', 'uipress-lite'),
-          },
-          {
-            key: 4,
-            title: __('Applies to', 'uipress-lite'),
-            description: __('Choose who you want to use the new admin template', 'uipress-lite'),
-          },
-          {
-            key: 5,
-            title: __('Login page', 'uipress-lite'),
-            description: __('Use the options below to customise your login page.', 'uipress-lite'),
-          },
-        ],
-        setupDetails: {
-          logo: false,
-          darkLogo: false,
-          appliesTo: [],
-          excludes: [],
-          loginLogo: false,
-          loginBackground: false,
-          enableLoginTheme: false,
-          chosenTemplate: false,
+        {
+          key: 2,
+          title: __('Template', 'uipress-lite'),
+          description: __('Choose a template for the admin area. This can be editied after the intiial setup.', 'uipress-lite'),
         },
-      };
-    },
-    inject: ['uipress', 'uipData', 'uiTemplate', 'router'],
-    watch: {
-      currentStep: {
-        handler(newValue, oldValue) {
-          if (newValue == 2) {
-            this.fetchThemes();
-          }
+        {
+          key: 3,
+          title: __('Theme styles', 'uipress-lite'),
+          description: __('Choose your colors and styles to run through the admin area.', 'uipress-lite'),
         },
+        {
+          key: 4,
+          title: __('Applies to', 'uipress-lite'),
+          description: __('Choose who you want to use the new admin template', 'uipress-lite'),
+        },
+        {
+          key: 5,
+          title: __('Login page', 'uipress-lite'),
+          description: __('Use the options below to customise your login page.', 'uipress-lite'),
+        },
+      ],
+      setupDetails: {
+        logo: false,
+        darkLogo: false,
+        appliesTo: [],
+        excludes: [],
+        loginLogo: false,
+        loginBackground: false,
+        enableLoginTheme: false,
+        chosenTemplate: false,
+      },
+    };
+  },
+  inject: ['uipress', 'uipData', 'uiTemplate', 'router'],
+  watch: {
+    currentStep: {
+      handler(newValue, oldValue) {
+        if (newValue == 2) {
+          this.fetchThemes();
+        }
       },
     },
-    mounted: function () {},
-    computed: {
-      returnThemes() {
-        console.log(this.themes);
-        return this.themes.filter(function (theme) {
-          return theme.type == 'Layout';
-        });
-      },
+  },
+  mounted: function () {},
+  computed: {
+    returnThemes() {
+      console.log(this.themes);
+      return this.themes.filter(function (theme) {
+        return theme.type == 'Layout';
+      });
     },
-    methods: {
-      returnFinished() {
-        return this.finished;
-      },
-      fetchThemes() {
-        let self = this;
-        self.themeLoading = true;
-        let formData = new FormData();
-        let URL = 'https://api.uipress.co/templates/list/' + '?sort=newest&filter=ui-template&v321=true';
+  },
+  methods: {
+    returnFinished() {
+      return this.finished;
+    },
+    fetchThemes() {
+      let self = this;
+      self.themeLoading = true;
+      let formData = new FormData();
+      let URL = 'https://api.uipress.co/templates/list/' + '?sort=newest&filter=ui-template&v321=true';
 
-        self.uipress.callServer(URL, formData).then((response) => {
-          if (response.error) {
-            self.uipress.notify(response.message, 'uipress-lite', '', 'error', true);
-            self.themeLoading = false;
-          }
+      self.uipress.callServer(URL, formData).then((response) => {
+        if (response.error) {
+          self.uipress.notify(response.message, 'uipress-lite', '', 'error', true);
           self.themeLoading = false;
-          self.themes = response;
-        });
-      },
-      onClickOutside(event) {
-        if (!this.$refs.uipmodal) {
-          return;
         }
-        const path = event.path || (event.composedPath ? event.composedPath() : undefined);
-        // check if the MouseClick occurs inside the component
-        if (path && !path.includes(this.$refs.uipmodal) && !this.$refs.uipmodal.contains(event.target)) {
-          this.closeThisComponent(); // whatever method which close your component
-        }
-      },
-      closeThisComponent() {
-        document.documentElement.removeEventListener('click', this.onClickOutside, false);
-        this.router.push('/');
-      },
-      finishSetup() {
-        let self = this;
-        if (self.saving == true) {
-          return;
-        }
-        self.saving = true;
-
-        if (self.setupDetails.chosenTemplate) {
-          self.getTemplate();
-        } else {
-          self.saveSettings();
-        }
-      },
-
-      getTemplate() {
-        let self = this;
-        let formData = new FormData();
-        let URL = 'https://api.uipress.co/templates/get/?templateid=' + self.setupDetails.chosenTemplate;
-        let notiID = self.uipress.notify(__('Importing template', 'uipress-lite'), '', 'default', false, true);
-
-        self.uipress.callServer(URL, formData).then((response) => {
-          if (response.error) {
-            self.uipress.notify(response.message, '', 'error', true);
-            self.uipress.destroy_notification(notiID);
-            self.saveSettings();
-          }
-          self.uipress.destroy_notification(notiID);
-          self.setupDetails.templateJSON = response;
-          self.saveSettings();
-        });
-      },
-      saveSettings() {
-        let self = this;
-        let settings = JSON.stringify(self.setupDetails, (k, v) =>
-          v === 'true' ? 'uiptrue' : v === true ? 'uiptrue' : v === 'false' ? 'uipfalse' : v === false ? 'uipfalse' : v === '' ? 'uipblank' : v
-        );
-        let styles = this.formatStyles();
-        let stylesJson = JSON.stringify(styles, (k, v) => (v === 'true' ? 'uiptrue' : v === true ? 'uiptrue' : v === 'false' ? 'uipfalse' : v === false ? 'uipfalse' : v === '' ? 'uipblank' : v));
-
-        let notiID = self.uipress.notify(__('Confirguring settings', 'uipress-lite'), '', 'default', false, true);
-
-        let formData = new FormData();
-        formData.append('action', 'uip_save_from_wizard');
-        formData.append('security', uip_ajax.security);
-        formData.append('settings', settings);
-        formData.append('styles', stylesJson);
-
-        self.uipress.callServer(uip_ajax.ajax_url, formData).then((response) => {
-          self.uipress.destroy_notification(notiID);
-          self.saving = false;
-          self.uipress.notify('Setup complete', '', 'success', true);
-          self.finished = true;
-        });
-      },
-      formatStyles() {
-        let styles = this.uipData.themeStyles;
-        let formatted = {};
-        for (let key in styles) {
-          if (styles[key].value) {
-            if (!formatted[styles[key].name]) {
-              formatted[styles[key].name] = {};
-            }
-            formatted[styles[key].name].value = styles[key].value;
-          }
-          if (styles[key].darkValue) {
-            if (!formatted[styles[key].name]) {
-              formatted[styles[key].name] = {};
-            }
-            formatted[styles[key].name].darkValue = styles[key].darkValue;
-          }
-          if (styles[key].user) {
-            formatted[styles[key].name].user = styles[key].user;
-            formatted[styles[key].name].label = styles[key].label;
-            formatted[styles[key].name].name = styles[key].name;
-            formatted[styles[key].name].type = styles[key].type;
-          }
-        }
-
-        return formatted;
-      },
-      refreshAdmin() {
-        window.location.assign(this.uipData.options.adminURL);
-      },
-      returnActiveIndex(theme) {
-        if (!('activeIndex' in theme)) {
-          theme.activeIndex = 0;
-        }
-
-        return theme.activeIndex;
-      },
+        self.themeLoading = false;
+        self.themes = response;
+      });
     },
-    template: `
+    onClickOutside(event) {
+      if (!this.$refs.uipmodal) {
+        return;
+      }
+      const path = event.path || (event.composedPath ? event.composedPath() : undefined);
+      // check if the MouseClick occurs inside the component
+      if (path && !path.includes(this.$refs.uipmodal) && !this.$refs.uipmodal.contains(event.target)) {
+        this.closeThisComponent(); // whatever method which close your component
+      }
+    },
+    closeThisComponent() {
+      document.documentElement.removeEventListener('click', this.onClickOutside, false);
+      this.router.push('/');
+    },
+    finishSetup() {
+      let self = this;
+      if (self.saving == true) {
+        return;
+      }
+      self.saving = true;
+
+      if (self.setupDetails.chosenTemplate) {
+        self.getTemplate();
+      } else {
+        self.saveSettings();
+      }
+    },
+
+    getTemplate() {
+      let self = this;
+      let formData = new FormData();
+      let URL = 'https://api.uipress.co/templates/get/?templateid=' + self.setupDetails.chosenTemplate;
+      let notiID = self.uipress.notify(__('Importing template', 'uipress-lite'), '', 'default', false, true);
+
+      self.uipress.callServer(URL, formData).then((response) => {
+        if (response.error) {
+          self.uipress.notify(response.message, '', 'error', true);
+          self.uipress.destroy_notification(notiID);
+          self.saveSettings();
+        }
+        self.uipress.destroy_notification(notiID);
+        self.setupDetails.templateJSON = response;
+        self.saveSettings();
+      });
+    },
+    saveSettings() {
+      let self = this;
+      let settings = JSON.stringify(self.setupDetails, (k, v) =>
+        v === 'true' ? 'uiptrue' : v === true ? 'uiptrue' : v === 'false' ? 'uipfalse' : v === false ? 'uipfalse' : v === '' ? 'uipblank' : v
+      );
+      let styles = this.formatStyles();
+      let stylesJson = JSON.stringify(styles, (k, v) => (v === 'true' ? 'uiptrue' : v === true ? 'uiptrue' : v === 'false' ? 'uipfalse' : v === false ? 'uipfalse' : v === '' ? 'uipblank' : v));
+
+      let notiID = self.uipress.notify(__('Confirguring settings', 'uipress-lite'), '', 'default', false, true);
+
+      let formData = new FormData();
+      formData.append('action', 'uip_save_from_wizard');
+      formData.append('security', uip_ajax.security);
+      formData.append('settings', settings);
+      formData.append('styles', stylesJson);
+
+      self.uipress.callServer(uip_ajax.ajax_url, formData).then((response) => {
+        self.uipress.destroy_notification(notiID);
+        self.saving = false;
+        self.uipress.notify('Setup complete', '', 'success', true);
+        self.finished = true;
+      });
+    },
+    formatStyles() {
+      let styles = this.uipData.themeStyles;
+      let formatted = {};
+      for (let key in styles) {
+        if (styles[key].value) {
+          if (!formatted[styles[key].name]) {
+            formatted[styles[key].name] = {};
+          }
+          formatted[styles[key].name].value = styles[key].value;
+        }
+        if (styles[key].darkValue) {
+          if (!formatted[styles[key].name]) {
+            formatted[styles[key].name] = {};
+          }
+          formatted[styles[key].name].darkValue = styles[key].darkValue;
+        }
+        if (styles[key].user) {
+          formatted[styles[key].name].user = styles[key].user;
+          formatted[styles[key].name].label = styles[key].label;
+          formatted[styles[key].name].name = styles[key].name;
+          formatted[styles[key].name].type = styles[key].type;
+        }
+      }
+
+      return formatted;
+    },
+    refreshAdmin() {
+      window.location.assign(this.uipData.options.adminURL);
+    },
+    returnActiveIndex(theme) {
+      if (!('activeIndex' in theme)) {
+        theme.activeIndex = 0;
+      }
+
+      return theme.activeIndex;
+    },
+  },
+  template: `
     
     
       <div class="uip-position-fixed uip-top-0 uip-left-0 uip-h-viewport uip-w-vw uip-background-black-wash uip-flex uip-flex-center uip-flex-middle uip-fade-in uip-text-normal uip-z-index-1" tabindex="1">
@@ -400,5 +399,4 @@ export function moduleData() {
       </div>
     
     `,
-  };
-}
+};

@@ -3,308 +3,307 @@
  * @since 3.0.0
  */
 const { __, _x, _n, _nx } = wp.i18n;
-export function moduleData() {
-  return {
-    data: function () {
-      return {
-        loading: false,
-        globalSettings: {},
-        search: '',
-        render: true,
-        ui: {
-          strings: {
-            siteSettings: __('Site settings', 'uipress-lite'),
-            saveSettings: __('Save settings', 'uipress-lite'),
-            settingsSaved: __('Settings saved', 'uipress-lite'),
-            proOption: __('This is a pro option. Upgrade to unlock', 'uipress-lite'),
-            searchSettings: __('Search settings', 'uipress-lite'),
-          },
+export default {
+  data: function () {
+    return {
+      loading: false,
+      globalSettings: {},
+      search: '',
+      render: true,
+      ui: {
+        strings: {
+          siteSettings: __('Site settings', 'uipress-lite'),
+          saveSettings: __('Save settings', 'uipress-lite'),
+          settingsSaved: __('Settings saved', 'uipress-lite'),
+          proOption: __('This is a pro option. Upgrade to unlock', 'uipress-lite'),
+          searchSettings: __('Search settings', 'uipress-lite'),
         },
-      };
+      },
+    };
+  },
+  inject: ['uipData', 'router', 'uipress'],
+  mounted: function () {
+    this.loading = false;
+    this.getSettings();
+  },
+  watch: {
+    'uiTemplate.globalSettings': {
+      handler(newValue, oldValue) {
+        return;
+        this.checkTemplateApplies();
+      },
+      deep: true,
     },
-    inject: ['uipData', 'router', 'uipress'],
-    mounted: function () {
-      this.loading = false;
-      this.getSettings();
+    'uiTemplate.globalSettings': {
+      handler(newValue, oldValue) {
+        return;
+        this.checkTemplateApplies();
+      },
+      deep: true,
     },
-    watch: {
-      'uiTemplate.globalSettings': {
-        handler(newValue, oldValue) {
+  },
+  computed: {
+    returnGlobalSettings() {
+      return this.globalSettings;
+    },
+  },
+  methods: {
+    getSettings() {
+      let self = this;
+      self.loading = true;
+
+      let formData = new FormData();
+      formData.append('action', 'uip_get_global_settings');
+      formData.append('security', uip_ajax.security);
+
+      self.uipress.callServer(uip_ajax.ajax_url, formData).then((response) => {
+        self.loading = false;
+        if (response.error) {
+          self.uipress.notify(response.message, '', 'error', true);
           return;
-          this.checkTemplateApplies();
-        },
-        deep: true,
-      },
-      'uiTemplate.globalSettings': {
-        handler(newValue, oldValue) {
+        }
+
+        //Get theme options
+        this.getUserStyles();
+
+        if (response.options) {
+          if (self.uipress.isObject(response.options)) {
+            if (Object.keys(response.options).length > 0) {
+              self.globalSettings = response.options;
+            }
+          }
+        }
+      });
+    },
+    getUserStyles() {
+      let self = this;
+
+      //Build form data for fetch request
+      let formData = new FormData();
+      formData.append('action', 'uip_get_ui_styles');
+      formData.append('security', uip_ajax.security);
+
+      self.uipress.callServer(uip_ajax.ajax_url, formData).then((response) => {
+        if (response.error) {
           return;
-          this.checkTemplateApplies();
-        },
-        deep: true,
-      },
+        }
+
+        if (response.styles) {
+          self.injectSavedStyles(response.styles);
+        }
+      });
     },
-    computed: {
-      returnGlobalSettings() {
-        return this.globalSettings;
-      },
+    injectSavedStyles(styles) {
+      let themeStyles = this.uipData.themeStyles;
+      for (let key in themeStyles) {
+        let item = themeStyles[key];
+
+        if (styles[item.name]) {
+          if ('value' in styles[item.name]) {
+            item.value = styles[item.name].value;
+          }
+          if ('darkValue' in styles[item.name]) {
+            item.darkValue = styles[item.name].darkValue;
+          }
+        }
+      }
+
+      for (let key in styles) {
+        let item = styles[key];
+        if (item.user) {
+          this.uipData.themeStyles[item.name] = item;
+        }
+      }
     },
-    methods: {
-      getSettings() {
-        let self = this;
-        self.loading = true;
+    returnTemplateOption(group, option) {
+      let key = option.uniqueKey;
+      let options = this.globalSettings;
+      if (!(group in options)) {
+        options[group] = {};
+      }
+      if (!(key in options[group])) {
+        if (option.accepts === String) {
+          options[group][key] = '';
+        }
+        if (option.accepts === Array) {
+          options[group][key] = [];
+        }
+        if (option.accepts === Object) {
+          options[group][key] = {};
+        }
+        if (option.accepts === Boolean) {
+          options[group][key] = false;
+        }
+      }
+      return options[group][key];
+    },
+    saveTemplateOption(group, key, value) {
+      let options = this.globalSettings;
+      options[group][key] = value;
+    },
+    saveSettings() {
+      let self = this;
 
-        let formData = new FormData();
-        formData.append('action', 'uip_get_global_settings');
-        formData.append('security', uip_ajax.security);
+      let sendData = self.uipress.uipEncodeJson(self.globalSettings);
 
-        self.uipress.callServer(uip_ajax.ajax_url, formData).then((response) => {
-          self.loading = false;
-          if (response.error) {
-            self.uipress.notify(response.message, '', 'error', true);
-            return;
-          }
+      let styles = this.formatStyles();
+      let stylesJson = JSON.stringify(styles, (k, v) => (v === 'true' ? 'uiptrue' : v === true ? 'uiptrue' : v === 'false' ? 'uipfalse' : v === false ? 'uipfalse' : v === '' ? 'uipblank' : v));
 
-          //Get theme options
-          this.getUserStyles();
+      let formData = new FormData();
+      formData.append('action', 'uip_save_global_settings');
+      formData.append('security', uip_ajax.security);
+      formData.append('settings', sendData);
+      formData.append('styles', stylesJson);
 
-          if (response.options) {
-            if (self.uipress.isObject(response.options)) {
-              if (Object.keys(response.options).length > 0) {
-                self.globalSettings = response.options;
-              }
-            }
-          }
-        });
-      },
-      getUserStyles() {
-        let self = this;
-
-        //Build form data for fetch request
-        let formData = new FormData();
-        formData.append('action', 'uip_get_ui_styles');
-        formData.append('security', uip_ajax.security);
-
-        self.uipress.callServer(uip_ajax.ajax_url, formData).then((response) => {
-          if (response.error) {
-            return;
-          }
-
-          if (response.styles) {
-            self.injectSavedStyles(response.styles);
-          }
-        });
-      },
-      injectSavedStyles(styles) {
-        let themeStyles = this.uipData.themeStyles;
-        for (let key in themeStyles) {
-          let item = themeStyles[key];
-
-          if (styles[item.name]) {
-            if ('value' in styles[item.name]) {
-              item.value = styles[item.name].value;
-            }
-            if ('darkValue' in styles[item.name]) {
-              item.darkValue = styles[item.name].darkValue;
-            }
-          }
+      self.uipress.callServer(uip_ajax.ajax_url, formData).then((response) => {
+        if (response.error) {
+          self.uipress.notify(response.message, '', 'error', true);
+          return;
         }
 
-        for (let key in styles) {
-          let item = styles[key];
-          if (item.user) {
-            this.uipData.themeStyles[item.name] = item;
+        self.uipress.notify(self.ui.strings.settingsSaved, '', 'success', true);
+      });
+    },
+    formatStyles() {
+      let styles = this.uipData.themeStyles;
+      let formatted = {};
+      for (let key in styles) {
+        if (styles[key].value) {
+          if (!formatted[styles[key].name]) {
+            formatted[styles[key].name] = {};
           }
+          formatted[styles[key].name].value = styles[key].value;
         }
-      },
-      returnTemplateOption(group, option) {
-        let key = option.uniqueKey;
-        let options = this.globalSettings;
-        if (!(group in options)) {
-          options[group] = {};
+        if (styles[key].darkValue) {
+          if (!formatted[styles[key].name]) {
+            formatted[styles[key].name] = {};
+          }
+          formatted[styles[key].name].darkValue = styles[key].darkValue;
         }
-        if (!(key in options[group])) {
-          if (option.accepts === String) {
-            options[group][key] = '';
-          }
-          if (option.accepts === Array) {
-            options[group][key] = [];
-          }
-          if (option.accepts === Object) {
-            options[group][key] = {};
-          }
-          if (option.accepts === Boolean) {
-            options[group][key] = false;
-          }
+        if (styles[key].user) {
+          formatted[styles[key].name].user = styles[key].user;
+          formatted[styles[key].name].label = styles[key].label;
+          formatted[styles[key].name].name = styles[key].name;
+          formatted[styles[key].name].type = styles[key].type;
         }
-        return options[group][key];
-      },
-      saveTemplateOption(group, key, value) {
-        let options = this.globalSettings;
-        options[group][key] = value;
-      },
-      saveSettings() {
-        let self = this;
+      }
 
-        let sendData = self.uipress.uipEncodeJson(self.globalSettings);
+      return formatted;
+    },
+    conditionalShowGroup(group) {
+      if (!('condition' in group)) {
+        return true;
+      }
 
-        let styles = this.formatStyles();
-        let stylesJson = JSON.stringify(styles, (k, v) => (v === 'true' ? 'uiptrue' : v === true ? 'uiptrue' : v === 'false' ? 'uipfalse' : v === false ? 'uipfalse' : v === '' ? 'uipblank' : v));
+      return group.condition(this.globalSettings);
+    },
+    inSearch(option) {
+      let sq = this.search.toLowerCase();
+      let lqN = option.label.toLowerCase();
+      let lqDes = option.help.toLowerCase();
 
-        let formData = new FormData();
-        formData.append('action', 'uip_save_global_settings');
-        formData.append('security', uip_ajax.security);
-        formData.append('settings', sendData);
-        formData.append('styles', stylesJson);
+      if (lqN.includes(sq) || lqDes.includes(sq)) {
+        return true;
+      }
+      return false;
+    },
+    exportSettings() {
+      self = this;
+      let layout;
+      let namer = 'uip-site-settings-';
+      layout = JSON.stringify({ uipSettings: self.globalSettings });
 
-        self.uipress.callServer(uip_ajax.ajax_url, formData).then((response) => {
-          if (response.error) {
-            self.uipress.notify(response.message, '', 'error', true);
-            return;
-          }
+      let today = new Date();
+      let dd = String(today.getDate()).padStart(2, '0');
+      let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+      let yyyy = today.getFullYear();
 
-          self.uipress.notify(self.ui.strings.settingsSaved, '', 'success', true);
-        });
-      },
-      formatStyles() {
-        let styles = this.uipData.themeStyles;
-        let formatted = {};
-        for (let key in styles) {
-          if (styles[key].value) {
-            if (!formatted[styles[key].name]) {
-              formatted[styles[key].name] = {};
-            }
-            formatted[styles[key].name].value = styles[key].value;
-          }
-          if (styles[key].darkValue) {
-            if (!formatted[styles[key].name]) {
-              formatted[styles[key].name] = {};
-            }
-            formatted[styles[key].name].darkValue = styles[key].darkValue;
-          }
-          if (styles[key].user) {
-            formatted[styles[key].name].user = styles[key].user;
-            formatted[styles[key].name].label = styles[key].label;
-            formatted[styles[key].name].name = styles[key].name;
-            formatted[styles[key].name].type = styles[key].type;
-          }
-        }
+      let date_today = mm + '-' + dd + '-' + yyyy;
+      let filename = namer + '-' + date_today + '.json';
 
-        return formatted;
-      },
-      conditionalShowGroup(group) {
-        if (!('condition' in group)) {
-          return true;
-        }
+      let dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(layout);
+      let dlAnchorElem = this.$refs.exporter;
+      dlAnchorElem.setAttribute('href', dataStr);
+      dlAnchorElem.setAttribute('download', filename);
+      dlAnchorElem.click();
 
-        return group.condition(this.globalSettings);
-      },
-      inSearch(option) {
-        let sq = this.search.toLowerCase();
-        let lqN = option.label.toLowerCase();
-        let lqDes = option.help.toLowerCase();
+      let message = __('Settings exported', 'uipress-lite');
+      self.uipress.notify(message, '', 'success', true);
+    },
+    importSettings() {
+      let self = this;
+      let notiID = self.uipress.notify(__('Importing settings', 'uipress-lite'), '', 'default', false, true);
+      let fileInput = event.target;
+      let thefile = fileInput.files[0];
 
-        if (lqN.includes(sq) || lqDes.includes(sq)) {
-          return true;
-        }
-        return false;
-      },
-      exportSettings() {
-        self = this;
-        let layout;
-        let namer = 'uip-site-settings-';
-        layout = JSON.stringify({ uipSettings: self.globalSettings });
+      if (thefile.type != 'application/json') {
+        self.uipress.notify(__('Settings must be in valid JSON format', 'uipress-lite'), '', 'error', true, false);
+        self.uipress.destroy_notification(notiID);
+        return;
+      }
 
-        let today = new Date();
-        let dd = String(today.getDate()).padStart(2, '0');
-        let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-        let yyyy = today.getFullYear();
+      if (thefile.size > 1000000) {
+        self.uipress.notify(__('Uploaded file is too big', 'uipress-lite'), '', 'error', true, false);
+        self.uipress.destroy_notification(notiID);
+        return;
+      }
 
-        let date_today = mm + '-' + dd + '-' + yyyy;
-        let filename = namer + '-' + date_today + '.json';
+      let reader = new FileReader();
+      reader.readAsText(thefile, 'UTF-8');
 
-        let dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(layout);
-        let dlAnchorElem = this.$refs.exporter;
-        dlAnchorElem.setAttribute('href', dataStr);
-        dlAnchorElem.setAttribute('download', filename);
-        dlAnchorElem.click();
+      reader.onload = function (evt) {
+        let json_settings = evt.target.result;
+        let parsed;
 
-        let message = __('Settings exported', 'uipress-lite');
-        self.uipress.notify(message, '', 'success', true);
-      },
-      importSettings() {
-        let self = this;
-        let notiID = self.uipress.notify(__('Importing settings', 'uipress-lite'), '', 'default', false, true);
-        let fileInput = event.target;
-        let thefile = fileInput.files[0];
-
-        if (thefile.type != 'application/json') {
-          self.uipress.notify(__('Settings must be in valid JSON format', 'uipress-lite'), '', 'error', true, false);
+        //Check for valid JSON data
+        try {
+          parsed = JSON.parse(json_settings);
+        } catch (error) {
+          self.uipress.notify(error, '', 'error', true, false);
           self.uipress.destroy_notification(notiID);
           return;
         }
 
-        if (thefile.size > 1000000) {
-          self.uipress.notify(__('Uploaded file is too big', 'uipress-lite'), '', 'error', true, false);
-          self.uipress.destroy_notification(notiID);
-          return;
-        }
-
-        let reader = new FileReader();
-        reader.readAsText(thefile, 'UTF-8');
-
-        reader.onload = function (evt) {
-          let json_settings = evt.target.result;
-          let parsed;
-
-          //Check for valid JSON data
-          try {
-            parsed = JSON.parse(json_settings);
-          } catch (error) {
-            self.uipress.notify(error, '', 'error', true, false);
+        if (parsed != null) {
+          if (!Array.isArray(parsed) && !self.uipress.isObject(parsed)) {
+            self.uipress.notify('Settings is not valid', '', 'error', true, false);
             self.uipress.destroy_notification(notiID);
             return;
           }
 
-          if (parsed != null) {
-            if (!Array.isArray(parsed) && !self.uipress.isObject(parsed)) {
-              self.uipress.notify('Settings is not valid', '', 'error', true, false);
-              self.uipress.destroy_notification(notiID);
-              return;
-            }
+          let temper;
 
-            let temper;
-
-            if ('uipSettings' in parsed) {
-              if (self.uipress.isObject(parsed.uipSettings)) {
-                temper = parsed.uipSettings;
-              } else {
-                self.uipress.notify(__('Settings mismatch', 'uipress-lite'), '', 'error', true, false);
-                self.uipress.destroy_notification(notiID);
-                return;
-              }
+          if ('uipSettings' in parsed) {
+            if (self.uipress.isObject(parsed.uipSettings)) {
+              temper = parsed.uipSettings;
             } else {
               self.uipress.notify(__('Settings mismatch', 'uipress-lite'), '', 'error', true, false);
               self.uipress.destroy_notification(notiID);
               return;
             }
-
-            self.globalSettings = temper;
-            self.uipress.notify(__('Settings imported', 'uipress-lite'), '', 'success', true, false);
-            self.uipress.destroy_notification(notiID);
-
-            self.render = false;
-            requestAnimationFrame(() => {
-              self.render = true;
-            });
-            return;
           } else {
-            self.uipress.notify(__('JSON parse failed', 'uipress-lite'), '', 'error', true, false);
+            self.uipress.notify(__('Settings mismatch', 'uipress-lite'), '', 'error', true, false);
             self.uipress.destroy_notification(notiID);
+            return;
           }
-        };
-      },
+
+          self.globalSettings = temper;
+          self.uipress.notify(__('Settings imported', 'uipress-lite'), '', 'success', true, false);
+          self.uipress.destroy_notification(notiID);
+
+          self.render = false;
+          requestAnimationFrame(() => {
+            self.render = true;
+          });
+          return;
+        } else {
+          self.uipress.notify(__('JSON parse failed', 'uipress-lite'), '', 'error', true, false);
+          self.uipress.destroy_notification(notiID);
+        }
+      };
     },
-    template: `
+  },
+  template: `
     
       <uip-floating-panel closeRoute="/">
       
@@ -455,6 +454,4 @@ export function moduleData() {
       
       </uip-floating-panel>
       `,
-  };
-  return compData;
-}
+};

@@ -75,22 +75,14 @@ uipress.uipAppData.blocks = allUIPBlocks;
 uipress.uipAppData.settings = allUIPSettings;
 
 ///Views
-import * as UIbuilderTable from './uibuilder/uip-template-list.min.js?ver=3.2.12';
-import * as UIBuilderFramework from './uibuilder/uip-builder-framework.min.js?ver=3.2.12';
-import * as UIbuilderSetupWizard from './uibuilder/uip-builder-setup-wizard.min.js?ver=3.2.12';
-import * as UIbuilderGlobalExport from './uibuilder/uip-builder-global-export.min.js?ver=3.2.12';
-import * as UIbuilderSiteSync from './uibuilder/uip-builder-site-sync.min.js?ver=3.2.12';
-import * as UIbuilderGlobalImport from './uibuilder/uip-builder-global-import.min.js?ver=3.2.12';
-import * as UIbuilderGlobalSettings from './uibuilder/uip-builder-global-settings.min.js?ver=3.2.12';
 
-import * as UIbuilderSettings from './uibuilder/uip-builder-settings.min.js?ver=3.2.12';
 import * as UIbuilderToolbar from './uibuilder/uip-builder-toolbar.min.js?ver=3.2.12';
 import * as UIbuilderPreview from './uibuilder/uip-ui-preview.min.js?ver=3.2.12';
 import * as UIbuilderblocksList from './uibuilder/uip-builder-blocks-list.min.js?ver=3.2.12';
 import * as UIbuilderDropArea from './uibuilder/uip-builder-drop-area.min.js?ver=3.2.12';
 import * as UIbuilderLibrary from './uibuilder/uip-template-library.min.js?ver=3.2.12';
 
-import * as UIbuilderVariablesList from './uibuilder/uip-builder-variables.min.js?ver=3.2.12';
+import UIbuilderVariablesList from './uibuilder/uip-builder-variables.min.js?ver=3.2.12';
 import * as UIbuilderSavePattern from './uibuilder/uip-save-pattern.min.js?ver=3.2.12';
 import * as UIbuilderDynamicDataWatcher from './uibuilder/uip-dynamic-data-watcher.min.js?ver=3.2.12';
 
@@ -205,44 +197,53 @@ const uiBuilderArgs = defineComponent({
  * Defines and create ui builder routes
  * @since 3.0.0
  */
+const UIbuilderSettings = () => import(`./uibuilder/uip-builder-settings.min.js?ver=${pluginVersion}`);
+const UIbuilderTable = () => import(`./uibuilder/uip-template-list.min.js?ver=${pluginVersion}`);
+const UIbuilderSetupWizard = () => import(`./uibuilder/uip-builder-setup-wizard.min.js?ver=${pluginVersion}`);
+const UIbuilderGlobalExport = () => import(`./uibuilder/uip-builder-global-export.min.js?ver=${pluginVersion}`);
+const UIbuilderGlobalImport = () => import(`./uibuilder/uip-builder-global-import.min.js?ver=${pluginVersion}`);
+const UIbuilderSiteSync = () => import(`./uibuilder/uip-builder-site-sync.min.js?ver=${pluginVersion}`);
+const UIbuilderGlobalSettings = () => import(`./uibuilder/uip-builder-global-settings.min.js?ver=${pluginVersion}`);
+const UIBuilderFramework = () => import(`./uibuilder/uip-builder-framework.min.js?ver=${pluginVersion}`);
+
 const routes = [
   {
     path: '/',
     name: __('List View', 'uipress-lite'),
-    component: UIbuilderTable.moduleData(),
+    component: UIbuilderTable,
     query: { page: '1', search: '' },
     children: [
       {
         name: __('Setup wizard', 'uipress-lite'),
         path: '/setupwizard/',
-        component: UIbuilderSetupWizard.moduleData(),
+        component: UIbuilderSetupWizard,
       },
       {
         name: __('Global export', 'uipress-lite'),
         path: '/globalexport/',
-        component: UIbuilderGlobalExport.moduleData(),
+        component: UIbuilderGlobalExport,
       },
       {
         name: __('Global import', 'uipress-lite'),
         path: '/globalimport/',
-        component: UIbuilderGlobalImport.moduleData(),
+        component: UIbuilderGlobalImport,
       },
       {
         name: __('Site sync', 'uipress-lite'),
         path: '/sitesync/',
-        component: UIbuilderSiteSync.moduleData(),
+        component: UIbuilderSiteSync,
       },
       {
         name: __('Site settings', 'uipress-lite'),
         path: '/site-settings/',
-        component: UIbuilderGlobalSettings.moduleData(),
+        component: UIbuilderGlobalSettings,
       },
     ],
   },
   {
     path: '/uibuilder/:templateID/',
     name: 'Builder',
-    component: UIBuilderFramework.moduleData(),
+    component: UIBuilderFramework,
     children: [
       {
         name: __('Block Settings', 'uipress-lite'),
@@ -255,7 +256,7 @@ const routes = [
       {
         name: __('Template Settings', 'uipress-lite'),
         path: 'settings/template',
-        component: UIbuilderSettings.moduleData(),
+        component: UIbuilderSettings,
       },
     ],
   },
@@ -289,7 +290,6 @@ uipUiBuilderApp.config.errorHandler = function (err, vm, info) {
 //import to app
 //import * as navigation from "./modules/navigation.min.js";
 //import components
-uipUiBuilderApp.component('builder-settings', UIbuilderSettings.moduleData());
 uipUiBuilderApp.component('builder-toolbar', UIbuilderToolbar.moduleData());
 
 uipUiBuilderApp.component('multi-select', UIbuilderMultiSelect.moduleData());
@@ -307,7 +307,7 @@ uipUiBuilderApp.component('uip-offcanvas', UIbuilderOffcanvas.moduleData());
 uipUiBuilderApp.component('uip-save-button', UIbuilderSaveButton.moduleData());
 uipUiBuilderApp.component('dynamic-data-list', UIbuilderDynamicList.moduleData());
 uipUiBuilderApp.component('dropdown', UIbuilderDropdown);
-uipUiBuilderApp.component('list-variables', UIbuilderVariablesList.moduleData());
+uipUiBuilderApp.component('list-variables', UIbuilderVariablesList);
 uipUiBuilderApp.component('saveaspattern', UIbuilderSavePattern.moduleData());
 uipUiBuilderApp.component('uip-chart', UIbuilderChart.moduleData());
 uipUiBuilderApp.component('uip-modal', UIbuilderModal.moduleData());

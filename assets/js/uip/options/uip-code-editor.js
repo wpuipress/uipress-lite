@@ -1,4 +1,12 @@
 const { __, _x, _n, _nx } = wp.i18n;
+
+import '../../libs/ace-editor.min.js';
+import '../../libs/ace-editor-css.min.js';
+import '../../libs/ace-editor-javascript.min.js';
+import '../../libs/ace-editor-html.min.js';
+import '../../libs/ace-theme-dracular.min.js';
+import '../../libs/ace-editor-beautify.min.js';
+
 export function moduleData() {
   return {
     props: {
@@ -25,24 +33,45 @@ export function moduleData() {
     inject: ['uipress'],
     mounted: function () {
       let self = this;
+      self.beautify = ace.require('ace/ext/beautify');
       self.editor = ace.edit(this.$refs.codeeditor);
       self.editor.setTheme('ace/theme/dracula');
+      self.editor.setOptions({ useWorker: false, fontSize: '12px' });
+      self.editor.session.setUseWrapMode(true);
+      self.editor.setShowPrintMargin(false);
+      self.editor.renderer.setScrollMargin(14, 14);
+      self.editor.container.style.lineHeight = 1.6;
+      self.editor.renderer.updateFontSize();
+
+      self.editor.setOptions({
+        maxLines: Infinity,
+        tabSize: 3,
+        wrap: 0, // wrap text to view
+        indentedSoftWrap: false,
+        fontSize: '0.8rem',
+        wrap: 1, // wrap text to view
+        indentedSoftWrap: true,
+      });
+
+      self.editor.renderer.setPadding(16);
+      self.editor.setHighlightActiveLine(false);
+
+      if (!self.language) self.language = 'css';
 
       if (self.language == 'css') {
-        let cssMode = ace.require('ace/mode/css').Mode;
-        self.editor.session.setMode(new cssMode());
+        self.editor.session.setMode('ace/mode/css');
       }
       if (self.language == 'javascript') {
-        let jsMode = ace.require('ace/mode/javascript').Mode;
-        self.editor.session.setMode(new jsMode());
+        self.editor.session.setMode('ace/mode/javascript');
       }
       if (self.language == 'html') {
-        let jsMode = ace.require('ace/mode/html').Mode;
         self.editor.session.setMode('ace/mode/html');
       }
 
-      let thisCode = structuredClone(self.option);
+      const thisCode = structuredClone(self.option);
       self.editor.setValue(thisCode, -1);
+
+      self.beautify.beautify(self.editor.session);
 
       self.editor.session.on('change', function (delta) {
         let val = self.editor.getValue();

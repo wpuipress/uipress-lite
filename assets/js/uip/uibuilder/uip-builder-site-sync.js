@@ -1,203 +1,202 @@
 const { __, _x, _n, _nx } = wp.i18n;
-export function moduleData() {
-  return {
-    props: {
-      args: Object,
-      triggerClass: String, // Allows custom classes to be set on the trigger container
-    },
-    data: function () {
-      return {
-        modelOpen: true,
-        themeLoading: false,
-        themes: [],
-        saving: false,
-        finished: false,
-        importPath: '',
-        fetchingSettings: true,
-        strings: {
-          siteSync: __('Site sync', 'uipress-lite'),
-          hostExplanation: __("Enabling this site as a host allows you to sync other sites to this site's uiPress settings. Please note, rest API needs to be enabled to use this feature."),
-          settingsExplanation: __(
-            'Choose the sections you sync with a remote site. Enabling auto update will allow uiPress to routinely check for changes at the host site and sync updates.',
-            'uipress-lite'
-          ),
-          templates: __('Templates', 'uipress-lite'),
-          siteSettings: __('Site settings', 'uipress-lite'),
-          themeStyles: __('Theme styles', 'uipress-lite'),
-          adminMenus: __('Admin menus', 'uipress-lite'),
-          cancel: __('Cancel', 'uipress-lite'),
-          export: __('Export', 'uipress-lite'),
-          hostEnabled: __('Host enabled', 'uipress-lite'),
-          importPath: __('Import URL', 'uipress-lite'),
-          importKey: __('Import key', 'uipress-lite'),
-          save: __('Save', 'uipress-lite'),
-          refreshKey: __('Refresh key', 'uipress-lite'),
-          syncOptions: __('Sync options', 'uipress-lite'),
-          autoUpdate: __('Auto update', 'uipress-lite'),
-          syncNow: __('Sync now', 'uipress-lite'),
+export default {
+  props: {
+    args: Object,
+    triggerClass: String, // Allows custom classes to be set on the trigger container
+  },
+  data: function () {
+    return {
+      modelOpen: true,
+      themeLoading: false,
+      themes: [],
+      saving: false,
+      finished: false,
+      importPath: '',
+      fetchingSettings: true,
+      strings: {
+        siteSync: __('Site sync', 'uipress-lite'),
+        hostExplanation: __("Enabling this site as a host allows you to sync other sites to this site's uiPress settings. Please note, rest API needs to be enabled to use this feature."),
+        settingsExplanation: __(
+          'Choose the sections you sync with a remote site. Enabling auto update will allow uiPress to routinely check for changes at the host site and sync updates.',
+          'uipress-lite'
+        ),
+        templates: __('Templates', 'uipress-lite'),
+        siteSettings: __('Site settings', 'uipress-lite'),
+        themeStyles: __('Theme styles', 'uipress-lite'),
+        adminMenus: __('Admin menus', 'uipress-lite'),
+        cancel: __('Cancel', 'uipress-lite'),
+        export: __('Export', 'uipress-lite'),
+        hostEnabled: __('Host enabled', 'uipress-lite'),
+        importPath: __('Import URL', 'uipress-lite'),
+        importKey: __('Import key', 'uipress-lite'),
+        save: __('Save', 'uipress-lite'),
+        refreshKey: __('Refresh key', 'uipress-lite'),
+        syncOptions: __('Sync options', 'uipress-lite'),
+        autoUpdate: __('Auto update', 'uipress-lite'),
+        syncNow: __('Sync now', 'uipress-lite'),
+      },
+      hostOptions: {
+        hostEnabled: false,
+        key: '',
+      },
+      syncOptions: {
+        importOptions: {
+          templates: true,
+          siteSettings: true,
+          themeStyles: true,
+          adminMenus: true,
         },
-        hostOptions: {
-          hostEnabled: false,
-          key: '',
+        key: '',
+        path: '',
+        keepUpToDate: false,
+      },
+      activeTab: 'host',
+      switchOptions: {
+        host: {
+          value: 'host',
+          label: __('Host', 'uipress-lite'),
         },
-        syncOptions: {
-          importOptions: {
-            templates: true,
-            siteSettings: true,
-            themeStyles: true,
-            adminMenus: true,
-          },
-          key: '',
-          path: '',
-          keepUpToDate: false,
-        },
-        activeTab: 'host',
-        switchOptions: {
-          host: {
-            value: 'host',
-            label: __('Host', 'uipress-lite'),
-          },
-          sync: {
-            value: 'sync',
-            label: __('Sync', 'uipress-lite'),
-          },
-        },
-      };
-    },
-    inject: ['uipress', 'uipData', 'uiTemplate', 'router'],
-    watch: {
-      currentStep: {
-        handler(newValue, oldValue) {
-          if (newValue == 2) {
-            this.fetchThemes();
-          }
+        sync: {
+          value: 'sync',
+          label: __('Sync', 'uipress-lite'),
         },
       },
-    },
-    created: function () {
-      this.getSyncOptions();
-    },
-    mounted: function () {},
-    computed: {
-      isDisabledButton() {
-        if (!this.syncOptions.importOptions.templates && !this.syncOptions.importOptions.siteSettings && !this.syncOptions.importOptions.themeStyles && !this.syncOptions.importOptions.adminMenus) {
-          return true;
+    };
+  },
+  inject: ['uipress', 'uipData', 'uiTemplate', 'router'],
+  watch: {
+    currentStep: {
+      handler(newValue, oldValue) {
+        if (newValue == 2) {
+          this.fetchThemes();
         }
       },
     },
-    methods: {
-      getSyncOptions() {
-        let self = this;
-
-        let formData = new FormData();
-        formData.append('action', 'uip_get_sync_options');
-        formData.append('security', uip_ajax.security);
-
-        self.uipress.callServer(uip_ajax.ajax_url, formData).then((response) => {
-          self.fetchingSettings = false;
-          if (response.error) {
-            self.uipress.notify(response.message, '', 'error', true);
-            return;
-          }
-
-          self.importPath = response.restURL;
-
-          if (response.options) {
-            if ('key' in response.options) {
-              self.hostOptions.key = response.options.key;
-            }
-            if ('hostEnabled' in response.options) {
-              self.hostOptions.hostEnabled = response.options.hostEnabled;
-            }
-
-            if (!('syncOptions' in response.options)) return;
-
-            if ('importOptions' in response.options.syncOptions) {
-              self.syncOptions.importOptions = { ...self.syncOptions.importOptions, ...response.options.syncOptions.importOptions };
-            }
-
-            if ('key' in response.options.syncOptions) {
-              self.syncOptions.key = response.options.syncOptions.key;
-            }
-
-            if ('keepUpToDate' in response.options.syncOptions) {
-              self.syncOptions.keepUpToDate = response.options.syncOptions.keepUpToDate;
-            }
-
-            if ('path' in response.options.syncOptions) {
-              self.syncOptions.path = response.options.syncOptions.path;
-            }
-          }
-        });
-      },
-      refreshKey() {
-        let self = this;
-
-        let formData = new FormData();
-        formData.append('action', 'uip_refresh_sync_key');
-        formData.append('security', uip_ajax.security);
-
-        self.uipress.callServer(uip_ajax.ajax_url, formData).then((response) => {
-          self.fetchingSettings = false;
-          if (response.error) {
-            self.uipress.notify(response.message, '', 'error', true);
-            return;
-          }
-          if (response.options) {
-            if ('key' in response.options) {
-              self.hostOptions.key = response.options.key;
-            }
-          }
-        });
-      },
-      saveHostSettings() {
-        let self = this;
-
-        let formData = new FormData();
-        formData.append('action', 'uip_save_sync_options');
-        formData.append('security', uip_ajax.security);
-        formData.append('options', self.uipress.uipEncodeJson(self.hostOptions));
-        formData.append('syncOptions', self.uipress.uipEncodeJson(self.syncOptions));
-
-        self.uipress.callServer(uip_ajax.ajax_url, formData).then((response) => {
-          self.fetchingSettings = false;
-          if (response.error) {
-            self.uipress.notify(response.message, '', 'error', true);
-            return;
-          }
-          self.uipress.notify(__('Settings saved', 'uipress-lite'), '', 'success');
-        });
-      },
-      closeThisComponent() {
-        document.documentElement.removeEventListener('click', this.onClickOutside, false);
-        this.router.push('/');
-      },
-      syncNow() {
-        let self = this;
-
-        let formData = new FormData();
-        formData.append('action', 'uip_start_site_sync');
-        formData.append('security', uip_ajax.security);
-        formData.append('options', JSON.stringify(self.syncOptions));
-        let notID = self.uipress.notify(__('Importing uiPress content', 'uipress-lite'), '', 'default', false, true);
-
-        self.uipress.callServer(uip_ajax.ajax_url, formData).then((response) => {
-          self.uipress.destroy_notification(notID);
-          if (response.error) {
-            self.uipress.notify(response.message, '', 'error', true);
-            return;
-          }
-          self.uipress.notify(__('Import complete', 'uipress-lite'), '', 'success');
-
-          self.router.push('/');
-
-          setTimeout(function () {
-            location.reload();
-          }, 600);
-        });
-      },
+  },
+  created: function () {
+    this.getSyncOptions();
+  },
+  mounted: function () {},
+  computed: {
+    isDisabledButton() {
+      if (!this.syncOptions.importOptions.templates && !this.syncOptions.importOptions.siteSettings && !this.syncOptions.importOptions.themeStyles && !this.syncOptions.importOptions.adminMenus) {
+        return true;
+      }
     },
-    template: `
+  },
+  methods: {
+    getSyncOptions() {
+      let self = this;
+
+      let formData = new FormData();
+      formData.append('action', 'uip_get_sync_options');
+      formData.append('security', uip_ajax.security);
+
+      self.uipress.callServer(uip_ajax.ajax_url, formData).then((response) => {
+        self.fetchingSettings = false;
+        if (response.error) {
+          self.uipress.notify(response.message, '', 'error', true);
+          return;
+        }
+
+        self.importPath = response.restURL;
+
+        if (response.options) {
+          if ('key' in response.options) {
+            self.hostOptions.key = response.options.key;
+          }
+          if ('hostEnabled' in response.options) {
+            self.hostOptions.hostEnabled = response.options.hostEnabled;
+          }
+
+          if (!('syncOptions' in response.options)) return;
+
+          if ('importOptions' in response.options.syncOptions) {
+            self.syncOptions.importOptions = { ...self.syncOptions.importOptions, ...response.options.syncOptions.importOptions };
+          }
+
+          if ('key' in response.options.syncOptions) {
+            self.syncOptions.key = response.options.syncOptions.key;
+          }
+
+          if ('keepUpToDate' in response.options.syncOptions) {
+            self.syncOptions.keepUpToDate = response.options.syncOptions.keepUpToDate;
+          }
+
+          if ('path' in response.options.syncOptions) {
+            self.syncOptions.path = response.options.syncOptions.path;
+          }
+        }
+      });
+    },
+    refreshKey() {
+      let self = this;
+
+      let formData = new FormData();
+      formData.append('action', 'uip_refresh_sync_key');
+      formData.append('security', uip_ajax.security);
+
+      self.uipress.callServer(uip_ajax.ajax_url, formData).then((response) => {
+        self.fetchingSettings = false;
+        if (response.error) {
+          self.uipress.notify(response.message, '', 'error', true);
+          return;
+        }
+        if (response.options) {
+          if ('key' in response.options) {
+            self.hostOptions.key = response.options.key;
+          }
+        }
+      });
+    },
+    saveHostSettings() {
+      let self = this;
+
+      let formData = new FormData();
+      formData.append('action', 'uip_save_sync_options');
+      formData.append('security', uip_ajax.security);
+      formData.append('options', self.uipress.uipEncodeJson(self.hostOptions));
+      formData.append('syncOptions', self.uipress.uipEncodeJson(self.syncOptions));
+
+      self.uipress.callServer(uip_ajax.ajax_url, formData).then((response) => {
+        self.fetchingSettings = false;
+        if (response.error) {
+          self.uipress.notify(response.message, '', 'error', true);
+          return;
+        }
+        self.uipress.notify(__('Settings saved', 'uipress-lite'), '', 'success');
+      });
+    },
+    closeThisComponent() {
+      document.documentElement.removeEventListener('click', this.onClickOutside, false);
+      this.router.push('/');
+    },
+    syncNow() {
+      let self = this;
+
+      let formData = new FormData();
+      formData.append('action', 'uip_start_site_sync');
+      formData.append('security', uip_ajax.security);
+      formData.append('options', JSON.stringify(self.syncOptions));
+      let notID = self.uipress.notify(__('Importing uiPress content', 'uipress-lite'), '', 'default', false, true);
+
+      self.uipress.callServer(uip_ajax.ajax_url, formData).then((response) => {
+        self.uipress.destroy_notification(notID);
+        if (response.error) {
+          self.uipress.notify(response.message, '', 'error', true);
+          return;
+        }
+        self.uipress.notify(__('Import complete', 'uipress-lite'), '', 'success');
+
+        self.router.push('/');
+
+        setTimeout(function () {
+          location.reload();
+        }, 600);
+      });
+    },
+  },
+  template: `
     
     
       <div class="uip-position-fixed uip-top-0 uip-left-0 uip-h-viewport uip-w-vw uip-background-black-wash uip-flex uip-flex-center uip-flex-middle uip-fade-in uip-text-normal uip-z-index-1" tabindex="1">
@@ -340,5 +339,4 @@ export function moduleData() {
       </div>
     
     `,
-  };
-}
+};
