@@ -1,0 +1,7 @@
+{
+  "apexskier.typescript.config.isEnabledForJavascript" : "Enable",
+  "prettier.default-config.jsxSingleQuote" : "Global Default",
+  "prettier.default-config.quoteProps" : "preserve",
+  "prettier.default-config.singleQuote" : "Enable",
+  "VineCode.Sass.cssStyle" : "Compressed"
+}

@@ -1,0 +1,6269 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: UiPress Lite\n"
+"POT-Creation-Date: 2023-08-02 11:17+0100\n"
+"PO-Revision-Date: 2022-11-09 21:12+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"X-Generator: Poedit 3.3.2\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
+"X-Poedit-WPHeader: uipress-lite.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.min.js\n"
+
+#: admin/classes/uip-ajax.php:69 admin/classes/uip-ajax.php:74
+#: admin/classes/uip-ajax.php:192 admin/classes/uip-ajax.php:198
+msgid "Unable to get import options"
+msgstr ""
+
+#: admin/classes/uip-ajax.php:133
+msgid "Unable to save site sync options"
+msgstr ""
+
+#: admin/classes/uip-ajax.php:241 admin/classes/uip-ajax.php:246
+msgid "Unable to get export options"
+msgstr ""
+
+#: admin/classes/uip-ajax.php:277
+msgid "Unable to fetch static menu"
+msgstr ""
+
+#: admin/classes/uip-ajax.php:367
+msgid "Unable to send message to chat"
+msgstr ""
+
+#: admin/classes/uip-ajax.php:372
+msgid "No valid API key provided"
+msgstr ""
+
+#: admin/classes/uip-ajax.php:377
+msgid "No valid messages to send"
+msgstr ""
+
+#: admin/classes/uip-ajax.php:425
+msgid "No option name specified"
+msgstr ""
+
+#: admin/classes/uip-ajax.php:433
+msgid "Option saved"
+msgstr ""
+
+#: admin/classes/uip-ajax.php:453
+msgid "Corrupt query. Unable to loop posts"
+msgstr ""
+
+#: admin/classes/uip-ajax.php:776
+msgid "Query fetched"
+msgstr ""
+
+#: admin/classes/uip-ajax.php:850
+msgid "Unable to locate error log"
+msgstr ""
+
+#: admin/classes/uip-ajax.php:851
+msgid "No error log path set in your PHP ini file"
+msgstr ""
+
+#: admin/classes/uip-ajax.php:857
+msgid "Log file does not exist or is empty"
+msgstr ""
+
+#: admin/classes/uip-ajax.php:858
+msgid ""
+"Either the PHP error log path is incorrect or you don't have any errors yet. "
+"Path: "
+msgstr ""
+
+#: admin/classes/uip-ajax.php:907
+msgid "Errros fetched"
+msgstr ""
+
+#: admin/classes/uip-ajax.php:928
+msgid "Unable to create temporary frame"
+msgstr ""
+
+#: admin/classes/uip-ajax.php:935
+msgid "Transient created"
+msgstr ""
+
+#: admin/classes/uip-ajax.php:955
+msgid "Config error: You need to specifiy a meta key to save the meta data to"
+msgstr ""
+
+#: admin/classes/uip-ajax.php:978
+msgid "Config error: Something went wrong"
+msgstr ""
+
+#: admin/classes/uip-ajax.php:997
+msgid "Config error: No site option name supplied"
+msgstr ""
+
+#: admin/classes/uip-ajax.php:1025
+msgid "Config error: Recipient email is not valid"
+msgstr ""
+
+#: admin/classes/uip-ajax.php:1031
+msgid "Config error: No email template set"
+msgstr ""
+
+#: admin/classes/uip-ajax.php:1055
+msgid "Unable to send mail at this time"
+msgstr ""
+
+#: admin/classes/uip-ajax.php:1166
+msgid "Passed function doesn't exist"
+msgstr ""
+
+#: admin/classes/uip-ajax.php:1174
+msgid "Unable to process form"
+msgstr ""
+
+#: admin/classes/uip-ajax.php:1232 admin/classes/uip-ajax.php:1451
+#: admin/classes/uip-ajax.php:1634 admin/classes/uip-ajax.php:1726
+#: admin/classes/uip-site-settings.php:894 admin/classes/uip-ui-builder.php:648
+msgid "ago"
+msgstr ""
+
+#: admin/classes/uip-ajax.php:1343 assets/js/uip/classes/uip.js:1543
+msgid "Preference updated"
+msgstr ""
+
+#: admin/classes/uip-ajax.php:1363
+msgid "Unable to read post ids to delete"
+msgstr ""
+
+#: admin/classes/uip-ajax.php:1388 assets/js/uip/classes/uip.js:349
+msgid "Item deleted"
+msgstr ""
+
+#: admin/classes/uip-ajax.php:1505 admin/classes/uip-utilities.php:888
+#: assets/js/uip/blocks/dynamic/loader.js:621
+#: assets/js/uip/blocks/dynamic/search.js:25
+msgid "View"
+msgstr ""
+
+#: admin/classes/uip-ajax.php:1506 admin/classes/uip-utilities.php:864
+#: assets/js/uip/blocks/dynamic/loader.js:625
+#: assets/js/uip/blocks/dynamic/search.js:24
+#: assets/js/uip/options/uip-image-select.js:26
+#: assets/js/uip/options/uip-inline-image-select.js:34
+#: assets/js/uip/uibuilder/uip-template-list.js:52
+msgid "Edit"
+msgstr ""
+
+#: admin/classes/uip-ajax.php:1507 admin/classes/uip-utilities.php:882
+#: assets/js/uip/blocks/dynamic/loader.js:629
+#: assets/js/uip/classes/uip-media-browser.js:47
+#: assets/js/uip/classes/uip-media-browser.js:413
+#: assets/js/uip/classes/uip.js:335
+#: assets/js/uip/uibuilder/uip-block-actions.js:34
+#: assets/js/uip/uibuilder/uip-template-list.js:332
+#: assets/js/uip/uibuilder/uip-template-list.js:342
+msgid "Delete"
+msgstr ""
+
+#: admin/classes/uip-ajax.php:1526 admin/classes/uip-utilities.php:225
+#: assets/js/uip/blocks/elements/todo-list.js:17
+#: assets/js/uip/options/uip-query-builder.js:209
+msgid "Title"
+msgstr ""
+
+#: admin/classes/uip-ajax.php:1531 admin/classes/uip-utilities.php:231
+#: assets/js/uip/options/uip-query-builder.js:205
+msgid "Author"
+msgstr ""
+
+#: admin/classes/uip-ajax.php:1536 admin/classes/uip-utilities.php:237
+#: assets/js/uip/options/uip-color-select.js:22
+#: assets/js/uip/options/uip-flex-layout.js:41
+#: assets/js/uip/options/uip-query-builder.js:31
+#: assets/js/uip/uibuilder/uip-builder-settings.js:59
+#: assets/js/uip/uibuilder/uip-template-library.js:40
+#: assets/js/uip/uibuilder/uip-template-list.js:21
+msgid "Type"
+msgstr ""
+
+#: admin/classes/uip-ajax.php:1541 admin/classes/uip-utilities.php:243
+#: assets/js/uip/options/uip-query-builder.js:221
+msgid "Date"
+msgstr ""
+
+#: admin/classes/uip-ajax.php:1546 admin/classes/uip-utilities.php:249
+msgid "Categories"
+msgstr ""
+
+#: admin/classes/uip-ajax.php:1551 admin/classes/uip-utilities.php:255
+msgid "Tags"
+msgstr ""
+
+#: admin/classes/uip-ajax.php:1556 admin/classes/uip-site-settings.php:905
+#: admin/classes/uip-utilities.php:261
+#: assets/js/uip/options/uip-query-builder.js:201
+#: assets/js/uip/options/uip-query-builder.js:247
+#: assets/js/uip/options/uip-query-builder.js:293
+msgid "ID"
+msgstr ""
+
+#: admin/classes/uip-ajax.php:1561 admin/classes/uip-utilities.php:267
+msgid "Actions"
+msgstr ""
+
+#: admin/classes/uip-ajax.php:1852 admin/classes/uip-ajax.php:1947
+#: assets/js/uip/blocks/dynamic/loader.js:649
+#: assets/js/uip/blocks/dynamic/loader.js:829
+#: assets/js/uip/blocks/dynamic/loader.js:933
+msgid "User"
+msgstr ""
+
+#: admin/classes/uip-ajax.php:1873 admin/classes/uip-ajax.php:1886
+#: admin/classes/uip-ajax.php:1968
+msgid "Role"
+msgstr ""
+
+#: admin/classes/uip-ajax.php:1898 admin/classes/uip-ajax.php:1977
+msgid "Nothing found for term:"
+msgstr ""
+
+#: admin/classes/uip-ajax.php:1919
+msgid "Something went wrong"
+msgstr ""
+
+#: admin/classes/uip-app.php:59 admin/classes/uip-ui-builder.php:91
+#: assets/js/uip/uibuilder/uip-template-list.js:29
+msgid "uiBuilder"
+msgstr ""
+
+#: admin/classes/uip-app.php:278
+msgid ""
+"You have an older version of uipress active on this site. Please deactivate "
+"to use UiPress Lite"
+msgstr ""
+
+#: admin/classes/uip-app.php:552
+msgid "Unable to load UiPress template"
+msgstr ""
+
+#: admin/classes/uip-app.php:554
+msgid ""
+"Current active template does not contain a page content block or a site "
+"navigation block such as an admin menu or content navigator. These are "
+"required to use a ui template"
+msgstr ""
+
+#: admin/classes/uip-app.php:925
+#: assets/js/uip/uibuilder/uip-dynamic-data-watcher.js:136
+msgid "User id"
+msgstr ""
+
+#: admin/classes/uip-app.php:930
+msgid "User roles"
+msgstr ""
+
+#: admin/classes/uip-app.php:935 assets/js/uip/options/dynamic-settings.js:19
+#: assets/js/uip/options/uip-query-builder.js:255
+msgid "Username"
+msgstr ""
+
+#: admin/classes/uip-app.php:940 assets/js/uip/options/dynamic-settings.js:26
+msgid "User first name"
+msgstr ""
+
+#: admin/classes/uip-app.php:945 assets/js/uip/options/dynamic-settings.js:33
+msgid "User last name"
+msgstr ""
+
+#: admin/classes/uip-app.php:950 assets/js/uip/options/dynamic-settings.js:40
+msgid "User full name"
+msgstr ""
+
+#: admin/classes/uip-app.php:955 assets/js/uip/options/dynamic-settings.js:47
+#: assets/js/uip/uibuilder/uip-dynamic-data-watcher.js:141
+msgid "User display name"
+msgstr ""
+
+#: admin/classes/uip-app.php:960 assets/js/uip/options/dynamic-settings.js:54
+#: assets/js/uip/uibuilder/uip-dynamic-data-watcher.js:146
+msgid "User email"
+msgstr ""
+
+#: admin/classes/uip-app.php:965 assets/js/uip/options/dynamic-settings.js:61
+msgid "User initials"
+msgstr ""
+
+#: admin/classes/uip-app.php:970
+msgid "User profile"
+msgstr ""
+
+#: admin/classes/uip-app.php:976
+msgid "Site title"
+msgstr ""
+
+#: admin/classes/uip-app.php:982 assets/js/uip/options/dynamic-settings.js:82
+msgid "Logout link"
+msgstr ""
+
+#: admin/classes/uip-app.php:987
+msgid "View site"
+msgstr ""
+
+#: admin/classes/uip-app.php:992
+msgid "Admin home"
+msgstr ""
+
+#: admin/classes/uip-app.php:997
+msgid "View profile"
+msgstr ""
+
+#: admin/classes/uip-app.php:1002
+msgid "Current date"
+msgstr ""
+
+#: admin/classes/uip-app.php:1007
+msgid "PHP version"
+msgstr ""
+
+#: admin/classes/uip-app.php:1012
+msgid "WordPress version"
+msgstr ""
+
+#: admin/classes/uip-app.php:1017
+msgid "Notification count"
+msgstr ""
+
+#: admin/classes/uip-app.php:1022
+msgid "Active plugins"
+msgstr ""
+
+#: admin/classes/uip-app.php:1027
+msgid "Inactive plugins"
+msgstr ""
+
+#: admin/classes/uip-app.php:1032
+msgid "Installed themes"
+msgstr ""
+
+#: admin/classes/uip-app.php:1037
+msgid "New post"
+msgstr ""
+
+#: admin/classes/uip-app.php:1042
+msgid "New page"
+msgstr ""
+
+#: admin/classes/uip-app.php:1058
+#: assets/js/uip/uibuilder/global-settings-groups.js:63
+#: assets/js/uip/uibuilder/uip-builder-setup-wizard.js:20
+#: assets/js/uip/uibuilder/uip-builder-setup-wizard.js:40
+msgid "Site logo"
+msgstr ""
+
+#: admin/classes/uip-app.php:1071
+#: assets/js/uip/uibuilder/global-settings-groups.js:72
+#: assets/js/uip/uibuilder/uip-builder-setup-wizard.js:21
+msgid "Site logo dark mode"
+msgstr ""
+
+#: admin/classes/uip-export-import.php:37
+msgid "Missing data required for import"
+msgstr ""
+
+#: admin/classes/uip-export-import.php:51
+msgid "Unable to connect to host site"
+msgstr ""
+
+#: admin/classes/uip-export-import.php:80
+msgid "Improted"
+msgstr ""
+
+#: admin/classes/uip-export-import.php:120
+#: admin/classes/uip-export-import.php:127
+msgid "Incorrect key"
+msgstr ""
+
+#: admin/classes/uip-site-settings.php:784
+#: assets/js/uip/options/uip-query-builder.js:46
+#: assets/js/uip/uibuilder/uip-builder-settings.js:61
+#: assets/js/uip/uibuilder/uip-template-list.js:16
+msgid "Status"
+msgstr ""
+
+#: admin/classes/uip-site-settings.php:801
+msgid "active"
+msgstr ""
+
+#: admin/classes/uip-site-settings.php:807
+msgid "inactive"
+msgstr ""
+
+#: admin/classes/uip-site-settings.php:882
+msgid "Last modified"
+msgstr ""
+
+#: admin/classes/uip-ui-builder.php:92
+msgid "uiSettings"
+msgstr ""
+
+#: admin/classes/uip-ui-builder.php:208
+msgctxt "post type general name"
+msgid "UI Template"
+msgstr ""
+
+#: admin/classes/uip-ui-builder.php:209
+msgctxt "post type singular name"
+msgid "UI Template"
+msgstr ""
+
+#: admin/classes/uip-ui-builder.php:210
+msgctxt "admin menu"
+msgid "UI Templates"
+msgstr ""
+
+#: admin/classes/uip-ui-builder.php:211
+msgctxt "add new on admin bar"
+msgid "UI Template"
+msgstr ""
+
+#: admin/classes/uip-ui-builder.php:212
+msgctxt "Template"
+msgid "Add New"
+msgstr ""
+
+#: admin/classes/uip-ui-builder.php:213
+msgid "Add New UI Template"
+msgstr ""
+
+#: admin/classes/uip-ui-builder.php:214
+msgid "New UI Template"
+msgstr ""
+
+#: admin/classes/uip-ui-builder.php:215
+msgid "Edit UI Template"
+msgstr ""
+
+#: admin/classes/uip-ui-builder.php:216
+msgid "View UI Template"
+msgstr ""
+
+#: admin/classes/uip-ui-builder.php:217
+msgid "All UI Templates"
+msgstr ""
+
+#: admin/classes/uip-ui-builder.php:218
+msgid "Search UI Templates"
+msgstr ""
+
+#: admin/classes/uip-ui-builder.php:219
+msgid "No UI Templates found."
+msgstr ""
+
+#: admin/classes/uip-ui-builder.php:220
+msgid "No UI Templates found in Trash."
+msgstr ""
+
+#: admin/classes/uip-ui-builder.php:224
+msgid "Post type used for the uipress UI builder"
+msgstr ""
+
+#: admin/classes/uip-ui-builder.php:240
+msgctxt "post type general name"
+msgid "UI Pattern"
+msgstr ""
+
+#: admin/classes/uip-ui-builder.php:241
+msgctxt "post type singular name"
+msgid "UI Pattern"
+msgstr ""
+
+#: admin/classes/uip-ui-builder.php:242
+msgctxt "admin menu"
+msgid "UI Patterns"
+msgstr ""
+
+#: admin/classes/uip-ui-builder.php:243
+msgctxt "add new on admin bar"
+msgid "UI Pattern"
+msgstr ""
+
+#: admin/classes/uip-ui-builder.php:244
+msgctxt "UI Pattern"
+msgid "Add New"
+msgstr ""
+
+#: admin/classes/uip-ui-builder.php:245
+msgid "Add New UI Pattern"
+msgstr ""
+
+#: admin/classes/uip-ui-builder.php:246
+msgid "New UI Pattern"
+msgstr ""
+
+#: admin/classes/uip-ui-builder.php:247
+msgid "Edit UI Pattern"
+msgstr ""
+
+#: admin/classes/uip-ui-builder.php:248
+msgid "View UI Patterns"
+msgstr ""
+
+#: admin/classes/uip-ui-builder.php:249
+msgid "All UI Patterns"
+msgstr ""
+
+#: admin/classes/uip-ui-builder.php:250
+msgid "Search UI Patterns"
+msgstr ""
+
+#: admin/classes/uip-ui-builder.php:251
+msgid "No UI Patterns found."
+msgstr ""
+
+#: admin/classes/uip-ui-builder.php:252
+msgid "No UI Patterns found in Trash."
+msgstr ""
+
+#: admin/classes/uip-ui-builder.php:256
+msgid "Post type used for the uipress UI builder for storing patterns"
+msgstr ""
+
+#: admin/classes/uip-ui-builder.php:286 admin/classes/uip-ui-builder.php:466
+msgid "Unable to save site settings. Data corrupted"
+msgstr ""
+
+#: admin/classes/uip-ui-builder.php:388
+#: assets/js/uip/blocks/dynamic/loader.js:528
+#: assets/js/uip/uibuilder/global-settings-groups.js:431
+msgid "Admin theme"
+msgstr ""
+
+#: admin/classes/uip-ui-builder.php:556
+msgid "UI Template (Draft)"
+msgstr ""
+
+#: admin/classes/uip-ui-builder.php:569
+msgid "Template created"
+msgstr ""
+
+#: admin/classes/uip-ui-builder.php:573
+msgid "Unable to create template"
+msgstr ""
+
+#: admin/classes/uip-ui-builder.php:656
+#: assets/js/uip/uibuilder/uip-builder-settings.js:25
+#: assets/js/uip/uibuilder/uip-template-list.js:43
+msgid "UI template"
+msgstr ""
+
+#: admin/classes/uip-ui-builder.php:658
+#: assets/js/uip/uibuilder/uip-builder-toolbar.js:674
+#: assets/js/uip/uibuilder/uip-template-list.js:45
+msgid "Admin page"
+msgstr ""
+
+#: admin/classes/uip-ui-builder.php:660
+#: assets/js/uip/uibuilder/uip-builder-settings.js:28
+#: assets/js/uip/uibuilder/uip-builder-setup-wizard.js:60
+#: assets/js/uip/uibuilder/uip-template-list.js:46
+msgid "Login page"
+msgstr ""
+
+#: admin/classes/uip-ui-builder.php:662
+#: assets/js/uip/uibuilder/uip-builder-settings.js:27
+#: assets/js/uip/uibuilder/uip-builder-toolbar.js:106
+#: assets/js/uip/uibuilder/uip-template-list.js:47
+msgid "Frontend toolbar"
+msgstr ""
+
+#: admin/classes/uip-ui-builder.php:762 admin/classes/uip-ui-builder.php:1103
+msgid "Unable to fetch template"
+msgstr ""
+
+#: admin/classes/uip-ui-builder.php:792
+msgid "Succesfully fetched Ui template"
+msgstr ""
+
+#: admin/classes/uip-ui-builder.php:905 admin/classes/uip-ui-builder.php:943
+msgid "Templates deleted"
+msgstr ""
+
+#: admin/classes/uip-ui-builder.php:924
+msgid "You don't have permission to delete UI Templates"
+msgstr ""
+
+#: admin/classes/uip-ui-builder.php:932
+#: assets/js/uip/uibuilder/uip-template-list.js:27
+msgid "Template deleted"
+msgstr ""
+
+#: admin/classes/uip-ui-builder.php:963 admin/classes/uip-ui-builder.php:995
+msgid "Unable to update template status"
+msgstr ""
+
+#: admin/classes/uip-ui-builder.php:969
+msgid "You don't have the correct permissions to edit this template"
+msgstr ""
+
+#: admin/classes/uip-ui-builder.php:1001
+msgid "Template status updated"
+msgstr ""
+
+#: admin/classes/uip-ui-builder.php:1022 admin/classes/uip-ui-builder.php:1049
+msgid "Unable to duplicate template"
+msgstr ""
+
+#: admin/classes/uip-ui-builder.php:1026
+msgid "copy"
+msgstr ""
+
+#: admin/classes/uip-ui-builder.php:1056
+msgid "Unable to duplicate template. Template is corrupted"
+msgstr ""
+
+#: admin/classes/uip-ui-builder.php:1063
+msgid "Unable to duplicate template. Settings are corrupted"
+msgstr ""
+
+#: admin/classes/uip-ui-builder.php:1080
+#: assets/js/uip/uibuilder/uip-template-list.js:26
+msgid "Template duplicated"
+msgstr ""
+
+#: admin/classes/uip-ui-builder.php:1125
+#: assets/js/uip/uibuilder/uip-builder-toolbar.js:343
+msgid "Unable to save template"
+msgstr ""
+
+#: admin/classes/uip-ui-builder.php:1131
+msgid "Unable to save template. Template is corrupted"
+msgstr ""
+
+#: admin/classes/uip-ui-builder.php:1137
+msgid "Unable to save template. Settings are corrupted"
+msgstr ""
+
+#: admin/classes/uip-ui-builder.php:1196
+#: assets/js/uip/uibuilder/uip-builder-toolbar.js:348
+#: assets/js/uip/uibuilder/uip-builder-toolbar.js:353
+#: assets/js/uip/uibuilder/uip-ui-preview.js:480
+#: assets/js/uip/uibuilder/uip-ui-preview.js:485
+msgid "Template saved"
+msgstr ""
+
+#: admin/classes/uip-ui-builder.php:1281
+msgid "Patterns synced"
+msgstr ""
+
+#: admin/classes/uip-ui-builder.php:1346
+msgid "Unable to save pattern"
+msgstr ""
+
+#: admin/classes/uip-ui-builder.php:1353
+#: assets/js/uip/uibuilder/uip-save-pattern.js:85
+msgid "Pattern saved"
+msgstr ""
+
+#: admin/classes/uip-ui-builder.php:1443
+msgid "Columns fetched"
+msgstr ""
+
+#: admin/classes/uip-ui-pages.php:340
+msgid "Unable to find page template"
+msgstr ""
+
+#: admin/classes/uip-ui-pages.php:398
+msgid "Unable to process page template"
+msgstr ""
+
+#: admin/classes/uip-utilities.php:852
+#: assets/js/uip/blocks/dynamic/loader.js:645
+#: assets/js/uip/blocks/dynamic/loader.js:825
+#: assets/js/uip/blocks/dynamic/loader.js:929
+#: assets/js/uip/blocks/dynamic/search.js:23
+#: assets/js/uip/blocks/elements/todo-list.js:24
+#: assets/js/uip/uibuilder/uip-template-list.js:89
+msgid "All"
+msgstr ""
+
+#: admin/classes/uip-utilities.php:858
+msgid "Read"
+msgstr ""
+
+#: admin/classes/uip-utilities.php:870
+msgid "Publish"
+msgstr ""
+
+#: admin/classes/uip-utilities.php:876
+msgid "Create"
+msgstr ""
+
+#: admin/classes/uip-utilities.php:894
+msgid "Manage"
+msgstr ""
+
+#: admin/classes/uip-utilities.php:900
+#: assets/js/uip/uibuilder/uip-block-actions.js:35
+#: assets/js/uip/uibuilder/uip-builder-global-export.js:26
+#: assets/js/uip/uibuilder/uip-builder-site-sync.js:29
+msgid "Export"
+msgstr ""
+
+#: admin/classes/uip-utilities.php:906
+#: assets/js/uip/uibuilder/uip-block-actions.js:39
+#: assets/js/uip/uibuilder/uip-builder-patterns-list.js:63
+msgid "Import"
+msgstr ""
+
+#: admin/classes/uip-utilities.php:912
+#: assets/js/uip/options/uip-color-picker.js:19
+#: assets/js/uip/options/uip-margin.js:16
+#: assets/js/uip/options/uip-padding.js:16
+#: assets/js/uip/options/uip-spacing.js:30
+#: assets/js/uip/options/uip-spacing.js:68
+#: assets/js/uip/options/uip-styles.js:94
+#: assets/js/uip/options/uip-text-format.js:116
+#: assets/js/uip/options/uip-text-format.js:255
+msgid "Custom"
+msgstr ""
+
+#: assets/js/uip/blocks/analytics/loader.js:9
+msgid "GA charts"
+msgstr ""
+
+#: assets/js/uip/blocks/analytics/loader.js:11
+msgid "Outputs your choice of charts and options on what data to display"
+msgstr ""
+
+#: assets/js/uip/blocks/analytics/loader.js:12
+#: assets/js/uip/blocks/analytics/loader.js:24
+#: assets/js/uip/blocks/analytics/loader.js:37
+#: assets/js/uip/blocks/analytics/loader.js:45
+msgid "Analytics"
+msgstr ""
+
+#: assets/js/uip/blocks/analytics/loader.js:21
+msgid "GA tables"
+msgstr ""
+
+#: assets/js/uip/blocks/analytics/loader.js:23
+msgid "Outputs your choice of tables and options on what data to display"
+msgstr ""
+
+#: assets/js/uip/blocks/analytics/loader.js:34
+msgid "GA realtime"
+msgstr ""
+
+#: assets/js/uip/blocks/analytics/loader.js:36
+msgid "Displays live visitor data about your site"
+msgstr ""
+
+#: assets/js/uip/blocks/analytics/loader.js:42
+msgid "GA map"
+msgstr ""
+
+#: assets/js/uip/blocks/analytics/loader.js:44
+msgid "Outputs your visitor data to a interactive map"
+msgstr ""
+
+#: assets/js/uip/blocks/block-settings-groups.js:8
+#: assets/js/uip/blocks/elements/loader.js:14
+#: assets/js/uip/blocks/elements/loader.js:94
+#: assets/js/uip/blocks/elements/loader.js:158
+#: assets/js/uip/blocks/elements/loader.js:198
+#: assets/js/uip/blocks/elements/loader.js:238
+#: assets/js/uip/blocks/elements/loader.js:309
+#: assets/js/uip/blocks/elements/loader.js:349
+#: assets/js/uip/blocks/elements/loader.js:417
+#: assets/js/uip/blocks/elements/loader.js:494
+#: assets/js/uip/blocks/elements/loader.js:584
+#: assets/js/uip/blocks/elements/loader.js:637
+#: assets/js/uip/blocks/elements/loader.js:713
+#: assets/js/uip/blocks/elements/loader.js:787
+#: assets/js/uip/blocks/elements/loader.js:795
+#: assets/js/uip/blocks/elements/loader.js:803
+msgid "Elements"
+msgstr ""
+
+#: assets/js/uip/blocks/block-settings-groups.js:12
+#: assets/js/uip/blocks/layout/loader.js:13
+#: assets/js/uip/blocks/layout/loader.js:51
+#: assets/js/uip/blocks/layout/loader.js:159
+#: assets/js/uip/blocks/layout/loader.js:210
+#: assets/js/uip/blocks/layout/loader.js:334 assets/js/uip/classes/uip.js:2539
+#: assets/js/uip/uibuilder/uip-builder-patterns-list.js:52
+#: assets/js/uip/uibuilder/uip-save-pattern.js:33
+#: assets/js/uip/uibuilder/uip-template-library.js:46
+msgid "Layout"
+msgstr ""
+
+#: assets/js/uip/blocks/block-settings-groups.js:16
+#: assets/js/uip/blocks/dynamic/loader.js:13
+#: assets/js/uip/blocks/dynamic/loader.js:36
+#: assets/js/uip/blocks/dynamic/loader.js:227
+#: assets/js/uip/blocks/dynamic/loader.js:247
+#: assets/js/uip/blocks/dynamic/loader.js:514
+#: assets/js/uip/blocks/dynamic/loader.js:599
+#: assets/js/uip/blocks/dynamic/loader.js:801
+#: assets/js/uip/blocks/dynamic/loader.js:907
+#: assets/js/uip/blocks/dynamic/loader.js:1036
+#: assets/js/uip/blocks/dynamic/loader.js:1224
+#: assets/js/uip/blocks/dynamic/loader.js:1281
+#: assets/js/uip/blocks/dynamic/loader.js:1335
+#: assets/js/uip/blocks/dynamic/loader.js:1438
+#: assets/js/uip/blocks/dynamic/loader.js:1474
+#: assets/js/uip/blocks/dynamic/loader.js:1608
+#: assets/js/uip/blocks/dynamic/loader.js:1617
+#: assets/js/uip/blocks/dynamic/loader.js:1625
+#: assets/js/uip/blocks/dynamic/loader.js:1633
+#: assets/js/uip/blocks/dynamic/loader.js:1641
+#: assets/js/uip/blocks/dynamic/loader.js:1649
+#: assets/js/uip/blocks/elements/loader.js:778
+#: assets/js/uip/options/settings-loader.js:724
+#: assets/js/uip/options/uip-image-select.js:30
+#: assets/js/uip/options/uip-inline-image-select.js:38
+#: assets/js/uip/options/uip-link-select.js:48
+#: assets/js/uip/options/uip-link-select.js:93
+msgid "Dynamic"
+msgstr ""
+
+#: assets/js/uip/blocks/block-settings-groups.js:20
+#: assets/js/uip/blocks/inputs/loader.js:10
+#: assets/js/uip/blocks/inputs/loader.js:13
+#: assets/js/uip/blocks/inputs/loader.js:108
+#: assets/js/uip/blocks/inputs/loader.js:238
+#: assets/js/uip/blocks/inputs/loader.js:337
+#: assets/js/uip/blocks/inputs/loader.js:430
+#: assets/js/uip/blocks/inputs/loader.js:438
+#: assets/js/uip/blocks/inputs/loader.js:446
+#: assets/js/uip/blocks/inputs/loader.js:454
+#: assets/js/uip/blocks/inputs/loader.js:462
+msgid "Form"
+msgstr ""
+
+#: assets/js/uip/blocks/block-settings-groups.js:24
+msgid "Visitor Analytics"
+msgstr ""
+
+#: assets/js/uip/blocks/block-settings-groups.js:28
+msgid "Store Analytics"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/admin-menu-new.js:15
+#: assets/js/uip/blocks/dynamic/admin-menu-new.js:248
+#: assets/js/uip/blocks/dynamic/admin-menu-new.js:307
+#: assets/js/uip/blocks/dynamic/admin-menu.js:15
+#: assets/js/uip/blocks/dynamic/admin-menu.js:129
+#: assets/js/uip/blocks/dynamic/admin-menu.js:188
+msgid "Home"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/admin-menu-new.js:20
+#: assets/js/uip/blocks/dynamic/admin-menu.js:18
+msgid "Main menu"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/admin-menu-new.js:21
+#: assets/js/uip/blocks/dynamic/admin-menu.js:19
+msgid "Collapse menu"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/admin-menu-new.js:22
+msgid "Search menu"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/ai-chat.js:15
+msgid "Send a message..."
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/ai-chat.js:16
+msgid "Please add an openAI api key to use this block"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/breadcrumbs.js:13
+#: assets/js/uip/options/uip-link-select.js:38
+msgid "Admin"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:10
+#: assets/js/uip/blocks/dynamic/loader.js:224
+msgid "Admin menu"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:12
+#: assets/js/uip/blocks/dynamic/loader.js:226
+msgid "Outputs the admin menu"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:22
+#: assets/js/uip/blocks/dynamic/loader.js:236
+#: assets/js/uip/blocks/dynamic/loader.js:523
+#: assets/js/uip/blocks/dynamic/loader.js:608
+#: assets/js/uip/blocks/dynamic/loader.js:810
+#: assets/js/uip/blocks/dynamic/loader.js:916
+#: assets/js/uip/blocks/dynamic/loader.js:1045
+#: assets/js/uip/blocks/dynamic/loader.js:1233
+#: assets/js/uip/blocks/dynamic/loader.js:1290
+#: assets/js/uip/blocks/dynamic/loader.js:1344
+#: assets/js/uip/blocks/dynamic/loader.js:1447
+#: assets/js/uip/blocks/dynamic/loader.js:1483
+#: assets/js/uip/blocks/elements/loader.js:23
+#: assets/js/uip/blocks/elements/loader.js:103
+#: assets/js/uip/blocks/elements/loader.js:167
+#: assets/js/uip/blocks/elements/loader.js:207
+#: assets/js/uip/blocks/elements/loader.js:248
+#: assets/js/uip/blocks/elements/loader.js:318
+#: assets/js/uip/blocks/elements/loader.js:358
+#: assets/js/uip/blocks/elements/loader.js:427
+#: assets/js/uip/blocks/elements/loader.js:593
+#: assets/js/uip/blocks/elements/loader.js:646
+#: assets/js/uip/blocks/elements/loader.js:722
+#: assets/js/uip/blocks/inputs/loader.js:23
+#: assets/js/uip/blocks/inputs/loader.js:117
+#: assets/js/uip/blocks/inputs/loader.js:247
+#: assets/js/uip/blocks/inputs/loader.js:346
+#: assets/js/uip/blocks/layout/loader.js:23
+#: assets/js/uip/blocks/layout/loader.js:61
+#: assets/js/uip/blocks/layout/loader.js:169
+#: assets/js/uip/blocks/layout/loader.js:220
+#: assets/js/uip/uibuilder/uip-block-settings.js:44
+msgid "Block options"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:34
+#: assets/js/uip/blocks/dynamic/loader.js:245
+#: assets/js/uip/options/settings-loader.js:716
+#: assets/js/uip/options/uip-position-designer.js:97
+msgid "Inline"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:35
+#: assets/js/uip/blocks/dynamic/loader.js:246
+#: assets/js/uip/options/settings-loader.js:720
+msgid "Hover"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:39
+#: assets/js/uip/blocks/dynamic/loader.js:250
+#: assets/js/uip/blocks/dynamic/loader.js:1361
+msgid "Behaviour"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:44
+#: assets/js/uip/options/uip-flex-layout.js:36
+msgid "Direction"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:49
+#: assets/js/uip/options/settings-loader.js:415
+#: assets/js/uip/options/uip-flex-layout.js:68
+msgid "Vertical"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:53
+#: assets/js/uip/options/settings-loader.js:420
+#: assets/js/uip/options/uip-flex-layout.js:63
+msgid "Horizontal"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:61
+msgid "Menu editor"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:62
+#: assets/js/uip/blocks/dynamic/loader.js:319
+msgid "Collapse option"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:67
+#: assets/js/uip/uibuilder/uip-builder-site-sync.js:36
+msgid "Auto update"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:68
+msgid ""
+"Auto update will automatically update the menu when new plugins are or menu "
+"items are added."
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:74
+#: assets/js/uip/blocks/dynamic/loader.js:327
+msgid "Auto load"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:75
+#: assets/js/uip/blocks/dynamic/loader.js:329
+msgid ""
+"Auto load will load top level menu items whe you click on them. If disabled "
+"clicking top level items will simply open the items submenu."
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:80
+#: assets/js/uip/blocks/dynamic/loader.js:187
+#: assets/js/uip/blocks/dynamic/loader.js:332
+#: assets/js/uip/blocks/dynamic/loader.js:462
+msgid "Icons"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:82
+#: assets/js/uip/blocks/dynamic/loader.js:334
+msgid "Submenu Icon"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:89
+#: assets/js/uip/blocks/dynamic/loader.js:350
+#: assets/js/uip/blocks/dynamic/loader.js:539
+#: assets/js/uip/blocks/dynamic/loader.js:678
+#: assets/js/uip/blocks/dynamic/loader.js:840
+#: assets/js/uip/blocks/dynamic/loader.js:945
+#: assets/js/uip/blocks/dynamic/loader.js:1124
+#: assets/js/uip/blocks/dynamic/loader.js:1241
+#: assets/js/uip/blocks/dynamic/loader.js:1312
+#: assets/js/uip/blocks/dynamic/loader.js:1401
+#: assets/js/uip/blocks/dynamic/loader.js:1455
+#: assets/js/uip/blocks/dynamic/loader.js:1540
+#: assets/js/uip/blocks/elements/loader.js:63
+#: assets/js/uip/blocks/elements/loader.js:126
+#: assets/js/uip/blocks/elements/loader.js:175
+#: assets/js/uip/blocks/elements/loader.js:215
+#: assets/js/uip/blocks/elements/loader.js:268
+#: assets/js/uip/blocks/elements/loader.js:326
+#: assets/js/uip/blocks/elements/loader.js:366
+#: assets/js/uip/blocks/elements/loader.js:435
+#: assets/js/uip/blocks/elements/loader.js:503
+#: assets/js/uip/blocks/elements/loader.js:604
+#: assets/js/uip/blocks/elements/loader.js:671
+#: assets/js/uip/blocks/elements/loader.js:741
+#: assets/js/uip/blocks/inputs/loader.js:67
+#: assets/js/uip/blocks/inputs/loader.js:198
+#: assets/js/uip/blocks/inputs/loader.js:296
+#: assets/js/uip/blocks/inputs/loader.js:394
+#: assets/js/uip/blocks/layout/loader.js:118
+#: assets/js/uip/blocks/layout/loader.js:259 assets/js/uip/classes/uip.js:2565
+#: assets/js/uip/options/settings-loader.js:97
+#: assets/js/uip/options/uip-border-designer.js:39
+#: assets/js/uip/options/uip-outline-designer.js:31
+#: assets/js/uip/uibuilder/uip-block-actions.js:24
+#: assets/js/uip/uibuilder/uip-block-settings.js:150
+msgid "Style"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:97
+#: assets/js/uip/blocks/dynamic/loader.js:371
+msgid "Menu headers"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:106
+msgid "Menu headers hover"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:115
+msgid "Menu headers active"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:123
+#: assets/js/uip/blocks/dynamic/loader.js:392
+msgid "Menu sepators"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:132
+#: assets/js/uip/blocks/dynamic/loader.js:401
+#: assets/js/uip/blocks/dynamic/loader.js:1170
+msgid "Submenu"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:141
+#: assets/js/uip/blocks/dynamic/loader.js:434
+msgid "Header submenu icon"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:150
+#: assets/js/uip/blocks/dynamic/loader.js:443
+msgid "Sub menu header"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:160
+#: assets/js/uip/blocks/dynamic/loader.js:453
+msgid "Sub menu items"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:169
+msgid "Sub menu items hover"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:178
+msgid "Sub menu items active"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:197
+#: assets/js/uip/blocks/dynamic/loader.js:472
+msgid "Notifications"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:206
+#: assets/js/uip/blocks/dynamic/loader.js:481
+msgid "Menu collapse"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:216
+#: assets/js/uip/blocks/dynamic/loader.js:499
+#: assets/js/uip/blocks/dynamic/loader.js:584
+#: assets/js/uip/blocks/dynamic/loader.js:787
+#: assets/js/uip/blocks/dynamic/loader.js:893
+#: assets/js/uip/blocks/dynamic/loader.js:1021
+#: assets/js/uip/blocks/dynamic/loader.js:1209
+#: assets/js/uip/blocks/dynamic/loader.js:1266
+#: assets/js/uip/blocks/dynamic/loader.js:1320
+#: assets/js/uip/blocks/dynamic/loader.js:1427
+#: assets/js/uip/blocks/dynamic/loader.js:1463
+#: assets/js/uip/blocks/dynamic/loader.js:1596
+#: assets/js/uip/blocks/elements/loader.js:79
+#: assets/js/uip/blocks/elements/loader.js:143
+#: assets/js/uip/blocks/elements/loader.js:183
+#: assets/js/uip/blocks/elements/loader.js:223
+#: assets/js/uip/blocks/elements/loader.js:294
+#: assets/js/uip/blocks/elements/loader.js:334
+#: assets/js/uip/blocks/elements/loader.js:402
+#: assets/js/uip/blocks/elements/loader.js:479
+#: assets/js/uip/blocks/elements/loader.js:569
+#: assets/js/uip/blocks/elements/loader.js:622
+#: assets/js/uip/blocks/elements/loader.js:698
+#: assets/js/uip/blocks/elements/loader.js:767
+#: assets/js/uip/blocks/inputs/loader.js:93
+#: assets/js/uip/blocks/inputs/loader.js:224
+#: assets/js/uip/blocks/inputs/loader.js:322
+#: assets/js/uip/blocks/inputs/loader.js:420
+#: assets/js/uip/blocks/layout/loader.js:37
+#: assets/js/uip/blocks/layout/loader.js:144
+#: assets/js/uip/blocks/layout/loader.js:195
+#: assets/js/uip/blocks/layout/loader.js:323
+#: assets/js/uip/uibuilder/global-settings-groups.js:8
+#: assets/js/uip/uibuilder/template-settings-groups.js:8
+#: assets/js/uip/uibuilder/uip-block-actions.js:31
+#: assets/js/uip/uibuilder/uip-block-settings.js:156
+#: assets/js/uip/uibuilder/uip-builder-settings.js:38
+msgid "Advanced"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:259
+#: assets/js/uip/blocks/dynamic/loader.js:1057
+#: assets/js/uip/blocks/dynamic/loader.js:1091
+#: assets/js/uip/blocks/layout/loader.js:85
+#: assets/js/uip/options/uip-background-position.js:50
+#: assets/js/uip/options/uip-border-designer.js:36
+#: assets/js/uip/options/uip-outline-designer.js:28
+#: assets/js/uip/options/uip-styles.js:38
+msgid "Bottom left"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:263
+#: assets/js/uip/blocks/dynamic/loader.js:1061
+#: assets/js/uip/blocks/dynamic/loader.js:1095
+#: assets/js/uip/blocks/layout/loader.js:89
+#: assets/js/uip/options/uip-background-position.js:58
+#: assets/js/uip/options/uip-border-designer.js:37
+#: assets/js/uip/options/uip-outline-designer.js:29
+#: assets/js/uip/options/uip-styles.js:39
+msgid "Bottom right"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:267
+#: assets/js/uip/blocks/dynamic/loader.js:1065
+#: assets/js/uip/blocks/dynamic/loader.js:1099
+#: assets/js/uip/blocks/layout/loader.js:93
+#: assets/js/uip/options/uip-background-position.js:24
+#: assets/js/uip/options/uip-border-designer.js:34
+#: assets/js/uip/options/uip-outline-designer.js:26
+#: assets/js/uip/options/uip-styles.js:36
+msgid "Top left"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:271
+#: assets/js/uip/blocks/dynamic/loader.js:1069
+#: assets/js/uip/blocks/dynamic/loader.js:1103
+#: assets/js/uip/blocks/layout/loader.js:97
+#: assets/js/uip/options/uip-background-position.js:32
+#: assets/js/uip/options/uip-border-designer.js:35
+#: assets/js/uip/options/uip-outline-designer.js:27
+#: assets/js/uip/options/uip-styles.js:37
+msgid "Top right"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:275
+#: assets/js/uip/blocks/dynamic/loader.js:1073
+#: assets/js/uip/blocks/dynamic/loader.js:1107
+#: assets/js/uip/blocks/elements/loader.js:46
+#: assets/js/uip/blocks/layout/loader.js:101
+#: assets/js/uip/blocks/layout/loader.js:244
+#: assets/js/uip/options/settings-loader.js:790
+#: assets/js/uip/options/settings-loader.js:1403
+#: assets/js/uip/options/uip-dynamic-input.js:24
+#: assets/js/uip/options/uip-margin.js:13
+#: assets/js/uip/options/uip-padding.js:13
+#: assets/js/uip/options/uip-position-designer.js:56
+#: assets/js/uip/options/uip-position-designer.js:119
+#: assets/js/uip/options/uip-spacing.js:27
+#: assets/js/uip/options/uip-text-format.js:47
+#: assets/js/uip/uibuilder/global-settings-groups.js:143
+#: assets/js/uip/uibuilder/global-settings-groups.js:190
+msgid "Left"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:279
+#: assets/js/uip/blocks/dynamic/loader.js:1077
+#: assets/js/uip/blocks/dynamic/loader.js:1111
+#: assets/js/uip/blocks/elements/loader.js:50
+#: assets/js/uip/blocks/layout/loader.js:105
+#: assets/js/uip/blocks/layout/loader.js:248
+#: assets/js/uip/options/settings-loader.js:800
+#: assets/js/uip/options/settings-loader.js:1407
+#: assets/js/uip/options/uip-dynamic-input.js:29
+#: assets/js/uip/options/uip-margin.js:12
+#: assets/js/uip/options/uip-padding.js:12
+#: assets/js/uip/options/uip-position-designer.js:66
+#: assets/js/uip/options/uip-position-designer.js:121
+#: assets/js/uip/options/uip-spacing.js:26
+#: assets/js/uip/options/uip-text-format.js:57
+#: assets/js/uip/uibuilder/global-settings-groups.js:151
+#: assets/js/uip/uibuilder/global-settings-groups.js:198
+msgid "Right"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:284
+msgid "Drop posisition"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:293
+#: assets/js/uip/blocks/dynamic/loader.js:311
+#: assets/js/uip/blocks/dynamic/loader.js:663
+#: assets/js/uip/options/uip-choice-select.js:58
+#: assets/js/uip/options/uip-query-builder.js:191
+#: assets/js/uip/options/uip-responsive.js:24
+#: assets/js/uip/uibuilder/global-settings-groups.js:305
+msgid "Show"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:297
+#: assets/js/uip/blocks/dynamic/loader.js:315
+#: assets/js/uip/blocks/dynamic/loader.js:667
+#: assets/js/uip/options/uip-choice-select.js:62
+#: assets/js/uip/options/uip-query-builder.js:187
+#: assets/js/uip/options/uip-responsive.js:28
+#: assets/js/uip/uibuilder/global-settings-groups.js:309
+msgid "Hide"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:301
+#: assets/js/uip/blocks/dynamic/loader.js:489
+msgid "Menu search"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:511
+msgid "Page content"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:513
+msgid "Outputs the page content block"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:526
+msgid "Screen options"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:527
+msgid "Help tab"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:529
+#: assets/js/uip/blocks/dynamic/loader.js:1298
+#: assets/js/uip/options/uip-code-editor.js:18
+msgid "Fullscreen"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:530
+msgid "Plugin notices"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:531
+#: assets/js/uip/blocks/dynamic/loader.js:575
+msgid "Loading bar"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:532
+msgid "Login redirect"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:547
+msgid "Content frame"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:557
+msgid "Frame toolbar"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:566
+msgid "Loading bar track"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:596
+msgid "Posts table"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:598
+#: assets/js/uip/blocks/dynamic/loader.js:800
+msgid "Create a list of recent posts"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:611
+#: assets/js/uip/blocks/dynamic/loader.js:813
+#: assets/js/uip/options/uip-query-builder.js:38
+msgid "Post types"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:612
+#: assets/js/uip/blocks/layout/loader.js:172
+#: assets/js/uip/options/uip-flex-layout.js:42
+msgid "Columns"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:616
+msgid "Actions enabled"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:634
+#: assets/js/uip/blocks/dynamic/loader.js:814
+msgid "Posts per page"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:638
+#: assets/js/uip/blocks/dynamic/loader.js:818
+#: assets/js/uip/blocks/dynamic/loader.js:922
+#: assets/js/uip/blocks/elements/loader.js:169
+#: assets/js/uip/options/uip-link-select.js:42
+#: assets/js/uip/uibuilder/uip-block-actions.js:40
+msgid "Content"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:639
+#: assets/js/uip/blocks/dynamic/loader.js:819
+#: assets/js/uip/blocks/dynamic/loader.js:923
+msgid "If enabled, only the users own content will show"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:657
+#: assets/js/uip/blocks/dynamic/loader.js:686
+#: assets/js/uip/blocks/dynamic/loader.js:904
+#: assets/js/uip/modules/uip-content-area.js:25
+#: assets/js/uip/options/uip-query-builder.js:53
+#: assets/js/uip/uibuilder/uip-builder-drop-area.js:25
+#: assets/js/uip/uibuilder/uip-builder-framework.js:59
+#: assets/js/uip/uibuilder/uip-dynamic-data-watcher.js:21
+msgid "Search"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:695
+msgid "Table styles"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:704
+msgid "Table head"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:713
+msgid "Table head cell"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:722
+msgid "Table row"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:731
+msgid "Table cell"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:740
+msgid "Grid item"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:750
+msgid "Grid item title"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:760
+#: assets/js/uip/blocks/dynamic/loader.js:875
+#: assets/js/uip/blocks/dynamic/loader.js:1012
+msgid "Pagination buttons"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:769
+#: assets/js/uip/blocks/dynamic/loader.js:884
+msgid "Post type label"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:778
+msgid "Table post count"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:798
+msgid "Recent posts"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:848
+msgid "Posts list"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:857
+#: assets/js/uip/blocks/elements/loader.js:551
+msgid "Item title"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:866
+msgid "Item meta"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:906
+msgid "Outputs a search block that queries your sites content"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:938
+#: assets/js/uip/options/uip-query-builder.js:39
+#: assets/js/uip/options/uip-select-post-types.js:12
+msgid "Search post types"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:954
+msgid "Search style"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:963
+msgid "Search results area"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:971
+msgid "Found items list"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:994
+msgid "Search item title"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:1003
+msgid "Search item meta"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:1033
+msgid "Toolbar"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:1035
+msgid "Outputs default toolbar items"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:1048
+#: assets/js/uip/options/uip-hidden-toolbar-items-select.js:13
+msgid "Hidden toolbar items"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:1049
+#: assets/js/uip/blocks/dynamic/loader.js:1162
+msgid "Toolbar icons"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:1082
+msgid "Submenu pos"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:1116
+msgid "Sub submenu pos"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:1131
+msgid "Admin bar"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:1153
+msgid "Toolbar item"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:1198
+msgid "Submenu items"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:1221
+msgid "Bread crumbs"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:1223
+msgid "Shows the current page path (breadcrumbs)"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:1235
+#: assets/js/uip/blocks/dynamic/loader.js:1257
+msgid "Icon separator"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:1249
+msgid "Breadcrumb item"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:1278
+msgid "Fullscreen toggle"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:1280
+msgid ""
+"A customisable button that can toggle the fullscreen mode of the content "
+"frame"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:1296
+#: assets/js/uip/blocks/dynamic/loader.js:1350
+#: assets/js/uip/blocks/elements/loader.js:29
+#: assets/js/uip/blocks/elements/loader.js:728
+msgid "Button text"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:1304
+#: assets/js/uip/blocks/dynamic/loader.js:1393
+#: assets/js/uip/blocks/elements/loader.js:38
+#: assets/js/uip/blocks/elements/loader.js:70
+#: assets/js/uip/blocks/elements/loader.js:118
+#: assets/js/uip/blocks/elements/loader.js:134
+#: assets/js/uip/blocks/elements/loader.js:251
+#: assets/js/uip/blocks/elements/loader.js:306
+#: assets/js/uip/blocks/elements/loader.js:320
+#: assets/js/uip/blocks/elements/loader.js:733
+#: assets/js/uip/blocks/layout/loader.js:75
+#: assets/js/uip/blocks/layout/loader.js:234
+#: assets/js/uip/uibuilder/uip-template-library.js:43
+msgid "Icon"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:1305
+#: assets/js/uip/blocks/dynamic/loader.js:1394
+#: assets/js/uip/blocks/elements/loader.js:54
+#: assets/js/uip/blocks/elements/loader.js:119
+#: assets/js/uip/blocks/elements/loader.js:734
+#: assets/js/uip/blocks/layout/loader.js:76
+#: assets/js/uip/blocks/layout/loader.js:235
+msgid "Icon position"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:1332
+msgid "Open without frame"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:1334
+msgid ""
+"This will open the current page outside the current frame and optionally "
+"without UiPress all together"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:1352
+msgid "Open outside frame"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:1366
+#: assets/js/uip/options/uip-link-select.js:53
+msgid "Default"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:1370
+#: assets/js/uip/options/uip-link-select.js:58
+#: assets/js/uip/options/uip-tab-builder.js:13
+msgid "New tab"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:1378
+msgid "Load without uiPress"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:1383
+#: assets/js/uip/blocks/inputs/loader.js:44
+#: assets/js/uip/blocks/inputs/loader.js:181
+#: assets/js/uip/blocks/inputs/loader.js:279
+#: assets/js/uip/blocks/inputs/loader.js:377
+#: assets/js/uip/options/uip-dimensions.js:53
+#: assets/js/uip/options/uip-dimensions.js:59
+#: assets/js/uip/options/uip-flex-layout.js:148
+#: assets/js/uip/options/uip-flex-layout.js:184
+#: assets/js/uip/options/uip-switch-select.js:15
+msgid "No"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:1387
+#: assets/js/uip/blocks/inputs/loader.js:48
+#: assets/js/uip/blocks/inputs/loader.js:185
+#: assets/js/uip/blocks/inputs/loader.js:283
+#: assets/js/uip/blocks/inputs/loader.js:381 assets/js/uip/classes/uip.js:1580
+#: assets/js/uip/options/uip-dimensions.js:49
+#: assets/js/uip/options/uip-dimensions.js:63
+#: assets/js/uip/options/uip-flex-layout.js:144
+#: assets/js/uip/options/uip-flex-layout.js:188
+#: assets/js/uip/options/uip-switch-select.js:19
+msgid "Yes"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:1409
+#: assets/js/uip/blocks/elements/loader.js:749
+msgid "Hover styles"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:1418
+#: assets/js/uip/blocks/elements/loader.js:758
+msgid "Active styles"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:1435
+msgid "Page loader"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:1437
+msgid ""
+"This block allows you to place a loading bar wherever you choose and has the "
+"option to replace the bar with a custom image."
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:1449
+#: assets/js/uip/blocks/elements/loader.js:195
+#: assets/js/uip/blocks/elements/loader.js:209
+#: assets/js/uip/options/uip-inline-image-select.js:40
+#: assets/js/uip/uibuilder/uip-dynamic-data-watcher.js:37
+msgid "Image"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:1471
+msgid "Ai chat"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:1473
+msgid ""
+"This block allows you to add an ai chat to your templates. OpenAi (chatGPT) "
+"API key is required."
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:1489
+msgid "openAI API key"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:1495
+msgid "Welcome message"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:1501
+msgid "System message"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:1504
+msgid ""
+"The system message helps set the behavior of the assistant. For example, you "
+"can modify the personality of the assistant or provide specific instructions "
+"about how it should behave throughout the conversation."
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:1532
+msgid "Chat model"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:1548
+msgid "Messages area"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:1570
+msgid "Bot message"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:1578
+msgid "User message"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:1587
+msgid "Chat input"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:1605
+msgid "Media library"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:1607
+msgid "Outputs a media library, with upload, delete and folder features"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:1614
+msgid "Plugin updates"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:1616
+msgid "Outputs a list of available plugin and allows you update from the block"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:1622
+msgid "Plugin search"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:1624
+msgid ""
+"Search the plugin directory with quick filters, discover new plugins and "
+"install all from one block"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:1630
+msgid "Grouped Date range"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:1632
+msgid ""
+"Outputs a grouped date picker. This date picker is used for controlling it's "
+"siblings range such as analytic blocks."
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:1638
+#: assets/js/uip/uibuilder/uip-dynamic-data-watcher.js:171
+msgid "User meta"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:1640
+msgid "Outputs selected user meta, either as a string or an list of values"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:1646
+msgid "Content navigator"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:1648
+msgid ""
+"Creates a navigatable file tree of all your site content like posts, pages "
+"and media. Allows for creation of new folders and organisation of content"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:1655
+msgid "Orders kanban"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:1657
+msgid ""
+"Creates a kanban view of recent woocommerce orders and allows for drag and "
+"drop management"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:1662
+msgid "Site notifications"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/loader.js:1664
+msgid "Collects all site notifications and displays theme inside thise block"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/posts-table.js:24
+#: assets/js/uip/blocks/dynamic/recent-posts.js:17
+msgid "Nothing posts found"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/posts-table.js:25
+#: assets/js/uip/blocks/dynamic/recent-posts.js:18
+msgid "By"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/posts-table.js:26
+msgid "items"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/posts-table.js:27
+#: assets/js/uip/options/uip-multi-select.js:15
+msgid "Search items"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/posts-table.js:28
+#: assets/js/uip/classes/uip-media-browser.js:38
+msgid "Grid view"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/posts-table.js:29
+#: assets/js/uip/classes/uip-media-browser.js:39
+#: assets/js/uip/classes/uip-media-browser.js:40
+msgid "List view"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/search.js:19
+msgid "Search content"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/search.js:20
+msgid "Nothing found for query"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/search.js:21
+msgid "by"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/search.js:22
+msgid "found"
+msgstr ""
+
+#: assets/js/uip/blocks/dynamic/search.js:26
+msgid "Copy url"
+msgstr ""
+
+#: assets/js/uip/blocks/elements/exit-to-dashboard.js:61
+#: assets/js/uip/classes/uip-media-browser.js:413
+#: assets/js/uip/classes/uip.js:335
+#: assets/js/uip/uibuilder/uip-builder-framework.js:536
+msgid "Are you sure?"
+msgstr ""
+
+#: assets/js/uip/blocks/elements/exit-to-dashboard.js:61
+msgid "This will remove the current UI and revert to the default admin page"
+msgstr ""
+
+#: assets/js/uip/blocks/elements/loader.js:11
+msgid "Button"
+msgstr ""
+
+#: assets/js/uip/blocks/elements/loader.js:13
+msgid "Creates a button link"
+msgstr ""
+
+#: assets/js/uip/blocks/elements/loader.js:31
+#: assets/js/uip/blocks/layout/loader.js:69
+#: assets/js/uip/blocks/layout/loader.js:228
+#: assets/js/uip/options/settings-loader.js:22
+msgid "Press me"
+msgstr ""
+
+#: assets/js/uip/blocks/elements/loader.js:37
+#: assets/js/uip/uibuilder/uip-block-settings.js:64
+#: assets/js/uip/uibuilder/uip-dynamic-data-watcher.js:42
+msgid "Link"
+msgstr ""
+
+#: assets/js/uip/blocks/elements/loader.js:57
+msgid "JS on click"
+msgstr ""
+
+#: assets/js/uip/blocks/elements/loader.js:91
+msgid "Heading"
+msgstr ""
+
+#: assets/js/uip/blocks/elements/loader.js:93
+msgid "Creates a heading block"
+msgstr ""
+
+#: assets/js/uip/blocks/elements/loader.js:109
+#: assets/js/uip/blocks/elements/loader.js:111
+msgid "Heading text"
+msgstr ""
+
+#: assets/js/uip/blocks/elements/loader.js:117
+msgid "Heading type"
+msgstr ""
+
+#: assets/js/uip/blocks/elements/loader.js:155
+msgid "Paragraph"
+msgstr ""
+
+#: assets/js/uip/blocks/elements/loader.js:157
+msgid "Creates a paragraph block"
+msgstr ""
+
+#: assets/js/uip/blocks/elements/loader.js:197
+msgid "Creates a image block"
+msgstr ""
+
+#: assets/js/uip/blocks/elements/loader.js:235
+msgid "Accordion"
+msgstr ""
+
+#: assets/js/uip/blocks/elements/loader.js:237
+msgid "Creates a accordion block"
+msgstr ""
+
+#: assets/js/uip/blocks/elements/loader.js:255
+#: assets/js/uip/blocks/elements/loader.js:257
+msgid "Accordion title"
+msgstr ""
+
+#: assets/js/uip/blocks/elements/loader.js:276
+msgid "Content style"
+msgstr ""
+
+#: assets/js/uip/blocks/elements/loader.js:285
+msgid "Chevron style"
+msgstr ""
+
+#: assets/js/uip/blocks/elements/loader.js:308
+msgid "Creates a icon block"
+msgstr ""
+
+#: assets/js/uip/blocks/elements/loader.js:346
+#: assets/js/uip/uibuilder/global-settings-groups.js:220
+#: assets/js/uip/uibuilder/uip-block-settings.js:116
+#: assets/js/uip/uibuilder/uip-builder-setup-wizard.js:34
+#: assets/js/uip/uibuilder/uip-builder-toolbar.js:76
+#: assets/js/uip/uibuilder/uip-ui-preview.js:48
+msgid "Dark mode"
+msgstr ""
+
+#: assets/js/uip/blocks/elements/loader.js:348
+msgid "Outputs a toggle for switiching between light and dark modes"
+msgstr ""
+
+#: assets/js/uip/blocks/elements/loader.js:360
+msgid "Auto detect color theme?"
+msgstr ""
+
+#: assets/js/uip/blocks/elements/loader.js:375
+msgid "Inactive toggle"
+msgstr ""
+
+#: assets/js/uip/blocks/elements/loader.js:384
+msgid "Active toggle"
+msgstr ""
+
+#: assets/js/uip/blocks/elements/loader.js:393
+msgid "Track"
+msgstr ""
+
+#: assets/js/uip/blocks/elements/loader.js:414
+#: assets/js/uip/blocks/elements/loader.js:429
+#: assets/js/uip/blocks/elements/loader.js:519
+msgid "Tabs"
+msgstr ""
+
+#: assets/js/uip/blocks/elements/loader.js:416
+msgid "Create a tabbed navigation with different styles"
+msgstr ""
+
+#: assets/js/uip/blocks/elements/loader.js:443
+msgid "Tab item"
+msgstr ""
+
+#: assets/js/uip/blocks/elements/loader.js:452
+msgid "Tab item hover"
+msgstr ""
+
+#: assets/js/uip/blocks/elements/loader.js:461
+msgid "Tab item active"
+msgstr ""
+
+#: assets/js/uip/blocks/elements/loader.js:470
+msgid "Tab content"
+msgstr ""
+
+#: assets/js/uip/blocks/elements/loader.js:491
+msgid "To do list"
+msgstr ""
+
+#: assets/js/uip/blocks/elements/loader.js:493
+msgid "Outputs a customisable to do list"
+msgstr ""
+
+#: assets/js/uip/blocks/elements/loader.js:511
+msgid "Add todo button"
+msgstr ""
+
+#: assets/js/uip/blocks/elements/loader.js:527
+#: assets/js/uip/options/settings-loader.js:684
+#: assets/js/uip/options/uip-tab-builder.js:41
+msgid "Tab"
+msgstr ""
+
+#: assets/js/uip/blocks/elements/loader.js:535
+msgid "Active tab"
+msgstr ""
+
+#: assets/js/uip/blocks/elements/loader.js:543
+msgid "List area"
+msgstr ""
+
+#: assets/js/uip/blocks/elements/loader.js:559
+msgid "Item description"
+msgstr ""
+
+#: assets/js/uip/blocks/elements/loader.js:581
+#: assets/js/uip/blocks/elements/loader.js:612
+msgid "Video"
+msgstr ""
+
+#: assets/js/uip/blocks/elements/loader.js:583
+msgid "Outputs a video block. Can be a direct URL, media library link or embed"
+msgstr ""
+
+#: assets/js/uip/blocks/elements/loader.js:596
+msgid "Video URL"
+msgstr ""
+
+#: assets/js/uip/blocks/elements/loader.js:597
+msgid "Video embed"
+msgstr ""
+
+#: assets/js/uip/blocks/elements/loader.js:634
+#: assets/js/uip/blocks/elements/loader.js:652
+#: assets/js/uip/blocks/elements/loader.js:679
+msgid "Quote"
+msgstr ""
+
+#: assets/js/uip/blocks/elements/loader.js:636
+msgid "Displays a quote in a decorative way"
+msgstr ""
+
+#: assets/js/uip/blocks/elements/loader.js:654
+msgid ""
+"When the power of love overcomes the love of power, the world will know peace"
+msgstr ""
+
+#: assets/js/uip/blocks/elements/loader.js:660
+#: assets/js/uip/blocks/elements/loader.js:688
+msgid "Quote meta"
+msgstr ""
+
+#: assets/js/uip/blocks/elements/loader.js:662
+msgid "Jimi Hendrix"
+msgstr ""
+
+#: assets/js/uip/blocks/elements/loader.js:710
+msgid "Exit to dashboard"
+msgstr ""
+
+#: assets/js/uip/blocks/elements/loader.js:712
+msgid ""
+"This button is designed for admins with active ui templates. When clicked it "
+"will remove the current UI layer and display the default WordPress admin page"
+msgstr ""
+
+#: assets/js/uip/blocks/elements/loader.js:730
+msgid "Exit to admin"
+msgstr ""
+
+#: assets/js/uip/blocks/elements/loader.js:775
+msgid "iFrame"
+msgstr ""
+
+#: assets/js/uip/blocks/elements/loader.js:777
+msgid "Outputs a iframe block"
+msgstr ""
+
+#: assets/js/uip/blocks/elements/loader.js:784
+msgid "HTML"
+msgstr ""
+
+#: assets/js/uip/blocks/elements/loader.js:786
+msgid "This block allows you to output your own HTML into the template"
+msgstr ""
+
+#: assets/js/uip/blocks/elements/loader.js:792
+msgid "Icon list"
+msgstr ""
+
+#: assets/js/uip/blocks/elements/loader.js:794
+msgid "Creates a list with icons"
+msgstr ""
+
+#: assets/js/uip/blocks/elements/loader.js:800
+msgid "Shortcode"
+msgstr ""
+
+#: assets/js/uip/blocks/elements/loader.js:802
+msgid "This block allows you to output custom shortcodes into the template"
+msgstr ""
+
+#: assets/js/uip/blocks/elements/todo-list.js:15
+msgid "Add todo"
+msgstr ""
+
+#: assets/js/uip/blocks/elements/todo-list.js:16
+msgid "What would you like to do?"
+msgstr ""
+
+#: assets/js/uip/blocks/elements/todo-list.js:18
+msgid "Add a description..."
+msgstr ""
+
+#: assets/js/uip/blocks/elements/todo-list.js:28
+msgid "Todo"
+msgstr ""
+
+#: assets/js/uip/blocks/elements/todo-list.js:32
+msgid "Completed"
+msgstr ""
+
+#: assets/js/uip/blocks/inputs/form-block.js:18
+msgid "Submit"
+msgstr ""
+
+#: assets/js/uip/blocks/inputs/form-block.js:158
+#: assets/js/uip/blocks/inputs/form-block.js:167
+#: assets/js/uip/blocks/inputs/form-block.js:176
+#: assets/js/uip/blocks/inputs/form-block.js:185
+#: assets/js/uip/blocks/inputs/form-block.js:190
+msgid "Configuration error"
+msgstr ""
+
+#: assets/js/uip/blocks/inputs/form-block.js:158
+msgid "No php function supplied to send form data to"
+msgstr ""
+
+#: assets/js/uip/blocks/inputs/form-block.js:167
+msgid "No email supplied to send form data to"
+msgstr ""
+
+#: assets/js/uip/blocks/inputs/form-block.js:176
+msgid "No site option name supplied to save as"
+msgstr ""
+
+#: assets/js/uip/blocks/inputs/form-block.js:185
+msgid "You have not specified how to save the data to the user meta"
+msgstr ""
+
+#: assets/js/uip/blocks/inputs/form-block.js:190
+msgid "You need to specifiy a meta key to save the meta data to"
+msgstr ""
+
+#: assets/js/uip/blocks/inputs/loader.js:12
+msgid "Form elements can be dragged into this block to create custom forms"
+msgstr ""
+
+#: assets/js/uip/blocks/inputs/loader.js:29
+msgid "Submit text"
+msgstr ""
+
+#: assets/js/uip/blocks/inputs/loader.js:31
+msgid "Send"
+msgstr ""
+
+#: assets/js/uip/blocks/inputs/loader.js:52
+msgid "Prefill data"
+msgstr ""
+
+#: assets/js/uip/blocks/inputs/loader.js:60
+msgid "Success message"
+msgstr ""
+
+#: assets/js/uip/blocks/inputs/loader.js:60
+msgid "Form sent successfully!"
+msgstr ""
+
+#: assets/js/uip/blocks/inputs/loader.js:75
+msgid "Form area"
+msgstr ""
+
+#: assets/js/uip/blocks/inputs/loader.js:84
+msgid "Submit button"
+msgstr ""
+
+#: assets/js/uip/blocks/inputs/loader.js:105
+#: assets/js/uip/blocks/inputs/loader.js:125
+#: assets/js/uip/blocks/inputs/loader.js:255
+msgid "Text input"
+msgstr ""
+
+#: assets/js/uip/blocks/inputs/loader.js:107
+msgid "A simple text input for use with the form block"
+msgstr ""
+
+#: assets/js/uip/blocks/inputs/loader.js:123
+#: assets/js/uip/blocks/inputs/loader.js:215
+#: assets/js/uip/blocks/inputs/loader.js:253
+#: assets/js/uip/blocks/inputs/loader.js:313
+#: assets/js/uip/blocks/inputs/loader.js:352
+#: assets/js/uip/blocks/inputs/loader.js:411
+#: assets/js/uip/options/uip-select-option-builder.js:13
+msgid "Label"
+msgstr ""
+
+#: assets/js/uip/blocks/inputs/loader.js:131
+#: assets/js/uip/blocks/inputs/loader.js:261
+#: assets/js/uip/blocks/inputs/loader.js:360
+#: assets/js/uip/options/uip-query-builder.js:40
+#: assets/js/uip/options/uip-query-builder.js:45
+#: assets/js/uip/options/uip-submit-action.js:53
+#: assets/js/uip/uibuilder/uip-dynamic-data-watcher.js:109
+msgid "Meta key"
+msgstr ""
+
+#: assets/js/uip/blocks/inputs/loader.js:137
+#: assets/js/uip/blocks/inputs/loader.js:267
+msgid "Placeholder"
+msgstr ""
+
+#: assets/js/uip/blocks/inputs/loader.js:139
+#: assets/js/uip/blocks/inputs/loader.js:269
+msgid "Placeholder text..."
+msgstr ""
+
+#: assets/js/uip/blocks/inputs/loader.js:145
+msgid "Inut type"
+msgstr ""
+
+#: assets/js/uip/blocks/inputs/loader.js:151 assets/js/uip/classes/uip.js:2581
+#: assets/js/uip/uibuilder/uip-dynamic-data-watcher.js:47
+msgid "Text"
+msgstr ""
+
+#: assets/js/uip/blocks/inputs/loader.js:155
+msgid "Number"
+msgstr ""
+
+#: assets/js/uip/blocks/inputs/loader.js:159
+#: assets/js/uip/options/uip-query-builder.js:267
+#: assets/js/uip/options/uip-submit-action.js:13
+msgid "Email"
+msgstr ""
+
+#: assets/js/uip/blocks/inputs/loader.js:163
+msgid "Phone number"
+msgstr ""
+
+#: assets/js/uip/blocks/inputs/loader.js:167
+msgid "Password"
+msgstr ""
+
+#: assets/js/uip/blocks/inputs/loader.js:189
+#: assets/js/uip/blocks/inputs/loader.js:287
+#: assets/js/uip/blocks/inputs/loader.js:385
+msgid "Required field"
+msgstr ""
+
+#: assets/js/uip/blocks/inputs/loader.js:206
+msgid "Input style"
+msgstr ""
+
+#: assets/js/uip/blocks/inputs/loader.js:235
+msgid "Text area"
+msgstr ""
+
+#: assets/js/uip/blocks/inputs/loader.js:237
+#: assets/js/uip/blocks/inputs/loader.js:336
+msgid "A simple textarea input for use with the form block"
+msgstr ""
+
+#: assets/js/uip/blocks/inputs/loader.js:304
+msgid "Textarea style"
+msgstr ""
+
+#: assets/js/uip/blocks/inputs/loader.js:334
+#: assets/js/uip/blocks/inputs/loader.js:354
+msgid "Select"
+msgstr ""
+
+#: assets/js/uip/blocks/inputs/loader.js:367
+msgid "Select options"
+msgstr ""
+
+#: assets/js/uip/blocks/inputs/loader.js:402
+msgid "Select style"
+msgstr ""
+
+#: assets/js/uip/blocks/inputs/loader.js:427
+msgid "Radio"
+msgstr ""
+
+#: assets/js/uip/blocks/inputs/loader.js:429
+msgid "Outputs a radio type input"
+msgstr ""
+
+#: assets/js/uip/blocks/inputs/loader.js:435
+msgid "Checkbox"
+msgstr ""
+
+#: assets/js/uip/blocks/inputs/loader.js:437
+msgid "Outputs a checkbox type input"
+msgstr ""
+
+#: assets/js/uip/blocks/inputs/loader.js:443
+msgid "Image select"
+msgstr ""
+
+#: assets/js/uip/blocks/inputs/loader.js:445
+msgid "Outputs a image select input"
+msgstr ""
+
+#: assets/js/uip/blocks/inputs/loader.js:451
+msgid "Date range"
+msgstr ""
+
+#: assets/js/uip/blocks/inputs/loader.js:453
+msgid ""
+"Outputs a date range input. Can be a single date, date range, or a "
+"comparison date range"
+msgstr ""
+
+#: assets/js/uip/blocks/inputs/loader.js:459
+msgid "Colour select"
+msgstr ""
+
+#: assets/js/uip/blocks/inputs/loader.js:461
+msgid "Outputs a colour select input. For use with the form block"
+msgstr ""
+
+#: assets/js/uip/blocks/inputs/select-input.js:15
+#: assets/js/uip/blocks/inputs/text-area.js:14
+#: assets/js/uip/blocks/inputs/text-input.js:14
+msgid "Input placeholder..."
+msgstr ""
+
+#: assets/js/uip/blocks/layout/loader.js:10
+msgid "Container"
+msgstr ""
+
+#: assets/js/uip/blocks/layout/loader.js:12
+msgid "Creates a container block with options for aligning content"
+msgstr ""
+
+#: assets/js/uip/blocks/layout/loader.js:48
+msgid "Dropdown"
+msgstr ""
+
+#: assets/js/uip/blocks/layout/loader.js:50
+msgid "Creates a dropdown with a customisable trigger"
+msgstr ""
+
+#: assets/js/uip/blocks/layout/loader.js:67
+#: assets/js/uip/blocks/layout/loader.js:226
+msgid "Trigger text"
+msgstr ""
+
+#: assets/js/uip/blocks/layout/loader.js:80
+msgid "Dropdown position"
+msgstr ""
+
+#: assets/js/uip/blocks/layout/loader.js:111
+msgid "Keyboard shortcut to open"
+msgstr ""
+
+#: assets/js/uip/blocks/layout/loader.js:127
+msgid "Trigger styles"
+msgstr ""
+
+#: assets/js/uip/blocks/layout/loader.js:135
+msgid "Dropdown styles"
+msgstr ""
+
+#: assets/js/uip/blocks/layout/loader.js:156
+msgid "Responsive grid"
+msgstr ""
+
+#: assets/js/uip/blocks/layout/loader.js:158
+msgid "Outputs a responsive grid"
+msgstr ""
+
+#: assets/js/uip/blocks/layout/loader.js:176
+#: assets/js/uip/options/uip-flex-layout.js:46
+msgid "Min col width"
+msgstr ""
+
+#: assets/js/uip/blocks/layout/loader.js:179
+msgid "Grid gap"
+msgstr ""
+
+#: assets/js/uip/blocks/layout/loader.js:186
+msgid "Content area"
+msgstr ""
+
+#: assets/js/uip/blocks/layout/loader.js:207
+msgid "Slide out panel"
+msgstr ""
+
+#: assets/js/uip/blocks/layout/loader.js:209
+msgid "Creates a slide out panel with a customisable trigger"
+msgstr ""
+
+#: assets/js/uip/blocks/layout/loader.js:239
+msgid "Panel position"
+msgstr ""
+
+#: assets/js/uip/blocks/layout/loader.js:264
+#: assets/js/uip/options/settings-loader.js:571
+#: assets/js/uip/options/uip-effects.js:73
+msgid "Overlay"
+msgstr ""
+
+#: assets/js/uip/blocks/layout/loader.js:268
+msgid "Push"
+msgstr ""
+
+#: assets/js/uip/blocks/layout/loader.js:283
+#: assets/js/uip/options/uip-choice-select.js:34
+#: assets/js/uip/options/uip-choice-select.js:46
+#: assets/js/uip/uibuilder/global-settings-groups.js:163
+#: assets/js/uip/uibuilder/global-settings-groups.js:337
+#: assets/js/uip/uibuilder/uip-block-settings.js:122
+#: assets/js/uip/uibuilder/uip-builder-settings.js:67
+msgid "Disabled"
+msgstr ""
+
+#: assets/js/uip/blocks/layout/loader.js:287
+#: assets/js/uip/options/uip-choice-select.js:38
+#: assets/js/uip/options/uip-choice-select.js:50
+#: assets/js/uip/uibuilder/global-settings-groups.js:167
+#: assets/js/uip/uibuilder/global-settings-groups.js:341
+#: assets/js/uip/uibuilder/uip-block-settings.js:126
+#: assets/js/uip/uibuilder/uip-builder-settings.js:71
+msgid "Enabled"
+msgstr ""
+
+#: assets/js/uip/blocks/layout/loader.js:291
+msgid "Close on page change"
+msgstr ""
+
+#: assets/js/uip/blocks/layout/loader.js:293
+msgid "Keyboard shortcut"
+msgstr ""
+
+#: assets/js/uip/blocks/layout/loader.js:305
+msgid "Trigger style"
+msgstr ""
+
+#: assets/js/uip/blocks/layout/loader.js:314
+msgid "Panel styles"
+msgstr ""
+
+#: assets/js/uip/blocks/layout/loader.js:331
+msgid "Modal"
+msgstr ""
+
+#: assets/js/uip/blocks/layout/loader.js:333
+msgid "Outputs a modal block with a customisable trigger"
+msgstr ""
+
+#: assets/js/uip/blocks/storeanalytics/loader.js:9
+msgid "WC charts"
+msgstr ""
+
+#: assets/js/uip/blocks/storeanalytics/loader.js:11
+msgid "Outputs your choice of order data from woocommerce as a chart"
+msgstr ""
+
+#: assets/js/uip/blocks/storeanalytics/loader.js:16
+msgid "WC tables"
+msgstr ""
+
+#: assets/js/uip/blocks/storeanalytics/loader.js:18
+msgid "Outputs your choice of order data from woocommerce as a table"
+msgstr ""
+
+#: assets/js/uip/blocks/storeanalytics/loader.js:23
+msgid "WC map"
+msgstr ""
+
+#: assets/js/uip/blocks/storeanalytics/loader.js:25
+msgid "Outputs order data from woocommerce as a interactive map"
+msgstr ""
+
+#: assets/js/uip/classes/uip-media-browser.js:29
+#: assets/js/uip/options/uip-image-select.js:29
+#: assets/js/uip/options/uip-inline-image-select.js:37
+#: assets/js/uip/uibuilder/uip-builder-framework.js:109
+#: assets/js/uip/uibuilder/uip-builder-toolbar.js:95
+msgid "Library"
+msgstr ""
+
+#: assets/js/uip/classes/uip-media-browser.js:37
+msgid "Search media"
+msgstr ""
+
+#: assets/js/uip/classes/uip-media-browser.js:41
+msgid "Choose image"
+msgstr ""
+
+#: assets/js/uip/classes/uip-media-browser.js:42
+msgid "Full size"
+msgstr ""
+
+#: assets/js/uip/classes/uip-media-browser.js:43
+#: assets/js/uip/options/uip-spacing.js:53
+#: assets/js/uip/options/uip-styles.js:79
+#: assets/js/uip/options/uip-text-format.js:101
+msgid "Medium"
+msgstr ""
+
+#: assets/js/uip/classes/uip-media-browser.js:44
+#: assets/js/uip/options/uip-spacing.js:48
+#: assets/js/uip/options/uip-styles.js:74
+#: assets/js/uip/options/uip-text-format.js:96
+msgid "Small"
+msgstr ""
+
+#: assets/js/uip/classes/uip-media-browser.js:45
+msgid "Thumbnail"
+msgstr ""
+
+#: assets/js/uip/classes/uip-media-browser.js:46
+#: assets/js/uip/options/uip-image-select.js:27
+#: assets/js/uip/options/uip-inline-image-select.js:35
+msgid "Upload"
+msgstr ""
+
+#: assets/js/uip/classes/uip-media-browser.js:48
+msgid "Photo by"
+msgstr ""
+
+#: assets/js/uip/classes/uip-media-browser.js:49
+msgid "on"
+msgstr ""
+
+#: assets/js/uip/classes/uip-media-browser.js:337
+msgid "Uploading files"
+msgstr ""
+
+#: assets/js/uip/classes/uip-media-browser.js:346
+msgid "Upload finsihed"
+msgstr ""
+
+#: assets/js/uip/classes/uip-media-browser.js:346
+msgid " errors"
+msgstr ""
+
+#: assets/js/uip/classes/uip-media-browser.js:362
+msgid "File exceeds max upload size"
+msgstr ""
+
+#: assets/js/uip/classes/uip-media-browser.js:369
+#: assets/js/uip/options/uip-image-select.js:162
+#: assets/js/uip/options/uip-inline-image-select.js:174
+msgid "Unable to upload this file type"
+msgstr ""
+
+#: assets/js/uip/classes/uip-media-browser.js:394
+msgid "File uploaded"
+msgstr ""
+
+#: assets/js/uip/classes/uip-media-browser.js:397
+#: assets/js/uip/options/uip-image-select.js:201
+#: assets/js/uip/options/uip-inline-image-select.js:213
+msgid "Unable to handle upload"
+msgstr ""
+
+#: assets/js/uip/classes/uip-media-browser.js:413
+#: assets/js/uip/classes/uip.js:335
+msgid ""
+"Are you sure you want to delete this? Once deleted this item can't be "
+"recovered"
+msgstr ""
+
+#: assets/js/uip/classes/uip-media-browser.js:416
+msgid "Deleting selected files"
+msgstr ""
+
+#: assets/js/uip/classes/uip-media-browser.js:431
+msgid "Items deleted"
+msgstr ""
+
+#: assets/js/uip/classes/uip-media-library.js:29
+#: assets/js/uip/classes/uip-media-library.js:38
+msgid "Unable to mount"
+msgstr ""
+
+#: assets/js/uip/classes/uip-media-library.js:29
+msgid "No element provided to mount to"
+msgstr ""
+
+#: assets/js/uip/classes/uip-media-library.js:38
+msgid "No elements found for sleector"
+msgstr ""
+
+#: assets/js/uip/classes/uip.js:94
+msgid "Bad request"
+msgstr ""
+
+#: assets/js/uip/classes/uip.js:99
+msgid "Parse error"
+msgstr ""
+
+#: assets/js/uip/classes/uip.js:99
+msgid "Unable to parse JSON response"
+msgstr ""
+
+#: assets/js/uip/classes/uip.js:1594
+#: assets/js/uip/uibuilder/uip-builder-global-export.js:25
+#: assets/js/uip/uibuilder/uip-builder-site-sync.js:28
+msgid "Cancel"
+msgstr ""
+
+#: assets/js/uip/classes/uip.js:2550 assets/js/uip/classes/uip.js:2561
+#: assets/js/uip/options/uip-background-position.js:97
+msgid "Size"
+msgstr ""
+
+#: assets/js/uip/classes/uip.js:2573
+msgid "Spacing"
+msgstr ""
+
+#: assets/js/uip/classes/uip.js:2582
+#: assets/js/uip/options/uip-background-position.js:95
+#: assets/js/uip/options/uip-border-designer.js:41
+#: assets/js/uip/options/uip-position-designer.js:118
+#: assets/js/uip/options/uip-shadow-designer.js:42
+msgid "Position"
+msgstr ""
+
+#: assets/js/uip/classes/uip.js:2583
+msgid "Effects"
+msgstr ""
+
+#: assets/js/uip/classes/uip.js:2590
+#: assets/js/uip/options/uip-position-designer.js:124
+msgid "Vertical align"
+msgstr ""
+
+#: assets/js/uip/classes/uip.js:2591
+#: assets/js/uip/options/uip-position-designer.js:125
+msgid "Horizontal align"
+msgstr ""
+
+#: assets/js/uip/classes/uip.js:2592
+msgid "Grow or shrink"
+msgstr ""
+
+#: assets/js/uip/classes/uip.js:2595
+msgid "Stretch direction"
+msgstr ""
+
+#: assets/js/uip/classes/uip.js:2598
+msgid "Container dimensions"
+msgstr ""
+
+#: assets/js/uip/classes/uip.js:2599 assets/js/uip/options/uip-styles.js:29
+msgid "Overflow"
+msgstr ""
+
+#: assets/js/uip/classes/uip.js:2605
+msgid "Justify content"
+msgstr ""
+
+#: assets/js/uip/classes/uip.js:2606
+msgid "Align content"
+msgstr ""
+
+#: assets/js/uip/classes/uip.js:2607
+msgid "Content direction"
+msgstr ""
+
+#: assets/js/uip/classes/uip.js:2608
+msgid "Content wrap"
+msgstr ""
+
+#: assets/js/uip/classes/uip.js:2609
+msgid "Column gap"
+msgstr ""
+
+#: assets/js/uip/classes/uip.js:2610
+msgid "Row gap"
+msgstr ""
+
+#: assets/js/uip/classes/uip.js:2615
+msgid "Custom classes"
+msgstr ""
+
+#: assets/js/uip/classes/uip.js:2618
+msgid "Conditions"
+msgstr ""
+
+#: assets/js/uip/classes/uip.js:2619
+msgid ""
+"Conditions allow you to control who sees this block. If all conditions are "
+"not met then this block will not be loaded for the user."
+msgstr ""
+
+#: assets/js/uip/classes/uip.js:2624
+msgid "css"
+msgstr ""
+
+#: assets/js/uip/classes/uip.js:2632
+#: assets/js/uip/uibuilder/template-settings-groups.js:31
+msgid "JavaScript"
+msgstr ""
+
+#: assets/js/uip/modules/uip-app-view.js:179
+msgid "Changes have been made to your current app. Refresh the page to update"
+msgstr ""
+
+#: assets/js/uip/modules/uip-app-view.js:180
+msgid "Update"
+msgstr ""
+
+#: assets/js/uip/modules/uip-app-view.js:187
+msgid "Update available"
+msgstr ""
+
+#: assets/js/uip/modules/uip-content-area.js:13
+#: assets/js/uip/uibuilder/uip-builder-drop-area.js:13
+#: assets/js/uip/uibuilder/uip-treeview-drop-area.js:14
+msgid "Drag blocks here"
+msgstr ""
+
+#: assets/js/uip/modules/uip-content-area.js:23
+#: assets/js/uip/uibuilder/uip-builder-drop-area.js:23
+msgid "This component is missing or can't be loaded"
+msgstr ""
+
+#: assets/js/uip/modules/uip-content-area.js:24
+#: assets/js/uip/uibuilder/uip-builder-drop-area.js:24
+msgid "Total items"
+msgstr ""
+
+#: assets/js/uip/modules/uip-content-area.js:30
+#: assets/js/uip/uibuilder/uip-builder-drop-area.js:31
+#: assets/js/uip/uibuilder/uip-builder-framework.js:101
+#: assets/js/uip/uibuilder/uip-treeview-drop-area.js:22
+msgid "Blocks"
+msgstr ""
+
+#: assets/js/uip/modules/uip-content-area.js:34
+#: assets/js/uip/uibuilder/uip-builder-drop-area.js:35
+#: assets/js/uip/uibuilder/uip-builder-patterns-list.js:65
+#: assets/js/uip/uibuilder/uip-builder-toolbar.js:94
+#: assets/js/uip/uibuilder/uip-template-library.js:38
+#: assets/js/uip/uibuilder/uip-treeview-drop-area.js:26
+msgid "Patterns"
+msgstr ""
+
+#: assets/js/uip/modules/uip-content-area.js:145
+#: assets/js/uip/uibuilder/uip-builder-drop-area.js:146
+#: assets/js/uip/uibuilder/uip-builder-setup-wizard.js:146
+msgid "Importing template"
+msgstr ""
+
+#: assets/js/uip/modules/uip-content-area.js:159
+#: assets/js/uip/modules/uip-content-area.js:174
+#: assets/js/uip/uibuilder/uip-builder-drop-area.js:160
+#: assets/js/uip/uibuilder/uip-builder-drop-area.js:175
+msgid "Unable to import template right now"
+msgstr ""
+
+#: assets/js/uip/modules/uip-content-area.js:171
+#: assets/js/uip/uibuilder/uip-block-actions.js:416
+#: assets/js/uip/uibuilder/uip-builder-drop-area.js:172
+#: assets/js/uip/uibuilder/uip-builder-toolbar.js:506
+msgid "Template imported"
+msgstr ""
+
+#: assets/js/uip/modules/uip-content-area.js:223
+#: assets/js/uip/uibuilder/uip-builder-drop-area.js:224
+#: assets/js/uip/uibuilder/uip-treeview-drop-area.js:62
+msgid "block added"
+msgstr ""
+
+#: assets/js/uip/modules/uip-content-area.js:233
+#: assets/js/uip/uibuilder/uip-builder-drop-area.js:234
+#: assets/js/uip/uibuilder/uip-treeview-drop-area.js:65
+msgid "block moved"
+msgstr ""
+
+#: assets/js/uip/modules/uip-dynamic-data-list.js:12
+#: assets/js/uip/options/uip-dynamic-input.js:19
+#: assets/js/uip/options/uip-image-select.js:23
+#: assets/js/uip/options/uip-inline-image-select.js:31
+#: assets/js/uip/options/uip-link-select.js:33
+msgid "select"
+msgstr ""
+
+#: assets/js/uip/modules/uip-dynamic-data-list.js:13
+#: assets/js/uip/options/uip-dynamic-input.js:18
+#: assets/js/uip/options/uip-image-select.js:22
+#: assets/js/uip/options/uip-inline-image-select.js:30
+#: assets/js/uip/options/uip-link-select.js:32
+msgid "Current value"
+msgstr ""
+
+#: assets/js/uip/modules/uip-post-meta-select.js:26
+#: assets/js/uip/uibuilder/uip-builder-settings.js:34
+#: assets/js/uip/uibuilder/uip-builder-variables.js:13
+msgid "Add"
+msgstr ""
+
+#: assets/js/uip/modules/uip-post-meta-select.js:27
+msgid "Column title"
+msgstr ""
+
+#: assets/js/uip/modules/uip-user-role-multiselect.js:32
+#: assets/js/uip/modules/uip-user-role-multiselect.js:41
+#: assets/js/uip/options/uip-query-builder.js:51
+msgid "Roles"
+msgstr ""
+
+#: assets/js/uip/modules/uip-user-role-multiselect.js:36
+#: assets/js/uip/modules/uip-user-role-multiselect.js:40
+#: assets/js/uip/options/uip-query-builder.js:85
+msgid "Users"
+msgstr ""
+
+#: assets/js/uip/options/dynamic-settings.js:68
+#: assets/js/uip/uibuilder/uip-dynamic-data-watcher.js:210
+msgid "Site name"
+msgstr ""
+
+#: assets/js/uip/options/dynamic-settings.js:75
+#: assets/js/uip/uibuilder/uip-dynamic-data-watcher.js:166
+msgid "User profile image"
+msgstr ""
+
+#: assets/js/uip/options/dynamic-settings.js:89
+msgid "View site link"
+msgstr ""
+
+#: assets/js/uip/options/dynamic-settings.js:96
+msgid "View admin link"
+msgstr ""
+
+#: assets/js/uip/options/dynamic-settings.js:103
+msgid "View profile link"
+msgstr ""
+
+#: assets/js/uip/options/dynamic-settings.js:110
+msgid "Current Date"
+msgstr ""
+
+#: assets/js/uip/options/dynamic-settings.js:117
+msgid "PHP Version"
+msgstr ""
+
+#: assets/js/uip/options/dynamic-settings.js:124
+msgid "WordPress Version"
+msgstr ""
+
+#: assets/js/uip/options/dynamic-settings.js:131
+msgid "Count of active plugins"
+msgstr ""
+
+#: assets/js/uip/options/dynamic-settings.js:138
+msgid "Count of inactive plugins"
+msgstr ""
+
+#: assets/js/uip/options/dynamic-settings.js:145
+msgid "Count of installed themes"
+msgstr ""
+
+#: assets/js/uip/options/dynamic-settings.js:152
+msgid "New post link"
+msgstr ""
+
+#: assets/js/uip/options/dynamic-settings.js:159
+msgid "New page link"
+msgstr ""
+
+#: assets/js/uip/options/settings-loader.js:41
+msgid "I am a paragraph"
+msgstr ""
+
+#: assets/js/uip/options/settings-loader.js:98
+msgid "Text alignment"
+msgstr ""
+
+#: assets/js/uip/options/settings-loader.js:240
+#: assets/js/uip/options/uip-flex-layout.js:39
+msgid "Wrap"
+msgstr ""
+
+#: assets/js/uip/options/settings-loader.js:245
+msgid "Wrap reverse"
+msgstr ""
+
+#: assets/js/uip/options/settings-loader.js:274
+#: assets/js/uip/options/uip-dimensions.js:73
+msgid "Grow"
+msgstr ""
+
+#: assets/js/uip/options/settings-loader.js:279
+#: assets/js/uip/options/uip-dimensions.js:74
+msgid "Shrink"
+msgstr ""
+
+#: assets/js/uip/options/settings-loader.js:305
+#: assets/js/uip/options/uip-flex-layout.js:158
+msgid "Baseline"
+msgstr ""
+
+#: assets/js/uip/options/settings-loader.js:310
+#: assets/js/uip/options/settings-loader.js:449
+#: assets/js/uip/options/settings-loader.js:519
+#: assets/js/uip/options/settings-loader.js:795
+#: assets/js/uip/options/settings-loader.js:833
+#: assets/js/uip/options/uip-effects.js:51
+#: assets/js/uip/options/uip-flex-layout.js:78
+#: assets/js/uip/options/uip-flex-layout.js:105
+#: assets/js/uip/options/uip-flex-layout.js:127
+#: assets/js/uip/options/uip-flex-layout.js:162
+#: assets/js/uip/options/uip-position-designer.js:39
+#: assets/js/uip/options/uip-position-designer.js:61
+#: assets/js/uip/options/uip-text-format.js:52
+#: assets/js/uip/uibuilder/global-settings-groups.js:147
+#: assets/js/uip/uibuilder/global-settings-groups.js:194
+msgid "Center"
+msgstr ""
+
+#: assets/js/uip/options/settings-loader.js:315
+#: assets/js/uip/options/settings-loader.js:454
+#: assets/js/uip/options/settings-loader.js:524
+#: assets/js/uip/options/uip-flex-layout.js:82
+#: assets/js/uip/options/uip-flex-layout.js:110
+#: assets/js/uip/options/uip-flex-layout.js:132
+#: assets/js/uip/options/uip-flex-layout.js:166
+msgid "End"
+msgstr ""
+
+#: assets/js/uip/options/settings-loader.js:320
+#: assets/js/uip/options/settings-loader.js:529
+#: assets/js/uip/options/uip-flex-layout.js:115
+#: assets/js/uip/options/uip-flex-layout.js:137
+msgid "Stretch"
+msgstr ""
+
+#: assets/js/uip/options/settings-loader.js:357
+msgid "Row"
+msgstr ""
+
+#: assets/js/uip/options/settings-loader.js:362
+msgid "Column"
+msgstr ""
+
+#: assets/js/uip/options/settings-loader.js:368
+msgid "Row reverse"
+msgstr ""
+
+#: assets/js/uip/options/settings-loader.js:373
+msgid "Column reverse"
+msgstr ""
+
+#: assets/js/uip/options/settings-loader.js:444
+#: assets/js/uip/options/settings-loader.js:514
+#: assets/js/uip/options/uip-flex-layout.js:74
+#: assets/js/uip/options/uip-flex-layout.js:100
+#: assets/js/uip/options/uip-flex-layout.js:122
+msgid "Start"
+msgstr ""
+
+#: assets/js/uip/options/settings-loader.js:459
+#: assets/js/uip/options/uip-flex-layout.js:86
+#: assets/js/uip/options/uip-flex-layout.js:170
+msgid "Space around"
+msgstr ""
+
+#: assets/js/uip/options/settings-loader.js:464
+#: assets/js/uip/options/uip-flex-layout.js:90
+#: assets/js/uip/options/uip-flex-layout.js:174
+msgid "Space between"
+msgstr ""
+
+#: assets/js/uip/options/settings-loader.js:470
+#: assets/js/uip/options/uip-flex-layout.js:94
+#: assets/js/uip/options/uip-flex-layout.js:178
+msgid "Space evenly"
+msgstr ""
+
+#: assets/js/uip/options/settings-loader.js:559
+#: assets/js/uip/options/uip-background-position.js:82
+#: assets/js/uip/options/uip-styles.js:49
+msgid "Auto"
+msgstr ""
+
+#: assets/js/uip/options/settings-loader.js:563
+#: assets/js/uip/options/uip-styles.js:53
+msgid "Hidden"
+msgstr ""
+
+#: assets/js/uip/options/settings-loader.js:567
+#: assets/js/uip/options/uip-styles.js:57
+msgid "Scroll"
+msgstr ""
+
+#: assets/js/uip/options/settings-loader.js:575
+#: assets/js/uip/options/uip-styles.js:45
+msgid "Visible"
+msgstr ""
+
+#: assets/js/uip/options/settings-loader.js:597
+msgid "H1"
+msgstr ""
+
+#: assets/js/uip/options/settings-loader.js:601
+msgid "H2"
+msgstr ""
+
+#: assets/js/uip/options/settings-loader.js:605
+msgid "H3"
+msgstr ""
+
+#: assets/js/uip/options/settings-loader.js:609
+msgid "H4"
+msgstr ""
+
+#: assets/js/uip/options/settings-loader.js:613
+msgid "H5"
+msgstr ""
+
+#: assets/js/uip/options/settings-loader.js:617
+msgid "p"
+msgstr ""
+
+#: assets/js/uip/options/settings-loader.js:685
+msgid "Another tab"
+msgstr ""
+
+#: assets/js/uip/options/settings-loader.js:828
+#: assets/js/uip/options/uip-effects.js:46
+#: assets/js/uip/options/uip-margin.js:14
+#: assets/js/uip/options/uip-padding.js:14
+#: assets/js/uip/options/uip-position-designer.js:34
+#: assets/js/uip/options/uip-position-designer.js:120
+#: assets/js/uip/options/uip-spacing.js:28
+msgid "Top"
+msgstr ""
+
+#: assets/js/uip/options/settings-loader.js:838
+#: assets/js/uip/options/uip-effects.js:56
+#: assets/js/uip/options/uip-margin.js:15
+#: assets/js/uip/options/uip-padding.js:15
+#: assets/js/uip/options/uip-position-designer.js:44
+#: assets/js/uip/options/uip-position-designer.js:122
+#: assets/js/uip/options/uip-spacing.js:29
+msgid "Bottom"
+msgstr ""
+
+#: assets/js/uip/options/settings-loader.js:1680
+#: assets/js/uip/options/uip-styles.js:34
+msgid "Shadow"
+msgstr ""
+
+#: assets/js/uip/options/settings-loader.js:1681
+msgid "Box shadow"
+msgstr ""
+
+#: assets/js/uip/options/settings-loader.js:1731
+msgid "Option 1"
+msgstr ""
+
+#: assets/js/uip/options/settings-loader.js:1732
+msgid "Option 2"
+msgstr ""
+
+#: assets/js/uip/options/theme-styles.js:7
+msgid "Primary color"
+msgstr ""
+
+#: assets/js/uip/options/theme-styles.js:14
+msgid "Primary color darker"
+msgstr ""
+
+#: assets/js/uip/options/theme-styles.js:21
+msgid "Primary color lighter"
+msgstr ""
+
+#: assets/js/uip/options/theme-styles.js:29
+msgid "Accent color"
+msgstr ""
+
+#: assets/js/uip/options/theme-styles.js:36
+msgid "Accent color darker"
+msgstr ""
+
+#: assets/js/uip/options/theme-styles.js:43
+msgid "Accent color lighter"
+msgstr ""
+
+#: assets/js/uip/options/theme-styles.js:51
+msgid "Success color"
+msgstr ""
+
+#: assets/js/uip/options/theme-styles.js:58
+msgid "Success color darker"
+msgstr ""
+
+#: assets/js/uip/options/theme-styles.js:65
+msgid "Success color lighter"
+msgstr ""
+
+#: assets/js/uip/options/theme-styles.js:73
+msgid "Warning color"
+msgstr ""
+
+#: assets/js/uip/options/theme-styles.js:80
+msgid "Warning color darker"
+msgstr ""
+
+#: assets/js/uip/options/theme-styles.js:87
+msgid "Warning color lighter"
+msgstr ""
+
+#: assets/js/uip/options/theme-styles.js:95
+msgid "Danger color"
+msgstr ""
+
+#: assets/js/uip/options/theme-styles.js:102
+msgid "Danger color darker"
+msgstr ""
+
+#: assets/js/uip/options/theme-styles.js:109
+msgid "Danger color lighter"
+msgstr ""
+
+#: assets/js/uip/options/theme-styles.js:117
+msgid "Base"
+msgstr ""
+
+#: assets/js/uip/options/theme-styles.js:124
+msgid "Base 1"
+msgstr ""
+
+#: assets/js/uip/options/theme-styles.js:131
+msgid "Base 2"
+msgstr ""
+
+#: assets/js/uip/options/theme-styles.js:139
+msgid "Text color base"
+msgstr ""
+
+#: assets/js/uip/options/theme-styles.js:146
+msgid "Text color emphasis"
+msgstr ""
+
+#: assets/js/uip/options/theme-styles.js:153
+msgid "Text color muted"
+msgstr ""
+
+#: assets/js/uip/options/theme-styles.js:160
+msgid "Text color inverted"
+msgstr ""
+
+#: assets/js/uip/options/uip-array-list.js:12
+msgid "New item"
+msgstr ""
+
+#: assets/js/uip/options/uip-background-position.js:20
+#: assets/js/uip/options/uip-custom-menu-select.js:15
+#: assets/js/uip/options/uip-effects.js:41
+#: assets/js/uip/options/uip-position-designer.js:29
+#: assets/js/uip/options/uip-position-designer.js:51
+#: assets/js/uip/options/uip-position-designer.js:113
+#: assets/js/uip/options/uip-query-builder.js:197
+#: assets/js/uip/options/uip-query-builder.js:243
+#: assets/js/uip/options/uip-query-builder.js:289
+#: assets/js/uip/options/uip-text-format.js:69
+#: assets/js/uip/options/uip-text-format.js:180
+#: assets/js/uip/uibuilder/uip-block-settings.js:59
+msgid "None"
+msgstr ""
+
+#: assets/js/uip/options/uip-background-position.js:28
+msgid "Top center"
+msgstr ""
+
+#: assets/js/uip/options/uip-background-position.js:37
+msgid "Center left"
+msgstr ""
+
+#: assets/js/uip/options/uip-background-position.js:41
+msgid "Center center"
+msgstr ""
+
+#: assets/js/uip/options/uip-background-position.js:45
+msgid "Center right"
+msgstr ""
+
+#: assets/js/uip/options/uip-background-position.js:54
+msgid "Bottom center"
+msgstr ""
+
+#: assets/js/uip/options/uip-background-position.js:64
+msgid "No repeat"
+msgstr ""
+
+#: assets/js/uip/options/uip-background-position.js:68
+msgid "Repeat x"
+msgstr ""
+
+#: assets/js/uip/options/uip-background-position.js:72
+msgid "Repeat y"
+msgstr ""
+
+#: assets/js/uip/options/uip-background-position.js:76
+#: assets/js/uip/options/uip-background-position.js:96
+msgid "Repeat"
+msgstr ""
+
+#: assets/js/uip/options/uip-background-position.js:86
+msgid "Cover"
+msgstr ""
+
+#: assets/js/uip/options/uip-background-position.js:90
+msgid "Contain"
+msgstr ""
+
+#: assets/js/uip/options/uip-border-designer.js:33
+#: assets/js/uip/options/uip-styles.js:35
+msgid "Radius"
+msgstr ""
+
+#: assets/js/uip/options/uip-border-designer.js:38
+#: assets/js/uip/options/uip-color-select.js:26
+#: assets/js/uip/options/uip-outline-designer.js:30
+#: assets/js/uip/options/uip-shadow-designer.js:41
+#: assets/js/uip/options/uip-text-format.js:37
+#: assets/js/uip/uibuilder/uip-builder-variables.js:38
+msgid "Colour"
+msgstr ""
+
+#: assets/js/uip/options/uip-border-designer.js:40
+#: assets/js/uip/options/uip-dimensions.js:68
+#: assets/js/uip/options/uip-outline-designer.js:32
+msgid "Width"
+msgstr ""
+
+#: assets/js/uip/options/uip-border-designer.js:67
+#: assets/js/uip/options/uip-color-select.js:67
+#: assets/js/uip/options/uip-outline-designer.js:37
+msgid "Solid"
+msgstr ""
+
+#: assets/js/uip/options/uip-border-designer.js:71
+#: assets/js/uip/options/uip-outline-designer.js:41
+msgid "Dashed"
+msgstr ""
+
+#: assets/js/uip/options/uip-border-designer.js:75
+#: assets/js/uip/options/uip-outline-designer.js:45
+msgid "Dotted"
+msgstr ""
+
+#: assets/js/uip/options/uip-border-designer.js:79
+#: assets/js/uip/options/uip-outline-designer.js:49
+msgid "Double"
+msgstr ""
+
+#: assets/js/uip/options/uip-border-designer.js:83
+#: assets/js/uip/options/uip-outline-designer.js:53
+msgid "Groove"
+msgstr ""
+
+#: assets/js/uip/options/uip-border-designer.js:87
+#: assets/js/uip/options/uip-outline-designer.js:57
+msgid "Ridge"
+msgstr ""
+
+#: assets/js/uip/options/uip-border-designer.js:91
+#: assets/js/uip/options/uip-outline-designer.js:61
+#: assets/js/uip/options/uip-position-designer.js:123
+msgid "Inset"
+msgstr ""
+
+#: assets/js/uip/options/uip-border-radius.js:13
+msgid "Radius top left"
+msgstr ""
+
+#: assets/js/uip/options/uip-border-radius.js:14
+msgid "Radius  top right"
+msgstr ""
+
+#: assets/js/uip/options/uip-border-radius.js:15
+msgid "Radius bottom left"
+msgstr ""
+
+#: assets/js/uip/options/uip-border-radius.js:16
+msgid "Radius bottom right"
+msgstr ""
+
+#: assets/js/uip/options/uip-classes.js:20
+msgid "Enter classes seperated by a space"
+msgstr ""
+
+#: assets/js/uip/options/uip-classes.js:21
+msgid "Search classess"
+msgstr ""
+
+#: assets/js/uip/options/uip-code-editor.js:19
+msgid "Exit fullscreen"
+msgstr ""
+
+#: assets/js/uip/options/uip-code-editor.js:20
+msgid "Code editor"
+msgstr ""
+
+#: assets/js/uip/options/uip-code-editor.js:21
+msgid "Edit code"
+msgstr ""
+
+#: assets/js/uip/options/uip-code-editor.js:83
+msgid "Code updated"
+msgstr ""
+
+#: assets/js/uip/options/uip-color-picker.js:17
+#: assets/js/uip/options/uip-color-select.js:20
+msgid "Colour value"
+msgstr ""
+
+#: assets/js/uip/options/uip-color-picker.js:18
+#: assets/js/uip/options/uip-color-select.js:29
+msgid "Colour code"
+msgstr ""
+
+#: assets/js/uip/options/uip-color-select.js:21
+msgid "Theme variables"
+msgstr ""
+
+#: assets/js/uip/options/uip-color-select.js:23
+msgid "Angle"
+msgstr ""
+
+#: assets/js/uip/options/uip-color-select.js:24
+msgid "Position X"
+msgstr ""
+
+#: assets/js/uip/options/uip-color-select.js:25
+msgid "Position Y"
+msgstr ""
+
+#: assets/js/uip/options/uip-color-select.js:27
+msgid "Location"
+msgstr ""
+
+#: assets/js/uip/options/uip-color-select.js:28
+msgid "Manage variables"
+msgstr ""
+
+#: assets/js/uip/options/uip-color-select.js:30
+msgid "Apply gradient"
+msgstr ""
+
+#: assets/js/uip/options/uip-color-select.js:57
+#: assets/js/uip/options/uip-effects.js:139
+msgid "Linear"
+msgstr ""
+
+#: assets/js/uip/options/uip-color-select.js:61
+msgid "Radial"
+msgstr ""
+
+#: assets/js/uip/options/uip-color-select.js:71
+msgid "Gradient"
+msgstr ""
+
+#: assets/js/uip/options/uip-dimensions.js:67
+msgid "Height"
+msgstr ""
+
+#: assets/js/uip/options/uip-dimensions.js:69
+msgid "Max height"
+msgstr ""
+
+#: assets/js/uip/options/uip-dimensions.js:70
+msgid "Max width"
+msgstr ""
+
+#: assets/js/uip/options/uip-dimensions.js:71
+msgid "Min height"
+msgstr ""
+
+#: assets/js/uip/options/uip-dimensions.js:72
+msgid "Min width"
+msgstr ""
+
+#: assets/js/uip/options/uip-dynamic-input.js:17
+#: assets/js/uip/options/uip-image-select.js:21
+#: assets/js/uip/options/uip-inline-image-select.js:29
+#: assets/js/uip/uibuilder/uip-builder-toolbar.js:19
+#: assets/js/uip/uibuilder/uip-dynamic-data-watcher.js:20
+msgid "Dynamic data"
+msgstr ""
+
+#: assets/js/uip/options/uip-dynamic-input.js:20
+#: assets/js/uip/options/uip-image-select.js:24
+#: assets/js/uip/options/uip-inline-image-select.js:32
+msgid "Dynamic data position"
+msgstr ""
+
+#: assets/js/uip/options/uip-edit-menu-items.js:13
+#: assets/js/uip/options/uip-edit-toolbar-items.js:13
+msgid "Rename item"
+msgstr ""
+
+#: assets/js/uip/options/uip-effects.js:61
+#: assets/js/uip/options/uip-flex-layout.js:154
+#: assets/js/uip/options/uip-text-format.js:170
+msgid "Normal"
+msgstr ""
+
+#: assets/js/uip/options/uip-effects.js:65
+msgid "Multiply"
+msgstr ""
+
+#: assets/js/uip/options/uip-effects.js:69
+msgid "Screen"
+msgstr ""
+
+#: assets/js/uip/options/uip-effects.js:77
+msgid "Darken"
+msgstr ""
+
+#: assets/js/uip/options/uip-effects.js:81
+msgid "Lighten"
+msgstr ""
+
+#: assets/js/uip/options/uip-effects.js:85
+msgid "Color dodge"
+msgstr ""
+
+#: assets/js/uip/options/uip-effects.js:89
+msgid "Color burn"
+msgstr ""
+
+#: assets/js/uip/options/uip-effects.js:93
+msgid "Hard light"
+msgstr ""
+
+#: assets/js/uip/options/uip-effects.js:97
+msgid "Soft light"
+msgstr ""
+
+#: assets/js/uip/options/uip-effects.js:101
+msgid "Difference"
+msgstr ""
+
+#: assets/js/uip/options/uip-effects.js:105
+msgid "Exclusion"
+msgstr ""
+
+#: assets/js/uip/options/uip-effects.js:109
+msgid "Hue"
+msgstr ""
+
+#: assets/js/uip/options/uip-effects.js:113
+msgid "Saturation"
+msgstr ""
+
+#: assets/js/uip/options/uip-effects.js:117
+msgid "Color"
+msgstr ""
+
+#: assets/js/uip/options/uip-effects.js:121
+msgid "Luminosity"
+msgstr ""
+
+#: assets/js/uip/options/uip-effects.js:125
+msgid "Initial"
+msgstr ""
+
+#: assets/js/uip/options/uip-effects.js:129
+#: assets/js/uip/options/uip-position-designer.js:109
+#: assets/js/uip/options/uip-text-format.js:174
+#: assets/js/uip/options/uip-text-format.js:251
+#: assets/js/uip/uibuilder/uip-builder-variables.js:100
+msgid "Inherit"
+msgstr ""
+
+#: assets/js/uip/options/uip-effects.js:133
+msgid "Unset"
+msgstr ""
+
+#: assets/js/uip/options/uip-effects.js:143
+#: assets/js/uip/options/uip-effects.js:224
+msgid "Ease"
+msgstr ""
+
+#: assets/js/uip/options/uip-effects.js:147
+msgid "Ease in"
+msgstr ""
+
+#: assets/js/uip/options/uip-effects.js:151
+msgid "Ease in out"
+msgstr ""
+
+#: assets/js/uip/options/uip-effects.js:155
+msgid "Ease out"
+msgstr ""
+
+#: assets/js/uip/options/uip-effects.js:159
+msgid "Out sine"
+msgstr ""
+
+#: assets/js/uip/options/uip-effects.js:163
+msgid "Out quadratic"
+msgstr ""
+
+#: assets/js/uip/options/uip-effects.js:167
+msgid "Back out"
+msgstr ""
+
+#: assets/js/uip/options/uip-effects.js:210
+#: assets/js/uip/options/uip-text-format.js:35
+msgid "Transform"
+msgstr ""
+
+#: assets/js/uip/options/uip-effects.js:211
+msgid "Translate"
+msgstr ""
+
+#: assets/js/uip/options/uip-effects.js:212
+msgid "Scale"
+msgstr ""
+
+#: assets/js/uip/options/uip-effects.js:213
+msgid "Rotate"
+msgstr ""
+
+#: assets/js/uip/options/uip-effects.js:214
+msgid "Skew"
+msgstr ""
+
+#: assets/js/uip/options/uip-effects.js:215
+#: assets/js/uip/uibuilder/uip-block-actions.js:23
+#: assets/js/uip/uibuilder/uip-block-settings.js:144
+#: assets/js/uip/uibuilder/uip-builder-toolbar.js:97
+msgid "Settings"
+msgstr ""
+
+#: assets/js/uip/options/uip-effects.js:216
+msgid "Filters"
+msgstr ""
+
+#: assets/js/uip/options/uip-effects.js:218
+msgid "Mix blend mode"
+msgstr ""
+
+#: assets/js/uip/options/uip-effects.js:219
+msgid "Grayscale"
+msgstr ""
+
+#: assets/js/uip/options/uip-effects.js:220
+#: assets/js/uip/options/uip-shadow-designer.js:40
+msgid "Blur"
+msgstr ""
+
+#: assets/js/uip/options/uip-effects.js:221
+msgid "Saturate"
+msgstr ""
+
+#: assets/js/uip/options/uip-effects.js:222
+msgid "Contrast"
+msgstr ""
+
+#: assets/js/uip/options/uip-effects.js:223
+msgid "Backdrop blur"
+msgstr ""
+
+#: assets/js/uip/options/uip-effects.js:225
+msgid "Time"
+msgstr ""
+
+#: assets/js/uip/options/uip-effects.js:226
+msgid "Delay"
+msgstr ""
+
+#: assets/js/uip/options/uip-effects.js:227
+msgid "Cursor"
+msgstr ""
+
+#: assets/js/uip/options/uip-effects.js:228
+#: assets/js/uip/uibuilder/global-settings-groups.js:43
+msgid "General"
+msgstr ""
+
+#: assets/js/uip/options/uip-effects.js:229
+msgid "Resizing"
+msgstr ""
+
+#: assets/js/uip/options/uip-flex-layout.js:37
+msgid "Distribute"
+msgstr ""
+
+#: assets/js/uip/options/uip-flex-layout.js:38
+#: assets/js/uip/options/uip-text-format.js:38
+msgid "Align"
+msgstr ""
+
+#: assets/js/uip/options/uip-flex-layout.js:40
+msgid "Gap"
+msgstr ""
+
+#: assets/js/uip/options/uip-flex-layout.js:43
+msgid "Rows"
+msgstr ""
+
+#: assets/js/uip/options/uip-flex-layout.js:44
+msgid "Column width"
+msgstr ""
+
+#: assets/js/uip/options/uip-flex-layout.js:45
+msgid "Place"
+msgstr ""
+
+#: assets/js/uip/options/uip-flex-layout.js:47
+msgid "Responsive"
+msgstr ""
+
+#: assets/js/uip/options/uip-flex-layout.js:52
+msgid "Stack"
+msgstr ""
+
+#: assets/js/uip/options/uip-flex-layout.js:56
+#: assets/js/uip/options/uip-position-designer.js:105
+msgid "Grid"
+msgstr ""
+
+#: assets/js/uip/options/uip-hidden-menu-items-select.js:13
+msgid "Hidden menu items"
+msgstr ""
+
+#: assets/js/uip/options/uip-hidden-menu-items-select.js:14
+msgid "Search menu items"
+msgstr ""
+
+#: assets/js/uip/options/uip-hidden-toolbar-items-select.js:14
+msgid "Search toolbar items"
+msgstr ""
+
+#: assets/js/uip/options/uip-icon-select.js:22
+#: assets/js/uip/options/uip-inline-icon-select.js:22
+msgid "Search icons"
+msgstr ""
+
+#: assets/js/uip/options/uip-icon-select.js:23
+#: assets/js/uip/options/uip-inline-icon-select.js:23
+msgid "Clear icon"
+msgstr ""
+
+#: assets/js/uip/options/uip-icon-select.js:24
+msgid "Choose icon"
+msgstr ""
+
+#: assets/js/uip/options/uip-image-select.js:25
+#: assets/js/uip/options/uip-inline-image-select.js:33
+msgid "Replace"
+msgstr ""
+
+#: assets/js/uip/options/uip-image-select.js:28
+#: assets/js/uip/options/uip-inline-image-select.js:36
+msgid "Uploading"
+msgstr ""
+
+#: assets/js/uip/options/uip-image-select.js:31
+#: assets/js/uip/options/uip-inline-image-select.js:39
+#: assets/js/uip/options/uip-inline-image-select.js:41
+#: assets/js/uip/options/uip-styles.js:33
+msgid "Add image"
+msgstr ""
+
+#: assets/js/uip/options/uip-image-select.js:154
+#: assets/js/uip/options/uip-inline-image-select.js:166
+msgid "Uploading image"
+msgstr ""
+
+#: assets/js/uip/options/uip-image-select.js:169
+#: assets/js/uip/options/uip-inline-image-select.js:181
+msgid "Image exceeds max upload size"
+msgstr ""
+
+#: assets/js/uip/options/uip-image-select.js:198
+#: assets/js/uip/options/uip-inline-image-select.js:210
+msgid "Image uploaded"
+msgstr ""
+
+#: assets/js/uip/options/uip-inline-image-select.js:42
+msgid "URL"
+msgstr ""
+
+#: assets/js/uip/options/uip-link-select.js:27
+msgid "Search admin pages"
+msgstr ""
+
+#: assets/js/uip/options/uip-link-select.js:28
+msgid "Search pages and posts"
+msgstr ""
+
+#: assets/js/uip/options/uip-link-select.js:29
+msgid "No posts found for current query"
+msgstr ""
+
+#: assets/js/uip/options/uip-link-select.js:30
+msgid "Link mode"
+msgstr ""
+
+#: assets/js/uip/options/uip-link-select.js:49
+msgid ""
+"Dynamic links will load in the available content frame without page refresh. "
+"If none exists then it will perform a normal relead."
+msgstr ""
+
+#: assets/js/uip/options/uip-link-select.js:54
+msgid "Default links load like a normal link and will refresh the whole page."
+msgstr ""
+
+#: assets/js/uip/options/uip-link-select.js:59
+msgid "New tab links open in a new browser tab."
+msgstr ""
+
+#: assets/js/uip/options/uip-multi-select.js:14
+msgid "Selected items"
+msgstr ""
+
+#: assets/js/uip/options/uip-outline-designer.js:33
+#: assets/js/uip/options/uip-query-builder.js:35
+msgid "Offset"
+msgstr ""
+
+#: assets/js/uip/options/uip-position-designer.js:71
+msgid "Relative"
+msgstr ""
+
+#: assets/js/uip/options/uip-position-designer.js:75
+msgid "Absolute"
+msgstr ""
+
+#: assets/js/uip/options/uip-position-designer.js:79
+msgid "Fixed"
+msgstr ""
+
+#: assets/js/uip/options/uip-position-designer.js:83
+msgid "Sticky"
+msgstr ""
+
+#: assets/js/uip/options/uip-position-designer.js:87
+msgid "Static"
+msgstr ""
+
+#: assets/js/uip/options/uip-position-designer.js:93
+#: assets/js/uip/uibuilder/uip-block-actions.js:36
+#: assets/js/uip/uibuilder/uip-block-actions.js:41
+#: assets/js/uip/uibuilder/uip-builder-patterns-list.js:53
+#: assets/js/uip/uibuilder/uip-save-pattern.js:34
+#: assets/js/uip/uibuilder/uip-template-library.js:47
+msgid "Block"
+msgstr ""
+
+#: assets/js/uip/options/uip-position-designer.js:101
+msgid "Flex"
+msgstr ""
+
+#: assets/js/uip/options/uip-position-designer.js:126
+msgid "z-index"
+msgstr ""
+
+#: assets/js/uip/options/uip-position-designer.js:127
+msgid "Display"
+msgstr ""
+
+#: assets/js/uip/options/uip-post-meta.js:13
+msgid "Select columns"
+msgstr ""
+
+#: assets/js/uip/options/uip-post-meta.js:14
+msgid "Add columns"
+msgstr ""
+
+#: assets/js/uip/options/uip-post-types.js:13
+#: assets/js/uip/options/uip-select-post-types.js:11
+msgid "Select post types"
+msgstr ""
+
+#: assets/js/uip/options/uip-post-types.js:14
+msgid "Seach post types"
+msgstr ""
+
+#: assets/js/uip/options/uip-query-builder.js:32
+#: assets/js/uip/uibuilder/uip-dynamic-data-watcher.js:94
+msgid "Post type"
+msgstr ""
+
+#: assets/js/uip/options/uip-query-builder.js:33
+msgid "Order by"
+msgstr ""
+
+#: assets/js/uip/options/uip-query-builder.js:34
+msgid "Per page"
+msgstr ""
+
+#: assets/js/uip/options/uip-query-builder.js:36
+msgid "Meta query"
+msgstr ""
+
+#: assets/js/uip/options/uip-query-builder.js:37
+msgid "Tax query"
+msgstr ""
+
+#: assets/js/uip/options/uip-query-builder.js:41
+#: assets/js/uip/options/uip-query-builder.js:237
+#: assets/js/uip/options/uip-query-builder.js:283
+msgid "Meta value"
+msgstr ""
+
+#: assets/js/uip/options/uip-query-builder.js:42
+msgid "Terms"
+msgstr ""
+
+#: assets/js/uip/options/uip-query-builder.js:43
+msgid "Compare"
+msgstr ""
+
+#: assets/js/uip/options/uip-query-builder.js:44
+msgid "Order"
+msgstr ""
+
+#: assets/js/uip/options/uip-query-builder.js:47
+msgid "Relation"
+msgstr ""
+
+#: assets/js/uip/options/uip-query-builder.js:48
+msgid "Post statuses"
+msgstr ""
+
+#: assets/js/uip/options/uip-query-builder.js:49
+msgid "Search post statuses"
+msgstr ""
+
+#: assets/js/uip/options/uip-query-builder.js:50
+msgid "Pagination"
+msgstr ""
+
+#: assets/js/uip/options/uip-query-builder.js:52
+msgid "Search roles"
+msgstr ""
+
+#: assets/js/uip/options/uip-query-builder.js:54
+msgid "Limit to users own content"
+msgstr ""
+
+#: assets/js/uip/options/uip-query-builder.js:55
+msgid "Taxonomy"
+msgstr ""
+
+#: assets/js/uip/options/uip-query-builder.js:56
+msgid "Field"
+msgstr ""
+
+#: assets/js/uip/options/uip-query-builder.js:57
+msgid "Tax value"
+msgstr ""
+
+#: assets/js/uip/options/uip-query-builder.js:58
+msgid "Include children"
+msgstr ""
+
+#: assets/js/uip/options/uip-query-builder.js:81
+msgid "Posts"
+msgstr ""
+
+#: assets/js/uip/options/uip-query-builder.js:91
+msgid "AND"
+msgstr ""
+
+#: assets/js/uip/options/uip-query-builder.js:95
+msgid "OR"
+msgstr ""
+
+#: assets/js/uip/options/uip-query-builder.js:101
+msgid "Equal"
+msgstr ""
+
+#: assets/js/uip/options/uip-query-builder.js:105
+msgid "Not equal"
+msgstr ""
+
+#: assets/js/uip/options/uip-query-builder.js:109
+msgid "Greater than"
+msgstr ""
+
+#: assets/js/uip/options/uip-query-builder.js:113
+msgid "Greater than or equal"
+msgstr ""
+
+#: assets/js/uip/options/uip-query-builder.js:117
+msgid "Lesser than"
+msgstr ""
+
+#: assets/js/uip/options/uip-query-builder.js:121
+msgid "Lesser than or equal"
+msgstr ""
+
+#: assets/js/uip/options/uip-query-builder.js:125
+msgid "LIKE"
+msgstr ""
+
+#: assets/js/uip/options/uip-query-builder.js:129
+msgid "NOT LIKE"
+msgstr ""
+
+#: assets/js/uip/options/uip-query-builder.js:133
+msgid "IN"
+msgstr ""
+
+#: assets/js/uip/options/uip-query-builder.js:137
+msgid "NOT IN"
+msgstr ""
+
+#: assets/js/uip/options/uip-query-builder.js:143
+msgid "NUMERIC"
+msgstr ""
+
+#: assets/js/uip/options/uip-query-builder.js:147
+msgid "CHAR"
+msgstr ""
+
+#: assets/js/uip/options/uip-query-builder.js:151
+msgid "DATE"
+msgstr ""
+
+#: assets/js/uip/options/uip-query-builder.js:155
+msgid "DATETIME"
+msgstr ""
+
+#: assets/js/uip/options/uip-query-builder.js:159
+msgid "DECIMAL"
+msgstr ""
+
+#: assets/js/uip/options/uip-query-builder.js:163
+msgid "SIGNED"
+msgstr ""
+
+#: assets/js/uip/options/uip-query-builder.js:167
+msgid "TIME"
+msgstr ""
+
+#: assets/js/uip/options/uip-query-builder.js:171
+msgid "UNSIGNED"
+msgstr ""
+
+#: assets/js/uip/options/uip-query-builder.js:177
+msgid "Descending"
+msgstr ""
+
+#: assets/js/uip/options/uip-query-builder.js:181
+msgid "Ascending"
+msgstr ""
+
+#: assets/js/uip/options/uip-query-builder.js:213
+#: assets/js/uip/options/uip-query-builder.js:251
+#: assets/js/uip/uibuilder/uip-block-settings.js:62
+#: assets/js/uip/uibuilder/uip-builder-settings.js:58
+#: assets/js/uip/uibuilder/uip-template-library.js:39
+#: assets/js/uip/uibuilder/uip-template-list.js:20
+msgid "Name"
+msgstr ""
+
+#: assets/js/uip/options/uip-query-builder.js:217
+msgid "Poast type"
+msgstr ""
+
+#: assets/js/uip/options/uip-query-builder.js:225
+#: assets/js/uip/uibuilder/uip-template-list.js:19
+msgid "Modified"
+msgstr ""
+
+#: assets/js/uip/options/uip-query-builder.js:229
+#: assets/js/uip/options/uip-query-builder.js:279
+msgid "Random"
+msgstr ""
+
+#: assets/js/uip/options/uip-query-builder.js:233
+msgid "Commend count"
+msgstr ""
+
+#: assets/js/uip/options/uip-query-builder.js:259
+#: assets/js/uip/uibuilder/uip-dynamic-data-watcher.js:151
+msgid "User login"
+msgstr ""
+
+#: assets/js/uip/options/uip-query-builder.js:263
+msgid "Nicename"
+msgstr ""
+
+#: assets/js/uip/options/uip-query-builder.js:271
+msgid "Registered date"
+msgstr ""
+
+#: assets/js/uip/options/uip-query-builder.js:275
+msgid "Post count"
+msgstr ""
+
+#: assets/js/uip/options/uip-query-builder.js:297
+msgid "Domain"
+msgstr ""
+
+#: assets/js/uip/options/uip-query-builder.js:301
+msgid "Path"
+msgstr ""
+
+#: assets/js/uip/options/uip-query-builder.js:305
+msgid "Network ID"
+msgstr ""
+
+#: assets/js/uip/options/uip-query-builder.js:309
+msgid "Last updated"
+msgstr ""
+
+#: assets/js/uip/options/uip-query-builder.js:313
+msgid "Registered"
+msgstr ""
+
+#: assets/js/uip/options/uip-query-builder.js:317
+msgid "Domain length"
+msgstr ""
+
+#: assets/js/uip/options/uip-query-builder.js:321
+msgid "Path length"
+msgstr ""
+
+#: assets/js/uip/options/uip-query-builder.js:341
+msgid "Sites"
+msgstr ""
+
+#: assets/js/uip/options/uip-responsive.js:17
+#: assets/js/uip/uibuilder/uip-block-settings.js:67
+#: assets/js/uip/uibuilder/uip-block-settings.js:106
+#: assets/js/uip/uibuilder/uip-builder-toolbar.js:81
+#: assets/js/uip/uibuilder/uip-ui-preview.js:53
+msgid "Mobile"
+msgstr ""
+
+#: assets/js/uip/options/uip-responsive.js:18
+#: assets/js/uip/uibuilder/uip-block-settings.js:66
+#: assets/js/uip/uibuilder/uip-block-settings.js:102
+#: assets/js/uip/uibuilder/uip-builder-toolbar.js:83
+#: assets/js/uip/uibuilder/uip-ui-preview.js:55
+msgid "Tablet"
+msgstr ""
+
+#: assets/js/uip/options/uip-responsive.js:19
+#: assets/js/uip/uibuilder/uip-builder-toolbar.js:82
+#: assets/js/uip/uibuilder/uip-ui-preview.js:54
+msgid "Desktop"
+msgstr ""
+
+#: assets/js/uip/options/uip-select-option-builder.js:12
+msgid "New option"
+msgstr ""
+
+#: assets/js/uip/options/uip-select-option-builder.js:14
+msgid "Value"
+msgstr ""
+
+#: assets/js/uip/options/uip-select-option-builder.js:45
+msgid "Option"
+msgstr ""
+
+#: assets/js/uip/options/uip-shadow-designer.js:30
+msgid "Outside"
+msgstr ""
+
+#: assets/js/uip/options/uip-shadow-designer.js:34
+msgid "Inside"
+msgstr ""
+
+#: assets/js/uip/options/uip-shadow-designer.js:38
+msgid "Horizontal distance"
+msgstr ""
+
+#: assets/js/uip/options/uip-shadow-designer.js:39
+msgid "Vertical distance"
+msgstr ""
+
+#: assets/js/uip/options/uip-spacing.js:31
+msgid "Paddding"
+msgstr ""
+
+#: assets/js/uip/options/uip-spacing.js:32
+msgid "Margin"
+msgstr ""
+
+#: assets/js/uip/options/uip-spacing.js:38
+#: assets/js/uip/options/uip-styles.js:64
+msgid "Remove"
+msgstr ""
+
+#: assets/js/uip/options/uip-spacing.js:43
+#: assets/js/uip/options/uip-styles.js:69
+#: assets/js/uip/options/uip-text-format.js:91
+msgid "Extra small"
+msgstr ""
+
+#: assets/js/uip/options/uip-spacing.js:58
+#: assets/js/uip/options/uip-styles.js:84
+#: assets/js/uip/options/uip-text-format.js:106
+msgid "Large"
+msgstr ""
+
+#: assets/js/uip/options/uip-spacing.js:63
+#: assets/js/uip/options/uip-styles.js:89
+#: assets/js/uip/options/uip-text-format.js:111
+msgid "Extra large"
+msgstr ""
+
+#: assets/js/uip/options/uip-styles.js:28
+msgid "Opacity"
+msgstr ""
+
+#: assets/js/uip/options/uip-styles.js:30
+msgid "Fill"
+msgstr ""
+
+#: assets/js/uip/options/uip-styles.js:31
+msgid "Background"
+msgstr ""
+
+#: assets/js/uip/options/uip-styles.js:32
+msgid "Border"
+msgstr ""
+
+#: assets/js/uip/options/uip-styles.js:40
+msgid "Outline"
+msgstr ""
+
+#: assets/js/uip/options/uip-submit-action.js:17
+msgid "Save as site option"
+msgstr ""
+
+#: assets/js/uip/options/uip-submit-action.js:21
+msgid "Save as user meta"
+msgstr ""
+
+#: assets/js/uip/options/uip-submit-action.js:25
+msgid "Send to PHP function"
+msgstr ""
+
+#: assets/js/uip/options/uip-submit-action.js:31
+msgid "Individual keys"
+msgstr ""
+
+#: assets/js/uip/options/uip-submit-action.js:35
+msgid "Group object"
+msgstr ""
+
+#: assets/js/uip/options/uip-submit-action.js:40
+#: assets/js/uip/options/uip-units.js:12
+#: assets/js/uip/tools/uip-php-error-log.js:21
+msgid "Pixels"
+msgstr ""
+
+#: assets/js/uip/options/uip-submit-action.js:41
+msgid "Submit type"
+msgstr ""
+
+#: assets/js/uip/options/uip-submit-action.js:42
+msgid "PHP function"
+msgstr ""
+
+#: assets/js/uip/options/uip-submit-action.js:43
+msgid "Option name"
+msgstr ""
+
+#: assets/js/uip/options/uip-submit-action.js:44
+msgid "Recipient email"
+msgstr ""
+
+#: assets/js/uip/options/uip-submit-action.js:45
+msgid "Email subject"
+msgstr ""
+
+#: assets/js/uip/options/uip-submit-action.js:46
+msgid "Email template"
+msgstr ""
+
+#: assets/js/uip/options/uip-submit-action.js:47
+msgid ""
+"Use form values in the email template by using {{meta_keys}} set inside from "
+"input blocks"
+msgstr ""
+
+#: assets/js/uip/options/uip-submit-action.js:49
+msgid ""
+"The form data will be saved as an object to your database using the function "
+"update_site_option(). You will then be able to access your data using the "
+"function get_site_option('your_option_key')"
+msgstr ""
+
+#: assets/js/uip/options/uip-submit-action.js:52
+msgid "Save as"
+msgstr ""
+
+#: assets/js/uip/options/uip-submit-action.js:54
+msgid "Submission redirect"
+msgstr ""
+
+#: assets/js/uip/options/uip-submit-action.js:55
+msgid "Action"
+msgstr ""
+
+#: assets/js/uip/options/uip-text-format.js:32
+msgid "size"
+msgstr ""
+
+#: assets/js/uip/options/uip-text-format.js:33
+msgid "Line height"
+msgstr ""
+
+#: assets/js/uip/options/uip-text-format.js:34
+msgid "Weight"
+msgstr ""
+
+#: assets/js/uip/options/uip-text-format.js:36
+#: assets/js/uip/uibuilder/uip-builder-variables.js:46
+msgid "Font"
+msgstr ""
+
+#: assets/js/uip/options/uip-text-format.js:39
+msgid "Decoration"
+msgstr ""
+
+#: assets/js/uip/options/uip-text-format.js:40
+msgid "Font url"
+msgstr ""
+
+#: assets/js/uip/options/uip-text-format.js:41
+msgid "Font family"
+msgstr ""
+
+#: assets/js/uip/options/uip-text-format.js:62
+msgid "Justify"
+msgstr ""
+
+#: assets/js/uip/options/uip-text-format.js:74
+msgid "Italic"
+msgstr ""
+
+#: assets/js/uip/options/uip-text-format.js:79
+msgid "Underline"
+msgstr ""
+
+#: assets/js/uip/options/uip-text-format.js:84
+msgid "Strikethrough"
+msgstr ""
+
+#: assets/js/uip/options/uip-text-format.js:122
+msgid "100"
+msgstr ""
+
+#: assets/js/uip/options/uip-text-format.js:126
+msgid "200"
+msgstr ""
+
+#: assets/js/uip/options/uip-text-format.js:130
+msgid "300"
+msgstr ""
+
+#: assets/js/uip/options/uip-text-format.js:134
+msgid "400"
+msgstr ""
+
+#: assets/js/uip/options/uip-text-format.js:138
+msgid "500"
+msgstr ""
+
+#: assets/js/uip/options/uip-text-format.js:142
+msgid "600"
+msgstr ""
+
+#: assets/js/uip/options/uip-text-format.js:146
+msgid "700"
+msgstr ""
+
+#: assets/js/uip/options/uip-text-format.js:150
+msgid "800"
+msgstr ""
+
+#: assets/js/uip/options/uip-text-format.js:154
+msgid "900"
+msgstr ""
+
+#: assets/js/uip/options/uip-text-format.js:158
+msgid "Bold"
+msgstr ""
+
+#: assets/js/uip/options/uip-text-format.js:162
+msgid "Bolder"
+msgstr ""
+
+#: assets/js/uip/options/uip-text-format.js:166
+msgid "Lighter"
+msgstr ""
+
+#: assets/js/uip/options/uip-text-format.js:184
+msgid "Capitalize"
+msgstr ""
+
+#: assets/js/uip/options/uip-text-format.js:188
+msgid "Lowercase"
+msgstr ""
+
+#: assets/js/uip/options/uip-text-format.js:192
+msgid "Uppercase"
+msgstr ""
+
+#: assets/js/uip/options/uip-text-format.js:199
+msgid "System"
+msgstr ""
+
+#: assets/js/uip/options/uip-text-format.js:203
+#: assets/js/uip/uibuilder/uip-builder-variables.js:52
+msgid "Arial / Helvetica"
+msgstr ""
+
+#: assets/js/uip/options/uip-text-format.js:207
+#: assets/js/uip/uibuilder/uip-builder-variables.js:56
+msgid "Times New Roman"
+msgstr ""
+
+#: assets/js/uip/options/uip-text-format.js:211
+#: assets/js/uip/uibuilder/uip-builder-variables.js:60
+msgid "Courier New"
+msgstr ""
+
+#: assets/js/uip/options/uip-text-format.js:215
+#: assets/js/uip/uibuilder/uip-builder-variables.js:64
+msgid "Tahoma"
+msgstr ""
+
+#: assets/js/uip/options/uip-text-format.js:219
+#: assets/js/uip/uibuilder/uip-builder-variables.js:68
+msgid "Trebuchet MS"
+msgstr ""
+
+#: assets/js/uip/options/uip-text-format.js:223
+#: assets/js/uip/uibuilder/uip-builder-variables.js:72
+msgid "Verdana"
+msgstr ""
+
+#: assets/js/uip/options/uip-text-format.js:227
+#: assets/js/uip/uibuilder/uip-builder-variables.js:76
+msgid "Georgia"
+msgstr ""
+
+#: assets/js/uip/options/uip-text-format.js:231
+#: assets/js/uip/uibuilder/uip-builder-variables.js:80
+msgid "Garamond"
+msgstr ""
+
+#: assets/js/uip/options/uip-text-format.js:235
+#: assets/js/uip/uibuilder/uip-builder-variables.js:84
+msgid "Arial Black"
+msgstr ""
+
+#: assets/js/uip/options/uip-text-format.js:239
+#: assets/js/uip/uibuilder/uip-builder-variables.js:88
+msgid "Impact"
+msgstr ""
+
+#: assets/js/uip/options/uip-text-format.js:243
+#: assets/js/uip/uibuilder/uip-builder-variables.js:92
+msgid "Brush Script MT"
+msgstr ""
+
+#: assets/js/uip/options/uip-text-format.js:247
+#: assets/js/uip/uibuilder/uip-builder-variables.js:96
+msgid "UiPress icons"
+msgstr ""
+
+#: assets/js/uip/options/uip-units.js:13
+msgid "Percent"
+msgstr ""
+
+#: assets/js/uip/options/uip-units.js:14
+msgid "Points"
+msgstr ""
+
+#: assets/js/uip/options/uip-units.js:15
+msgid "Font size"
+msgstr ""
+
+#: assets/js/uip/options/uip-units.js:16
+msgid "Root font size"
+msgstr ""
+
+#: assets/js/uip/options/uip-units.js:17
+msgid "Viewport height"
+msgstr ""
+
+#: assets/js/uip/options/uip-units.js:18
+msgid "Viewport width"
+msgstr ""
+
+#: assets/js/uip/options/uip-units.js:19
+msgid "auto"
+msgstr ""
+
+#: assets/js/uip/tools/uip-php-error-log.js:22
+msgid "Search errors"
+msgstr ""
+
+#: assets/js/uip/tools/uip-php-error-log.js:23
+msgid "Error log"
+msgstr ""
+
+#: assets/js/uip/tools/uip-php-error-log.js:24
+msgid "Misc"
+msgstr ""
+
+#: assets/js/uip/tools/uip-php-error-log.js:25
+msgid "Fatal"
+msgstr ""
+
+#: assets/js/uip/tools/uip-php-error-log.js:26
+msgid "Warning"
+msgstr ""
+
+#: assets/js/uip/tools/uip-php-error-log.js:27
+msgid "Syntax"
+msgstr ""
+
+#: assets/js/uip/tools/uip-php-error-log.js:28
+msgid "Notice"
+msgstr ""
+
+#: assets/js/uip/tools/uip-php-error-log.js:29
+msgid "Exception"
+msgstr ""
+
+#: assets/js/uip/tools/uip-php-error-log.js:30
+msgid "entries"
+msgstr ""
+
+#: assets/js/uip/tools/uip-php-error-log.js:31
+msgid "Newest first"
+msgstr ""
+
+#: assets/js/uip/tools/uip-php-error-log.js:32
+msgid "Oldest first"
+msgstr ""
+
+#: assets/js/uip/tools/uip-php-error-log.js:33
+#: assets/js/uip/uibuilder/uip-template-library.js:33
+msgid "Sort by"
+msgstr ""
+
+#: assets/js/uip/tools/uip-php-error-log.js:34
+msgid "line"
+msgstr ""
+
+#: assets/js/uip/tools/uip-php-error-log.js:35
+msgid "Refresh log"
+msgstr ""
+
+#: assets/js/uip/tools/uip-php-error-log.js:36
+msgid "Stack trace"
+msgstr ""
+
+#: assets/js/uip/tools/uip-php-error-log.js:37
+msgid "No PHP errors to display!"
+msgstr ""
+
+#: assets/js/uip/ui-builder.js:219
+msgid "List View"
+msgstr ""
+
+#: assets/js/uip/ui-builder.js:224
+#: assets/js/uip/uibuilder/uip-builder-setup-wizard.js:16
+#: assets/js/uip/uibuilder/uip-template-list.js:48
+msgid "Setup wizard"
+msgstr ""
+
+#: assets/js/uip/ui-builder.js:229
+#: assets/js/uip/uibuilder/uip-builder-global-export.js:16
+#: assets/js/uip/uibuilder/uip-template-list.js:49
+msgid "Global export"
+msgstr ""
+
+#: assets/js/uip/ui-builder.js:234
+#: assets/js/uip/uibuilder/uip-builder-global-import.js:17
+#: assets/js/uip/uibuilder/uip-template-list.js:56
+msgid "Global import"
+msgstr ""
+
+#: assets/js/uip/ui-builder.js:239
+#: assets/js/uip/uibuilder/uip-builder-site-sync.js:18
+msgid "Site sync"
+msgstr ""
+
+#: assets/js/uip/ui-builder.js:244
+#: assets/js/uip/uibuilder/uip-builder-global-export.js:22
+#: assets/js/uip/uibuilder/uip-builder-global-settings.js:16
+#: assets/js/uip/uibuilder/uip-builder-site-sync.js:25
+#: assets/js/uip/uibuilder/uip-builder-toolbar.js:96
+#: assets/js/uip/uibuilder/uip-template-list.js:39
+msgid "Site settings"
+msgstr ""
+
+#: assets/js/uip/ui-builder.js:256
+msgid "Block Settings"
+msgstr ""
+
+#: assets/js/uip/ui-builder.js:261
+msgid "Template Settings"
+msgstr ""
+
+#: assets/js/uip/ui-builder.js:287
+msgid "Please clear your cache"
+msgstr ""
+
+#: assets/js/uip/ui-builder.js:287
+msgid ""
+"Thank you for updating uiPress. Please clear your cache to ensure the "
+"builder works correctly"
+msgstr ""
+
+#: assets/js/uip/ui-builder.js:400 assets/js/uip/uip-app.js:167
+msgid "Unable to load all plugins"
+msgstr ""
+
+#: assets/js/uip/ui-builder.js:400 assets/js/uip/ui-builder.js:404
+#: assets/js/uip/uip-app.js:167 assets/js/uip/uip-app.js:179
+msgid "Some functions may not work as expected."
+msgstr ""
+
+#: assets/js/uip/ui-builder.js:404 assets/js/uip/uip-app.js:179
+msgid "Unable to load all components"
+msgstr ""
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:13
+msgid "White label"
+msgstr ""
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:18
+#: assets/js/uip/uibuilder/global-settings-groups.js:173
+#: assets/js/uip/uibuilder/uip-block-settings.js:35
+#: assets/js/uip/uibuilder/uip-builder-settings.js:33
+#: assets/js/uip/uibuilder/uip-builder-variables.js:12
+msgid "Theme"
+msgstr ""
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:23
+msgid "Login"
+msgstr ""
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:28
+msgid "Posts and pages"
+msgstr ""
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:33
+msgid "Media"
+msgstr ""
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:38
+msgid "Plugins"
+msgstr ""
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:48
+msgid "Extensions"
+msgstr ""
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:64
+#: assets/js/uip/uibuilder/global-settings-groups.js:73
+msgid ""
+"This will replace the WordPress logo with your own. The logo will also "
+"become available in the dynamic options in the builder."
+msgstr ""
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:81
+msgid "Remove jQuery Migrate front end"
+msgstr ""
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:82
+msgid "Removes jQuery migrate script from all front end pages."
+msgstr ""
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:90
+msgid "Remove jQuery Migrate back end"
+msgstr ""
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:91
+msgid ""
+"Removes jQuery migrate script from all back end pages. This may break some "
+"functions in the back end"
+msgstr ""
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:99
+msgid "Add post ID to table"
+msgstr ""
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:100
+msgid ""
+"Adds the post ID to each row in a table. Works for posts, custom post types, "
+"pages and users."
+msgstr ""
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:108
+msgid "Disply last modified in table"
+msgstr ""
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:109
+msgid ""
+"Adds a last modified column to post tables. Works for posts, custom post "
+"types and pages."
+msgstr ""
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:117
+msgid "Add plugin status"
+msgstr ""
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:118
+msgid "Adds a plugin status column to the plugin table"
+msgstr ""
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:126
+msgid "Logo"
+msgstr ""
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:127
+msgid "This will replace the WordPress logo with your own on the login page."
+msgstr ""
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:135
+msgid "Logo alignment"
+msgstr ""
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:136
+msgid "Sets the logo alignment."
+msgstr ""
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:174
+msgid "Adds a modern theme to the login page"
+msgstr ""
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:182
+msgid "Form alignment"
+msgstr ""
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:183
+msgid "Sets the position of the login form."
+msgstr ""
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:208
+msgid "Background image"
+msgstr ""
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:209
+msgid "Adds a background image to the login page."
+msgstr ""
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:221
+msgid "Forces dark mode on the login page"
+msgstr ""
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:231
+msgid "Disable language selector"
+msgstr ""
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:232
+msgid "Disables the language selector on the login page"
+msgstr ""
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:242
+msgid "Remove UiPress link"
+msgstr ""
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:243
+msgid "Removes the powered by uipress link"
+msgstr ""
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:252
+msgid "Custom HTML"
+msgstr ""
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:253
+msgid ""
+"HTML to be added to the side panel of the login page. Only works when the "
+"login theme is enabled and not using the centered form."
+msgstr ""
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:265
+msgid "Custom CSS"
+msgstr ""
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:266
+msgid "CSS to be added to the login page"
+msgstr ""
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:281
+msgid "Hide UiPress from plugin table"
+msgstr ""
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:282
+msgid ""
+"If enabled, both UiPress lite and pro (if installed) will be hidden from the "
+"plugins table"
+msgstr ""
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:292
+msgid "Change Howdy message"
+msgstr ""
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:293
+msgid "Replaces the Howdy message in the toolbar with one of your choosing"
+msgstr ""
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:314
+msgid "Howdy message"
+msgstr ""
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:315
+msgid "Removes the Howdy message in the toolbar"
+msgstr ""
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:325
+msgid "Add user roles as body class"
+msgstr ""
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:326
+msgid ""
+"If enabled, the current user roles will be added as classes to the admin "
+"body tag. This can give you more flexibility in your css for role based "
+"conditions"
+msgstr ""
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:347
+msgid "Dynamic loading"
+msgstr ""
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:348
+msgid ""
+"If enabled, dynamic loading on templates will be disabled and every link "
+"will be loaded with a page refresh"
+msgstr ""
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:357
+msgid "Load frontend outside frame"
+msgstr ""
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:358
+msgid ""
+"If enabled, all page links not inside the wordpress admin will be reloaded "
+"outside the frame"
+msgstr ""
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:368
+msgid "Enqueue styles"
+msgstr ""
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:369
+msgid "Add stylesheets to the head of every admin page"
+msgstr ""
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:379
+msgid "Enqueue scripts"
+msgstr ""
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:380
+msgid "Add scripts to the head of every admin page"
+msgstr ""
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:391
+msgid "HTML for head"
+msgstr ""
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:392
+msgid "Add HTML here to be added to every admin page head section"
+msgstr ""
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:406
+msgid "Disable uipress on pages"
+msgstr ""
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:407
+msgid ""
+"Add URLs of pages here that you wish uiPress to be disabled on, separated by "
+"a comma. The URL can be an absolute URL, partial path or a query paramater."
+msgstr ""
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:417
+msgid "Enter fullscreen on pages"
+msgstr ""
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:419
+msgid ""
+"Add URLs of pages here that you wish to be fullscreen when using a "
+"uiTemplate, separated by a comma. The URL can be an absolute URL, partial "
+"path or a query paramater."
+msgstr ""
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:432
+msgid ""
+"If enabled, a simple modernised theme will be applied to the admin area. "
+"This is an alternative to using the builder for your UI"
+msgstr ""
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:442
+msgid "Private library"
+msgstr ""
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:443
+msgid ""
+"If enabled, users will only be able to view their own media in the media "
+"library. This does not apply to administrators"
+msgstr ""
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:454
+msgid "Private posts"
+msgstr ""
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:455
+msgid ""
+"If enabled, users will only be able to view their own posts and pages in the "
+"post tables. This does not apply to administrators"
+msgstr ""
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:466
+msgid "Menu builder"
+msgstr ""
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:467
+msgid ""
+"The menu builder allows you to create custom admin menus for roles and users"
+msgstr ""
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:477
+msgid "User management"
+msgstr ""
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:478
+msgid ""
+"The user management page allows you manage your users, roles and user "
+"activity all in one place"
+msgstr ""
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:488
+msgid "Content folders"
+msgstr ""
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:489
+msgid "Enables a folder system for posts, pages, custom post types and media"
+msgstr ""
+
+#: assets/js/uip/uibuilder/template-settings-groups.js:21
+#: assets/js/uip/uibuilder/uip-builder-settings.js:39
+msgid "CSS"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-actions.js:22
+#: assets/js/uip/uibuilder/uip-builder-patterns-list.js:60
+#: assets/js/uip/uibuilder/uip-save-pattern.js:20
+#: assets/js/uip/uibuilder/uip-template-library.js:41
+msgid "Save pattern"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-actions.js:25
+msgid "Copy"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-actions.js:26
+msgid "Copy block"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-actions.js:27
+msgid "Copy styles"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-actions.js:28
+msgid "Paste"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-actions.js:29
+msgid "Paste content"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-actions.js:30
+msgid "Paste styles"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-actions.js:32
+#: assets/js/uip/uibuilder/uip-template-list.js:53
+msgid "Duplicate"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-actions.js:33
+msgid "Sync pattern"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-actions.js:37
+msgid "Block content"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-actions.js:38
+#: assets/js/uip/uibuilder/uip-block-actions.js:42
+#: assets/js/uip/uibuilder/uip-builder-setup-wizard.js:45
+msgid "Template"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-actions.js:43
+msgid "Insert"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-actions.js:132
+#: assets/js/uip/uibuilder/uip-block-actions.js:133
+msgid " duplicated"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-actions.js:170
+#: assets/js/uip/uibuilder/uip-block-actions.js:171
+msgid " pasted"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-actions.js:232
+#: assets/js/uip/uibuilder/uip-block-actions.js:234
+msgid "block deleted"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-actions.js:250
+msgid "Sync pattern?"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-actions.js:251
+msgid ""
+"This will update the pattern template and will sync this pattern's changes "
+"accross all templates using the same pattern"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-actions.js:252
+msgid "Sync patern"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-actions.js:261
+msgid "Pattern sync in progress"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-actions.js:301
+msgid "Pattern succesfully synced"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-actions.js:330
+msgid "Block copied"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-actions.js:335
+msgid "Block styles copied"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-actions.js:368
+#: assets/js/uip/uibuilder/uip-builder-toolbar.js:455
+#: assets/js/uip/uibuilder/uip-ui-preview.js:569
+msgid "Layout exported"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-actions.js:370
+#: assets/js/uip/uibuilder/uip-builder-toolbar.js:457
+msgid "Block exported"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-actions.js:373
+#: assets/js/uip/uibuilder/uip-builder-toolbar.js:460
+msgid "Block content exported"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-actions.js:385
+#: assets/js/uip/uibuilder/uip-builder-toolbar.js:471
+msgid "Templates must be in valid JSON format"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-actions.js:390
+#: assets/js/uip/uibuilder/uip-builder-global-settings.js:247
+#: assets/js/uip/uibuilder/uip-builder-toolbar.js:477
+msgid "Uploaded file is too big"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-actions.js:427
+#: assets/js/uip/uibuilder/uip-block-actions.js:432
+#: assets/js/uip/uibuilder/uip-block-actions.js:439
+#: assets/js/uip/uibuilder/uip-builder-global-import.js:97
+#: assets/js/uip/uibuilder/uip-builder-toolbar.js:517
+msgid "Template mismatch"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-actions.js:434
+msgid "Block imported"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-actions.js:441
+msgid "Content imported"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-actions.js:460
+#: assets/js/uip/uibuilder/uip-builder-toolbar.js:531
+msgid "File is not a valid JSON template"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-actions.js:464
+#: assets/js/uip/uibuilder/uip-builder-global-import.js:82
+#: assets/js/uip/uibuilder/uip-builder-global-settings.js:301
+#: assets/js/uip/uibuilder/uip-builder-toolbar.js:536
+msgid "JSON parse failed"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:31
+#: assets/js/uip/uibuilder/uip-template-library.js:21
+msgid "This block no longer exists"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:32
+msgid "Go back"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:33
+msgid "Unique ID"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:34
+#: assets/js/uip/uibuilder/uip-builder-drop-area.js:26
+#: assets/js/uip/uibuilder/uip-builder-global-settings.js:19
+msgid "This is a pro option. Upgrade to unlock"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:36
+#: assets/js/uip/uibuilder/uip-block-settings.js:48
+msgid "Options"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:37
+msgid "Building settings object..."
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:38
+msgid ""
+"Block unique id. If you change this it must remain unique and can not be "
+"blank"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:39
+msgid "Hidden on device"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:40
+msgid "Tooltip"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:41
+msgid "Message"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:42
+msgid "Delay (ms)"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:43
+msgid "Styles"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:45
+msgid "Currently editing"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:46
+msgid "Block part"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:47
+msgid "root"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:49
+msgid "Element states"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:50
+msgid "Editing for light mode"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:51
+msgid "Editing for dark mode"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:52
+msgid "Pseudo content"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:53
+#: assets/js/uip/uibuilder/uip-block-settings.js:90
+msgid "::before"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:54
+#: assets/js/uip/uibuilder/uip-block-settings.js:94
+msgid "::after"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:55
+msgid "Query loop"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:56
+#: assets/js/uip/uibuilder/uip-dynamic-data-watcher.js:27
+msgid "Query"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:57
+#: assets/js/uip/uibuilder/uip-builder-toolbar.js:35
+msgid "Style presets"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:58
+msgid "Use preset"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:60
+msgid "New preset"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:61
+msgid "Create preset"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:63
+msgid ""
+"You are currently editing a style preset. Changes made here will apply to "
+"all blocks using the same preset."
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:65
+#: assets/js/uip/uibuilder/uip-block-settings.js:98
+msgid "Menu collapsed"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:68
+msgid "Clear state"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:69
+msgid ""
+"This block has now been discontinued. We recommend replacing it with the new "
+"menu block from the blocks list."
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:74
+msgid ":active"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:78
+msgid ":focus"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:82
+msgid ":hover"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:86
+msgid ":visited"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:112
+#: assets/js/uip/uibuilder/uip-builder-setup-wizard.js:33
+msgid "Light mode"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:133
+msgid "Light mode styles"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:138
+msgid "Dark mode styles"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:556
+msgid "This block has no settings"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:564
+msgid "This is a pro block. Upgrade to unlock"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:772
+msgid "Preset name is required"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:800
+msgid "Presets updated"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:822
+msgid "Preset missing"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:830
+msgid "Are yous sure?"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:830
+msgid "Are you sure you want to delete this style preset?"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-blocks-list.js:19
+msgid "This block requires uipress pro. Upgrade to unlock."
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-blocks-list.js:20
+msgid "Search blocks..."
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-blocks-list.js:120
+msgid " added"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-framework.js:43
+#: assets/js/uip/uibuilder/uip-builder-framework.js:105
+msgid "Layers"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-framework.js:44
+msgid "Welcome to the uiBuilder"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-framework.js:46
+msgid ""
+"Brand new for UiPress 3, the uiBuilder is a powerful drag and drop tool for "
+"building great looking, functional admin experiences for yourself or your "
+"clients"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-framework.js:49
+msgid "Browse premade templates or start from scratch"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-framework.js:50
+msgid "Blank canvas"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-framework.js:51
+msgid "View templates"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-framework.js:52
+msgid "Don't show this again"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-framework.js:53
+#: assets/js/uip/uibuilder/uip-builder-toolbar.js:102
+msgid "Close"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-framework.js:54
+msgid "Deletes all blocks"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-framework.js:55
+msgid "Hide layers"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-framework.js:56
+msgid "Block shortcuts"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-framework.js:57
+msgid ""
+"As you build your template, key blocks will automatically be added here for "
+"easy settings access"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-framework.js:58
+msgid "Clear layers"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-framework.js:82
+msgid "Draft Layout"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-framework.js:331
+msgid "Canvas"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-framework.js:536
+msgid "This will delete all blocks from your template."
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-framework.js:539
+msgid "Template blocks deleted"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-global-export.js:18
+msgid ""
+"Choose the sections you wish to export to another site and click export to "
+"generate a file containing all of uiPress settings, templates, menus and "
+"theme styles"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-global-export.js:21
+#: assets/js/uip/uibuilder/uip-builder-site-sync.js:24
+msgid "Templates"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-global-export.js:23
+#: assets/js/uip/uibuilder/uip-builder-settings.js:20
+#: assets/js/uip/uibuilder/uip-builder-setup-wizard.js:50
+#: assets/js/uip/uibuilder/uip-builder-site-sync.js:26
+msgid "Theme styles"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-global-export.js:24
+#: assets/js/uip/uibuilder/uip-builder-site-sync.js:27
+msgid "Admin menus"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-global-export.js:66
+msgid "Exporting uiPress content"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-global-export.js:95
+msgid "Export complete"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-global-import.js:18
+msgid ""
+"If you have global exported uiPress on another site then drag and select "
+"the .json file below to import."
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-global-import.js:49
+#: assets/js/uip/uibuilder/uip-builder-site-sync.js:182
+msgid "Importing uiPress content"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-global-import.js:59
+msgid "Global exports must be in valid JSON format"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-global-import.js:120
+msgid "Content imported succesfully"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-global-settings.js:17
+msgid "Save settings"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-global-settings.js:18
+#: assets/js/uip/uibuilder/uip-builder-site-sync.js:168
+msgid "Settings saved"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-global-settings.js:20
+msgid "Search settings"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-global-settings.js:231
+msgid "Settings exported"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-global-settings.js:236
+msgid "Importing settings"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-global-settings.js:241
+msgid "Settings must be in valid JSON format"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-global-settings.js:281
+#: assets/js/uip/uibuilder/uip-builder-global-settings.js:286
+msgid "Settings mismatch"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-global-settings.js:292
+msgid "Settings imported"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-history.js:18
+msgid "Undo"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-history.js:19
+msgid "Redo"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-history.js:20
+msgid "History states"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-history.js:38
+msgid "Project opened"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-patterns-list.js:23
+msgid "2 column"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-patterns-list.js:30
+msgid "3 column"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-patterns-list.js:37
+msgid "4 column"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-patterns-list.js:43
+msgid "A basic sidebar, toolbar and content frame layout"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-patterns-list.js:44
+msgid "Admin boilerplate"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-patterns-list.js:56
+#: assets/js/uip/uibuilder/uip-template-library.js:23
+msgid "Pro"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-patterns-list.js:57
+msgid "Search patterns..."
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-patterns-list.js:58
+#: assets/js/uip/uibuilder/uip-save-pattern.js:17
+msgid "Pattern title"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-patterns-list.js:59
+#: assets/js/uip/uibuilder/uip-save-pattern.js:18
+msgid "Pattern type"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-patterns-list.js:61
+#: assets/js/uip/uibuilder/uip-save-pattern.js:21
+#: assets/js/uip/uibuilder/uip-template-library.js:42
+msgid "Description"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-patterns-list.js:62
+#: assets/js/uip/uibuilder/uip-save-pattern.js:22
+msgid "Pattern icon"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-patterns-list.js:64
+msgid "Layouts"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-patterns-list.js:202
+msgid "Pattern exported"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-patterns-list.js:206
+msgid "Importing pattern"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:21
+#: assets/js/uip/uibuilder/uip-builder-variables.js:18
+msgid "Revert style back to default"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:22
+#: assets/js/uip/uibuilder/uip-builder-setup-wizard.js:22
+#: assets/js/uip/uibuilder/uip-builder-setup-wizard.js:55
+msgid "Applies to"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:23
+#: assets/js/uip/uibuilder/uip-builder-setup-wizard.js:23
+#: assets/js/uip/uibuilder/uip-template-list.js:18
+msgid "Excludes"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:24
+msgid "Template type"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:26
+#: assets/js/uip/uibuilder/uip-builder-toolbar.js:105
+msgid "Admin Page"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:29
+msgid "Template will now load for you!"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:30
+msgid "Take care not to revoke access to anything you may need in the admin."
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:31
+msgid "If you haven't already, we recommend setting up:"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:32
+msgid "safe mode"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:35
+#: assets/js/uip/uibuilder/uip-builder-variables.js:14
+msgid "Variable label"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:36
+#: assets/js/uip/uibuilder/uip-builder-variables.js:15
+msgid "Variable name"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:37
+#: assets/js/uip/uibuilder/uip-builder-variables.js:16
+msgid "Delete variable"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:40
+msgid "Javascript"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:41
+#: assets/js/uip/uibuilder/uip-builder-settings.js:77
+#: assets/js/uip/uibuilder/uip-builder-variables.js:25
+msgid "Light"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:42
+#: assets/js/uip/uibuilder/uip-builder-settings.js:81
+#: assets/js/uip/uibuilder/uip-builder-variables.js:30
+msgid "Dark"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:43
+#: assets/js/uip/uibuilder/uip-builder-toolbar.js:90
+#: assets/js/uip/uibuilder/uip-ui-preview.js:63
+msgid "Template name"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:44
+#: assets/js/uip/uibuilder/uip-builder-toolbar.js:91
+#: assets/js/uip/uibuilder/uip-template-list.js:22
+#: assets/js/uip/uibuilder/uip-template-list.js:67
+#: assets/js/uip/uibuilder/uip-template-list.js:111
+#: assets/js/uip/uibuilder/uip-ui-preview.js:59
+#: assets/js/uip/uibuilder/uip-ui-preview.js:64
+msgid "Active"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:45
+msgid "Users and roles"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:46
+#: assets/js/uip/uibuilder/uip-builder-setup-wizard.js:25
+msgid "Search users and roles"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:47
+#: assets/js/uip/uibuilder/uip-builder-variables.js:17
+msgid "custom"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:48
+msgid "Menu icon"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:49
+msgid "Add to submenu"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:50
+msgid "None (top level)"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:51
+msgid "Apply to subsites"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:52
+msgid "Is this an admin page?"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:54
+msgid ""
+"This template does not contain a content block. The content block is key to "
+"navigating the admin. Setting this live as a uiTemplate can cause a lock out."
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:57
+msgid "Page link"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:60
+#: assets/js/uip/uibuilder/uip-builder-toolbar.js:98
+msgid "Template settings"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-setup-wizard.js:17
+#: assets/js/uip/uibuilder/uip-builder-toolbar.js:100
+msgid "Previous"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-setup-wizard.js:18
+#: assets/js/uip/uibuilder/uip-builder-toolbar.js:99
+msgid "Next"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-setup-wizard.js:19
+msgid "Finish"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-setup-wizard.js:24
+msgid "Select users and roles"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-setup-wizard.js:26
+msgid "Login logo"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-setup-wizard.js:27
+msgid "Login background"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-setup-wizard.js:28
+msgid "Enable login theme"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-setup-wizard.js:29
+msgid "Setup complete!"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-setup-wizard.js:30
+msgid ""
+"Settings from the wizard have been saved to your site. If you chose a admin "
+"template you will need to reload the page to use it."
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-setup-wizard.js:31
+msgid "Refresh admin"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-setup-wizard.js:32
+msgid "Exit"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-setup-wizard.js:41
+msgid "Choose a logo for the admin area."
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-setup-wizard.js:46
+msgid ""
+"Choose a template for the admin area. This can be editied after the intiial "
+"setup."
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-setup-wizard.js:51
+msgid "Choose your colors and styles to run through the admin area."
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-setup-wizard.js:56
+msgid "Choose who you want to use the new admin template"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-setup-wizard.js:61
+msgid "Use the options below to customise your login page."
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-setup-wizard.js:167
+msgid "Confirguring settings"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-site-sync.js:19
+msgid ""
+"Enabling this site as a host allows you to sync other sites to this site's "
+"uiPress settings. Please note, rest API needs to be enabled to use this "
+"feature."
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-site-sync.js:21
+msgid ""
+"Choose the sections you sync with a remote site. Enabling auto update will "
+"allow uiPress to routinely check for changes at the host site and sync "
+"updates."
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-site-sync.js:30
+msgid "Host enabled"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-site-sync.js:31
+msgid "Import URL"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-site-sync.js:32
+msgid "Import key"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-site-sync.js:33
+#: assets/js/uip/uibuilder/uip-builder-toolbar.js:84
+#: assets/js/uip/uibuilder/uip-ui-preview.js:56
+msgid "Save"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-site-sync.js:34
+msgid "Refresh key"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-site-sync.js:35
+msgid "Sync options"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-site-sync.js:37
+msgid "Sync now"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-site-sync.js:58
+msgid "Host"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-site-sync.js:62
+msgid "Sync"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-site-sync.js:190
+msgid "Import complete"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-toolbar.js:21
+msgid ""
+"Typing \"{{\" in any window now opens the new dynamic data flow. Continue "
+"typing to search or press enter to select. Dynamic data will render in "
+"preview mode."
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-toolbar.js:27
+msgid "Query builder"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-toolbar.js:29
+msgid ""
+"The new query builder can be enabled on any block and allows you to query "
+"posts, pages, users and sites (multsitie only). The query builder is "
+"designed to work perfectly with the new dynamic data selector."
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-toolbar.js:37
+msgid ""
+"Style presets allow you to create custom presets that you can apply to any "
+"blocks. Presets are global and making changes to them in one place will "
+"update them across all of your templates"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-toolbar.js:43
+msgid "Redesigned block styles"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-toolbar.js:44
+msgid ""
+"The new editor makes it easier to adjust block styles and create more "
+"advanced layouts. Use the new pseudo switcher to create detailed templates"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-toolbar.js:48
+msgid "Effects and transitions"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-toolbar.js:49
+msgid ""
+"You can add and manage transitions within the uiBuilder. Adjust timings and "
+"animation styles to get the perfect result."
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-toolbar.js:53
+msgid "Contextual options"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-toolbar.js:54
+msgid ""
+"Common actions are just a right click away. Duplicate blocks, copy styles or "
+"export your entire template"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-toolbar.js:71
+#: assets/js/uip/uibuilder/uip-builder-toolbar.js:93
+#: assets/js/uip/uibuilder/uip-ui-preview.js:43
+msgid "Exit builder"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-toolbar.js:72
+#: assets/js/uip/uibuilder/uip-ui-preview.js:44
+msgid "Toggle layers panel"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-toolbar.js:73
+#: assets/js/uip/uibuilder/uip-ui-preview.js:45
+msgid "Back to template list"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-toolbar.js:74
+#: assets/js/uip/uibuilder/uip-ui-preview.js:46
+msgid "Zoom in"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-toolbar.js:75
+#: assets/js/uip/uibuilder/uip-ui-preview.js:47
+msgid "Zoom out"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-toolbar.js:77
+#: assets/js/uip/uibuilder/uip-builder-toolbar.js:116
+#: assets/js/uip/uibuilder/uip-ui-preview.js:49
+#: assets/js/uip/uibuilder/uip-ui-preview.js:79
+msgid "Preview"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-toolbar.js:78
+#: assets/js/uip/uibuilder/uip-ui-preview.js:50
+msgid "Import template"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-toolbar.js:79
+#: assets/js/uip/uibuilder/uip-ui-preview.js:51
+msgid "Export template"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-toolbar.js:80
+#: assets/js/uip/uibuilder/uip-ui-preview.js:52
+msgid "Template Library"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-toolbar.js:85
+#: assets/js/uip/uibuilder/uip-ui-preview.js:57
+msgid "Help"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-toolbar.js:86
+#: assets/js/uip/uibuilder/uip-ui-preview.js:58
+msgid "Documentation and guides"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-toolbar.js:87
+#: assets/js/uip/uibuilder/uip-builder-toolbar.js:92
+#: assets/js/uip/uibuilder/uip-template-list.js:23
+#: assets/js/uip/uibuilder/uip-template-list.js:107
+#: assets/js/uip/uibuilder/uip-ui-preview.js:60
+#: assets/js/uip/uibuilder/uip-ui-preview.js:65
+msgid "Draft"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-toolbar.js:88
+#: assets/js/uip/uibuilder/uip-template-list.js:30
+#: assets/js/uip/uibuilder/uip-template-list.js:50
+#: assets/js/uip/uibuilder/uip-ui-preview.js:61
+msgid "New template"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-toolbar.js:89
+#: assets/js/uip/uibuilder/uip-ui-preview.js:62
+msgid "Recent templates"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-toolbar.js:101
+msgid "Done"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-toolbar.js:103
+msgid "Tips and updates"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-toolbar.js:104
+#: assets/js/uip/uibuilder/uip-builder-toolbar.js:671
+#: assets/js/uip/uibuilder/uip-template-list.js:51
+msgid "User interface"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-toolbar.js:112
+#: assets/js/uip/uibuilder/uip-ui-preview.js:75
+msgid "Builder"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-toolbar.js:406
+#: assets/js/uip/uibuilder/uip-builder-toolbar.js:549
+#: assets/js/uip/uibuilder/uip-builder-toolbar.js:562
+#: assets/js/uip/uibuilder/uip-ui-preview.js:518
+#: assets/js/uip/uibuilder/uip-ui-preview.js:634
+#: assets/js/uip/uibuilder/uip-ui-preview.js:647
+msgid "You have unsaved changes!"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-toolbar.js:406
+#: assets/js/uip/uibuilder/uip-builder-toolbar.js:549
+#: assets/js/uip/uibuilder/uip-builder-toolbar.js:562
+#: assets/js/uip/uibuilder/uip-ui-preview.js:518
+#: assets/js/uip/uibuilder/uip-ui-preview.js:634
+#: assets/js/uip/uibuilder/uip-ui-preview.js:647
+msgid "If you leave this page all unsaved changes will be discarded"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-toolbar.js:466
+#: assets/js/uip/uibuilder/uip-ui-preview.js:574
+msgid "Importing layout"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-toolbar.js:584
+msgid "New template created"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-toolbar.js:677
+msgid "Front end toolbar"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-variables.js:19
+msgid "Search variables..."
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-variables.js:20
+msgid "New variable"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-variables.js:42
+msgid "Units"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-variables.js:204
+msgid "Variable deleted"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-variables.js:208
+msgid "Variable label is required"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-variables.js:212
+msgid "Variable name is required"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-builder-variables.js:226
+msgid "Variable created!"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-dynamic-data-watcher.js:32
+msgid "Array"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-dynamic-data-watcher.js:54
+msgid "Post title"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-dynamic-data-watcher.js:59
+msgid "Post author"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-dynamic-data-watcher.js:64
+msgid "Post date"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-dynamic-data-watcher.js:69
+msgid "Post link"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-dynamic-data-watcher.js:74
+msgid "Post edit link"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-dynamic-data-watcher.js:79
+msgid "Post featured image"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-dynamic-data-watcher.js:84
+msgid "Post content"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-dynamic-data-watcher.js:89
+msgid "Post excerpt"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-dynamic-data-watcher.js:99
+msgid "Post status"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-dynamic-data-watcher.js:104
+msgid "Comment count"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-dynamic-data-watcher.js:114
+msgid "ACF Meta key"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-dynamic-data-watcher.js:119
+msgid "Metabox Meta key"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-dynamic-data-watcher.js:125
+msgid "Attachment image"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-dynamic-data-watcher.js:130
+msgid "Attachment type"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-dynamic-data-watcher.js:156
+msgid "User nicename"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-dynamic-data-watcher.js:161
+msgid "User registered"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-dynamic-data-watcher.js:176
+msgid "ACF User meta"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-dynamic-data-watcher.js:184
+msgid "Site registered"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-dynamic-data-watcher.js:189
+msgid "Site domain"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-dynamic-data-watcher.js:194
+msgid "Site last updated"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-dynamic-data-watcher.js:199
+msgid "Site path"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-dynamic-data-watcher.js:204
+msgid "Site id"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-dynamic-data-watcher.js:215
+msgid "Site home url"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-dynamic-data-watcher.js:220
+msgid "Site admin url"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-dynamic-data-watcher.js:225
+msgid "Site meta"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-save-pattern.js:16
+msgid "Save as pattern"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-save-pattern.js:19
+msgid ""
+"Patterns can be either single components or entire layoutsd and are a great "
+"way of creating reusable blocks for your projects."
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-save-pattern.js:56
+msgid "Pattern not saved"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-save-pattern.js:56
+msgid "Pattern title is required"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-template-library.js:22
+msgid "Template library"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-template-library.js:24
+msgid "Search templates"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-template-library.js:25
+msgid "Back to all templates"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-template-library.js:26
+msgid "Includes pro blocks"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-template-library.js:27
+msgid "Created by"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-template-library.js:28
+msgid "Add to template"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-template-library.js:29
+msgid "Replace current layout"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-template-library.js:30
+msgid "Add to end of layout"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-template-library.js:31
+msgid "Requires uipress"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-template-library.js:32
+msgid "How many times this template has been downloaded"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-template-library.js:34
+msgid "Include"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-template-library.js:35
+#: assets/js/uip/uibuilder/uip-template-library.js:66
+#: assets/js/uip/uibuilder/uip-template-list.js:44
+msgid "UI templates"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-template-library.js:36
+msgid "Pages"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-template-library.js:37
+msgid "Sections"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-template-library.js:52
+msgid "Downloads"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-template-library.js:56
+msgid "Newest"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-template-library.js:60
+msgid "Oldest"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-template-library.js:71
+#: assets/js/uip/uibuilder/uip-template-list.js:79
+#: assets/js/uip/uibuilder/uip-template-list.js:97
+#: assets/js/uip/uibuilder/uip-template-list.js:122
+msgid "Admin pages"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-template-list.js:17
+msgid "Roles and users"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-template-list.js:24
+msgid "results"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-template-list.js:25
+msgid "Search templates..."
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-template-list.js:28
+msgid "Delete selected"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-template-list.js:31
+msgid "It's a little quiet!"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-template-list.js:32
+msgid ""
+"Create a new template to get started with uiBuilder or check out the docs"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-template-list.js:33
+msgid "View docs"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-template-list.js:34
+msgid "Edit template"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-template-list.js:35
+msgid "Duplicate template"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-template-list.js:36
+msgid "Delete template"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-template-list.js:37
+msgid "version"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-template-list.js:38
+msgid "Tools"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-template-list.js:40
+msgid "PHP error log"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-template-list.js:41
+msgid "Role editor"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-template-list.js:42
+msgid "pro"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-template-list.js:54
+msgid "No templates yet!"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-template-list.js:55
+msgid "Welcome to version 3.2!"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-template-list.js:57
+msgid "Remote sync"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-template-list.js:63
+msgid "All templates"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-template-list.js:71
+msgid "Drafts"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-template-list.js:75
+#: assets/js/uip/uibuilder/uip-template-list.js:93
+#: assets/js/uip/uibuilder/uip-template-list.js:117
+msgid "UI Templates"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-template-list.js:83
+msgid "Frontend toolbars"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-template-list.js:101
+#: assets/js/uip/uibuilder/uip-template-list.js:127
+msgid "Toolbars"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-template-list.js:332
+msgid "Are you sure you want to delete this template?"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-template-list.js:332
+#: assets/js/uip/uibuilder/uip-template-list.js:342
+msgid "Deleted templates can't be recovered"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-template-list.js:342
+msgid "Are you sure you want to multiple templates?"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-treeview-drop-area.js:15
+msgid "Block is using query loop"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-ui-preview.js:66
+msgid "Re-center"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-ui-preview.js:67
+msgid "Show grid lines"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-ui-preview.js:68
+msgid "frame"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-ui-preview.js:69
+msgid "Zoom to 100%"
+msgstr ""
+
+#: assets/js/uip/uibuilder/uip-ui-preview.js:546
+msgid "Exporting layout"
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "UiPress Lite"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "https://uipress.co"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid ""
+"UiPress is an all in one solution for tailoring your WordPress admin. From "
+"custom dashboards, profile pages to entire admin frameworks, the uiBuilder "
+"can do it all. Pre-made intuitive blocks and a library of professional "
+"templates make it super easy to transform the way your site users interact "
+"with your content."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Admin 2020"
+msgstr ""
