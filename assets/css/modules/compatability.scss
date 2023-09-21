@@ -1,0 +1,173 @@
+[uip-admin-theme='true'] {
+  //Woocommerce
+  .woocommerce-layout__header {
+    top: 0;
+    width: 100%;
+  }
+  .woocommerce-layout__header,
+  .woocommerce-layout__header .woocommerce-layout__header-heading {
+    background: var(--uip-color-base-1);
+  }
+  .css-wv5nn {
+    color: var(--uip-text-color-base);
+  }
+  .woocommerce-layout__activity-panel-tabs .woocommerce-layout__activity-panel-tab {
+    background: var(--uip-color-base-1);
+    &:hover {
+      background: var(--uip-color-base-0);
+    }
+  }
+  .woocommerce-layout__activity-panel-tabs .woocommerce-layout__activity-panel-tab.components-button:not(:disabled):not([aria-disabled='true']):hover,
+  .woocommerce-layout__activity-panel-tabs .woocommerce-layout__activity-panel-tab:hover {
+    background: var(--uip-color-base-0);
+  }
+  .css-1pd4mph {
+    background: var(--uip-color-base-1);
+  }
+  .woocommerce-task-progress-header .woocommerce-task-progress-header__progress-bar {
+    background: var(--uip-color-base-2);
+    border-color: var(--uip-border-color);
+  }
+  .woocommerce-task-dashboard__container.two-column-experiment:not(.two-columns) ul li {
+    background: var(--uip-color-base-1);
+    border-color: var(--uip-border-color);
+  }
+  .css-2x4s0q,
+  article.woocommerce-stats-overview__install-jetpack-promo h2 {
+    color: var(--uip-text-color-emphasis);
+  }
+  .woocommerce-experimental-list__item,
+  .woocommerce-stats-overview__stats .woocommerce-summary__item {
+    background: var(--uip-color-base-2);
+  }
+  .woocommerce-stats-overview__tabs .components-tab-panel__tabs .components-button {
+    color: var(--uip-color-accent);
+  }
+  .css-10feu0u,
+  .css-jfofvs,
+  .css-10hubey {
+    color: var(--uip-text-color-base);
+  }
+  .css-10hubey,
+  .woocommerce-quick-links__item,
+  .woocommerce-layout .components-panel__body > .components-panel__body-title,
+  .woocommerce-layout .woocommerce-experimental-list__item,
+  .woocommerce-layout .woocommerce-inbox-message {
+    &:hover {
+      background: var(--uip-color-base-2);
+    }
+  }
+  .woocommerce-homescreen .woocommerce-activity-panel .components-panel__body {
+    background: var(--uip-color-base-2);
+    border-color: var(--uip-border-color);
+  }
+  .woocommerce-layout__main {
+    * {
+      border-color: var(--uip-border-color) !important;
+    }
+  }
+  .woocommerce-task-list__item:not(.complete) .woocommerce-task__icon,
+  .woocommerce-badge,
+  .order-status {
+    background-color: var(--uip-color-primary-lighter);
+  }
+  .select2-search__field {
+    filter: invert(1);
+  }
+  #woocommerce-order-items .inside,
+  #woocommerce-order-items .woocommerce_order_items_wrapper table.woocommerce_order_items {
+    background: var(--uip-color-base-1);
+    * {
+      border-color: var(--uip-border-color) !important;
+    }
+  }
+  #woocommerce-order-items .woocommerce_order_items_wrapper table.woocommerce_order_items thead th {
+    background: var(--uip-color-base-1);
+  }
+  #woocommerce-order-items .wc-order-data-row,
+  ul.order_notes li .note_content {
+    background: var(--uip-color-base-2);
+  }
+  .wc-backbone-modal-main {
+    * {
+      border-color: var(--uip-border-color) !important;
+    }
+  }
+  .wc-backbone-modal-main .wc-backbone-modal-header,
+  .wc-backbone-modal-main footer,
+  .wc-backbone-modal .wc-backbone-modal-content {
+    background: var(--uip-color-base-0);
+  }
+
+  //Surecart header
+  .css-wa3qun {
+    top: 0;
+  }
+  //Seopress
+  #seopress-header {
+    width: 100%;
+    top: 0;
+  }
+
+  //CookieYes
+  .cky-app-wrap .cky-app-nav-bar {
+    width: calc(100% - 40px);
+    top: 0px;
+    left: 20px;
+  }
+  .woocommerce-input-toggle {
+    background: var(--uip-color-primary);
+    border: 2px solid var(--uip-color-primary);
+  }
+  .woocommerce-input-toggle.woocommerce-input-toggle--disabled {
+    background: var(--uip-color-base-2);
+    border: 2px solid var(--uip-color-base-2);
+  }
+}
+html[uip-framed-page='true'] {
+  #e-admin-top-bar-root {
+    width: 100%;
+  }
+}
+
+///Fluent forms
+html[uip-framed-page='true'] .form_internal_menu {
+  left: 0;
+  top: 0;
+}
+
+//Toolbar icons
+.uip-admin-toolbar #wpadminbar #wp-admin-bar-new-content .ab-icon:before {
+  font-family: dashicons;
+  content: '\f132';
+}
+.uip-admin-toolbar #wpadminbar #wp-admin-bar-comments .ab-icon:before {
+  font-family: dashicons;
+  content: '\f101';
+}
+
+////WP WAND
+html[uip-core-app='true'] {
+  .wpwand-trigger {
+    display: none !important;
+  }
+  #wpf_launcher {
+    display: none !important;
+  }
+}
+//Wicked folders fix
+#wicked-object-folder-pane .wicked-resizer {
+  left: 0;
+}
+#wicked-object-folder-pane .wicked-content {
+  left: 0;
+}
+html[uip-core-app='true'] #wicked-object-folder-pane {
+  display: none !important;
+}
+
+html[uip-framed-page='true'] .toplevel_page_WishListMember {
+  #wpcontent {
+    padding-left: 0;
+  }
+}

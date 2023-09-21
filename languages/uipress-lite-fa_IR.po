@@ -1,0 +1,4199 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: UiPress Lite\n"
+"POT-Creation-Date: 2022-12-29 13:14+0330\n"
+"PO-Revision-Date: 2023-01-24 14:40+0330\n"
+"Language-Team: فارسی\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
+"X-Generator: Poedit 2.2\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
+"X-Poedit-WPHeader: uipress-lite.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"Last-Translator: \n"
+"Language: fa_IR\n"
+"Report-Msgid-Bugs-To: \n"
+"X-Loco-Version: 2.4.0; wp-6.1.1\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.min.js\n"
+
+#: admin/classes/uip-ajax.php:56
+msgid "Unable to locate error log"
+msgstr "نمی توان گزارش خطا را پیدا کرد"
+
+#: admin/classes/uip-ajax.php:57
+msgid "No error log path set in your PHP ini file"
+msgstr "هیچ مسیر ورود خطا در فایل ini PHP شما تنظیم نشده است"
+
+#: admin/classes/uip-ajax.php:63
+msgid "Log file does not exist or is empty"
+msgstr "فایل گزارش وجود ندارد یا خالی است"
+
+#: admin/classes/uip-ajax.php:64
+msgid ""
+"Either the PHP error log path is incorrect or you don't have any errors yet. "
+"Path: "
+msgstr "یا مسیر ثبت خطای PHP نادرست است یا هنوز هیچ خطایی ندارید. مسیر:"
+
+#: admin/classes/uip-ajax.php:113
+msgid "Errros fetched"
+msgstr "ارروس واکشی شد"
+
+#: admin/classes/uip-ajax.php:134
+msgid "Unable to create temporary frame"
+msgstr "امکان ایجاد قاب موقت وجود ندارد"
+
+#: admin/classes/uip-ajax.php:141
+msgid "Transient created"
+msgstr "گذرا ایجاد شد"
+
+#: admin/classes/uip-ajax.php:161
+msgid "Config error: You need to specifiy a meta key to save the meta data to"
+msgstr "خطای پیکربندی: برای ذخیره متا داده ها باید یک کلید متا را مشخص کنید"
+
+#: admin/classes/uip-ajax.php:184
+msgid "Config error: Something went wrong"
+msgstr "خطای پیکربندی: مشکلی پیش آمد"
+
+#: admin/classes/uip-ajax.php:203
+msgid "Config error: No site option name supplied"
+msgstr "خطای پیکربندی: نام گزینه سایت ارائه نشده است"
+
+#: admin/classes/uip-ajax.php:231
+msgid "Config error: Recipient email is not valid"
+msgstr "خطای پیکربندی: ایمیل گیرنده معتبر نیست"
+
+#: admin/classes/uip-ajax.php:237
+msgid "Config error: No email template set"
+msgstr "خطای پیکربندی: الگوی ایمیل تنظیم نشده است"
+
+#: admin/classes/uip-ajax.php:261
+msgid "Unable to send mail at this time"
+msgstr "در حال حاضر امکان ارسال نامه وجود ندارد"
+
+#: admin/classes/uip-ajax.php:372
+msgid "Passed function doesn't exist"
+msgstr "تابع پاس شده وجود ندارد"
+
+#: admin/classes/uip-ajax.php:380
+msgid "Unable to process form"
+msgstr "امکان پردازش فرم وجود ندارد"
+
+#: admin/classes/uip-ajax.php:431 admin/classes/uip-ajax.php:628
+#: admin/classes/uip-ajax.php:811 admin/classes/uip-ajax.php:903
+#: admin/classes/uip-site-settings.php:279 admin/classes/uip-ui-builder.php:452
+msgid "ago"
+msgstr "پیش"
+
+#: admin/classes/uip-ajax.php:520 assets/js/uip/classes/uip.js:1274
+msgid "Preference updated"
+msgstr "اولویت به‌روزرسانی شد"
+
+#: admin/classes/uip-ajax.php:540
+msgid "Unable to read post ids to delete"
+msgstr "خواندن شناسه پست برای حذف امکان پذیر نیست"
+
+#: admin/classes/uip-ajax.php:565 assets/js/uip/classes/uip.js:306
+msgid "Item deleted"
+msgstr "مورد حذف شد"
+
+#: admin/classes/uip-ajax.php:682 admin/classes/uip-utilities.php:974
+#: assets/js/uip/blocks/dynamic/loader.js:352
+msgid "View"
+msgstr "چشم انداز"
+
+#: admin/classes/uip-ajax.php:683 admin/classes/uip-utilities.php:950
+#: assets/js/uip/blocks/dynamic/loader.js:356
+#: assets/js/uip/options/uip-image-select.js:26
+msgid "Edit"
+msgstr "ویرایش کنید"
+
+#: admin/classes/uip-ajax.php:684 admin/classes/uip-utilities.php:968
+#: assets/js/uip/blocks/dynamic/loader.js:360
+#: assets/js/uip/classes/uip-media-browser.js:47
+#: assets/js/uip/classes/uip-media-browser.js:411 assets/js/uip/classes/uip.js:292
+#: assets/js/uip/uibuilder/uip-block-actions.js:30
+#: assets/js/uip/uibuilder/uip-template-list.js:237
+#: assets/js/uip/uibuilder/uip-template-list.js:247
+msgid "Delete"
+msgstr "حذف"
+
+#: admin/classes/uip-ajax.php:703 admin/classes/uip-utilities.php:205
+#: assets/js/uip/blocks/elements/todo-list.js:17
+msgid "Title"
+msgstr "عنوان"
+
+#: admin/classes/uip-ajax.php:708 admin/classes/uip-utilities.php:211
+msgid "Author"
+msgstr "نویسنده"
+
+#: admin/classes/uip-ajax.php:713 admin/classes/uip-utilities.php:217
+#: assets/js/uip/options/uip-color-select.js:22
+#: assets/js/uip/uibuilder/uip-template-list.js:20
+msgid "Type"
+msgstr "تایپ کنید"
+
+#: admin/classes/uip-ajax.php:718 admin/classes/uip-utilities.php:223
+msgid "Date"
+msgstr "تاریخ"
+
+#: admin/classes/uip-ajax.php:723 admin/classes/uip-utilities.php:229
+msgid "Categories"
+msgstr "دسته بندی ها"
+
+#: admin/classes/uip-ajax.php:728 admin/classes/uip-utilities.php:235
+msgid "Tags"
+msgstr "برچسب ها"
+
+#: admin/classes/uip-ajax.php:733 admin/classes/uip-site-settings.php:290
+#: admin/classes/uip-utilities.php:241
+msgid "ID"
+msgstr "شناسه"
+
+#: admin/classes/uip-ajax.php:738 admin/classes/uip-utilities.php:247
+msgid "Actions"
+msgstr "اقدامات"
+
+#: admin/classes/uip-ajax.php:992
+msgid "Something went wrong"
+msgstr "مشکلی پیش آمد"
+
+#: admin/classes/uip-ajax.php:1018
+msgid "User"
+msgstr "کاربر"
+
+#: admin/classes/uip-ajax.php:1036 admin/classes/uip-ajax.php:1047
+msgid "Role"
+msgstr "نقش"
+
+#: admin/classes/uip-ajax.php:1054
+msgid "Nothing found for term:"
+msgstr "چیزی برای مدت پیدا نشد:"
+
+#: admin/classes/uip-app.php:53 assets/js/uip/uibuilder/uip-template-list.js:28
+msgid "uiBuilder"
+msgstr "uiBuilder"
+
+#: admin/classes/uip-app.php:191
+msgid ""
+"You have an older version of uipress active on this site. Please deactivate to "
+"use UiPress Lite"
+msgstr ""
+"شما یک نسخه قدیمی از uipress در این سایت فعال دارید. لطفاً برای استفاده از "
+"UiPress Lite آن را غیرفعال کنید"
+
+#: admin/classes/uip-app.php:405
+msgid "Unable to load UiPress template"
+msgstr "بارگیری قالب UiPress ممکن نیست"
+
+#: admin/classes/uip-app.php:407
+msgid ""
+"Current active template does not contain a page content block or a site "
+"navigation block such as an admin menu or content navigator. These are required "
+"to use a ui template"
+msgstr ""
+"الگوی فعال فعلی حاوی بلوک محتوای صفحه یا بلوک ناوبری سایت مانند منوی مدیریت یا "
+"ناوبر محتوا نیست. اینها برای استفاده از یک الگوی رابط کاربری ضروری هستند"
+
+#: admin/classes/uip-app.php:731 assets/js/uip/options/dynamic-settings.js:19
+msgid "Username"
+msgstr "نام کاربری"
+
+#: admin/classes/uip-app.php:736 assets/js/uip/options/dynamic-settings.js:26
+msgid "User first name"
+msgstr "نام کاربر"
+
+#: admin/classes/uip-app.php:741 assets/js/uip/options/dynamic-settings.js:33
+msgid "User last name"
+msgstr "نام خانوادگی کاربر"
+
+#: admin/classes/uip-app.php:746 assets/js/uip/options/dynamic-settings.js:40
+msgid "User full name"
+msgstr "نام کامل کاربر"
+
+#: admin/classes/uip-app.php:751 assets/js/uip/options/dynamic-settings.js:47
+msgid "User display name"
+msgstr "نام نمایشی کاربر"
+
+#: admin/classes/uip-app.php:756 assets/js/uip/options/dynamic-settings.js:54
+msgid "User email"
+msgstr "ایمیل کاربر"
+
+#: admin/classes/uip-app.php:761 assets/js/uip/options/dynamic-settings.js:61
+msgid "User initials"
+msgstr "حروف اول کاربر"
+
+#: admin/classes/uip-app.php:766
+msgid "Site title"
+msgstr "عنوان سایت"
+
+#: admin/classes/uip-app.php:772
+msgid "User profile"
+msgstr "مشخصات کاربر"
+
+#: admin/classes/uip-app.php:778 assets/js/uip/options/dynamic-settings.js:82
+msgid "Logout link"
+msgstr "لینک خروج"
+
+#: admin/classes/uip-app.php:783
+msgid "View site"
+msgstr "مشاهده سایت"
+
+#: admin/classes/uip-app.php:788 assets/js/uip/uip-app.js:99
+msgid "Admin home"
+msgstr "خانه ادمین"
+
+#: admin/classes/uip-app.php:793
+msgid "View profile"
+msgstr "مشاهده نمایه"
+
+#: admin/classes/uip-app.php:798
+msgid "Current date"
+msgstr "تاریخ فعلی"
+
+#: admin/classes/uip-app.php:803
+msgid "PHP version"
+msgstr "نسخه PHP"
+
+#: admin/classes/uip-app.php:808
+msgid "WordPress version"
+msgstr "نسخه وردپرس"
+
+#: admin/classes/uip-app.php:813
+msgid "Active plugins"
+msgstr "پلاگین های فعال"
+
+#: admin/classes/uip-app.php:818
+msgid "Inactive plugins"
+msgstr "افزونه های غیر فعال"
+
+#: admin/classes/uip-app.php:823
+msgid "Installed themes"
+msgstr "تم های نصب شده"
+
+#: admin/classes/uip-app.php:828
+msgid "New post"
+msgstr "پست جدید"
+
+#: admin/classes/uip-app.php:833
+msgid "New page"
+msgstr "صفحه جدید"
+
+#: admin/classes/uip-app.php:849
+#: assets/js/uip/uibuilder/global-settings-groups.js:32
+msgid "Site logo"
+msgstr "لوگوی سایت"
+
+#: admin/classes/uip-app.php:862
+#: assets/js/uip/uibuilder/global-settings-groups.js:40
+msgid "Site logo dark mode"
+msgstr "حالت تاریک لوگوی سایت"
+
+#: admin/classes/uip-site-settings.php:169
+#: assets/js/uip/uibuilder/uip-template-list.js:15
+msgid "Status"
+msgstr "وضعیت"
+
+#: admin/classes/uip-site-settings.php:186
+msgid "active"
+msgstr "فعال"
+
+#: admin/classes/uip-site-settings.php:192
+msgid "inactive"
+msgstr "غیر فعال"
+
+#: admin/classes/uip-site-settings.php:267
+msgid "Last modified"
+msgstr "آخرین تغییر"
+
+#: admin/classes/uip-ui-builder.php:88
+msgid "UI Builder"
+msgstr "UI Builder"
+
+#: admin/classes/uip-ui-builder.php:207
+msgctxt "post type general name"
+msgid "UI Template"
+msgstr "قالب UI"
+
+#: admin/classes/uip-ui-builder.php:208
+msgctxt "post type singular name"
+msgid "UI Template"
+msgstr "قالب UI"
+
+#: admin/classes/uip-ui-builder.php:209
+msgctxt "admin menu"
+msgid "UI Templates"
+msgstr "قالب های رابط کاربری"
+
+#: admin/classes/uip-ui-builder.php:210
+msgctxt "add new on admin bar"
+msgid "UI Template"
+msgstr "قالب UI"
+
+#: admin/classes/uip-ui-builder.php:211
+msgctxt "Template"
+msgid "Add New"
+msgstr "جدید اضافه کن"
+
+#: admin/classes/uip-ui-builder.php:212
+msgid "Add New UI Template"
+msgstr "اضافه کردن قالب جدید UI"
+
+#: admin/classes/uip-ui-builder.php:213
+msgid "New UI Template"
+msgstr "قالب جدید UI"
+
+#: admin/classes/uip-ui-builder.php:214
+msgid "Edit UI Template"
+msgstr "ویرایش قالب UI"
+
+#: admin/classes/uip-ui-builder.php:215
+msgid "View UI Template"
+msgstr "مشاهده قالب UI"
+
+#: admin/classes/uip-ui-builder.php:216
+msgid "All UI Templates"
+msgstr "همه قالب های UI"
+
+#: admin/classes/uip-ui-builder.php:217
+msgid "Search UI Templates"
+msgstr "جستجو در قالب های UI"
+
+#: admin/classes/uip-ui-builder.php:218
+msgid "No UI Templates found."
+msgstr "هیچ الگوی رابط کاربری یافت نشد."
+
+#: admin/classes/uip-ui-builder.php:219
+msgid "No UI Templates found in Trash."
+msgstr "هیچ الگوی رابط کاربری در سطل زباله یافت نشد."
+
+#: admin/classes/uip-ui-builder.php:223
+msgid "Post type used for the uipress UI builder"
+msgstr "نوع پست مورد استفاده برای سازنده رابط کاربری uipress"
+
+#: admin/classes/uip-ui-builder.php:239
+msgctxt "post type general name"
+msgid "UI Pattern"
+msgstr "الگوی رابط کاربری"
+
+#: admin/classes/uip-ui-builder.php:240
+msgctxt "post type singular name"
+msgid "UI Pattern"
+msgstr "الگوی رابط کاربری"
+
+#: admin/classes/uip-ui-builder.php:241
+msgctxt "admin menu"
+msgid "UI Patterns"
+msgstr "الگوهای رابط کاربری"
+
+#: admin/classes/uip-ui-builder.php:242
+msgctxt "add new on admin bar"
+msgid "UI Pattern"
+msgstr "الگوی رابط کاربری"
+
+#: admin/classes/uip-ui-builder.php:243
+msgctxt "UI Pattern"
+msgid "Add New"
+msgstr "جدید اضافه کن"
+
+#: admin/classes/uip-ui-builder.php:244
+msgid "Add New UI Pattern"
+msgstr "اضافه کردن الگوی رابط کاربری جدید"
+
+#: admin/classes/uip-ui-builder.php:245
+msgid "New UI Pattern"
+msgstr "الگوی جدید رابط کاربری"
+
+#: admin/classes/uip-ui-builder.php:246
+msgid "Edit UI Pattern"
+msgstr "ویرایش الگوی رابط کاربری"
+
+#: admin/classes/uip-ui-builder.php:247
+msgid "View UI Patterns"
+msgstr "مشاهده الگوهای رابط کاربری"
+
+#: admin/classes/uip-ui-builder.php:248
+msgid "All UI Patterns"
+msgstr "همه الگوهای رابط کاربری"
+
+#: admin/classes/uip-ui-builder.php:249
+msgid "Search UI Patterns"
+msgstr "جستجوی الگوهای رابط کاربری"
+
+#: admin/classes/uip-ui-builder.php:250
+msgid "No UI Patterns found."
+msgstr "هیچ الگوی رابط کاربری یافت نشد."
+
+#: admin/classes/uip-ui-builder.php:251
+msgid "No UI Patterns found in Trash."
+msgstr "هیچ الگوی رابط کاربری در سطل زباله یافت نشد."
+
+#: admin/classes/uip-ui-builder.php:255
+msgid "Post type used for the uipress UI builder for storing patterns"
+msgstr "نوع پست برای سازنده رابط کاربری uipress برای ذخیره الگوها استفاده می شود"
+
+#: admin/classes/uip-ui-builder.php:281
+msgid "Unable to save site settings. Data corrupted"
+msgstr "تنظیمات سایت ذخیره نشد. داده ها خراب شد"
+
+#: admin/classes/uip-ui-builder.php:369
+msgid "UI Template (Draft)"
+msgstr "الگوی رابط کاربری (پیش‌نویس)"
+
+#: admin/classes/uip-ui-builder.php:381
+msgid "Template created"
+msgstr "الگو ایجاد شد"
+
+#: admin/classes/uip-ui-builder.php:385
+msgid "Unable to create template"
+msgstr "امکان ایجاد الگو وجود ندارد"
+
+#: admin/classes/uip-ui-builder.php:459
+#: assets/js/uip/uibuilder/uip-builder-settings.js:25
+msgid "UI template"
+msgstr "قالب UI"
+
+#: admin/classes/uip-ui-builder.php:461
+msgid "Admin page"
+msgstr "صفحه مدیریت"
+
+#: admin/classes/uip-ui-builder.php:555 admin/classes/uip-ui-builder.php:813
+msgid "Unable to fetch template"
+msgstr "واکشی الگو ممکن نیست"
+
+#: admin/classes/uip-ui-builder.php:585
+msgid "Succesfully fetched Ui template"
+msgstr "الگوی Ui با موفقیت واکشی شد"
+
+#: admin/classes/uip-ui-builder.php:672 admin/classes/uip-ui-builder.php:710
+msgid "Templates deleted"
+msgstr "قالب ها حذف شدند"
+
+#: admin/classes/uip-ui-builder.php:691
+msgid "You don't have permission to delete UI Templates"
+msgstr "شما اجازه حذف الگوهای UI را ندارید"
+
+#: admin/classes/uip-ui-builder.php:699
+#: assets/js/uip/uibuilder/uip-template-list.js:26
+msgid "Template deleted"
+msgstr "الگو حذف شد"
+
+#: admin/classes/uip-ui-builder.php:732 admin/classes/uip-ui-builder.php:759
+msgid "Unable to duplicate template"
+msgstr "الگوی تکراری ممکن نیست"
+
+#: admin/classes/uip-ui-builder.php:736
+msgid "copy"
+msgstr "کپی "
+
+#: admin/classes/uip-ui-builder.php:766
+msgid "Unable to duplicate template. Template is corrupted"
+msgstr "الگوی تکراری ممکن نیست. قالب خراب است"
+
+#: admin/classes/uip-ui-builder.php:773
+msgid "Unable to duplicate template. Settings are corrupted"
+msgstr "الگوی تکراری ممکن نیست. تنظیمات خراب است"
+
+#: admin/classes/uip-ui-builder.php:790
+#: assets/js/uip/uibuilder/uip-template-list.js:25
+msgid "Template duplicated"
+msgstr "قالب کپی شده"
+
+#: admin/classes/uip-ui-builder.php:835
+msgid "Unable to save template"
+msgstr "ذخیره الگو امکان پذیر نیست"
+
+#: admin/classes/uip-ui-builder.php:841
+msgid "Unable to save template. Template is corrupted"
+msgstr "ذخیره الگو امکان پذیر نیست. قالب خراب است"
+
+#: admin/classes/uip-ui-builder.php:847
+msgid "Unable to save template. Settings are corrupted"
+msgstr "ذخیره الگو امکان پذیر نیست. تنظیمات خراب است"
+
+#: admin/classes/uip-ui-builder.php:906
+#: assets/js/uip/uibuilder/uip-ui-preview.js:281
+#: assets/js/uip/uibuilder/uip-ui-preview.js:286
+msgid "Template saved"
+msgstr "الگو ذخیره شد"
+
+#: admin/classes/uip-ui-builder.php:991
+msgid "Patterns synced"
+msgstr "الگوها همگام شدند"
+
+#: admin/classes/uip-ui-builder.php:1056
+msgid "Unable to save pattern"
+msgstr "ذخیره الگو امکان پذیر نیست"
+
+#: admin/classes/uip-ui-builder.php:1063
+#: assets/js/uip/uibuilder/uip-save-pattern.js:85
+msgid "Pattern saved"
+msgstr "الگو ذخیره شد"
+
+#: admin/classes/uip-ui-builder.php:1153
+msgid "Columns fetched"
+msgstr "ستون‌ها واکشی شدند"
+
+#: admin/classes/uip-ui-pages.php:339
+msgid "Unable to find page template"
+msgstr "الگوی صفحه پیدا نشد"
+
+#: admin/classes/uip-ui-pages.php:396
+msgid "Unable to process page template"
+msgstr "پردازش الگوی صفحه ممکن نیست"
+
+#: admin/classes/uip-utilities.php:938
+#: assets/js/uip/blocks/elements/todo-list.js:24
+msgid "All"
+msgstr "همه"
+
+#: admin/classes/uip-utilities.php:944
+msgid "Read"
+msgstr "خواندن"
+
+#: admin/classes/uip-utilities.php:956
+msgid "Publish"
+msgstr "انتشار"
+
+#: admin/classes/uip-utilities.php:962
+msgid "Create"
+msgstr "ايجاد كردن"
+
+#: admin/classes/uip-utilities.php:980
+msgid "Manage"
+msgstr "مدیریت کنید"
+
+#: admin/classes/uip-utilities.php:986
+msgid "Export"
+msgstr "صادرات"
+
+#: admin/classes/uip-utilities.php:992
+#: assets/js/uip/uibuilder/uip-builder-patterns-list.js:63
+msgid "Import"
+msgstr "وارد كردن"
+
+#: admin/classes/uip-utilities.php:998 assets/js/uip/options/uip-margin.js:16
+#: assets/js/uip/options/uip-padding.js:16
+msgid "Custom"
+msgstr "سفارشی"
+
+#: assets/js/uip/blocks/analytics/loader.js:9
+msgid "GA charts"
+msgstr "نمودارهای GA"
+
+#: assets/js/uip/blocks/analytics/loader.js:11
+msgid "Outputs your choice of charts and options on what data to display"
+msgstr ""
+"نمودارها و گزینه‌های انتخابی شما را در مورد اینکه چه داده‌هایی نمایش داده شود، "
+"خروجی می‌دهد"
+
+#: assets/js/uip/blocks/analytics/loader.js:12
+#: assets/js/uip/blocks/analytics/loader.js:24
+#: assets/js/uip/blocks/analytics/loader.js:37
+#: assets/js/uip/blocks/block-settings-groups.js:24
+msgid "Analytics"
+msgstr "تجزیه و تحلیل"
+
+#: assets/js/uip/blocks/analytics/loader.js:21
+msgid "GA tables"
+msgstr "جداول GA"
+
+#: assets/js/uip/blocks/analytics/loader.js:23
+msgid "Outputs your choice of tables and options on what data to display"
+msgstr ""
+"جداول و گزینه‌های انتخابی شما را در مورد اینکه چه داده‌هایی را نمایش دهید، خروجی "
+"می‌دهد"
+
+#: assets/js/uip/blocks/analytics/loader.js:34
+msgid "GA realtime"
+msgstr "GA بیدرنگ"
+
+#: assets/js/uip/blocks/analytics/loader.js:36
+msgid "Displays live visitor data about your site"
+msgstr "داده های زنده بازدیدکنندگان را در مورد سایت شما نمایش می دهد"
+
+#: assets/js/uip/blocks/analytics/loader.js:46
+#: assets/js/uip/blocks/layout/loader.js:71 assets/js/uip/classes/uip.js:1871
+msgid "Background colour"
+msgstr "رنگ پس زمینه"
+
+#: assets/js/uip/blocks/analytics/loader.js:47
+#: assets/js/uip/blocks/layout/loader.js:72 assets/js/uip/classes/uip.js:1872
+msgid "Background Image"
+msgstr "تصویر پس زمینه"
+
+#: assets/js/uip/blocks/analytics/loader.js:48
+#: assets/js/uip/blocks/layout/loader.js:75 assets/js/uip/classes/uip.js:1875
+msgid "Dimensions"
+msgstr "ابعاد"
+
+#: assets/js/uip/blocks/analytics/loader.js:49
+#: assets/js/uip/blocks/layout/loader.js:83 assets/js/uip/classes/uip.js:1877
+msgid "Padding"
+msgstr "لایه گذاری"
+
+#: assets/js/uip/blocks/analytics/loader.js:50
+#: assets/js/uip/blocks/layout/loader.js:84 assets/js/uip/classes/uip.js:1878
+msgid "Margin"
+msgstr "لبه"
+
+#: assets/js/uip/blocks/analytics/loader.js:51
+#: assets/js/uip/blocks/layout/loader.js:85 assets/js/uip/classes/uip.js:1879
+msgid "Text format"
+msgstr "قالب متن"
+
+#: assets/js/uip/blocks/analytics/loader.js:52
+#: assets/js/uip/blocks/layout/loader.js:86 assets/js/uip/classes/uip.js:1880
+msgid "Border"
+msgstr "مرز"
+
+#: assets/js/uip/blocks/analytics/loader.js:53
+#: assets/js/uip/blocks/layout/loader.js:87 assets/js/uip/classes/uip.js:1881
+#: assets/js/uip/options/uip-border-designer.js:20
+msgid "Position"
+msgstr "موقعیت"
+
+#: assets/js/uip/blocks/analytics/loader.js:54
+#: assets/js/uip/blocks/layout/loader.js:88 assets/js/uip/classes/uip.js:1882
+#: assets/js/uip/options/settings-loader.js:1102
+msgid "Box shadow"
+msgstr "سایه جعبه"
+
+#: assets/js/uip/blocks/analytics/loader.js:60
+#: assets/js/uip/blocks/layout/loader.js:28 assets/js/uip/classes/uip.js:1903
+msgid "Justify content"
+msgstr "مطالب را توجیه کنید"
+
+#: assets/js/uip/blocks/analytics/loader.js:61
+#: assets/js/uip/blocks/layout/loader.js:29 assets/js/uip/classes/uip.js:1904
+msgid "Align content"
+msgstr "تراز کردن محتوا"
+
+#: assets/js/uip/blocks/analytics/loader.js:62
+#: assets/js/uip/blocks/layout/loader.js:27 assets/js/uip/classes/uip.js:1905
+msgid "Content direction"
+msgstr "جهت محتوا"
+
+#: assets/js/uip/blocks/analytics/loader.js:63
+#: assets/js/uip/blocks/layout/loader.js:30 assets/js/uip/classes/uip.js:1906
+msgid "Content wrap"
+msgstr "بسته بندی محتوا"
+
+#: assets/js/uip/blocks/analytics/loader.js:64
+#: assets/js/uip/blocks/layout/loader.js:31 assets/js/uip/classes/uip.js:1907
+msgid "Column gap"
+msgstr "شکاف ستون"
+
+#: assets/js/uip/blocks/analytics/loader.js:65
+#: assets/js/uip/blocks/layout/loader.js:32 assets/js/uip/classes/uip.js:1908
+msgid "Row gap"
+msgstr "شکاف ردیف"
+
+#: assets/js/uip/blocks/block-settings-groups.js:8
+#: assets/js/uip/blocks/elements/loader.js:14
+#: assets/js/uip/blocks/elements/loader.js:114
+#: assets/js/uip/blocks/elements/loader.js:195
+#: assets/js/uip/blocks/elements/loader.js:261
+#: assets/js/uip/blocks/elements/loader.js:327
+#: assets/js/uip/blocks/elements/loader.js:433
+#: assets/js/uip/blocks/elements/loader.js:499
+#: assets/js/uip/blocks/elements/loader.js:593
+#: assets/js/uip/blocks/elements/loader.js:696
+#: assets/js/uip/blocks/elements/loader.js:813
+#: assets/js/uip/blocks/elements/loader.js:892
+#: assets/js/uip/blocks/elements/loader.js:996
+#: assets/js/uip/blocks/elements/loader.js:1096
+#: assets/js/uip/blocks/elements/loader.js:1104
+msgid "Elements"
+msgstr "عناصر"
+
+#: assets/js/uip/blocks/block-settings-groups.js:12
+#: assets/js/uip/blocks/layout/loader.js:13
+#: assets/js/uip/blocks/layout/loader.js:126
+#: assets/js/uip/blocks/layout/loader.js:280
+#: assets/js/uip/blocks/layout/loader.js:356
+#: assets/js/uip/blocks/layout/loader.js:501
+#: assets/js/uip/uibuilder/uip-builder-patterns-list.js:52
+#: assets/js/uip/uibuilder/uip-save-pattern.js:33
+msgid "Layout"
+msgstr "چیدمان"
+
+#: assets/js/uip/blocks/block-settings-groups.js:16
+#: assets/js/uip/blocks/dynamic/loader.js:13
+#: assets/js/uip/blocks/dynamic/loader.js:220
+#: assets/js/uip/blocks/dynamic/loader.js:330
+#: assets/js/uip/blocks/dynamic/loader.js:523
+#: assets/js/uip/blocks/dynamic/loader.js:637
+#: assets/js/uip/blocks/dynamic/loader.js:752
+#: assets/js/uip/blocks/dynamic/loader.js:857
+#: assets/js/uip/blocks/dynamic/loader.js:940
+#: assets/js/uip/blocks/dynamic/loader.js:1038
+#: assets/js/uip/blocks/dynamic/loader.js:1135
+#: assets/js/uip/blocks/dynamic/loader.js:1144
+#: assets/js/uip/blocks/dynamic/loader.js:1152
+#: assets/js/uip/blocks/dynamic/loader.js:1160
+#: assets/js/uip/blocks/dynamic/loader.js:1168
+#: assets/js/uip/blocks/dynamic/loader.js:1176
+#: assets/js/uip/blocks/elements/loader.js:1087
+#: assets/js/uip/options/settings-loader.js:666
+#: assets/js/uip/options/uip-image-select.js:30
+#: assets/js/uip/options/uip-link-select.js:38
+#: assets/js/uip/options/uip-link-select.js:44
+msgid "Dynamic"
+msgstr "پویا"
+
+#: assets/js/uip/blocks/block-settings-groups.js:20
+#: assets/js/uip/blocks/inputs/loader.js:10
+#: assets/js/uip/blocks/inputs/loader.js:13
+#: assets/js/uip/blocks/inputs/loader.js:115
+#: assets/js/uip/blocks/inputs/loader.js:252
+#: assets/js/uip/blocks/inputs/loader.js:359
+#: assets/js/uip/blocks/inputs/loader.js:460
+#: assets/js/uip/blocks/inputs/loader.js:468
+#: assets/js/uip/blocks/inputs/loader.js:476
+#: assets/js/uip/blocks/inputs/loader.js:484
+#: assets/js/uip/blocks/inputs/loader.js:492
+msgid "Form"
+msgstr "فرم"
+
+#: assets/js/uip/blocks/dynamic/admin-menu.js:14
+#: assets/js/uip/blocks/dynamic/admin-menu.js:75
+#: assets/js/uip/blocks/dynamic/admin-menu.js:100
+msgid "Home"
+msgstr "صفحه اصلی"
+
+#: assets/js/uip/blocks/dynamic/admin-menu.js:17
+msgid "Main menu"
+msgstr "منوی اصلی"
+
+#: assets/js/uip/blocks/dynamic/loader.js:10
+msgid "Admin menu"
+msgstr "منوی مدیریت"
+
+#: assets/js/uip/blocks/dynamic/loader.js:12
+msgid "Outputs the admin menu"
+msgstr "خروجی منوی مدیریت"
+
+#: assets/js/uip/blocks/dynamic/loader.js:22
+#: assets/js/uip/blocks/dynamic/loader.js:229
+#: assets/js/uip/blocks/dynamic/loader.js:339
+#: assets/js/uip/blocks/dynamic/loader.js:532
+#: assets/js/uip/blocks/dynamic/loader.js:646
+#: assets/js/uip/blocks/dynamic/loader.js:761
+#: assets/js/uip/blocks/dynamic/loader.js:866
+#: assets/js/uip/blocks/dynamic/loader.js:949
+#: assets/js/uip/blocks/dynamic/loader.js:1047
+#: assets/js/uip/blocks/elements/loader.js:23
+#: assets/js/uip/blocks/elements/loader.js:123
+#: assets/js/uip/blocks/elements/loader.js:204
+#: assets/js/uip/blocks/elements/loader.js:270
+#: assets/js/uip/blocks/elements/loader.js:337
+#: assets/js/uip/blocks/elements/loader.js:442
+#: assets/js/uip/blocks/elements/loader.js:508
+#: assets/js/uip/blocks/elements/loader.js:603
+#: assets/js/uip/blocks/elements/loader.js:822
+#: assets/js/uip/blocks/elements/loader.js:901
+#: assets/js/uip/blocks/elements/loader.js:1005
+#: assets/js/uip/blocks/inputs/loader.js:23
+#: assets/js/uip/blocks/inputs/loader.js:124
+#: assets/js/uip/blocks/inputs/loader.js:261
+#: assets/js/uip/blocks/inputs/loader.js:368
+#: assets/js/uip/blocks/layout/loader.js:23
+#: assets/js/uip/blocks/layout/loader.js:136
+#: assets/js/uip/blocks/layout/loader.js:290
+#: assets/js/uip/blocks/layout/loader.js:366
+#: assets/js/uip/uibuilder/uip-block-settings.js:38
+msgid "Block options"
+msgstr "مسدود کردن گزینه ها"
+
+#: assets/js/uip/blocks/dynamic/loader.js:25
+msgid "Menu style"
+msgstr "سبک منو"
+
+#: assets/js/uip/blocks/dynamic/loader.js:29
+msgid "Menu direction"
+msgstr "جهت منو"
+
+#: assets/js/uip/blocks/dynamic/loader.js:34
+#: assets/js/uip/options/settings-loader.js:357
+msgid "Vertical"
+msgstr "عمودی"
+
+#: assets/js/uip/blocks/dynamic/loader.js:38
+#: assets/js/uip/options/settings-loader.js:362
+msgid "Horizontal"
+msgstr "افقی"
+
+#: assets/js/uip/blocks/dynamic/loader.js:46
+msgid "Advanced menu editor"
+msgstr "ویرایشگر منوی پیشرفته"
+
+#: assets/js/uip/blocks/dynamic/loader.js:50
+msgid "Disable menu auto update"
+msgstr "به روز رسانی خودکار منو را غیرفعال کنید"
+
+#: assets/js/uip/blocks/dynamic/loader.js:52
+msgid "Hiden menu items"
+msgstr "موارد منو را مخفی کنید"
+
+#: assets/js/uip/blocks/dynamic/loader.js:53
+msgid "Menu options"
+msgstr "گزینه های منو"
+
+#: assets/js/uip/blocks/dynamic/loader.js:54
+msgid "Submenu Icon"
+msgstr "نماد منوی فرعی"
+
+#: assets/js/uip/blocks/dynamic/loader.js:55
+msgid "Hide menu icons"
+msgstr "پنهان کردن نمادهای منو"
+
+#: assets/js/uip/blocks/dynamic/loader.js:61
+#: assets/js/uip/blocks/dynamic/loader.js:243
+#: assets/js/uip/blocks/dynamic/loader.js:373
+#: assets/js/uip/blocks/dynamic/loader.js:543
+#: assets/js/uip/blocks/dynamic/loader.js:656
+#: assets/js/uip/blocks/dynamic/loader.js:771
+#: assets/js/uip/blocks/dynamic/loader.js:873
+#: assets/js/uip/blocks/dynamic/loader.js:970
+#: assets/js/uip/blocks/dynamic/loader.js:1070
+#: assets/js/uip/blocks/elements/loader.js:46
+#: assets/js/uip/blocks/elements/loader.js:145
+#: assets/js/uip/blocks/elements/loader.js:211
+#: assets/js/uip/blocks/elements/loader.js:277
+#: assets/js/uip/blocks/elements/loader.js:357
+#: assets/js/uip/blocks/elements/loader.js:449
+#: assets/js/uip/blocks/elements/loader.js:515
+#: assets/js/uip/blocks/elements/loader.js:610
+#: assets/js/uip/blocks/elements/loader.js:705
+#: assets/js/uip/blocks/elements/loader.js:832
+#: assets/js/uip/blocks/elements/loader.js:927
+#: assets/js/uip/blocks/elements/loader.js:1023
+#: assets/js/uip/blocks/inputs/loader.js:48
+#: assets/js/uip/blocks/inputs/loader.js:186
+#: assets/js/uip/blocks/inputs/loader.js:292
+#: assets/js/uip/blocks/inputs/loader.js:398
+#: assets/js/uip/blocks/layout/loader.js:39
+#: assets/js/uip/blocks/layout/loader.js:194
+#: assets/js/uip/blocks/layout/loader.js:306
+#: assets/js/uip/blocks/layout/loader.js:428
+msgid "Block container"
+msgstr "ظرف بلوک"
+
+#: assets/js/uip/blocks/dynamic/loader.js:69
+#: assets/js/uip/blocks/dynamic/loader.js:251
+#: assets/js/uip/blocks/dynamic/loader.js:381
+#: assets/js/uip/blocks/dynamic/loader.js:551
+#: assets/js/uip/blocks/dynamic/loader.js:664
+#: assets/js/uip/blocks/dynamic/loader.js:779
+#: assets/js/uip/blocks/dynamic/loader.js:881
+#: assets/js/uip/blocks/dynamic/loader.js:978
+#: assets/js/uip/blocks/dynamic/loader.js:1078
+#: assets/js/uip/blocks/elements/loader.js:54
+#: assets/js/uip/blocks/elements/loader.js:153
+#: assets/js/uip/blocks/elements/loader.js:219
+#: assets/js/uip/blocks/elements/loader.js:285
+#: assets/js/uip/blocks/elements/loader.js:365
+#: assets/js/uip/blocks/elements/loader.js:457
+#: assets/js/uip/blocks/elements/loader.js:523
+#: assets/js/uip/blocks/elements/loader.js:618
+#: assets/js/uip/blocks/elements/loader.js:713
+#: assets/js/uip/blocks/elements/loader.js:840
+#: assets/js/uip/blocks/elements/loader.js:935
+#: assets/js/uip/blocks/elements/loader.js:1031
+#: assets/js/uip/blocks/inputs/loader.js:56
+#: assets/js/uip/blocks/inputs/loader.js:194
+#: assets/js/uip/blocks/inputs/loader.js:300
+#: assets/js/uip/blocks/inputs/loader.js:406
+#: assets/js/uip/blocks/layout/loader.js:202
+#: assets/js/uip/options/settings-loader.js:95
+#: assets/js/uip/options/uip-border-designer.js:18
+#: assets/js/uip/uibuilder/uip-block-actions.js:24
+#: assets/js/uip/uibuilder/uip-block-settings.js:66
+msgid "Style"
+msgstr "سبک"
+
+#: assets/js/uip/blocks/dynamic/loader.js:77
+msgid "Menu headers"
+msgstr "سرصفحه های منو"
+
+#: assets/js/uip/blocks/dynamic/loader.js:86
+msgid "Menu headers hover"
+msgstr "سرصفحه های منو شناور هستند"
+
+#: assets/js/uip/blocks/dynamic/loader.js:95
+msgid "Menu headers active"
+msgstr "هدر منو فعال است"
+
+#: assets/js/uip/blocks/dynamic/loader.js:103
+msgid "Menu sepators"
+msgstr "جداکننده های منو"
+
+#: assets/js/uip/blocks/dynamic/loader.js:112
+#: assets/js/uip/blocks/dynamic/loader.js:814
+msgid "Submenu"
+msgstr "منوی فرعی"
+
+#: assets/js/uip/blocks/dynamic/loader.js:121
+msgid "Header submenu icon"
+msgstr "نماد منوی فرعی هدر"
+
+#: assets/js/uip/blocks/dynamic/loader.js:130
+msgid "Sub menu header"
+msgstr "سربرگ منوی فرعی"
+
+#: assets/js/uip/blocks/dynamic/loader.js:140
+msgid "Sub menu items"
+msgstr "آیتم های زیر منو"
+
+#: assets/js/uip/blocks/dynamic/loader.js:149
+msgid "Sub menu items hover"
+msgstr "آیتم های منوی فرعی شناور می شوند"
+
+#: assets/js/uip/blocks/dynamic/loader.js:158
+msgid "Sub menu items active"
+msgstr "موارد زیر منو فعال است"
+
+#: assets/js/uip/blocks/dynamic/loader.js:167
+msgid "Icons"
+msgstr "نمادها"
+
+#: assets/js/uip/blocks/dynamic/loader.js:177
+msgid "Notifications"
+msgstr "اطلاعیه"
+
+#: assets/js/uip/blocks/dynamic/loader.js:186
+#: assets/js/uip/blocks/dynamic/loader.js:296
+#: assets/js/uip/blocks/dynamic/loader.js:490
+#: assets/js/uip/blocks/dynamic/loader.js:604
+#: assets/js/uip/blocks/dynamic/loader.js:718
+#: assets/js/uip/blocks/dynamic/loader.js:823
+#: assets/js/uip/blocks/dynamic/loader.js:906
+#: assets/js/uip/blocks/dynamic/loader.js:1004
+#: assets/js/uip/blocks/dynamic/loader.js:1104
+#: assets/js/uip/blocks/elements/loader.js:80
+#: assets/js/uip/blocks/elements/loader.js:161
+#: assets/js/uip/blocks/elements/loader.js:227
+#: assets/js/uip/blocks/elements/loader.js:293
+#: assets/js/uip/blocks/elements/loader.js:399
+#: assets/js/uip/blocks/elements/loader.js:465
+#: assets/js/uip/blocks/elements/loader.js:559
+#: assets/js/uip/blocks/elements/loader.js:662
+#: assets/js/uip/blocks/elements/loader.js:779
+#: assets/js/uip/blocks/elements/loader.js:858
+#: assets/js/uip/blocks/elements/loader.js:962
+#: assets/js/uip/blocks/elements/loader.js:1057
+#: assets/js/uip/blocks/inputs/loader.js:82
+#: assets/js/uip/blocks/inputs/loader.js:220
+#: assets/js/uip/blocks/inputs/loader.js:326
+#: assets/js/uip/blocks/inputs/loader.js:432
+#: assets/js/uip/blocks/layout/loader.js:94
+#: assets/js/uip/blocks/layout/loader.js:247
+#: assets/js/uip/blocks/layout/loader.js:323
+#: assets/js/uip/blocks/layout/loader.js:472
+#: assets/js/uip/uibuilder/template-settings-groups.js:8
+#: assets/js/uip/uibuilder/uip-block-actions.js:27
+#: assets/js/uip/uibuilder/uip-block-settings.js:72
+#: assets/js/uip/uibuilder/uip-builder-settings.js:37
+msgid "Advanced"
+msgstr "پیشرفته"
+
+#: assets/js/uip/blocks/dynamic/loader.js:189
+#: assets/js/uip/blocks/dynamic/loader.js:299
+#: assets/js/uip/blocks/dynamic/loader.js:493
+#: assets/js/uip/blocks/dynamic/loader.js:607
+#: assets/js/uip/blocks/dynamic/loader.js:721
+#: assets/js/uip/blocks/dynamic/loader.js:826
+#: assets/js/uip/blocks/dynamic/loader.js:909
+#: assets/js/uip/blocks/dynamic/loader.js:1007
+#: assets/js/uip/blocks/dynamic/loader.js:1107
+#: assets/js/uip/blocks/elements/loader.js:83
+#: assets/js/uip/blocks/elements/loader.js:164
+#: assets/js/uip/blocks/elements/loader.js:230
+#: assets/js/uip/blocks/elements/loader.js:296
+#: assets/js/uip/blocks/elements/loader.js:402
+#: assets/js/uip/blocks/elements/loader.js:468
+#: assets/js/uip/blocks/elements/loader.js:562
+#: assets/js/uip/blocks/elements/loader.js:665
+#: assets/js/uip/blocks/elements/loader.js:782
+#: assets/js/uip/blocks/elements/loader.js:861
+#: assets/js/uip/blocks/elements/loader.js:965
+#: assets/js/uip/blocks/elements/loader.js:1060
+#: assets/js/uip/blocks/inputs/loader.js:85
+#: assets/js/uip/blocks/inputs/loader.js:223
+#: assets/js/uip/blocks/inputs/loader.js:329
+#: assets/js/uip/blocks/inputs/loader.js:435
+#: assets/js/uip/blocks/layout/loader.js:97
+#: assets/js/uip/blocks/layout/loader.js:250
+#: assets/js/uip/blocks/layout/loader.js:326
+#: assets/js/uip/blocks/layout/loader.js:475
+msgid "Custom classes"
+msgstr "کلاس های سفارشی"
+
+#: assets/js/uip/blocks/dynamic/loader.js:194
+#: assets/js/uip/blocks/dynamic/loader.js:304
+#: assets/js/uip/blocks/dynamic/loader.js:498
+#: assets/js/uip/blocks/dynamic/loader.js:612
+#: assets/js/uip/blocks/dynamic/loader.js:726
+#: assets/js/uip/blocks/dynamic/loader.js:831
+#: assets/js/uip/blocks/dynamic/loader.js:914
+#: assets/js/uip/blocks/dynamic/loader.js:1012
+#: assets/js/uip/blocks/dynamic/loader.js:1112
+#: assets/js/uip/blocks/elements/loader.js:88
+#: assets/js/uip/blocks/elements/loader.js:169
+#: assets/js/uip/blocks/elements/loader.js:235
+#: assets/js/uip/blocks/elements/loader.js:301
+#: assets/js/uip/blocks/elements/loader.js:407
+#: assets/js/uip/blocks/elements/loader.js:473
+#: assets/js/uip/blocks/elements/loader.js:567
+#: assets/js/uip/blocks/elements/loader.js:670
+#: assets/js/uip/blocks/elements/loader.js:787
+#: assets/js/uip/blocks/elements/loader.js:866
+#: assets/js/uip/blocks/elements/loader.js:970
+#: assets/js/uip/blocks/elements/loader.js:1065
+#: assets/js/uip/blocks/inputs/loader.js:89
+#: assets/js/uip/blocks/inputs/loader.js:227
+#: assets/js/uip/blocks/inputs/loader.js:333
+#: assets/js/uip/blocks/inputs/loader.js:439
+#: assets/js/uip/blocks/layout/loader.js:101
+#: assets/js/uip/blocks/layout/loader.js:254
+#: assets/js/uip/blocks/layout/loader.js:330
+#: assets/js/uip/blocks/layout/loader.js:479
+#: assets/js/uip/uibuilder/template-settings-groups.js:21
+msgid "Custom css"
+msgstr "css سفارشی"
+
+#: assets/js/uip/blocks/dynamic/loader.js:202
+#: assets/js/uip/blocks/dynamic/loader.js:312
+#: assets/js/uip/blocks/dynamic/loader.js:506
+#: assets/js/uip/blocks/dynamic/loader.js:620
+#: assets/js/uip/blocks/dynamic/loader.js:734
+#: assets/js/uip/blocks/dynamic/loader.js:839
+#: assets/js/uip/blocks/dynamic/loader.js:922
+#: assets/js/uip/blocks/dynamic/loader.js:1020
+#: assets/js/uip/blocks/dynamic/loader.js:1120
+#: assets/js/uip/blocks/elements/loader.js:96
+#: assets/js/uip/blocks/elements/loader.js:177
+#: assets/js/uip/blocks/elements/loader.js:243
+#: assets/js/uip/blocks/elements/loader.js:309
+#: assets/js/uip/blocks/elements/loader.js:415
+#: assets/js/uip/blocks/elements/loader.js:481
+#: assets/js/uip/blocks/elements/loader.js:575
+#: assets/js/uip/blocks/elements/loader.js:678
+#: assets/js/uip/blocks/elements/loader.js:795
+#: assets/js/uip/blocks/elements/loader.js:874
+#: assets/js/uip/blocks/elements/loader.js:978
+#: assets/js/uip/blocks/elements/loader.js:1073
+#: assets/js/uip/blocks/inputs/loader.js:97
+#: assets/js/uip/blocks/inputs/loader.js:235
+#: assets/js/uip/blocks/inputs/loader.js:341
+#: assets/js/uip/blocks/inputs/loader.js:447
+#: assets/js/uip/blocks/layout/loader.js:109
+#: assets/js/uip/blocks/layout/loader.js:262
+#: assets/js/uip/blocks/layout/loader.js:338
+#: assets/js/uip/blocks/layout/loader.js:487
+#: assets/js/uip/uibuilder/template-settings-groups.js:31
+msgid "Custom javaScript"
+msgstr "جاوا اسکریپت سفارشی"
+
+#: assets/js/uip/blocks/dynamic/loader.js:217
+msgid "Page content"
+msgstr "محتوای صفحه"
+
+#: assets/js/uip/blocks/dynamic/loader.js:219
+msgid "Outputs the page content block"
+msgstr "بلوک محتوای صفحه را خروجی می دهد"
+
+#: assets/js/uip/blocks/dynamic/loader.js:232
+msgid "Hide screen options?"
+msgstr "گزینه های صفحه پنهان شود؟"
+
+#: assets/js/uip/blocks/dynamic/loader.js:233
+msgid "Hide help tab?"
+msgstr "برگه راهنما پنهان شود؟"
+
+#: assets/js/uip/blocks/dynamic/loader.js:234
+msgid "Disable theme?"
+msgstr "تم غیرفعال شود؟"
+
+#: assets/js/uip/blocks/dynamic/loader.js:235
+msgid "Disable fullscreen option?"
+msgstr "گزینه تمام صفحه غیرفعال شود؟"
+
+#: assets/js/uip/blocks/dynamic/loader.js:236
+msgid "Hide plugin notices?"
+msgstr "اعلامیه های افزونه پنهان شود؟"
+
+#: assets/js/uip/blocks/dynamic/loader.js:237
+msgid "Login redirect - homepage"
+msgstr "تغییر مسیر ورود - صفحه اصلی"
+
+#: assets/js/uip/blocks/dynamic/loader.js:259
+msgid "Content frame"
+msgstr "قاب محتوا"
+
+#: assets/js/uip/blocks/dynamic/loader.js:269
+msgid "Frame toolbar"
+msgstr "نوار ابزار قاب"
+
+#: assets/js/uip/blocks/dynamic/loader.js:278
+msgid "Loading bar track"
+msgstr "بارگیری مسیر نوار"
+
+#: assets/js/uip/blocks/dynamic/loader.js:287
+msgid "Loading bar"
+msgstr "نوار بارگیری"
+
+#: assets/js/uip/blocks/dynamic/loader.js:327
+msgid "Posts table"
+msgstr "جدول پست ها"
+
+#: assets/js/uip/blocks/dynamic/loader.js:329
+#: assets/js/uip/blocks/dynamic/loader.js:522
+msgid "Create a list of recent posts"
+msgstr "فهرستی از پست های اخیر ایجاد کنید"
+
+#: assets/js/uip/blocks/dynamic/loader.js:342
+#: assets/js/uip/blocks/dynamic/loader.js:535
+msgid "Post types"
+msgstr "انواع پست"
+
+#: assets/js/uip/blocks/dynamic/loader.js:343
+msgid "Columns"
+msgstr "ستون ها"
+
+#: assets/js/uip/blocks/dynamic/loader.js:347
+msgid "Actions enabled"
+msgstr "اقدامات فعال شد"
+
+#: assets/js/uip/blocks/dynamic/loader.js:365
+#: assets/js/uip/blocks/dynamic/loader.js:536
+msgid "Posts per page"
+msgstr "پست در هر صفحه"
+
+#: assets/js/uip/blocks/dynamic/loader.js:366
+msgid "Only show users own content?"
+msgstr "فقط محتوای خود کاربران را نشان می دهد؟"
+
+#: assets/js/uip/blocks/dynamic/loader.js:367
+msgid "Hide search? "
+msgstr "جستجو پنهان شود؟"
+
+#: assets/js/uip/blocks/dynamic/loader.js:389
+#: assets/js/uip/blocks/dynamic/loader.js:634
+msgid "Search"
+msgstr "جستجو کردن"
+
+#: assets/js/uip/blocks/dynamic/loader.js:398
+msgid "Table styles"
+msgstr "سبک های جدول"
+
+#: assets/js/uip/blocks/dynamic/loader.js:407
+msgid "Table head"
+msgstr "سر میز"
+
+#: assets/js/uip/blocks/dynamic/loader.js:416
+msgid "Table head cell"
+msgstr "سلول سر میز"
+
+#: assets/js/uip/blocks/dynamic/loader.js:425
+msgid "Table row"
+msgstr "ردیف جدول"
+
+#: assets/js/uip/blocks/dynamic/loader.js:434
+msgid "Table cell"
+msgstr "سلول جدول"
+
+#: assets/js/uip/blocks/dynamic/loader.js:443
+msgid "Grid item"
+msgstr "مورد گرید"
+
+#: assets/js/uip/blocks/dynamic/loader.js:453
+msgid "Grid item title"
+msgstr "عنوان آیتم گرید"
+
+#: assets/js/uip/blocks/dynamic/loader.js:463
+#: assets/js/uip/blocks/dynamic/loader.js:586
+#: assets/js/uip/blocks/dynamic/loader.js:709
+msgid "Pagination buttons"
+msgstr "دکمه های صفحه بندی"
+
+#: assets/js/uip/blocks/dynamic/loader.js:472
+#: assets/js/uip/blocks/dynamic/loader.js:595
+msgid "Post type label"
+msgstr "برچسب نوع پست"
+
+#: assets/js/uip/blocks/dynamic/loader.js:481
+msgid "Table post count"
+msgstr "تعداد پست های جدول"
+
+#: assets/js/uip/blocks/dynamic/loader.js:520
+msgid "Recent posts"
+msgstr "پستهای اخیر"
+
+#: assets/js/uip/blocks/dynamic/loader.js:537
+#: assets/js/uip/blocks/dynamic/loader.js:649
+msgid "Only show users own content? "
+msgstr "فقط محتوای خود کاربران را نشان می دهد؟"
+
+#: assets/js/uip/blocks/dynamic/loader.js:559
+msgid "Posts list"
+msgstr "لیست پست ها"
+
+#: assets/js/uip/blocks/dynamic/loader.js:568
+#: assets/js/uip/blocks/elements/loader.js:761
+msgid "Item title"
+msgstr "عنوان مورد"
+
+#: assets/js/uip/blocks/dynamic/loader.js:577
+msgid "Item meta"
+msgstr "متای مورد"
+
+#: assets/js/uip/blocks/dynamic/loader.js:636
+msgid "Outputs a search block that queries your sites content"
+msgstr "یک بلوک جستجو را خروجی می دهد که محتوای سایت شما را پرس و جو می کند"
+
+#: assets/js/uip/blocks/dynamic/loader.js:650
+msgid "Post types available in search "
+msgstr "انواع پست در جستجو موجود است"
+
+#: assets/js/uip/blocks/dynamic/loader.js:673
+msgid "Search style"
+msgstr "سبک جستجو"
+
+#: assets/js/uip/blocks/dynamic/loader.js:682
+msgid "Search results area"
+msgstr "منطقه نتایج جستجو"
+
+#: assets/js/uip/blocks/dynamic/loader.js:691
+msgid "Search item title"
+msgstr "جستجوی عنوان مورد"
+
+#: assets/js/uip/blocks/dynamic/loader.js:700
+msgid "Search item meta"
+msgstr "جستجوی متا مورد"
+
+#: assets/js/uip/blocks/dynamic/loader.js:749
+msgid "Toolbar"
+msgstr "نوار ابزار"
+
+#: assets/js/uip/blocks/dynamic/loader.js:751
+msgid "Outputs default toolbar items"
+msgstr "موارد پیش فرض نوار ابزار را خروجی می دهد"
+
+#: assets/js/uip/blocks/dynamic/loader.js:764
+#: assets/js/uip/options/uip-hidden-toolbar-items-select.js:13
+msgid "Hidden toolbar items"
+msgstr "موارد پنهان نوار ابزار"
+
+#: assets/js/uip/blocks/dynamic/loader.js:765
+#: assets/js/uip/blocks/dynamic/loader.js:796
+msgid "Toolbar icons"
+msgstr "نمادهای نوار ابزار"
+
+#: assets/js/uip/blocks/dynamic/loader.js:787
+msgid "Toolbar items"
+msgstr "موارد نوار ابزار"
+
+#: assets/js/uip/blocks/dynamic/loader.js:805
+msgid "Submenu items"
+msgstr "موارد زیر منو"
+
+#: assets/js/uip/blocks/dynamic/loader.js:854
+msgid "Bread crumbs"
+msgstr "پودرهای سوخاری"
+
+#: assets/js/uip/blocks/dynamic/loader.js:856
+msgid "Shows the current page path (breadcrumbs)"
+msgstr "مسیر فعلی صفحه را نشان می دهد (breadcrumbs)"
+
+#: assets/js/uip/blocks/dynamic/loader.js:868
+#: assets/js/uip/blocks/dynamic/loader.js:897
+msgid "Icon separator"
+msgstr "جداکننده آیکون"
+
+#: assets/js/uip/blocks/dynamic/loader.js:889
+msgid "Breadcrumb item"
+msgstr "مورد خرده نان"
+
+#: assets/js/uip/blocks/dynamic/loader.js:937
+msgid "Fullscreen toggle"
+msgstr "تغییر حالت تمام صفحه"
+
+#: assets/js/uip/blocks/dynamic/loader.js:939
+msgid ""
+"A customisable button that can toggle the fullscreen mode of the content frame"
+msgstr "یک دکمه قابل تنظیم که می تواند حالت تمام صفحه قاب محتوا را تغییر دهد"
+
+#: assets/js/uip/blocks/dynamic/loader.js:955
+#: assets/js/uip/blocks/dynamic/loader.js:1053
+#: assets/js/uip/blocks/elements/loader.js:29
+#: assets/js/uip/blocks/elements/loader.js:1011
+msgid "Button text"
+msgstr "متن دکمه"
+
+#: assets/js/uip/blocks/dynamic/loader.js:957
+#: assets/js/uip/options/uip-code-editor.js:17
+msgid "Fullscreen"
+msgstr "تمام صفحه"
+
+#: assets/js/uip/blocks/dynamic/loader.js:963
+#: assets/js/uip/blocks/dynamic/loader.js:1063
+#: assets/js/uip/blocks/elements/loader.js:38
+#: assets/js/uip/blocks/elements/loader.js:138
+#: assets/js/uip/blocks/elements/loader.js:340
+#: assets/js/uip/blocks/elements/loader.js:430
+#: assets/js/uip/blocks/elements/loader.js:444
+#: assets/js/uip/blocks/elements/loader.js:1016
+#: assets/js/uip/blocks/layout/loader.js:150
+#: assets/js/uip/blocks/layout/loader.js:380
+msgid "Icon"
+msgstr "آیکون"
+
+#: assets/js/uip/blocks/dynamic/loader.js:964
+#: assets/js/uip/blocks/dynamic/loader.js:1064
+#: assets/js/uip/blocks/elements/loader.js:39
+#: assets/js/uip/blocks/elements/loader.js:139
+#: assets/js/uip/blocks/elements/loader.js:1017
+#: assets/js/uip/blocks/layout/loader.js:151
+#: assets/js/uip/blocks/layout/loader.js:381
+msgid "Icon position"
+msgstr "موقعیت نماد"
+
+#: assets/js/uip/blocks/dynamic/loader.js:986
+#: assets/js/uip/blocks/dynamic/loader.js:1086
+#: assets/js/uip/blocks/elements/loader.js:62
+#: assets/js/uip/blocks/elements/loader.js:1039
+msgid "Hover styles"
+msgstr "سبک های شناور"
+
+#: assets/js/uip/blocks/dynamic/loader.js:995
+#: assets/js/uip/blocks/dynamic/loader.js:1095
+#: assets/js/uip/blocks/elements/loader.js:71
+#: assets/js/uip/blocks/elements/loader.js:1048
+msgid "Active styles"
+msgstr "سبک های فعال"
+
+#: assets/js/uip/blocks/dynamic/loader.js:1035
+msgid "Open without frame"
+msgstr "بدون قاب باز کنید"
+
+#: assets/js/uip/blocks/dynamic/loader.js:1037
+msgid ""
+"This will open the current page outside the current frame and optionally without "
+"UiPress all together"
+msgstr ""
+"با این کار صفحه فعلی خارج از فریم فعلی و به صورت اختیاری بدون UiPress همگی باز "
+"می شود"
+
+#: assets/js/uip/blocks/dynamic/loader.js:1055
+msgid "Open outside frame"
+msgstr "قاب بیرونی را باز کنید"
+
+#: assets/js/uip/blocks/dynamic/loader.js:1061
+msgid "Open in new tab"
+msgstr "در برگه جدیدی باز کن"
+
+#: assets/js/uip/blocks/dynamic/loader.js:1062
+msgid "Disable UiPress on page"
+msgstr "UiPress در صفحه را غیرفعال کنید"
+
+#: assets/js/uip/blocks/dynamic/loader.js:1132
+msgid "Media library"
+msgstr "کتابخانه ی رسانه"
+
+#: assets/js/uip/blocks/dynamic/loader.js:1134
+msgid "Outputs a media library, with upload, delete and folder features"
+msgstr "یک کتابخانه رسانه را با ویژگی های آپلود، حذف و پوشه خروجی می دهد"
+
+#: assets/js/uip/blocks/dynamic/loader.js:1141
+msgid "Plugin updates"
+msgstr "به روز رسانی پلاگین"
+
+#: assets/js/uip/blocks/dynamic/loader.js:1143
+msgid "Outputs a list of available plugin and allows you update from the block"
+msgstr ""
+"لیستی از افزونه های موجود را خروجی می دهد و به شما امکان می دهد از بلوک به روز "
+"رسانی کنید"
+
+#: assets/js/uip/blocks/dynamic/loader.js:1149
+msgid "Plugin search"
+msgstr "جستجوی افزونه"
+
+#: assets/js/uip/blocks/dynamic/loader.js:1151
+msgid ""
+"Search the plugin directory with quick filters, discover new plugins and install "
+"all from one block"
+msgstr ""
+"دایرکتوری افزونه ها را با فیلترهای سریع جستجو کنید، افزونه های جدید را کشف کنید "
+"و همه را از یک بلوک نصب کنید"
+
+#: assets/js/uip/blocks/dynamic/loader.js:1157
+msgid "Grouped Date range"
+msgstr "محدوده تاریخ گروه بندی شده"
+
+#: assets/js/uip/blocks/dynamic/loader.js:1159
+msgid ""
+"Outputs a grouped date picker. This date picker is used for controlling it's "
+"siblings range such as analytic blocks."
+msgstr ""
+"یک انتخابگر تاریخ گروه بندی شده را خروجی می دهد. این انتخابگر تاریخ برای کنترل "
+"محدوده خواهر و برادر خود مانند بلوک های تحلیلی استفاده می شود."
+
+#: assets/js/uip/blocks/dynamic/loader.js:1165
+msgid "User meta"
+msgstr "متای کاربر"
+
+#: assets/js/uip/blocks/dynamic/loader.js:1167
+msgid "Outputs selected user meta, either as a string or an list of values"
+msgstr "متای کاربر انتخاب شده را به صورت رشته یا لیستی از مقادیر خروجی می دهد"
+
+#: assets/js/uip/blocks/dynamic/loader.js:1173
+msgid "Content navigator"
+msgstr "ناوبر محتوا"
+
+#: assets/js/uip/blocks/dynamic/loader.js:1175
+msgid ""
+"Creates a navigatable file tree of all your site content like posts, pages and "
+"media. Allows for creation of new folders and organisation of content"
+msgstr ""
+"یک درخت فایل قابل پیمایش از تمام محتوای سایت شما مانند پست ها، صفحات و رسانه ها "
+"ایجاد می کند. امکان ایجاد پوشه های جدید و سازماندهی محتوا را فراهم می کند"
+
+#: assets/js/uip/blocks/dynamic/posts-table.js:25
+#: assets/js/uip/blocks/dynamic/recent-posts.js:20
+msgid "Nothing posts found"
+msgstr "هیچ پستی پیدا نشد"
+
+#: assets/js/uip/blocks/dynamic/posts-table.js:26
+#: assets/js/uip/blocks/dynamic/recent-posts.js:21
+msgid "By"
+msgstr "توسط"
+
+#: assets/js/uip/blocks/dynamic/posts-table.js:27
+msgid "items"
+msgstr "موارد"
+
+#: assets/js/uip/blocks/dynamic/posts-table.js:28
+#: assets/js/uip/options/uip-multi-select.js:15
+msgid "Search items"
+msgstr "موارد را جستجو کنید"
+
+#: assets/js/uip/blocks/dynamic/posts-table.js:29
+#: assets/js/uip/classes/uip-media-browser.js:38
+msgid "Grid view"
+msgstr "نمای شبکه ای"
+
+#: assets/js/uip/blocks/dynamic/posts-table.js:30
+#: assets/js/uip/classes/uip-media-browser.js:39
+#: assets/js/uip/classes/uip-media-browser.js:40
+msgid "List view"
+msgstr "نمای فهرستی"
+
+#: assets/js/uip/blocks/dynamic/search.js:17
+msgid "Search content"
+msgstr "جستجو در محتوا"
+
+#: assets/js/uip/blocks/dynamic/search.js:18
+msgid "Nothing found for query"
+msgstr "چیزی برای پرس و جو پیدا نشد"
+
+#: assets/js/uip/blocks/dynamic/search.js:19
+msgid "by"
+msgstr "توسط"
+
+#: assets/js/uip/blocks/dynamic/search.js:20
+msgid "found"
+msgstr "یافت"
+
+#: assets/js/uip/blocks/elements/exit-to-dashboard.js:61
+#: assets/js/uip/classes/uip-media-browser.js:411 assets/js/uip/classes/uip.js:292
+#: assets/js/uip/uibuilder/uip-builder-framework.js:347
+msgid "Are you sure?"
+msgstr "مطمئنی؟"
+
+#: assets/js/uip/blocks/elements/exit-to-dashboard.js:61
+msgid "This will remove the current UI and revert to the default admin page"
+msgstr "با این کار رابط کاربری فعلی حذف می شود و به صفحه مدیریت پیش فرض برمی گردد"
+
+#: assets/js/uip/blocks/elements/loader.js:11
+msgid "Button"
+msgstr "دکمه"
+
+#: assets/js/uip/blocks/elements/loader.js:13
+msgid "Creates a button link"
+msgstr "پیوند دکمه ایجاد می کند"
+
+#: assets/js/uip/blocks/elements/loader.js:31
+#: assets/js/uip/blocks/layout/loader.js:144
+#: assets/js/uip/blocks/layout/loader.js:374
+#: assets/js/uip/options/settings-loader.js:15
+msgid "Press me"
+msgstr "مرا فشار دهید"
+
+#: assets/js/uip/blocks/elements/loader.js:37
+msgid "Link"
+msgstr "ارتباط دادن"
+
+#: assets/js/uip/blocks/elements/loader.js:40
+msgid "JavaScript on click"
+msgstr "جاوا اسکریپت روی کلیک"
+
+#: assets/js/uip/blocks/elements/loader.js:111
+msgid "Heading"
+msgstr "سرفصل"
+
+#: assets/js/uip/blocks/elements/loader.js:113
+msgid "Creates a heading block"
+msgstr "یک بلوک عنوان ایجاد می کند"
+
+#: assets/js/uip/blocks/elements/loader.js:129
+#: assets/js/uip/blocks/elements/loader.js:131
+msgid "Heading text"
+msgstr "متن سرفصل"
+
+#: assets/js/uip/blocks/elements/loader.js:137
+msgid "Heading type"
+msgstr "نوع سرفصل"
+
+#: assets/js/uip/blocks/elements/loader.js:192
+msgid "Paragraph"
+msgstr "پاراگراف"
+
+#: assets/js/uip/blocks/elements/loader.js:194
+msgid "Creates a paragraph block"
+msgstr "یک بلوک پاراگراف ایجاد می کند"
+
+#: assets/js/uip/blocks/elements/loader.js:206
+msgid "Paragraph content"
+msgstr "محتوای پاراگراف"
+
+#: assets/js/uip/blocks/elements/loader.js:258
+#: assets/js/uip/blocks/elements/loader.js:272
+msgid "Image"
+msgstr "تصویر"
+
+#: assets/js/uip/blocks/elements/loader.js:260
+msgid "Creates a image block"
+msgstr "یک بلوک تصویر ایجاد می کند"
+
+#: assets/js/uip/blocks/elements/loader.js:324
+msgid "Accordion"
+msgstr "آکاردئون"
+
+#: assets/js/uip/blocks/elements/loader.js:326
+msgid "Creates a accordion block"
+msgstr "یک بلوک آکاردئونی ایجاد می کند"
+
+#: assets/js/uip/blocks/elements/loader.js:344
+#: assets/js/uip/blocks/elements/loader.js:346
+msgid "Accordion title"
+msgstr "عنوان آکاردئون"
+
+#: assets/js/uip/blocks/elements/loader.js:373
+msgid "Content align"
+msgstr "تراز کردن محتوا"
+
+#: assets/js/uip/blocks/elements/loader.js:381
+msgid "Content style"
+msgstr "سبک محتوا"
+
+#: assets/js/uip/blocks/elements/loader.js:390
+msgid "Chevron style"
+msgstr "سبک شورون"
+
+#: assets/js/uip/blocks/elements/loader.js:432
+msgid "Creates a icon block"
+msgstr "یک بلوک آیکون ایجاد می کند"
+
+#: assets/js/uip/blocks/elements/loader.js:496
+#: assets/js/uip/uibuilder/uip-block-settings.js:48
+#: assets/js/uip/uibuilder/uip-ui-preview.js:32
+msgid "Dark mode"
+msgstr "حالت تاریک"
+
+#: assets/js/uip/blocks/elements/loader.js:498
+msgid "Outputs a toggle for switiching between light and dark modes"
+msgstr "یک ضامن برای جابه‌جایی بین حالت‌های روشن و تاریک تولید می‌کند"
+
+#: assets/js/uip/blocks/elements/loader.js:510
+msgid "Let dark mode update based on OS theme?"
+msgstr "اجازه می‌دهید حالت تاریک براساس موضوع سیستم عامل به‌روزرسانی شود؟"
+
+#: assets/js/uip/blocks/elements/loader.js:532
+msgid "Inactive toggle"
+msgstr "تغییر حالت غیرفعال"
+
+#: assets/js/uip/blocks/elements/loader.js:541
+msgid "Active toggle"
+msgstr "ضامن فعال"
+
+#: assets/js/uip/blocks/elements/loader.js:550
+msgid "Track"
+msgstr "مسیر"
+
+#: assets/js/uip/blocks/elements/loader.js:590
+#: assets/js/uip/blocks/elements/loader.js:605
+#: assets/js/uip/blocks/elements/loader.js:729
+msgid "Tabs"
+msgstr "زبانه ها"
+
+#: assets/js/uip/blocks/elements/loader.js:592
+msgid "Create a tabbed navigation with different styles"
+msgstr "یک پیمایش زبانه دار با سبک های مختلف ایجاد کنید"
+
+#: assets/js/uip/blocks/elements/loader.js:626
+msgid "Tab item"
+msgstr "مورد برگه"
+
+#: assets/js/uip/blocks/elements/loader.js:635
+msgid "Tab item hover"
+msgstr "مورد برگه شناور"
+
+#: assets/js/uip/blocks/elements/loader.js:644
+msgid "Tab item active"
+msgstr "مورد برگه فعال است"
+
+#: assets/js/uip/blocks/elements/loader.js:653
+msgid "Tab content"
+msgstr "محتوای برگه"
+
+#: assets/js/uip/blocks/elements/loader.js:693
+msgid "To do list"
+msgstr "لیست برای انجام کار"
+
+#: assets/js/uip/blocks/elements/loader.js:695
+msgid "Outputs a customisable to do list"
+msgstr "یک لیست انجام کار قابل تنظیم را خروجی می دهد"
+
+#: assets/js/uip/blocks/elements/loader.js:721
+msgid "Add todo button"
+msgstr "دکمه اضافه کردن کار"
+
+#: assets/js/uip/blocks/elements/loader.js:737
+#: assets/js/uip/options/settings-loader.js:626
+#: assets/js/uip/options/uip-tab-builder.js:35
+msgid "Tab"
+msgstr "Tab"
+
+#: assets/js/uip/blocks/elements/loader.js:745
+msgid "Active tab"
+msgstr "برگه فعال"
+
+#: assets/js/uip/blocks/elements/loader.js:753
+msgid "List area"
+msgstr "منطقه فهرست"
+
+#: assets/js/uip/blocks/elements/loader.js:769
+msgid "Item description"
+msgstr "توضیحات مورد"
+
+#: assets/js/uip/blocks/elements/loader.js:810
+#: assets/js/uip/blocks/elements/loader.js:848
+msgid "Video"
+msgstr "ویدئو"
+
+#: assets/js/uip/blocks/elements/loader.js:812
+msgid "Outputs a video block. Can be a direct URL, media library link or embed"
+msgstr ""
+"یک بلوک ویدیویی را خروجی می دهد. می تواند یک URL مستقیم، پیوند کتابخانه رسانه یا "
+"جاسازی باشد"
+
+#: assets/js/uip/blocks/elements/loader.js:825
+msgid "Video URL"
+msgstr "URL ویدیو"
+
+#: assets/js/uip/blocks/elements/loader.js:826
+msgid "Video embed"
+msgstr "جاسازی ویدیو"
+
+#: assets/js/uip/blocks/elements/loader.js:889
+#: assets/js/uip/blocks/elements/loader.js:907
+#: assets/js/uip/blocks/elements/loader.js:943
+msgid "Quote"
+msgstr "نقل قول"
+
+#: assets/js/uip/blocks/elements/loader.js:891
+msgid "Displays a quote in a decorative way"
+msgstr "یک نقل قول را به روشی تزئینی نشان می دهد"
+
+#: assets/js/uip/blocks/elements/loader.js:909
+msgid ""
+"When the power of love overcomes the love of power, the world will know peace"
+msgstr "وقتی قدرت عشق بر عشق به قدرت غلبه کند، جهان صلح را خواهد شناخت"
+
+#: assets/js/uip/blocks/elements/loader.js:915
+#: assets/js/uip/blocks/elements/loader.js:952
+msgid "Quote meta"
+msgstr "نقل قول متا"
+
+#: assets/js/uip/blocks/elements/loader.js:917
+msgid "Jimi Hendrix"
+msgstr "جیمی هندریکس"
+
+#: assets/js/uip/blocks/elements/loader.js:921
+#: assets/js/uip/blocks/inputs/loader.js:180
+#: assets/js/uip/blocks/inputs/loader.js:286
+#: assets/js/uip/blocks/inputs/loader.js:392
+msgid "Required field"
+msgstr "فیلد الزامی"
+
+#: assets/js/uip/blocks/elements/loader.js:993
+msgid "Exit to dashboard"
+msgstr "خروج به داشبورد"
+
+#: assets/js/uip/blocks/elements/loader.js:995
+msgid ""
+"This button is designed for admins with active ui templates. When clicked it "
+"will remove the current UI layer and display the default WordPress admin page"
+msgstr ""
+"این دکمه برای مدیران با قالب های فعال رابط کاربری طراحی شده است. وقتی روی آن "
+"کلیک کنید، لایه رابط کاربری فعلی حذف می‌شود و صفحه مدیریت پیش‌فرض وردپرس نمایش "
+"داده می‌شود"
+
+#: assets/js/uip/blocks/elements/loader.js:1013
+msgid "Exit to admin"
+msgstr "خروج به ادمین"
+
+#: assets/js/uip/blocks/elements/loader.js:1084
+msgid "iFrame"
+msgstr "آی فریم"
+
+#: assets/js/uip/blocks/elements/loader.js:1086
+msgid "Outputs a iframe block"
+msgstr "یک بلوک iframe را خروجی می دهد"
+
+#: assets/js/uip/blocks/elements/loader.js:1093
+msgid "HTML"
+msgstr "HTML"
+
+#: assets/js/uip/blocks/elements/loader.js:1095
+msgid "This block allows you to output your own HTML into the template"
+msgstr "این بلوک به شما اجازه می دهد تا HTML خود را در قالب خروجی بگیرید"
+
+#: assets/js/uip/blocks/elements/loader.js:1101
+msgid "Icon list"
+msgstr "لیست آیکون ها"
+
+#: assets/js/uip/blocks/elements/loader.js:1103
+msgid "Creates a list with icons"
+msgstr "لیستی با آیکون ها ایجاد می کند"
+
+#: assets/js/uip/blocks/elements/todo-list.js:15
+msgid "Add todo"
+msgstr "همه را اضافه کنید"
+
+#: assets/js/uip/blocks/elements/todo-list.js:16
+msgid "What would you like to do?"
+msgstr "دوست دارید چه کار کنید؟"
+
+#: assets/js/uip/blocks/elements/todo-list.js:18
+msgid "Add a description..."
+msgstr "اضافه کردن توضیحات..."
+
+#: assets/js/uip/blocks/elements/todo-list.js:28
+msgid "Todo"
+msgstr "همه"
+
+#: assets/js/uip/blocks/elements/todo-list.js:32
+msgid "Completed"
+msgstr "تکمیل شد"
+
+#: assets/js/uip/blocks/inputs/form-block.js:18
+msgid "Submit"
+msgstr "ارسال"
+
+#: assets/js/uip/blocks/inputs/form-block.js:158
+#: assets/js/uip/blocks/inputs/form-block.js:167
+#: assets/js/uip/blocks/inputs/form-block.js:176
+#: assets/js/uip/blocks/inputs/form-block.js:185
+#: assets/js/uip/blocks/inputs/form-block.js:190
+msgid "Configuration error"
+msgstr "خطای پیکربندی"
+
+#: assets/js/uip/blocks/inputs/form-block.js:158
+msgid "No php function supplied to send form data to"
+msgstr "هیچ تابع php برای ارسال داده های فرم به آن ارائه نشده است"
+
+#: assets/js/uip/blocks/inputs/form-block.js:167
+msgid "No email supplied to send form data to"
+msgstr "هیچ ایمیلی برای ارسال اطلاعات فرم به آن ارائه نشده است"
+
+#: assets/js/uip/blocks/inputs/form-block.js:176
+msgid "No site option name supplied to save as"
+msgstr "هیچ نام گزینه سایتی برای ذخیره به عنوان ارائه نشده است"
+
+#: assets/js/uip/blocks/inputs/form-block.js:185
+msgid "You have not specified how to save the data to the user meta"
+msgstr "نحوه ذخیره داده ها در متای کاربر را مشخص نکرده اید"
+
+#: assets/js/uip/blocks/inputs/form-block.js:190
+msgid "You need to specifiy a meta key to save the meta data to"
+msgstr "برای ذخیره متا داده ها باید یک کلید متا را مشخص کنید"
+
+#: assets/js/uip/blocks/inputs/loader.js:12
+msgid "Form elements can be dragged into this block to create custom forms"
+msgstr "عناصر فرم را می توان برای ایجاد فرم های سفارشی به این بلوک کشید"
+
+#: assets/js/uip/blocks/inputs/loader.js:29
+msgid "Button submit text"
+msgstr "دکمه ارسال متن"
+
+#: assets/js/uip/blocks/inputs/loader.js:31
+msgid "Send"
+msgstr "ارسال"
+
+#: assets/js/uip/blocks/inputs/loader.js:39
+msgid "Submit action"
+msgstr "اقدام را ارسال کنید"
+
+#: assets/js/uip/blocks/inputs/loader.js:41
+msgid "Prefill form data"
+msgstr "داده های فرم از قبل پر کنید"
+
+#: assets/js/uip/blocks/inputs/loader.js:42
+msgid "Success message"
+msgstr "پیام موفقیت"
+
+#: assets/js/uip/blocks/inputs/loader.js:42
+msgid "Form sent successfully!"
+msgstr "فرم با موفقیت ارسال شد!"
+
+#: assets/js/uip/blocks/inputs/loader.js:64
+msgid "Form area"
+msgstr "منطقه فرم"
+
+#: assets/js/uip/blocks/inputs/loader.js:73
+msgid "Submit button"
+msgstr "دکمه ارسال"
+
+#: assets/js/uip/blocks/inputs/loader.js:112
+#: assets/js/uip/blocks/inputs/loader.js:132
+#: assets/js/uip/blocks/inputs/loader.js:269
+msgid "Text input"
+msgstr "ورودی متن"
+
+#: assets/js/uip/blocks/inputs/loader.js:114
+msgid "A simple text input for use with the form block"
+msgstr "یک ورودی متن ساده برای استفاده با بلوک فرم"
+
+#: assets/js/uip/blocks/inputs/loader.js:130
+#: assets/js/uip/blocks/inputs/loader.js:211
+#: assets/js/uip/blocks/inputs/loader.js:267
+#: assets/js/uip/blocks/inputs/loader.js:317
+#: assets/js/uip/blocks/inputs/loader.js:374
+#: assets/js/uip/blocks/inputs/loader.js:423
+#: assets/js/uip/options/uip-select-option-builder.js:13
+msgid "Label"
+msgstr "برچسب"
+
+#: assets/js/uip/blocks/inputs/loader.js:138
+#: assets/js/uip/blocks/inputs/loader.js:275
+#: assets/js/uip/blocks/inputs/loader.js:382
+#: assets/js/uip/options/uip-submit-action.js:53
+msgid "Meta key"
+msgstr "کلید متا"
+
+#: assets/js/uip/blocks/inputs/loader.js:144
+#: assets/js/uip/blocks/inputs/loader.js:281
+msgid "Placeholder"
+msgstr "مکان نگهدار"
+
+#: assets/js/uip/blocks/inputs/loader.js:146
+#: assets/js/uip/blocks/inputs/loader.js:283
+msgid "Placeholder text..."
+msgstr "متن جای جای..."
+
+#: assets/js/uip/blocks/inputs/loader.js:152
+msgid "Inut type"
+msgstr "نوع ورودی"
+
+#: assets/js/uip/blocks/inputs/loader.js:158
+msgid "Text"
+msgstr "متن"
+
+#: assets/js/uip/blocks/inputs/loader.js:162
+msgid "Number"
+msgstr "عدد"
+
+#: assets/js/uip/blocks/inputs/loader.js:166
+#: assets/js/uip/options/uip-submit-action.js:13
+msgid "Email"
+msgstr "پست الکترونیک"
+
+#: assets/js/uip/blocks/inputs/loader.js:170
+msgid "Phone number"
+msgstr "شماره تلفن"
+
+#: assets/js/uip/blocks/inputs/loader.js:174
+msgid "Password"
+msgstr "کلمه عبور"
+
+#: assets/js/uip/blocks/inputs/loader.js:202
+msgid "Input style"
+msgstr "سبک ورودی"
+
+#: assets/js/uip/blocks/inputs/loader.js:249
+msgid "Text area"
+msgstr "ناحیه متن"
+
+#: assets/js/uip/blocks/inputs/loader.js:251
+#: assets/js/uip/blocks/inputs/loader.js:358
+msgid "A simple textarea input for use with the form block"
+msgstr "یک ورودی textarea ساده برای استفاده با بلوک فرم"
+
+#: assets/js/uip/blocks/inputs/loader.js:308
+msgid "Textarea style"
+msgstr "سبک Textarea"
+
+#: assets/js/uip/blocks/inputs/loader.js:356
+#: assets/js/uip/blocks/inputs/loader.js:376
+msgid "Select"
+msgstr "انتخاب کنید"
+
+#: assets/js/uip/blocks/inputs/loader.js:389
+msgid "Select options"
+msgstr "گزینه مورد نظر را انتخاب کنید"
+
+#: assets/js/uip/blocks/inputs/loader.js:414
+msgid "Select style"
+msgstr "سبک را انتخاب کنید"
+
+#: assets/js/uip/blocks/inputs/loader.js:457
+msgid "Radio"
+msgstr "رادیو"
+
+#: assets/js/uip/blocks/inputs/loader.js:459
+msgid "Outputs a radio type input"
+msgstr "یک ورودی نوع رادیویی را خروجی می دهد"
+
+#: assets/js/uip/blocks/inputs/loader.js:465
+msgid "Checkbox"
+msgstr "چک باکس"
+
+#: assets/js/uip/blocks/inputs/loader.js:467
+msgid "Outputs a checkbox type input"
+msgstr "یک ورودی نوع چک باکس را خروجی می دهد"
+
+#: assets/js/uip/blocks/inputs/loader.js:473
+msgid "Image select"
+msgstr "انتخاب تصویر"
+
+#: assets/js/uip/blocks/inputs/loader.js:475
+msgid "Outputs a image select input"
+msgstr "خروجی ورودی انتخاب تصویر"
+
+#: assets/js/uip/blocks/inputs/loader.js:481
+msgid "Date range"
+msgstr "محدوده زمانی"
+
+#: assets/js/uip/blocks/inputs/loader.js:483
+msgid ""
+"Outputs a date range input. Can be a single date, date range, or a comparison "
+"date range"
+msgstr ""
+"یک ورودی محدوده تاریخ را خروجی می کند. می تواند یک تاریخ واحد، محدوده تاریخ، یا "
+"محدوده تاریخ مقایسه باشد"
+
+#: assets/js/uip/blocks/inputs/loader.js:489
+msgid "Colour select"
+msgstr "رنگ را انتخاب کنید"
+
+#: assets/js/uip/blocks/inputs/loader.js:491
+msgid "Outputs a colour select input. For use with the form block"
+msgstr "یک ورودی انتخاب رنگ را خروجی می دهد. برای استفاده با بلوک فرم"
+
+#: assets/js/uip/blocks/inputs/select-input.js:15
+#: assets/js/uip/blocks/inputs/text-area.js:14
+#: assets/js/uip/blocks/inputs/text-input.js:14
+msgid "Input placeholder..."
+msgstr "مکان نگهدار ورودی..."
+
+#: assets/js/uip/blocks/layout/loader.js:10
+msgid "Container"
+msgstr "ظرف"
+
+#: assets/js/uip/blocks/layout/loader.js:12
+msgid "Creates a container block with options for aligning content"
+msgstr "یک بلوک کانتینری با گزینه هایی برای تراز کردن محتوا ایجاد می کند"
+
+#: assets/js/uip/blocks/layout/loader.js:26
+msgid "Align self"
+msgstr "خود را تراز کنید"
+
+#: assets/js/uip/blocks/layout/loader.js:43 assets/js/uip/classes/uip.js:1888
+msgid "Vertical align"
+msgstr "تراز عمودی"
+
+#: assets/js/uip/blocks/layout/loader.js:44 assets/js/uip/classes/uip.js:1889
+msgid "Horizontal align"
+msgstr "تراز افقی"
+
+#: assets/js/uip/blocks/layout/loader.js:45 assets/js/uip/classes/uip.js:1890
+msgid "Grow or shrink"
+msgstr "رشد یا کوچک شدن"
+
+#: assets/js/uip/blocks/layout/loader.js:48 assets/js/uip/classes/uip.js:1893
+msgid "Stretch direction"
+msgstr "جهت کشش"
+
+#: assets/js/uip/blocks/layout/loader.js:53 assets/js/uip/classes/uip.js:1896
+msgid "Container dimensions"
+msgstr "ابعاد ظرف"
+
+#: assets/js/uip/blocks/layout/loader.js:61 assets/js/uip/classes/uip.js:1897
+msgid "Overflow"
+msgstr "سرریز"
+
+#: assets/js/uip/blocks/layout/loader.js:67
+#: assets/js/uip/blocks/layout/loader.js:314
+msgid "Content area"
+msgstr "حوزه محتوا"
+
+#: assets/js/uip/blocks/layout/loader.js:123
+msgid "Dropdown"
+msgstr "کشویی"
+
+#: assets/js/uip/blocks/layout/loader.js:125
+msgid "Creates a dropdown with a customisable trigger"
+msgstr "یک کشویی با یک ماشه قابل تنظیم ایجاد می کند"
+
+#: assets/js/uip/blocks/layout/loader.js:142
+#: assets/js/uip/blocks/layout/loader.js:372
+msgid "Trigger text"
+msgstr "متن ماشه"
+
+#: assets/js/uip/blocks/layout/loader.js:155
+msgid "Dropdown position"
+msgstr "موقعیت کشویی"
+
+#: assets/js/uip/blocks/layout/loader.js:160
+#: assets/js/uip/options/uip-border-designer.js:15
+msgid "Bottom left"
+msgstr "پایین سمت چپ"
+
+#: assets/js/uip/blocks/layout/loader.js:164
+#: assets/js/uip/options/uip-border-designer.js:16
+msgid "Bottom right"
+msgstr "سمت راست پایین"
+
+#: assets/js/uip/blocks/layout/loader.js:168
+#: assets/js/uip/options/uip-border-designer.js:13
+msgid "Top left"
+msgstr "بالا سمت چپ"
+
+#: assets/js/uip/blocks/layout/loader.js:172
+#: assets/js/uip/options/uip-border-designer.js:14
+msgid "Top right"
+msgstr "بالا سمت راست"
+
+#: assets/js/uip/blocks/layout/loader.js:176
+#: assets/js/uip/blocks/layout/loader.js:390
+#: assets/js/uip/options/settings-loader.js:732
+#: assets/js/uip/options/settings-loader.js:984
+#: assets/js/uip/options/uip-dynamic-input.js:21
+#: assets/js/uip/options/uip-margin.js:13 assets/js/uip/options/uip-padding.js:13
+#: assets/js/uip/options/uip-position-designer.js:31
+msgid "Left"
+msgstr "ترک کرد"
+
+#: assets/js/uip/blocks/layout/loader.js:180
+#: assets/js/uip/blocks/layout/loader.js:394
+#: assets/js/uip/options/settings-loader.js:742
+#: assets/js/uip/options/settings-loader.js:988
+#: assets/js/uip/options/uip-dynamic-input.js:26
+#: assets/js/uip/options/uip-margin.js:12 assets/js/uip/options/uip-padding.js:12
+#: assets/js/uip/options/uip-position-designer.js:33
+msgid "Right"
+msgstr "درست"
+
+#: assets/js/uip/blocks/layout/loader.js:188
+#: assets/js/uip/blocks/layout/loader.js:422
+msgid "Keyboard shortcut to open"
+msgstr "میانبر صفحه کلید برای باز کردن"
+
+#: assets/js/uip/blocks/layout/loader.js:211
+msgid "Trigger styles"
+msgstr "سبک های ماشه"
+
+#: assets/js/uip/blocks/layout/loader.js:220
+#: assets/js/uip/blocks/layout/loader.js:445
+msgid "Trigger hover styles"
+msgstr "سبک‌های شناور را فعال کنید"
+
+#: assets/js/uip/blocks/layout/loader.js:229
+#: assets/js/uip/blocks/layout/loader.js:454
+msgid "Trigger active styles"
+msgstr "راه‌اندازی سبک‌های فعال"
+
+#: assets/js/uip/blocks/layout/loader.js:238
+msgid "Dropdown styles"
+msgstr "سبک های کشویی"
+
+#: assets/js/uip/blocks/layout/loader.js:277
+msgid "Responsive grid"
+msgstr "شبکه پاسخگو"
+
+#: assets/js/uip/blocks/layout/loader.js:279
+msgid "Outputs a responsive grid"
+msgstr "یک شبکه پاسخگو را خروجی می دهد"
+
+#: assets/js/uip/blocks/layout/loader.js:293
+msgid "Number of columns"
+msgstr "تعداد ستون ها"
+
+#: assets/js/uip/blocks/layout/loader.js:297
+msgid "Minimum column width"
+msgstr "حداقل عرض ستون"
+
+#: assets/js/uip/blocks/layout/loader.js:300
+msgid "Grid gap"
+msgstr "شکاف شبکه"
+
+#: assets/js/uip/blocks/layout/loader.js:353
+msgid "Slide out panel"
+msgstr "پانل را به بیرون بکشید"
+
+#: assets/js/uip/blocks/layout/loader.js:355
+msgid "Creates a slide out panel with a customisable trigger"
+msgstr "یک پانل کشویی با یک ماشه قابل تنظیم ایجاد می کند"
+
+#: assets/js/uip/blocks/layout/loader.js:385
+#: assets/js/uip/blocks/layout/loader.js:405
+msgid "Panel position"
+msgstr "موقعیت پانل"
+
+#: assets/js/uip/blocks/layout/loader.js:410
+#: assets/js/uip/options/settings-loader.js:513
+msgid "Overlay"
+msgstr "پوشش"
+
+#: assets/js/uip/blocks/layout/loader.js:414
+msgid "Push"
+msgstr "فشار دادن"
+
+#: assets/js/uip/blocks/layout/loader.js:436
+msgid "Trigger style"
+msgstr "سبک ماشه"
+
+#: assets/js/uip/blocks/layout/loader.js:463
+msgid "Panel styles"
+msgstr "سبک های پانل"
+
+#: assets/js/uip/blocks/layout/loader.js:498
+msgid "Modal"
+msgstr "معین"
+
+#: assets/js/uip/blocks/layout/loader.js:500
+msgid "Outputs a modal block with a customisable trigger"
+msgstr "یک بلوک مودال را با یک ماشه قابل تنظیم خروجی می دهد"
+
+#: assets/js/uip/classes/uip-media-browser.js:29
+#: assets/js/uip/options/uip-image-select.js:29
+#: assets/js/uip/uibuilder/uip-builder-framework.js:96
+msgid "Library"
+msgstr "کتابخانه"
+
+#: assets/js/uip/classes/uip-media-browser.js:37
+msgid "Search media"
+msgstr "جستجو در رسانه"
+
+#: assets/js/uip/classes/uip-media-browser.js:41
+msgid "Choose image"
+msgstr "تصویر را انتخاب کنید"
+
+#: assets/js/uip/classes/uip-media-browser.js:42
+msgid "Full size"
+msgstr "اندازه کامل"
+
+#: assets/js/uip/classes/uip-media-browser.js:43
+msgid "Medium"
+msgstr "متوسط"
+
+#: assets/js/uip/classes/uip-media-browser.js:44
+msgid "Small"
+msgstr "کم اهمیت"
+
+#: assets/js/uip/classes/uip-media-browser.js:45
+msgid "Thumbnail"
+msgstr "بند انگشتی"
+
+#: assets/js/uip/classes/uip-media-browser.js:46
+#: assets/js/uip/options/uip-image-select.js:27
+msgid "Upload"
+msgstr "بارگذاری"
+
+#: assets/js/uip/classes/uip-media-browser.js:48
+msgid "Photo by"
+msgstr "عکس توسط"
+
+#: assets/js/uip/classes/uip-media-browser.js:49
+msgid "on"
+msgstr "بر"
+
+#: assets/js/uip/classes/uip-media-browser.js:335
+msgid "Uploading files"
+msgstr "در حال آپلود فایل ها"
+
+#: assets/js/uip/classes/uip-media-browser.js:344
+msgid "Upload finsihed"
+msgstr "آپلود تمام شد"
+
+#: assets/js/uip/classes/uip-media-browser.js:344
+msgid " errors"
+msgstr "خطاها"
+
+#: assets/js/uip/classes/uip-media-browser.js:360
+msgid "File exceeds max upload size"
+msgstr "اندازه فایل از حداکثر حجم بارگذاری بیشتر است"
+
+#: assets/js/uip/classes/uip-media-browser.js:367
+#: assets/js/uip/options/uip-image-select.js:162
+msgid "Unable to upload this file type"
+msgstr "آپلود این نوع فایل ممکن نیست"
+
+#: assets/js/uip/classes/uip-media-browser.js:392
+msgid "File uploaded"
+msgstr "فایل آپلود شد"
+
+#: assets/js/uip/classes/uip-media-browser.js:395
+#: assets/js/uip/options/uip-image-select.js:201
+msgid "Unable to handle upload"
+msgstr "قادر به مدیریت آپلود نیست"
+
+#: assets/js/uip/classes/uip-media-browser.js:411 assets/js/uip/classes/uip.js:292
+msgid ""
+"Are you sure you want to delete this? Once deleted this item can't be recovered"
+msgstr ""
+"آیا مطمئن هستید که می خواهید این را حذف کنید؟ پس از حذف، این مورد قابل بازیابی "
+"نیست"
+
+#: assets/js/uip/classes/uip-media-browser.js:414
+msgid "Deleting selected files"
+msgstr "حذف فایل های انتخاب شده"
+
+#: assets/js/uip/classes/uip-media-browser.js:429
+msgid "Items deleted"
+msgstr "موارد حذف شد"
+
+#: assets/js/uip/classes/uip-media-library.js:28
+#: assets/js/uip/classes/uip-media-library.js:37
+msgid "Unable to mount"
+msgstr "امکان سوار شدن وجود ندارد"
+
+#: assets/js/uip/classes/uip-media-library.js:28
+msgid "No element provided to mount to"
+msgstr "هیچ عنصری برای نصب ارائه نشده است"
+
+#: assets/js/uip/classes/uip-media-library.js:37
+msgid "No elements found for sleector"
+msgstr "هیچ عنصری برای Sleector یافت نشد"
+
+#: assets/js/uip/classes/uip.js:95
+msgid "Parse error"
+msgstr "خطای تجزیه"
+
+#: assets/js/uip/classes/uip.js:95
+msgid "Unable to parse JSON response"
+msgstr "پاسخ JSON قابل تجزیه نیست"
+
+#: assets/js/uip/classes/uip.js:1311
+msgid "Yes"
+msgstr "آره"
+
+#: assets/js/uip/classes/uip.js:1325
+msgid "Cancel"
+msgstr "لغو کنید"
+
+#: assets/js/uip/modules/uip-dynamic-data-list.js:12
+#: assets/js/uip/options/uip-dynamic-input.js:16
+#: assets/js/uip/options/uip-image-select.js:23
+#: assets/js/uip/options/uip-link-select.js:25
+msgid "select"
+msgstr "انتخاب کنید"
+
+#: assets/js/uip/modules/uip-dynamic-data-list.js:13
+#: assets/js/uip/options/uip-dynamic-input.js:15
+#: assets/js/uip/options/uip-image-select.js:22
+#: assets/js/uip/options/uip-link-select.js:24
+msgid "Current value"
+msgstr "ارزش فعلی"
+
+#: assets/js/uip/modules/uip-post-meta-select.js:26
+#: assets/js/uip/uibuilder/uip-builder-settings.js:33
+#: assets/js/uip/uibuilder/uip-builder-variables.js:13
+msgid "Add"
+msgstr "اضافه کردن"
+
+#: assets/js/uip/modules/uip-post-meta-select.js:27
+msgid "Column title"
+msgstr "عنوان ستون"
+
+#: assets/js/uip/options/dynamic-settings.js:68
+msgid "Site name"
+msgstr "نام سایت"
+
+#: assets/js/uip/options/dynamic-settings.js:75
+msgid "User profile image"
+msgstr "تصویر پروفایل کاربر"
+
+#: assets/js/uip/options/dynamic-settings.js:89
+msgid "View site link"
+msgstr "مشاهده لینک سایت"
+
+#: assets/js/uip/options/dynamic-settings.js:96
+msgid "View admin link"
+msgstr "مشاهده لینک مدیریت"
+
+#: assets/js/uip/options/dynamic-settings.js:103
+msgid "View profile link"
+msgstr "مشاهده لینک پروفایل"
+
+#: assets/js/uip/options/dynamic-settings.js:110
+msgid "Current Date"
+msgstr "تاریخ فعلی"
+
+#: assets/js/uip/options/dynamic-settings.js:117
+msgid "PHP Version"
+msgstr "نسخه پی اچ پی"
+
+#: assets/js/uip/options/dynamic-settings.js:124
+msgid "WordPress Version"
+msgstr "نسخه وردپرس"
+
+#: assets/js/uip/options/dynamic-settings.js:131
+msgid "Count of active plugins"
+msgstr "تعداد افزونه های فعال"
+
+#: assets/js/uip/options/dynamic-settings.js:138
+msgid "Count of inactive plugins"
+msgstr "تعداد افزونه های غیر فعال"
+
+#: assets/js/uip/options/dynamic-settings.js:145
+msgid "Count of installed themes"
+msgstr "تعداد تم های نصب شده"
+
+#: assets/js/uip/options/dynamic-settings.js:152
+msgid "New post link"
+msgstr "لینک پست جدید"
+
+#: assets/js/uip/options/dynamic-settings.js:159
+msgid "New page link"
+msgstr "لینک صفحه جدید"
+
+#: assets/js/uip/options/settings-loader.js:28
+msgid "I am a paragraph"
+msgstr "من یک پاراگراف هستم"
+
+#: assets/js/uip/options/settings-loader.js:96
+msgid "Text alignment"
+msgstr "تراز متن"
+
+#: assets/js/uip/options/settings-loader.js:182
+#: assets/js/uip/uibuilder/uip-block-settings.js:60
+msgid "Wrap"
+msgstr "بسته بندی کردن"
+
+#: assets/js/uip/options/settings-loader.js:187
+msgid "Wrap reverse"
+msgstr "برعکس بپیچید"
+
+#: assets/js/uip/options/settings-loader.js:216
+msgid "Grow"
+msgstr "رشد"
+
+#: assets/js/uip/options/settings-loader.js:221
+msgid "Shrink"
+msgstr "کوچک شدن"
+
+#: assets/js/uip/options/settings-loader.js:247
+msgid "Baseline"
+msgstr "خط مبنا"
+
+#: assets/js/uip/options/settings-loader.js:252
+#: assets/js/uip/options/settings-loader.js:391
+#: assets/js/uip/options/settings-loader.js:461
+#: assets/js/uip/options/settings-loader.js:737
+#: assets/js/uip/options/settings-loader.js:775
+msgid "Center"
+msgstr "مرکز"
+
+#: assets/js/uip/options/settings-loader.js:257
+#: assets/js/uip/options/settings-loader.js:396
+#: assets/js/uip/options/settings-loader.js:466
+msgid "End"
+msgstr "پایان"
+
+#: assets/js/uip/options/settings-loader.js:262
+#: assets/js/uip/options/settings-loader.js:471
+msgid "Stretch"
+msgstr "کش آمدن"
+
+#: assets/js/uip/options/settings-loader.js:299
+msgid "Row"
+msgstr "ردیف"
+
+#: assets/js/uip/options/settings-loader.js:304
+msgid "Column"
+msgstr "ستون"
+
+#: assets/js/uip/options/settings-loader.js:310
+msgid "Row reverse"
+msgstr "ردیف معکوس"
+
+#: assets/js/uip/options/settings-loader.js:315
+msgid "Column reverse"
+msgstr "ستون معکوس"
+
+#: assets/js/uip/options/settings-loader.js:386
+#: assets/js/uip/options/settings-loader.js:456
+msgid "Start"
+msgstr "شروع کنید"
+
+#: assets/js/uip/options/settings-loader.js:401
+msgid "Space around"
+msgstr "فضای اطراف"
+
+#: assets/js/uip/options/settings-loader.js:406
+msgid "Space between"
+msgstr "فاصله بین"
+
+#: assets/js/uip/options/settings-loader.js:412
+msgid "Space evenly"
+msgstr "به طور مساوی فاصله دهید"
+
+#: assets/js/uip/options/settings-loader.js:501
+msgid "Auto"
+msgstr "خودکار"
+
+#: assets/js/uip/options/settings-loader.js:505
+msgid "Hidden"
+msgstr "پنهان شده است"
+
+#: assets/js/uip/options/settings-loader.js:509
+msgid "Scroll"
+msgstr "طومار"
+
+#: assets/js/uip/options/settings-loader.js:517
+msgid "Visible"
+msgstr "قابل رویت"
+
+#: assets/js/uip/options/settings-loader.js:539
+msgid "H1"
+msgstr "H1"
+
+#: assets/js/uip/options/settings-loader.js:543
+msgid "H2"
+msgstr "H2"
+
+#: assets/js/uip/options/settings-loader.js:547
+msgid "H3"
+msgstr "H3"
+
+#: assets/js/uip/options/settings-loader.js:551
+msgid "H4"
+msgstr "H4"
+
+#: assets/js/uip/options/settings-loader.js:555
+msgid "H5"
+msgstr "H5"
+
+#: assets/js/uip/options/settings-loader.js:559
+msgid "p"
+msgstr "پ"
+
+#: assets/js/uip/options/settings-loader.js:627
+msgid "Another tab"
+msgstr "یک برگه دیگر"
+
+#: assets/js/uip/options/settings-loader.js:658
+msgid "Inline"
+msgstr "درون خطی"
+
+#: assets/js/uip/options/settings-loader.js:662
+msgid "Hover"
+msgstr "شناور"
+
+#: assets/js/uip/options/settings-loader.js:770
+#: assets/js/uip/options/uip-margin.js:14 assets/js/uip/options/uip-padding.js:14
+#: assets/js/uip/options/uip-position-designer.js:32
+msgid "Top"
+msgstr "بالا"
+
+#: assets/js/uip/options/settings-loader.js:780
+#: assets/js/uip/options/uip-margin.js:15 assets/js/uip/options/uip-padding.js:15
+#: assets/js/uip/options/uip-position-designer.js:34
+msgid "Bottom"
+msgstr "پایین"
+
+#: assets/js/uip/options/settings-loader.js:1101
+msgid "Shadow"
+msgstr "سایه"
+
+#: assets/js/uip/options/settings-loader.js:1145
+msgid "Option 1"
+msgstr "انتخاب 1"
+
+#: assets/js/uip/options/settings-loader.js:1146
+msgid "Option 2"
+msgstr "گزینه 2"
+
+#: assets/js/uip/options/theme-styles.js:7
+msgid "Primary color"
+msgstr "رنگ اولیه"
+
+#: assets/js/uip/options/theme-styles.js:14
+msgid "Primary color darker"
+msgstr "رنگ اصلی تیره تر"
+
+#: assets/js/uip/options/theme-styles.js:21
+msgid "Primary color lighter"
+msgstr "رنگ اصلی روشن تر"
+
+#: assets/js/uip/options/theme-styles.js:29
+msgid "Accent color"
+msgstr "رنگ تاکیدی"
+
+#: assets/js/uip/options/theme-styles.js:36
+msgid "Accent color darker"
+msgstr "رنگ تاکیدی تیره تر"
+
+#: assets/js/uip/options/theme-styles.js:43
+msgid "Accent color lighter"
+msgstr "رنگ روشن تر"
+
+#: assets/js/uip/options/theme-styles.js:51
+msgid "Succes color"
+msgstr "رنگ موفقیت"
+
+#: assets/js/uip/options/theme-styles.js:58
+msgid "Succes color darker"
+msgstr "رنگ موفقیت آمیز تیره تر است"
+
+#: assets/js/uip/options/theme-styles.js:65
+msgid "Succes color lighter"
+msgstr "موفق رنگ روشن تر"
+
+#: assets/js/uip/options/theme-styles.js:73
+msgid "Warning color"
+msgstr "رنگ هشدار دهنده"
+
+#: assets/js/uip/options/theme-styles.js:80
+msgid "Warning color darker"
+msgstr "رنگ هشدار تیره تر"
+
+#: assets/js/uip/options/theme-styles.js:87
+msgid "Warning color lighter"
+msgstr "رنگ اخطار روشن تر"
+
+#: assets/js/uip/options/theme-styles.js:95
+msgid "Danger color"
+msgstr "رنگ خطرناک"
+
+#: assets/js/uip/options/theme-styles.js:102
+msgid "Danger color darker"
+msgstr "رنگ خطر تیره تر"
+
+#: assets/js/uip/options/theme-styles.js:109
+msgid "Danger color lighter"
+msgstr "رنگ خطر روشن تر"
+
+#: assets/js/uip/options/theme-styles.js:117
+msgid "Base"
+msgstr "پایه"
+
+#: assets/js/uip/options/theme-styles.js:124
+msgid "Base 1"
+msgstr "پایه 1"
+
+#: assets/js/uip/options/theme-styles.js:131
+msgid "Base 2"
+msgstr "پایه 2"
+
+#: assets/js/uip/options/theme-styles.js:139
+msgid "Text color base"
+msgstr "پایه رنگ متن"
+
+#: assets/js/uip/options/theme-styles.js:146
+msgid "Text color emphasis"
+msgstr "تاکید بر رنگ متن"
+
+#: assets/js/uip/options/theme-styles.js:153
+msgid "Text color muted"
+msgstr "رنگ متن قطع شد"
+
+#: assets/js/uip/options/theme-styles.js:160
+msgid "Text color inverted"
+msgstr "رنگ متن معکوس شد"
+
+#: assets/js/uip/options/uip-array-list.js:12
+msgid "New item"
+msgstr "گزینه جدید"
+
+#: assets/js/uip/options/uip-border-designer.js:12
+msgid "Radius"
+msgstr "شعاع"
+
+#: assets/js/uip/options/uip-border-designer.js:17
+#: assets/js/uip/options/uip-color-select.js:26
+#: assets/js/uip/options/uip-text-format.js:32
+#: assets/js/uip/uibuilder/uip-builder-variables.js:36
+msgid "Colour"
+msgstr "رنگ"
+
+#: assets/js/uip/options/uip-border-designer.js:19
+#: assets/js/uip/options/uip-dimensions.js:39
+msgid "Width"
+msgstr "عرض"
+
+#: assets/js/uip/options/uip-border-designer.js:46
+#: assets/js/uip/options/uip-color-select.js:67
+msgid "Solid"
+msgstr "جامد"
+
+#: assets/js/uip/options/uip-border-designer.js:50
+msgid "Dashed"
+msgstr "نقطه چین"
+
+#: assets/js/uip/options/uip-border-designer.js:54
+msgid "Dotted"
+msgstr "خط چین"
+
+#: assets/js/uip/options/uip-border-designer.js:58
+msgid "Double"
+msgstr "دو برابر"
+
+#: assets/js/uip/options/uip-border-designer.js:62
+msgid "Groove"
+msgstr "شیار"
+
+#: assets/js/uip/options/uip-border-designer.js:66
+msgid "Ridge"
+msgstr "ریج"
+
+#: assets/js/uip/options/uip-border-designer.js:70
+#: assets/js/uip/options/uip-position-designer.js:35
+msgid "Inset"
+msgstr "درج شده"
+
+#: assets/js/uip/options/uip-border-radius.js:13
+msgid "Radius top left"
+msgstr "شعاع بالا سمت چپ"
+
+#: assets/js/uip/options/uip-border-radius.js:14
+msgid "Radius  top right"
+msgstr "شعاع بالا سمت راست"
+
+#: assets/js/uip/options/uip-border-radius.js:15
+msgid "Radius bottom left"
+msgstr "شعاع پایین سمت چپ"
+
+#: assets/js/uip/options/uip-border-radius.js:16
+msgid "Radius bottom right"
+msgstr "شعاع پایین سمت راست"
+
+#: assets/js/uip/options/uip-code-editor.js:18
+msgid "Exit fullscreen"
+msgstr "خروج از تمام صفحه"
+
+#: assets/js/uip/options/uip-color-picker.js:16
+#: assets/js/uip/options/uip-color-select.js:20
+msgid "Colour value"
+msgstr "ارزش رنگ"
+
+#: assets/js/uip/options/uip-color-picker.js:17
+#: assets/js/uip/options/uip-color-select.js:29
+msgid "Colour code"
+msgstr "کد رنگ"
+
+#: assets/js/uip/options/uip-color-select.js:21
+msgid "Theme variables"
+msgstr "متغیرهای تم"
+
+#: assets/js/uip/options/uip-color-select.js:23
+msgid "Angle"
+msgstr "زاویه"
+
+#: assets/js/uip/options/uip-color-select.js:24
+msgid "Position X"
+msgstr "موقعیت X"
+
+#: assets/js/uip/options/uip-color-select.js:25
+msgid "Position Y"
+msgstr "موقعیت Y"
+
+#: assets/js/uip/options/uip-color-select.js:27
+msgid "Location"
+msgstr "محل"
+
+#: assets/js/uip/options/uip-color-select.js:28
+msgid "Manage variables"
+msgstr "متغیرها را مدیریت کنید"
+
+#: assets/js/uip/options/uip-color-select.js:30
+msgid "Apply gradient"
+msgstr "شیب را اعمال کنید"
+
+#: assets/js/uip/options/uip-color-select.js:57
+msgid "Linear"
+msgstr "خطی"
+
+#: assets/js/uip/options/uip-color-select.js:61
+msgid "Radial"
+msgstr "شعاعی"
+
+#: assets/js/uip/options/uip-color-select.js:71
+msgid "Gradient"
+msgstr "شیب"
+
+#: assets/js/uip/options/uip-dimensions.js:38
+msgid "Height"
+msgstr "ارتفاع"
+
+#: assets/js/uip/options/uip-dimensions.js:40
+#: assets/js/uip/options/uip-dimensions.js:41
+msgid "Max"
+msgstr "حداکثر"
+
+#: assets/js/uip/options/uip-dimensions.js:42
+#: assets/js/uip/options/uip-dimensions.js:43
+msgid "Min"
+msgstr "حداقل"
+
+#: assets/js/uip/options/uip-dynamic-input.js:14
+#: assets/js/uip/options/uip-image-select.js:21
+msgid "Dynamic data"
+msgstr "داده های پویا"
+
+#: assets/js/uip/options/uip-dynamic-input.js:17
+#: assets/js/uip/options/uip-image-select.js:24
+msgid "Dynamic data position"
+msgstr "موقعیت داده پویا"
+
+#: assets/js/uip/options/uip-edit-menu-items.js:13
+#: assets/js/uip/options/uip-edit-toolbar-items.js:13
+msgid "Rename item"
+msgstr "تغییر نام مورد"
+
+#: assets/js/uip/options/uip-hidden-menu-items-select.js:13
+msgid "Hidden menu items"
+msgstr "موارد مخفی منو"
+
+#: assets/js/uip/options/uip-hidden-menu-items-select.js:14
+msgid "Search menu items"
+msgstr "جستجوی آیتم های منو"
+
+#: assets/js/uip/options/uip-hidden-toolbar-items-select.js:14
+msgid "Search toolbar items"
+msgstr "جستجوی آیتم های نوار ابزار"
+
+#: assets/js/uip/options/uip-icon-select.js:20
+#: assets/js/uip/options/uip-inline-icon-select.js:20
+msgid "Search icons"
+msgstr "نمادهای جستجو"
+
+#: assets/js/uip/options/uip-icon-select.js:21
+#: assets/js/uip/options/uip-inline-icon-select.js:21
+msgid "Clear icon"
+msgstr "نماد پاک کردن"
+
+#: assets/js/uip/options/uip-icon-select.js:22
+msgid "Choose icon"
+msgstr "نماد را انتخاب کنید"
+
+#: assets/js/uip/options/uip-image-select.js:25
+msgid "Replace"
+msgstr "جایگزین کردن"
+
+#: assets/js/uip/options/uip-image-select.js:28
+msgid "Uploading"
+msgstr "در حال آپلود"
+
+#: assets/js/uip/options/uip-image-select.js:31
+msgid "Add image"
+msgstr "تصویر اضافه کن"
+
+#: assets/js/uip/options/uip-image-select.js:154
+msgid "Uploading image"
+msgstr "در حال آپلود تصویر"
+
+#: assets/js/uip/options/uip-image-select.js:169
+msgid "Image exceeds max upload size"
+msgstr "تصویر از حداکثر اندازه بارگذاری بیشتر است"
+
+#: assets/js/uip/options/uip-image-select.js:198
+msgid "Image uploaded"
+msgstr "تصویر آپلود شد"
+
+#: assets/js/uip/options/uip-link-select.js:19
+msgid "Search admin pages"
+msgstr "جستجو در صفحات مدیریت"
+
+#: assets/js/uip/options/uip-link-select.js:20
+msgid "Search pages and posts"
+msgstr "جستجو در صفحات و پست ها"
+
+#: assets/js/uip/options/uip-link-select.js:21
+msgid "No posts found for current query"
+msgstr "هیچ پستی برای درخواست فعلی یافت نشد"
+
+#: assets/js/uip/options/uip-link-select.js:22
+msgid "Link mode"
+msgstr "حالت پیوند"
+
+#: assets/js/uip/options/uip-link-select.js:30
+msgid "Admin"
+msgstr "مدیر"
+
+#: assets/js/uip/options/uip-link-select.js:34
+msgid "Content"
+msgstr "محتوا"
+
+#: assets/js/uip/options/uip-link-select.js:45
+msgid ""
+"Dynamic links will load in the available content frame without page refresh. If "
+"none exists then it will perform a normal relead."
+msgstr ""
+"پیوندهای پویا در قاب محتوای موجود بدون بازخوانی صفحه بارگیری می شوند. اگر "
+"هیچکدام وجود نداشته باشد، یک انتشار عادی انجام خواهد داد."
+
+#: assets/js/uip/options/uip-link-select.js:49
+msgid "Default"
+msgstr "پیش فرض"
+
+#: assets/js/uip/options/uip-link-select.js:50
+msgid "Default links load like a normal link and will refresh the whole page."
+msgstr ""
+"لینک های پیش فرض مانند یک لینک معمولی بارگیری می شوند و کل صفحه را تازه می کنند."
+
+#: assets/js/uip/options/uip-link-select.js:54
+#: assets/js/uip/options/uip-tab-builder.js:12
+msgid "New tab"
+msgstr "برگه جدید"
+
+#: assets/js/uip/options/uip-link-select.js:55
+msgid "New tab links open in a new browser tab."
+msgstr "پیوندهای برگه جدید در یک برگه مرورگر جدید باز می شوند."
+
+#: assets/js/uip/options/uip-multi-select.js:14
+msgid "Selected items"
+msgstr "عناوین انتخاب شده"
+
+#: assets/js/uip/options/uip-position-designer.js:14
+msgid "Relative"
+msgstr "نسبت فامیلی"
+
+#: assets/js/uip/options/uip-position-designer.js:18
+msgid "Absolute"
+msgstr "مطلق"
+
+#: assets/js/uip/options/uip-position-designer.js:22
+msgid "Fixed"
+msgstr "درست شد"
+
+#: assets/js/uip/options/uip-position-designer.js:26
+msgid "Sticky"
+msgstr "چسبنده"
+
+#: assets/js/uip/options/uip-post-meta.js:13
+msgid "Select columns"
+msgstr "ستون ها را انتخاب کنید"
+
+#: assets/js/uip/options/uip-post-meta.js:14
+msgid "Add columns"
+msgstr "اضافه کردن ستون"
+
+#: assets/js/uip/options/uip-post-types.js:13
+msgid "Select post types"
+msgstr "انواع پست را انتخاب کنید"
+
+#: assets/js/uip/options/uip-post-types.js:14
+msgid "Seach post types"
+msgstr "جستجوی انواع پست"
+
+#: assets/js/uip/options/uip-responsive.js:13
+#: assets/js/uip/uibuilder/uip-ui-preview.js:37
+msgid "Mobile"
+msgstr "سیار"
+
+#: assets/js/uip/options/uip-responsive.js:14
+#: assets/js/uip/uibuilder/uip-ui-preview.js:39
+msgid "Tablet"
+msgstr "تبلت"
+
+#: assets/js/uip/options/uip-responsive.js:15
+#: assets/js/uip/uibuilder/uip-ui-preview.js:38
+msgid "Desktop"
+msgstr "دسکتاپ"
+
+#: assets/js/uip/options/uip-select-option-builder.js:12
+msgid "New option"
+msgstr "گزینه جدید"
+
+#: assets/js/uip/options/uip-select-option-builder.js:14
+msgid "Value"
+msgstr "مقدار"
+
+#: assets/js/uip/options/uip-select-option-builder.js:37
+msgid "Option"
+msgstr "گزینه"
+
+#: assets/js/uip/options/uip-shadow-designer.js:13
+msgid "Horizontal distance"
+msgstr "فاصله افقی"
+
+#: assets/js/uip/options/uip-shadow-designer.js:14
+msgid "Vertical distance"
+msgstr "فاصله عمودی"
+
+#: assets/js/uip/options/uip-shadow-designer.js:15
+msgid "Blur"
+msgstr "محو کردن"
+
+#: assets/js/uip/options/uip-shadow-designer.js:16
+msgid "Spread"
+msgstr "گسترش"
+
+#: assets/js/uip/options/uip-shadow-designer.js:17
+msgid "Shadow colour"
+msgstr "رنگ سایه"
+
+#: assets/js/uip/options/uip-submit-action.js:17
+msgid "Save as site option"
+msgstr "گزینه ذخیره به عنوان سایت"
+
+#: assets/js/uip/options/uip-submit-action.js:21
+msgid "Save as user meta"
+msgstr "ذخیره به عنوان متای کاربر"
+
+#: assets/js/uip/options/uip-submit-action.js:25
+msgid "Send to PHP function"
+msgstr "ارسال به تابع PHP"
+
+#: assets/js/uip/options/uip-submit-action.js:31
+msgid "Individual keys"
+msgstr "کلیدهای جداگانه"
+
+#: assets/js/uip/options/uip-submit-action.js:35
+msgid "Group object"
+msgstr "شی گروه"
+
+#: assets/js/uip/options/uip-submit-action.js:40
+#: assets/js/uip/options/uip-units.js:12
+#: assets/js/uip/tools/uip-php-error-log.js:21
+msgid "Pixels"
+msgstr "پیکسل ها"
+
+#: assets/js/uip/options/uip-submit-action.js:41
+msgid "Submit type"
+msgstr "نوع ارسال کنید"
+
+#: assets/js/uip/options/uip-submit-action.js:42
+msgid "PHP function name"
+msgstr "نام تابع PHP"
+
+#: assets/js/uip/options/uip-submit-action.js:43
+msgid "Site option name"
+msgstr "نام گزینه سایت"
+
+#: assets/js/uip/options/uip-submit-action.js:44
+msgid "Recipient email"
+msgstr "ایمیل گیرنده"
+
+#: assets/js/uip/options/uip-submit-action.js:45
+msgid "Email subject"
+msgstr "موضوع نامه الکترونیکی"
+
+#: assets/js/uip/options/uip-submit-action.js:46
+msgid "Email template"
+msgstr "قالب ایمیل"
+
+#: assets/js/uip/options/uip-submit-action.js:47
+msgid "Use form values in the email template by using {{input_name}}"
+msgstr ""
+
+#: assets/js/uip/options/uip-submit-action.js:49
+msgid ""
+"The form data will be saved as an object to your database using the function "
+"update_site_option(). You will then be able to access your data using the "
+"function get_site_option('your_option_key')"
+msgstr ""
+"داده های فرم به عنوان یک شی در پایگاه داده شما با استفاده از تابع "
+"update_site_option() ذخیره می شود. سپس می توانید با استفاده از تابع "
+"get_site_option ('your_option_key') به داده های خود دسترسی پیدا کنید."
+
+#: assets/js/uip/options/uip-submit-action.js:52
+msgid "Save as"
+msgstr "ذخیره به عنوان"
+
+#: assets/js/uip/options/uip-submit-action.js:54
+msgid "Redirect URL after submission"
+msgstr "پس از ارسال، URL را تغییر مسیر دهید"
+
+#: assets/js/uip/options/uip-text-format.js:27
+#: assets/js/uip/options/uip-units.js:15
+msgid "Font size"
+msgstr "اندازه فونت"
+
+#: assets/js/uip/options/uip-text-format.js:28
+msgid "Line height"
+msgstr "ارتفاع خط"
+
+#: assets/js/uip/options/uip-text-format.js:29
+msgid "Font weight"
+msgstr "وزن فونت"
+
+#: assets/js/uip/options/uip-text-format.js:30
+msgid "Text transform"
+msgstr "تبدیل متن"
+
+#: assets/js/uip/options/uip-text-format.js:31
+msgid "Font family"
+msgstr "خانواده فونت"
+
+#: assets/js/uip/options/uip-text-format.js:37
+msgid "100"
+msgstr "100"
+
+#: assets/js/uip/options/uip-text-format.js:41
+msgid "200"
+msgstr "200"
+
+#: assets/js/uip/options/uip-text-format.js:45
+msgid "300"
+msgstr "300"
+
+#: assets/js/uip/options/uip-text-format.js:49
+msgid "400"
+msgstr "400"
+
+#: assets/js/uip/options/uip-text-format.js:53
+msgid "500"
+msgstr "500"
+
+#: assets/js/uip/options/uip-text-format.js:57
+msgid "600"
+msgstr "600"
+
+#: assets/js/uip/options/uip-text-format.js:61
+msgid "700"
+msgstr "700"
+
+#: assets/js/uip/options/uip-text-format.js:65
+msgid "800"
+msgstr "800"
+
+#: assets/js/uip/options/uip-text-format.js:69
+msgid "900"
+msgstr "900"
+
+#: assets/js/uip/options/uip-text-format.js:73
+msgid "Bold"
+msgstr "پررنگ"
+
+#: assets/js/uip/options/uip-text-format.js:77
+msgid "Bolder"
+msgstr "جسورتر"
+
+#: assets/js/uip/options/uip-text-format.js:81
+msgid "Lighter"
+msgstr "فندک"
+
+#: assets/js/uip/options/uip-text-format.js:85
+msgid "Normal"
+msgstr "طبیعی"
+
+#: assets/js/uip/options/uip-text-format.js:89
+#: assets/js/uip/options/uip-text-format.js:161
+#: assets/js/uip/uibuilder/uip-builder-variables.js:98
+msgid "Inherit"
+msgstr "به ارث می برند"
+
+#: assets/js/uip/options/uip-text-format.js:95
+msgid "None"
+msgstr "هیچ یک"
+
+#: assets/js/uip/options/uip-text-format.js:99
+msgid "Capitalize"
+msgstr "بزرگ کردن"
+
+#: assets/js/uip/options/uip-text-format.js:103
+msgid "Lowercase"
+msgstr "حروف کوچک"
+
+#: assets/js/uip/options/uip-text-format.js:107
+msgid "Uppercase"
+msgstr "حروف بزرگ"
+
+#: assets/js/uip/options/uip-text-format.js:113
+#: assets/js/uip/uibuilder/uip-builder-variables.js:50
+msgid "Arial / Helvetica"
+msgstr "Arial / Helvetica"
+
+#: assets/js/uip/options/uip-text-format.js:117
+#: assets/js/uip/uibuilder/uip-builder-variables.js:54
+msgid "Times New Roman"
+msgstr "تایمز نیو رومن"
+
+#: assets/js/uip/options/uip-text-format.js:121
+#: assets/js/uip/uibuilder/uip-builder-variables.js:58
+msgid "Courier New"
+msgstr "پیک جدید"
+
+#: assets/js/uip/options/uip-text-format.js:125
+#: assets/js/uip/uibuilder/uip-builder-variables.js:62
+msgid "Tahoma"
+msgstr "تاهوما"
+
+#: assets/js/uip/options/uip-text-format.js:129
+#: assets/js/uip/uibuilder/uip-builder-variables.js:66
+msgid "Trebuchet MS"
+msgstr "ترابوشت ام اس"
+
+#: assets/js/uip/options/uip-text-format.js:133
+#: assets/js/uip/uibuilder/uip-builder-variables.js:70
+msgid "Verdana"
+msgstr "verdana"
+
+#: assets/js/uip/options/uip-text-format.js:137
+#: assets/js/uip/uibuilder/uip-builder-variables.js:74
+msgid "Georgia"
+msgstr "گرجستان"
+
+#: assets/js/uip/options/uip-text-format.js:141
+#: assets/js/uip/uibuilder/uip-builder-variables.js:78
+msgid "Garamond"
+msgstr "گاراموند"
+
+#: assets/js/uip/options/uip-text-format.js:145
+#: assets/js/uip/uibuilder/uip-builder-variables.js:82
+msgid "Arial Black"
+msgstr "آریال مشکی"
+
+#: assets/js/uip/options/uip-text-format.js:149
+#: assets/js/uip/uibuilder/uip-builder-variables.js:86
+msgid "Impact"
+msgstr "ضربه"
+
+#: assets/js/uip/options/uip-text-format.js:153
+#: assets/js/uip/uibuilder/uip-builder-variables.js:90
+msgid "Brush Script MT"
+msgstr "Brush Script MT"
+
+#: assets/js/uip/options/uip-text-format.js:157
+#: assets/js/uip/uibuilder/uip-builder-variables.js:94
+msgid "UiPress icons"
+msgstr "آیکون های UiPress"
+
+#: assets/js/uip/options/uip-units.js:13
+msgid "Percent"
+msgstr "درصد"
+
+#: assets/js/uip/options/uip-units.js:14
+msgid "Points"
+msgstr "نکته ها"
+
+#: assets/js/uip/options/uip-units.js:16
+msgid "Root font size"
+msgstr "اندازه فونت ریشه"
+
+#: assets/js/uip/options/uip-units.js:17
+msgid "Viewport height"
+msgstr "ارتفاع درگاه دید"
+
+#: assets/js/uip/options/uip-units.js:18
+msgid "Viewport width"
+msgstr "عرض درگاه دید"
+
+#: assets/js/uip/tools/uip-php-error-log.js:22
+msgid "Search errors"
+msgstr "خطاهای جستجو"
+
+#: assets/js/uip/tools/uip-php-error-log.js:23
+msgid "Error log"
+msgstr "گزارش خطا"
+
+#: assets/js/uip/tools/uip-php-error-log.js:24
+msgid "Misc"
+msgstr "متفرقه"
+
+#: assets/js/uip/tools/uip-php-error-log.js:25
+msgid "Fatal"
+msgstr "کشنده"
+
+#: assets/js/uip/tools/uip-php-error-log.js:26
+msgid "Warning"
+msgstr "هشدار"
+
+#: assets/js/uip/tools/uip-php-error-log.js:27
+msgid "Syntax"
+msgstr "نحو"
+
+#: assets/js/uip/tools/uip-php-error-log.js:28
+msgid "Notice"
+msgstr "اطلاع"
+
+#: assets/js/uip/tools/uip-php-error-log.js:29
+msgid "Exception"
+msgstr "استثنا"
+
+#: assets/js/uip/tools/uip-php-error-log.js:30
+msgid "entries"
+msgstr "ورودی های"
+
+#: assets/js/uip/tools/uip-php-error-log.js:31
+msgid "Newest first"
+msgstr "اول جدیدترین"
+
+#: assets/js/uip/tools/uip-php-error-log.js:32
+msgid "Oldest first"
+msgstr "قدیمی ترها در اولویت"
+
+#: assets/js/uip/tools/uip-php-error-log.js:33
+#: assets/js/uip/uibuilder/uip-template-library.js:32
+msgid "Sort by"
+msgstr "مرتب سازی بر اساس"
+
+#: assets/js/uip/tools/uip-php-error-log.js:34
+msgid "line"
+msgstr "خط"
+
+#: assets/js/uip/tools/uip-php-error-log.js:35
+msgid "Refresh log"
+msgstr "تازه کردن گزارش"
+
+#: assets/js/uip/tools/uip-php-error-log.js:36
+msgid "Stack trace"
+msgstr "ردیابی پشته"
+
+#: assets/js/uip/tools/uip-php-error-log.js:37
+msgid "No PHP errors to display!"
+msgstr "هیچ خطای PHP برای نمایش وجود ندارد!"
+
+#: assets/js/uip/ui-builder.js:182
+msgid "List View"
+msgstr "نمایش لیست"
+
+#: assets/js/uip/ui-builder.js:189
+msgid "Block Settings"
+msgstr "تنظیمات را مسدود کنید"
+
+#: assets/js/uip/ui-builder.js:308 assets/js/uip/uip-app.js:161
+msgid "Unable to load all plugins"
+msgstr "بارگیری همه افزونه ها ممکن نیست"
+
+#: assets/js/uip/ui-builder.js:308 assets/js/uip/ui-builder.js:312
+#: assets/js/uip/uip-app.js:161 assets/js/uip/uip-app.js:166
+msgid "Some functions may not work as expected."
+msgstr "برخی از عملکردها ممکن است آنطور که انتظار می رود کار نکنند."
+
+#: assets/js/uip/ui-builder.js:312 assets/js/uip/uip-app.js:166
+msgid "Unable to load all components"
+msgstr "بارگیری همه اجزا ممکن نیست"
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:8
+msgid "General"
+msgstr "عمومی"
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:13
+msgid "Posts and pages"
+msgstr "پست ها و صفحات"
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:18
+msgid "Plugins"
+msgstr "پلاگین ها"
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:33
+msgid ""
+"This will replace the WordPress logo with your own. The log0 will also become "
+"available in the dynamic options in the builder."
+msgstr ""
+"این لوگوی وردپرس را با لوگوی شما جایگزین می کند. log0 همچنین در گزینه های پویا "
+"در سازنده در دسترس خواهد بود."
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:41
+msgid ""
+"This will replace the WordPress logo with your own. The logo will also become "
+"available in the dynamic options in the builder."
+msgstr ""
+"این لوگوی وردپرس را با لوگوی شما جایگزین می کند. لوگو همچنین در گزینه های پویا "
+"در سازنده در دسترس خواهد بود."
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:48
+msgid "Remove jQuery Migrate front end"
+msgstr "jQuery Migrate front end را حذف کنید"
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:49
+msgid "Removes jQuery migrate script from all front end pages."
+msgstr "اسکریپت مهاجرت جی کوئری را از تمام صفحات جلویی حذف می کند."
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:56
+msgid "Remove jQuery Migrate back end"
+msgstr "jQuery Migrate back end را حذف کنید"
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:57
+msgid ""
+"Removes jQuery migrate script from all back end pages. This may break some "
+"functions in the back end"
+msgstr ""
+"اسکریپت مهاجرت جی کوئری را از تمام صفحات انتهایی حذف می کند. این ممکن است برخی "
+"از عملکردها را در انتهای پشتی خراب کند"
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:64
+msgid "Add post ID to table"
+msgstr "شناسه پست را به جدول اضافه کنید"
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:65
+msgid ""
+"Adds the post ID to each row in a table. Works for posts, custom post types, "
+"pages and users."
+msgstr ""
+"شناسه پست را به هر ردیف در جدول اضافه می کند. برای پست ها، انواع پست های سفارشی، "
+"صفحات و کاربران کار می کند."
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:72
+msgid "Disply last modified in table"
+msgstr "نمایش آخرین تغییر در جدول"
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:73
+msgid ""
+"Adds a last modified column to post tables. Works for posts, custom post types "
+"and pages."
+msgstr ""
+"آخرین ستون اصلاح شده را به جداول پست اضافه می کند. برای پست ها، انواع پست سفارشی "
+"و صفحات کار می کند."
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:80
+msgid "Add plugin status"
+msgstr "اضافه کردن وضعیت افزونه"
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:81
+msgid "Adds a plugin status column to the plugin table"
+msgstr "یک ستون وضعیت پلاگین را به جدول افزونه اضافه می کند"
+
+#: assets/js/uip/uibuilder/uip-block-actions.js:22
+#: assets/js/uip/uibuilder/uip-builder-patterns-list.js:60
+#: assets/js/uip/uibuilder/uip-save-pattern.js:20
+msgid "Save pattern"
+msgstr "ذخیره الگو"
+
+#: assets/js/uip/uibuilder/uip-block-actions.js:23
+#: assets/js/uip/uibuilder/uip-block-settings.js:54
+#: assets/js/uip/uibuilder/uip-builder-framework.js:100
+msgid "Settings"
+msgstr "تنظیمات"
+
+#: assets/js/uip/uibuilder/uip-block-actions.js:25
+msgid "Copy"
+msgstr "کپی "
+
+#: assets/js/uip/uibuilder/uip-block-actions.js:26
+msgid "Paste"
+msgstr "چسباندن"
+
+#: assets/js/uip/uibuilder/uip-block-actions.js:28
+msgid "Duplicate"
+msgstr "تکراری"
+
+#: assets/js/uip/uibuilder/uip-block-actions.js:29
+msgid "Sync pattern"
+msgstr "الگوی همگام سازی"
+
+#: assets/js/uip/uibuilder/uip-block-actions.js:120
+#: assets/js/uip/uibuilder/uip-block-actions.js:121
+msgid " duplicated"
+msgstr "کپی شده"
+
+#: assets/js/uip/uibuilder/uip-block-actions.js:158
+#: assets/js/uip/uibuilder/uip-block-actions.js:159
+msgid " pasted"
+msgstr "چسبانده شده است"
+
+#: assets/js/uip/uibuilder/uip-block-actions.js:194
+#: assets/js/uip/uibuilder/uip-block-actions.js:196
+msgid "block deleted"
+msgstr "بلوک حذف شد"
+
+#: assets/js/uip/uibuilder/uip-block-actions.js:197
+msgid " deleted"
+msgstr "حذف شده"
+
+#: assets/js/uip/uibuilder/uip-block-actions.js:213
+msgid "Sync pattern?"
+msgstr "الگوی همگام سازی؟"
+
+#: assets/js/uip/uibuilder/uip-block-actions.js:214
+msgid ""
+"This will update the pattern template and will sync this pattern's changes "
+"accross all templates using the same pattern"
+msgstr ""
+"این الگوی الگو را به‌روزرسانی می‌کند و تغییرات این الگو را با استفاده از همان الگو "
+"در همه الگوها همگام‌سازی می‌کند."
+
+#: assets/js/uip/uibuilder/uip-block-actions.js:215
+msgid "Sync patern"
+msgstr "همگام سازی پدر"
+
+#: assets/js/uip/uibuilder/uip-block-actions.js:224
+msgid "Pattern sync in progress"
+msgstr "همگام سازی الگو در حال انجام است"
+
+#: assets/js/uip/uibuilder/uip-block-actions.js:264
+msgid "Pattern succesfully synced"
+msgstr "الگو با موفقیت همگام سازی شد"
+
+#: assets/js/uip/uibuilder/uip-block-actions.js:287
+msgid "Block copied"
+msgstr "بلوک کپی شد"
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:25
+#: assets/js/uip/uibuilder/uip-template-library.js:20
+msgid "This block no longer exists"
+msgstr "این بلوک دیگر وجود ندارد"
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:26
+msgid "Go back"
+msgstr "برگرد"
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:27
+msgid "Block ID"
+msgstr "شناسه مسدود کردن"
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:28
+msgid "This is a pro option. Upgrade to unlock"
+msgstr "این یک گزینه حرفه ای است. برای باز کردن قفل ارتقا دهید"
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:29
+#: assets/js/uip/uibuilder/uip-builder-settings.js:32
+#: assets/js/uip/uibuilder/uip-builder-variables.js:12
+msgid "Theme"
+msgstr "موضوع"
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:30
+msgid "Options"
+msgstr "گزینه ها"
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:31
+msgid "Building settings object..."
+msgstr "شی تنظیمات ساختمان..."
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:32
+msgid ""
+"Block unique id. If you change this it must remain unique and can not be blank"
+msgstr ""
+"مسدود کردن شناسه منحصر به فرد اگر این را تغییر دهید باید منحصر به فرد باقی بماند "
+"و نمی تواند خالی باشد"
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:33
+msgid "Hidden on device"
+msgstr "روی دستگاه مخفی شده است"
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:34
+msgid "Tooltip"
+msgstr "راهنمای ابزار"
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:35
+msgid "Message"
+msgstr "پیام"
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:36
+msgid "Delay before show"
+msgstr "تاخیر قبل از نمایش"
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:37
+msgid "Styles"
+msgstr "سبک ها"
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:39
+msgid "Currently editing"
+msgstr "در حال ویرایش"
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:44
+msgid "Light mode"
+msgstr "حالت نور"
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:329
+msgid "This block has no settings"
+msgstr "این بلوک تنظیماتی ندارد"
+
+#: assets/js/uip/uibuilder/uip-builder-blocks-list.js:18
+#: assets/js/uip/uibuilder/uip-builder-patterns-list.js:56
+#: assets/js/uip/uibuilder/uip-template-library.js:22
+msgid "Pro"
+msgstr "حرفه ای"
+
+#: assets/js/uip/uibuilder/uip-builder-blocks-list.js:19
+msgid "Search blocks..."
+msgstr "بلوک های جستجو..."
+
+#: assets/js/uip/uibuilder/uip-builder-drop-area.js:14
+#: assets/js/uip/uibuilder/uip-treeview-drop-area.js:13
+msgid "Drag blocks here"
+msgstr "بلوک ها را به اینجا بکشید"
+
+#: assets/js/uip/uibuilder/uip-builder-drop-area.js:20
+msgid "This component is missing or can't be loaded"
+msgstr "این مؤلفه وجود ندارد یا نمی‌توان آن را بارگیری کرد"
+
+#: assets/js/uip/uibuilder/uip-builder-drop-area.js:25
+#: assets/js/uip/uibuilder/uip-builder-framework.js:88
+msgid "Blocks"
+msgstr "بلوک ها"
+
+#: assets/js/uip/uibuilder/uip-builder-drop-area.js:29
+#: assets/js/uip/uibuilder/uip-builder-framework.js:92
+#: assets/js/uip/uibuilder/uip-builder-patterns-list.js:65
+msgid "Patterns"
+msgstr "الگوها"
+
+#: assets/js/uip/uibuilder/uip-builder-drop-area.js:65
+#: assets/js/uip/uibuilder/uip-treeview-drop-area.js:47
+msgid "block added"
+msgstr "بلوک اضافه شد"
+
+#: assets/js/uip/uibuilder/uip-builder-drop-area.js:68
+#: assets/js/uip/uibuilder/uip-treeview-drop-area.js:50
+msgid "block moved"
+msgstr "بلوک منتقل شد"
+
+#: assets/js/uip/uibuilder/uip-builder-framework.js:34
+msgid "Layers"
+msgstr "لایه های"
+
+#: assets/js/uip/uibuilder/uip-builder-framework.js:35
+msgid "Welcome to the uiBuilder"
+msgstr "به uiBuilder خوش آمدید"
+
+#: assets/js/uip/uibuilder/uip-builder-framework.js:37
+msgid ""
+"Brand new for UiPress 3, the uiBuilder is a powerful drag and drop tool for "
+"building great looking, functional admin experiences for yourself or your clients"
+msgstr ""
+"کاملاً جدید برای UiPress 3، uiBuilder یک ابزار قدرتمند کشیدن و رها کردن برای "
+"ایجاد تجربیات مدیریتی عالی و کاربردی برای خود یا مشتریانتان است."
+
+#: assets/js/uip/uibuilder/uip-builder-framework.js:40
+msgid "Browse premade templates or start from scratch"
+msgstr "الگوهای از پیش ساخته شده را مرور کنید یا از ابتدا شروع کنید"
+
+#: assets/js/uip/uibuilder/uip-builder-framework.js:41
+msgid "Blank canvas"
+msgstr "بوم خالی"
+
+#: assets/js/uip/uibuilder/uip-builder-framework.js:42
+msgid "View templates"
+msgstr "مشاهده قالب ها"
+
+#: assets/js/uip/uibuilder/uip-builder-framework.js:43
+msgid "Don't show this again"
+msgstr "اینو دیگه نشون نده"
+
+#: assets/js/uip/uibuilder/uip-builder-framework.js:44
+msgid "Close"
+msgstr "نزدیک"
+
+#: assets/js/uip/uibuilder/uip-builder-framework.js:45
+msgid "Deletes all blocks"
+msgstr "تمام بلوک ها را حذف می کند"
+
+#: assets/js/uip/uibuilder/uip-builder-framework.js:46
+msgid "Hide layers"
+msgstr "لایه ها را پنهان کنید"
+
+#: assets/js/uip/uibuilder/uip-builder-framework.js:47
+msgid "Block shortcuts"
+msgstr "مسدود کردن میانبرها"
+
+#: assets/js/uip/uibuilder/uip-builder-framework.js:48
+msgid ""
+"As you build your template, key blocks will automatically be added here for easy "
+"settings access"
+msgstr ""
+"همانطور که الگوی خود را می سازید، بلوک های کلیدی به طور خودکار در اینجا برای "
+"دسترسی آسان به تنظیمات اضافه می شوند"
+
+#: assets/js/uip/uibuilder/uip-builder-framework.js:69
+msgid "Draft Layout"
+msgstr "پیش نویس طرح"
+
+#: assets/js/uip/uibuilder/uip-builder-framework.js:347
+msgid "This will delete all blocks from your template."
+msgstr "با این کار تمام بلوک ها از قالب شما حذف می شود."
+
+#: assets/js/uip/uibuilder/uip-builder-framework.js:350
+msgid "Template blocks deleted"
+msgstr "بلوک های قالب حذف شدند"
+
+#: assets/js/uip/uibuilder/uip-builder-global-settings.js:14
+#: assets/js/uip/uibuilder/uip-template-list.js:38
+msgid "Site settings"
+msgstr "تنظیمات سایت"
+
+#: assets/js/uip/uibuilder/uip-builder-global-settings.js:15
+msgid "Save settings"
+msgstr "تنظیمات را ذخیره کن"
+
+#: assets/js/uip/uibuilder/uip-builder-global-settings.js:16
+msgid "Settings saved"
+msgstr "تنظیمات ذخیره شد"
+
+#: assets/js/uip/uibuilder/uip-builder-history.js:18
+msgid "Undo"
+msgstr "واگرد"
+
+#: assets/js/uip/uibuilder/uip-builder-history.js:19
+msgid "Redo"
+msgstr "دوباره انجام دهید"
+
+#: assets/js/uip/uibuilder/uip-builder-history.js:20
+msgid "History states"
+msgstr "تاریخ بیان می کند"
+
+#: assets/js/uip/uibuilder/uip-builder-history.js:38
+msgid "Project opened"
+msgstr "پروژه افتتاح شد"
+
+#: assets/js/uip/uibuilder/uip-builder-patterns-list.js:23
+msgid "2 column"
+msgstr "2 ستون"
+
+#: assets/js/uip/uibuilder/uip-builder-patterns-list.js:30
+msgid "3 column"
+msgstr "3 ستون"
+
+#: assets/js/uip/uibuilder/uip-builder-patterns-list.js:37
+msgid "4 column"
+msgstr "4 ستون"
+
+#: assets/js/uip/uibuilder/uip-builder-patterns-list.js:43
+msgid "A basic sidebar, toolbar and content frame layout"
+msgstr "نوار کناری، نوار ابزار و طرح بندی قاب محتوا"
+
+#: assets/js/uip/uibuilder/uip-builder-patterns-list.js:44
+msgid "Admin boilerplate"
+msgstr "دیگ ادمین"
+
+#: assets/js/uip/uibuilder/uip-builder-patterns-list.js:53
+#: assets/js/uip/uibuilder/uip-save-pattern.js:34
+msgid "Block"
+msgstr "مسدود کردن"
+
+#: assets/js/uip/uibuilder/uip-builder-patterns-list.js:57
+msgid "Search patterns..."
+msgstr "جستجوی الگوهای ..."
+
+#: assets/js/uip/uibuilder/uip-builder-patterns-list.js:58
+#: assets/js/uip/uibuilder/uip-save-pattern.js:17
+msgid "Pattern title"
+msgstr "عنوان الگو"
+
+#: assets/js/uip/uibuilder/uip-builder-patterns-list.js:59
+#: assets/js/uip/uibuilder/uip-save-pattern.js:18
+msgid "Pattern type"
+msgstr "نوع الگو"
+
+#: assets/js/uip/uibuilder/uip-builder-patterns-list.js:61
+#: assets/js/uip/uibuilder/uip-save-pattern.js:21
+msgid "Description"
+msgstr "شرح"
+
+#: assets/js/uip/uibuilder/uip-builder-patterns-list.js:62
+#: assets/js/uip/uibuilder/uip-save-pattern.js:22
+msgid "Pattern icon"
+msgstr "نماد الگو"
+
+#: assets/js/uip/uibuilder/uip-builder-patterns-list.js:64
+msgid "Layouts"
+msgstr "طرح بندی ها"
+
+#: assets/js/uip/uibuilder/uip-builder-patterns-list.js:202
+msgid "Pattern exported"
+msgstr "الگو صادر شد"
+
+#: assets/js/uip/uibuilder/uip-builder-patterns-list.js:206
+msgid "Importing pattern"
+msgstr "الگوی واردات"
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:20
+msgid "Theme styles"
+msgstr "سبک های تم"
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:21
+#: assets/js/uip/uibuilder/uip-builder-variables.js:18
+msgid "Revert style back to default"
+msgstr "استایل را به حالت پیش فرض برگردانید"
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:22
+msgid "Applies to"
+msgstr "اعمال می شود"
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:23
+#: assets/js/uip/uibuilder/uip-template-list.js:17
+msgid "Excludes"
+msgstr "مستثنی می کند"
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:24
+msgid "Template type"
+msgstr "نوع قالب"
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:26
+msgid "Admin Page"
+msgstr "صفحه مدیریت"
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:27
+msgid "Login page (coming soon)"
+msgstr "صفحه ورود (به زودی)"
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:28
+msgid "Template will now load for you!"
+msgstr "اکنون قالب برای شما بارگیری می شود!"
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:29
+msgid "Take care not to revoke access to anything you may need in the admin."
+msgstr ""
+"مراقب باشید که دسترسی به هر چیزی را که ممکن است در ادمین نیاز داشته باشید لغو "
+"نکنید."
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:30
+msgid "If you haven't already, we recommend setting up:"
+msgstr "اگر قبلاً این کار را نکرده‌اید، توصیه می‌کنیم راه‌اندازی کنید:"
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:31
+msgid "safe mode"
+msgstr "حالت امن"
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:34
+#: assets/js/uip/uibuilder/uip-builder-variables.js:14
+msgid "Variable label"
+msgstr "برچسب متغیر"
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:35
+#: assets/js/uip/uibuilder/uip-builder-variables.js:15
+msgid "Variable name"
+msgstr "نام متغیر"
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:36
+#: assets/js/uip/uibuilder/uip-builder-variables.js:16
+msgid "Delete variable"
+msgstr "حذف متغیر"
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:38
+msgid "Custom CSS"
+msgstr "CSS سفارشی"
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:39
+msgid "Custom JS"
+msgstr "JS سفارشی"
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:40
+#: assets/js/uip/uibuilder/uip-builder-settings.js:61
+#: assets/js/uip/uibuilder/uip-builder-variables.js:25
+msgid "Light"
+msgstr "سبک"
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:41
+#: assets/js/uip/uibuilder/uip-builder-settings.js:65
+#: assets/js/uip/uibuilder/uip-builder-variables.js:29
+msgid "Dark"
+msgstr "تاریک"
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:42
+#: assets/js/uip/uibuilder/uip-ui-preview.js:47
+msgid "Template name"
+msgstr "نام الگو"
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:43
+#: assets/js/uip/uibuilder/uip-template-list.js:21
+#: assets/js/uip/uibuilder/uip-template-list.js:51
+#: assets/js/uip/uibuilder/uip-ui-preview.js:43
+#: assets/js/uip/uibuilder/uip-ui-preview.js:48
+msgid "Active"
+msgstr "فعال"
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:44
+msgid "Select users and roles"
+msgstr "کاربران و نقش ها را انتخاب کنید"
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:45
+msgid "Search users and roles"
+msgstr "جستجوی کاربران و نقش ها"
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:46
+#: assets/js/uip/uibuilder/uip-builder-variables.js:17
+msgid "custom"
+msgstr "سفارشی"
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:47
+msgid "Menu icon"
+msgstr "نماد منو"
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:48
+msgid "Add to submenu"
+msgstr "به زیر منو اضافه کنید"
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:49
+msgid "None (top level)"
+msgstr "هیچ (سطح بالا)"
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:50
+msgid "Apply to subsites"
+msgstr "برای سایت های فرعی اقدام کنید"
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:51
+msgid "Is this an admin page?"
+msgstr "آیا این صفحه مدیریت است؟"
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:53
+msgid ""
+"This template does not contain a content block. The content block is key to "
+"navigating the admin. Setting this live as a uiTemplate can cause a lock out."
+msgstr ""
+"این الگو دارای بلوک محتوا نیست. بلوک محتوا کلید پیمایش مدیر است. تنظیم این لایو "
+"به عنوان uiTemplate می تواند باعث قفل شدن شود."
+
+#: assets/js/uip/uibuilder/uip-builder-variables.js:19
+msgid "Search variables..."
+msgstr "جستجوی متغیرها..."
+
+#: assets/js/uip/uibuilder/uip-builder-variables.js:20
+msgid "New variable"
+msgstr "متغیر جدید"
+
+#: assets/js/uip/uibuilder/uip-builder-variables.js:40
+msgid "Units"
+msgstr "واحدها"
+
+#: assets/js/uip/uibuilder/uip-builder-variables.js:44
+msgid "Font"
+msgstr "فونت"
+
+#: assets/js/uip/uibuilder/uip-builder-variables.js:194
+msgid "Variable deleted"
+msgstr "متغیر حذف شد"
+
+#: assets/js/uip/uibuilder/uip-builder-variables.js:198
+msgid "Variable label is required"
+msgstr "برچسب متغیر مورد نیاز است"
+
+#: assets/js/uip/uibuilder/uip-builder-variables.js:202
+msgid "Variable name is required"
+msgstr "نام متغیر مورد نیاز است"
+
+#: assets/js/uip/uibuilder/uip-builder-variables.js:216
+msgid "Variable created!"
+msgstr "متغیر ایجاد شد!"
+
+#: assets/js/uip/uibuilder/uip-save-pattern.js:16
+msgid "Save as pattern"
+msgstr "ذخیره به عنوان الگو"
+
+#: assets/js/uip/uibuilder/uip-save-pattern.js:19
+msgid ""
+"Patterns can be either single components or entire layoutsd and are a great way "
+"of creating reusable blocks for your projects."
+msgstr ""
+"الگوها می توانند اجزای منفرد یا کل layoutsd باشند و راهی عالی برای ایجاد بلوک "
+"های قابل استفاده مجدد برای پروژه های شما هستند."
+
+#: assets/js/uip/uibuilder/uip-save-pattern.js:56
+msgid "Pattern not saved"
+msgstr "الگو ذخیره نشد"
+
+#: assets/js/uip/uibuilder/uip-save-pattern.js:56
+msgid "Pattern title is required"
+msgstr "عنوان الگو الزامی است"
+
+#: assets/js/uip/uibuilder/uip-template-library.js:21
+msgid "Template library"
+msgstr "کتابخانه الگو"
+
+#: assets/js/uip/uibuilder/uip-template-library.js:23
+#: assets/js/uip/uibuilder/uip-template-list.js:24
+msgid "Search templates"
+msgstr "جستجو در قالب ها"
+
+#: assets/js/uip/uibuilder/uip-template-library.js:24
+msgid "Back to all templates"
+msgstr "بازگشت به همه قالب ها"
+
+#: assets/js/uip/uibuilder/uip-template-library.js:25
+msgid "Includes pro blocks"
+msgstr "شامل بلوک های حرفه ای"
+
+#: assets/js/uip/uibuilder/uip-template-library.js:26
+msgid "Created by"
+msgstr "خلق شده توسط"
+
+#: assets/js/uip/uibuilder/uip-template-library.js:27
+msgid "Add to template"
+msgstr "به قالب اضافه کنید"
+
+#: assets/js/uip/uibuilder/uip-template-library.js:28
+msgid "Replace current layout"
+msgstr "طرح فعلی را جایگزین کنید"
+
+#: assets/js/uip/uibuilder/uip-template-library.js:29
+msgid "Add to end of layout"
+msgstr "به انتهای طرح بندی اضافه کنید"
+
+#: assets/js/uip/uibuilder/uip-template-library.js:30
+msgid "Requires uipress"
+msgstr "به uipress نیاز دارد"
+
+#: assets/js/uip/uibuilder/uip-template-library.js:31
+msgid "How many times this template has been downloaded"
+msgstr "این قالب چند بار دانلود شده است"
+
+#: assets/js/uip/uibuilder/uip-template-library.js:33
+msgid "Include"
+msgstr "عبارتند از"
+
+#: assets/js/uip/uibuilder/uip-template-library.js:38
+msgid "Downloads"
+msgstr "دانلودها"
+
+#: assets/js/uip/uibuilder/uip-template-library.js:42
+msgid "Newest"
+msgstr "جدیدترین"
+
+#: assets/js/uip/uibuilder/uip-template-library.js:46
+msgid "Oldest"
+msgstr "قدیمی ترین"
+
+#: assets/js/uip/uibuilder/uip-template-library.js:52
+msgid "UI templates"
+msgstr "قالب های رابط کاربری"
+
+#: assets/js/uip/uibuilder/uip-template-library.js:57
+#: assets/js/uip/uibuilder/uip-template-list.js:63
+msgid "Admin pages"
+msgstr "صفحات مدیریت"
+
+#: assets/js/uip/uibuilder/uip-template-library.js:140
+msgid "Importing template"
+msgstr "در حال وارد کردن قالب"
+
+#: assets/js/uip/uibuilder/uip-template-library.js:157
+msgid "Unable to import template"
+msgstr "امکان وارد کردن الگو وجود ندارد"
+
+#: assets/js/uip/uibuilder/uip-template-library.js:184
+msgid "Template imported from library"
+msgstr "الگو از کتابخانه وارد شد"
+
+#: assets/js/uip/uibuilder/uip-template-library.js:186
+msgid "Template added"
+msgstr "الگو اضافه شد"
+
+#: assets/js/uip/uibuilder/uip-template-list.js:16
+msgid "Roles and users"
+msgstr "نقش ها و کاربران"
+
+#: assets/js/uip/uibuilder/uip-template-list.js:18
+msgid "Modified"
+msgstr "اصلاح شده"
+
+#: assets/js/uip/uibuilder/uip-template-list.js:19
+msgid "Name"
+msgstr "نام"
+
+#: assets/js/uip/uibuilder/uip-template-list.js:22
+#: assets/js/uip/uibuilder/uip-ui-preview.js:44
+#: assets/js/uip/uibuilder/uip-ui-preview.js:49
+msgid "Draft"
+msgstr "پیش نویس"
+
+#: assets/js/uip/uibuilder/uip-template-list.js:23
+msgid "results"
+msgstr "نتایج"
+
+#: assets/js/uip/uibuilder/uip-template-list.js:27
+msgid "Delete selected"
+msgstr "انتخاب شده را پاک کن"
+
+#: assets/js/uip/uibuilder/uip-template-list.js:29
+#: assets/js/uip/uibuilder/uip-ui-preview.js:45
+msgid "New template"
+msgstr "قالب جدید"
+
+#: assets/js/uip/uibuilder/uip-template-list.js:30
+msgid "It's a little quiet!"
+msgstr "کمی خلوت است!"
+
+#: assets/js/uip/uibuilder/uip-template-list.js:31
+msgid "Create a new template to get started with uiBuilder or check out the docs"
+msgstr "برای شروع با uiBuilder یک الگوی جدید ایجاد کنید یا اسناد را بررسی کنید"
+
+#: assets/js/uip/uibuilder/uip-template-list.js:32
+msgid "View docs"
+msgstr "مشاهده اسناد"
+
+#: assets/js/uip/uibuilder/uip-template-list.js:33
+msgid "Edit template"
+msgstr "ویرایش قالب"
+
+#: assets/js/uip/uibuilder/uip-template-list.js:34
+msgid "Duplicate template"
+msgstr "قالب تکراری"
+
+#: assets/js/uip/uibuilder/uip-template-list.js:35
+msgid "Delete template"
+msgstr "حذف قالب"
+
+#: assets/js/uip/uibuilder/uip-template-list.js:36
+msgid "version"
+msgstr "نسخه"
+
+#: assets/js/uip/uibuilder/uip-template-list.js:37
+msgid "Tools"
+msgstr "ابزار"
+
+#: assets/js/uip/uibuilder/uip-template-list.js:39
+msgid "PHP error log"
+msgstr "گزارش خطای PHP"
+
+#: assets/js/uip/uibuilder/uip-template-list.js:40
+msgid "Role editor"
+msgstr "ویرایشگر نقش"
+
+#: assets/js/uip/uibuilder/uip-template-list.js:41
+msgid "pro"
+msgstr "حرفه ای"
+
+#: assets/js/uip/uibuilder/uip-template-list.js:47
+msgid "All templates"
+msgstr "همه قالب ها"
+
+#: assets/js/uip/uibuilder/uip-template-list.js:55
+msgid "Drafts"
+msgstr "پیش نویس"
+
+#: assets/js/uip/uibuilder/uip-template-list.js:59
+msgid "UI Templates"
+msgstr "قالب های رابط کاربری"
+
+#: assets/js/uip/uibuilder/uip-template-list.js:237
+msgid "Are you sure you want to delete this template?"
+msgstr "آیا مطمئن هستید که می خواهید این الگو را حذف کنید؟"
+
+#: assets/js/uip/uibuilder/uip-template-list.js:237
+#: assets/js/uip/uibuilder/uip-template-list.js:247
+msgid "Deleted templates can't be recovered"
+msgstr "الگوهای حذف شده قابل بازیابی نیستند"
+
+#: assets/js/uip/uibuilder/uip-template-list.js:247
+msgid "Are you sure you want to multiple templates?"
+msgstr "آیا مطمئن هستید که می خواهید چندین الگو داشته باشید؟"
+
+#: assets/js/uip/uibuilder/uip-ui-preview.js:27
+msgid "Exit builder"
+msgstr "از سازنده خارج شوید"
+
+#: assets/js/uip/uibuilder/uip-ui-preview.js:28
+msgid "Toggle layers panel"
+msgstr "پانل لایه ها را تغییر دهید"
+
+#: assets/js/uip/uibuilder/uip-ui-preview.js:29
+msgid "Back to template list"
+msgstr "بازگشت به لیست قالب"
+
+#: assets/js/uip/uibuilder/uip-ui-preview.js:30
+msgid "Zoom in"
+msgstr "بزرگنمایی"
+
+#: assets/js/uip/uibuilder/uip-ui-preview.js:31
+msgid "Zoom out"
+msgstr "کوچک نمایی"
+
+#: assets/js/uip/uibuilder/uip-ui-preview.js:33
+#: assets/js/uip/uibuilder/uip-ui-preview.js:59
+msgid "Preview"
+msgstr "پیش نمایش"
+
+#: assets/js/uip/uibuilder/uip-ui-preview.js:34
+msgid "Import template"
+msgstr "وارد کردن قالب"
+
+#: assets/js/uip/uibuilder/uip-ui-preview.js:35
+msgid "Export template"
+msgstr "قالب صادراتی"
+
+#: assets/js/uip/uibuilder/uip-ui-preview.js:36
+msgid "Template Library"
+msgstr "کتابخانه الگو"
+
+#: assets/js/uip/uibuilder/uip-ui-preview.js:40
+msgid "Save"
+msgstr "صرفه جویی"
+
+#: assets/js/uip/uibuilder/uip-ui-preview.js:41
+msgid "Help"
+msgstr "کمک"
+
+#: assets/js/uip/uibuilder/uip-ui-preview.js:42
+msgid "Documentation and guides"
+msgstr "مستندات و راهنماها"
+
+#: assets/js/uip/uibuilder/uip-ui-preview.js:46
+msgid "Recent templates"
+msgstr "قالب های اخیر"
+
+#: assets/js/uip/uibuilder/uip-ui-preview.js:55
+msgid "Builder"
+msgstr "سازنده"
+
+#: assets/js/uip/uibuilder/uip-ui-preview.js:319
+#: assets/js/uip/uibuilder/uip-ui-preview.js:435
+#: assets/js/uip/uibuilder/uip-ui-preview.js:448
+msgid "You have unsaved changes!"
+msgstr "شما تغییرات ذخیره نشده ای دارید!"
+
+#: assets/js/uip/uibuilder/uip-ui-preview.js:319
+#: assets/js/uip/uibuilder/uip-ui-preview.js:435
+#: assets/js/uip/uibuilder/uip-ui-preview.js:448
+msgid "If you leave this page all unsaved changes will be discarded"
+msgstr "If you leave this page all unsaved changes will be discarded"
+
+#: assets/js/uip/uibuilder/uip-ui-preview.js:347
+msgid "Exporting layout"
+msgstr "Exporting layout"
+
+#: assets/js/uip/uibuilder/uip-ui-preview.js:370
+msgid "Layout exported"
+msgstr "Layout exported"
+
+#: assets/js/uip/uibuilder/uip-ui-preview.js:375
+msgid "Importing layout"
+msgstr "Importing layout"
+
+#. Plugin Name of the plugin/theme
+msgid "UiPress Lite"
+msgstr "UiPress Lite"
+
+#. Plugin URI of the plugin/theme
+msgid "https://uipress.co"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid ""
+"UiPress is an all in one solution for tailoring your WordPress admin "
+"interactions. From custom dashboards, profile pages to entire admin frameworks, "
+"the uiBuilder can do it all. Premade intuitive blocks and a library of "
+"professional templates make it super easy to transform the way your site users "
+"interact with your  content."
+msgstr ""
+"UiPress is an all in one solution for tailoring your WordPress admin "
+"interactions. From custom dashboards, profile pages to entire admin frameworks, "
+"the uiBuilder can do it all. Premade intuitive blocks and a library of "
+"professional templates make it super easy to transform the way your site users "
+"interact with your  content."
+
+#. Author of the plugin/theme
+msgid "Admin 2020"
+msgstr "Admin 2020"

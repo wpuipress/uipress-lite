@@ -1,0 +1,2805 @@
+{
+   "domain": "uipress-lite",
+   "locale_data": {
+      "uipress-lite": {
+         "100": [
+            "100"
+         ],
+         "200": [
+            "200"
+         ],
+         "300": [
+            "300"
+         ],
+         "400": [
+            "400"
+         ],
+         "500": [
+            "500"
+         ],
+         "600": [
+            "600"
+         ],
+         "700": [
+            "700"
+         ],
+         "800": [
+            "800"
+         ],
+         "900": [
+            "900"
+         ],
+         "": {
+            "domain": "uipress-lite",
+            "plural_forms": "nplurals=2; plural=(n > 1);",
+            "lang": "fr"
+         },
+         "Unable to locate error log": [
+            "Impossible de localiser le journal des erreurs"
+         ],
+         "No error log path set in your PHP ini file": [
+            "Le chemin du journal des erreurs n'est pas défini dans le fichier PHP ini"
+         ],
+         "Log file does not exist or is empty": [
+            "Le fichier journal n'existe pas ou est vide"
+         ],
+         "Either the PHP error log path is incorrect or you don't have any errors yet. Path: ": [
+            "Soit le chemin du journal des erreurs PHP est incorrect, soit vous n'avez pas encore d'erreurs. Chemin "
+         ],
+         "Errros fetched": [
+            "Errros récupérés"
+         ],
+         "Unable to create temporary frame": [
+            "Impossible de créer un cadre temporaire"
+         ],
+         "Transient created": [
+            "Transitoire créé"
+         ],
+         "Config error: You need to specifiy a meta key to save the meta data to": [
+            "Erreur de configuration : Vous devez spécifier une clé méta pour sauvegarder les métadonnées"
+         ],
+         "Config error: Something went wrong": [
+            "Erreur de configuration : Quelque chose s'est mal passé"
+         ],
+         "Config error: No site option name supplied": [
+            "Erreur de configuration : Aucun nom d'option de site n'a été fourni"
+         ],
+         "Config error: Recipient email is not valid": [
+            "Erreur de configuration : L'email du destinataire n'est pas valide"
+         ],
+         "Config error: No email template set": [
+            "Erreur de configuration : Aucun modèle d'email n'a été défini"
+         ],
+         "Unable to send mail at this time": [
+            "Impossible d'envoyer du courrier pour le moment"
+         ],
+         "Passed function doesn't exist": [
+            "La fonction passée n'existe pas"
+         ],
+         "Unable to process form": [
+            "Impossible de traiter le formulaire"
+         ],
+         "ago": [
+            "ago"
+         ],
+         "Preference updated": [
+            "Préférence mise à jour"
+         ],
+         "Unable to read post ids to delete": [
+            "Impossible de lire les identifiants des messages à supprimer"
+         ],
+         "Item deleted": [
+            "Élémént supprimé"
+         ],
+         "View": [
+            "Voir"
+         ],
+         "Edit": [
+            "Modifier"
+         ],
+         "Delete": [
+            "Supprimer"
+         ],
+         "Title": [
+            "Titre"
+         ],
+         "Author": [
+            "Auteur"
+         ],
+         "Type": [
+            "Type"
+         ],
+         "Date": [
+            "Date"
+         ],
+         "Categories": [
+            "Catégories"
+         ],
+         "Tags": [
+            "Tags"
+         ],
+         "ID": [
+            "ID"
+         ],
+         "Actions": [
+            "Actions"
+         ],
+         "Something went wrong": [
+            "Quelque chose s’est mal passée"
+         ],
+         "User": [
+            "Utilisateur"
+         ],
+         "Role": [
+            "Rôle"
+         ],
+         "Nothing found for term:": [
+            "Aucun résultat pour le terme:"
+         ],
+         "uiBuilder": [
+            "uiBuilder"
+         ],
+         "You have an older version of uipress active on this site. Please deactivate to use UiPress Lite": [
+            "Vous avez une ancienne version d'uipress active sur ce site. Veuillez la désactiver pour utiliser UiPress Lite"
+         ],
+         "Unable to load UiPress template": [
+            "Impossible de charger le modèle UiPress"
+         ],
+         "Current active template does not contain a page content block or a site navigation block such as an admin menu or content navigator. These are required to use a ui template": [
+            "Le modèle actif actuel ne contient pas de bloc de contenu de page ni de bloc de navigation de site tel qu'un menu d'administration ou un navigateur de contenu. Ces éléments sont nécessaires pour utiliser un modèle d'interface utilisateur"
+         ],
+         "User id": [
+            "Id utilisateur"
+         ],
+         "User roles": [
+            "Rôles utilisateur"
+         ],
+         "Username": [
+            "Nom d'utilisateur"
+         ],
+         "User first name": [
+            "Prénom de l’utilisateur"
+         ],
+         "User last name": [
+            "Nom de famille de l’utilisateur"
+         ],
+         "User full name": [
+            "Nom complet de l'utilisateur"
+         ],
+         "User display name": [
+            "Nom à afficher de l'utilisateur"
+         ],
+         "User email": [
+            "Email de l'utilisateur"
+         ],
+         "User initials": [
+            "Initiales de l'utilisateur"
+         ],
+         "User profile": [
+            "Profil Utilisateur"
+         ],
+         "Site title": [
+            "Titre du site"
+         ],
+         "Logout link": [
+            "Lien de déconnexion"
+         ],
+         "View site": [
+            "Voir le site"
+         ],
+         "Admin home": [
+            "Accueil Admin"
+         ],
+         "View profile": [
+            "Voir le profil"
+         ],
+         "Current date": [
+            "Date actuelle"
+         ],
+         "PHP version": [
+            "Version PHP"
+         ],
+         "WordPress version": [
+            "Version de Wordpress"
+         ],
+         "Active plugins": [
+            "Extensions actives"
+         ],
+         "Inactive plugins": [
+            "Extensions inactives"
+         ],
+         "Installed themes": [
+            "Thèmes installés"
+         ],
+         "New post": [
+            "Nouvel article"
+         ],
+         "New page": [
+            "Nouvelle page"
+         ],
+         "Site logo": [
+            "Logo du site"
+         ],
+         "Site logo dark mode": [
+            "Logo du site en mode sombre"
+         ],
+         "Status": [
+            "Statut"
+         ],
+         "active": [
+            "actif"
+         ],
+         "inactive": [
+            "inactif"
+         ],
+         "Last modified": [
+            "Dernière modification"
+         ],
+         "UI Builder": [
+            "Constructeur d'interface utilisateur"
+         ],
+         "Add New UI Template": [
+            "Ajouter un nouveau modèle d'interface utilisateur"
+         ],
+         "New UI Template": [
+            "Nouveau modèle d'interface utilisateur"
+         ],
+         "Edit UI Template": [
+            "Modifier le modèle d'interface utilisateur"
+         ],
+         "View UI Template": [
+            "Voir le modèle d'interface utilisateur"
+         ],
+         "All UI Templates": [
+            "Tous les modèles d'interface utilisateur"
+         ],
+         "Search UI Templates": [
+            "Recherche de modèles d'interface utilisateur"
+         ],
+         "No UI Templates found.": [
+            "Aucun modèle d'interface utilisateur n'a été trouvé."
+         ],
+         "No UI Templates found in Trash.": [
+            "Aucun modèle d'interface utilisateur n'a été trouvé dans la corbeille."
+         ],
+         "Post type used for the uipress UI builder": [
+            "Type de message utilisé pour le constructeur d'interface utilisateur d'uipress"
+         ],
+         "Add New UI Pattern": [
+            "Ajouter un nouveau modèle d'interface utilisateur"
+         ],
+         "New UI Pattern": [
+            "Nouveau modèle d'interface utilisateur"
+         ],
+         "Edit UI Pattern": [
+            "Modifier le modèle d'interface utilisateur"
+         ],
+         "View UI Patterns": [
+            "Voir les modèles d'interface utilisateur"
+         ],
+         "All UI Patterns": [
+            "Tous les modèles d'interface utilisateur"
+         ],
+         "Search UI Patterns": [
+            "Recherche de modèles d'interface utilisateur"
+         ],
+         "No UI Patterns found.": [
+            "Aucun modèle d'interface utilisateur n'a été trouvé."
+         ],
+         "No UI Patterns found in Trash.": [
+            "Aucun modèle d'interface utilisateur n'a été trouvé dans la corbeille."
+         ],
+         "Post type used for the uipress UI builder for storing patterns": [
+            "Type de message utilisé par le constructeur de l'interface utilisateur d'uipress pour stocker les modèles"
+         ],
+         "Unable to save site settings. Data corrupted": [
+            "Impossible d'enregistrer les paramètres du site. Données corrompues"
+         ],
+         "UI Template (Draft)": [
+            "Modèle d'interface utilisateur (projet)"
+         ],
+         "Template created": [
+            "Modèle créé"
+         ],
+         "Unable to create template": [
+            "Impossible de créer le gabarit"
+         ],
+         "UI template": [
+            "Modèle d'interface utilisateur"
+         ],
+         "Admin page": [
+            "صفحة المدير"
+         ],
+         "Login page": [
+            "Page de connexion"
+         ],
+         "Frontend toolbar": [
+            "Barre d'outils frontale"
+         ],
+         "Unable to fetch template": [
+            "Impossible de récupérer le modèle"
+         ],
+         "Succesfully fetched Ui template": [
+            "Le modèle d'interface utilisateur a été récupéré avec succès"
+         ],
+         "Templates deleted": [
+            "Modèles supprimés"
+         ],
+         "You don't have permission to delete UI Templates": [
+            "Vous n'avez pas le droit de supprimer des modèles d'interface utilisateur"
+         ],
+         "Template deleted": [
+            "Modèle supprimé"
+         ],
+         "Unable to duplicate template": [
+            "Impossible de dupliquer le modèle"
+         ],
+         "copy": [
+            "copier"
+         ],
+         "Unable to duplicate template. Template is corrupted": [
+            "Impossible de dupliquer le modèle. Le modèle est corrompu"
+         ],
+         "Unable to duplicate template. Settings are corrupted": [
+            "Impossible de dupliquer le modèle. Les paramètres sont corrompus"
+         ],
+         "Template duplicated": [
+            "Modèle dupliqué."
+         ],
+         "Unable to save template": [
+            "Impossible d’enregistrer le modèle"
+         ],
+         "Unable to save template. Template is corrupted": [
+            "Impossible d'enregistrer le modèle. Le modèle est corrompu"
+         ],
+         "Unable to save template. Settings are corrupted": [
+            "Impossible d'enregistrer le modèle. Les paramètres sont corrompus"
+         ],
+         "Template saved": [
+            "Modèle sauvegardé"
+         ],
+         "Patterns synced": [
+            "Patrons synchronisés"
+         ],
+         "Unable to save pattern": [
+            "Impossible d'enregistrer le modèle"
+         ],
+         "Pattern saved": [
+            "Modèle sauvegardé"
+         ],
+         "Columns fetched": [
+            "Colonnes récupérées"
+         ],
+         "Unable to find page template": [
+            "Impossible de trouver le modèle de page"
+         ],
+         "Unable to process page template": [
+            "Impossible de traiter le modèle de page"
+         ],
+         "All": [
+            "Tout"
+         ],
+         "Read": [
+            "Lire"
+         ],
+         "Publish": [
+            "Publier"
+         ],
+         "Create": [
+            "Créer"
+         ],
+         "Manage": [
+            "Gérer"
+         ],
+         "Export": [
+            "Exporter"
+         ],
+         "Import": [
+            "Importer"
+         ],
+         "Custom": [
+            "Personnalisé"
+         ],
+         "GA charts": [
+            "Graphiques GA"
+         ],
+         "Outputs your choice of charts and options on what data to display": [
+            "Fournit votre choix de graphiques et d'options sur les données à afficher"
+         ],
+         "Analytics": [
+            "Analytics"
+         ],
+         "GA tables": [
+            "Tables GA"
+         ],
+         "Outputs your choice of tables and options on what data to display": [
+            "Affiche votre choix de tableaux et d'options sur les données à afficher"
+         ],
+         "GA realtime": [
+            "GA en temps réel"
+         ],
+         "Displays live visitor data about your site": [
+            "Affiche des données en direct sur les visiteurs de votre site"
+         ],
+         "GA map": [
+            "Carte de l'AG"
+         ],
+         "Outputs your visitor data to a interactive map": [
+            "Affiche les données relatives à vos visiteurs sur une carte interactive"
+         ],
+         "Background colour": [
+            "Couleur d’arrière plan"
+         ],
+         "Background Image": [
+            "Image de fond"
+         ],
+         "Dimensions": [
+            "Dimensions"
+         ],
+         "Padding": [
+            "Padding (marges internes)"
+         ],
+         "Margin": [
+            "Marge"
+         ],
+         "Text format": [
+            "Format de texte enrichi"
+         ],
+         "Border": [
+            "Bordure"
+         ],
+         "Position": [
+            "Position"
+         ],
+         "Box shadow": [
+            "Boite Ombre"
+         ],
+         "Justify content": [
+            "Justifier le contenu"
+         ],
+         "Align content": [
+            "Aligner le contenu"
+         ],
+         "Content direction": [
+            "Direction du contenu"
+         ],
+         "Content wrap": [
+            "Enveloppement de contenu"
+         ],
+         "Column gap": [
+            "Écart de colonne"
+         ],
+         "Row gap": [
+            "Écart de ligne"
+         ],
+         "Elements": [
+            "Éléments"
+         ],
+         "Layout": [
+            "Mise en page"
+         ],
+         "Dynamic": [
+            "Dynamique"
+         ],
+         "Form": [
+            "Formulaire"
+         ],
+         "Home": [
+            "Accueil"
+         ],
+         "Main menu": [
+            "Menu principal"
+         ],
+         "Collapse menu": [
+            "Réduire le menu"
+         ],
+         "Admin menu": [
+            "Menu administrateur"
+         ],
+         "Outputs the admin menu": [
+            "Affiche le menu d'administration"
+         ],
+         "Block options": [
+            "Options de bloc"
+         ],
+         "Menu style": [
+            "Style de menu"
+         ],
+         "Menu direction": [
+            "Direction du menu"
+         ],
+         "Vertical": [
+            "Vertical"
+         ],
+         "Horizontal": [
+            "Horizontal"
+         ],
+         "Advanced menu editor": [
+            "Editeur de menu avancé"
+         ],
+         "Show menu collapse option": [
+            "Afficher l'option de réduction du menu"
+         ],
+         "Disable menu auto update": [
+            "Désactiver la mise à jour automatique du menu"
+         ],
+         "Hiden menu items": [
+            "Les éléments de menu cachés"
+         ],
+         "Menu options": [
+            "Options du menu"
+         ],
+         "Submenu Icon": [
+            "Icône Sous-menu"
+         ],
+         "Hide menu icons": [
+            "Masquer les icônes de menu"
+         ],
+         "Block container": [
+            "Conteneur du bloc"
+         ],
+         "Style": [
+            "Style"
+         ],
+         "Menu headers": [
+            "En-têtes de menu"
+         ],
+         "Menu headers hover": [
+            "En-têtes de menu en survol"
+         ],
+         "Menu headers active": [
+            "En-têtes de menu actifs"
+         ],
+         "Menu sepators": [
+            "Séparateurs de menu"
+         ],
+         "Submenu": [
+            "Sous-menu"
+         ],
+         "Header submenu icon": [
+            "Icône du sous-menu de l'en-tête"
+         ],
+         "Sub menu header": [
+            "En-tête de sous-menu"
+         ],
+         "Sub menu items": [
+            "Pas d'éléments du sous-menu"
+         ],
+         "Sub menu items hover": [
+            "Le survol des éléments de sous-menu"
+         ],
+         "Sub menu items active": [
+            "Éléments de sous-menu actifs"
+         ],
+         "Icons": [
+            "Icônes"
+         ],
+         "Notifications": [
+            "Notifications"
+         ],
+         "Menu collapse": [
+            "Réduction du menu"
+         ],
+         "Advanced": [
+            "Avancé"
+         ],
+         "Page content": [
+            "Contenu de la page"
+         ],
+         "Outputs the page content block": [
+            "Produit le bloc de contenu de la page"
+         ],
+         "Hide screen options?": [
+            "Cacher les options de l'écran ?"
+         ],
+         "Hide help tab?": [
+            "Masquer l'onglet d'aide ?"
+         ],
+         "Disable theme?": [
+            "Désactiver le thème ?"
+         ],
+         "Disable fullscreen option?": [
+            "Désactiver l'option plein écran ?"
+         ],
+         "Hide plugin notices?": [
+            "Masquer les avis sur les plugins ?"
+         ],
+         "Login redirect - homepage": [
+            "Redirection de la connexion - page d'accueil"
+         ],
+         "Content frame": [
+            "Cadre de contenu"
+         ],
+         "Frame toolbar": [
+            "Barre d'outils du cadre"
+         ],
+         "Loading bar track": [
+            "Rail de la barre de chargement"
+         ],
+         "Loading bar": [
+            "Barre de chargement"
+         ],
+         "Posts table": [
+            "Table des postes"
+         ],
+         "Create a list of recent posts": [
+            "Créez une liste des messages récents"
+         ],
+         "Post types": [
+            "Modifier cet article"
+         ],
+         "Columns": [
+            "Colonnes"
+         ],
+         "Actions enabled": [
+            "Actions activées"
+         ],
+         "Posts per page": [
+            "Articles par page"
+         ],
+         "Only show users own content?": [
+            "Afficher uniquement le contenu des utilisateurs ?"
+         ],
+         "Hide search? ": [
+            "Cacher la barre de recherches"
+         ],
+         "Search": [
+            "Rechercher"
+         ],
+         "Table styles": [
+            "Styles de table"
+         ],
+         "Table head": [
+            "Tête de table"
+         ],
+         "Table head cell": [
+            "Cellule de tête de table"
+         ],
+         "Table row": [
+            "Ligne du tableau"
+         ],
+         "Table cell": [
+            "Cellule du tableau"
+         ],
+         "Grid item": [
+            "Élément de la grille"
+         ],
+         "Grid item title": [
+            "Titre de l'élément de la grille"
+         ],
+         "Pagination buttons": [
+            "Boutons de pagination"
+         ],
+         "Post type label": [
+            "Label de type de poste"
+         ],
+         "Table post count": [
+            "Nombre de messages du tableau"
+         ],
+         "Recent posts": [
+            "Articles récents"
+         ],
+         "Only show users own content? ": [
+            "Afficher uniquement le contenu des utilisateurs ?"
+         ],
+         "Posts list": [
+            "Liste des articles"
+         ],
+         "Item title": [
+            "Titre de l’élément"
+         ],
+         "Item meta": [
+            "Article méta"
+         ],
+         "Outputs a search block that queries your sites content": [
+            "Produit un bloc de recherche qui interroge le contenu de votre site"
+         ],
+         "Post types available in search ": [
+            "Types de post disponible dans Rechercher"
+         ],
+         "Search style": [
+            "Style de recherche"
+         ],
+         "Search results area": [
+            "Zone de résultats de recherche"
+         ],
+         "Search item title": [
+            "Rechercher le titre de l'article"
+         ],
+         "Search item meta": [
+            "Méta élément de recherche"
+         ],
+         "Toolbar": [
+            "Barre d’outils"
+         ],
+         "Outputs default toolbar items": [
+            "Affiche les éléments par défaut de la barre d'outils"
+         ],
+         "Hidden toolbar items": [
+            "Éléments cachés de la barre d'outils"
+         ],
+         "Toolbar icons": [
+            "Icônes de la barre d'outils"
+         ],
+         "Toolbar items": [
+            "Éléments de la barre d’outils"
+         ],
+         "Submenu items": [
+            "Éléments de sous-menu"
+         ],
+         "Bread crumbs": [
+            "Chapelure de pain"
+         ],
+         "Shows the current page path (breadcrumbs)": [
+            "Montre le chemin de la page actuelle (fil d'Ariane)"
+         ],
+         "Icon separator": [
+            "Séparateur d'icônes"
+         ],
+         "Breadcrumb item": [
+            "Élément du fil d'Ariane"
+         ],
+         "Fullscreen toggle": [
+            "Basculement en plein écran"
+         ],
+         "A customisable button that can toggle the fullscreen mode of the content frame": [
+            "Un bouton personnalisable permettant de basculer le mode plein écran du cadre de contenu"
+         ],
+         "Button text": [
+            "Texte du bouton"
+         ],
+         "Fullscreen": [
+            "Plein écran"
+         ],
+         "Icon": [
+            "Icône"
+         ],
+         "Icon position": [
+            "Position Icône"
+         ],
+         "Hover styles": [
+            "Styles de survol"
+         ],
+         "Active styles": [
+            "Styles actifs"
+         ],
+         "Open without frame": [
+            "Ouvert sans cadre"
+         ],
+         "This will open the current page outside the current frame and optionally without UiPress all together": [
+            "Cela ouvrira la page actuelle en dehors du cadre actuel et éventuellement sans UiPress"
+         ],
+         "Open outside frame": [
+            "Ouvrir le cadre extérieur"
+         ],
+         "Open in new tab": [
+            "Ouvrir dans un nouvel onglet"
+         ],
+         "Disable UiPress on page": [
+            "Désactiver UiPress à la page"
+         ],
+         "Media library": [
+            "Bibliothèque de médias"
+         ],
+         "Outputs a media library, with upload, delete and folder features": [
+            "Crée une bibliothèque de médias, avec des fonctions de téléchargement, de suppression et de classement"
+         ],
+         "Plugin updates": [
+            "Mises à jour de l’extension"
+         ],
+         "Outputs a list of available plugin and allows you update from the block": [
+            "Affiche une liste des plugins disponibles et vous permet de les mettre à jour à partir du bloc"
+         ],
+         "Plugin search": [
+            "Recherche de plugins"
+         ],
+         "Search the plugin directory with quick filters, discover new plugins and install all from one block": [
+            "Effectuez des recherches dans le répertoire des plugins à l'aide de filtres rapides, découvrez de nouveaux plugins et installez-les tous à partir d'un seul bloc"
+         ],
+         "Grouped Date range": [
+            "Groupé Plage de dates"
+         ],
+         "Outputs a grouped date picker. This date picker is used for controlling it's siblings range such as analytic blocks.": [
+            "Produit un sélecteur de date groupé. Ce sélecteur de date est utilisé pour contrôler l'étendue de ses frères et sœurs, comme les blocs analytiques."
+         ],
+         "User meta": [
+            "Nom d'utilisateur"
+         ],
+         "Outputs selected user meta, either as a string or an list of values": [
+            "Produit les méta utilisateurs sélectionnés, sous forme de chaîne de caractères ou de liste de valeurs"
+         ],
+         "Content navigator": [
+            "Navigateur de contenu"
+         ],
+         "Creates a navigatable file tree of all your site content like posts, pages and media. Allows for creation of new folders and organisation of content": [
+            "Crée une arborescence navigable de tous les contenus de votre site (articles, pages et médias). Permet de créer de nouveaux dossiers et d'organiser le contenu"
+         ],
+         "Nothing posts found": [
+            "Aucun poste trouvé"
+         ],
+         "By": [
+            "Par"
+         ],
+         "items": [
+            "éléments"
+         ],
+         "Search items": [
+            "Rechercher un élément"
+         ],
+         "Grid view": [
+            "Vue grille"
+         ],
+         "List view": [
+            "Vue liste"
+         ],
+         "Search content": [
+            "Espace de travail mobile"
+         ],
+         "Nothing found for query": [
+            "Rien trouvé pour la requête"
+         ],
+         "by": [
+            "par"
+         ],
+         "found": [
+            "trouvé"
+         ],
+         "Copy url": [
+            "Copier l'url"
+         ],
+         "Are you sure?": [
+            "Êtes-vous sûr ?"
+         ],
+         "This will remove the current UI and revert to the default admin page": [
+            "Cela supprimera l'interface utilisateur actuelle et rétablira la page d'administration par défaut"
+         ],
+         "Button": [
+            "Bouton"
+         ],
+         "Creates a button link": [
+            "Crée un lien vers un bouton"
+         ],
+         "Press me": [
+            "Pressez-moi"
+         ],
+         "Link": [
+            "Lien"
+         ],
+         "JavaScript on click": [
+            "JavaScript au clic"
+         ],
+         "Heading": [
+            "En-tête"
+         ],
+         "Creates a heading block": [
+            "Crée un bloc d'en-tête"
+         ],
+         "Heading text": [
+            "Texte du titre"
+         ],
+         "Heading type": [
+            "Type d’en-tête"
+         ],
+         "Paragraph": [
+            "Paragraphe"
+         ],
+         "Creates a paragraph block": [
+            "Crée un bloc de paragraphes"
+         ],
+         "Paragraph content": [
+            "Contenu du paragraphe"
+         ],
+         "Image": [
+            "Image"
+         ],
+         "Creates a image block": [
+            "Crée un bloc d'images"
+         ],
+         "Accordion": [
+            "Accordéon"
+         ],
+         "Creates a accordion block": [
+            "Crée un bloc accordéon"
+         ],
+         "Accordion title": [
+            "Titre Accordéon"
+         ],
+         "Content align": [
+            "Alignement du contenu"
+         ],
+         "Content style": [
+            "Style du contenu"
+         ],
+         "Chevron style": [
+            "Style chevron"
+         ],
+         "Creates a icon block": [
+            "Crée un bloc d'icônes"
+         ],
+         "Dark mode": [
+            "Dark mode"
+         ],
+         "Outputs a toggle for switiching between light and dark modes": [
+            "Sortie d'une bascule permettant de passer du mode clair au mode foncé"
+         ],
+         "Let dark mode update based on OS theme?": [
+            "Laisser le mode sombre se mettre à jour en fonction du thème du système d'exploitation ?"
+         ],
+         "Inactive toggle": [
+            "Inactif à bascule"
+         ],
+         "Active toggle": [
+            "Active toggle"
+         ],
+         "Track": [
+            "Suivre"
+         ],
+         "Tabs": [
+            "Onglets"
+         ],
+         "Create a tabbed navigation with different styles": [
+            "Créer une navigation par onglets avec différents styles"
+         ],
+         "Tab item": [
+            "Élément de l’onglet"
+         ],
+         "Tab item hover": [
+            "Survol de l'onglet"
+         ],
+         "Tab item active": [
+            "Élément d'onglet actif"
+         ],
+         "Tab content": [
+            "Contenu de l’onglet"
+         ],
+         "To do list": [
+            "Liste des choses à faire"
+         ],
+         "Outputs a customisable to do list": [
+            "Produit une liste de choses à faire personnalisable"
+         ],
+         "Add todo button": [
+            "Ajouter un bouton todo"
+         ],
+         "Tab": [
+            "Onglet"
+         ],
+         "Active tab": [
+            "Onglet actif"
+         ],
+         "List area": [
+            "Zone de liste"
+         ],
+         "Item description": [
+            "Description de l'élément"
+         ],
+         "Video": [
+            "Vidéo"
+         ],
+         "Outputs a video block. Can be a direct URL, media library link or embed": [
+            "Produit un bloc vidéo. Il peut s'agir d'une URL directe, d'un lien vers la médiathèque ou d'un lien intégré"
+         ],
+         "Video URL": [
+            "URL de la vidéo"
+         ],
+         "Video embed": [
+            "Intégrer de la vidéo"
+         ],
+         "Quote": [
+            "Citation"
+         ],
+         "Displays a quote in a decorative way": [
+            "Affiche une citation de manière décorative"
+         ],
+         "When the power of love overcomes the love of power, the world will know peace": [
+            "Lorsque le pouvoir de l'amour vaincra l'amour du pouvoir, le monde connaîtra la paix"
+         ],
+         "Quote meta": [
+            "Citation méta"
+         ],
+         "Jimi Hendrix": [
+            "Jimi Hendrix"
+         ],
+         "Required field": [
+            "Champ obligatoire"
+         ],
+         "Exit to dashboard": [
+            "Quitter le Tableau de Bord"
+         ],
+         "This button is designed for admins with active ui templates. When clicked it will remove the current UI layer and display the default WordPress admin page": [
+            "Ce bouton est conçu pour les administrateurs avec des modèles d'interface utilisateur actifs. Lorsqu'il est cliqué, il supprime la couche d'interface utilisateur actuelle et affiche la page d'administration WordPress par défaut"
+         ],
+         "Exit to admin": [
+            "Sortie vers l'administration"
+         ],
+         "iFrame": [
+            "iFrame"
+         ],
+         "Outputs a iframe block": [
+            "Produit un bloc iframe"
+         ],
+         "HTML": [
+            "HTML"
+         ],
+         "This block allows you to output your own HTML into the template": [
+            "Ce bloc vous permet d'insérer votre propre HTML dans le modèle"
+         ],
+         "Icon list": [
+            "Liste d’icônes"
+         ],
+         "Creates a list with icons": [
+            "Crée une liste avec des icônes"
+         ],
+         "Shortcode": [
+            "Shortcode (Code court)"
+         ],
+         "This block allows you to output custom shortcodes into the template": [
+            "Ce bloc vous permet d'insérer des shortcodes personnalisés dans le modèle"
+         ],
+         "Add todo": [
+            "Ajouter une chose à faire"
+         ],
+         "What would you like to do?": [
+            "Qu'est-ce que vous aimeriez faire ?"
+         ],
+         "Add a description...": [
+            "Ajouter une description..."
+         ],
+         "Todo": [
+            "À faire"
+         ],
+         "Completed": [
+            "Terminé"
+         ],
+         "Submit": [
+            "Envoyer"
+         ],
+         "Configuration error": [
+            "Erreur de configuration"
+         ],
+         "No php function supplied to send form data to": [
+            "Aucune fonction php n'est fournie pour envoyer les données du formulaire"
+         ],
+         "No email supplied to send form data to": [
+            "Pas d'email fourni pour envoyer les données du formulaire"
+         ],
+         "No site option name supplied to save as": [
+            "Aucun nom d'option de site n'a été fourni pour l'enregistrement"
+         ],
+         "You have not specified how to save the data to the user meta": [
+            "Vous n'avez pas précisé comment sauvegarder les données dans la méta utilisateur"
+         ],
+         "You need to specifiy a meta key to save the meta data to": [
+            "Vous devez spécifier une clé méta pour sauvegarder les méta-données"
+         ],
+         "Form elements can be dragged into this block to create custom forms": [
+            "Les éléments de formulaire peuvent être glissés dans ce bloc pour créer des formulaires personnalisés"
+         ],
+         "Button submit text": [
+            "Texte d'envoi du bouton"
+         ],
+         "Send": [
+            "Envoyer"
+         ],
+         "Submit action": [
+            "Soumettre une action"
+         ],
+         "Prefill form data": [
+            "Remplir les données du formulaire"
+         ],
+         "Success message": [
+            "Message de réussite"
+         ],
+         "Form sent successfully!": [
+            "Formulaire envoyé avec succès !"
+         ],
+         "Form area": [
+            "Zone de formulaire"
+         ],
+         "Submit button": [
+            "Bouton Envoyer"
+         ],
+         "Text input": [
+            "Entrée de texte"
+         ],
+         "A simple text input for use with the form block": [
+            "Une simple entrée de texte à utiliser avec le bloc de formulaire"
+         ],
+         "Label": [
+            "Label"
+         ],
+         "Meta key": [
+            "Touche Meta"
+         ],
+         "Placeholder": [
+            "Etiquette"
+         ],
+         "Placeholder text...": [
+            "Texte de remplacement..."
+         ],
+         "Inut type": [
+            "Type d'Inut"
+         ],
+         "Text": [
+            "Texte"
+         ],
+         "Number": [
+            "Nombre"
+         ],
+         "Email": [
+            "E-mail"
+         ],
+         "Phone number": [
+            "Numéro de téléphone"
+         ],
+         "Password": [
+            "Mot de passe"
+         ],
+         "Input style": [
+            "Style d'entrée"
+         ],
+         "Text area": [
+            "Zone de texte"
+         ],
+         "A simple textarea input for use with the form block": [
+            "Une entrée textarea simple à utiliser avec le bloc de formulaire"
+         ],
+         "Textarea style": [
+            "Style de la zone de texte"
+         ],
+         "Select": [
+            "Sélectionner"
+         ],
+         "Select options": [
+            "Sélectionner les options"
+         ],
+         "Select style": [
+            "Veuillez choisir un style"
+         ],
+         "Radio": [
+            "Radio"
+         ],
+         "Outputs a radio type input": [
+            "Sort une entrée de type radio"
+         ],
+         "Checkbox": [
+            "Case à cocher"
+         ],
+         "Outputs a checkbox type input": [
+            "Produit une entrée de type case à cocher"
+         ],
+         "Image select": [
+            "Sélection de l'image"
+         ],
+         "Outputs a image select input": [
+            "Sortie d'une entrée de sélection d'image"
+         ],
+         "Date range": [
+            "Plage de dates"
+         ],
+         "Outputs a date range input. Can be a single date, date range, or a comparison date range": [
+            "Produit une entrée de plage de dates. Il peut s'agir d'une date unique, d'une plage de dates ou d'une plage de dates de comparaison"
+         ],
+         "Colour select": [
+            "Choix de la couleur"
+         ],
+         "Outputs a colour select input. For use with the form block": [
+            "Produit une entrée de sélection de couleur. À utiliser avec le bloc de formulaire"
+         ],
+         "Input placeholder...": [
+            "Placeholder d'entrée..."
+         ],
+         "Container": [
+            "Conteneur"
+         ],
+         "Creates a container block with options for aligning content": [
+            "Crée un bloc conteneur avec des options d'alignement du contenu"
+         ],
+         "Align self": [
+            "S'aligner"
+         ],
+         "Vertical align": [
+            "Alignement Vertical"
+         ],
+         "Horizontal align": [
+            "Alignement horizontal"
+         ],
+         "Grow or shrink": [
+            "Croissance ou décroissance"
+         ],
+         "Stretch direction": [
+            "Direction de l'étirement"
+         ],
+         "Container dimensions": [
+            "Dimensions du conteneur"
+         ],
+         "Overflow": [
+            "Débordement"
+         ],
+         "Content area": [
+            "Zone de contenu"
+         ],
+         "Dropdown": [
+            "Liste déroulante"
+         ],
+         "Creates a dropdown with a customisable trigger": [
+            "Crée une liste déroulante avec un déclencheur personnalisable"
+         ],
+         "Trigger text": [
+            "Texte de déclenchement"
+         ],
+         "Dropdown position": [
+            "Position déroulante"
+         ],
+         "Bottom left": [
+            "En bas à gauche"
+         ],
+         "Bottom right": [
+            "En bas à droite"
+         ],
+         "Top left": [
+            "En haut à gauche"
+         ],
+         "Top right": [
+            "En haut à droite"
+         ],
+         "Left": [
+            "Gauche"
+         ],
+         "Right": [
+            "Droite"
+         ],
+         "Keyboard shortcut to open": [
+            "Raccourci clavier pour ouvrir"
+         ],
+         "Trigger styles": [
+            "Styles de déclenchement"
+         ],
+         "Trigger hover styles": [
+            "Déclencher des styles de survol"
+         ],
+         "Trigger active styles": [
+            "Styles actifs de déclenchement"
+         ],
+         "Dropdown styles": [
+            "Liste des styles"
+         ],
+         "Responsive grid": [
+            "Grille réactive"
+         ],
+         "Outputs a responsive grid": [
+            "Produit une grille réactive"
+         ],
+         "Number of columns": [
+            "Nombre de colonnes"
+         ],
+         "Minimum column width": [
+            "Largeur minimale des colonnes"
+         ],
+         "Grid gap": [
+            "Écart de grille"
+         ],
+         "Slide out panel": [
+            "Panneau coulissant"
+         ],
+         "Creates a slide out panel with a customisable trigger": [
+            "Crée un panneau coulissant avec un déclencheur personnalisable"
+         ],
+         "Panel position": [
+            "Position du groupe spécial"
+         ],
+         "Overlay": [
+            "Superposition"
+         ],
+         "Push": [
+            "Repousser"
+         ],
+         "Trigger style": [
+            "Style de gâchette"
+         ],
+         "Panel styles": [
+            "Styles de panneaux"
+         ],
+         "Modal": [
+            "Fenêtre Popup"
+         ],
+         "Outputs a modal block with a customisable trigger": [
+            "Sortie d'un bloc modal avec un déclencheur personnalisable"
+         ],
+         "Library": [
+            "Bibliothèque"
+         ],
+         "Search media": [
+            "Rechercher des médias"
+         ],
+         "Choose image": [
+            "Choisir une image"
+         ],
+         "Full size": [
+            "Taille originale"
+         ],
+         "Medium": [
+            "Moyen"
+         ],
+         "Small": [
+            "Petit"
+         ],
+         "Thumbnail": [
+            "Miniature"
+         ],
+         "Upload": [
+            "Upload"
+         ],
+         "Photo by": [
+            "Photo par"
+         ],
+         "on": [
+            "on"
+         ],
+         "Uploading files": [
+            "Téléchargement des fichiers"
+         ],
+         "Upload finsihed": [
+            "Téléchargement terminé"
+         ],
+         " errors": [
+            " erreurs"
+         ],
+         "File exceeds max upload size": [
+            "Le fichier dépasse la taille maximale de téléchargement"
+         ],
+         "Unable to upload this file type": [
+            "Impossible de télécharger ce type de fichier"
+         ],
+         "File uploaded": [
+            "Fichier téléchargé"
+         ],
+         "Unable to handle upload": [
+            "Impossible de gérer le téléchargement"
+         ],
+         "Are you sure you want to delete this? Once deleted this item can't be recovered": [
+            "Êtes-vous sûr de vouloir supprimer cet élément ? Une fois supprimé, cet élément ne peut pas être récupéré"
+         ],
+         "Deleting selected files": [
+            "Suppression des fichiers sélectionnés"
+         ],
+         "Items deleted": [
+            "Elément supprimé"
+         ],
+         "Unable to mount": [
+            "Impossible de monter"
+         ],
+         "No element provided to mount to": [
+            "Aucun élément fourni pour le montage"
+         ],
+         "No elements found for sleector": [
+            "Aucun élément trouvé pour sleector"
+         ],
+         "Parse error": [
+            "Erreur d'analyse"
+         ],
+         "Unable to parse JSON response": [
+            "Impossible d'analyser la réponse JSON"
+         ],
+         "Yes": [
+            "Oui"
+         ],
+         "Cancel": [
+            "Annuler"
+         ],
+         "Custom classes": [
+            "Classes Personnalisé"
+         ],
+         "Conditions": [
+            "Conditions"
+         ],
+         "Custom css": [
+            "CSS personnalisé"
+         ],
+         "Custom javaScript": [
+            "JavaScript personnalisé"
+         ],
+         "select": [
+            "sélectionner"
+         ],
+         "Current value": [
+            "Valeur en cours"
+         ],
+         "Add": [
+            "Ajouter"
+         ],
+         "Column title": [
+            "Titre de Colonne"
+         ],
+         "Site name": [
+            "Nom du site"
+         ],
+         "User profile image": [
+            "Image du profil de l'utilisateur"
+         ],
+         "View site link": [
+            "Voir le lien du site"
+         ],
+         "View admin link": [
+            "Voir le lien administrateur"
+         ],
+         "View profile link": [
+            "Voir le lien du profil"
+         ],
+         "Current Date": [
+            "Date actuelle"
+         ],
+         "PHP Version": [
+            "Version PHP"
+         ],
+         "WordPress Version": [
+            "Version de WordPress"
+         ],
+         "Count of active plugins": [
+            "Nombre de plugins actifs"
+         ],
+         "Count of inactive plugins": [
+            "Nombre de plugins inactifs"
+         ],
+         "Count of installed themes": [
+            "Nombre de thèmes installés"
+         ],
+         "New post link": [
+            "Nouveau lien vers le poste"
+         ],
+         "New page link": [
+            "Lien vers une nouvelle page"
+         ],
+         "I am a paragraph": [
+            "Je suis un paragraphe"
+         ],
+         "Text alignment": [
+            "Alignement du texte"
+         ],
+         "Wrap": [
+            "Enveloppe"
+         ],
+         "Wrap reverse": [
+            "Passage à la ligne inversé (wrap reverse)"
+         ],
+         "Grow": [
+            "Agrandir"
+         ],
+         "Shrink": [
+            "Réduire"
+         ],
+         "Baseline": [
+            "Ligne de base"
+         ],
+         "Center": [
+            "Centre"
+         ],
+         "End": [
+            "Fin"
+         ],
+         "Stretch": [
+            "Etirée"
+         ],
+         "Row": [
+            "Ligne"
+         ],
+         "Column": [
+            "Colonne"
+         ],
+         "Row reverse": [
+            "Ligne inversée"
+         ],
+         "Column reverse": [
+            "Colonnes inversées"
+         ],
+         "Start": [
+            "Début"
+         ],
+         "Space around": [
+            "Espace autour"
+         ],
+         "Space between": [
+            "Espace entre"
+         ],
+         "Space evenly": [
+            "Espace uniforme"
+         ],
+         "Auto": [
+            "Auto"
+         ],
+         "Hidden": [
+            "Masqué"
+         ],
+         "Scroll": [
+            "Défilement"
+         ],
+         "Visible": [
+            "Visible"
+         ],
+         "H1": [
+            "H1"
+         ],
+         "H2": [
+            "H2"
+         ],
+         "H3": [
+            "H3"
+         ],
+         "H4": [
+            "H4"
+         ],
+         "H5": [
+            "H5"
+         ],
+         "p": [
+            "p"
+         ],
+         "Another tab": [
+            "Un autre onglet"
+         ],
+         "Inline": [
+            "En ligne"
+         ],
+         "Hover": [
+            "Survol"
+         ],
+         "Top": [
+            "Haut"
+         ],
+         "Bottom": [
+            "Bas"
+         ],
+         "Shadow": [
+            "Ombre"
+         ],
+         "Option 1": [
+            "Option 1"
+         ],
+         "Option 2": [
+            "Option 2"
+         ],
+         "Primary color": [
+            "Couleur primaire"
+         ],
+         "Primary color darker": [
+            "Couleur primaire plus foncée"
+         ],
+         "Primary color lighter": [
+            "Couleur primaire plus claire"
+         ],
+         "Accent color": [
+            "Couleur d’accentuation"
+         ],
+         "Accent color darker": [
+            "Couleur d'accent plus foncée"
+         ],
+         "Accent color lighter": [
+            "Couleur d'accent plus claire"
+         ],
+         "Succes color": [
+            "Couleur de la réussite"
+         ],
+         "Succes color darker": [
+            "Succes couleur plus foncée"
+         ],
+         "Succes color lighter": [
+            "Succes couleur plus claire"
+         ],
+         "Warning color": [
+            "Couleur d'avertissement"
+         ],
+         "Warning color darker": [
+            "Couleur d'avertissement plus foncée"
+         ],
+         "Warning color lighter": [
+            "Couleur d'avertissement plus claire"
+         ],
+         "Danger color": [
+            "Couleur danger"
+         ],
+         "Danger color darker": [
+            "Couleur du danger plus foncée"
+         ],
+         "Danger color lighter": [
+            "Couleur de danger plus claire"
+         ],
+         "Base": [
+            "Base"
+         ],
+         "Base 1": [
+            "Base 1"
+         ],
+         "Base 2": [
+            "Base 2"
+         ],
+         "Text color base": [
+            "Base de la couleur du texte"
+         ],
+         "Text color emphasis": [
+            "Accentuation de la couleur du texte"
+         ],
+         "Text color muted": [
+            "Couleur du texte atténuée"
+         ],
+         "Text color inverted": [
+            "Couleur du texte inversée"
+         ],
+         "New item": [
+            "Nouvel élément"
+         ],
+         "Radius": [
+            "Rayon"
+         ],
+         "Colour": [
+            "Couleur"
+         ],
+         "Width": [
+            "Largeur"
+         ],
+         "Solid": [
+            "Solide"
+         ],
+         "Dashed": [
+            "Tirets"
+         ],
+         "Dotted": [
+            "Pointillés"
+         ],
+         "Double": [
+            "Double"
+         ],
+         "Groove": [
+            "Groove"
+         ],
+         "Ridge": [
+            "Ridge"
+         ],
+         "Inset": [
+            "Intérieure"
+         ],
+         "Radius top left": [
+            "Rayon en haut à gauche"
+         ],
+         "Radius  top right": [
+            "Rayon en haut à droite"
+         ],
+         "Radius bottom left": [
+            "Rayon en bas à gauche"
+         ],
+         "Radius bottom right": [
+            "Rayon en bas à droite"
+         ],
+         "Exit fullscreen": [
+            "Quitter le plein écran"
+         ],
+         "Colour value": [
+            "Valeur de la couleur"
+         ],
+         "Colour code": [
+            "Combinaison"
+         ],
+         "Theme variables": [
+            "Contrôler les variables de thème de page à l’aide de contexte."
+         ],
+         "Angle": [
+            "Angle"
+         ],
+         "Position X": [
+            "Position X"
+         ],
+         "Position Y": [
+            "Position Y"
+         ],
+         "Location": [
+            "Emplacement"
+         ],
+         "Manage variables": [
+            "Gérer les variables"
+         ],
+         "Apply gradient": [
+            "Appliquer un dégradé"
+         ],
+         "Linear": [
+            "Linéaire"
+         ],
+         "Radial": [
+            "Radial"
+         ],
+         "Gradient": [
+            "Dégradé"
+         ],
+         "Height": [
+            "Hauteur"
+         ],
+         "Max": [
+            "Max"
+         ],
+         "Min": [
+            "Min"
+         ],
+         "Dynamic data": [
+            "Données dynamiques"
+         ],
+         "Dynamic data position": [
+            "Position dynamique des données"
+         ],
+         "Rename item": [
+            "Renommer l'élément"
+         ],
+         "Hidden menu items": [
+            "Éléments de menu cachés"
+         ],
+         "Search menu items": [
+            "Rechercher des éléments de menu"
+         ],
+         "Search toolbar items": [
+            "Éléments de la barre d'outils de recherche"
+         ],
+         "Search icons": [
+            "Recherche d'icônes"
+         ],
+         "Clear icon": [
+            "Icône claire"
+         ],
+         "Choose icon": [
+            "Choisir l'icône"
+         ],
+         "Replace": [
+            "Remplacer"
+         ],
+         "Uploading": [
+            "Chargement en cours"
+         ],
+         "Add image": [
+            "Ajouter une image"
+         ],
+         "Uploading image": [
+            "Transfert de l'image en cours"
+         ],
+         "Image exceeds max upload size": [
+            "L'image dépasse la taille maximale de téléchargement"
+         ],
+         "Image uploaded": [
+            "Image envoyée"
+         ],
+         "Search admin pages": [
+            "Rechercher des pages d’administration"
+         ],
+         "Search pages and posts": [
+            "Recherche de pages et de messages"
+         ],
+         "No posts found for current query": [
+            "Aucun poste trouvé pour cette requête"
+         ],
+         "Link mode": [
+            "Mode de liaison"
+         ],
+         "Admin": [
+            "Admin"
+         ],
+         "Content": [
+            "Contenu"
+         ],
+         "Dynamic links will load in the available content frame without page refresh. If none exists then it will perform a normal relead.": [
+            "Les liens dynamiques seront chargés dans le cadre de contenu disponible sans rafraîchissement de la page. S'il n'y en a pas, il y aura un rafraîchissement normal."
+         ],
+         "Default": [
+            "Défaut"
+         ],
+         "Default links load like a normal link and will refresh the whole page.": [
+            "Les liens par défaut se chargent comme un lien normal et rafraîchissent toute la page."
+         ],
+         "New tab": [
+            "Nouvel onglet"
+         ],
+         "New tab links open in a new browser tab.": [
+            "Les liens vers un nouvel onglet s'ouvrent dans un nouvel onglet du navigateur."
+         ],
+         "Selected items": [
+            "Éléments sélectionnés"
+         ],
+         "Relative": [
+            "Relative"
+         ],
+         "Absolute": [
+            "Absolue"
+         ],
+         "Fixed": [
+            "Fixe"
+         ],
+         "Sticky": [
+            "Épinglé"
+         ],
+         "Select columns": [
+            "Sélectionner les colonnes"
+         ],
+         "Add columns": [
+            "Ajouter des colonnes"
+         ],
+         "Select post types": [
+            "Sélectionner des types d’articles"
+         ],
+         "Seach post types": [
+            "Recherche de types de messages"
+         ],
+         "Mobile": [
+            "Mobile"
+         ],
+         "Tablet": [
+            "Tablette"
+         ],
+         "Desktop": [
+            "Ordinateur de bureau"
+         ],
+         "New option": [
+            "Nouvelle option"
+         ],
+         "Value": [
+            "Valeur"
+         ],
+         "Option": [
+            "Option"
+         ],
+         "Horizontal distance": [
+            "Distance horizontale"
+         ],
+         "Vertical distance": [
+            "Distance verticale"
+         ],
+         "Blur": [
+            "Flou"
+         ],
+         "Spread": [
+            "Diffusion"
+         ],
+         "Shadow colour": [
+            "Couleur de l'ombre"
+         ],
+         "Save as site option": [
+            "Option \"Enregistrer comme site"
+         ],
+         "Save as user meta": [
+            "Sauvegarder comme méta utilisateur"
+         ],
+         "Send to PHP function": [
+            "Envoyer à la fonction PHP"
+         ],
+         "Individual keys": [
+            "Clés individuelles"
+         ],
+         "Group object": [
+            "Objet du groupe"
+         ],
+         "Pixels": [
+            "Pixels"
+         ],
+         "Submit type": [
+            "Type de soumission"
+         ],
+         "PHP function name": [
+            "Nom de la fonction PHP"
+         ],
+         "Site option name": [
+            "Nom de l'option du site"
+         ],
+         "Recipient email": [
+            "E-mail du destinataire"
+         ],
+         "Email subject": [
+            "Objet du mail"
+         ],
+         "Email template": [
+            "Modèle de courriel"
+         ],
+         "Use form values in the email template by using {{input_name}}": [
+            "Utilisez les valeurs du formulaire dans le modèle d'email en utilisant {{input_name}}"
+         ],
+         "The form data will be saved as an object to your database using the function update_site_option(). You will then be able to access your data using the function get_site_option('your_option_key')": [
+            "Les données du formulaire seront enregistrées sous forme d'objet dans votre base de données à l'aide de la fonction update_site_option(). Vous pourrez ensuite accéder à vos données à l'aide de la fonction get_site_option('your_option_key')"
+         ],
+         "Save as": [
+            "Enregistrer sous"
+         ],
+         "Redirect URL after submission": [
+            "Rediriger l'URL après la soumission"
+         ],
+         "Font size": [
+            "Taille de police"
+         ],
+         "Line height": [
+            "Hauteur de ligne"
+         ],
+         "Font weight": [
+            "Epaisseur de la police"
+         ],
+         "Text transform": [
+            "Transformation du texte"
+         ],
+         "Font family": [
+            "Famille de police"
+         ],
+         "Bold": [
+            "Gras"
+         ],
+         "Bolder": [
+            "Plus gras"
+         ],
+         "Lighter": [
+            "Plus fin"
+         ],
+         "Normal": [
+            "Normal"
+         ],
+         "Inherit": [
+            "Hériter"
+         ],
+         "None": [
+            "Aucun"
+         ],
+         "Capitalize": [
+            "Mettre une majuscule"
+         ],
+         "Lowercase": [
+            "Minuscule"
+         ],
+         "Uppercase": [
+            "Majuscule"
+         ],
+         "Arial / Helvetica": [
+            "Arial / Helvetica"
+         ],
+         "Times New Roman": [
+            "Times New Roman"
+         ],
+         "Courier New": [
+            "Courier New"
+         ],
+         "Tahoma": [
+            "Tahoma"
+         ],
+         "Trebuchet MS": [
+            "Trebuchet MS"
+         ],
+         "Verdana": [
+            "Verdana"
+         ],
+         "Georgia": [
+            "Géorgie"
+         ],
+         "Garamond": [
+            "Garamond"
+         ],
+         "Arial Black": [
+            "Arial Black"
+         ],
+         "Impact": [
+            "Impact"
+         ],
+         "Brush Script MT": [
+            "Brush Script MT"
+         ],
+         "UiPress icons": [
+            "Icônes UiPress"
+         ],
+         "Percent": [
+            "Pourcent"
+         ],
+         "Points": [
+            "Points"
+         ],
+         "Root font size": [
+            "Taille de la police de base"
+         ],
+         "Viewport height": [
+            "Hauteur de la fenêtre de visualisation"
+         ],
+         "Viewport width": [
+            "Largeur du Viewport"
+         ],
+         "Search errors": [
+            "Erreurs de recherche"
+         ],
+         "Error log": [
+            "Journal d'erreurs"
+         ],
+         "Misc": [
+            "Divers"
+         ],
+         "Fatal": [
+            "Fatal"
+         ],
+         "Warning": [
+            "Avertissement"
+         ],
+         "Syntax": [
+            "Syntaxe"
+         ],
+         "Notice": [
+            "Avis"
+         ],
+         "Exception": [
+            "Exception"
+         ],
+         "entries": [
+            "entrées"
+         ],
+         "Newest first": [
+            "Les plus récents en premier"
+         ],
+         "Oldest first": [
+            "Les plus anciens en premier"
+         ],
+         "Sort by": [
+            "Trier par"
+         ],
+         "line": [
+            "ligne"
+         ],
+         "Refresh log": [
+            "Rafraîchir le journal"
+         ],
+         "Stack trace": [
+            "Trace de la pile"
+         ],
+         "No PHP errors to display!": [
+            "Aucune erreur PHP à afficher !"
+         ],
+         "List View": [
+            "Vue en liste"
+         ],
+         "Block Settings": [
+            "Paramètres de bloc"
+         ],
+         "Unable to load all plugins": [
+            "Impossible de charger tous les plugins"
+         ],
+         "Some functions may not work as expected.": [
+            "Certaines fonctions peuvent ne pas fonctionner comme prévu."
+         ],
+         "Unable to load all components": [
+            "Impossible de charger tous les composants"
+         ],
+         "White label": [
+            "Marque blanche"
+         ],
+         "Theme": [
+            "Thème"
+         ],
+         "Login": [
+            "Login"
+         ],
+         "Posts and pages": [
+            "Articles et pages trouvés"
+         ],
+         "Plugins": [
+            "Extensions"
+         ],
+         "General": [
+            "Général"
+         ],
+         "This will replace the WordPress logo with your own. The logo will also become available in the dynamic options in the builder.": [
+            "Cela remplacera le logo WordPress par le vôtre. Le logo sera également disponible dans les options dynamiques du constructeur."
+         ],
+         "Remove jQuery Migrate front end": [
+            "Suppression du frontal jQuery Migrate"
+         ],
+         "Removes jQuery migrate script from all front end pages.": [
+            "Suppression du script jQuery migrate de toutes les pages d'accueil."
+         ],
+         "Remove jQuery Migrate back end": [
+            "Supprimer le back-end de jQuery Migrate"
+         ],
+         "Removes jQuery migrate script from all back end pages. This may break some functions in the back end": [
+            "Supprime le script jQuery migrate de toutes les pages d'arrière-plan. Cela peut casser certaines fonctions du back-end"
+         ],
+         "Add post ID to table": [
+            "Ajouter l'ID du poste dans le tableau"
+         ],
+         "Adds the post ID to each row in a table. Works for posts, custom post types, pages and users.": [
+            "Ajoute l'ID du message à chaque ligne d'un tableau. Fonctionne pour les articles, les types d'articles personnalisés, les pages et les utilisateurs."
+         ],
+         "Disply last modified in table": [
+            "Disply dernière modification en table"
+         ],
+         "Adds a last modified column to post tables. Works for posts, custom post types and pages.": [
+            "Ajoute une colonne \"dernière modification\" aux tableaux de messages. Fonctionne pour les articles, les types d'articles personnalisés et les pages."
+         ],
+         "Add plugin status": [
+            "Ajouter le statut du plugin"
+         ],
+         "Adds a plugin status column to the plugin table": [
+            "Ajoute une colonne d'état des plugins à la table des plugins"
+         ],
+         "Login logo": [
+            "Logo de connexion"
+         ],
+         "This will replace the WordPress logo with your own on the login page.": [
+            "Cela remplacera le logo de WordPress par le vôtre sur la page de connexion."
+         ],
+         "Logo alignment": [
+            "Alignement du logo"
+         ],
+         "Sets the logo alignment.": [
+            "Définit l'alignement du logo."
+         ],
+         "Login theme": [
+            "Thème de connexion"
+         ],
+         "Adds a modern theme to the login page": [
+            "Ajout d'un thème moderne à la page de connexion"
+         ],
+         "Form alignment": [
+            "Nom du formulaire"
+         ],
+         "Sets the position of the login form.": [
+            "Définit la position du formulaire de connexion."
+         ],
+         "Login background image": [
+            "Image de fond de la page connexion"
+         ],
+         "Adds a background image to the login page.": [
+            "Ajoute une image de fond à la page de connexion."
+         ],
+         "Forces dark mode on the login page": [
+            "Force le mode sombre sur la page de connexion"
+         ],
+         "Disable language selector": [
+            "Désactiver le sélecteur de langue"
+         ],
+         "Disables the language selector on the login page": [
+            "Désactive le sélecteur de langue sur la page de connexion"
+         ],
+         "Remove UiPress link": [
+            "Supprimer le lien UiPress"
+         ],
+         "Removes the powered by uipress link": [
+            "Supprime le lien powered by uipress"
+         ],
+         "Custom HTML": [
+            "HTML Personnalisé"
+         ],
+         "HTML to be added to the side panel of the login page. Only works when the login theme is enabled and not using the centered form.": [
+            "HTML à ajouter au panneau latéral de la page de connexion. Ne fonctionne que lorsque le thème de connexion est activé et n'utilise pas le formulaire centré."
+         ],
+         "Custom CSS": [
+            "CSS personnalisé"
+         ],
+         "CSS to be added to the login page": [
+            "CSS à ajouter à la page de connexion"
+         ],
+         "Hide UiPress from plugin table": [
+            "Cacher UiPress de la table des plugins"
+         ],
+         "If enabled, both UiPress lite and pro (if installed) will be hidden from the plugins table": [
+            "Si cette option est activée, UiPress lite et pro (s'ils sont installés) seront cachés de la table des plugins"
+         ],
+         "Change Howdy message": [
+            "Modifier le message Howdy"
+         ],
+         "Replaces the Howdy message in the toolbar with one of your choosing": [
+            "Remplace le message \"Howdy\" de la barre d'outils par un message de votre choix"
+         ],
+         "Remove Howdy message": [
+            "Supprimer le message \"Howdy"
+         ],
+         "Removes the Howdy message in the toolbar": [
+            "Supprime le message \"Howdy\" de la barre d'outils"
+         ],
+         "Add user roles as body class": [
+            "Ajouter les rôles des utilisateurs comme classe de corps"
+         ],
+         "If enabled, the current user roles will be added as classes to the admin body tag. This can give you more flexibility in your css for role based conditions": [
+            "Si cette option est activée, les rôles des utilisateurs actuels seront ajoutés en tant que classes à la balise body de l'administrateur. Cela peut vous donner plus de flexibilité dans votre css pour les conditions basées sur les rôles"
+         ],
+         "Disable dynamic loading": [
+            "Désactiver le chargement dynamique"
+         ],
+         "If enabled, dynamic loading on templates will be disabled and every link will be loaded with a page refresh": [
+            "Si cette option est activée, le chargement dynamique des modèles sera désactivé et chaque lien sera chargé lors du rafraîchissement de la page"
+         ],
+         "Enqueue styles": [
+            "Styles en file d’attente"
+         ],
+         "Add stylesheets to the head of every admin page": [
+            "Ajoutez des stylesheets (feuille de style) au <head> de toutes les pages admin et pages de connexion"
+         ],
+         "Enqueue scripts": [
+            "Enqueue scripts"
+         ],
+         "Add scripts to the head of every admin page": [
+            "Ajouter des scripts à <head> sur toutes les page admin et page de connexion"
+         ],
+         "HTML for head": [
+            "HTML pour <head>"
+         ],
+         "Add HTML here to be added to every admin page head section": [
+            "Ajoutez ici du HTML qui sera ajouté à la section d'en-tête de chaque page d'administration"
+         ],
+         "Admin theme ": [
+            "Thème Admin"
+         ],
+         "If enabled, a simple modernised theme will be applied to the admin area. This is an alternative to using the builder for your UI": [
+            "Si cette option est activée, un thème simple et modernisé sera appliqué à la zone d'administration. Il s'agit d'une alternative à l'utilisation du constructeur pour votre interface utilisateur"
+         ],
+         "Save pattern": [
+            "Sauvegarder le modèle"
+         ],
+         "Settings": [
+            "Paramètres"
+         ],
+         "Copy": [
+            "Copier"
+         ],
+         "Paste": [
+            "Coller"
+         ],
+         "Duplicate": [
+            "Dupliquer"
+         ],
+         "Sync pattern": [
+            "Un modèle de synchronisation ?"
+         ],
+         " duplicated": [
+            "Menu dupliqué"
+         ],
+         " pasted": [
+            " collé"
+         ],
+         "block deleted": [
+            "bloc supprimé"
+         ],
+         "Sync pattern?": [
+            "Un modèle de synchronisation ?"
+         ],
+         "This will update the pattern template and will sync this pattern's changes accross all templates using the same pattern": [
+            "Cela mettra à jour le modèle de motif et synchronisera les changements de ce motif avec tous les modèles utilisant le même motif"
+         ],
+         "Sync patern": [
+            "Paternité de la synchro"
+         ],
+         "Pattern sync in progress": [
+            "Synchronisation des motifs en cours"
+         ],
+         "Pattern succesfully synced": [
+            "Synchronisation réussie du modèle"
+         ],
+         "Block copied": [
+            "Bloc copié"
+         ],
+         "This block no longer exists": [
+            "Ce bloc n'existe plus"
+         ],
+         "Go back": [
+            "Retour"
+         ],
+         "Block ID": [
+            "ID de Bloc"
+         ],
+         "This is a pro option. Upgrade to unlock": [
+            "Il s'agit d'une option pro. Passez à la version supérieure pour débloquer"
+         ],
+         "Options": [
+            "Options"
+         ],
+         "Building settings object...": [
+            "Objet des paramètres de construction..."
+         ],
+         "Block unique id. If you change this it must remain unique and can not be blank": [
+            "Identifiant unique du bloc. Si vous le modifiez, il doit rester unique et ne peut être vide"
+         ],
+         "Hidden on device": [
+            "Caché sur le dispositif"
+         ],
+         "Tooltip": [
+            "Info-bulle"
+         ],
+         "Message": [
+            "Message"
+         ],
+         "Delay before show": [
+            "Délai avant le spectacle"
+         ],
+         "Styles": [
+            "Styles"
+         ],
+         "Currently editing": [
+            "Actuellement en cours d'édition"
+         ],
+         "Light mode": [
+            "Mode Light"
+         ],
+         "This block has no settings": [
+            "Ce bloc n'a pas de paramètres"
+         ],
+         "Pro": [
+            "Pro"
+         ],
+         "Search blocks...": [
+            "Recherche de blocs..."
+         ],
+         "Drag blocks here": [
+            "Faites glisser les blocs ici"
+         ],
+         "This component is missing or can't be loaded": [
+            "Ce composant est manquant ou ne peut pas être chargé"
+         ],
+         "Blocks": [
+            "Blocs"
+         ],
+         "Patterns": [
+            "Les modèles"
+         ],
+         "block added": [
+            "bloc ajouté"
+         ],
+         "block moved": [
+            "bloc déplacé"
+         ],
+         "Layers": [
+            "Calques"
+         ],
+         "Welcome to the uiBuilder": [
+            "Bienvenue à l'uiBuilder"
+         ],
+         "Brand new for UiPress 3, the uiBuilder is a powerful drag and drop tool for building great looking, functional admin experiences for yourself or your clients": [
+            "Tout nouveau dans UiPress 3, l'uiBuilder est un puissant outil de glisser-déposer qui permet de créer des expériences d'administration fonctionnelles et esthétiques pour vous-même ou vos clients"
+         ],
+         "Browse premade templates or start from scratch": [
+            "Parcourir des modèles préétablis ou partir de zéro"
+         ],
+         "Blank canvas": [
+            "Toile vierge"
+         ],
+         "View templates": [
+            "Afficher les modèles"
+         ],
+         "Don't show this again": [
+            "Ne plus afficher à nouveau"
+         ],
+         "Close": [
+            "Fermer"
+         ],
+         "Deletes all blocks": [
+            "Supprime tous les blocs"
+         ],
+         "Hide layers": [
+            "Cacher les couches"
+         ],
+         "Block shortcuts": [
+            "Bloquer les raccourcis"
+         ],
+         "As you build your template, key blocks will automatically be added here for easy settings access": [
+            "Au fur et à mesure que vous construisez votre modèle, des blocs clés seront automatiquement ajoutés ici pour faciliter l'accès aux paramètres"
+         ],
+         "Draft Layout": [
+            "Projet de mise en page"
+         ],
+         "This will delete all blocks from your template.": [
+            "Cela supprimera tous les blocs de votre modèle."
+         ],
+         "Template blocks deleted": [
+            "Blocs de modèles supprimés"
+         ],
+         "Site settings": [
+            "Paramètres du site"
+         ],
+         "Save settings": [
+            "Enregistrer les paramètres"
+         ],
+         "Settings saved": [
+            "Paramètres sauvegardés"
+         ],
+         "Undo": [
+            "Annuler"
+         ],
+         "Redo": [
+            "Refaire"
+         ],
+         "History states": [
+            "Les états historiques"
+         ],
+         "Project opened": [
+            "Projet ouvert"
+         ],
+         "2 column": [
+            "2 colonne"
+         ],
+         "3 column": [
+            "3 colonnes"
+         ],
+         "4 column": [
+            "4 colonnes"
+         ],
+         "A basic sidebar, toolbar and content frame layout": [
+            "Une disposition de base de la barre latérale, de la barre d'outils et du cadre de contenu"
+         ],
+         "Admin boilerplate": [
+            "Plaque de l'administrateur"
+         ],
+         "Block": [
+            "Bloquer"
+         ],
+         "Search patterns...": [
+            "Recherche de modèles..."
+         ],
+         "Pattern title": [
+            "Titre du motif"
+         ],
+         "Pattern type": [
+            "Type de motif"
+         ],
+         "Description": [
+            "Description"
+         ],
+         "Pattern icon": [
+            "Icône de motif"
+         ],
+         "Layouts": [
+            "Mises en page"
+         ],
+         "Pattern exported": [
+            "Motif exporté"
+         ],
+         "Importing pattern": [
+            "Importation d'un motif"
+         ],
+         "Theme styles": [
+            "Styles du thème"
+         ],
+         "Revert style back to default": [
+            "Rétablir le style par défaut"
+         ],
+         "Applies to": [
+            "S'applique à"
+         ],
+         "Excludes": [
+            "Exclut"
+         ],
+         "Template type": [
+            "Type de modèle"
+         ],
+         "Admin Page": [
+            "Page d'administration"
+         ],
+         "Template will now load for you!": [
+            "Le modèle sera maintenant chargé pour vous !"
+         ],
+         "Take care not to revoke access to anything you may need in the admin.": [
+            "Veillez à ne pas révoquer l'accès à tout ce dont vous pourriez avoir besoin dans l'administration."
+         ],
+         "If you haven't already, we recommend setting up:": [
+            "Si vous ne l'avez pas encore fait, nous vous recommandons de le faire :"
+         ],
+         "safe mode": [
+            "mode sans échec"
+         ],
+         "Variable label": [
+            "Etiquette Variable "
+         ],
+         "Variable name": [
+            "Nom de la variable"
+         ],
+         "Delete variable": [
+            "Supprimer la variable"
+         ],
+         "Custom JS": [
+            "JS personnalisé"
+         ],
+         "Light": [
+            "Éclairage"
+         ],
+         "Dark": [
+            "Sombre"
+         ],
+         "Template name": [
+            "Nom du modèle"
+         ],
+         "Active": [
+            "Actif"
+         ],
+         "Select users and roles": [
+            "Sélectionner les utilisateurs et les rôles"
+         ],
+         "Search users and roles": [
+            "Rechercher des utilisateurs ou des rôles"
+         ],
+         "custom": [
+            "personnalisé"
+         ],
+         "Menu icon": [
+            "Icône du menu"
+         ],
+         "Add to submenu": [
+            "Ajouter au sous-menu"
+         ],
+         "None (top level)": [
+            "Aucun (niveau supérieur)"
+         ],
+         "Apply to subsites": [
+            "Appliquer aux substituts"
+         ],
+         "Is this an admin page?": [
+            "Slug des pages d'administration"
+         ],
+         "This template does not contain a content block. The content block is key to navigating the admin. Setting this live as a uiTemplate can cause a lock out.": [
+            "Ce modèle ne contient pas de bloc de contenu. Le bloc de contenu est essentiel à la navigation dans l'administration. Si vous le mettez en direct en tant que uiTemplate, vous risquez d'être bloqué."
+         ],
+         "Page link": [
+            "Lien vers la page"
+         ],
+         "Search variables...": [
+            "Rechercher des variables..."
+         ],
+         "New variable": [
+            "Nouvelle variable"
+         ],
+         "Units": [
+            "Unités"
+         ],
+         "Font": [
+            "Police"
+         ],
+         "Variable deleted": [
+            "Variable supprimée"
+         ],
+         "Variable label is required": [
+            "Une étiquette variable est requise"
+         ],
+         "Variable name is required": [
+            "Le nom de la variable est obligatoire"
+         ],
+         "Variable created!": [
+            "Variable créée !"
+         ],
+         "Save as pattern": [
+            "Enregistrer comme modèle"
+         ],
+         "Patterns can be either single components or entire layoutsd and are a great way of creating reusable blocks for your projects.": [
+            "Les motifs peuvent être des composants uniques ou des mises en page entières et constituent un excellent moyen de créer des blocs réutilisables pour vos projets."
+         ],
+         "Pattern not saved": [
+            "Le motif n'est pas sauvegardé"
+         ],
+         "Pattern title is required": [
+            "Le titre du motif est obligatoire"
+         ],
+         "Template library": [
+            "Bibliothèque de modèles"
+         ],
+         "Search templates": [
+            "Chercher dans les modèles"
+         ],
+         "Back to all templates": [
+            "Retour à tous les modèles"
+         ],
+         "Includes pro blocks": [
+            "Comprend des blocs pro"
+         ],
+         "Created by": [
+            "Créé par"
+         ],
+         "Add to template": [
+            "Ajouter au modèle"
+         ],
+         "Replace current layout": [
+            "Remplacer la mise en page actuelle"
+         ],
+         "Add to end of layout": [
+            "Ajouter à la fin de la mise en page"
+         ],
+         "Requires uipress": [
+            "Requiert uipress"
+         ],
+         "How many times this template has been downloaded": [
+            "Combien de fois ce modèle a été téléchargé"
+         ],
+         "Include": [
+            "Inclure"
+         ],
+         "Downloads": [
+            "Téléchargements"
+         ],
+         "Newest": [
+            "Plus récent"
+         ],
+         "Oldest": [
+            "Le plus ancien"
+         ],
+         "UI templates": [
+            "Modèles d'interface utilisateur"
+         ],
+         "Admin pages": [
+            "Pages d’administration"
+         ],
+         "Importing template": [
+            "Importation d'un modèle"
+         ],
+         "Unable to import template": [
+            "Impossible d'importer un modèle"
+         ],
+         "Template imported from library": [
+            "Modèle importé de la bibliothèque"
+         ],
+         "Template added": [
+            "Modèle ajouté"
+         ],
+         "Roles and users": [
+            "Selectionner les fonctions ou les utilisateurs"
+         ],
+         "Modified": [
+            "Modifié"
+         ],
+         "Name": [
+            "Nom"
+         ],
+         "Draft": [
+            "Brouillon"
+         ],
+         "results": [
+            "résultats"
+         ],
+         "Delete selected": [
+            "Supprimer la sélection"
+         ],
+         "New template": [
+            "Nouveau modèle"
+         ],
+         "It's a little quiet!": [
+            "C'est un peu calme par ici"
+         ],
+         "Create a new template to get started with uiBuilder or check out the docs": [
+            "Créez un nouveau modèle pour commencer à utiliser uiBuilder ou consultez la documentation"
+         ],
+         "View docs": [
+            "Afficher les documents"
+         ],
+         "Edit template": [
+            "Modifier le modèle"
+         ],
+         "Duplicate template": [
+            "Dupliquer le modèle de page"
+         ],
+         "Delete template": [
+            "Supprimer le modèle"
+         ],
+         "version": [
+            "version"
+         ],
+         "Tools": [
+            "Outils"
+         ],
+         "PHP error log": [
+            "Registre d’erreur PHP"
+         ],
+         "Role editor": [
+            "Rôle d'éditeur"
+         ],
+         "pro": [
+            "PRO"
+         ],
+         "Ui Template": [
+            "Modèle d'interface utilisateur"
+         ],
+         "All templates": [
+            "Tous les modèles"
+         ],
+         "Drafts": [
+            "Brouillons"
+         ],
+         "UI Templates": [
+            "Modèles d'interface utilisateur"
+         ],
+         "Frontend toolbars": [
+            "Barres d'outils frontales"
+         ],
+         "Are you sure you want to delete this template?": [
+            "Voulez-vous réellement supprimer ce modèle ?"
+         ],
+         "Deleted templates can't be recovered": [
+            "Les modèles supprimés ne peuvent pas être récupérés"
+         ],
+         "Are you sure you want to multiple templates?": [
+            "Êtes-vous sûr de vouloir utiliser plusieurs modèles ?"
+         ],
+         "Exit builder": [
+            "Sortie du constructeur"
+         ],
+         "Toggle layers panel": [
+            "Basculer le panneau des couches"
+         ],
+         "Back to template list": [
+            "Retour à la liste des modèles"
+         ],
+         "Zoom in": [
+            "Agrandir"
+         ],
+         "Zoom out": [
+            "Réduire"
+         ],
+         "Preview": [
+            "Prévisualisation"
+         ],
+         "Import template": [
+            "Importer un modèle"
+         ],
+         "Export template": [
+            "Insérer la description du modèle"
+         ],
+         "Template Library": [
+            "Bibliothèque de modèles"
+         ],
+         "Save": [
+            "Sauvegarder"
+         ],
+         "Help": [
+            "Aide"
+         ],
+         "Documentation and guides": [
+            "Documentation et guides"
+         ],
+         "Recent templates": [
+            "Modèles récents"
+         ],
+         "Builder": [
+            "Constructeur"
+         ],
+         "You have unsaved changes!": [
+            "Vous avez des changements non enregistrés !"
+         ],
+         "If you leave this page all unsaved changes will be discarded": [
+            "Si vous quittez cette page, toutes les modifications non sauvegardées seront supprimées"
+         ],
+         "Exporting layout": [
+            "Exportation de la mise en page"
+         ],
+         "Layout exported": [
+            "Mise en page exportée"
+         ],
+         "Importing layout": [
+            "Importation de la mise en page"
+         ],
+         "UiPress Lite": [
+            "UiPress Lite"
+         ],
+         "https://uipress.co": [
+            "https://uipress.co"
+         ],
+         "UiPress is an all in one solution for tailoring your WordPress admin interactions. From custom dashboards, profile pages to entire admin frameworks, the uiBuilder can do it all. Premade intuitive blocks and a library of professional templates make it super easy to transform the way your site users interact with your  content.": [
+            "UiPress est une solution tout-en-un pour personnaliser les interactions de votre administration WordPress. Des tableaux de bord personnalisés, des pages de profil aux cadres d'administration entiers, le uiBuilder peut tout faire. Des blocs intuitifs préfabriqués et une bibliothèque de modèles professionnels permettent de transformer très facilement la façon dont les utilisateurs de votre site interagissent avec votre contenu."
+         ],
+         "Admin 2020": [
+            "Admin 2020"
+         ],
+         "post type general name\u0004UI Template": [
+            "Modèle d'interface utilisateur"
+         ],
+         "post type general name\u0004UI Pattern": [
+            "Modèle d'interface utilisateur"
+         ],
+         "post type singular name\u0004UI Template": [
+            "Modèle d'interface utilisateur"
+         ],
+         "post type singular name\u0004UI Pattern": [
+            "Modèle d'interface utilisateur"
+         ],
+         "admin menu\u0004UI Templates": [
+            "Modèles d'interface utilisateur"
+         ],
+         "admin menu\u0004UI Patterns": [
+            "Modèles d'interface utilisateur"
+         ],
+         "add new on admin bar\u0004UI Template": [
+            "Modèle d'interface utilisateur"
+         ],
+         "add new on admin bar\u0004UI Pattern": [
+            "Modèle d'interface utilisateur"
+         ],
+         "Template\u0004Add New": [
+            "Ajouter"
+         ],
+         "UI Pattern\u0004Add New": [
+            "Ajouter"
+         ]
+      }
+   }
+}

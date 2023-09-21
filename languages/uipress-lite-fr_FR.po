@@ -1,0 +1,5367 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: UiPress Lite\n"
+"POT-Creation-Date: 2023-02-02 17:13+0000\n"
+"PO-Revision-Date: 2023-02-08 14:51+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 3.2.2\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
+"X-Poedit-WPHeader: uipress-lite.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.min.js\n"
+
+#: admin/classes/uip-ajax.php:88
+#, fuzzy
+msgid "Unable to locate error log"
+msgstr "Impossible de localiser le journal des erreurs"
+
+#: admin/classes/uip-ajax.php:89
+#, fuzzy
+msgid "No error log path set in your PHP ini file"
+msgstr ""
+"Le chemin du journal des erreurs n'est pas défini dans le fichier PHP ini"
+
+#: admin/classes/uip-ajax.php:95
+#, fuzzy
+msgid "Log file does not exist or is empty"
+msgstr "Le fichier journal n'existe pas ou est vide"
+
+#: admin/classes/uip-ajax.php:96
+#, fuzzy
+msgid ""
+"Either the PHP error log path is incorrect or you don't have any errors yet. "
+"Path: "
+msgstr ""
+"Soit le chemin du journal des erreurs PHP est incorrect, soit vous n'avez "
+"pas encore d'erreurs. Chemin "
+
+#: admin/classes/uip-ajax.php:145
+#, fuzzy
+msgid "Errros fetched"
+msgstr "Errros récupérés"
+
+#: admin/classes/uip-ajax.php:166
+#, fuzzy
+msgid "Unable to create temporary frame"
+msgstr "Impossible de créer un cadre temporaire"
+
+#: admin/classes/uip-ajax.php:173
+#, fuzzy
+msgid "Transient created"
+msgstr "Transitoire créé"
+
+#: admin/classes/uip-ajax.php:193
+#, fuzzy
+msgid "Config error: You need to specifiy a meta key to save the meta data to"
+msgstr ""
+"Erreur de configuration : Vous devez spécifier une clé méta pour sauvegarder "
+"les métadonnées"
+
+#: admin/classes/uip-ajax.php:216
+#, fuzzy
+msgid "Config error: Something went wrong"
+msgstr "Erreur de configuration : Quelque chose s'est mal passé"
+
+#: admin/classes/uip-ajax.php:235
+#, fuzzy
+msgid "Config error: No site option name supplied"
+msgstr "Erreur de configuration : Aucun nom d'option de site n'a été fourni"
+
+#: admin/classes/uip-ajax.php:263
+#, fuzzy
+msgid "Config error: Recipient email is not valid"
+msgstr "Erreur de configuration : L'email du destinataire n'est pas valide"
+
+#: admin/classes/uip-ajax.php:269
+#, fuzzy
+msgid "Config error: No email template set"
+msgstr "Erreur de configuration : Aucun modèle d'email n'a été défini"
+
+#: admin/classes/uip-ajax.php:293
+#, fuzzy
+msgid "Unable to send mail at this time"
+msgstr "Impossible d'envoyer du courrier pour le moment"
+
+#: admin/classes/uip-ajax.php:404
+#, fuzzy
+msgid "Passed function doesn't exist"
+msgstr "La fonction passée n'existe pas"
+
+#: admin/classes/uip-ajax.php:412
+#, fuzzy
+msgid "Unable to process form"
+msgstr "Impossible de traiter le formulaire"
+
+#: admin/classes/uip-ajax.php:470 admin/classes/uip-ajax.php:689
+#: admin/classes/uip-ajax.php:872 admin/classes/uip-ajax.php:964
+#: admin/classes/uip-site-settings.php:682 admin/classes/uip-ui-builder.php:464
+#, fuzzy
+msgid "ago"
+msgstr "ago"
+
+#: admin/classes/uip-ajax.php:581 assets/js/uip/classes/uip.js:1308
+#, fuzzy
+msgid "Preference updated"
+msgstr "Préférence mise à jour"
+
+#: admin/classes/uip-ajax.php:601
+#, fuzzy
+msgid "Unable to read post ids to delete"
+msgstr "Impossible de lire les identifiants des messages à supprimer"
+
+#: admin/classes/uip-ajax.php:626 assets/js/uip/classes/uip.js:306
+#, fuzzy
+msgid "Item deleted"
+msgstr "Élémént supprimé"
+
+#: admin/classes/uip-ajax.php:743 admin/classes/uip-utilities.php:974
+#: assets/js/uip/blocks/dynamic/loader.js:329
+#: assets/js/uip/blocks/dynamic/search.js:25
+#, fuzzy
+msgid "View"
+msgstr "Voir"
+
+#: admin/classes/uip-ajax.php:744 admin/classes/uip-utilities.php:950
+#: assets/js/uip/blocks/dynamic/loader.js:333
+#: assets/js/uip/blocks/dynamic/search.js:24
+#: assets/js/uip/options/uip-image-select.js:26
+#, fuzzy
+msgid "Edit"
+msgstr "Modifier"
+
+#: admin/classes/uip-ajax.php:745 admin/classes/uip-utilities.php:968
+#: assets/js/uip/blocks/dynamic/loader.js:337
+#: assets/js/uip/classes/uip-media-browser.js:47
+#: assets/js/uip/classes/uip-media-browser.js:411
+#: assets/js/uip/classes/uip.js:292
+#: assets/js/uip/uibuilder/uip-block-actions.js:30
+#: assets/js/uip/uibuilder/uip-template-list.js:246
+#: assets/js/uip/uibuilder/uip-template-list.js:256
+#, fuzzy
+msgid "Delete"
+msgstr "Supprimer"
+
+#: admin/classes/uip-ajax.php:764 admin/classes/uip-utilities.php:205
+#: assets/js/uip/blocks/elements/todo-list.js:17
+#, fuzzy
+msgid "Title"
+msgstr "Titre"
+
+#: admin/classes/uip-ajax.php:769 admin/classes/uip-utilities.php:211
+#, fuzzy
+msgid "Author"
+msgstr "Auteur"
+
+#: admin/classes/uip-ajax.php:774 admin/classes/uip-utilities.php:217
+#: assets/js/uip/options/uip-color-select.js:22
+#: assets/js/uip/uibuilder/uip-template-list.js:20
+#, fuzzy
+msgid "Type"
+msgstr "Type"
+
+#: admin/classes/uip-ajax.php:779 admin/classes/uip-utilities.php:223
+#, fuzzy
+msgid "Date"
+msgstr "Date"
+
+#: admin/classes/uip-ajax.php:784 admin/classes/uip-utilities.php:229
+#, fuzzy
+msgid "Categories"
+msgstr "Catégories"
+
+#: admin/classes/uip-ajax.php:789 admin/classes/uip-utilities.php:235
+#, fuzzy
+msgid "Tags"
+msgstr "Tags"
+
+#: admin/classes/uip-ajax.php:794 admin/classes/uip-site-settings.php:693
+#: admin/classes/uip-utilities.php:241
+#, fuzzy
+msgid "ID"
+msgstr "ID"
+
+#: admin/classes/uip-ajax.php:799 admin/classes/uip-utilities.php:247
+#, fuzzy
+msgid "Actions"
+msgstr "Actions"
+
+#: admin/classes/uip-ajax.php:1053 admin/classes/uip-ajax.php:1136
+#, fuzzy
+msgid "Something went wrong"
+msgstr "Quelque chose s’est mal passée"
+
+#: admin/classes/uip-ajax.php:1079 admin/classes/uip-ajax.php:1164
+#, fuzzy
+msgid "User"
+msgstr "Utilisateur"
+
+#: admin/classes/uip-ajax.php:1097 admin/classes/uip-ajax.php:1108
+#: admin/classes/uip-ajax.php:1185
+#, fuzzy
+msgid "Role"
+msgstr "Rôle"
+
+#: admin/classes/uip-ajax.php:1115 admin/classes/uip-ajax.php:1194
+#, fuzzy
+msgid "Nothing found for term:"
+msgstr "Aucun résultat pour le terme:"
+
+#: admin/classes/uip-app.php:53 assets/js/uip/uibuilder/uip-template-list.js:28
+#, fuzzy
+msgid "uiBuilder"
+msgstr "uiBuilder"
+
+#: admin/classes/uip-app.php:206
+#, fuzzy
+msgid ""
+"You have an older version of uipress active on this site. Please deactivate "
+"to use UiPress Lite"
+msgstr ""
+"Vous avez une ancienne version d'uipress active sur ce site. Veuillez la "
+"désactiver pour utiliser UiPress Lite"
+
+#: admin/classes/uip-app.php:420
+#, fuzzy
+msgid "Unable to load UiPress template"
+msgstr "Impossible de charger le modèle UiPress"
+
+#: admin/classes/uip-app.php:422
+#, fuzzy
+msgid ""
+"Current active template does not contain a page content block or a site "
+"navigation block such as an admin menu or content navigator. These are "
+"required to use a ui template"
+msgstr ""
+"Le modèle actif actuel ne contient pas de bloc de contenu de page ni de bloc "
+"de navigation de site tel qu'un menu d'administration ou un navigateur de "
+"contenu. Ces éléments sont nécessaires pour utiliser un modèle d'interface "
+"utilisateur"
+
+#: admin/classes/uip-app.php:757
+#, fuzzy
+msgid "User id"
+msgstr "Id utilisateur"
+
+#: admin/classes/uip-app.php:762
+#, fuzzy
+msgid "User roles"
+msgstr "Rôles utilisateur"
+
+#: admin/classes/uip-app.php:767 assets/js/uip/options/dynamic-settings.js:19
+#, fuzzy
+msgid "Username"
+msgstr "Nom d'utilisateur"
+
+#: admin/classes/uip-app.php:772 assets/js/uip/options/dynamic-settings.js:26
+#, fuzzy
+msgid "User first name"
+msgstr "Prénom de l’utilisateur"
+
+#: admin/classes/uip-app.php:777 assets/js/uip/options/dynamic-settings.js:33
+#, fuzzy
+msgid "User last name"
+msgstr "Nom de famille de l’utilisateur"
+
+#: admin/classes/uip-app.php:782 assets/js/uip/options/dynamic-settings.js:40
+#, fuzzy
+msgid "User full name"
+msgstr "Nom complet de l'utilisateur"
+
+#: admin/classes/uip-app.php:787 assets/js/uip/options/dynamic-settings.js:47
+#, fuzzy
+msgid "User display name"
+msgstr "Nom à afficher de l'utilisateur"
+
+#: admin/classes/uip-app.php:792 assets/js/uip/options/dynamic-settings.js:54
+#, fuzzy
+msgid "User email"
+msgstr "Email de l'utilisateur"
+
+#: admin/classes/uip-app.php:797 assets/js/uip/options/dynamic-settings.js:61
+#, fuzzy
+msgid "User initials"
+msgstr "Initiales de l'utilisateur"
+
+#: admin/classes/uip-app.php:802
+#, fuzzy
+msgid "User profile"
+msgstr "Profil Utilisateur"
+
+#: admin/classes/uip-app.php:808
+#, fuzzy
+msgid "Site title"
+msgstr "Titre du site"
+
+#: admin/classes/uip-app.php:814 assets/js/uip/options/dynamic-settings.js:82
+#, fuzzy
+msgid "Logout link"
+msgstr "Lien de déconnexion"
+
+#: admin/classes/uip-app.php:819
+#, fuzzy
+msgid "View site"
+msgstr "Voir le site"
+
+#: admin/classes/uip-app.php:824 assets/js/uip/uip-app.js:99
+#, fuzzy
+msgid "Admin home"
+msgstr "Accueil Admin"
+
+#: admin/classes/uip-app.php:829
+#, fuzzy
+msgid "View profile"
+msgstr "Voir le profil"
+
+#: admin/classes/uip-app.php:834
+#, fuzzy
+msgid "Current date"
+msgstr "Date actuelle"
+
+#: admin/classes/uip-app.php:839
+#, fuzzy
+msgid "PHP version"
+msgstr "Version PHP"
+
+#: admin/classes/uip-app.php:844
+#, fuzzy
+msgid "WordPress version"
+msgstr "Version de Wordpress"
+
+#: admin/classes/uip-app.php:849
+#, fuzzy
+msgid "Active plugins"
+msgstr "Extensions actives"
+
+#: admin/classes/uip-app.php:854
+#, fuzzy
+msgid "Inactive plugins"
+msgstr "Extensions inactives"
+
+#: admin/classes/uip-app.php:859
+#, fuzzy
+msgid "Installed themes"
+msgstr "Thèmes installés"
+
+#: admin/classes/uip-app.php:864
+#, fuzzy
+msgid "New post"
+msgstr "Nouvel article"
+
+#: admin/classes/uip-app.php:869
+#, fuzzy
+msgid "New page"
+msgstr "Nouvelle page"
+
+#: admin/classes/uip-app.php:885
+#: assets/js/uip/uibuilder/global-settings-groups.js:53
+#, fuzzy
+msgid "Site logo"
+msgstr "Logo du site"
+
+#: admin/classes/uip-app.php:898
+#: assets/js/uip/uibuilder/global-settings-groups.js:61
+#, fuzzy
+msgid "Site logo dark mode"
+msgstr "Logo du site en mode sombre"
+
+#: admin/classes/uip-site-settings.php:572
+#: assets/js/uip/uibuilder/uip-template-list.js:15
+#, fuzzy
+msgid "Status"
+msgstr "Statut"
+
+#: admin/classes/uip-site-settings.php:589
+#, fuzzy
+msgid "active"
+msgstr "actif"
+
+#: admin/classes/uip-site-settings.php:595
+#, fuzzy
+msgid "inactive"
+msgstr "inactif"
+
+#: admin/classes/uip-site-settings.php:670
+#, fuzzy
+msgid "Last modified"
+msgstr "Dernière modification"
+
+#: admin/classes/uip-ui-builder.php:88
+#, fuzzy
+msgid "UI Builder"
+msgstr "Constructeur d'interface utilisateur"
+
+#: admin/classes/uip-ui-builder.php:207
+#, fuzzy
+msgctxt "post type general name"
+msgid "UI Template"
+msgstr "Modèle d'interface utilisateur"
+
+#: admin/classes/uip-ui-builder.php:208
+#, fuzzy
+msgctxt "post type singular name"
+msgid "UI Template"
+msgstr "Modèle d'interface utilisateur"
+
+#: admin/classes/uip-ui-builder.php:209
+#, fuzzy
+msgctxt "admin menu"
+msgid "UI Templates"
+msgstr "Modèles d'interface utilisateur"
+
+#: admin/classes/uip-ui-builder.php:210
+#, fuzzy
+msgctxt "add new on admin bar"
+msgid "UI Template"
+msgstr "Modèle d'interface utilisateur"
+
+#: admin/classes/uip-ui-builder.php:211
+#, fuzzy
+msgctxt "Template"
+msgid "Add New"
+msgstr "Ajouter"
+
+#: admin/classes/uip-ui-builder.php:212
+#, fuzzy
+msgid "Add New UI Template"
+msgstr "Ajouter un nouveau modèle d'interface utilisateur"
+
+#: admin/classes/uip-ui-builder.php:213
+#, fuzzy
+msgid "New UI Template"
+msgstr "Nouveau modèle d'interface utilisateur"
+
+#: admin/classes/uip-ui-builder.php:214
+#, fuzzy
+msgid "Edit UI Template"
+msgstr "Modifier le modèle d'interface utilisateur"
+
+#: admin/classes/uip-ui-builder.php:215
+#, fuzzy
+msgid "View UI Template"
+msgstr "Voir le modèle d'interface utilisateur"
+
+#: admin/classes/uip-ui-builder.php:216
+#, fuzzy
+msgid "All UI Templates"
+msgstr "Tous les modèles d'interface utilisateur"
+
+#: admin/classes/uip-ui-builder.php:217
+#, fuzzy
+msgid "Search UI Templates"
+msgstr "Recherche de modèles d'interface utilisateur"
+
+#: admin/classes/uip-ui-builder.php:218
+#, fuzzy
+msgid "No UI Templates found."
+msgstr "Aucun modèle d'interface utilisateur n'a été trouvé."
+
+#: admin/classes/uip-ui-builder.php:219
+#, fuzzy
+msgid "No UI Templates found in Trash."
+msgstr "Aucun modèle d'interface utilisateur n'a été trouvé dans la corbeille."
+
+#: admin/classes/uip-ui-builder.php:223
+#, fuzzy
+msgid "Post type used for the uipress UI builder"
+msgstr ""
+"Type de message utilisé pour le constructeur d'interface utilisateur "
+"d'uipress"
+
+#: admin/classes/uip-ui-builder.php:239
+#, fuzzy
+msgctxt "post type general name"
+msgid "UI Pattern"
+msgstr "Modèle d'interface utilisateur"
+
+#: admin/classes/uip-ui-builder.php:240
+#, fuzzy
+msgctxt "post type singular name"
+msgid "UI Pattern"
+msgstr "Modèle d'interface utilisateur"
+
+#: admin/classes/uip-ui-builder.php:241
+#, fuzzy
+msgctxt "admin menu"
+msgid "UI Patterns"
+msgstr "Modèles d'interface utilisateur"
+
+#: admin/classes/uip-ui-builder.php:242
+#, fuzzy
+msgctxt "add new on admin bar"
+msgid "UI Pattern"
+msgstr "Modèle d'interface utilisateur"
+
+#: admin/classes/uip-ui-builder.php:243
+#, fuzzy
+msgctxt "UI Pattern"
+msgid "Add New"
+msgstr "Ajouter"
+
+#: admin/classes/uip-ui-builder.php:244
+#, fuzzy
+msgid "Add New UI Pattern"
+msgstr "Ajouter un nouveau modèle d'interface utilisateur"
+
+#: admin/classes/uip-ui-builder.php:245
+#, fuzzy
+msgid "New UI Pattern"
+msgstr "Nouveau modèle d'interface utilisateur"
+
+#: admin/classes/uip-ui-builder.php:246
+#, fuzzy
+msgid "Edit UI Pattern"
+msgstr "Modifier le modèle d'interface utilisateur"
+
+#: admin/classes/uip-ui-builder.php:247
+#, fuzzy
+msgid "View UI Patterns"
+msgstr "Voir les modèles d'interface utilisateur"
+
+#: admin/classes/uip-ui-builder.php:248
+#, fuzzy
+msgid "All UI Patterns"
+msgstr "Tous les modèles d'interface utilisateur"
+
+#: admin/classes/uip-ui-builder.php:249
+#, fuzzy
+msgid "Search UI Patterns"
+msgstr "Recherche de modèles d'interface utilisateur"
+
+#: admin/classes/uip-ui-builder.php:250
+#, fuzzy
+msgid "No UI Patterns found."
+msgstr "Aucun modèle d'interface utilisateur n'a été trouvé."
+
+#: admin/classes/uip-ui-builder.php:251
+#, fuzzy
+msgid "No UI Patterns found in Trash."
+msgstr "Aucun modèle d'interface utilisateur n'a été trouvé dans la corbeille."
+
+#: admin/classes/uip-ui-builder.php:255
+#, fuzzy
+msgid "Post type used for the uipress UI builder for storing patterns"
+msgstr ""
+"Type de message utilisé par le constructeur de l'interface utilisateur "
+"d'uipress pour stocker les modèles"
+
+#: admin/classes/uip-ui-builder.php:281
+#, fuzzy
+msgid "Unable to save site settings. Data corrupted"
+msgstr "Impossible d'enregistrer les paramètres du site. Données corrompues"
+
+#: admin/classes/uip-ui-builder.php:371
+#, fuzzy
+msgid "UI Template (Draft)"
+msgstr "Modèle d'interface utilisateur (projet)"
+
+#: admin/classes/uip-ui-builder.php:384
+#, fuzzy
+msgid "Template created"
+msgstr "Modèle créé"
+
+#: admin/classes/uip-ui-builder.php:388
+#, fuzzy
+msgid "Unable to create template"
+msgstr "Impossible de créer le gabarit"
+
+#: admin/classes/uip-ui-builder.php:471
+#: assets/js/uip/uibuilder/uip-builder-settings.js:25
+#, fuzzy
+msgid "UI template"
+msgstr "Modèle d'interface utilisateur"
+
+#: admin/classes/uip-ui-builder.php:473
+#: assets/js/uip/uibuilder/uip-template-list.js:43
+#, fuzzy
+msgid "Admin page"
+msgstr "صفحة المدير"
+
+#: admin/classes/uip-ui-builder.php:475
+#: assets/js/uip/uibuilder/uip-builder-settings.js:28
+#: assets/js/uip/uibuilder/uip-template-list.js:44
+#, fuzzy
+msgid "Login page"
+msgstr "Page de connexion"
+
+#: admin/classes/uip-ui-builder.php:477
+#: assets/js/uip/uibuilder/uip-builder-settings.js:27
+#: assets/js/uip/uibuilder/uip-template-list.js:45
+#, fuzzy
+msgid "Frontend toolbar"
+msgstr "Barre d'outils frontale"
+
+#: admin/classes/uip-ui-builder.php:571 admin/classes/uip-ui-builder.php:829
+#, fuzzy
+msgid "Unable to fetch template"
+msgstr "Impossible de récupérer le modèle"
+
+#: admin/classes/uip-ui-builder.php:601
+#, fuzzy
+msgid "Succesfully fetched Ui template"
+msgstr "Le modèle d'interface utilisateur a été récupéré avec succès"
+
+#: admin/classes/uip-ui-builder.php:688 admin/classes/uip-ui-builder.php:726
+#, fuzzy
+msgid "Templates deleted"
+msgstr "Modèles supprimés"
+
+#: admin/classes/uip-ui-builder.php:707
+#, fuzzy
+msgid "You don't have permission to delete UI Templates"
+msgstr ""
+"Vous n'avez pas le droit de supprimer des modèles d'interface utilisateur"
+
+#: admin/classes/uip-ui-builder.php:715
+#: assets/js/uip/uibuilder/uip-template-list.js:26
+#, fuzzy
+msgid "Template deleted"
+msgstr "Modèle supprimé"
+
+#: admin/classes/uip-ui-builder.php:748 admin/classes/uip-ui-builder.php:775
+#, fuzzy
+msgid "Unable to duplicate template"
+msgstr "Impossible de dupliquer le modèle"
+
+#: admin/classes/uip-ui-builder.php:752
+#, fuzzy
+msgid "copy"
+msgstr "copier"
+
+#: admin/classes/uip-ui-builder.php:782
+#, fuzzy
+msgid "Unable to duplicate template. Template is corrupted"
+msgstr "Impossible de dupliquer le modèle. Le modèle est corrompu"
+
+#: admin/classes/uip-ui-builder.php:789
+#, fuzzy
+msgid "Unable to duplicate template. Settings are corrupted"
+msgstr "Impossible de dupliquer le modèle. Les paramètres sont corrompus"
+
+#: admin/classes/uip-ui-builder.php:806
+#: assets/js/uip/uibuilder/uip-template-list.js:25
+#, fuzzy
+msgid "Template duplicated"
+msgstr "Modèle dupliqué."
+
+#: admin/classes/uip-ui-builder.php:851
+#, fuzzy
+msgid "Unable to save template"
+msgstr "Impossible d’enregistrer le modèle"
+
+#: admin/classes/uip-ui-builder.php:857
+#, fuzzy
+msgid "Unable to save template. Template is corrupted"
+msgstr "Impossible d'enregistrer le modèle. Le modèle est corrompu"
+
+#: admin/classes/uip-ui-builder.php:863
+#, fuzzy
+msgid "Unable to save template. Settings are corrupted"
+msgstr "Impossible d'enregistrer le modèle. Les paramètres sont corrompus"
+
+#: admin/classes/uip-ui-builder.php:922
+#: assets/js/uip/uibuilder/uip-ui-preview.js:281
+#: assets/js/uip/uibuilder/uip-ui-preview.js:286
+#, fuzzy
+msgid "Template saved"
+msgstr "Modèle sauvegardé"
+
+#: admin/classes/uip-ui-builder.php:1007
+#, fuzzy
+msgid "Patterns synced"
+msgstr "Patrons synchronisés"
+
+#: admin/classes/uip-ui-builder.php:1072
+#, fuzzy
+msgid "Unable to save pattern"
+msgstr "Impossible d'enregistrer le modèle"
+
+#: admin/classes/uip-ui-builder.php:1079
+#: assets/js/uip/uibuilder/uip-save-pattern.js:85
+#, fuzzy
+msgid "Pattern saved"
+msgstr "Modèle sauvegardé"
+
+#: admin/classes/uip-ui-builder.php:1169
+#, fuzzy
+msgid "Columns fetched"
+msgstr "Colonnes récupérées"
+
+#: admin/classes/uip-ui-pages.php:339
+#, fuzzy
+msgid "Unable to find page template"
+msgstr "Impossible de trouver le modèle de page"
+
+#: admin/classes/uip-ui-pages.php:396
+#, fuzzy
+msgid "Unable to process page template"
+msgstr "Impossible de traiter le modèle de page"
+
+#: admin/classes/uip-utilities.php:938
+#: assets/js/uip/blocks/dynamic/search.js:23
+#: assets/js/uip/blocks/elements/todo-list.js:24
+#, fuzzy
+msgid "All"
+msgstr "Tout"
+
+#: admin/classes/uip-utilities.php:944
+#, fuzzy
+msgid "Read"
+msgstr "Lire"
+
+#: admin/classes/uip-utilities.php:956
+#, fuzzy
+msgid "Publish"
+msgstr "Publier"
+
+#: admin/classes/uip-utilities.php:962
+#, fuzzy
+msgid "Create"
+msgstr "Créer"
+
+#: admin/classes/uip-utilities.php:980
+#, fuzzy
+msgid "Manage"
+msgstr "Gérer"
+
+#: admin/classes/uip-utilities.php:986
+#, fuzzy
+msgid "Export"
+msgstr "Exporter"
+
+#: admin/classes/uip-utilities.php:992
+#: assets/js/uip/uibuilder/uip-builder-patterns-list.js:63
+#, fuzzy
+msgid "Import"
+msgstr "Importer"
+
+#: admin/classes/uip-utilities.php:998 assets/js/uip/options/uip-margin.js:16
+#: assets/js/uip/options/uip-padding.js:16
+#, fuzzy
+msgid "Custom"
+msgstr "Personnalisé"
+
+#: assets/js/uip/blocks/analytics/loader.js:9
+#, fuzzy
+msgid "GA charts"
+msgstr "Graphiques GA"
+
+#: assets/js/uip/blocks/analytics/loader.js:11
+#, fuzzy
+msgid "Outputs your choice of charts and options on what data to display"
+msgstr ""
+"Fournit votre choix de graphiques et d'options sur les données à afficher"
+
+#: assets/js/uip/blocks/analytics/loader.js:12
+#: assets/js/uip/blocks/analytics/loader.js:24
+#: assets/js/uip/blocks/analytics/loader.js:37
+#: assets/js/uip/blocks/analytics/loader.js:45
+#: assets/js/uip/blocks/block-settings-groups.js:24
+#, fuzzy
+msgid "Analytics"
+msgstr "Analytics"
+
+#: assets/js/uip/blocks/analytics/loader.js:21
+#, fuzzy
+msgid "GA tables"
+msgstr "Tables GA"
+
+#: assets/js/uip/blocks/analytics/loader.js:23
+#, fuzzy
+msgid "Outputs your choice of tables and options on what data to display"
+msgstr ""
+"Affiche votre choix de tableaux et d'options sur les données à afficher"
+
+#: assets/js/uip/blocks/analytics/loader.js:34
+#, fuzzy
+msgid "GA realtime"
+msgstr "GA en temps réel"
+
+#: assets/js/uip/blocks/analytics/loader.js:36
+#, fuzzy
+msgid "Displays live visitor data about your site"
+msgstr "Affiche des données en direct sur les visiteurs de votre site"
+
+#: assets/js/uip/blocks/analytics/loader.js:42
+#, fuzzy
+msgid "GA map"
+msgstr "Carte de l'AG"
+
+#: assets/js/uip/blocks/analytics/loader.js:44
+#, fuzzy
+msgid "Outputs your visitor data to a interactive map"
+msgstr ""
+"Affiche les données relatives à vos visiteurs sur une carte interactive"
+
+#: assets/js/uip/blocks/analytics/loader.js:54
+#: assets/js/uip/blocks/layout/loader.js:71 assets/js/uip/classes/uip.js:1905
+#, fuzzy
+msgid "Background colour"
+msgstr "Couleur d’arrière plan"
+
+#: assets/js/uip/blocks/analytics/loader.js:55
+#: assets/js/uip/blocks/layout/loader.js:72 assets/js/uip/classes/uip.js:1906
+#, fuzzy
+msgid "Background Image"
+msgstr "Image de fond"
+
+#: assets/js/uip/blocks/analytics/loader.js:56
+#: assets/js/uip/blocks/layout/loader.js:75 assets/js/uip/classes/uip.js:1909
+#, fuzzy
+msgid "Dimensions"
+msgstr "Dimensions"
+
+#: assets/js/uip/blocks/analytics/loader.js:57
+#: assets/js/uip/blocks/layout/loader.js:83 assets/js/uip/classes/uip.js:1911
+#, fuzzy
+msgid "Padding"
+msgstr "Padding (marges internes)"
+
+#: assets/js/uip/blocks/analytics/loader.js:58
+#: assets/js/uip/blocks/layout/loader.js:84 assets/js/uip/classes/uip.js:1912
+#, fuzzy
+msgid "Margin"
+msgstr "Marge"
+
+#: assets/js/uip/blocks/analytics/loader.js:59
+#: assets/js/uip/blocks/layout/loader.js:85 assets/js/uip/classes/uip.js:1913
+#, fuzzy
+msgid "Text format"
+msgstr "Format de texte enrichi"
+
+#: assets/js/uip/blocks/analytics/loader.js:60
+#: assets/js/uip/blocks/layout/loader.js:86 assets/js/uip/classes/uip.js:1914
+#, fuzzy
+msgid "Border"
+msgstr "Bordure"
+
+#: assets/js/uip/blocks/analytics/loader.js:61
+#: assets/js/uip/blocks/layout/loader.js:87 assets/js/uip/classes/uip.js:1915
+#: assets/js/uip/options/uip-border-designer.js:20
+#, fuzzy
+msgid "Position"
+msgstr "Position"
+
+#: assets/js/uip/blocks/analytics/loader.js:62
+#: assets/js/uip/blocks/layout/loader.js:88 assets/js/uip/classes/uip.js:1916
+#: assets/js/uip/options/settings-loader.js:1103
+#, fuzzy
+msgid "Box shadow"
+msgstr "Boite Ombre"
+
+#: assets/js/uip/blocks/analytics/loader.js:68
+#: assets/js/uip/blocks/layout/loader.js:28 assets/js/uip/classes/uip.js:1937
+#, fuzzy
+msgid "Justify content"
+msgstr "Justifier le contenu"
+
+#: assets/js/uip/blocks/analytics/loader.js:69
+#: assets/js/uip/blocks/layout/loader.js:29 assets/js/uip/classes/uip.js:1938
+#, fuzzy
+msgid "Align content"
+msgstr "Aligner le contenu"
+
+#: assets/js/uip/blocks/analytics/loader.js:70
+#: assets/js/uip/blocks/layout/loader.js:27 assets/js/uip/classes/uip.js:1939
+#, fuzzy
+msgid "Content direction"
+msgstr "Direction du contenu"
+
+#: assets/js/uip/blocks/analytics/loader.js:71
+#: assets/js/uip/blocks/layout/loader.js:30 assets/js/uip/classes/uip.js:1940
+#, fuzzy
+msgid "Content wrap"
+msgstr "Enveloppement de contenu"
+
+#: assets/js/uip/blocks/analytics/loader.js:72
+#: assets/js/uip/blocks/layout/loader.js:31 assets/js/uip/classes/uip.js:1941
+#, fuzzy
+msgid "Column gap"
+msgstr "Écart de colonne"
+
+#: assets/js/uip/blocks/analytics/loader.js:73
+#: assets/js/uip/blocks/layout/loader.js:32 assets/js/uip/classes/uip.js:1942
+#, fuzzy
+msgid "Row gap"
+msgstr "Écart de ligne"
+
+#: assets/js/uip/blocks/block-settings-groups.js:8
+#: assets/js/uip/blocks/elements/loader.js:14
+#: assets/js/uip/blocks/elements/loader.js:103
+#: assets/js/uip/blocks/elements/loader.js:174
+#: assets/js/uip/blocks/elements/loader.js:221
+#: assets/js/uip/blocks/elements/loader.js:268
+#: assets/js/uip/blocks/elements/loader.js:355
+#: assets/js/uip/blocks/elements/loader.js:402
+#: assets/js/uip/blocks/elements/loader.js:477
+#: assets/js/uip/blocks/elements/loader.js:561
+#: assets/js/uip/blocks/elements/loader.js:659
+#: assets/js/uip/blocks/elements/loader.js:719
+#: assets/js/uip/blocks/elements/loader.js:804
+#: assets/js/uip/blocks/elements/loader.js:885
+#: assets/js/uip/blocks/elements/loader.js:893
+#: assets/js/uip/blocks/elements/loader.js:901
+#, fuzzy
+msgid "Elements"
+msgstr "Éléments"
+
+#: assets/js/uip/blocks/block-settings-groups.js:12
+#: assets/js/uip/blocks/layout/loader.js:13
+#: assets/js/uip/blocks/layout/loader.js:108
+#: assets/js/uip/blocks/layout/loader.js:244
+#: assets/js/uip/blocks/layout/loader.js:302
+#: assets/js/uip/blocks/layout/loader.js:429
+#: assets/js/uip/uibuilder/uip-builder-patterns-list.js:52
+#: assets/js/uip/uibuilder/uip-save-pattern.js:33
+#, fuzzy
+msgid "Layout"
+msgstr "Mise en page"
+
+#: assets/js/uip/blocks/block-settings-groups.js:16
+#: assets/js/uip/blocks/dynamic/loader.js:13
+#: assets/js/uip/blocks/dynamic/loader.js:216
+#: assets/js/uip/blocks/dynamic/loader.js:307
+#: assets/js/uip/blocks/dynamic/loader.js:481
+#: assets/js/uip/blocks/dynamic/loader.js:576
+#: assets/js/uip/blocks/dynamic/loader.js:672
+#: assets/js/uip/blocks/dynamic/loader.js:758
+#: assets/js/uip/blocks/dynamic/loader.js:822
+#: assets/js/uip/blocks/dynamic/loader.js:901
+#: assets/js/uip/blocks/dynamic/loader.js:979
+#: assets/js/uip/blocks/dynamic/loader.js:988
+#: assets/js/uip/blocks/dynamic/loader.js:996
+#: assets/js/uip/blocks/dynamic/loader.js:1004
+#: assets/js/uip/blocks/dynamic/loader.js:1012
+#: assets/js/uip/blocks/dynamic/loader.js:1020
+#: assets/js/uip/blocks/elements/loader.js:876
+#: assets/js/uip/options/settings-loader.js:667
+#: assets/js/uip/options/uip-image-select.js:30
+#: assets/js/uip/options/uip-link-select.js:38
+#: assets/js/uip/options/uip-link-select.js:44
+#, fuzzy
+msgid "Dynamic"
+msgstr "Dynamique"
+
+#: assets/js/uip/blocks/block-settings-groups.js:20
+#: assets/js/uip/blocks/inputs/loader.js:10
+#: assets/js/uip/blocks/inputs/loader.js:13
+#: assets/js/uip/blocks/inputs/loader.js:97
+#: assets/js/uip/blocks/inputs/loader.js:216
+#: assets/js/uip/blocks/inputs/loader.js:305
+#: assets/js/uip/blocks/inputs/loader.js:388
+#: assets/js/uip/blocks/inputs/loader.js:396
+#: assets/js/uip/blocks/inputs/loader.js:404
+#: assets/js/uip/blocks/inputs/loader.js:412
+#: assets/js/uip/blocks/inputs/loader.js:420
+#, fuzzy
+msgid "Form"
+msgstr "Formulaire"
+
+#: assets/js/uip/blocks/dynamic/admin-menu.js:14
+#: assets/js/uip/blocks/dynamic/admin-menu.js:95
+#: assets/js/uip/blocks/dynamic/admin-menu.js:120
+#, fuzzy
+msgid "Home"
+msgstr "Accueil"
+
+#: assets/js/uip/blocks/dynamic/admin-menu.js:17
+#, fuzzy
+msgid "Main menu"
+msgstr "Menu principal"
+
+#: assets/js/uip/blocks/dynamic/admin-menu.js:18
+#, fuzzy
+msgid "Collapse menu"
+msgstr "Réduire le menu"
+
+#: assets/js/uip/blocks/dynamic/loader.js:10
+#, fuzzy
+msgid "Admin menu"
+msgstr "Menu administrateur"
+
+#: assets/js/uip/blocks/dynamic/loader.js:12
+#, fuzzy
+msgid "Outputs the admin menu"
+msgstr "Affiche le menu d'administration"
+
+#: assets/js/uip/blocks/dynamic/loader.js:22
+#: assets/js/uip/blocks/dynamic/loader.js:225
+#: assets/js/uip/blocks/dynamic/loader.js:316
+#: assets/js/uip/blocks/dynamic/loader.js:490
+#: assets/js/uip/blocks/dynamic/loader.js:585
+#: assets/js/uip/blocks/dynamic/loader.js:681
+#: assets/js/uip/blocks/dynamic/loader.js:767
+#: assets/js/uip/blocks/dynamic/loader.js:831
+#: assets/js/uip/blocks/dynamic/loader.js:910
+#: assets/js/uip/blocks/elements/loader.js:23
+#: assets/js/uip/blocks/elements/loader.js:112
+#: assets/js/uip/blocks/elements/loader.js:183
+#: assets/js/uip/blocks/elements/loader.js:230
+#: assets/js/uip/blocks/elements/loader.js:278
+#: assets/js/uip/blocks/elements/loader.js:364
+#: assets/js/uip/blocks/elements/loader.js:411
+#: assets/js/uip/blocks/elements/loader.js:487
+#: assets/js/uip/blocks/elements/loader.js:668
+#: assets/js/uip/blocks/elements/loader.js:728
+#: assets/js/uip/blocks/elements/loader.js:813
+#: assets/js/uip/blocks/inputs/loader.js:23
+#: assets/js/uip/blocks/inputs/loader.js:106
+#: assets/js/uip/blocks/inputs/loader.js:225
+#: assets/js/uip/blocks/inputs/loader.js:314
+#: assets/js/uip/blocks/layout/loader.js:23
+#: assets/js/uip/blocks/layout/loader.js:118
+#: assets/js/uip/blocks/layout/loader.js:254
+#: assets/js/uip/blocks/layout/loader.js:312
+#: assets/js/uip/uibuilder/uip-block-settings.js:38
+#, fuzzy
+msgid "Block options"
+msgstr "Options de bloc"
+
+#: assets/js/uip/blocks/dynamic/loader.js:25
+#, fuzzy
+msgid "Menu style"
+msgstr "Style de menu"
+
+#: assets/js/uip/blocks/dynamic/loader.js:29
+#, fuzzy
+msgid "Menu direction"
+msgstr "Direction du menu"
+
+#: assets/js/uip/blocks/dynamic/loader.js:34
+#: assets/js/uip/options/settings-loader.js:358
+#, fuzzy
+msgid "Vertical"
+msgstr "Vertical"
+
+#: assets/js/uip/blocks/dynamic/loader.js:38
+#: assets/js/uip/options/settings-loader.js:363
+#, fuzzy
+msgid "Horizontal"
+msgstr "Horizontal"
+
+#: assets/js/uip/blocks/dynamic/loader.js:46
+#, fuzzy
+msgid "Advanced menu editor"
+msgstr "Editeur de menu avancé"
+
+#: assets/js/uip/blocks/dynamic/loader.js:50
+#, fuzzy
+msgid "Show menu collapse option"
+msgstr "Afficher l'option de réduction du menu"
+
+#: assets/js/uip/blocks/dynamic/loader.js:55
+#, fuzzy
+msgid "Disable menu auto update"
+msgstr "Désactiver la mise à jour automatique du menu"
+
+#: assets/js/uip/blocks/dynamic/loader.js:57
+#, fuzzy
+msgid "Hiden menu items"
+msgstr "Les éléments de menu cachés"
+
+#: assets/js/uip/blocks/dynamic/loader.js:58
+#, fuzzy
+msgid "Menu options"
+msgstr "Options du menu"
+
+#: assets/js/uip/blocks/dynamic/loader.js:59
+#, fuzzy
+msgid "Submenu Icon"
+msgstr "Icône Sous-menu"
+
+#: assets/js/uip/blocks/dynamic/loader.js:60
+#, fuzzy
+msgid "Hide menu icons"
+msgstr "Masquer les icônes de menu"
+
+#: assets/js/uip/blocks/dynamic/loader.js:66
+#: assets/js/uip/blocks/dynamic/loader.js:239
+#: assets/js/uip/blocks/dynamic/loader.js:350
+#: assets/js/uip/blocks/dynamic/loader.js:501
+#: assets/js/uip/blocks/dynamic/loader.js:595
+#: assets/js/uip/blocks/dynamic/loader.js:691
+#: assets/js/uip/blocks/dynamic/loader.js:774
+#: assets/js/uip/blocks/dynamic/loader.js:852
+#: assets/js/uip/blocks/dynamic/loader.js:933
+#: assets/js/uip/blocks/elements/loader.js:46
+#: assets/js/uip/blocks/elements/loader.js:134
+#: assets/js/uip/blocks/elements/loader.js:190
+#: assets/js/uip/blocks/elements/loader.js:237
+#: assets/js/uip/blocks/elements/loader.js:298
+#: assets/js/uip/blocks/elements/loader.js:371
+#: assets/js/uip/blocks/elements/loader.js:418
+#: assets/js/uip/blocks/elements/loader.js:494
+#: assets/js/uip/blocks/elements/loader.js:570
+#: assets/js/uip/blocks/elements/loader.js:678
+#: assets/js/uip/blocks/elements/loader.js:754
+#: assets/js/uip/blocks/elements/loader.js:831
+#: assets/js/uip/blocks/inputs/loader.js:48
+#: assets/js/uip/blocks/inputs/loader.js:168
+#: assets/js/uip/blocks/inputs/loader.js:256
+#: assets/js/uip/blocks/inputs/loader.js:344
+#: assets/js/uip/blocks/layout/loader.js:39
+#: assets/js/uip/blocks/layout/loader.js:176
+#: assets/js/uip/blocks/layout/loader.js:270
+#: assets/js/uip/blocks/layout/loader.js:374
+#, fuzzy
+msgid "Block container"
+msgstr "Conteneur du bloc"
+
+#: assets/js/uip/blocks/dynamic/loader.js:74
+#: assets/js/uip/blocks/dynamic/loader.js:247
+#: assets/js/uip/blocks/dynamic/loader.js:358
+#: assets/js/uip/blocks/dynamic/loader.js:509
+#: assets/js/uip/blocks/dynamic/loader.js:603
+#: assets/js/uip/blocks/dynamic/loader.js:699
+#: assets/js/uip/blocks/dynamic/loader.js:782
+#: assets/js/uip/blocks/dynamic/loader.js:860
+#: assets/js/uip/blocks/dynamic/loader.js:941
+#: assets/js/uip/blocks/elements/loader.js:54
+#: assets/js/uip/blocks/elements/loader.js:142
+#: assets/js/uip/blocks/elements/loader.js:198
+#: assets/js/uip/blocks/elements/loader.js:245
+#: assets/js/uip/blocks/elements/loader.js:306
+#: assets/js/uip/blocks/elements/loader.js:379
+#: assets/js/uip/blocks/elements/loader.js:426
+#: assets/js/uip/blocks/elements/loader.js:502
+#: assets/js/uip/blocks/elements/loader.js:578
+#: assets/js/uip/blocks/elements/loader.js:686
+#: assets/js/uip/blocks/elements/loader.js:762
+#: assets/js/uip/blocks/elements/loader.js:839
+#: assets/js/uip/blocks/inputs/loader.js:56
+#: assets/js/uip/blocks/inputs/loader.js:176
+#: assets/js/uip/blocks/inputs/loader.js:264
+#: assets/js/uip/blocks/inputs/loader.js:352
+#: assets/js/uip/blocks/layout/loader.js:184
+#: assets/js/uip/options/settings-loader.js:96
+#: assets/js/uip/options/uip-border-designer.js:18
+#: assets/js/uip/uibuilder/uip-block-actions.js:24
+#: assets/js/uip/uibuilder/uip-block-settings.js:66
+#, fuzzy
+msgid "Style"
+msgstr "Style"
+
+#: assets/js/uip/blocks/dynamic/loader.js:82
+#, fuzzy
+msgid "Menu headers"
+msgstr "En-têtes de menu"
+
+#: assets/js/uip/blocks/dynamic/loader.js:91
+#, fuzzy
+msgid "Menu headers hover"
+msgstr "En-têtes de menu en survol"
+
+#: assets/js/uip/blocks/dynamic/loader.js:100
+#, fuzzy
+msgid "Menu headers active"
+msgstr "En-têtes de menu actifs"
+
+#: assets/js/uip/blocks/dynamic/loader.js:108
+#, fuzzy
+msgid "Menu sepators"
+msgstr "Séparateurs de menu"
+
+#: assets/js/uip/blocks/dynamic/loader.js:117
+#: assets/js/uip/blocks/dynamic/loader.js:734
+#, fuzzy
+msgid "Submenu"
+msgstr "Sous-menu"
+
+#: assets/js/uip/blocks/dynamic/loader.js:126
+#, fuzzy
+msgid "Header submenu icon"
+msgstr "Icône du sous-menu de l'en-tête"
+
+#: assets/js/uip/blocks/dynamic/loader.js:135
+#, fuzzy
+msgid "Sub menu header"
+msgstr "En-tête de sous-menu"
+
+#: assets/js/uip/blocks/dynamic/loader.js:145
+#, fuzzy
+msgid "Sub menu items"
+msgstr "Pas d'éléments du sous-menu"
+
+#: assets/js/uip/blocks/dynamic/loader.js:154
+#, fuzzy
+msgid "Sub menu items hover"
+msgstr "Le survol des éléments de sous-menu"
+
+#: assets/js/uip/blocks/dynamic/loader.js:163
+#, fuzzy
+msgid "Sub menu items active"
+msgstr "Éléments de sous-menu actifs"
+
+#: assets/js/uip/blocks/dynamic/loader.js:172
+#, fuzzy
+msgid "Icons"
+msgstr "Icônes"
+
+#: assets/js/uip/blocks/dynamic/loader.js:182
+#, fuzzy
+msgid "Notifications"
+msgstr "Notifications"
+
+#: assets/js/uip/blocks/dynamic/loader.js:191
+#, fuzzy
+msgid "Menu collapse"
+msgstr "Réduction du menu"
+
+#: assets/js/uip/blocks/dynamic/loader.js:201
+#: assets/js/uip/blocks/dynamic/loader.js:292
+#: assets/js/uip/blocks/dynamic/loader.js:467
+#: assets/js/uip/blocks/dynamic/loader.js:562
+#: assets/js/uip/blocks/dynamic/loader.js:657
+#: assets/js/uip/blocks/dynamic/loader.js:743
+#: assets/js/uip/blocks/dynamic/loader.js:807
+#: assets/js/uip/blocks/dynamic/loader.js:886
+#: assets/js/uip/blocks/dynamic/loader.js:967
+#: assets/js/uip/blocks/elements/loader.js:88
+#: assets/js/uip/blocks/elements/loader.js:159
+#: assets/js/uip/blocks/elements/loader.js:206
+#: assets/js/uip/blocks/elements/loader.js:253
+#: assets/js/uip/blocks/elements/loader.js:340
+#: assets/js/uip/blocks/elements/loader.js:387
+#: assets/js/uip/blocks/elements/loader.js:462
+#: assets/js/uip/blocks/elements/loader.js:546
+#: assets/js/uip/blocks/elements/loader.js:644
+#: assets/js/uip/blocks/elements/loader.js:704
+#: assets/js/uip/blocks/elements/loader.js:789
+#: assets/js/uip/blocks/elements/loader.js:865
+#: assets/js/uip/blocks/inputs/loader.js:82
+#: assets/js/uip/blocks/inputs/loader.js:202
+#: assets/js/uip/blocks/inputs/loader.js:290
+#: assets/js/uip/blocks/inputs/loader.js:378
+#: assets/js/uip/blocks/layout/loader.js:94
+#: assets/js/uip/blocks/layout/loader.js:229
+#: assets/js/uip/blocks/layout/loader.js:287
+#: assets/js/uip/blocks/layout/loader.js:418
+#: assets/js/uip/uibuilder/global-settings-groups.js:8
+#: assets/js/uip/uibuilder/template-settings-groups.js:8
+#: assets/js/uip/uibuilder/uip-block-actions.js:27
+#: assets/js/uip/uibuilder/uip-block-settings.js:72
+#: assets/js/uip/uibuilder/uip-builder-settings.js:38
+#, fuzzy
+msgid "Advanced"
+msgstr "Avancé"
+
+#: assets/js/uip/blocks/dynamic/loader.js:213
+#, fuzzy
+msgid "Page content"
+msgstr "Contenu de la page"
+
+#: assets/js/uip/blocks/dynamic/loader.js:215
+#, fuzzy
+msgid "Outputs the page content block"
+msgstr "Produit le bloc de contenu de la page"
+
+#: assets/js/uip/blocks/dynamic/loader.js:228
+#, fuzzy
+msgid "Hide screen options?"
+msgstr "Cacher les options de l'écran ?"
+
+#: assets/js/uip/blocks/dynamic/loader.js:229
+#, fuzzy
+msgid "Hide help tab?"
+msgstr "Masquer l'onglet d'aide ?"
+
+#: assets/js/uip/blocks/dynamic/loader.js:230
+#, fuzzy
+msgid "Disable theme?"
+msgstr "Désactiver le thème ?"
+
+#: assets/js/uip/blocks/dynamic/loader.js:231
+#, fuzzy
+msgid "Disable fullscreen option?"
+msgstr "Désactiver l'option plein écran ?"
+
+#: assets/js/uip/blocks/dynamic/loader.js:232
+#, fuzzy
+msgid "Hide plugin notices?"
+msgstr "Masquer les avis sur les plugins ?"
+
+#: assets/js/uip/blocks/dynamic/loader.js:233
+#, fuzzy
+msgid "Login redirect - homepage"
+msgstr "Redirection de la connexion - page d'accueil"
+
+#: assets/js/uip/blocks/dynamic/loader.js:255
+#, fuzzy
+msgid "Content frame"
+msgstr "Cadre de contenu"
+
+#: assets/js/uip/blocks/dynamic/loader.js:265
+#, fuzzy
+msgid "Frame toolbar"
+msgstr "Barre d'outils du cadre"
+
+#: assets/js/uip/blocks/dynamic/loader.js:274
+#, fuzzy
+msgid "Loading bar track"
+msgstr "Rail de la barre de chargement"
+
+#: assets/js/uip/blocks/dynamic/loader.js:283
+#, fuzzy
+msgid "Loading bar"
+msgstr "Barre de chargement"
+
+#: assets/js/uip/blocks/dynamic/loader.js:304
+#, fuzzy
+msgid "Posts table"
+msgstr "Table des postes"
+
+#: assets/js/uip/blocks/dynamic/loader.js:306
+#: assets/js/uip/blocks/dynamic/loader.js:480
+#, fuzzy
+msgid "Create a list of recent posts"
+msgstr "Créez une liste des messages récents"
+
+#: assets/js/uip/blocks/dynamic/loader.js:319
+#: assets/js/uip/blocks/dynamic/loader.js:493
+#, fuzzy
+msgid "Post types"
+msgstr "Modifier cet article"
+
+#: assets/js/uip/blocks/dynamic/loader.js:320
+#, fuzzy
+msgid "Columns"
+msgstr "Colonnes"
+
+#: assets/js/uip/blocks/dynamic/loader.js:324
+#, fuzzy
+msgid "Actions enabled"
+msgstr "Actions activées"
+
+#: assets/js/uip/blocks/dynamic/loader.js:342
+#: assets/js/uip/blocks/dynamic/loader.js:494
+#, fuzzy
+msgid "Posts per page"
+msgstr "Articles par page"
+
+#: assets/js/uip/blocks/dynamic/loader.js:343
+#, fuzzy
+msgid "Only show users own content?"
+msgstr "Afficher uniquement le contenu des utilisateurs ?"
+
+#: assets/js/uip/blocks/dynamic/loader.js:344
+#, fuzzy
+msgid "Hide search? "
+msgstr "Cacher la barre de recherches"
+
+#: assets/js/uip/blocks/dynamic/loader.js:366
+#: assets/js/uip/blocks/dynamic/loader.js:573
+#, fuzzy
+msgid "Search"
+msgstr "Rechercher"
+
+#: assets/js/uip/blocks/dynamic/loader.js:375
+#, fuzzy
+msgid "Table styles"
+msgstr "Styles de table"
+
+#: assets/js/uip/blocks/dynamic/loader.js:384
+#, fuzzy
+msgid "Table head"
+msgstr "Tête de table"
+
+#: assets/js/uip/blocks/dynamic/loader.js:393
+#, fuzzy
+msgid "Table head cell"
+msgstr "Cellule de tête de table"
+
+#: assets/js/uip/blocks/dynamic/loader.js:402
+#, fuzzy
+msgid "Table row"
+msgstr "Ligne du tableau"
+
+#: assets/js/uip/blocks/dynamic/loader.js:411
+#, fuzzy
+msgid "Table cell"
+msgstr "Cellule du tableau"
+
+#: assets/js/uip/blocks/dynamic/loader.js:420
+#, fuzzy
+msgid "Grid item"
+msgstr "Élément de la grille"
+
+#: assets/js/uip/blocks/dynamic/loader.js:430
+#, fuzzy
+msgid "Grid item title"
+msgstr "Titre de l'élément de la grille"
+
+#: assets/js/uip/blocks/dynamic/loader.js:440
+#: assets/js/uip/blocks/dynamic/loader.js:544
+#: assets/js/uip/blocks/dynamic/loader.js:648
+#, fuzzy
+msgid "Pagination buttons"
+msgstr "Boutons de pagination"
+
+#: assets/js/uip/blocks/dynamic/loader.js:449
+#: assets/js/uip/blocks/dynamic/loader.js:553
+#, fuzzy
+msgid "Post type label"
+msgstr "Label de type de poste"
+
+#: assets/js/uip/blocks/dynamic/loader.js:458
+#, fuzzy
+msgid "Table post count"
+msgstr "Nombre de messages du tableau"
+
+#: assets/js/uip/blocks/dynamic/loader.js:478
+#, fuzzy
+msgid "Recent posts"
+msgstr "Articles récents"
+
+#: assets/js/uip/blocks/dynamic/loader.js:495
+#: assets/js/uip/blocks/dynamic/loader.js:588
+#, fuzzy
+msgid "Only show users own content? "
+msgstr "Afficher uniquement le contenu des utilisateurs ?"
+
+#: assets/js/uip/blocks/dynamic/loader.js:517
+#, fuzzy
+msgid "Posts list"
+msgstr "Liste des articles"
+
+#: assets/js/uip/blocks/dynamic/loader.js:526
+#: assets/js/uip/blocks/elements/loader.js:626
+#, fuzzy
+msgid "Item title"
+msgstr "Titre de l’élément"
+
+#: assets/js/uip/blocks/dynamic/loader.js:535
+#, fuzzy
+msgid "Item meta"
+msgstr "Article méta"
+
+#: assets/js/uip/blocks/dynamic/loader.js:575
+#, fuzzy
+msgid "Outputs a search block that queries your sites content"
+msgstr "Produit un bloc de recherche qui interroge le contenu de votre site"
+
+#: assets/js/uip/blocks/dynamic/loader.js:589
+#, fuzzy
+msgid "Post types available in search "
+msgstr "Types de post disponible dans Rechercher"
+
+#: assets/js/uip/blocks/dynamic/loader.js:612
+#, fuzzy
+msgid "Search style"
+msgstr "Style de recherche"
+
+#: assets/js/uip/blocks/dynamic/loader.js:621
+#, fuzzy
+msgid "Search results area"
+msgstr "Zone de résultats de recherche"
+
+#: assets/js/uip/blocks/dynamic/loader.js:630
+#, fuzzy
+msgid "Search item title"
+msgstr "Rechercher le titre de l'article"
+
+#: assets/js/uip/blocks/dynamic/loader.js:639
+#, fuzzy
+msgid "Search item meta"
+msgstr "Méta élément de recherche"
+
+#: assets/js/uip/blocks/dynamic/loader.js:669
+#, fuzzy
+msgid "Toolbar"
+msgstr "Barre d’outils"
+
+#: assets/js/uip/blocks/dynamic/loader.js:671
+#, fuzzy
+msgid "Outputs default toolbar items"
+msgstr "Affiche les éléments par défaut de la barre d'outils"
+
+#: assets/js/uip/blocks/dynamic/loader.js:684
+#: assets/js/uip/options/uip-hidden-toolbar-items-select.js:13
+#, fuzzy
+msgid "Hidden toolbar items"
+msgstr "Éléments cachés de la barre d'outils"
+
+#: assets/js/uip/blocks/dynamic/loader.js:685
+#: assets/js/uip/blocks/dynamic/loader.js:716
+#, fuzzy
+msgid "Toolbar icons"
+msgstr "Icônes de la barre d'outils"
+
+#: assets/js/uip/blocks/dynamic/loader.js:707
+#, fuzzy
+msgid "Toolbar items"
+msgstr "Éléments de la barre d’outils"
+
+#: assets/js/uip/blocks/dynamic/loader.js:725
+#, fuzzy
+msgid "Submenu items"
+msgstr "Éléments de sous-menu"
+
+#: assets/js/uip/blocks/dynamic/loader.js:755
+#, fuzzy
+msgid "Bread crumbs"
+msgstr "Chapelure de pain"
+
+#: assets/js/uip/blocks/dynamic/loader.js:757
+#, fuzzy
+msgid "Shows the current page path (breadcrumbs)"
+msgstr "Montre le chemin de la page actuelle (fil d'Ariane)"
+
+#: assets/js/uip/blocks/dynamic/loader.js:769
+#: assets/js/uip/blocks/dynamic/loader.js:798
+#, fuzzy
+msgid "Icon separator"
+msgstr "Séparateur d'icônes"
+
+#: assets/js/uip/blocks/dynamic/loader.js:790
+#, fuzzy
+msgid "Breadcrumb item"
+msgstr "Élément du fil d'Ariane"
+
+#: assets/js/uip/blocks/dynamic/loader.js:819
+#, fuzzy
+msgid "Fullscreen toggle"
+msgstr "Basculement en plein écran"
+
+#: assets/js/uip/blocks/dynamic/loader.js:821
+#, fuzzy
+msgid ""
+"A customisable button that can toggle the fullscreen mode of the content "
+"frame"
+msgstr ""
+"Un bouton personnalisable permettant de basculer le mode plein écran du "
+"cadre de contenu"
+
+#: assets/js/uip/blocks/dynamic/loader.js:837
+#: assets/js/uip/blocks/dynamic/loader.js:916
+#: assets/js/uip/blocks/elements/loader.js:29
+#: assets/js/uip/blocks/elements/loader.js:819
+#, fuzzy
+msgid "Button text"
+msgstr "Texte du bouton"
+
+#: assets/js/uip/blocks/dynamic/loader.js:839
+#: assets/js/uip/options/uip-code-editor.js:17
+#, fuzzy
+msgid "Fullscreen"
+msgstr "Plein écran"
+
+#: assets/js/uip/blocks/dynamic/loader.js:845
+#: assets/js/uip/blocks/dynamic/loader.js:926
+#: assets/js/uip/blocks/elements/loader.js:38
+#: assets/js/uip/blocks/elements/loader.js:61
+#: assets/js/uip/blocks/elements/loader.js:127
+#: assets/js/uip/blocks/elements/loader.js:150
+#: assets/js/uip/blocks/elements/loader.js:281
+#: assets/js/uip/blocks/elements/loader.js:352
+#: assets/js/uip/blocks/elements/loader.js:366
+#: assets/js/uip/blocks/elements/loader.js:824
+#: assets/js/uip/blocks/layout/loader.js:132
+#: assets/js/uip/blocks/layout/loader.js:326
+#, fuzzy
+msgid "Icon"
+msgstr "Icône"
+
+#: assets/js/uip/blocks/dynamic/loader.js:846
+#: assets/js/uip/blocks/dynamic/loader.js:927
+#: assets/js/uip/blocks/elements/loader.js:39
+#: assets/js/uip/blocks/elements/loader.js:128
+#: assets/js/uip/blocks/elements/loader.js:825
+#: assets/js/uip/blocks/layout/loader.js:133
+#: assets/js/uip/blocks/layout/loader.js:327
+#, fuzzy
+msgid "Icon position"
+msgstr "Position Icône"
+
+#: assets/js/uip/blocks/dynamic/loader.js:868
+#: assets/js/uip/blocks/dynamic/loader.js:949
+#: assets/js/uip/blocks/elements/loader.js:70
+#: assets/js/uip/blocks/elements/loader.js:847
+#, fuzzy
+msgid "Hover styles"
+msgstr "Styles de survol"
+
+#: assets/js/uip/blocks/dynamic/loader.js:877
+#: assets/js/uip/blocks/dynamic/loader.js:958
+#: assets/js/uip/blocks/elements/loader.js:79
+#: assets/js/uip/blocks/elements/loader.js:856
+#, fuzzy
+msgid "Active styles"
+msgstr "Styles actifs"
+
+#: assets/js/uip/blocks/dynamic/loader.js:898
+#, fuzzy
+msgid "Open without frame"
+msgstr "Ouvert sans cadre"
+
+#: assets/js/uip/blocks/dynamic/loader.js:900
+#, fuzzy
+msgid ""
+"This will open the current page outside the current frame and optionally "
+"without UiPress all together"
+msgstr ""
+"Cela ouvrira la page actuelle en dehors du cadre actuel et éventuellement "
+"sans UiPress"
+
+#: assets/js/uip/blocks/dynamic/loader.js:918
+#, fuzzy
+msgid "Open outside frame"
+msgstr "Ouvrir le cadre extérieur"
+
+#: assets/js/uip/blocks/dynamic/loader.js:924
+#, fuzzy
+msgid "Open in new tab"
+msgstr "Ouvrir dans un nouvel onglet"
+
+#: assets/js/uip/blocks/dynamic/loader.js:925
+#, fuzzy
+msgid "Disable UiPress on page"
+msgstr "Désactiver UiPress à la page"
+
+#: assets/js/uip/blocks/dynamic/loader.js:976
+#, fuzzy
+msgid "Media library"
+msgstr "Bibliothèque de médias"
+
+#: assets/js/uip/blocks/dynamic/loader.js:978
+#, fuzzy
+msgid "Outputs a media library, with upload, delete and folder features"
+msgstr ""
+"Crée une bibliothèque de médias, avec des fonctions de téléchargement, de "
+"suppression et de classement"
+
+#: assets/js/uip/blocks/dynamic/loader.js:985
+#, fuzzy
+msgid "Plugin updates"
+msgstr "Mises à jour de l’extension"
+
+#: assets/js/uip/blocks/dynamic/loader.js:987
+#, fuzzy
+msgid "Outputs a list of available plugin and allows you update from the block"
+msgstr ""
+"Affiche une liste des plugins disponibles et vous permet de les mettre à "
+"jour à partir du bloc"
+
+#: assets/js/uip/blocks/dynamic/loader.js:993
+#, fuzzy
+msgid "Plugin search"
+msgstr "Recherche de plugins"
+
+#: assets/js/uip/blocks/dynamic/loader.js:995
+#, fuzzy
+msgid ""
+"Search the plugin directory with quick filters, discover new plugins and "
+"install all from one block"
+msgstr ""
+"Effectuez des recherches dans le répertoire des plugins à l'aide de filtres "
+"rapides, découvrez de nouveaux plugins et installez-les tous à partir d'un "
+"seul bloc"
+
+#: assets/js/uip/blocks/dynamic/loader.js:1001
+#, fuzzy
+msgid "Grouped Date range"
+msgstr "Groupé Plage de dates"
+
+#: assets/js/uip/blocks/dynamic/loader.js:1003
+#, fuzzy
+msgid ""
+"Outputs a grouped date picker. This date picker is used for controlling it's "
+"siblings range such as analytic blocks."
+msgstr ""
+"Produit un sélecteur de date groupé. Ce sélecteur de date est utilisé pour "
+"contrôler l'étendue de ses frères et sœurs, comme les blocs analytiques."
+
+#: assets/js/uip/blocks/dynamic/loader.js:1009
+#, fuzzy
+msgid "User meta"
+msgstr "Nom d'utilisateur"
+
+#: assets/js/uip/blocks/dynamic/loader.js:1011
+#, fuzzy
+msgid "Outputs selected user meta, either as a string or an list of values"
+msgstr ""
+"Produit les méta utilisateurs sélectionnés, sous forme de chaîne de "
+"caractères ou de liste de valeurs"
+
+#: assets/js/uip/blocks/dynamic/loader.js:1017
+#, fuzzy
+msgid "Content navigator"
+msgstr "Navigateur de contenu"
+
+#: assets/js/uip/blocks/dynamic/loader.js:1019
+#, fuzzy
+msgid ""
+"Creates a navigatable file tree of all your site content like posts, pages "
+"and media. Allows for creation of new folders and organisation of content"
+msgstr ""
+"Crée une arborescence navigable de tous les contenus de votre site "
+"(articles, pages et médias). Permet de créer de nouveaux dossiers et "
+"d'organiser le contenu"
+
+#: assets/js/uip/blocks/dynamic/posts-table.js:25
+#: assets/js/uip/blocks/dynamic/recent-posts.js:20
+#, fuzzy
+msgid "Nothing posts found"
+msgstr "Aucun poste trouvé"
+
+#: assets/js/uip/blocks/dynamic/posts-table.js:26
+#: assets/js/uip/blocks/dynamic/recent-posts.js:21
+#, fuzzy
+msgid "By"
+msgstr "Par"
+
+#: assets/js/uip/blocks/dynamic/posts-table.js:27
+#, fuzzy
+msgid "items"
+msgstr "éléments"
+
+#: assets/js/uip/blocks/dynamic/posts-table.js:28
+#: assets/js/uip/options/uip-multi-select.js:15
+#, fuzzy
+msgid "Search items"
+msgstr "Rechercher un élément"
+
+#: assets/js/uip/blocks/dynamic/posts-table.js:29
+#: assets/js/uip/classes/uip-media-browser.js:38
+#, fuzzy
+msgid "Grid view"
+msgstr "Vue grille"
+
+#: assets/js/uip/blocks/dynamic/posts-table.js:30
+#: assets/js/uip/classes/uip-media-browser.js:39
+#: assets/js/uip/classes/uip-media-browser.js:40
+#, fuzzy
+msgid "List view"
+msgstr "Vue liste"
+
+#: assets/js/uip/blocks/dynamic/search.js:19
+#, fuzzy
+msgid "Search content"
+msgstr "Espace de travail mobile"
+
+#: assets/js/uip/blocks/dynamic/search.js:20
+#, fuzzy
+msgid "Nothing found for query"
+msgstr "Rien trouvé pour la requête"
+
+#: assets/js/uip/blocks/dynamic/search.js:21
+#, fuzzy
+msgid "by"
+msgstr "par"
+
+#: assets/js/uip/blocks/dynamic/search.js:22
+#, fuzzy
+msgid "found"
+msgstr "trouvé"
+
+#: assets/js/uip/blocks/dynamic/search.js:26
+#, fuzzy
+msgid "Copy url"
+msgstr "Copier l'url"
+
+#: assets/js/uip/blocks/elements/exit-to-dashboard.js:61
+#: assets/js/uip/classes/uip-media-browser.js:411
+#: assets/js/uip/classes/uip.js:292
+#: assets/js/uip/uibuilder/uip-builder-framework.js:351
+#, fuzzy
+msgid "Are you sure?"
+msgstr "Êtes-vous sûr ?"
+
+#: assets/js/uip/blocks/elements/exit-to-dashboard.js:61
+#, fuzzy
+msgid "This will remove the current UI and revert to the default admin page"
+msgstr ""
+"Cela supprimera l'interface utilisateur actuelle et rétablira la page "
+"d'administration par défaut"
+
+#: assets/js/uip/blocks/elements/loader.js:11
+#, fuzzy
+msgid "Button"
+msgstr "Bouton"
+
+#: assets/js/uip/blocks/elements/loader.js:13
+#, fuzzy
+msgid "Creates a button link"
+msgstr "Crée un lien vers un bouton"
+
+#: assets/js/uip/blocks/elements/loader.js:31
+#: assets/js/uip/blocks/layout/loader.js:126
+#: assets/js/uip/blocks/layout/loader.js:320
+#: assets/js/uip/options/settings-loader.js:15
+#, fuzzy
+msgid "Press me"
+msgstr "Pressez-moi"
+
+#: assets/js/uip/blocks/elements/loader.js:37
+#, fuzzy
+msgid "Link"
+msgstr "Lien"
+
+#: assets/js/uip/blocks/elements/loader.js:40
+#, fuzzy
+msgid "JavaScript on click"
+msgstr "JavaScript au clic"
+
+#: assets/js/uip/blocks/elements/loader.js:100
+#, fuzzy
+msgid "Heading"
+msgstr "En-tête"
+
+#: assets/js/uip/blocks/elements/loader.js:102
+#, fuzzy
+msgid "Creates a heading block"
+msgstr "Crée un bloc d'en-tête"
+
+#: assets/js/uip/blocks/elements/loader.js:118
+#: assets/js/uip/blocks/elements/loader.js:120
+#, fuzzy
+msgid "Heading text"
+msgstr "Texte du titre"
+
+#: assets/js/uip/blocks/elements/loader.js:126
+#, fuzzy
+msgid "Heading type"
+msgstr "Type d’en-tête"
+
+#: assets/js/uip/blocks/elements/loader.js:171
+#, fuzzy
+msgid "Paragraph"
+msgstr "Paragraphe"
+
+#: assets/js/uip/blocks/elements/loader.js:173
+#, fuzzy
+msgid "Creates a paragraph block"
+msgstr "Crée un bloc de paragraphes"
+
+#: assets/js/uip/blocks/elements/loader.js:185
+#, fuzzy
+msgid "Paragraph content"
+msgstr "Contenu du paragraphe"
+
+#: assets/js/uip/blocks/elements/loader.js:218
+#: assets/js/uip/blocks/elements/loader.js:232
+#, fuzzy
+msgid "Image"
+msgstr "Image"
+
+#: assets/js/uip/blocks/elements/loader.js:220
+#, fuzzy
+msgid "Creates a image block"
+msgstr "Crée un bloc d'images"
+
+#: assets/js/uip/blocks/elements/loader.js:265
+#, fuzzy
+msgid "Accordion"
+msgstr "Accordéon"
+
+#: assets/js/uip/blocks/elements/loader.js:267
+#, fuzzy
+msgid "Creates a accordion block"
+msgstr "Crée un bloc accordéon"
+
+#: assets/js/uip/blocks/elements/loader.js:285
+#: assets/js/uip/blocks/elements/loader.js:287
+#, fuzzy
+msgid "Accordion title"
+msgstr "Titre Accordéon"
+
+#: assets/js/uip/blocks/elements/loader.js:314
+#, fuzzy
+msgid "Content align"
+msgstr "Alignement du contenu"
+
+#: assets/js/uip/blocks/elements/loader.js:322
+#, fuzzy
+msgid "Content style"
+msgstr "Style du contenu"
+
+#: assets/js/uip/blocks/elements/loader.js:331
+#, fuzzy
+msgid "Chevron style"
+msgstr "Style chevron"
+
+#: assets/js/uip/blocks/elements/loader.js:354
+#, fuzzy
+msgid "Creates a icon block"
+msgstr "Crée un bloc d'icônes"
+
+#: assets/js/uip/blocks/elements/loader.js:399
+#: assets/js/uip/uibuilder/global-settings-groups.js:188
+#: assets/js/uip/uibuilder/uip-block-settings.js:48
+#: assets/js/uip/uibuilder/uip-ui-preview.js:32
+#, fuzzy
+msgid "Dark mode"
+msgstr "Dark mode"
+
+#: assets/js/uip/blocks/elements/loader.js:401
+#, fuzzy
+msgid "Outputs a toggle for switiching between light and dark modes"
+msgstr "Sortie d'une bascule permettant de passer du mode clair au mode foncé"
+
+#: assets/js/uip/blocks/elements/loader.js:413
+#, fuzzy
+msgid "Let dark mode update based on OS theme?"
+msgstr ""
+"Laisser le mode sombre se mettre à jour en fonction du thème du système "
+"d'exploitation ?"
+
+#: assets/js/uip/blocks/elements/loader.js:435
+#, fuzzy
+msgid "Inactive toggle"
+msgstr "Inactif à bascule"
+
+#: assets/js/uip/blocks/elements/loader.js:444
+#, fuzzy
+msgid "Active toggle"
+msgstr "Active toggle"
+
+#: assets/js/uip/blocks/elements/loader.js:453
+#, fuzzy
+msgid "Track"
+msgstr "Suivre"
+
+#: assets/js/uip/blocks/elements/loader.js:474
+#: assets/js/uip/blocks/elements/loader.js:489
+#: assets/js/uip/blocks/elements/loader.js:594
+#, fuzzy
+msgid "Tabs"
+msgstr "Onglets"
+
+#: assets/js/uip/blocks/elements/loader.js:476
+#, fuzzy
+msgid "Create a tabbed navigation with different styles"
+msgstr "Créer une navigation par onglets avec différents styles"
+
+#: assets/js/uip/blocks/elements/loader.js:510
+#, fuzzy
+msgid "Tab item"
+msgstr "Élément de l’onglet"
+
+#: assets/js/uip/blocks/elements/loader.js:519
+#, fuzzy
+msgid "Tab item hover"
+msgstr "Survol de l'onglet"
+
+#: assets/js/uip/blocks/elements/loader.js:528
+#, fuzzy
+msgid "Tab item active"
+msgstr "Élément d'onglet actif"
+
+#: assets/js/uip/blocks/elements/loader.js:537
+#, fuzzy
+msgid "Tab content"
+msgstr "Contenu de l’onglet"
+
+#: assets/js/uip/blocks/elements/loader.js:558
+#, fuzzy
+msgid "To do list"
+msgstr "Liste des choses à faire"
+
+#: assets/js/uip/blocks/elements/loader.js:560
+#, fuzzy
+msgid "Outputs a customisable to do list"
+msgstr "Produit une liste de choses à faire personnalisable"
+
+#: assets/js/uip/blocks/elements/loader.js:586
+#, fuzzy
+msgid "Add todo button"
+msgstr "Ajouter un bouton todo"
+
+#: assets/js/uip/blocks/elements/loader.js:602
+#: assets/js/uip/options/settings-loader.js:627
+#: assets/js/uip/options/uip-tab-builder.js:35
+#, fuzzy
+msgid "Tab"
+msgstr "Onglet"
+
+#: assets/js/uip/blocks/elements/loader.js:610
+#, fuzzy
+msgid "Active tab"
+msgstr "Onglet actif"
+
+#: assets/js/uip/blocks/elements/loader.js:618
+#, fuzzy
+msgid "List area"
+msgstr "Zone de liste"
+
+#: assets/js/uip/blocks/elements/loader.js:634
+#, fuzzy
+msgid "Item description"
+msgstr "Description de l'élément"
+
+#: assets/js/uip/blocks/elements/loader.js:656
+#: assets/js/uip/blocks/elements/loader.js:694
+#, fuzzy
+msgid "Video"
+msgstr "Vidéo"
+
+#: assets/js/uip/blocks/elements/loader.js:658
+#, fuzzy
+msgid "Outputs a video block. Can be a direct URL, media library link or embed"
+msgstr ""
+"Produit un bloc vidéo. Il peut s'agir d'une URL directe, d'un lien vers la "
+"médiathèque ou d'un lien intégré"
+
+#: assets/js/uip/blocks/elements/loader.js:671
+#, fuzzy
+msgid "Video URL"
+msgstr "URL de la vidéo"
+
+#: assets/js/uip/blocks/elements/loader.js:672
+#, fuzzy
+msgid "Video embed"
+msgstr "Intégrer de la vidéo"
+
+#: assets/js/uip/blocks/elements/loader.js:716
+#: assets/js/uip/blocks/elements/loader.js:734
+#: assets/js/uip/blocks/elements/loader.js:770
+#, fuzzy
+msgid "Quote"
+msgstr "Citation"
+
+#: assets/js/uip/blocks/elements/loader.js:718
+#, fuzzy
+msgid "Displays a quote in a decorative way"
+msgstr "Affiche une citation de manière décorative"
+
+#: assets/js/uip/blocks/elements/loader.js:736
+#, fuzzy
+msgid ""
+"When the power of love overcomes the love of power, the world will know peace"
+msgstr ""
+"Lorsque le pouvoir de l'amour vaincra l'amour du pouvoir, le monde connaîtra "
+"la paix"
+
+#: assets/js/uip/blocks/elements/loader.js:742
+#: assets/js/uip/blocks/elements/loader.js:779
+#, fuzzy
+msgid "Quote meta"
+msgstr "Citation méta"
+
+#: assets/js/uip/blocks/elements/loader.js:744
+#, fuzzy
+msgid "Jimi Hendrix"
+msgstr "Jimi Hendrix"
+
+#: assets/js/uip/blocks/elements/loader.js:748
+#: assets/js/uip/blocks/inputs/loader.js:162
+#: assets/js/uip/blocks/inputs/loader.js:250
+#: assets/js/uip/blocks/inputs/loader.js:338
+#, fuzzy
+msgid "Required field"
+msgstr "Champ obligatoire"
+
+#: assets/js/uip/blocks/elements/loader.js:801
+#, fuzzy
+msgid "Exit to dashboard"
+msgstr "Quitter le Tableau de Bord"
+
+#: assets/js/uip/blocks/elements/loader.js:803
+#, fuzzy
+msgid ""
+"This button is designed for admins with active ui templates. When clicked it "
+"will remove the current UI layer and display the default WordPress admin page"
+msgstr ""
+"Ce bouton est conçu pour les administrateurs avec des modèles d'interface "
+"utilisateur actifs. Lorsqu'il est cliqué, il supprime la couche d'interface "
+"utilisateur actuelle et affiche la page d'administration WordPress par défaut"
+
+#: assets/js/uip/blocks/elements/loader.js:821
+#, fuzzy
+msgid "Exit to admin"
+msgstr "Sortie vers l'administration"
+
+#: assets/js/uip/blocks/elements/loader.js:873
+#, fuzzy
+msgid "iFrame"
+msgstr "iFrame"
+
+#: assets/js/uip/blocks/elements/loader.js:875
+#, fuzzy
+msgid "Outputs a iframe block"
+msgstr "Produit un bloc iframe"
+
+#: assets/js/uip/blocks/elements/loader.js:882
+#, fuzzy
+msgid "HTML"
+msgstr "HTML"
+
+#: assets/js/uip/blocks/elements/loader.js:884
+#, fuzzy
+msgid "This block allows you to output your own HTML into the template"
+msgstr "Ce bloc vous permet d'insérer votre propre HTML dans le modèle"
+
+#: assets/js/uip/blocks/elements/loader.js:890
+#, fuzzy
+msgid "Icon list"
+msgstr "Liste d’icônes"
+
+#: assets/js/uip/blocks/elements/loader.js:892
+#, fuzzy
+msgid "Creates a list with icons"
+msgstr "Crée une liste avec des icônes"
+
+#: assets/js/uip/blocks/elements/loader.js:898
+#, fuzzy
+msgid "Shortcode"
+msgstr "Shortcode (Code court)"
+
+#: assets/js/uip/blocks/elements/loader.js:900
+#, fuzzy
+msgid "This block allows you to output custom shortcodes into the template"
+msgstr ""
+"Ce bloc vous permet d'insérer des shortcodes personnalisés dans le modèle"
+
+#: assets/js/uip/blocks/elements/todo-list.js:15
+#, fuzzy
+msgid "Add todo"
+msgstr "Ajouter une chose à faire"
+
+#: assets/js/uip/blocks/elements/todo-list.js:16
+#, fuzzy
+msgid "What would you like to do?"
+msgstr "Qu'est-ce que vous aimeriez faire ?"
+
+#: assets/js/uip/blocks/elements/todo-list.js:18
+#, fuzzy
+msgid "Add a description..."
+msgstr "Ajouter une description..."
+
+#: assets/js/uip/blocks/elements/todo-list.js:28
+#, fuzzy
+msgid "Todo"
+msgstr "À faire"
+
+#: assets/js/uip/blocks/elements/todo-list.js:32
+#, fuzzy
+msgid "Completed"
+msgstr "Terminé"
+
+#: assets/js/uip/blocks/inputs/form-block.js:18
+#, fuzzy
+msgid "Submit"
+msgstr "Envoyer"
+
+#: assets/js/uip/blocks/inputs/form-block.js:158
+#: assets/js/uip/blocks/inputs/form-block.js:167
+#: assets/js/uip/blocks/inputs/form-block.js:176
+#: assets/js/uip/blocks/inputs/form-block.js:185
+#: assets/js/uip/blocks/inputs/form-block.js:190
+#, fuzzy
+msgid "Configuration error"
+msgstr "Erreur de configuration"
+
+#: assets/js/uip/blocks/inputs/form-block.js:158
+#, fuzzy
+msgid "No php function supplied to send form data to"
+msgstr ""
+"Aucune fonction php n'est fournie pour envoyer les données du formulaire"
+
+#: assets/js/uip/blocks/inputs/form-block.js:167
+#, fuzzy
+msgid "No email supplied to send form data to"
+msgstr "Pas d'email fourni pour envoyer les données du formulaire"
+
+#: assets/js/uip/blocks/inputs/form-block.js:176
+#, fuzzy
+msgid "No site option name supplied to save as"
+msgstr "Aucun nom d'option de site n'a été fourni pour l'enregistrement"
+
+#: assets/js/uip/blocks/inputs/form-block.js:185
+#, fuzzy
+msgid "You have not specified how to save the data to the user meta"
+msgstr ""
+"Vous n'avez pas précisé comment sauvegarder les données dans la méta "
+"utilisateur"
+
+#: assets/js/uip/blocks/inputs/form-block.js:190
+#, fuzzy
+msgid "You need to specifiy a meta key to save the meta data to"
+msgstr "Vous devez spécifier une clé méta pour sauvegarder les méta-données"
+
+#: assets/js/uip/blocks/inputs/loader.js:12
+#, fuzzy
+msgid "Form elements can be dragged into this block to create custom forms"
+msgstr ""
+"Les éléments de formulaire peuvent être glissés dans ce bloc pour créer des "
+"formulaires personnalisés"
+
+#: assets/js/uip/blocks/inputs/loader.js:29
+#, fuzzy
+msgid "Button submit text"
+msgstr "Texte d'envoi du bouton"
+
+#: assets/js/uip/blocks/inputs/loader.js:31
+#, fuzzy
+msgid "Send"
+msgstr "Envoyer"
+
+#: assets/js/uip/blocks/inputs/loader.js:39
+#, fuzzy
+msgid "Submit action"
+msgstr "Soumettre une action"
+
+#: assets/js/uip/blocks/inputs/loader.js:41
+#, fuzzy
+msgid "Prefill form data"
+msgstr "Remplir les données du formulaire"
+
+#: assets/js/uip/blocks/inputs/loader.js:42
+#, fuzzy
+msgid "Success message"
+msgstr "Message de réussite"
+
+#: assets/js/uip/blocks/inputs/loader.js:42
+#, fuzzy
+msgid "Form sent successfully!"
+msgstr "Formulaire envoyé avec succès !"
+
+#: assets/js/uip/blocks/inputs/loader.js:64
+#, fuzzy
+msgid "Form area"
+msgstr "Zone de formulaire"
+
+#: assets/js/uip/blocks/inputs/loader.js:73
+#, fuzzy
+msgid "Submit button"
+msgstr "Bouton Envoyer"
+
+#: assets/js/uip/blocks/inputs/loader.js:94
+#: assets/js/uip/blocks/inputs/loader.js:114
+#: assets/js/uip/blocks/inputs/loader.js:233
+#, fuzzy
+msgid "Text input"
+msgstr "Entrée de texte"
+
+#: assets/js/uip/blocks/inputs/loader.js:96
+#, fuzzy
+msgid "A simple text input for use with the form block"
+msgstr "Une simple entrée de texte à utiliser avec le bloc de formulaire"
+
+#: assets/js/uip/blocks/inputs/loader.js:112
+#: assets/js/uip/blocks/inputs/loader.js:193
+#: assets/js/uip/blocks/inputs/loader.js:231
+#: assets/js/uip/blocks/inputs/loader.js:281
+#: assets/js/uip/blocks/inputs/loader.js:320
+#: assets/js/uip/blocks/inputs/loader.js:369
+#: assets/js/uip/options/uip-select-option-builder.js:13
+#, fuzzy
+msgid "Label"
+msgstr "Label"
+
+#: assets/js/uip/blocks/inputs/loader.js:120
+#: assets/js/uip/blocks/inputs/loader.js:239
+#: assets/js/uip/blocks/inputs/loader.js:328
+#: assets/js/uip/options/uip-submit-action.js:53
+#, fuzzy
+msgid "Meta key"
+msgstr "Touche Meta"
+
+#: assets/js/uip/blocks/inputs/loader.js:126
+#: assets/js/uip/blocks/inputs/loader.js:245
+#, fuzzy
+msgid "Placeholder"
+msgstr "Etiquette"
+
+#: assets/js/uip/blocks/inputs/loader.js:128
+#: assets/js/uip/blocks/inputs/loader.js:247
+#, fuzzy
+msgid "Placeholder text..."
+msgstr "Texte de remplacement..."
+
+#: assets/js/uip/blocks/inputs/loader.js:134
+#, fuzzy
+msgid "Inut type"
+msgstr "Type d'Inut"
+
+#: assets/js/uip/blocks/inputs/loader.js:140
+#, fuzzy
+msgid "Text"
+msgstr "Texte"
+
+#: assets/js/uip/blocks/inputs/loader.js:144
+#, fuzzy
+msgid "Number"
+msgstr "Nombre"
+
+#: assets/js/uip/blocks/inputs/loader.js:148
+#: assets/js/uip/options/uip-submit-action.js:13
+#, fuzzy
+msgid "Email"
+msgstr "E-mail"
+
+#: assets/js/uip/blocks/inputs/loader.js:152
+#, fuzzy
+msgid "Phone number"
+msgstr "Numéro de téléphone"
+
+#: assets/js/uip/blocks/inputs/loader.js:156
+#, fuzzy
+msgid "Password"
+msgstr "Mot de passe"
+
+#: assets/js/uip/blocks/inputs/loader.js:184
+#, fuzzy
+msgid "Input style"
+msgstr "Style d'entrée"
+
+#: assets/js/uip/blocks/inputs/loader.js:213
+#, fuzzy
+msgid "Text area"
+msgstr "Zone de texte"
+
+#: assets/js/uip/blocks/inputs/loader.js:215
+#: assets/js/uip/blocks/inputs/loader.js:304
+#, fuzzy
+msgid "A simple textarea input for use with the form block"
+msgstr "Une entrée textarea simple à utiliser avec le bloc de formulaire"
+
+#: assets/js/uip/blocks/inputs/loader.js:272
+#, fuzzy
+msgid "Textarea style"
+msgstr "Style de la zone de texte"
+
+#: assets/js/uip/blocks/inputs/loader.js:302
+#: assets/js/uip/blocks/inputs/loader.js:322
+#, fuzzy
+msgid "Select"
+msgstr "Sélectionner"
+
+#: assets/js/uip/blocks/inputs/loader.js:335
+#, fuzzy
+msgid "Select options"
+msgstr "Sélectionner les options"
+
+#: assets/js/uip/blocks/inputs/loader.js:360
+#, fuzzy
+msgid "Select style"
+msgstr "Veuillez choisir un style"
+
+#: assets/js/uip/blocks/inputs/loader.js:385
+#, fuzzy
+msgid "Radio"
+msgstr "Radio"
+
+#: assets/js/uip/blocks/inputs/loader.js:387
+#, fuzzy
+msgid "Outputs a radio type input"
+msgstr "Sort une entrée de type radio"
+
+#: assets/js/uip/blocks/inputs/loader.js:393
+#, fuzzy
+msgid "Checkbox"
+msgstr "Case à cocher"
+
+#: assets/js/uip/blocks/inputs/loader.js:395
+#, fuzzy
+msgid "Outputs a checkbox type input"
+msgstr "Produit une entrée de type case à cocher"
+
+#: assets/js/uip/blocks/inputs/loader.js:401
+#, fuzzy
+msgid "Image select"
+msgstr "Sélection de l'image"
+
+#: assets/js/uip/blocks/inputs/loader.js:403
+#, fuzzy
+msgid "Outputs a image select input"
+msgstr "Sortie d'une entrée de sélection d'image"
+
+#: assets/js/uip/blocks/inputs/loader.js:409
+#, fuzzy
+msgid "Date range"
+msgstr "Plage de dates"
+
+#: assets/js/uip/blocks/inputs/loader.js:411
+#, fuzzy
+msgid ""
+"Outputs a date range input. Can be a single date, date range, or a "
+"comparison date range"
+msgstr ""
+"Produit une entrée de plage de dates. Il peut s'agir d'une date unique, "
+"d'une plage de dates ou d'une plage de dates de comparaison"
+
+#: assets/js/uip/blocks/inputs/loader.js:417
+#, fuzzy
+msgid "Colour select"
+msgstr "Choix de la couleur"
+
+#: assets/js/uip/blocks/inputs/loader.js:419
+#, fuzzy
+msgid "Outputs a colour select input. For use with the form block"
+msgstr ""
+"Produit une entrée de sélection de couleur. À utiliser avec le bloc de "
+"formulaire"
+
+#: assets/js/uip/blocks/inputs/select-input.js:15
+#: assets/js/uip/blocks/inputs/text-area.js:14
+#: assets/js/uip/blocks/inputs/text-input.js:14
+#, fuzzy
+msgid "Input placeholder..."
+msgstr "Placeholder d'entrée..."
+
+#: assets/js/uip/blocks/layout/loader.js:10
+#, fuzzy
+msgid "Container"
+msgstr "Conteneur"
+
+#: assets/js/uip/blocks/layout/loader.js:12
+#, fuzzy
+msgid "Creates a container block with options for aligning content"
+msgstr "Crée un bloc conteneur avec des options d'alignement du contenu"
+
+#: assets/js/uip/blocks/layout/loader.js:26
+#, fuzzy
+msgid "Align self"
+msgstr "S'aligner"
+
+#: assets/js/uip/blocks/layout/loader.js:43 assets/js/uip/classes/uip.js:1922
+#, fuzzy
+msgid "Vertical align"
+msgstr "Alignement Vertical"
+
+#: assets/js/uip/blocks/layout/loader.js:44 assets/js/uip/classes/uip.js:1923
+#, fuzzy
+msgid "Horizontal align"
+msgstr "Alignement horizontal"
+
+#: assets/js/uip/blocks/layout/loader.js:45 assets/js/uip/classes/uip.js:1924
+#, fuzzy
+msgid "Grow or shrink"
+msgstr "Croissance ou décroissance"
+
+#: assets/js/uip/blocks/layout/loader.js:48 assets/js/uip/classes/uip.js:1927
+#, fuzzy
+msgid "Stretch direction"
+msgstr "Direction de l'étirement"
+
+#: assets/js/uip/blocks/layout/loader.js:53 assets/js/uip/classes/uip.js:1930
+#, fuzzy
+msgid "Container dimensions"
+msgstr "Dimensions du conteneur"
+
+#: assets/js/uip/blocks/layout/loader.js:61 assets/js/uip/classes/uip.js:1931
+#, fuzzy
+msgid "Overflow"
+msgstr "Débordement"
+
+#: assets/js/uip/blocks/layout/loader.js:67
+#: assets/js/uip/blocks/layout/loader.js:278
+#, fuzzy
+msgid "Content area"
+msgstr "Zone de contenu"
+
+#: assets/js/uip/blocks/layout/loader.js:105
+#, fuzzy
+msgid "Dropdown"
+msgstr "Liste déroulante"
+
+#: assets/js/uip/blocks/layout/loader.js:107
+#, fuzzy
+msgid "Creates a dropdown with a customisable trigger"
+msgstr "Crée une liste déroulante avec un déclencheur personnalisable"
+
+#: assets/js/uip/blocks/layout/loader.js:124
+#: assets/js/uip/blocks/layout/loader.js:318
+#, fuzzy
+msgid "Trigger text"
+msgstr "Texte de déclenchement"
+
+#: assets/js/uip/blocks/layout/loader.js:137
+#, fuzzy
+msgid "Dropdown position"
+msgstr "Position déroulante"
+
+#: assets/js/uip/blocks/layout/loader.js:142
+#: assets/js/uip/options/uip-border-designer.js:15
+#, fuzzy
+msgid "Bottom left"
+msgstr "En bas à gauche"
+
+#: assets/js/uip/blocks/layout/loader.js:146
+#: assets/js/uip/options/uip-border-designer.js:16
+#, fuzzy
+msgid "Bottom right"
+msgstr "En bas à droite"
+
+#: assets/js/uip/blocks/layout/loader.js:150
+#: assets/js/uip/options/uip-border-designer.js:13
+#, fuzzy
+msgid "Top left"
+msgstr "En haut à gauche"
+
+#: assets/js/uip/blocks/layout/loader.js:154
+#: assets/js/uip/options/uip-border-designer.js:14
+#, fuzzy
+msgid "Top right"
+msgstr "En haut à droite"
+
+#: assets/js/uip/blocks/layout/loader.js:158
+#: assets/js/uip/blocks/layout/loader.js:336
+#: assets/js/uip/options/settings-loader.js:733
+#: assets/js/uip/options/settings-loader.js:985
+#: assets/js/uip/options/uip-dynamic-input.js:21
+#: assets/js/uip/options/uip-margin.js:13
+#: assets/js/uip/options/uip-padding.js:13
+#: assets/js/uip/options/uip-position-designer.js:31
+#: assets/js/uip/uibuilder/global-settings-groups.js:126
+#: assets/js/uip/uibuilder/global-settings-groups.js:160
+#, fuzzy
+msgid "Left"
+msgstr "Gauche"
+
+#: assets/js/uip/blocks/layout/loader.js:162
+#: assets/js/uip/blocks/layout/loader.js:340
+#: assets/js/uip/options/settings-loader.js:743
+#: assets/js/uip/options/settings-loader.js:989
+#: assets/js/uip/options/uip-dynamic-input.js:26
+#: assets/js/uip/options/uip-margin.js:12
+#: assets/js/uip/options/uip-padding.js:12
+#: assets/js/uip/options/uip-position-designer.js:33
+#: assets/js/uip/uibuilder/global-settings-groups.js:134
+#: assets/js/uip/uibuilder/global-settings-groups.js:168
+#, fuzzy
+msgid "Right"
+msgstr "Droite"
+
+#: assets/js/uip/blocks/layout/loader.js:170
+#: assets/js/uip/blocks/layout/loader.js:368
+#, fuzzy
+msgid "Keyboard shortcut to open"
+msgstr "Raccourci clavier pour ouvrir"
+
+#: assets/js/uip/blocks/layout/loader.js:193
+#, fuzzy
+msgid "Trigger styles"
+msgstr "Styles de déclenchement"
+
+#: assets/js/uip/blocks/layout/loader.js:202
+#: assets/js/uip/blocks/layout/loader.js:391
+#, fuzzy
+msgid "Trigger hover styles"
+msgstr "Déclencher des styles de survol"
+
+#: assets/js/uip/blocks/layout/loader.js:211
+#: assets/js/uip/blocks/layout/loader.js:400
+#, fuzzy
+msgid "Trigger active styles"
+msgstr "Styles actifs de déclenchement"
+
+#: assets/js/uip/blocks/layout/loader.js:220
+#, fuzzy
+msgid "Dropdown styles"
+msgstr "Liste des styles"
+
+#: assets/js/uip/blocks/layout/loader.js:241
+#, fuzzy
+msgid "Responsive grid"
+msgstr "Grille réactive"
+
+#: assets/js/uip/blocks/layout/loader.js:243
+#, fuzzy
+msgid "Outputs a responsive grid"
+msgstr "Produit une grille réactive"
+
+#: assets/js/uip/blocks/layout/loader.js:257
+#, fuzzy
+msgid "Number of columns"
+msgstr "Nombre de colonnes"
+
+#: assets/js/uip/blocks/layout/loader.js:261
+#, fuzzy
+msgid "Minimum column width"
+msgstr "Largeur minimale des colonnes"
+
+#: assets/js/uip/blocks/layout/loader.js:264
+#, fuzzy
+msgid "Grid gap"
+msgstr "Écart de grille"
+
+#: assets/js/uip/blocks/layout/loader.js:299
+#, fuzzy
+msgid "Slide out panel"
+msgstr "Panneau coulissant"
+
+#: assets/js/uip/blocks/layout/loader.js:301
+#, fuzzy
+msgid "Creates a slide out panel with a customisable trigger"
+msgstr "Crée un panneau coulissant avec un déclencheur personnalisable"
+
+#: assets/js/uip/blocks/layout/loader.js:331
+#: assets/js/uip/blocks/layout/loader.js:351
+#, fuzzy
+msgid "Panel position"
+msgstr "Position du groupe spécial"
+
+#: assets/js/uip/blocks/layout/loader.js:356
+#: assets/js/uip/options/settings-loader.js:514
+#, fuzzy
+msgid "Overlay"
+msgstr "Superposition"
+
+#: assets/js/uip/blocks/layout/loader.js:360
+#, fuzzy
+msgid "Push"
+msgstr "Repousser"
+
+#: assets/js/uip/blocks/layout/loader.js:382
+#, fuzzy
+msgid "Trigger style"
+msgstr "Style de gâchette"
+
+#: assets/js/uip/blocks/layout/loader.js:409
+#, fuzzy
+msgid "Panel styles"
+msgstr "Styles de panneaux"
+
+#: assets/js/uip/blocks/layout/loader.js:426
+#, fuzzy
+msgid "Modal"
+msgstr "Fenêtre Popup"
+
+#: assets/js/uip/blocks/layout/loader.js:428
+#, fuzzy
+msgid "Outputs a modal block with a customisable trigger"
+msgstr "Sortie d'un bloc modal avec un déclencheur personnalisable"
+
+#: assets/js/uip/classes/uip-media-browser.js:29
+#: assets/js/uip/options/uip-image-select.js:29
+#: assets/js/uip/uibuilder/uip-builder-framework.js:96
+#, fuzzy
+msgid "Library"
+msgstr "Bibliothèque"
+
+#: assets/js/uip/classes/uip-media-browser.js:37
+#, fuzzy
+msgid "Search media"
+msgstr "Rechercher des médias"
+
+#: assets/js/uip/classes/uip-media-browser.js:41
+#, fuzzy
+msgid "Choose image"
+msgstr "Choisir une image"
+
+#: assets/js/uip/classes/uip-media-browser.js:42
+#, fuzzy
+msgid "Full size"
+msgstr "Taille originale"
+
+#: assets/js/uip/classes/uip-media-browser.js:43
+#, fuzzy
+msgid "Medium"
+msgstr "Moyen"
+
+#: assets/js/uip/classes/uip-media-browser.js:44
+#, fuzzy
+msgid "Small"
+msgstr "Petit"
+
+#: assets/js/uip/classes/uip-media-browser.js:45
+#, fuzzy
+msgid "Thumbnail"
+msgstr "Miniature"
+
+#: assets/js/uip/classes/uip-media-browser.js:46
+#: assets/js/uip/options/uip-image-select.js:27
+#, fuzzy
+msgid "Upload"
+msgstr "Upload"
+
+#: assets/js/uip/classes/uip-media-browser.js:48
+#, fuzzy
+msgid "Photo by"
+msgstr "Photo par"
+
+#: assets/js/uip/classes/uip-media-browser.js:49
+#, fuzzy
+msgid "on"
+msgstr "on"
+
+#: assets/js/uip/classes/uip-media-browser.js:335
+#, fuzzy
+msgid "Uploading files"
+msgstr "Téléchargement des fichiers"
+
+#: assets/js/uip/classes/uip-media-browser.js:344
+#, fuzzy
+msgid "Upload finsihed"
+msgstr "Téléchargement terminé"
+
+#: assets/js/uip/classes/uip-media-browser.js:344
+#, fuzzy
+msgid " errors"
+msgstr " erreurs"
+
+#: assets/js/uip/classes/uip-media-browser.js:360
+#, fuzzy
+msgid "File exceeds max upload size"
+msgstr "Le fichier dépasse la taille maximale de téléchargement"
+
+#: assets/js/uip/classes/uip-media-browser.js:367
+#: assets/js/uip/options/uip-image-select.js:162
+#, fuzzy
+msgid "Unable to upload this file type"
+msgstr "Impossible de télécharger ce type de fichier"
+
+#: assets/js/uip/classes/uip-media-browser.js:392
+#, fuzzy
+msgid "File uploaded"
+msgstr "Fichier téléchargé"
+
+#: assets/js/uip/classes/uip-media-browser.js:395
+#: assets/js/uip/options/uip-image-select.js:201
+#, fuzzy
+msgid "Unable to handle upload"
+msgstr "Impossible de gérer le téléchargement"
+
+#: assets/js/uip/classes/uip-media-browser.js:411
+#: assets/js/uip/classes/uip.js:292
+#, fuzzy
+msgid ""
+"Are you sure you want to delete this? Once deleted this item can't be "
+"recovered"
+msgstr ""
+"Êtes-vous sûr de vouloir supprimer cet élément ? Une fois supprimé, cet "
+"élément ne peut pas être récupéré"
+
+#: assets/js/uip/classes/uip-media-browser.js:414
+#, fuzzy
+msgid "Deleting selected files"
+msgstr "Suppression des fichiers sélectionnés"
+
+#: assets/js/uip/classes/uip-media-browser.js:429
+#, fuzzy
+msgid "Items deleted"
+msgstr "Elément supprimé"
+
+#: assets/js/uip/classes/uip-media-library.js:28
+#: assets/js/uip/classes/uip-media-library.js:37
+#, fuzzy
+msgid "Unable to mount"
+msgstr "Impossible de monter"
+
+#: assets/js/uip/classes/uip-media-library.js:28
+#, fuzzy
+msgid "No element provided to mount to"
+msgstr "Aucun élément fourni pour le montage"
+
+#: assets/js/uip/classes/uip-media-library.js:37
+#, fuzzy
+msgid "No elements found for sleector"
+msgstr "Aucun élément trouvé pour sleector"
+
+#: assets/js/uip/classes/uip.js:95
+#, fuzzy
+msgid "Parse error"
+msgstr "Erreur d'analyse"
+
+#: assets/js/uip/classes/uip.js:95
+#, fuzzy
+msgid "Unable to parse JSON response"
+msgstr "Impossible d'analyser la réponse JSON"
+
+#: assets/js/uip/classes/uip.js:1345
+#, fuzzy
+msgid "Yes"
+msgstr "Oui"
+
+#: assets/js/uip/classes/uip.js:1359
+#, fuzzy
+msgid "Cancel"
+msgstr "Annuler"
+
+#: assets/js/uip/classes/uip.js:1947
+#, fuzzy
+msgid "Custom classes"
+msgstr "Classes Personnalisé"
+
+#: assets/js/uip/classes/uip.js:1948
+#, fuzzy
+msgid "Conditions"
+msgstr "Conditions"
+
+#: assets/js/uip/classes/uip.js:1952
+#: assets/js/uip/uibuilder/template-settings-groups.js:21
+#, fuzzy
+msgid "Custom css"
+msgstr "CSS personnalisé"
+
+#: assets/js/uip/classes/uip.js:1960
+#: assets/js/uip/uibuilder/template-settings-groups.js:31
+#, fuzzy
+msgid "Custom javaScript"
+msgstr "JavaScript personnalisé"
+
+#: assets/js/uip/modules/uip-dynamic-data-list.js:12
+#: assets/js/uip/options/uip-dynamic-input.js:16
+#: assets/js/uip/options/uip-image-select.js:23
+#: assets/js/uip/options/uip-link-select.js:25
+#, fuzzy
+msgid "select"
+msgstr "sélectionner"
+
+#: assets/js/uip/modules/uip-dynamic-data-list.js:13
+#: assets/js/uip/options/uip-dynamic-input.js:15
+#: assets/js/uip/options/uip-image-select.js:22
+#: assets/js/uip/options/uip-link-select.js:24
+#, fuzzy
+msgid "Current value"
+msgstr "Valeur en cours"
+
+#: assets/js/uip/modules/uip-post-meta-select.js:26
+#: assets/js/uip/uibuilder/uip-builder-settings.js:34
+#: assets/js/uip/uibuilder/uip-builder-variables.js:13
+#, fuzzy
+msgid "Add"
+msgstr "Ajouter"
+
+#: assets/js/uip/modules/uip-post-meta-select.js:27
+#, fuzzy
+msgid "Column title"
+msgstr "Titre de Colonne"
+
+#: assets/js/uip/options/dynamic-settings.js:68
+#, fuzzy
+msgid "Site name"
+msgstr "Nom du site"
+
+#: assets/js/uip/options/dynamic-settings.js:75
+#, fuzzy
+msgid "User profile image"
+msgstr "Image du profil de l'utilisateur"
+
+#: assets/js/uip/options/dynamic-settings.js:89
+#, fuzzy
+msgid "View site link"
+msgstr "Voir le lien du site"
+
+#: assets/js/uip/options/dynamic-settings.js:96
+#, fuzzy
+msgid "View admin link"
+msgstr "Voir le lien administrateur"
+
+#: assets/js/uip/options/dynamic-settings.js:103
+#, fuzzy
+msgid "View profile link"
+msgstr "Voir le lien du profil"
+
+#: assets/js/uip/options/dynamic-settings.js:110
+#, fuzzy
+msgid "Current Date"
+msgstr "Date actuelle"
+
+#: assets/js/uip/options/dynamic-settings.js:117
+#, fuzzy
+msgid "PHP Version"
+msgstr "Version PHP"
+
+#: assets/js/uip/options/dynamic-settings.js:124
+#, fuzzy
+msgid "WordPress Version"
+msgstr "Version de WordPress"
+
+#: assets/js/uip/options/dynamic-settings.js:131
+#, fuzzy
+msgid "Count of active plugins"
+msgstr "Nombre de plugins actifs"
+
+#: assets/js/uip/options/dynamic-settings.js:138
+#, fuzzy
+msgid "Count of inactive plugins"
+msgstr "Nombre de plugins inactifs"
+
+#: assets/js/uip/options/dynamic-settings.js:145
+#, fuzzy
+msgid "Count of installed themes"
+msgstr "Nombre de thèmes installés"
+
+#: assets/js/uip/options/dynamic-settings.js:152
+#, fuzzy
+msgid "New post link"
+msgstr "Nouveau lien vers le poste"
+
+#: assets/js/uip/options/dynamic-settings.js:159
+#, fuzzy
+msgid "New page link"
+msgstr "Lien vers une nouvelle page"
+
+#: assets/js/uip/options/settings-loader.js:28
+#, fuzzy
+msgid "I am a paragraph"
+msgstr "Je suis un paragraphe"
+
+#: assets/js/uip/options/settings-loader.js:97
+#, fuzzy
+msgid "Text alignment"
+msgstr "Alignement du texte"
+
+#: assets/js/uip/options/settings-loader.js:183
+#: assets/js/uip/uibuilder/uip-block-settings.js:60
+#, fuzzy
+msgid "Wrap"
+msgstr "Enveloppe"
+
+#: assets/js/uip/options/settings-loader.js:188
+#, fuzzy
+msgid "Wrap reverse"
+msgstr "Passage à la ligne inversé (wrap reverse)"
+
+#: assets/js/uip/options/settings-loader.js:217
+#, fuzzy
+msgid "Grow"
+msgstr "Agrandir"
+
+#: assets/js/uip/options/settings-loader.js:222
+#, fuzzy
+msgid "Shrink"
+msgstr "Réduire"
+
+#: assets/js/uip/options/settings-loader.js:248
+#, fuzzy
+msgid "Baseline"
+msgstr "Ligne de base"
+
+#: assets/js/uip/options/settings-loader.js:253
+#: assets/js/uip/options/settings-loader.js:392
+#: assets/js/uip/options/settings-loader.js:462
+#: assets/js/uip/options/settings-loader.js:738
+#: assets/js/uip/options/settings-loader.js:776
+#: assets/js/uip/uibuilder/global-settings-groups.js:130
+#: assets/js/uip/uibuilder/global-settings-groups.js:164
+#, fuzzy
+msgid "Center"
+msgstr "Centre"
+
+#: assets/js/uip/options/settings-loader.js:258
+#: assets/js/uip/options/settings-loader.js:397
+#: assets/js/uip/options/settings-loader.js:467
+#, fuzzy
+msgid "End"
+msgstr "Fin"
+
+#: assets/js/uip/options/settings-loader.js:263
+#: assets/js/uip/options/settings-loader.js:472
+#, fuzzy
+msgid "Stretch"
+msgstr "Etirée"
+
+#: assets/js/uip/options/settings-loader.js:300
+#, fuzzy
+msgid "Row"
+msgstr "Ligne"
+
+#: assets/js/uip/options/settings-loader.js:305
+#, fuzzy
+msgid "Column"
+msgstr "Colonne"
+
+#: assets/js/uip/options/settings-loader.js:311
+#, fuzzy
+msgid "Row reverse"
+msgstr "Ligne inversée"
+
+#: assets/js/uip/options/settings-loader.js:316
+#, fuzzy
+msgid "Column reverse"
+msgstr "Colonnes inversées"
+
+#: assets/js/uip/options/settings-loader.js:387
+#: assets/js/uip/options/settings-loader.js:457
+#, fuzzy
+msgid "Start"
+msgstr "Début"
+
+#: assets/js/uip/options/settings-loader.js:402
+#, fuzzy
+msgid "Space around"
+msgstr "Espace autour"
+
+#: assets/js/uip/options/settings-loader.js:407
+#, fuzzy
+msgid "Space between"
+msgstr "Espace entre"
+
+#: assets/js/uip/options/settings-loader.js:413
+#, fuzzy
+msgid "Space evenly"
+msgstr "Espace uniforme"
+
+#: assets/js/uip/options/settings-loader.js:502
+#, fuzzy
+msgid "Auto"
+msgstr "Auto"
+
+#: assets/js/uip/options/settings-loader.js:506
+#, fuzzy
+msgid "Hidden"
+msgstr "Masqué"
+
+#: assets/js/uip/options/settings-loader.js:510
+#, fuzzy
+msgid "Scroll"
+msgstr "Défilement"
+
+#: assets/js/uip/options/settings-loader.js:518
+#, fuzzy
+msgid "Visible"
+msgstr "Visible"
+
+#: assets/js/uip/options/settings-loader.js:540
+#, fuzzy
+msgid "H1"
+msgstr "H1"
+
+#: assets/js/uip/options/settings-loader.js:544
+#, fuzzy
+msgid "H2"
+msgstr "H2"
+
+#: assets/js/uip/options/settings-loader.js:548
+#, fuzzy
+msgid "H3"
+msgstr "H3"
+
+#: assets/js/uip/options/settings-loader.js:552
+#, fuzzy
+msgid "H4"
+msgstr "H4"
+
+#: assets/js/uip/options/settings-loader.js:556
+#, fuzzy
+msgid "H5"
+msgstr "H5"
+
+#: assets/js/uip/options/settings-loader.js:560
+#, fuzzy
+msgid "p"
+msgstr "p"
+
+#: assets/js/uip/options/settings-loader.js:628
+#, fuzzy
+msgid "Another tab"
+msgstr "Un autre onglet"
+
+#: assets/js/uip/options/settings-loader.js:659
+#, fuzzy
+msgid "Inline"
+msgstr "En ligne"
+
+#: assets/js/uip/options/settings-loader.js:663
+#, fuzzy
+msgid "Hover"
+msgstr "Survol"
+
+#: assets/js/uip/options/settings-loader.js:771
+#: assets/js/uip/options/uip-margin.js:14
+#: assets/js/uip/options/uip-padding.js:14
+#: assets/js/uip/options/uip-position-designer.js:32
+#, fuzzy
+msgid "Top"
+msgstr "Haut"
+
+#: assets/js/uip/options/settings-loader.js:781
+#: assets/js/uip/options/uip-margin.js:15
+#: assets/js/uip/options/uip-padding.js:15
+#: assets/js/uip/options/uip-position-designer.js:34
+#, fuzzy
+msgid "Bottom"
+msgstr "Bas"
+
+#: assets/js/uip/options/settings-loader.js:1102
+#, fuzzy
+msgid "Shadow"
+msgstr "Ombre"
+
+#: assets/js/uip/options/settings-loader.js:1146
+#, fuzzy
+msgid "Option 1"
+msgstr "Option 1"
+
+#: assets/js/uip/options/settings-loader.js:1147
+#, fuzzy
+msgid "Option 2"
+msgstr "Option 2"
+
+#: assets/js/uip/options/theme-styles.js:7
+#, fuzzy
+msgid "Primary color"
+msgstr "Couleur primaire"
+
+#: assets/js/uip/options/theme-styles.js:14
+#, fuzzy
+msgid "Primary color darker"
+msgstr "Couleur primaire plus foncée"
+
+#: assets/js/uip/options/theme-styles.js:21
+#, fuzzy
+msgid "Primary color lighter"
+msgstr "Couleur primaire plus claire"
+
+#: assets/js/uip/options/theme-styles.js:29
+#, fuzzy
+msgid "Accent color"
+msgstr "Couleur d’accentuation"
+
+#: assets/js/uip/options/theme-styles.js:36
+#, fuzzy
+msgid "Accent color darker"
+msgstr "Couleur d'accent plus foncée"
+
+#: assets/js/uip/options/theme-styles.js:43
+#, fuzzy
+msgid "Accent color lighter"
+msgstr "Couleur d'accent plus claire"
+
+#: assets/js/uip/options/theme-styles.js:51
+#, fuzzy
+msgid "Succes color"
+msgstr "Couleur de la réussite"
+
+#: assets/js/uip/options/theme-styles.js:58
+#, fuzzy
+msgid "Succes color darker"
+msgstr "Succes couleur plus foncée"
+
+#: assets/js/uip/options/theme-styles.js:65
+#, fuzzy
+msgid "Succes color lighter"
+msgstr "Succes couleur plus claire"
+
+#: assets/js/uip/options/theme-styles.js:73
+#, fuzzy
+msgid "Warning color"
+msgstr "Couleur d'avertissement"
+
+#: assets/js/uip/options/theme-styles.js:80
+#, fuzzy
+msgid "Warning color darker"
+msgstr "Couleur d'avertissement plus foncée"
+
+#: assets/js/uip/options/theme-styles.js:87
+#, fuzzy
+msgid "Warning color lighter"
+msgstr "Couleur d'avertissement plus claire"
+
+#: assets/js/uip/options/theme-styles.js:95
+#, fuzzy
+msgid "Danger color"
+msgstr "Couleur danger"
+
+#: assets/js/uip/options/theme-styles.js:102
+#, fuzzy
+msgid "Danger color darker"
+msgstr "Couleur du danger plus foncée"
+
+#: assets/js/uip/options/theme-styles.js:109
+#, fuzzy
+msgid "Danger color lighter"
+msgstr "Couleur de danger plus claire"
+
+#: assets/js/uip/options/theme-styles.js:117
+#, fuzzy
+msgid "Base"
+msgstr "Base"
+
+#: assets/js/uip/options/theme-styles.js:124
+#, fuzzy
+msgid "Base 1"
+msgstr "Base 1"
+
+#: assets/js/uip/options/theme-styles.js:131
+#, fuzzy
+msgid "Base 2"
+msgstr "Base 2"
+
+#: assets/js/uip/options/theme-styles.js:139
+#, fuzzy
+msgid "Text color base"
+msgstr "Base de la couleur du texte"
+
+#: assets/js/uip/options/theme-styles.js:146
+#, fuzzy
+msgid "Text color emphasis"
+msgstr "Accentuation de la couleur du texte"
+
+#: assets/js/uip/options/theme-styles.js:153
+#, fuzzy
+msgid "Text color muted"
+msgstr "Couleur du texte atténuée"
+
+#: assets/js/uip/options/theme-styles.js:160
+#, fuzzy
+msgid "Text color inverted"
+msgstr "Couleur du texte inversée"
+
+#: assets/js/uip/options/uip-array-list.js:12
+#, fuzzy
+msgid "New item"
+msgstr "Nouvel élément"
+
+#: assets/js/uip/options/uip-border-designer.js:12
+#, fuzzy
+msgid "Radius"
+msgstr "Rayon"
+
+#: assets/js/uip/options/uip-border-designer.js:17
+#: assets/js/uip/options/uip-color-select.js:26
+#: assets/js/uip/options/uip-text-format.js:32
+#: assets/js/uip/uibuilder/uip-builder-variables.js:36
+#, fuzzy
+msgid "Colour"
+msgstr "Couleur"
+
+#: assets/js/uip/options/uip-border-designer.js:19
+#: assets/js/uip/options/uip-dimensions.js:39
+#, fuzzy
+msgid "Width"
+msgstr "Largeur"
+
+#: assets/js/uip/options/uip-border-designer.js:46
+#: assets/js/uip/options/uip-color-select.js:67
+#, fuzzy
+msgid "Solid"
+msgstr "Solide"
+
+#: assets/js/uip/options/uip-border-designer.js:50
+#, fuzzy
+msgid "Dashed"
+msgstr "Tirets"
+
+#: assets/js/uip/options/uip-border-designer.js:54
+#, fuzzy
+msgid "Dotted"
+msgstr "Pointillés"
+
+#: assets/js/uip/options/uip-border-designer.js:58
+#, fuzzy
+msgid "Double"
+msgstr "Double"
+
+#: assets/js/uip/options/uip-border-designer.js:62
+#, fuzzy
+msgid "Groove"
+msgstr "Groove"
+
+#: assets/js/uip/options/uip-border-designer.js:66
+#, fuzzy
+msgid "Ridge"
+msgstr "Ridge"
+
+#: assets/js/uip/options/uip-border-designer.js:70
+#: assets/js/uip/options/uip-position-designer.js:35
+#, fuzzy
+msgid "Inset"
+msgstr "Intérieure"
+
+#: assets/js/uip/options/uip-border-radius.js:13
+#, fuzzy
+msgid "Radius top left"
+msgstr "Rayon en haut à gauche"
+
+#: assets/js/uip/options/uip-border-radius.js:14
+#, fuzzy
+msgid "Radius  top right"
+msgstr "Rayon en haut à droite"
+
+#: assets/js/uip/options/uip-border-radius.js:15
+#, fuzzy
+msgid "Radius bottom left"
+msgstr "Rayon en bas à gauche"
+
+#: assets/js/uip/options/uip-border-radius.js:16
+#, fuzzy
+msgid "Radius bottom right"
+msgstr "Rayon en bas à droite"
+
+#: assets/js/uip/options/uip-code-editor.js:18
+#, fuzzy
+msgid "Exit fullscreen"
+msgstr "Quitter le plein écran"
+
+#: assets/js/uip/options/uip-color-picker.js:16
+#: assets/js/uip/options/uip-color-select.js:20
+#, fuzzy
+msgid "Colour value"
+msgstr "Valeur de la couleur"
+
+#: assets/js/uip/options/uip-color-picker.js:17
+#: assets/js/uip/options/uip-color-select.js:29
+#, fuzzy
+msgid "Colour code"
+msgstr "Combinaison"
+
+#: assets/js/uip/options/uip-color-select.js:21
+#, fuzzy
+msgid "Theme variables"
+msgstr "Contrôler les variables de thème de page à l’aide de contexte."
+
+#: assets/js/uip/options/uip-color-select.js:23
+#, fuzzy
+msgid "Angle"
+msgstr "Angle"
+
+#: assets/js/uip/options/uip-color-select.js:24
+#, fuzzy
+msgid "Position X"
+msgstr "Position X"
+
+#: assets/js/uip/options/uip-color-select.js:25
+#, fuzzy
+msgid "Position Y"
+msgstr "Position Y"
+
+#: assets/js/uip/options/uip-color-select.js:27
+#, fuzzy
+msgid "Location"
+msgstr "Emplacement"
+
+#: assets/js/uip/options/uip-color-select.js:28
+#, fuzzy
+msgid "Manage variables"
+msgstr "Gérer les variables"
+
+#: assets/js/uip/options/uip-color-select.js:30
+#, fuzzy
+msgid "Apply gradient"
+msgstr "Appliquer un dégradé"
+
+#: assets/js/uip/options/uip-color-select.js:57
+#, fuzzy
+msgid "Linear"
+msgstr "Linéaire"
+
+#: assets/js/uip/options/uip-color-select.js:61
+#, fuzzy
+msgid "Radial"
+msgstr "Radial"
+
+#: assets/js/uip/options/uip-color-select.js:71
+#, fuzzy
+msgid "Gradient"
+msgstr "Dégradé"
+
+#: assets/js/uip/options/uip-dimensions.js:38
+#, fuzzy
+msgid "Height"
+msgstr "Hauteur"
+
+#: assets/js/uip/options/uip-dimensions.js:40
+#: assets/js/uip/options/uip-dimensions.js:41
+#, fuzzy
+msgid "Max"
+msgstr "Max"
+
+#: assets/js/uip/options/uip-dimensions.js:42
+#: assets/js/uip/options/uip-dimensions.js:43
+#, fuzzy
+msgid "Min"
+msgstr "Min"
+
+#: assets/js/uip/options/uip-dynamic-input.js:14
+#: assets/js/uip/options/uip-image-select.js:21
+#, fuzzy
+msgid "Dynamic data"
+msgstr "Données dynamiques"
+
+#: assets/js/uip/options/uip-dynamic-input.js:17
+#: assets/js/uip/options/uip-image-select.js:24
+#, fuzzy
+msgid "Dynamic data position"
+msgstr "Position dynamique des données"
+
+#: assets/js/uip/options/uip-edit-menu-items.js:13
+#: assets/js/uip/options/uip-edit-toolbar-items.js:13
+#, fuzzy
+msgid "Rename item"
+msgstr "Renommer l'élément"
+
+#: assets/js/uip/options/uip-hidden-menu-items-select.js:13
+#, fuzzy
+msgid "Hidden menu items"
+msgstr "Éléments de menu cachés"
+
+#: assets/js/uip/options/uip-hidden-menu-items-select.js:14
+#, fuzzy
+msgid "Search menu items"
+msgstr "Rechercher des éléments de menu"
+
+#: assets/js/uip/options/uip-hidden-toolbar-items-select.js:14
+#, fuzzy
+msgid "Search toolbar items"
+msgstr "Éléments de la barre d'outils de recherche"
+
+#: assets/js/uip/options/uip-icon-select.js:20
+#: assets/js/uip/options/uip-inline-icon-select.js:20
+#, fuzzy
+msgid "Search icons"
+msgstr "Recherche d'icônes"
+
+#: assets/js/uip/options/uip-icon-select.js:21
+#: assets/js/uip/options/uip-inline-icon-select.js:21
+#, fuzzy
+msgid "Clear icon"
+msgstr "Icône claire"
+
+#: assets/js/uip/options/uip-icon-select.js:22
+#, fuzzy
+msgid "Choose icon"
+msgstr "Choisir l'icône"
+
+#: assets/js/uip/options/uip-image-select.js:25
+#, fuzzy
+msgid "Replace"
+msgstr "Remplacer"
+
+#: assets/js/uip/options/uip-image-select.js:28
+#, fuzzy
+msgid "Uploading"
+msgstr "Chargement en cours"
+
+#: assets/js/uip/options/uip-image-select.js:31
+#, fuzzy
+msgid "Add image"
+msgstr "Ajouter une image"
+
+#: assets/js/uip/options/uip-image-select.js:154
+#, fuzzy
+msgid "Uploading image"
+msgstr "Transfert de l'image en cours"
+
+#: assets/js/uip/options/uip-image-select.js:169
+#, fuzzy
+msgid "Image exceeds max upload size"
+msgstr "L'image dépasse la taille maximale de téléchargement"
+
+#: assets/js/uip/options/uip-image-select.js:198
+#, fuzzy
+msgid "Image uploaded"
+msgstr "Image envoyée"
+
+#: assets/js/uip/options/uip-link-select.js:19
+#, fuzzy
+msgid "Search admin pages"
+msgstr "Rechercher des pages d’administration"
+
+#: assets/js/uip/options/uip-link-select.js:20
+#, fuzzy
+msgid "Search pages and posts"
+msgstr "Recherche de pages et de messages"
+
+#: assets/js/uip/options/uip-link-select.js:21
+#, fuzzy
+msgid "No posts found for current query"
+msgstr "Aucun poste trouvé pour cette requête"
+
+#: assets/js/uip/options/uip-link-select.js:22
+#, fuzzy
+msgid "Link mode"
+msgstr "Mode de liaison"
+
+#: assets/js/uip/options/uip-link-select.js:30
+#, fuzzy
+msgid "Admin"
+msgstr "Admin"
+
+#: assets/js/uip/options/uip-link-select.js:34
+#, fuzzy
+msgid "Content"
+msgstr "Contenu"
+
+#: assets/js/uip/options/uip-link-select.js:45
+#, fuzzy
+msgid ""
+"Dynamic links will load in the available content frame without page refresh. "
+"If none exists then it will perform a normal relead."
+msgstr ""
+"Les liens dynamiques seront chargés dans le cadre de contenu disponible sans "
+"rafraîchissement de la page. S'il n'y en a pas, il y aura un "
+"rafraîchissement normal."
+
+#: assets/js/uip/options/uip-link-select.js:49
+#, fuzzy
+msgid "Default"
+msgstr "Défaut"
+
+#: assets/js/uip/options/uip-link-select.js:50
+#, fuzzy
+msgid "Default links load like a normal link and will refresh the whole page."
+msgstr ""
+"Les liens par défaut se chargent comme un lien normal et rafraîchissent "
+"toute la page."
+
+#: assets/js/uip/options/uip-link-select.js:54
+#: assets/js/uip/options/uip-tab-builder.js:12
+#, fuzzy
+msgid "New tab"
+msgstr "Nouvel onglet"
+
+#: assets/js/uip/options/uip-link-select.js:55
+#, fuzzy
+msgid "New tab links open in a new browser tab."
+msgstr ""
+"Les liens vers un nouvel onglet s'ouvrent dans un nouvel onglet du "
+"navigateur."
+
+#: assets/js/uip/options/uip-multi-select.js:14
+#, fuzzy
+msgid "Selected items"
+msgstr "Éléments sélectionnés"
+
+#: assets/js/uip/options/uip-position-designer.js:14
+#, fuzzy
+msgid "Relative"
+msgstr "Relative"
+
+#: assets/js/uip/options/uip-position-designer.js:18
+#, fuzzy
+msgid "Absolute"
+msgstr "Absolue"
+
+#: assets/js/uip/options/uip-position-designer.js:22
+#, fuzzy
+msgid "Fixed"
+msgstr "Fixe"
+
+#: assets/js/uip/options/uip-position-designer.js:26
+#, fuzzy
+msgid "Sticky"
+msgstr "Épinglé"
+
+#: assets/js/uip/options/uip-post-meta.js:13
+#, fuzzy
+msgid "Select columns"
+msgstr "Sélectionner les colonnes"
+
+#: assets/js/uip/options/uip-post-meta.js:14
+#, fuzzy
+msgid "Add columns"
+msgstr "Ajouter des colonnes"
+
+#: assets/js/uip/options/uip-post-types.js:13
+#, fuzzy
+msgid "Select post types"
+msgstr "Sélectionner des types d’articles"
+
+#: assets/js/uip/options/uip-post-types.js:14
+#, fuzzy
+msgid "Seach post types"
+msgstr "Recherche de types de messages"
+
+#: assets/js/uip/options/uip-responsive.js:13
+#: assets/js/uip/uibuilder/uip-ui-preview.js:37
+#, fuzzy
+msgid "Mobile"
+msgstr "Mobile"
+
+#: assets/js/uip/options/uip-responsive.js:14
+#: assets/js/uip/uibuilder/uip-ui-preview.js:39
+#, fuzzy
+msgid "Tablet"
+msgstr "Tablette"
+
+#: assets/js/uip/options/uip-responsive.js:15
+#: assets/js/uip/uibuilder/uip-ui-preview.js:38
+#, fuzzy
+msgid "Desktop"
+msgstr "Ordinateur de bureau"
+
+#: assets/js/uip/options/uip-select-option-builder.js:12
+#, fuzzy
+msgid "New option"
+msgstr "Nouvelle option"
+
+#: assets/js/uip/options/uip-select-option-builder.js:14
+#, fuzzy
+msgid "Value"
+msgstr "Valeur"
+
+#: assets/js/uip/options/uip-select-option-builder.js:37
+#, fuzzy
+msgid "Option"
+msgstr "Option"
+
+#: assets/js/uip/options/uip-shadow-designer.js:13
+#, fuzzy
+msgid "Horizontal distance"
+msgstr "Distance horizontale"
+
+#: assets/js/uip/options/uip-shadow-designer.js:14
+#, fuzzy
+msgid "Vertical distance"
+msgstr "Distance verticale"
+
+#: assets/js/uip/options/uip-shadow-designer.js:15
+#, fuzzy
+msgid "Blur"
+msgstr "Flou"
+
+#: assets/js/uip/options/uip-shadow-designer.js:16
+#, fuzzy
+msgid "Spread"
+msgstr "Diffusion"
+
+#: assets/js/uip/options/uip-shadow-designer.js:17
+#, fuzzy
+msgid "Shadow colour"
+msgstr "Couleur de l'ombre"
+
+#: assets/js/uip/options/uip-submit-action.js:17
+#, fuzzy
+msgid "Save as site option"
+msgstr "Option \"Enregistrer comme site"
+
+#: assets/js/uip/options/uip-submit-action.js:21
+#, fuzzy
+msgid "Save as user meta"
+msgstr "Sauvegarder comme méta utilisateur"
+
+#: assets/js/uip/options/uip-submit-action.js:25
+#, fuzzy
+msgid "Send to PHP function"
+msgstr "Envoyer à la fonction PHP"
+
+#: assets/js/uip/options/uip-submit-action.js:31
+#, fuzzy
+msgid "Individual keys"
+msgstr "Clés individuelles"
+
+#: assets/js/uip/options/uip-submit-action.js:35
+#, fuzzy
+msgid "Group object"
+msgstr "Objet du groupe"
+
+#: assets/js/uip/options/uip-submit-action.js:40
+#: assets/js/uip/options/uip-units.js:12
+#: assets/js/uip/tools/uip-php-error-log.js:21
+#, fuzzy
+msgid "Pixels"
+msgstr "Pixels"
+
+#: assets/js/uip/options/uip-submit-action.js:41
+#, fuzzy
+msgid "Submit type"
+msgstr "Type de soumission"
+
+#: assets/js/uip/options/uip-submit-action.js:42
+#, fuzzy
+msgid "PHP function name"
+msgstr "Nom de la fonction PHP"
+
+#: assets/js/uip/options/uip-submit-action.js:43
+#, fuzzy
+msgid "Site option name"
+msgstr "Nom de l'option du site"
+
+#: assets/js/uip/options/uip-submit-action.js:44
+#, fuzzy
+msgid "Recipient email"
+msgstr "E-mail du destinataire"
+
+#: assets/js/uip/options/uip-submit-action.js:45
+#, fuzzy
+msgid "Email subject"
+msgstr "Objet du mail"
+
+#: assets/js/uip/options/uip-submit-action.js:46
+#, fuzzy
+msgid "Email template"
+msgstr "Modèle de courriel"
+
+#: assets/js/uip/options/uip-submit-action.js:47
+#, fuzzy
+msgid "Use form values in the email template by using {{input_name}}"
+msgstr ""
+"Utilisez les valeurs du formulaire dans le modèle d'email en utilisant "
+"{{input_name}}"
+
+#: assets/js/uip/options/uip-submit-action.js:49
+#, fuzzy
+msgid ""
+"The form data will be saved as an object to your database using the function "
+"update_site_option(). You will then be able to access your data using the "
+"function get_site_option('your_option_key')"
+msgstr ""
+"Les données du formulaire seront enregistrées sous forme d'objet dans votre "
+"base de données à l'aide de la fonction update_site_option(). Vous pourrez "
+"ensuite accéder à vos données à l'aide de la fonction "
+"get_site_option('your_option_key')"
+
+#: assets/js/uip/options/uip-submit-action.js:52
+#, fuzzy
+msgid "Save as"
+msgstr "Enregistrer sous"
+
+#: assets/js/uip/options/uip-submit-action.js:54
+#, fuzzy
+msgid "Redirect URL after submission"
+msgstr "Rediriger l'URL après la soumission"
+
+#: assets/js/uip/options/uip-text-format.js:27
+#: assets/js/uip/options/uip-units.js:15
+#, fuzzy
+msgid "Font size"
+msgstr "Taille de police"
+
+#: assets/js/uip/options/uip-text-format.js:28
+#, fuzzy
+msgid "Line height"
+msgstr "Hauteur de ligne"
+
+#: assets/js/uip/options/uip-text-format.js:29
+#, fuzzy
+msgid "Font weight"
+msgstr "Epaisseur de la police"
+
+#: assets/js/uip/options/uip-text-format.js:30
+#, fuzzy
+msgid "Text transform"
+msgstr "Transformation du texte"
+
+#: assets/js/uip/options/uip-text-format.js:31
+#, fuzzy
+msgid "Font family"
+msgstr "Famille de police"
+
+#: assets/js/uip/options/uip-text-format.js:37
+#, fuzzy
+msgid "100"
+msgstr "100"
+
+#: assets/js/uip/options/uip-text-format.js:41
+#, fuzzy
+msgid "200"
+msgstr "200"
+
+#: assets/js/uip/options/uip-text-format.js:45
+#, fuzzy
+msgid "300"
+msgstr "300"
+
+#: assets/js/uip/options/uip-text-format.js:49
+#, fuzzy
+msgid "400"
+msgstr "400"
+
+#: assets/js/uip/options/uip-text-format.js:53
+#, fuzzy
+msgid "500"
+msgstr "500"
+
+#: assets/js/uip/options/uip-text-format.js:57
+#, fuzzy
+msgid "600"
+msgstr "600"
+
+#: assets/js/uip/options/uip-text-format.js:61
+#, fuzzy
+msgid "700"
+msgstr "700"
+
+#: assets/js/uip/options/uip-text-format.js:65
+#, fuzzy
+msgid "800"
+msgstr "800"
+
+#: assets/js/uip/options/uip-text-format.js:69
+#, fuzzy
+msgid "900"
+msgstr "900"
+
+#: assets/js/uip/options/uip-text-format.js:73
+#, fuzzy
+msgid "Bold"
+msgstr "Gras"
+
+#: assets/js/uip/options/uip-text-format.js:77
+#, fuzzy
+msgid "Bolder"
+msgstr "Plus gras"
+
+#: assets/js/uip/options/uip-text-format.js:81
+#, fuzzy
+msgid "Lighter"
+msgstr "Plus fin"
+
+#: assets/js/uip/options/uip-text-format.js:85
+#, fuzzy
+msgid "Normal"
+msgstr "Normal"
+
+#: assets/js/uip/options/uip-text-format.js:89
+#: assets/js/uip/options/uip-text-format.js:161
+#: assets/js/uip/uibuilder/uip-builder-variables.js:98
+#, fuzzy
+msgid "Inherit"
+msgstr "Hériter"
+
+#: assets/js/uip/options/uip-text-format.js:95
+#, fuzzy
+msgid "None"
+msgstr "Aucun"
+
+#: assets/js/uip/options/uip-text-format.js:99
+#, fuzzy
+msgid "Capitalize"
+msgstr "Mettre une majuscule"
+
+#: assets/js/uip/options/uip-text-format.js:103
+#, fuzzy
+msgid "Lowercase"
+msgstr "Minuscule"
+
+#: assets/js/uip/options/uip-text-format.js:107
+#, fuzzy
+msgid "Uppercase"
+msgstr "Majuscule"
+
+#: assets/js/uip/options/uip-text-format.js:113
+#: assets/js/uip/uibuilder/uip-builder-variables.js:50
+#, fuzzy
+msgid "Arial / Helvetica"
+msgstr "Arial / Helvetica"
+
+#: assets/js/uip/options/uip-text-format.js:117
+#: assets/js/uip/uibuilder/uip-builder-variables.js:54
+#, fuzzy
+msgid "Times New Roman"
+msgstr "Times New Roman"
+
+#: assets/js/uip/options/uip-text-format.js:121
+#: assets/js/uip/uibuilder/uip-builder-variables.js:58
+#, fuzzy
+msgid "Courier New"
+msgstr "Courier New"
+
+#: assets/js/uip/options/uip-text-format.js:125
+#: assets/js/uip/uibuilder/uip-builder-variables.js:62
+#, fuzzy
+msgid "Tahoma"
+msgstr "Tahoma"
+
+#: assets/js/uip/options/uip-text-format.js:129
+#: assets/js/uip/uibuilder/uip-builder-variables.js:66
+#, fuzzy
+msgid "Trebuchet MS"
+msgstr "Trebuchet MS"
+
+#: assets/js/uip/options/uip-text-format.js:133
+#: assets/js/uip/uibuilder/uip-builder-variables.js:70
+#, fuzzy
+msgid "Verdana"
+msgstr "Verdana"
+
+#: assets/js/uip/options/uip-text-format.js:137
+#: assets/js/uip/uibuilder/uip-builder-variables.js:74
+#, fuzzy
+msgid "Georgia"
+msgstr "Géorgie"
+
+#: assets/js/uip/options/uip-text-format.js:141
+#: assets/js/uip/uibuilder/uip-builder-variables.js:78
+#, fuzzy
+msgid "Garamond"
+msgstr "Garamond"
+
+#: assets/js/uip/options/uip-text-format.js:145
+#: assets/js/uip/uibuilder/uip-builder-variables.js:82
+#, fuzzy
+msgid "Arial Black"
+msgstr "Arial Black"
+
+#: assets/js/uip/options/uip-text-format.js:149
+#: assets/js/uip/uibuilder/uip-builder-variables.js:86
+#, fuzzy
+msgid "Impact"
+msgstr "Impact"
+
+#: assets/js/uip/options/uip-text-format.js:153
+#: assets/js/uip/uibuilder/uip-builder-variables.js:90
+#, fuzzy
+msgid "Brush Script MT"
+msgstr "Brush Script MT"
+
+#: assets/js/uip/options/uip-text-format.js:157
+#: assets/js/uip/uibuilder/uip-builder-variables.js:94
+#, fuzzy
+msgid "UiPress icons"
+msgstr "Icônes UiPress"
+
+#: assets/js/uip/options/uip-units.js:13
+#, fuzzy
+msgid "Percent"
+msgstr "Pourcent"
+
+#: assets/js/uip/options/uip-units.js:14
+#, fuzzy
+msgid "Points"
+msgstr "Points"
+
+#: assets/js/uip/options/uip-units.js:16
+#, fuzzy
+msgid "Root font size"
+msgstr "Taille de la police de base"
+
+#: assets/js/uip/options/uip-units.js:17
+#, fuzzy
+msgid "Viewport height"
+msgstr "Hauteur de la fenêtre de visualisation"
+
+#: assets/js/uip/options/uip-units.js:18
+#, fuzzy
+msgid "Viewport width"
+msgstr "Largeur du Viewport"
+
+#: assets/js/uip/tools/uip-php-error-log.js:22
+#, fuzzy
+msgid "Search errors"
+msgstr "Erreurs de recherche"
+
+#: assets/js/uip/tools/uip-php-error-log.js:23
+#, fuzzy
+msgid "Error log"
+msgstr "Journal d'erreurs"
+
+#: assets/js/uip/tools/uip-php-error-log.js:24
+#, fuzzy
+msgid "Misc"
+msgstr "Divers"
+
+#: assets/js/uip/tools/uip-php-error-log.js:25
+#, fuzzy
+msgid "Fatal"
+msgstr "Fatal"
+
+#: assets/js/uip/tools/uip-php-error-log.js:26
+#, fuzzy
+msgid "Warning"
+msgstr "Avertissement"
+
+#: assets/js/uip/tools/uip-php-error-log.js:27
+#, fuzzy
+msgid "Syntax"
+msgstr "Syntaxe"
+
+#: assets/js/uip/tools/uip-php-error-log.js:28
+#, fuzzy
+msgid "Notice"
+msgstr "Avis"
+
+#: assets/js/uip/tools/uip-php-error-log.js:29
+#, fuzzy
+msgid "Exception"
+msgstr "Exception"
+
+#: assets/js/uip/tools/uip-php-error-log.js:30
+#, fuzzy
+msgid "entries"
+msgstr "entrées"
+
+#: assets/js/uip/tools/uip-php-error-log.js:31
+#, fuzzy
+msgid "Newest first"
+msgstr "Les plus récents en premier"
+
+#: assets/js/uip/tools/uip-php-error-log.js:32
+#, fuzzy
+msgid "Oldest first"
+msgstr "Les plus anciens en premier"
+
+#: assets/js/uip/tools/uip-php-error-log.js:33
+#: assets/js/uip/uibuilder/uip-template-library.js:32
+#, fuzzy
+msgid "Sort by"
+msgstr "Trier par"
+
+#: assets/js/uip/tools/uip-php-error-log.js:34
+#, fuzzy
+msgid "line"
+msgstr "ligne"
+
+#: assets/js/uip/tools/uip-php-error-log.js:35
+#, fuzzy
+msgid "Refresh log"
+msgstr "Rafraîchir le journal"
+
+#: assets/js/uip/tools/uip-php-error-log.js:36
+#, fuzzy
+msgid "Stack trace"
+msgstr "Trace de la pile"
+
+#: assets/js/uip/tools/uip-php-error-log.js:37
+#, fuzzy
+msgid "No PHP errors to display!"
+msgstr "Aucune erreur PHP à afficher !"
+
+#: assets/js/uip/ui-builder.js:184
+#, fuzzy
+msgid "List View"
+msgstr "Vue en liste"
+
+#: assets/js/uip/ui-builder.js:191
+#, fuzzy
+msgid "Block Settings"
+msgstr "Paramètres de bloc"
+
+#: assets/js/uip/ui-builder.js:311 assets/js/uip/uip-app.js:161
+#, fuzzy
+msgid "Unable to load all plugins"
+msgstr "Impossible de charger tous les plugins"
+
+#: assets/js/uip/ui-builder.js:311 assets/js/uip/ui-builder.js:315
+#: assets/js/uip/uip-app.js:161 assets/js/uip/uip-app.js:166
+#, fuzzy
+msgid "Some functions may not work as expected."
+msgstr "Certaines fonctions peuvent ne pas fonctionner comme prévu."
+
+#: assets/js/uip/ui-builder.js:315 assets/js/uip/uip-app.js:166
+#, fuzzy
+msgid "Unable to load all components"
+msgstr "Impossible de charger tous les composants"
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:13
+#, fuzzy
+msgid "White label"
+msgstr "Marque blanche"
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:18
+#: assets/js/uip/uibuilder/uip-block-settings.js:29
+#: assets/js/uip/uibuilder/uip-builder-settings.js:33
+#: assets/js/uip/uibuilder/uip-builder-variables.js:12
+#, fuzzy
+msgid "Theme"
+msgstr "Thème"
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:23
+#, fuzzy
+msgid "Login"
+msgstr "Login"
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:28
+#, fuzzy
+msgid "Posts and pages"
+msgstr "Articles et pages trouvés"
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:34
+#, fuzzy
+msgid "Plugins"
+msgstr "Extensions"
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:39
+#, fuzzy
+msgid "General"
+msgstr "Général"
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:54
+#: assets/js/uip/uibuilder/global-settings-groups.js:62
+#, fuzzy
+msgid ""
+"This will replace the WordPress logo with your own. The logo will also "
+"become available in the dynamic options in the builder."
+msgstr ""
+"Cela remplacera le logo WordPress par le vôtre. Le logo sera également "
+"disponible dans les options dynamiques du constructeur."
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:69
+#, fuzzy
+msgid "Remove jQuery Migrate front end"
+msgstr "Suppression du frontal jQuery Migrate"
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:70
+#, fuzzy
+msgid "Removes jQuery migrate script from all front end pages."
+msgstr "Suppression du script jQuery migrate de toutes les pages d'accueil."
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:77
+#, fuzzy
+msgid "Remove jQuery Migrate back end"
+msgstr "Supprimer le back-end de jQuery Migrate"
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:78
+#, fuzzy
+msgid ""
+"Removes jQuery migrate script from all back end pages. This may break some "
+"functions in the back end"
+msgstr ""
+"Supprime le script jQuery migrate de toutes les pages d'arrière-plan. Cela "
+"peut casser certaines fonctions du back-end"
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:85
+#, fuzzy
+msgid "Add post ID to table"
+msgstr "Ajouter l'ID du poste dans le tableau"
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:86
+#, fuzzy
+msgid ""
+"Adds the post ID to each row in a table. Works for posts, custom post types, "
+"pages and users."
+msgstr ""
+"Ajoute l'ID du message à chaque ligne d'un tableau. Fonctionne pour les "
+"articles, les types d'articles personnalisés, les pages et les utilisateurs."
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:93
+#, fuzzy
+msgid "Disply last modified in table"
+msgstr "Disply dernière modification en table"
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:94
+#, fuzzy
+msgid ""
+"Adds a last modified column to post tables. Works for posts, custom post "
+"types and pages."
+msgstr ""
+"Ajoute une colonne \"dernière modification\" aux tableaux de messages. "
+"Fonctionne pour les articles, les types d'articles personnalisés et les "
+"pages."
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:101
+#, fuzzy
+msgid "Add plugin status"
+msgstr "Ajouter le statut du plugin"
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:102
+#, fuzzy
+msgid "Adds a plugin status column to the plugin table"
+msgstr "Ajoute une colonne d'état des plugins à la table des plugins"
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:109
+#, fuzzy
+msgid "Login logo"
+msgstr "Logo de connexion"
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:110
+#, fuzzy
+msgid "This will replace the WordPress logo with your own on the login page."
+msgstr ""
+"Cela remplacera le logo de WordPress par le vôtre sur la page de connexion."
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:118
+#, fuzzy
+msgid "Logo alignment"
+msgstr "Alignement du logo"
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:119
+#, fuzzy
+msgid "Sets the logo alignment."
+msgstr "Définit l'alignement du logo."
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:143
+#, fuzzy
+msgid "Login theme"
+msgstr "Thème de connexion"
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:144
+#, fuzzy
+msgid "Adds a modern theme to the login page"
+msgstr "Ajout d'un thème moderne à la page de connexion"
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:152
+#, fuzzy
+msgid "Form alignment"
+msgstr "Nom du formulaire"
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:153
+#, fuzzy
+msgid "Sets the position of the login form."
+msgstr "Définit la position du formulaire de connexion."
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:177
+#, fuzzy
+msgid "Login background image"
+msgstr "Image de fond de la page connexion"
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:178
+#, fuzzy
+msgid "Adds a background image to the login page."
+msgstr "Ajoute une image de fond à la page de connexion."
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:189
+#, fuzzy
+msgid "Forces dark mode on the login page"
+msgstr "Force le mode sombre sur la page de connexion"
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:198
+#, fuzzy
+msgid "Disable language selector"
+msgstr "Désactiver le sélecteur de langue"
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:199
+#, fuzzy
+msgid "Disables the language selector on the login page"
+msgstr "Désactive le sélecteur de langue sur la page de connexion"
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:208
+#, fuzzy
+msgid "Remove UiPress link"
+msgstr "Supprimer le lien UiPress"
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:209
+#, fuzzy
+msgid "Removes the powered by uipress link"
+msgstr "Supprime le lien powered by uipress"
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:218
+#, fuzzy
+msgid "Custom HTML"
+msgstr "HTML Personnalisé"
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:219
+#, fuzzy
+msgid ""
+"HTML to be added to the side panel of the login page. Only works when the "
+"login theme is enabled and not using the centered form."
+msgstr ""
+"HTML à ajouter au panneau latéral de la page de connexion. Ne fonctionne que "
+"lorsque le thème de connexion est activé et n'utilise pas le formulaire "
+"centré."
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:231
+#: assets/js/uip/uibuilder/uip-builder-settings.js:39
+#, fuzzy
+msgid "Custom CSS"
+msgstr "CSS personnalisé"
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:232
+#, fuzzy
+msgid "CSS to be added to the login page"
+msgstr "CSS à ajouter à la page de connexion"
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:246
+#, fuzzy
+msgid "Hide UiPress from plugin table"
+msgstr "Cacher UiPress de la table des plugins"
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:247
+#, fuzzy
+msgid ""
+"If enabled, both UiPress lite and pro (if installed) will be hidden from the "
+"plugins table"
+msgstr ""
+"Si cette option est activée, UiPress lite et pro (s'ils sont installés) "
+"seront cachés de la table des plugins"
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:256
+#, fuzzy
+msgid "Change Howdy message"
+msgstr "Modifier le message Howdy"
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:257
+#, fuzzy
+msgid "Replaces the Howdy message in the toolbar with one of your choosing"
+msgstr ""
+"Remplace le message \"Howdy\" de la barre d'outils par un message de votre "
+"choix"
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:264
+#, fuzzy
+msgid "Remove Howdy message"
+msgstr "Supprimer le message \"Howdy"
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:265
+#, fuzzy
+msgid "Removes the Howdy message in the toolbar"
+msgstr "Supprime le message \"Howdy\" de la barre d'outils"
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:274
+#, fuzzy
+msgid "Add user roles as body class"
+msgstr "Ajouter les rôles des utilisateurs comme classe de corps"
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:275
+#, fuzzy
+msgid ""
+"If enabled, the current user roles will be added as classes to the admin "
+"body tag. This can give you more flexibility in your css for role based "
+"conditions"
+msgstr ""
+"Si cette option est activée, les rôles des utilisateurs actuels seront "
+"ajoutés en tant que classes à la balise body de l'administrateur. Cela peut "
+"vous donner plus de flexibilité dans votre css pour les conditions basées "
+"sur les rôles"
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:283
+#, fuzzy
+msgid "Disable dynamic loading"
+msgstr "Désactiver le chargement dynamique"
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:284
+#, fuzzy
+msgid ""
+"If enabled, dynamic loading on templates will be disabled and every link "
+"will be loaded with a page refresh"
+msgstr ""
+"Si cette option est activée, le chargement dynamique des modèles sera "
+"désactivé et chaque lien sera chargé lors du rafraîchissement de la page"
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:292
+#, fuzzy
+msgid "Enqueue styles"
+msgstr "Styles en file d’attente"
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:293
+#, fuzzy
+msgid "Add stylesheets to the head of every admin page"
+msgstr ""
+"Ajoutez des stylesheets (feuille de style) au <head> de toutes les pages "
+"admin et pages de connexion"
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:302
+#, fuzzy
+msgid "Enqueue scripts"
+msgstr "Enqueue scripts"
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:303
+#, fuzzy
+msgid "Add scripts to the head of every admin page"
+msgstr ""
+"Ajouter des scripts à <head> sur toutes les page admin et page de connexion"
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:313
+#, fuzzy
+msgid "HTML for head"
+msgstr "HTML pour <head>"
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:314
+#, fuzzy
+msgid "Add HTML here to be added to every admin page head section"
+msgstr ""
+"Ajoutez ici du HTML qui sera ajouté à la section d'en-tête de chaque page "
+"d'administration"
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:328
+#, fuzzy
+msgid "Admin theme "
+msgstr "Thème Admin"
+
+#: assets/js/uip/uibuilder/global-settings-groups.js:329
+#, fuzzy
+msgid ""
+"If enabled, a simple modernised theme will be applied to the admin area. "
+"This is an alternative to using the builder for your UI"
+msgstr ""
+"Si cette option est activée, un thème simple et modernisé sera appliqué à la "
+"zone d'administration. Il s'agit d'une alternative à l'utilisation du "
+"constructeur pour votre interface utilisateur"
+
+#: assets/js/uip/uibuilder/uip-block-actions.js:22
+#: assets/js/uip/uibuilder/uip-builder-patterns-list.js:60
+#: assets/js/uip/uibuilder/uip-save-pattern.js:20
+#, fuzzy
+msgid "Save pattern"
+msgstr "Sauvegarder le modèle"
+
+#: assets/js/uip/uibuilder/uip-block-actions.js:23
+#: assets/js/uip/uibuilder/uip-block-settings.js:54
+#: assets/js/uip/uibuilder/uip-builder-framework.js:100
+#, fuzzy
+msgid "Settings"
+msgstr "Paramètres"
+
+#: assets/js/uip/uibuilder/uip-block-actions.js:25
+#, fuzzy
+msgid "Copy"
+msgstr "Copier"
+
+#: assets/js/uip/uibuilder/uip-block-actions.js:26
+#, fuzzy
+msgid "Paste"
+msgstr "Coller"
+
+#: assets/js/uip/uibuilder/uip-block-actions.js:28
+#, fuzzy
+msgid "Duplicate"
+msgstr "Dupliquer"
+
+#: assets/js/uip/uibuilder/uip-block-actions.js:29
+#, fuzzy
+msgid "Sync pattern"
+msgstr "Un modèle de synchronisation ?"
+
+#: assets/js/uip/uibuilder/uip-block-actions.js:120
+#: assets/js/uip/uibuilder/uip-block-actions.js:121
+#, fuzzy
+msgid " duplicated"
+msgstr "Menu dupliqué"
+
+#: assets/js/uip/uibuilder/uip-block-actions.js:158
+#: assets/js/uip/uibuilder/uip-block-actions.js:159
+#, fuzzy
+msgid " pasted"
+msgstr " collé"
+
+#: assets/js/uip/uibuilder/uip-block-actions.js:194
+#: assets/js/uip/uibuilder/uip-block-actions.js:196
+#, fuzzy
+msgid "block deleted"
+msgstr "bloc supprimé"
+
+#: assets/js/uip/uibuilder/uip-block-actions.js:212
+#, fuzzy
+msgid "Sync pattern?"
+msgstr "Un modèle de synchronisation ?"
+
+#: assets/js/uip/uibuilder/uip-block-actions.js:213
+#, fuzzy
+msgid ""
+"This will update the pattern template and will sync this pattern's changes "
+"accross all templates using the same pattern"
+msgstr ""
+"Cela mettra à jour le modèle de motif et synchronisera les changements de ce "
+"motif avec tous les modèles utilisant le même motif"
+
+#: assets/js/uip/uibuilder/uip-block-actions.js:214
+#, fuzzy
+msgid "Sync patern"
+msgstr "Paternité de la synchro"
+
+#: assets/js/uip/uibuilder/uip-block-actions.js:223
+#, fuzzy
+msgid "Pattern sync in progress"
+msgstr "Synchronisation des motifs en cours"
+
+#: assets/js/uip/uibuilder/uip-block-actions.js:263
+#, fuzzy
+msgid "Pattern succesfully synced"
+msgstr "Synchronisation réussie du modèle"
+
+#: assets/js/uip/uibuilder/uip-block-actions.js:286
+#, fuzzy
+msgid "Block copied"
+msgstr "Bloc copié"
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:25
+#: assets/js/uip/uibuilder/uip-template-library.js:20
+#, fuzzy
+msgid "This block no longer exists"
+msgstr "Ce bloc n'existe plus"
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:26
+#, fuzzy
+msgid "Go back"
+msgstr "Retour"
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:27
+#, fuzzy
+msgid "Block ID"
+msgstr "ID de Bloc"
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:28
+#: assets/js/uip/uibuilder/uip-builder-global-settings.js:17
+#, fuzzy
+msgid "This is a pro option. Upgrade to unlock"
+msgstr ""
+"Il s'agit d'une option pro. Passez à la version supérieure pour débloquer"
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:30
+#, fuzzy
+msgid "Options"
+msgstr "Options"
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:31
+#, fuzzy
+msgid "Building settings object..."
+msgstr "Objet des paramètres de construction..."
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:32
+#, fuzzy
+msgid ""
+"Block unique id. If you change this it must remain unique and can not be "
+"blank"
+msgstr ""
+"Identifiant unique du bloc. Si vous le modifiez, il doit rester unique et ne "
+"peut être vide"
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:33
+#, fuzzy
+msgid "Hidden on device"
+msgstr "Caché sur le dispositif"
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:34
+#, fuzzy
+msgid "Tooltip"
+msgstr "Info-bulle"
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:35
+#, fuzzy
+msgid "Message"
+msgstr "Message"
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:36
+#, fuzzy
+msgid "Delay before show"
+msgstr "Délai avant le spectacle"
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:37
+#, fuzzy
+msgid "Styles"
+msgstr "Styles"
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:39
+#, fuzzy
+msgid "Currently editing"
+msgstr "Actuellement en cours d'édition"
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:44
+#, fuzzy
+msgid "Light mode"
+msgstr "Mode Light"
+
+#: assets/js/uip/uibuilder/uip-block-settings.js:329
+#, fuzzy
+msgid "This block has no settings"
+msgstr "Ce bloc n'a pas de paramètres"
+
+#: assets/js/uip/uibuilder/uip-builder-blocks-list.js:18
+#: assets/js/uip/uibuilder/uip-builder-patterns-list.js:56
+#: assets/js/uip/uibuilder/uip-template-library.js:22
+#, fuzzy
+msgid "Pro"
+msgstr "Pro"
+
+#: assets/js/uip/uibuilder/uip-builder-blocks-list.js:19
+#, fuzzy
+msgid "Search blocks..."
+msgstr "Recherche de blocs..."
+
+#: assets/js/uip/uibuilder/uip-builder-drop-area.js:14
+#: assets/js/uip/uibuilder/uip-treeview-drop-area.js:13
+#, fuzzy
+msgid "Drag blocks here"
+msgstr "Faites glisser les blocs ici"
+
+#: assets/js/uip/uibuilder/uip-builder-drop-area.js:20
+#, fuzzy
+msgid "This component is missing or can't be loaded"
+msgstr "Ce composant est manquant ou ne peut pas être chargé"
+
+#: assets/js/uip/uibuilder/uip-builder-drop-area.js:25
+#: assets/js/uip/uibuilder/uip-builder-framework.js:88
+#, fuzzy
+msgid "Blocks"
+msgstr "Blocs"
+
+#: assets/js/uip/uibuilder/uip-builder-drop-area.js:29
+#: assets/js/uip/uibuilder/uip-builder-framework.js:92
+#: assets/js/uip/uibuilder/uip-builder-patterns-list.js:65
+#, fuzzy
+msgid "Patterns"
+msgstr "Les modèles"
+
+#: assets/js/uip/uibuilder/uip-builder-drop-area.js:65
+#: assets/js/uip/uibuilder/uip-treeview-drop-area.js:47
+#, fuzzy
+msgid "block added"
+msgstr "bloc ajouté"
+
+#: assets/js/uip/uibuilder/uip-builder-drop-area.js:68
+#: assets/js/uip/uibuilder/uip-treeview-drop-area.js:50
+#, fuzzy
+msgid "block moved"
+msgstr "bloc déplacé"
+
+#: assets/js/uip/uibuilder/uip-builder-framework.js:34
+#, fuzzy
+msgid "Layers"
+msgstr "Calques"
+
+#: assets/js/uip/uibuilder/uip-builder-framework.js:35
+#, fuzzy
+msgid "Welcome to the uiBuilder"
+msgstr "Bienvenue à l'uiBuilder"
+
+#: assets/js/uip/uibuilder/uip-builder-framework.js:37
+#, fuzzy
+msgid ""
+"Brand new for UiPress 3, the uiBuilder is a powerful drag and drop tool for "
+"building great looking, functional admin experiences for yourself or your "
+"clients"
+msgstr ""
+"Tout nouveau dans UiPress 3, l'uiBuilder est un puissant outil de glisser-"
+"déposer qui permet de créer des expériences d'administration fonctionnelles "
+"et esthétiques pour vous-même ou vos clients"
+
+#: assets/js/uip/uibuilder/uip-builder-framework.js:40
+#, fuzzy
+msgid "Browse premade templates or start from scratch"
+msgstr "Parcourir des modèles préétablis ou partir de zéro"
+
+#: assets/js/uip/uibuilder/uip-builder-framework.js:41
+#, fuzzy
+msgid "Blank canvas"
+msgstr "Toile vierge"
+
+#: assets/js/uip/uibuilder/uip-builder-framework.js:42
+#, fuzzy
+msgid "View templates"
+msgstr "Afficher les modèles"
+
+#: assets/js/uip/uibuilder/uip-builder-framework.js:43
+#, fuzzy
+msgid "Don't show this again"
+msgstr "Ne plus afficher à nouveau"
+
+#: assets/js/uip/uibuilder/uip-builder-framework.js:44
+#, fuzzy
+msgid "Close"
+msgstr "Fermer"
+
+#: assets/js/uip/uibuilder/uip-builder-framework.js:45
+#, fuzzy
+msgid "Deletes all blocks"
+msgstr "Supprime tous les blocs"
+
+#: assets/js/uip/uibuilder/uip-builder-framework.js:46
+#, fuzzy
+msgid "Hide layers"
+msgstr "Cacher les couches"
+
+#: assets/js/uip/uibuilder/uip-builder-framework.js:47
+#, fuzzy
+msgid "Block shortcuts"
+msgstr "Bloquer les raccourcis"
+
+#: assets/js/uip/uibuilder/uip-builder-framework.js:48
+#, fuzzy
+msgid ""
+"As you build your template, key blocks will automatically be added here for "
+"easy settings access"
+msgstr ""
+"Au fur et à mesure que vous construisez votre modèle, des blocs clés seront "
+"automatiquement ajoutés ici pour faciliter l'accès aux paramètres"
+
+#: assets/js/uip/uibuilder/uip-builder-framework.js:69
+#, fuzzy
+msgid "Draft Layout"
+msgstr "Projet de mise en page"
+
+#: assets/js/uip/uibuilder/uip-builder-framework.js:351
+#, fuzzy
+msgid "This will delete all blocks from your template."
+msgstr "Cela supprimera tous les blocs de votre modèle."
+
+#: assets/js/uip/uibuilder/uip-builder-framework.js:354
+#, fuzzy
+msgid "Template blocks deleted"
+msgstr "Blocs de modèles supprimés"
+
+#: assets/js/uip/uibuilder/uip-builder-global-settings.js:14
+#: assets/js/uip/uibuilder/uip-template-list.js:38
+#, fuzzy
+msgid "Site settings"
+msgstr "Paramètres du site"
+
+#: assets/js/uip/uibuilder/uip-builder-global-settings.js:15
+#, fuzzy
+msgid "Save settings"
+msgstr "Enregistrer les paramètres"
+
+#: assets/js/uip/uibuilder/uip-builder-global-settings.js:16
+#, fuzzy
+msgid "Settings saved"
+msgstr "Paramètres sauvegardés"
+
+#: assets/js/uip/uibuilder/uip-builder-history.js:18
+#, fuzzy
+msgid "Undo"
+msgstr "Annuler"
+
+#: assets/js/uip/uibuilder/uip-builder-history.js:19
+#, fuzzy
+msgid "Redo"
+msgstr "Refaire"
+
+#: assets/js/uip/uibuilder/uip-builder-history.js:20
+#, fuzzy
+msgid "History states"
+msgstr "Les états historiques"
+
+#: assets/js/uip/uibuilder/uip-builder-history.js:38
+#, fuzzy
+msgid "Project opened"
+msgstr "Projet ouvert"
+
+#: assets/js/uip/uibuilder/uip-builder-patterns-list.js:23
+#, fuzzy
+msgid "2 column"
+msgstr "2 colonne"
+
+#: assets/js/uip/uibuilder/uip-builder-patterns-list.js:30
+#, fuzzy
+msgid "3 column"
+msgstr "3 colonnes"
+
+#: assets/js/uip/uibuilder/uip-builder-patterns-list.js:37
+#, fuzzy
+msgid "4 column"
+msgstr "4 colonnes"
+
+#: assets/js/uip/uibuilder/uip-builder-patterns-list.js:43
+#, fuzzy
+msgid "A basic sidebar, toolbar and content frame layout"
+msgstr ""
+"Une disposition de base de la barre latérale, de la barre d'outils et du "
+"cadre de contenu"
+
+#: assets/js/uip/uibuilder/uip-builder-patterns-list.js:44
+#, fuzzy
+msgid "Admin boilerplate"
+msgstr "Plaque de l'administrateur"
+
+#: assets/js/uip/uibuilder/uip-builder-patterns-list.js:53
+#: assets/js/uip/uibuilder/uip-save-pattern.js:34
+#, fuzzy
+msgid "Block"
+msgstr "Bloquer"
+
+#: assets/js/uip/uibuilder/uip-builder-patterns-list.js:57
+#, fuzzy
+msgid "Search patterns..."
+msgstr "Recherche de modèles..."
+
+#: assets/js/uip/uibuilder/uip-builder-patterns-list.js:58
+#: assets/js/uip/uibuilder/uip-save-pattern.js:17
+#, fuzzy
+msgid "Pattern title"
+msgstr "Titre du motif"
+
+#: assets/js/uip/uibuilder/uip-builder-patterns-list.js:59
+#: assets/js/uip/uibuilder/uip-save-pattern.js:18
+#, fuzzy
+msgid "Pattern type"
+msgstr "Type de motif"
+
+#: assets/js/uip/uibuilder/uip-builder-patterns-list.js:61
+#: assets/js/uip/uibuilder/uip-save-pattern.js:21
+#, fuzzy
+msgid "Description"
+msgstr "Description"
+
+#: assets/js/uip/uibuilder/uip-builder-patterns-list.js:62
+#: assets/js/uip/uibuilder/uip-save-pattern.js:22
+#, fuzzy
+msgid "Pattern icon"
+msgstr "Icône de motif"
+
+#: assets/js/uip/uibuilder/uip-builder-patterns-list.js:64
+#, fuzzy
+msgid "Layouts"
+msgstr "Mises en page"
+
+#: assets/js/uip/uibuilder/uip-builder-patterns-list.js:202
+#, fuzzy
+msgid "Pattern exported"
+msgstr "Motif exporté"
+
+#: assets/js/uip/uibuilder/uip-builder-patterns-list.js:206
+#, fuzzy
+msgid "Importing pattern"
+msgstr "Importation d'un motif"
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:20
+#, fuzzy
+msgid "Theme styles"
+msgstr "Styles du thème"
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:21
+#: assets/js/uip/uibuilder/uip-builder-variables.js:18
+#, fuzzy
+msgid "Revert style back to default"
+msgstr "Rétablir le style par défaut"
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:22
+#, fuzzy
+msgid "Applies to"
+msgstr "S'applique à"
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:23
+#: assets/js/uip/uibuilder/uip-template-list.js:17
+#, fuzzy
+msgid "Excludes"
+msgstr "Exclut"
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:24
+#, fuzzy
+msgid "Template type"
+msgstr "Type de modèle"
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:26
+#, fuzzy
+msgid "Admin Page"
+msgstr "Page d'administration"
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:29
+#, fuzzy
+msgid "Template will now load for you!"
+msgstr "Le modèle sera maintenant chargé pour vous !"
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:30
+#, fuzzy
+msgid "Take care not to revoke access to anything you may need in the admin."
+msgstr ""
+"Veillez à ne pas révoquer l'accès à tout ce dont vous pourriez avoir besoin "
+"dans l'administration."
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:31
+#, fuzzy
+msgid "If you haven't already, we recommend setting up:"
+msgstr ""
+"Si vous ne l'avez pas encore fait, nous vous recommandons de le faire :"
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:32
+#, fuzzy
+msgid "safe mode"
+msgstr "mode sans échec"
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:35
+#: assets/js/uip/uibuilder/uip-builder-variables.js:14
+#, fuzzy
+msgid "Variable label"
+msgstr "Etiquette Variable "
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:36
+#: assets/js/uip/uibuilder/uip-builder-variables.js:15
+#, fuzzy
+msgid "Variable name"
+msgstr "Nom de la variable"
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:37
+#: assets/js/uip/uibuilder/uip-builder-variables.js:16
+#, fuzzy
+msgid "Delete variable"
+msgstr "Supprimer la variable"
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:40
+#, fuzzy
+msgid "Custom JS"
+msgstr "JS personnalisé"
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:41
+#: assets/js/uip/uibuilder/uip-builder-settings.js:63
+#: assets/js/uip/uibuilder/uip-builder-variables.js:25
+#, fuzzy
+msgid "Light"
+msgstr "Éclairage"
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:42
+#: assets/js/uip/uibuilder/uip-builder-settings.js:67
+#: assets/js/uip/uibuilder/uip-builder-variables.js:29
+#, fuzzy
+msgid "Dark"
+msgstr "Sombre"
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:43
+#: assets/js/uip/uibuilder/uip-ui-preview.js:47
+#, fuzzy
+msgid "Template name"
+msgstr "Nom du modèle"
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:44
+#: assets/js/uip/uibuilder/uip-template-list.js:21
+#: assets/js/uip/uibuilder/uip-template-list.js:55
+#: assets/js/uip/uibuilder/uip-ui-preview.js:43
+#: assets/js/uip/uibuilder/uip-ui-preview.js:48
+#, fuzzy
+msgid "Active"
+msgstr "Actif"
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:45
+#, fuzzy
+msgid "Select users and roles"
+msgstr "Sélectionner les utilisateurs et les rôles"
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:46
+#, fuzzy
+msgid "Search users and roles"
+msgstr "Rechercher des utilisateurs ou des rôles"
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:47
+#: assets/js/uip/uibuilder/uip-builder-variables.js:17
+#, fuzzy
+msgid "custom"
+msgstr "personnalisé"
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:48
+#, fuzzy
+msgid "Menu icon"
+msgstr "Icône du menu"
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:49
+#, fuzzy
+msgid "Add to submenu"
+msgstr "Ajouter au sous-menu"
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:50
+#, fuzzy
+msgid "None (top level)"
+msgstr "Aucun (niveau supérieur)"
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:51
+#, fuzzy
+msgid "Apply to subsites"
+msgstr "Appliquer aux substituts"
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:52
+#, fuzzy
+msgid "Is this an admin page?"
+msgstr "Slug des pages d'administration"
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:54
+#, fuzzy
+msgid ""
+"This template does not contain a content block. The content block is key to "
+"navigating the admin. Setting this live as a uiTemplate can cause a lock out."
+msgstr ""
+"Ce modèle ne contient pas de bloc de contenu. Le bloc de contenu est "
+"essentiel à la navigation dans l'administration. Si vous le mettez en direct "
+"en tant que uiTemplate, vous risquez d'être bloqué."
+
+#: assets/js/uip/uibuilder/uip-builder-settings.js:57
+#, fuzzy
+msgid "Page link"
+msgstr "Lien vers la page"
+
+#: assets/js/uip/uibuilder/uip-builder-variables.js:19
+#, fuzzy
+msgid "Search variables..."
+msgstr "Rechercher des variables..."
+
+#: assets/js/uip/uibuilder/uip-builder-variables.js:20
+#, fuzzy
+msgid "New variable"
+msgstr "Nouvelle variable"
+
+#: assets/js/uip/uibuilder/uip-builder-variables.js:40
+#, fuzzy
+msgid "Units"
+msgstr "Unités"
+
+#: assets/js/uip/uibuilder/uip-builder-variables.js:44
+#, fuzzy
+msgid "Font"
+msgstr "Police"
+
+#: assets/js/uip/uibuilder/uip-builder-variables.js:194
+#, fuzzy
+msgid "Variable deleted"
+msgstr "Variable supprimée"
+
+#: assets/js/uip/uibuilder/uip-builder-variables.js:198
+#, fuzzy
+msgid "Variable label is required"
+msgstr "Une étiquette variable est requise"
+
+#: assets/js/uip/uibuilder/uip-builder-variables.js:202
+#, fuzzy
+msgid "Variable name is required"
+msgstr "Le nom de la variable est obligatoire"
+
+#: assets/js/uip/uibuilder/uip-builder-variables.js:216
+#, fuzzy
+msgid "Variable created!"
+msgstr "Variable créée !"
+
+#: assets/js/uip/uibuilder/uip-save-pattern.js:16
+#, fuzzy
+msgid "Save as pattern"
+msgstr "Enregistrer comme modèle"
+
+#: assets/js/uip/uibuilder/uip-save-pattern.js:19
+#, fuzzy
+msgid ""
+"Patterns can be either single components or entire layoutsd and are a great "
+"way of creating reusable blocks for your projects."
+msgstr ""
+"Les motifs peuvent être des composants uniques ou des mises en page entières "
+"et constituent un excellent moyen de créer des blocs réutilisables pour vos "
+"projets."
+
+#: assets/js/uip/uibuilder/uip-save-pattern.js:56
+#, fuzzy
+msgid "Pattern not saved"
+msgstr "Le motif n'est pas sauvegardé"
+
+#: assets/js/uip/uibuilder/uip-save-pattern.js:56
+#, fuzzy
+msgid "Pattern title is required"
+msgstr "Le titre du motif est obligatoire"
+
+#: assets/js/uip/uibuilder/uip-template-library.js:21
+#, fuzzy
+msgid "Template library"
+msgstr "Bibliothèque de modèles"
+
+#: assets/js/uip/uibuilder/uip-template-library.js:23
+#: assets/js/uip/uibuilder/uip-template-list.js:24
+#, fuzzy
+msgid "Search templates"
+msgstr "Chercher dans les modèles"
+
+#: assets/js/uip/uibuilder/uip-template-library.js:24
+#, fuzzy
+msgid "Back to all templates"
+msgstr "Retour à tous les modèles"
+
+#: assets/js/uip/uibuilder/uip-template-library.js:25
+#, fuzzy
+msgid "Includes pro blocks"
+msgstr "Comprend des blocs pro"
+
+#: assets/js/uip/uibuilder/uip-template-library.js:26
+#, fuzzy
+msgid "Created by"
+msgstr "Créé par"
+
+#: assets/js/uip/uibuilder/uip-template-library.js:27
+#, fuzzy
+msgid "Add to template"
+msgstr "Ajouter au modèle"
+
+#: assets/js/uip/uibuilder/uip-template-library.js:28
+#, fuzzy
+msgid "Replace current layout"
+msgstr "Remplacer la mise en page actuelle"
+
+#: assets/js/uip/uibuilder/uip-template-library.js:29
+#, fuzzy
+msgid "Add to end of layout"
+msgstr "Ajouter à la fin de la mise en page"
+
+#: assets/js/uip/uibuilder/uip-template-library.js:30
+#, fuzzy
+msgid "Requires uipress"
+msgstr "Requiert uipress"
+
+#: assets/js/uip/uibuilder/uip-template-library.js:31
+#, fuzzy
+msgid "How many times this template has been downloaded"
+msgstr "Combien de fois ce modèle a été téléchargé"
+
+#: assets/js/uip/uibuilder/uip-template-library.js:33
+#, fuzzy
+msgid "Include"
+msgstr "Inclure"
+
+#: assets/js/uip/uibuilder/uip-template-library.js:38
+#, fuzzy
+msgid "Downloads"
+msgstr "Téléchargements"
+
+#: assets/js/uip/uibuilder/uip-template-library.js:42
+#, fuzzy
+msgid "Newest"
+msgstr "Plus récent"
+
+#: assets/js/uip/uibuilder/uip-template-library.js:46
+#, fuzzy
+msgid "Oldest"
+msgstr "Le plus ancien"
+
+#: assets/js/uip/uibuilder/uip-template-library.js:52
+#, fuzzy
+msgid "UI templates"
+msgstr "Modèles d'interface utilisateur"
+
+#: assets/js/uip/uibuilder/uip-template-library.js:57
+#: assets/js/uip/uibuilder/uip-template-list.js:67
+#, fuzzy
+msgid "Admin pages"
+msgstr "Pages d’administration"
+
+#: assets/js/uip/uibuilder/uip-template-library.js:140
+#, fuzzy
+msgid "Importing template"
+msgstr "Importation d'un modèle"
+
+#: assets/js/uip/uibuilder/uip-template-library.js:157
+#, fuzzy
+msgid "Unable to import template"
+msgstr "Impossible d'importer un modèle"
+
+#: assets/js/uip/uibuilder/uip-template-library.js:184
+#, fuzzy
+msgid "Template imported from library"
+msgstr "Modèle importé de la bibliothèque"
+
+#: assets/js/uip/uibuilder/uip-template-library.js:186
+#, fuzzy
+msgid "Template added"
+msgstr "Modèle ajouté"
+
+#: assets/js/uip/uibuilder/uip-template-list.js:16
+#, fuzzy
+msgid "Roles and users"
+msgstr "Selectionner les fonctions ou les utilisateurs"
+
+#: assets/js/uip/uibuilder/uip-template-list.js:18
+#, fuzzy
+msgid "Modified"
+msgstr "Modifié"
+
+#: assets/js/uip/uibuilder/uip-template-list.js:19
+#, fuzzy
+msgid "Name"
+msgstr "Nom"
+
+#: assets/js/uip/uibuilder/uip-template-list.js:22
+#: assets/js/uip/uibuilder/uip-ui-preview.js:44
+#: assets/js/uip/uibuilder/uip-ui-preview.js:49
+#, fuzzy
+msgid "Draft"
+msgstr "Brouillon"
+
+#: assets/js/uip/uibuilder/uip-template-list.js:23
+#, fuzzy
+msgid "results"
+msgstr "résultats"
+
+#: assets/js/uip/uibuilder/uip-template-list.js:27
+#, fuzzy
+msgid "Delete selected"
+msgstr "Supprimer la sélection"
+
+#: assets/js/uip/uibuilder/uip-template-list.js:29
+#: assets/js/uip/uibuilder/uip-ui-preview.js:45
+#, fuzzy
+msgid "New template"
+msgstr "Nouveau modèle"
+
+#: assets/js/uip/uibuilder/uip-template-list.js:30
+#, fuzzy
+msgid "It's a little quiet!"
+msgstr "C'est un peu calme par ici"
+
+#: assets/js/uip/uibuilder/uip-template-list.js:31
+#, fuzzy
+msgid ""
+"Create a new template to get started with uiBuilder or check out the docs"
+msgstr ""
+"Créez un nouveau modèle pour commencer à utiliser uiBuilder ou consultez la "
+"documentation"
+
+#: assets/js/uip/uibuilder/uip-template-list.js:32
+#, fuzzy
+msgid "View docs"
+msgstr "Afficher les documents"
+
+#: assets/js/uip/uibuilder/uip-template-list.js:33
+#, fuzzy
+msgid "Edit template"
+msgstr "Modifier le modèle"
+
+#: assets/js/uip/uibuilder/uip-template-list.js:34
+#, fuzzy
+msgid "Duplicate template"
+msgstr "Dupliquer le modèle de page"
+
+#: assets/js/uip/uibuilder/uip-template-list.js:35
+#, fuzzy
+msgid "Delete template"
+msgstr "Supprimer le modèle"
+
+#: assets/js/uip/uibuilder/uip-template-list.js:36
+#, fuzzy
+msgid "version"
+msgstr "version"
+
+#: assets/js/uip/uibuilder/uip-template-list.js:37
+#, fuzzy
+msgid "Tools"
+msgstr "Outils"
+
+#: assets/js/uip/uibuilder/uip-template-list.js:39
+#, fuzzy
+msgid "PHP error log"
+msgstr "Registre d’erreur PHP"
+
+#: assets/js/uip/uibuilder/uip-template-list.js:40
+#, fuzzy
+msgid "Role editor"
+msgstr "Rôle d'éditeur"
+
+#: assets/js/uip/uibuilder/uip-template-list.js:41
+#, fuzzy
+msgid "pro"
+msgstr "PRO"
+
+#: assets/js/uip/uibuilder/uip-template-list.js:42
+#, fuzzy
+msgid "Ui Template"
+msgstr "Modèle d'interface utilisateur"
+
+#: assets/js/uip/uibuilder/uip-template-list.js:51
+#, fuzzy
+msgid "All templates"
+msgstr "Tous les modèles"
+
+#: assets/js/uip/uibuilder/uip-template-list.js:59
+#, fuzzy
+msgid "Drafts"
+msgstr "Brouillons"
+
+#: assets/js/uip/uibuilder/uip-template-list.js:63
+#, fuzzy
+msgid "UI Templates"
+msgstr "Modèles d'interface utilisateur"
+
+#: assets/js/uip/uibuilder/uip-template-list.js:71
+#, fuzzy
+msgid "Frontend toolbars"
+msgstr "Barres d'outils frontales"
+
+#: assets/js/uip/uibuilder/uip-template-list.js:246
+#, fuzzy
+msgid "Are you sure you want to delete this template?"
+msgstr "Voulez-vous réellement supprimer ce modèle ?"
+
+#: assets/js/uip/uibuilder/uip-template-list.js:246
+#: assets/js/uip/uibuilder/uip-template-list.js:256
+#, fuzzy
+msgid "Deleted templates can't be recovered"
+msgstr "Les modèles supprimés ne peuvent pas être récupérés"
+
+#: assets/js/uip/uibuilder/uip-template-list.js:256
+#, fuzzy
+msgid "Are you sure you want to multiple templates?"
+msgstr "Êtes-vous sûr de vouloir utiliser plusieurs modèles ?"
+
+#: assets/js/uip/uibuilder/uip-ui-preview.js:27
+#, fuzzy
+msgid "Exit builder"
+msgstr "Sortie du constructeur"
+
+#: assets/js/uip/uibuilder/uip-ui-preview.js:28
+#, fuzzy
+msgid "Toggle layers panel"
+msgstr "Basculer le panneau des couches"
+
+#: assets/js/uip/uibuilder/uip-ui-preview.js:29
+#, fuzzy
+msgid "Back to template list"
+msgstr "Retour à la liste des modèles"
+
+#: assets/js/uip/uibuilder/uip-ui-preview.js:30
+#, fuzzy
+msgid "Zoom in"
+msgstr "Agrandir"
+
+#: assets/js/uip/uibuilder/uip-ui-preview.js:31
+#, fuzzy
+msgid "Zoom out"
+msgstr "Réduire"
+
+#: assets/js/uip/uibuilder/uip-ui-preview.js:33
+#: assets/js/uip/uibuilder/uip-ui-preview.js:59
+#, fuzzy
+msgid "Preview"
+msgstr "Prévisualisation"
+
+#: assets/js/uip/uibuilder/uip-ui-preview.js:34
+#, fuzzy
+msgid "Import template"
+msgstr "Importer un modèle"
+
+#: assets/js/uip/uibuilder/uip-ui-preview.js:35
+#, fuzzy
+msgid "Export template"
+msgstr "Insérer la description du modèle"
+
+#: assets/js/uip/uibuilder/uip-ui-preview.js:36
+#, fuzzy
+msgid "Template Library"
+msgstr "Bibliothèque de modèles"
+
+#: assets/js/uip/uibuilder/uip-ui-preview.js:40
+#, fuzzy
+msgid "Save"
+msgstr "Sauvegarder"
+
+#: assets/js/uip/uibuilder/uip-ui-preview.js:41
+#, fuzzy
+msgid "Help"
+msgstr "Aide"
+
+#: assets/js/uip/uibuilder/uip-ui-preview.js:42
+#, fuzzy
+msgid "Documentation and guides"
+msgstr "Documentation et guides"
+
+#: assets/js/uip/uibuilder/uip-ui-preview.js:46
+#, fuzzy
+msgid "Recent templates"
+msgstr "Modèles récents"
+
+#: assets/js/uip/uibuilder/uip-ui-preview.js:55
+#, fuzzy
+msgid "Builder"
+msgstr "Constructeur"
+
+#: assets/js/uip/uibuilder/uip-ui-preview.js:319
+#: assets/js/uip/uibuilder/uip-ui-preview.js:435
+#: assets/js/uip/uibuilder/uip-ui-preview.js:448
+#, fuzzy
+msgid "You have unsaved changes!"
+msgstr "Vous avez des changements non enregistrés !"
+
+#: assets/js/uip/uibuilder/uip-ui-preview.js:319
+#: assets/js/uip/uibuilder/uip-ui-preview.js:435
+#: assets/js/uip/uibuilder/uip-ui-preview.js:448
+#, fuzzy
+msgid "If you leave this page all unsaved changes will be discarded"
+msgstr ""
+"Si vous quittez cette page, toutes les modifications non sauvegardées seront "
+"supprimées"
+
+#: assets/js/uip/uibuilder/uip-ui-preview.js:347
+#, fuzzy
+msgid "Exporting layout"
+msgstr "Exportation de la mise en page"
+
+#: assets/js/uip/uibuilder/uip-ui-preview.js:370
+#, fuzzy
+msgid "Layout exported"
+msgstr "Mise en page exportée"
+
+#: assets/js/uip/uibuilder/uip-ui-preview.js:375
+#, fuzzy
+msgid "Importing layout"
+msgstr "Importation de la mise en page"
+
+#. Plugin Name of the plugin/theme
+#, fuzzy
+msgid "UiPress Lite"
+msgstr "UiPress Lite"
+
+#. Plugin URI of the plugin/theme
+#, fuzzy
+msgid "https://uipress.co"
+msgstr "https://uipress.co"
+
+#. Description of the plugin/theme
+#, fuzzy
+msgid ""
+"UiPress is an all in one solution for tailoring your WordPress admin "
+"interactions. From custom dashboards, profile pages to entire admin "
+"frameworks, the uiBuilder can do it all. Premade intuitive blocks and a "
+"library of professional templates make it super easy to transform the way "
+"your site users interact with your  content."
+msgstr ""
+"UiPress est une solution tout-en-un pour personnaliser les interactions de "
+"votre administration WordPress. Des tableaux de bord personnalisés, des "
+"pages de profil aux cadres d'administration entiers, le uiBuilder peut tout "
+"faire. Des blocs intuitifs préfabriqués et une bibliothèque de modèles "
+"professionnels permettent de transformer très facilement la façon dont les "
+"utilisateurs de votre site interagissent avec votre contenu."
+
+#. Author of the plugin/theme
+#, fuzzy
+msgid "Admin 2020"
+msgstr "Admin 2020"
