@@ -127,8 +127,8 @@ import * as UIbuilderDynamicInput from './options/uip-dynamic-input.min.js?ver=3
 import * as UIbuilderPadding from './options/uip-padding.min.js?ver=3.2.12';
 import * as UIbuilderSpacing from './options/uip-spacing.min.js?ver=3.2.12';
 import * as UIbuilderMargin from './options/uip-margin.min.js?ver=3.2.12';
-import * as UIbuilderIconSelect from './options/uip-icon-select.min.js?ver=3.2.12';
-import * as UIbuilderInlineIconSelect from './options/uip-inline-icon-select.min.js?ver=3.2.12';
+import UIbuilderIconSelect from './options/uip-icon-select.min.js?ver=3.2.12';
+import UIbuilderInlineIconSelect from './options/uip-inline-icon-select.min.js?ver=3.2.12';
 import * as UIbuilderChoiceSelect from './options/uip-choice-select.min.js?ver=3.2.12';
 import * as UIbuilderIconChoiceSelect from './options/uip-icon-choice-select.min.js?ver=3.2.12';
 import * as UIbuilderTextFormat from './options/uip-text-format.min.js?ver=3.2.12';
@@ -337,8 +337,8 @@ uipUiBuilderApp.component('uip-dynamic-input', UIbuilderDynamicInput.moduleData(
 uipUiBuilderApp.component('uip-padding', UIbuilderPadding.moduleData());
 uipUiBuilderApp.component('uip-spacing', UIbuilderSpacing.moduleData());
 uipUiBuilderApp.component('uip-margin', UIbuilderMargin.moduleData());
-uipUiBuilderApp.component('icon-select', UIbuilderIconSelect.moduleData());
-uipUiBuilderApp.component('inline-icon-select', UIbuilderInlineIconSelect.moduleData());
+uipUiBuilderApp.component('icon-select', UIbuilderIconSelect);
+uipUiBuilderApp.component('inline-icon-select', UIbuilderInlineIconSelect);
 uipUiBuilderApp.component('choice-select', UIbuilderChoiceSelect.moduleData());
 uipUiBuilderApp.component('icon-choice-select', UIbuilderIconChoiceSelect.moduleData());
 uipUiBuilderApp.component('text-format', UIbuilderTextFormat.moduleData());

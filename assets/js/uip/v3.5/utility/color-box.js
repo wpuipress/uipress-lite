@@ -13,7 +13,7 @@ export default {
   },
   template: `
   
-	  <div class="uip-background-muted uip-border-rounder uip-padding-xxs uip-flex uip-flex-center uip-gap-xs uip-cursor-pointer">
+	<div class="uip-background-muted uip-border-rounder uip-padding-xxs uip-flex uip-flex-center uip-gap-xs uip-cursor-pointer">
 	
 	  <div class="uip-background-grey uip-background-checkered uip-border-round">
 		<div class="uip-border-round uip-padding-xxxs uip-w-14 uip-ratio-1-1 user-style-area"
