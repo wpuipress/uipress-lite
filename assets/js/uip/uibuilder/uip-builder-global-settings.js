@@ -150,14 +150,10 @@ export default {
 
       let sendData = self.uipress.uipEncodeJson(self.globalSettings);
 
-      let styles = this.formatStyles();
-      let stylesJson = JSON.stringify(styles, (k, v) => (v === 'true' ? 'uiptrue' : v === true ? 'uiptrue' : v === 'false' ? 'uipfalse' : v === false ? 'uipfalse' : v === '' ? 'uipblank' : v));
-
       let formData = new FormData();
       formData.append('action', 'uip_save_global_settings');
       formData.append('security', uip_ajax.security);
       formData.append('settings', sendData);
-      formData.append('styles', stylesJson);
 
       self.uipress.callServer(uip_ajax.ajax_url, formData).then((response) => {
         if (response.error) {
@@ -167,32 +163,6 @@ export default {
 
         self.uipress.notify(self.ui.strings.settingsSaved, '', 'success', true);
       });
-    },
-    formatStyles() {
-      let styles = this.uipData.themeStyles;
-      let formatted = {};
-      for (let key in styles) {
-        if (styles[key].value) {
-          if (!formatted[styles[key].name]) {
-            formatted[styles[key].name] = {};
-          }
-          formatted[styles[key].name].value = styles[key].value;
-        }
-        if (styles[key].darkValue) {
-          if (!formatted[styles[key].name]) {
-            formatted[styles[key].name] = {};
-          }
-          formatted[styles[key].name].darkValue = styles[key].darkValue;
-        }
-        if (styles[key].user) {
-          formatted[styles[key].name].user = styles[key].user;
-          formatted[styles[key].name].label = styles[key].label;
-          formatted[styles[key].name].name = styles[key].name;
-          formatted[styles[key].name].type = styles[key].type;
-        }
-      }
-
-      return formatted;
     },
     conditionalShowGroup(group) {
       if (!('condition' in group)) {

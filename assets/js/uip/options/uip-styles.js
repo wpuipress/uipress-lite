@@ -8,7 +8,7 @@ export function moduleData() {
       screenControl: defineAsyncComponent(() => import('../v3.5/utility/screen-control.min.js?ver=3.2.12')),
       ColorPicker: defineAsyncComponent(() => import('../v3.5/styles/color-picker.min.js?ver=3.2.12')),
       colourStyleEditor: defineAsyncComponent(() => import('../v3.5/styles/color-style-editor.min.js?ver=3.2.12')),
-      imageBGSelect: defineAsyncComponent(() => import('./uip-image-select.min.js?ver=3.2.12')),
+      imageBGSelect: defineAsyncComponent(() => import('../v3.5/styles/image-select.min.js?ver=3.2.12')),
       borderDesigner: defineAsyncComponent(() => import('./uip-border-designer.min.js?ver=3.2.12')),
       shadowDesigner: defineAsyncComponent(() => import('./uip-shadow-designer.min.js?ver=3.2.12')),
       outlineDesigner: defineAsyncComponent(() => import('./uip-outline-designer.min.js?ver=3.2.12')),

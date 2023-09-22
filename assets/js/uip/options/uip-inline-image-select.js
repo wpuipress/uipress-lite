@@ -2,7 +2,7 @@ const { __, _x, _n, _nx } = wp.i18n;
 import { defineAsyncComponent, nextTick } from '../../libs/vue-esm-dev.js';
 export default {
   components: {
-    imageSelect: defineAsyncComponent(() => import('./uip-image-select.min.js?ver=3.2.12')),
+    imageSelect: defineAsyncComponent(() => import('../v3.5/styles/image-select.min.js?ver=3.2.12')),
     colorBox: defineAsyncComponent(() => import('../v3.5/utility/color-box.min.js?ver=3.2.12')),
   },
   props: {
@@ -42,10 +42,10 @@ export default {
      *
      * @returns {string} - The background-image CSS rule or an empty string.
      *
-     * @since x.x.x
+     * @since 3.2.13
      */
     returnBackgroundImage() {
-      if (this.img.url) return `background-image: url(${this.img.url})`;
+      if (this.img.url) return `background-size:contain;background-image: url(${this.img.url})`;
     },
     /**
      * Returns the curent value

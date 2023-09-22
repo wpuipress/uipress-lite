@@ -61,9 +61,12 @@ export function moduleData() {
       },
     },
     template: `
-    <div v-if="rendered" class="uip-flex uip-background-muted uip-border-rounder uip-padding-left-xs uip-flex-content-stretch uip-w-100p" :class="{'uip-active-outline' : focus}">
-      <input v-if="option.units != 'auto'" @focus="focus = true" @blur="focus = false" style="width:30px" type="text" class="uip-input-small uip-blank-input uip-remove-steps uip-background-remove uip-padding-xxxs uip-flex-grow" v-model="option.value">
+    <div v-if="rendered" class="uip-flex uip-background-muted uip-border-rounder uip-padding-left-xs uip-padding-right-xxs" :class="{'uip-active-outline' : focus}">
+    
+      <input v-if="option.units != 'auto'" @focus="focus = true" @blur="focus = false" style="width:30px" type="text" class="uip-input-small uip-blank-input uip-remove-steps uip-background-remove uip-flex-grow" v-model="option.value">
+      
       <units-select :value="returnUnits" :returnData="function(e){option.units = e}" :class=" option.units == 'auto' ? 'uip-flex-grow' : '' "></units-select>
+      
     </div>`,
   };
 }
