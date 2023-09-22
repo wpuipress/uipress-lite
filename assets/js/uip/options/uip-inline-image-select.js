@@ -78,7 +78,7 @@ export default {
      * @param {any} value - The input value to format.
      * @returns {void}
      *
-     * @since x.x.x
+     * @since 3.2.13
      */
     formatInput(value) {
       // Check for undefined values
