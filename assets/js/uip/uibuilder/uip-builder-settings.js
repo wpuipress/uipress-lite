@@ -256,7 +256,7 @@ export default {
                 <div class="uip-text-bold uip-blank-input uip-text-l uip-text-emphasis">{{ui.strings.templateSettings}}</div>
               </div>
               
-              <button class="uip-button-default uip-border-rounder uip-icon uip-padding-xxs uip-link-muted uip-margin-left-xs" @click="goBack()">close</button>
+              <a class="uip-link-muted hover:uip-background-muted uip-border-rounder uip-icon uip-padding-xxs" @click="goBack()">close</a>
               
             </div>
             
@@ -266,10 +266,10 @@ export default {
           
         
           <div class="uip-flex uip-flex-column uip-gap-xs uip-padding-s uip-flex-grow uip-overflow-auto">
-          
-            <div class="uip-border-bottom"></div>
             
-            <div class="uip-padding-s uip-padding-right-remove uip-flex uip-flex-column uip-row-gap-s">
+            <div class="uip-text-bold uip-margin-top-xs">General</div>
+            
+            <div class="uip-padding-s uip-padding-right-remove uip-padding-top-xs uip-flex uip-flex-column uip-row-gap-s">
               
               <div v-if="isTemplateWithoutFrame" class=" uip-background-red-wash uip-border-rounder uip-text-s uip-padding-xs uip-scale-in-top uip-flex uip-flex-column uip-row-gap-xs">
                 <div class="uip-text-bold uip-text-l uip-text-emphasis">{{ui.strings.watchOut}}</div>

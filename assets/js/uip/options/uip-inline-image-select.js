@@ -42,10 +42,10 @@ export default {
      *
      * @returns {string} - The background-image CSS rule or an empty string.
      *
-     * @since x.x.x
+     * @since 3.2.13
      */
     returnBackgroundImage() {
-      if (this.img.url) return `background-image: url(${this.img.url})`;
+      if (this.img.url) return `background-size:contain;background-image: url(${this.img.url})`;
     },
     /**
      * Returns the curent value

@@ -1,13 +1,17 @@
 const { __, _x, _n, _nx } = wp.i18n;
 import { defineAsyncComponent } from '../../libs/vue-esm-dev.js';
+import Fonts from '../v3.5/lists/fonts.min.js';
 export default {
   components: {
     colourManager: defineAsyncComponent(() => import('../v3.5/styles/color-style-editor.min.js')),
+    contextmenu: defineAsyncComponent(() => import('../v3.5/utility/contextmenu.min.js')),
   },
   props: {},
+  inject: ['uipData', 'uipress'],
   data: function () {
     return {
       loading: true,
+      newUnitItem: {},
       ui: {
         mode: 'light',
         search: '',
@@ -22,88 +26,26 @@ export default {
           searchVariables: __('Search variables...', 'uipress-lite'),
           new: __('New variable', 'uipress-lite'),
           editStyle: __('Edit style', 'uipress-lite'),
+          colours: __('Colours', 'uipress-lite'),
+          units: __('Units', 'uipress-lite'),
+          fonts: __('Fonts', 'uipress-lite'),
+          text: __('Text', 'uipress-lite'),
+          newStyle: __('New style variable', 'uipress-lite'),
+          newUnit: __('New unit variable', 'uipress-lite'),
+          editUnit: __('Edit unit', 'uipress-lite'),
+          styleName: __('Style name', 'uipress-lite'),
+          value: __('Value', 'uipress-lite'),
+          create: __('Create', 'uipress-lite'),
+          editText: __('Edit text', 'uipress-lite'),
+          newTextVariable: __('New text variable', 'uipress-lite'),
         },
-        switchOptions: {
-          light: {
-            value: 'light',
-            tip: __('Light', 'uipress-lite'),
-            icon: 'light_mode',
-          },
-          dark: {
-            value: 'dark',
-            tip: __('Dark', 'uipress-lite'),
-            icon: 'dark_mode',
-          },
+        tabs: {
+          color: false,
+          units: false,
+          font: false,
         },
-        varTypeSelected: 'color',
-        varTypes: {
-          color: {
-            value: 'color',
-            label: __('Colour', 'uipress-lite'),
-          },
-          units: {
-            value: 'units',
-            label: __('Units', 'uipress-lite'),
-          },
-          font: {
-            value: 'font',
-            label: __('Font', 'uipress-lite'),
-          },
-        },
-        fonts: [
-          {
-            value: 'Arial, Helvetica, sans-serif',
-            label: __('Arial / Helvetica', 'uipress-lite'),
-          },
-          {
-            value: 'Times New Roman, Times, serif',
-            label: __('Times New Roman', 'uipress-lite'),
-          },
-          {
-            value: 'Courier New / Courier, Monospace',
-            label: __('Courier New', 'uipress-lite'),
-          },
-          {
-            value: 'Tahoma, sans-serif',
-            label: __('Tahoma', 'uipress-lite'),
-          },
-          {
-            value: 'Trebuchet MS, sans-serif',
-            label: __('Trebuchet MS', 'uipress-lite'),
-          },
-          {
-            value: 'Verdana, sans-serif',
-            label: __('Verdana', 'uipress-lite'),
-          },
-          {
-            value: 'Georgia, serif',
-            label: __('Georgia', 'uipress-lite'),
-          },
-          {
-            value: 'Garamond, serif',
-            label: __('Garamond', 'uipress-lite'),
-          },
-          {
-            value: 'Arial Black, sans-serif',
-            label: __('Arial Black', 'uipress-lite'),
-          },
-          {
-            value: 'Impact, sans-serif',
-            label: __('Impact', 'uipress-lite'),
-          },
-          {
-            value: 'Brush Script MT, cursive',
-            label: __('Brush Script MT', 'uipress-lite'),
-          },
-          {
-            value: 'Material Symbols Rounded',
-            label: __('UiPress icons', 'uipress-lite'),
-          },
-          {
-            value: 'inherit',
-            label: __('Inherit', 'uipress-lite'),
-          },
-        ],
+
+        fonts: Fonts,
       },
 
       newVariable: {
@@ -113,36 +55,21 @@ export default {
       },
     };
   },
-  inject: ['uipData', 'uipress', 'uiTemplate'],
   watch: {
-    'newVariable.var': {
-      handler(newValue, oldValue) {
-        if (newValue && newValue.length > 2) {
-          let firstTwo = newValue.slice(0, 2);
-          let first = newValue.slice(0, 2);
-          let ammended = '';
-
-          if (firstTwo != '--') {
-            if (first != '-') {
-              ammended = '--' + newValue;
-            } else {
-              ammended = '-' + newValue;
-            }
-          } else {
-            ammended = newValue;
-          }
-          ammended = ammended.replace(' ', '-');
-
-          this.newVariable.var = ammended;
-        }
+    /**
+     * Watches changes to styles and then saves
+     *
+     * @since 3.2.13
+     */
+    'uipData.themeStyles': {
+      handler() {
+        this.saveStyles();
       },
       deep: true,
     },
   },
-  mounted: function () {
-    if (this.uipData.userPrefs.darkTheme) {
-      this.ui.mode = 'dark';
-    }
+  mounted() {
+    this.getLocalFonts();
   },
   computed: {
     /**
@@ -154,15 +81,87 @@ export default {
       if (!this.uipData.userPrefs.darkTheme) return 'value';
       if (this.uipData.userPrefs.darkTheme) return 'darkValue';
     },
+    /**
+     * Returns a list of filtered variables for type color
+     *
+     * @returns {Object}
+     * @since 3.2.13
+     */
+    returnColorVars() {
+      return Object.values(this.uipData.themeStyles).filter((item) => item.type === 'color');
+    },
+    /**
+     * Returns a list of filtered variables for type units
+     *
+     * @returns {Object}
+     * @since 3.2.13
+     */
+    returnUnitsVars() {
+      return Object.values(this.uipData.themeStyles).filter((item) => item.type === 'units');
+    },
+    /**
+     * Returns a list of filtered variables for type font
+     *
+     * @returns {Object}
+     * @since 3.2.13
+     */
+    returnFontsVars() {
+      return Object.values(this.uipData.themeStyles).filter((item) => item.type === 'font');
+    },
   },
   methods: {
-    returnVar(item) {
-      if (this.ui.mode == 'light') {
-        return item.value;
-      } else {
-        return item.darkValue;
+    /**
+     * Saves users styles
+     *
+     * @returns {Promise}  - whether styles where saved succesfully
+     * @since 3.2.13
+     */
+    async saveStyles() {
+      // Format styles
+      let stylesJson = JSON.stringify(this.uipData.themeStyles);
+
+      // Build form data for fetch request
+      let formData = new FormData();
+      formData.append('action', 'uip_save_user_styles');
+      formData.append('security', uip_ajax.security);
+      formData.append('styles', stylesJson);
+
+      const response = await this.uipress.callServer(uip_ajax.ajax_url, formData);
+
+      // Error saving styles
+      if (response.error) {
+        this.uipress.notify(response.message, 'uipress-lite', '', 'error', true);
       }
+
+      return true;
     },
+    /**
+     * Gets current page fonts
+     *
+     * @returns {Promise}
+     * @since 3.2.13
+     */
+    async getLocalFonts() {
+      await document.fonts.ready;
+
+      const fonts = [...document.fonts].map((font) => font.family);
+      const uniqueFonts = [...new Set(fonts)];
+
+      const sortedFonts = uniqueFonts.map((fontName) => {
+        return {
+          value: fontName.replace(/["']/g, ''), // Removing any quotes around font names
+          label: fontName.replace(/["']/g, '').split(',')[0], // Taking the first font name if there's a fallback list
+        };
+      });
+      this.ui.fonts = [...sortedFonts, ...this.ui.fonts];
+    },
+
+    /**
+     * Splits a unit's value into number and unit
+     *
+     * @param {String} item - the string to split
+     * @since 3.2.13
+     */
     splitUnitVal(item) {
       let val = false;
       if (this.ui.mode == 'light') {
@@ -184,64 +183,46 @@ export default {
       let units = parts[1];
       return { value: num, units: units };
     },
-    setVar(data, item) {
-      if (this.ui.mode == 'light') {
-        item.value = data;
-      } else {
-        item.darkValue = data;
-      }
-    },
+    /**
+     * Sets a unit variable value
+     *
+     * @param {Object} data - the new value object
+     * @param {Object} item - the variable to update
+     * @since 3.2.13
+     */
     setUnitVal(data, item) {
-      if (this.ui.mode == 'light') {
-        if (!data.value) {
-          item.value = '';
-        } else {
-          item.value = data.value + data.units;
-        }
+      if (!data.value) {
+        item.value = '';
       } else {
-        if (!data.darkValue) {
-          item.darkValue = '';
-        } else {
-          item.darkValue = data.value + data.units;
-        }
+        item.value = data.value + data.units;
       }
     },
+    /**
+     * Clears custom variable value
+     *
+     * @param {Object} item - the variable to clear
+     * @since 3.213
+     */
     clearVar(item) {
-      if (this.ui.mode == 'light') {
-        delete item.value;
-      } else {
-        delete item.darkValue;
-      }
+      delete item.value;
+      delete item.darkValue;
     },
-    deleteVar(item, key) {
-      delete this.uipData.themeStyles[key];
+    /**
+     * Deletes a variable
+     *
+     * @param {Object} item - variable to delete
+     * @since 3.2.13
+     */
+    deleteVar(item) {
+      delete this.uipData.themeStyles[item.name];
       this.uipress.notify(__('Variable deleted', 'uipress-lite'), '', 'success', true);
     },
-    createVariable() {
-      if (this.newVariable.label == '') {
-        this.uipress.notify(__('Variable label is required', 'uipress-lite'), '', 'error', true);
-        return;
-      }
-      if (this.newVariable.var == '') {
-        this.uipress.notify(__('Variable name is required', 'uipress-lite'), '', 'error', true);
-        return;
-      }
-      console.log(this.newVariable.type);
-      let style = {
-        label: this.newVariable.label,
-        darkValue: '',
-        value: '',
-        type: this.newVariable.type,
-        name: this.newVariable.var,
-        user: true,
-      };
-
-      this.uipData.themeStyles[this.newVariable.var] = style;
-      this.uipress.notify(__('Variable created!', 'uipress-lite'), '', 'success', true);
-
-      this.newVariable.label = '';
-      this.newVariable.var = '';
-    },
+    /**
+     * Checks if the variable has a custom value
+     *
+     * @param {Object} style - the variable object to check
+     * @since 3.2.13
+     */
     customSet(style) {
       if (this.ui.mode == 'light') {
         if (style.value && style.value != '') {
@@ -276,6 +257,38 @@ export default {
       return false;
     },
     /**
+     * Cleans variable name
+     *
+     * @param {String} value - the name to clean
+     */
+    cleanKeyName(value) {
+      value = value.replace(' ', '-');
+      value = value.replace(',', '');
+      value = value.replace('.', '');
+      value = value.replace(/[`~!@#$%^&*()|+\=?;:'",.<>\{\}\[\]\\\/]/gi, '');
+      value = value.toLowerCase();
+      value = this.ensureDoubleDashPrefix(value);
+      return value;
+    },
+    /**
+     * Enforces double dash at start of string
+     *
+     * @param {String} str - the string to add dashed too@since 3.2.13
+     */
+    ensureDoubleDashPrefix(str) {
+      // If string is null or undefined, return '--'
+      if (!str) return '--';
+
+      // If string starts with '--', return it as is
+      if (str.startsWith('--')) return str;
+
+      // If string starts with '-', but not followed by another '-'
+      if (str.startsWith('-')) return '--' + str.slice(1);
+
+      // If string doesn't start with '-', prefix it with '--'
+      return '--' + str;
+    },
+    /**
      * Returns the css background value
      *
      * @param {Object} style - style object
@@ -287,118 +300,422 @@ export default {
       if (style[mode].includes('--')) return `var(${style[mode]})`;
       return style[mode];
     },
+    /**
+     * Adds a new color var from the picker menu
+     *
+     * @param {Object} d - color object
+     * @since 3.2.13
+     */
+    addNewColorVar(d) {
+      let newCol = { name: '', type: 'color', value: '', darkValue: '', user: true };
+      newCol = { ...newCol, ...d };
+      this.uipData.themeStyles[newCol.name] = newCol;
+      this.$refs.newcolourdrop.close();
+    },
+    /**
+     * Adds a new units var from the picker menu
+     *
+     * @param {Object} d - color object
+     * @since 3.2.13
+     */
+    addNewUnitVar() {
+      let newCol = { name: '', type: 'units', value: '', darkValue: '', user: true };
+      newCol = { ...newCol, ...this.newUnitItem };
+      this.uipData.themeStyles[newCol.name] = newCol;
+      this.$refs.newunitdrop.close();
+      this.newUnitItem = {};
+    },
+    /**
+     * Adds a new text var from the picker menu
+     *
+     * @param {Object} d - color object
+     * @since 3.2.13
+     */
+    addNewTextVar() {
+      let newCol = { name: '', type: 'font', value: '', darkValue: '', user: true };
+      newCol = { ...newCol, ...this.newUnitItem };
+      this.uipData.themeStyles[newCol.name] = newCol;
+      this.$refs.newtextdrop.close();
+      this.newUnitItem = {};
+    },
+    /**
+     * Returns variable custom value if set, otherwise returns calculated value from document
+     *
+     * @param {Object} variable - variable object
+     * @since 3.2.13
+     */
+    getCalculatedValue(variable) {
+      if (variable.value) return variable.value;
+      // Attempt to get value from document
+      const rootStyle = getComputedStyle(document.documentElement);
+      const varName = variable.name.trim();
+      const variableValue = rootStyle.getPropertyValue(varName).trim();
+      if (variableValue) return variableValue;
+    },
   },
   template: `
-		  <div class="uip-flex uip-flex-column uip-row-gap-s">
-      
+	<div class="uip-flex uip-flex-column uip-row-gap-s">
+  
+  
+        <!--Color vars-->
+        <div class="uip-flex uip-gap-xxs uip-flex-center uip-link-default" @click="ui.tabs.color = !ui.tabs.color">
         
-        <!-- Var types -->
-        <div class="">
-          <toggle-switch :options="ui.varTypes" :activeValue="ui.varTypeSelected" :returnValue="function(data){ ui.varTypeSelected = data}"></toggle-switch>
+          <div class="uip-flex uip-flex-center uip-flex-middle uip-padding-xxs uip-link-muted hover:uip-background-muted uip-border-rounder">
+            <span v-if="!ui.tabs.color" class="uip-icon">chevron_right</span>
+            <span v-if="ui.tabs.color" class="uip-icon">expand_more</span>
+          </div>
+          
+          <div class="uip-text-emphasis uip-text-bold uip-text-s uip-flex-grow">{{ui.strings.colours}}</div>
+          
+          <div @click.prevent.stop="$refs.newcolourdrop.show($event)" class="uip-flex uip-flex-center uip-flex-middle uip-padding-xxs uip-link-default hover:uip-background-muted uip-border-rounder">
+            <span class="uip-icon">add</span>
+          </div>
+          
         </div>
         
+        <div v-if="ui.tabs.color" class="uip-flex uip-flex-column uip-padding-left-xs">
         
-        
-        
-        
-        <div class="uip-padding-right-remove">
-          <div class="uip-flex uip-flex-column uip-gap-xxs">
-          
-			      <template v-for="(item, index) in uipData.themeStyles">
+          <template v-for="(item, index) in returnColorVars">
+            
+            <div class="uip-flex uip-gap-xs uip-flex-center uip-gap-xxxs">
               
-              <template v-if="item.type == ui.varTypeSelected && inSearch(item)">
+              <!--Color picker dropdown-->
+              <dropdown
+              :ref="'coloreditor-'+index" 
+              pos="left center" 
+              :offsetX="56" class="uip-flex-grow">
               
-                <div class="uip-flex uip-gap-xs uip-flex-center uip-gap-xxxs">
+                <template #trigger>
                 
-                  <div class="uip-w-100p uip-flex-grow uip-flex-center">
-                    
+                  <div class="uip-flex uip-gap-s uip-flex-center uip-padding-xxs uip-padding-left-xs uip-link-default uip-border-rounder hover:uip-background-muted">
+                  
+                    <div class="uip-w-16 uip-border-circle uip-ratio-1-1 uip-background-checkered">
+                      <div class="uip-w-16 uip-border-circle uip-ratio-1-1 uip-border" :style="{background:returnStyleBackground(item)}">
                       
-                    <!--Color picker dropdown-->
-                    <dropdown v-if="item.type == 'color'" :ref="'coloreditor-'+index" pos="left center" :offsetX="56">
+                      </div>
+                    </div>
                     
-                      <template #trigger>
-                      
-                        <div class="uip-flex uip-gap-s uip-flex-center uip-padding-xxs uip-padding-left-xs uip-link-default uip-border-rounder hover:uip-background-muted">
-                        
-                          <div class="uip-w-16 uip-border-circle uip-ratio-1-1 uip-background-checkered">
-                            <div class="uip-w-16 uip-border-circle uip-ratio-1-1 uip-border" :style="{background:returnStyleBackground(item)}">
-                            
-                            </div>
-                          </div>
-                          
-                          <div class="">{{item.name}}</div>
-                        
-                        </div>
-                        
-                      </template>
-                      
-                      <template #content>
-                      
-                        <div class="uip-padding-s uip-flex uip-flex-column uip-row-gap-xs uip-w-240">
-                        
-                          <div class="uip-flex uip-flex-between uip-flex-center">
-                            <div class="uip-text-emphasis uip-text-bold uip-text-s">{{ui.strings.editStyle}}</div>
-                            
-                            <div @click="$refs['coloreditor-'+index][0].close()" 
-                            class="uip-flex uip-flex-center uip-flex-middle uip-padding-xxs uip-link-muted hover:uip-background-muted uip-border-rounder">
-                              <span class="uip-icon">close</span>
-                            </div>
-                          </div>
-                          
-                          <colourManager :value="item" :returnData="false"/>
-                        
-                        </div>
-                        
-                      </template>
-                      
-                    </dropdown>  
-                    
-                    <!--Value vars-->
-                    <template v-if="item.type == 'units'">
-                    
-                      <value-units :value="splitUnitVal(item)" size="xsmall" :returnData="function(data){ setUnitVal(data, item)}"></value-units>
-                    
-                    </template>
-                    
-                    
-                    <!--Font vars-->
-                    <template v-if="item.type == 'font'">
-                    
-                      <select v-if="ui.mode == 'light'" v-model="item.value" class="uip-input-small uip-padding-top-xxxs uip-padding-bottom-xxxs uip-max-w-100p uip-w-100p uip-border-rounder" 
-                      style="padding-top: 2px; padding-bottom: 2px; border-radius: var(--uip-border-radius-large);">
-                        <template v-for="font in ui.fonts">
-                          <option vlass="font.value" >{{font.label}}</option>
-                        </template>
-                      </select>
-                      
-                      <select v-else v-model="item.darkValue" class="uip-input-small uip-padding-top-xxxs uip-padding-bottom-xxxs uip-max-w-100p uip-w-100p uip-border-rounder" 
-                      style="padding-top: 2px; padding-bottom: 2px; border-radius: var(--uip-border-radius-large);">
-                        <template v-for="font in ui.fonts">
-                          <option vlass="font.value" >{{font.label}}</option>
-                        </template>
-                      </select>
-                    
-                    </template>
-                    
-                    
+                    <div class="uip-text-s">{{item.name}}</div>
+                  
                   </div>
                   
-                  <uip-tooltip :message="ui.strings.revertStyle" :delay="1000" v-if="!item.user && customSet(item)">
-                   <a @click="clearVar(item)" class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-text-s">format_color_reset</a>
-                  </uip-tooltip>
-                  
-                  <uip-tooltip :message="ui.strings.revertStyle" :delay="1000" v-if="item.user">
-                   <a @click="deleteVar(item, index)" class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-text-s">delete</a>
-                  </uip-tooltip>
-                  
-                </div>
+                </template>
                 
-		          </template>
+                <template #content>
+                
+                  <div class="uip-padding-s uip-flex uip-flex-column uip-row-gap-xs uip-w-240">
+                  
+                    <div class="uip-flex uip-flex-between uip-flex-center">
+                      <div class="uip-text-emphasis uip-text-bold uip-text-s">{{ui.strings.editStyle}}</div>
+                      
+                      <div @click="$refs['coloreditor-'+index][0].close()" 
+                      class="uip-flex uip-flex-center uip-flex-middle uip-padding-xxs uip-link-muted hover:uip-background-muted uip-border-rounder">
+                        <span class="uip-icon">close</span>
+                      </div>
+                    </div>
+                    
+                    <colourManager :value="item" :returnData="false"/>
+                  
+                  </div>
+                  
+                </template>
+                
+              </dropdown>  
               
-			      </template>
-          </div>
-        
+               <a @click="clearVar(item)" 
+               v-if="!item.user && customSet(item)"
+               :title="ui.strings.revertStyle"
+               class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-text-s">format_color_reset</a>
+              
+               <a v-if="item.user" 
+               @click="deleteVar(item)"
+               :title="ui.strings.deleteVariable" 
+               class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-text-s">delete</a>              
+               
+            </div>  
+          
+          </template>
         </div>
+        
+        
+        <!--Units vars-->
+        <div class="uip-flex uip-gap-xxs uip-flex-center uip-link-default" @click="ui.tabs.units = !ui.tabs.units">
+        
+          <div class="uip-flex uip-flex-center uip-flex-middle uip-padding-xxs uip-link-muted hover:uip-background-muted uip-border-rounder">
+            <span v-if="!ui.tabs.units" class="uip-icon">chevron_right</span>
+            <span v-if="ui.tabs.units" class="uip-icon">expand_more</span>
+          </div>
+          
+          <div class="uip-text-emphasis uip-text-bold uip-text-s uip-flex-grow">{{ui.strings.units}}</div>
+          
+          <div @click.prevent.stop="$refs.newunitdrop.show($event)" class="uip-flex uip-flex-center uip-flex-middle uip-padding-xxs uip-link-default hover:uip-background-muted uip-border-rounder">
+            <span class="uip-icon">add</span>
+          </div>
+          
+        </div>
+        
+        <div v-if="ui.tabs.units" class="uip-flex uip-flex-column uip-padding-left-s uip-row-gap-xxs">
+        
+          <template v-for="(item, index) in returnUnitsVars">
+            
+            <div class="uip-flex uip-gap-xs uip-flex-center uip-gap-xxxs">
+              
+              <!--Units dropdown dropdown-->
+              <dropdown
+              :ref="'uniteditor-'+index" 
+              pos="left center" 
+              :offsetX="56" class="uip-flex-grow">
+              
+                <template #trigger>
+                
+                  <div class="uip-flex uip-gap-s uip-flex-center uip-padding-xxs uip-padding-left-xs uip-link-default uip-border-rounder hover:uip-background-muted">
+                    
+                    <div class="uip-text-bold uip-text-s uip-w-40">{{getCalculatedValue(item)}}</div>
+                    
+                    <div class="uip-text-s">{{item.name}}</div>
+                  
+                  </div>
+                  
+                </template>
+                
+                <template #content>
+                
+                  <div class="uip-padding-s uip-flex uip-flex-column uip-row-gap-xs uip-w-240">
+                  
+                    <div class="uip-flex uip-flex-between uip-flex-center">
+                      <div class="uip-text-emphasis uip-text-bold uip-text-s">{{ui.strings.editUnit}}</div>
+                      
+                      <div @click="$refs['uniteditor-'+index][0].close()" 
+                      class="uip-flex uip-flex-center uip-flex-middle uip-padding-xxs uip-link-muted hover:uip-background-muted uip-border-rounder">
+                        <span class="uip-icon">close</span>
+                      </div>
+                    </div>
+                    
+                    <div class="uip-grid-col-1-3 uip-padding-left-xs">
+                      
+                      <div class="uip-text-muted uip-flex uip-flex-center uip-text-s uip-no-wrap"><span>{{ ui.strings.styleName }}</span></div>
+                      <input :disabled="!item.user"
+                      @input="item.name = cleanKeyName(item.name)"
+                      class="uip-input uip-w-100p" type="text" v-model="item.name" :placeholder="ui.strings.styleName" autofocus>
+                      
+                      <div class="uip-text-muted uip-flex uip-flex-center uip-text-s uip-no-wrap"><span>{{ ui.strings.value }}</span></div>
+                      <value-units :value="splitUnitVal(item)" size="xsmall" :returnData="(data)=>{ setUnitVal(data, item)}" class="uip-w-100p"></value-units>
+                    
+                    </div>
+                  
+                  </div>
+                  
+                </template>
+                
+              </dropdown>  
+              
+              <a @click="clearVar(item)" 
+              v-if="!item.user && customSet(item)"
+              :title="ui.strings.revertStyle"
+              class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-text-s">format_color_reset</a>
+              
+              <a v-if="item.user" 
+              @click="deleteVar(item)"
+              :title="ui.strings.deleteVariable" 
+              class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-text-s">delete</a>              
+               
+            </div>  
+          
+          </template>
+        </div>
+        
+        
+        
+        <!--Font vars-->
+        <div class="uip-flex uip-gap-xxs uip-flex-center uip-link-default" @click="ui.tabs.font = !ui.tabs.font">
+        
+          <div class="uip-flex uip-flex-center uip-flex-middle uip-padding-xxs uip-link-muted hover:uip-background-muted uip-border-rounder">
+            <span v-if="!ui.tabs.font" class="uip-icon">chevron_right</span>
+            <span v-if="ui.tabs.font" class="uip-icon">expand_more</span>
+          </div>
+          
+          <div class="uip-text-emphasis uip-text-bold uip-text-s uip-flex-grow">{{ui.strings.text}}</div>
+          
+          <div @click.prevent.stop="$refs.newtextdrop.show($event)" class="uip-flex uip-flex-center uip-flex-middle uip-padding-xxs uip-link-default hover:uip-background-muted uip-border-rounder">
+            <span class="uip-icon">add</span>
+          </div>
+          
+        </div>
+        
+        <div v-if="ui.tabs.font" class="uip-flex uip-flex-column uip-padding-left-s uip-row-gap-xxs">
+        
+          <template v-for="(item, index) in returnFontsVars">
+            
+            <div class="uip-flex uip-gap-xs uip-flex-center uip-gap-xxxs">
+              
+              <!--Units dropdown dropdown-->
+              <dropdown
+              :ref="'fonteditor-'+index" 
+              pos="left center" 
+              :offsetX="56" class="uip-flex-grow">
+              
+                <template #trigger>
+                
+                  <div class="uip-flex uip-gap-s uip-flex-center uip-padding-xxs uip-padding-left-xs uip-link-default uip-border-rounder hover:uip-background-muted">
+                    
+                    <div class="uip-text-bold uip-text-s uip-w-40 uip-overflow-hidden uip-text-ellipsis uip-no-wrap">{{getCalculatedValue(item)}}</div>
+                    
+                    <div class="uip-text-s">{{item.name}}</div>
+                  
+                  </div>
+                  
+                </template>
+                
+                <template #content>
+                
+                  <div class="uip-padding-s uip-flex uip-flex-column uip-row-gap-xs uip-w-240">
+                  
+                    <div class="uip-flex uip-flex-between uip-flex-center">
+                      <div class="uip-text-emphasis uip-text-bold uip-text-s">{{ui.strings.editText}}</div>
+                      
+                      <div @click="$refs['fonteditor-'+index][0].close()" 
+                      class="uip-flex uip-flex-center uip-flex-middle uip-padding-xxs uip-link-muted hover:uip-background-muted uip-border-rounder">
+                        <span class="uip-icon">close</span>
+                      </div>
+                    </div>
+                    
+                    <div class="uip-grid-col-1-3 uip-padding-left-xs">
+                      
+                      <div class="uip-text-muted uip-flex uip-flex-center uip-text-s uip-no-wrap"><span>{{ ui.strings.styleName }}</span></div>
+                      <input :disabled="!item.user"
+                      @input="item.name = cleanKeyName(item.name)"
+                      class="uip-input uip-w-100p" type="text" v-model="item.name" :placeholder="ui.strings.styleName" autofocus>
+                      
+                      <div class="uip-text-muted uip-flex uip-flex-center uip-text-s uip-no-wrap"><span>{{ ui.strings.value }}</span></div>
+                      <select class="uip-input uip-w-100p" v-model="item.value">
+                        <template v-for="font in ui.fonts">
+                          <option :value="font.value">{{ font.label }}</option>
+                        </template>
+                      </select>
+                    
+                    </div>
+                  
+                  </div>
+                  
+                </template>
+                
+              </dropdown>  
+              
+              <a @click="clearVar(item)" 
+              v-if="!item.user && customSet(item)"
+              :title="ui.strings.revertStyle"
+              class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-text-s">format_color_reset</a>
+              
+              <a v-if="item.user" 
+              @click="deleteVar(item)"
+              :title="ui.strings.deleteVariable" 
+              class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-text-s">delete</a>              
+               
+            </div>  
+          
+          </template>
+        </div>
+        
+        
+        
+        <!-- New color dropdown-->
+        <contextmenu
+        ref="newcolourdrop" 
+        :offsetX="-580">
+        
+          
+            <div class="uip-padding-s uip-flex uip-flex-column uip-row-gap-xs uip-w-280">
+            
+              <div class="uip-flex uip-flex-between uip-flex-center">
+                <div class="uip-text-emphasis uip-text-bold uip-text-s">{{ui.strings.newStyle}}</div>
+                
+                <div @click="$refs.newcolourdrop.close()" 
+                class="uip-flex uip-flex-center uip-flex-middle uip-padding-xxs uip-link-muted hover:uip-background-muted uip-border-rounder">
+                  <span class="uip-icon">close</span>
+                </div>
+              </div>
+              
+              <colourManager :value="{}" :returnData="(d)=>{addNewColorVar(d)}"/>
+            
+            </div>
+          
+        </contextmenu>
+        
+        
+        <!-- New Unit dropdown-->
+        <contextmenu
+        ref="newunitdrop" 
+        :offsetX="-580">
+        
+          
+            <div class="uip-padding-s uip-flex uip-flex-column uip-row-gap-s uip-w-280">
+            
+              <div class="uip-flex uip-flex-between uip-flex-center">
+                <div class="uip-text-emphasis uip-text-bold uip-text-s">{{ui.strings.newUnit}}</div>
+                
+                <div @click="$refs.newunitdrop.close()" 
+                class="uip-flex uip-flex-center uip-flex-middle uip-padding-xxs uip-link-muted hover:uip-background-muted uip-border-rounder">
+                  <span class="uip-icon">close</span>
+                </div>
+              </div>
+              
+              <div class="uip-grid-col-1-3 uip-padding-left-xs">
+                
+                <div class="uip-text-muted uip-flex uip-flex-center uip-text-s uip-no-wrap"><span>{{ ui.strings.styleName }}</span></div>
+                <input
+                @input="newUnitItem.name = cleanKeyName(newUnitItem.name)"
+                class="uip-input uip-flex-grow uip-w-100p" type="text" v-model="newUnitItem.name" :placeholder="ui.strings.styleName" autofocus>
+                
+                <div class="uip-text-muted uip-flex uip-flex-center uip-text-s uip-no-wrap"><span>{{ ui.strings.value }}</span></div>
+                <value-units :value="splitUnitVal(newUnitItem)" size="xsmall" :returnData="(data)=>{ setUnitVal(data, newUnitItem)}" class="uip-w-100p"></value-units>
+              
+              </div>
+              
+              <button @click="addNewUnitVar" class="uip-button-primary" :disabled="!newUnitItem.name">{{ui.strings.create}}</button>
+            
+            </div>
+          
+        </contextmenu>
+        
+        
+        <!-- New Text dropdown-->
+        <contextmenu
+        ref="newtextdrop" 
+        :offsetX="-580">
+        
+          
+            <div class="uip-padding-s uip-flex uip-flex-column uip-row-gap-s uip-w-280">
+            
+              <div class="uip-flex uip-flex-between uip-flex-center">
+                <div class="uip-text-emphasis uip-text-bold uip-text-s">{{ui.strings.newTextVariable}}</div>
+                
+                <div @click="$refs.newtextdrop.close()" 
+                class="uip-flex uip-flex-center uip-flex-middle uip-padding-xxs uip-link-muted hover:uip-background-muted uip-border-rounder">
+                  <span class="uip-icon">close</span>
+                </div>
+              </div>
+              
+              <div class="uip-grid-col-1-3 uip-padding-left-xs">
+                
+                <div class="uip-text-muted uip-flex uip-flex-center uip-text-s uip-no-wrap"><span>{{ ui.strings.styleName }}</span></div>
+                <input
+                @input="newUnitItem.name = cleanKeyName(newUnitItem.name)"
+                class="uip-input uip-w-100p" type="text" v-model="newUnitItem.name" :placeholder="ui.strings.styleName" autofocus>
+                
+                <div class="uip-text-muted uip-flex uip-flex-center uip-text-s uip-no-wrap"><span>{{ ui.strings.value }}</span></div>
+                <select class="uip-input uip-w-100p" v-model="newUnitItem.value">
+                  <template v-for="font in ui.fonts">
+                    <option :value="font.value">{{ font.label }}</option>
+                  </template>
+                </select>
+              
+              </div>
+              
+              <button @click="addNewTextVar" class="uip-button-primary" :disabled="!newUnitItem.name">{{ui.strings.create}}</button>
+            
+            </div>
+          
+        </contextmenu>
         
      </div>`,
 };

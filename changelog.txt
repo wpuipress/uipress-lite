@@ -15,6 +15,8 @@
 * New colour picker and improved colour variable support
 * New gradient picker
 * Added dvh units to the units selector
+* Overhauled the theme styles editor and added auto save
+* Theme styles changes preview immediately within the frame 
 
 = 3.2.12 =
 *Release Date 28 August 2023*

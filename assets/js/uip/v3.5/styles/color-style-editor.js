@@ -148,7 +148,7 @@ export default {
   
 	  <div class="uip-flex uip-flex-column uip-row-gap-s" ref="colorpicker">
 	
-		<input class="uip-input uip-flex-grow" type="text" v-model="color.name" :placeholder="strings.styleName" autofocus>
+		<input :disabled="!color.user" class="uip-input uip-flex-grow" type="text" v-model="color.name" :placeholder="strings.styleName" autofocus>
 		
 		<toggle-switch :activeValue="mode" :options="colorModes" :returnValue="(d)=>{mode = d}"/>
 		

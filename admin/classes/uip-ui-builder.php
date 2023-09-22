@@ -442,13 +442,6 @@ class uip_ui_builder extends uip_app
     if (defined('DOING_AJAX') && DOING_AJAX && check_ajax_referer('uip-security-nonce', 'security') > 0) {
       $utils = new uip_util();
       $options = $utils->clean_ajax_input_width_code(json_decode(stripslashes($_POST['settings'])));
-      $styles = $utils->clean_ajax_input_width_code(json_decode(stripslashes($_POST['styles'])));
-
-      if ($styles && is_object($styles)) {
-        $globalSettings = get_option('uip-global-settings');
-        $globalSettings['theme-styles'] = $styles;
-        update_option('uip-global-settings', $globalSettings);
-      }
 
       if (!is_object($options)) {
         $returndata['error'] = true;
