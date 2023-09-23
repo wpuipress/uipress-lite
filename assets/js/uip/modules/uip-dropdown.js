@@ -8,6 +8,8 @@ export default {
     onOpen: Function,
     offsetX: { type: Number, default: 8 },
     offsetY: { type: Number, default: 8 },
+    snapX: Array, // Optional selector to snap X axis to
+    snapY: Array, // Optional selector to snap Y axis to
     shortCut: [Boolean, String, Array],
   },
   data() {
@@ -143,6 +145,24 @@ export default {
       document.body.removeEventListener('click', this.onClickOutside, true);
       document.removeEventListener('scroll', this.handleScroll, true);
     },
+    /**
+     * Turns a domrect into a regular object
+     *
+     * @param {domRect} domRect - the domrect to convert
+     * @since 3.2.13
+     */
+    domRectToObject(domRect) {
+      return {
+        top: domRect.top,
+        right: domRect.right,
+        bottom: domRect.bottom,
+        left: domRect.left,
+        width: domRect.width,
+        height: domRect.height,
+        x: domRect.x,
+        y: domRect.y,
+      };
+    },
 
     /**
      * Sets the drop position
@@ -158,9 +178,21 @@ export default {
       // Rests position to default
       this.resetPosition();
 
-      const triggerRect = trigger.getBoundingClientRect();
+      let triggerRect = this.domRectToObject(trigger.getBoundingClientRect());
       const windowHeight = window.innerHeight || document.documentElement.clientHeight;
       const windowWidth = window.innerWidth || document.documentElement.clientWidth;
+
+      // Loop through snaps and update the trigger position
+      if (this.snapX && Array.isArray(this.snapX)) {
+        for (let selector of this.snapX) {
+          let snap = document.querySelector(selector);
+          if (!snap) continue;
+          let temprect = snap.getBoundingClientRect();
+          triggerRect.left = temprect.left;
+          triggerRect.right = temprect.right;
+          break;
+        }
+      }
 
       let posParts = this.pos.split(' ');
       let anchor = posParts[0];

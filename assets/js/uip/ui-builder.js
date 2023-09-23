@@ -89,11 +89,11 @@ import * as UIToolsErrroLog from './tools/uip-php-error-log.min.js?ver=3.2.12';
 
 //modules
 import UIbuilderDropdown from './modules/uip-dropdown.min.js?ver=3.2.12';
-import * as UIbuilderMultiSelect from './modules/uip-multiselect.min.js?ver=3.2.12';
-import * as UIbuilderUserMultiSelect from './modules/uip-user-role-multiselect.min.js?ver=3.2.12';
+import UIbuilderMultiSelect from './modules/uip-multiselect.min.js?ver=3.2.12';
+import UIbuilderUserMultiSelect from './modules/uip-user-role-multiselect.min.js?ver=3.2.12';
 import * as UIbuilderUserSearch from './modules/uip-user-role-search.min.js?ver=3.2.12';
 
-import * as UIbuilderPostTypeMultiSelect from './modules/uip-post-type-select.min.js?ver=3.2.12';
+import UIbuilderPostTypeMultiSelect from './modules/uip-post-type-select.min.js?ver=3.2.12';
 import * as UIbuilderPostMetaMultiSelect from './modules/uip-post-meta-select.min.js?ver=3.2.12';
 import * as UIbuilderAccordion from './modules/uip-accordion.min.js?ver=3.2.12';
 import UIbuilderSwitchToggle from './modules/uip-switch-toggle.min.js?ver=3.2.12';
@@ -152,7 +152,6 @@ import * as UIbuilderSimpleColorPicker from './options/uip-simple-color-picker.m
 import * as UIbuilderArrayList from './options/uip-array-list.min.js?ver=3.2.12';
 import * as UIbuilderSelectPostTypes from './options/uip-select-post-types.min.js?ver=3.2.12';
 import * as UIbuilderFlexLayout from './options/uip-flex-layout.min.js?ver=3.2.12';
-import * as UIbuilderQueryBuilder from './options/uip-query-builder.min.js?ver=3.2.12';
 import * as UIbuilderStyles from './options/uip-styles.min.js?ver=3.2.12';
 import * as UIbuilderEffects from './options/uip-effects.min.js?ver=3.2.12';
 
@@ -289,10 +288,10 @@ uipUiBuilderApp.config.errorHandler = function (err, vm, info) {
 //import components
 uipUiBuilderApp.component('builder-toolbar', UIbuilderToolbar.moduleData());
 
-uipUiBuilderApp.component('multi-select', UIbuilderMultiSelect.moduleData());
-uipUiBuilderApp.component('user-role-select', UIbuilderUserMultiSelect.moduleData());
+uipUiBuilderApp.component('multi-select', UIbuilderMultiSelect);
+uipUiBuilderApp.component('user-role-select', UIbuilderUserMultiSelect);
 uipUiBuilderApp.component('user-role-search', UIbuilderUserSearch.moduleData());
-uipUiBuilderApp.component('post-type-select', UIbuilderPostTypeMultiSelect.moduleData());
+uipUiBuilderApp.component('post-type-select', UIbuilderPostTypeMultiSelect);
 uipUiBuilderApp.component('post-meta-select', UIbuilderPostMetaMultiSelect.moduleData());
 uipUiBuilderApp.component('accordion', UIbuilderAccordion.moduleData());
 uipUiBuilderApp.component('ui-preview', UIbuilderPreview.moduleData());
@@ -363,7 +362,6 @@ uipUiBuilderApp.component('uip-select-post-types', UIbuilderSelectPostTypes.modu
 uipUiBuilderApp.component('flex-layout', UIbuilderFlexLayout.moduleData());
 uipUiBuilderApp.component('style-designer', UIbuilderStyles.moduleData());
 uipUiBuilderApp.component('inline-image-select', UIbuilderInlineImageSelect);
-uipUiBuilderApp.component('query-builder', UIbuilderQueryBuilder.moduleData());
 uipUiBuilderApp.component('uip-effects', UIbuilderEffects.moduleData());
 
 uipUiBuilderApp.config.globalProperties.uipApp = reactive({

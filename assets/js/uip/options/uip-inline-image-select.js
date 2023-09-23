@@ -92,7 +92,7 @@ export default {
     },
   },
   template: `
-        <dropdown pos="left center"  class="uip-w-100p" ref="imageDropdown">
+        <dropdown pos="left center"  class="uip-w-100p" ref="imageDropdown" :snapX="['#uip-block-settings', '#uip-template-settings', '#uip-global-settings']">
         
           <template v-slot:trigger>
           

@@ -359,7 +359,7 @@ export function moduleData() {
         <div class="uip-flex uip-gap-xs uip-flex-no-wrap uip-flex-center">
         
           
-          <dropdown pos="left center" :offsetX="130" ref="fillDrop" class="uip-w-100p">
+          <dropdown pos="left center" :snapX="['#uip-block-settings', '#uip-template-settings', '#uip-global-settings']" ref="fillDrop" class="uip-w-100p">
             <template #trigger>
               <colorBox :backgroundStyle="returnFillStyle" :text="returnFillValue" :remove="()=>{styles.fill = {}}"/>
             </template>
@@ -398,7 +398,7 @@ export function moduleData() {
         
         <div class="uip-flex uip-gap-xs uip-flex-no-wrap uip-flex-center">
         
-          <dropdown pos="left center" :offsetX="130" ref="backgroundDrop" class="uip-w-100p">
+          <dropdown pos="left center" :snapX="['#uip-block-settings', '#uip-template-settings', '#uip-global-settings']" ref="backgroundDrop" class="uip-w-100p">
             <template #trigger>
               <colorBox :backgroundStyle="returnBackgroundImage" :text="styles.backgroundImage.url" :remove="()=>{styles.backgroundImage = {}}"/>
             </template>
@@ -538,7 +538,7 @@ export function moduleData() {
           
             <div class="uip-flex uip-gap-xs uip-row-gap-xs uip-flex-center">
             
-                <dropdown pos="left center" class="uip-w-100p" :ref="'borderDrop-'+index" :offsetX="130">
+                <dropdown pos="left center" class="uip-w-100p" :ref="'borderDrop-'+index" :snapX="['#uip-block-settings', '#uip-template-settings', '#uip-global-settings']">
                   <template v-slot:trigger>
                   
                     <colorBox :backgroundStyle="returnBorderColor(border, index)" :text="border.style" :remove="()=>{styles.borders.splice(index, 1)}"/>
@@ -592,7 +592,7 @@ export function moduleData() {
           
             <div class="uip-flex uip-gap-xs uip-row-gap-xs uip-flex-center">
             
-                <dropdown pos="left center" class="uip-w-100p" :ref="'shadowDrop-'+index" :offsetX="130">
+                <dropdown pos="left center" class="uip-w-100p" :ref="'shadowDrop-'+index" :snapX="['#uip-block-settings', '#uip-template-settings', '#uip-global-settings']">
                   <template v-slot:trigger>
                   
                     <colorBox :backgroundStyle="returnShadowColor(shadow)" :text="shadow.position" :remove="()=>{styles.shadows.splice(index, 1)}"/>
@@ -645,7 +645,7 @@ export function moduleData() {
         <div class="uip-flex uip-gap-xs uip-flex-no-wrap uip-flex-center">
         
           
-          <dropdown pos="left center" :offsetX="130" ref="outlineDrop" class="uip-w-100p">
+          <dropdown pos="left center" :snapX="['#uip-block-settings', '#uip-template-settings', '#uip-global-settings']" ref="outlineDrop" class="uip-w-100p">
             <template #trigger>
               <colorBox :backgroundStyle="returnOutlineStyle" :text="styles.outline.style" :remove="()=>{styles.outline = {}}"/>
             </template>

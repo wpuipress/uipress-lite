@@ -3,10 +3,12 @@
  * @since 3.0.0
  */
 const { __, _x, _n, _nx } = wp.i18n;
-import { nextTick } from '../../libs/vue-esm-dev.js';
+import { defineAsyncComponent, nextTick } from '../../libs/vue-esm-dev.js';
 export default {
   inject: ['uipData', 'router', 'uipress', 'uiTemplate'],
-
+  components: {
+    QueryBuilder: defineAsyncComponent(() => import('../options/uip-query-builder.min.js?ver=3.2.12')),
+  },
   data() {
     return {
       block: {},
@@ -720,7 +722,7 @@ export default {
     
     
     
-    <div v-if="showSettings"
+    <div v-if="showSettings" id="uip-block-settings"
     class="uip-position-fixed uip-top-80 uip-right-16 uip-bottom-16 uip-background-default uip-w-320 uip-flex uip-flex-column uip-row-gap-s uip-overflow-auto uip-fade-in uip-shadow" style="border-radius: calc(var(--uip-border-radius-large) + var(--uip-padding-xs)); z-index: 2;">
     
         <div v-if="loading" class="uip-padding-m uip-flex uip-flex-center uip-flex-middle "><loading-chart></loading-chart></div>
@@ -806,18 +808,9 @@ export default {
                   <div class="uip-margin-bottom-xxs uip-text-bold uip-text-emphasis">{{strings.queryLoop}}</div>
                   
                   <div class="uip-padding-s uip-padding-right-remove uip-flex uip-flex-column uip-row-gap-xs" v-if="uiTemplate.proActivated">
-                  
-                    <!--Tooltip text -->
-                    <div class="uip-grid-col-1-3">
                     
-                      <div class="uip-text-muted uip-flex uip-flex-center uip-text-s"><span>{{strings.query}}</span></div>
-                        
-                      <toggle-switch :options="enabledDisabled" :activeValue="returnQueryVal()" :returnValue="function(data){ block.query.enabled = data}"></toggle-switch>
-                      
-                    </div>
                     
-                    <!--Tooltip Delay -->
-                    <query-builder v-if="returnQueryVal()" :value="block.query.settings" :returnData="function(data){ block.query.settings = data}"></query-builder>
+                    <QueryBuilder :block="block" :value="block.query.settings" :returnData="(d)=>{ block.query.settings = d}"/>
                   
                   </div>
                   
@@ -886,7 +879,9 @@ export default {
             <!--Block styles -->
             <div class="uip-flex uip-flex-column uip-row-gap-s uip-margin-bottom-l" v-if="section == 'style'">
             
-              <dropdown pos="left center" triggerClass="uip-w-100p uip-border-box" v-if="returnBlockPartsCount > 0" class="uip-position-sticky uip-top-0" style="z-index:2">
+              <dropdown pos="left top" 
+              :snapX="['#uip-block-settings', '#uip-template-settings', '#uip-global-settings']"
+              v-if="returnBlockPartsCount > 0" class="uip-position-sticky uip-top-0" style="z-index:2">
                 
                 <template v-slot:trigger>
                   
@@ -998,7 +993,7 @@ export default {
                         
                        </div>
                        
-                       <dropdown pos="left center" triggerClass="uip-flex uip-gap-xxxs uip-flex-center">
+                       <dropdown pos="left top" :snapX="['#uip-block-settings', '#uip-template-settings', '#uip-global-settings']">
                         <template v-slot:trigger>
                           <div v-if="'pseudo' in option" class="uip-w-6 uip-ratio-1-1 uip-border-circle uip-background-green-wash" style="border:1px solid var(--uip-color-green)"></div>
                           <div class="uip-icon uip-link-default uip-text-l">add</div>
@@ -1102,7 +1097,7 @@ export default {
                       <div class="uip-flex uip-flex-center uip-gap-xxs">
                       
                         
-                        <dropdown pos="left center" containerClass="uip-w-100p" triggerClass="uip-w-100p">
+                        <dropdown pos="left center" class="uip-w-100p" :snapX="['#uip-block-settings', '#uip-template-settings', '#uip-global-settings']">
                           
                           <template v-slot:trigger>
                           

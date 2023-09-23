@@ -279,7 +279,7 @@ export default {
   },
   template: `
     
-      <uip-floating-panel closeRoute="/">
+      <uip-floating-panel closeRoute="/" id="uip-global-settings">
       
       
         <!-- Site settings -->

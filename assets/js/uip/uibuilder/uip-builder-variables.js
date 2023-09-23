@@ -383,7 +383,7 @@ export default {
               <dropdown
               :ref="'coloreditor-'+index" 
               pos="left center" 
-              :offsetX="56" class="uip-flex-grow">
+              :snapX="['#uip-block-settings', '#uip-template-settings', '#uip-global-settings']" class="uip-flex-grow">
               
                 <template #trigger>
                 
@@ -464,7 +464,7 @@ export default {
               <dropdown
               :ref="'uniteditor-'+index" 
               pos="left center" 
-              :offsetX="56" class="uip-flex-grow">
+              :snapX="['#uip-block-settings', '#uip-template-settings', '#uip-global-settings']" class="uip-flex-grow">
               
                 <template #trigger>
                 
@@ -552,7 +552,7 @@ export default {
               <dropdown
               :ref="'fonteditor-'+index" 
               pos="left center" 
-              :offsetX="56" class="uip-flex-grow">
+              :snapX="['#uip-block-settings', '#uip-template-settings', '#uip-global-settings']" class="uip-flex-grow">
               
                 <template #trigger>
                 
@@ -621,7 +621,9 @@ export default {
         <!-- New color dropdown-->
         <contextmenu
         ref="newcolourdrop" 
-        :offsetX="-580">
+        :snapRight="true"
+        :snapX="['#uip-block-settings', '#uip-template-settings', '#uip-global-settings']"
+        :offsetX="-8">
         
           
             <div class="uip-padding-s uip-flex uip-flex-column uip-row-gap-xs uip-w-280">
@@ -645,7 +647,9 @@ export default {
         <!-- New Unit dropdown-->
         <contextmenu
         ref="newunitdrop" 
-        :offsetX="-580">
+        :snapRight="true"
+        :snapX="['#uip-block-settings', '#uip-template-settings', '#uip-global-settings']"
+        :offsetX="-8">
         
           
             <div class="uip-padding-s uip-flex uip-flex-column uip-row-gap-s uip-w-280">
@@ -681,7 +685,9 @@ export default {
         <!-- New Text dropdown-->
         <contextmenu
         ref="newtextdrop" 
-        :offsetX="-580">
+        :snapRight="true"
+        :snapX="['#uip-block-settings', '#uip-template-settings', '#uip-global-settings']"
+        :offsetX="-8">
         
           
             <div class="uip-padding-s uip-flex uip-flex-column uip-row-gap-s uip-w-280">

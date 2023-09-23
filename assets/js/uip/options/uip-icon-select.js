@@ -57,7 +57,7 @@ export default {
   },
   template: `
     
-        <dropdown pos="left center" class="uip-w-100p" :offsetX="56" ref="iconselect">
+        <dropdown pos="left center" class="uip-w-100p" ref="iconselect" :snapX="['#uip-block-settings', '#uip-template-settings', '#uip-global-settings']">
         
             <template #trigger>
                 

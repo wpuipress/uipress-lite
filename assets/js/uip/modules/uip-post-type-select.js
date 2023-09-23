@@ -1,137 +1,220 @@
-export function moduleData() {
-  return {
-    props: {
-      //array of selected items
-      selected: Array,
-      //Placeholder
-      placeHolder: String,
-      //Search Placeholder
-      searchPlaceHolder: String,
-      //Whether it is single select or multi
-      single: Boolean,
-      //Function to return selected on change
-      updateSelected: Function,
+export const core = {
+  props: {
+    selected: Array,
+    placeHolder: String,
+    searchPlaceHolder: String,
+    single: Boolean,
+    updateSelected: Function,
+  },
+  data() {
+    return {
+      thisSearchInput: '',
+      options: [],
+      loading: false,
+      selectedOptions: this.selected,
+    };
+  },
+  inject: ['uipress'],
+  watch: {
+    selected: {
+      handler(newValue, oldValue) {
+        if (JSON.stringify(this.selected) != JSON.stringify(this.selectedOptions)) {
+          this.selectedOptions = this.selected;
+        }
+      },
+      deep: true,
     },
-    data: function () {
-      return {
-        thisSearchInput: '',
-        options: [],
-        loading: false,
-        selectedOptions: this.selected,
-        ui: {
-          dropOpen: false,
-        },
-      };
+    selectedOptions: {
+      handler(newValue, oldValue) {
+        this.updateSelected(this.selectedOptions);
+      },
+      deep: true,
     },
-    inject: ['uipress'],
+  },
+  mounted() {
+    this.getPostTypes();
+  },
+  computed: {
+    /**
+     * Returns options
+     *
+     * @since 3.1.0
+     */
+    formattedOptions() {
+      return this.options;
+    },
+    /**
+     * Returns loading status
+     *
+     * @since 3.1.0
+     */
+    returnLoading() {
+      return this.loading;
+    },
+  },
+  methods: {
+    /**
+     * Gets post types
+     *
+     * @since 3.1.0
+     */
+    getPostTypes() {
+      this.loading = true;
+      let formData = new FormData();
+      formData.append('action', 'uip_get_post_types');
+      formData.append('security', uip_ajax.security);
 
-    watch: {
-      selected: {
-        handler(newValue, oldValue) {
-          if (JSON.stringify(this.selected) != JSON.stringify(this.selectedOptions)) {
-            this.selectedOptions = this.selected;
-          }
-        },
-        deep: true,
-      },
-      selectedOptions: {
-        handler(newValue, oldValue) {
-          this.updateSelected(this.selectedOptions);
-        },
-        deep: true,
-      },
-    },
-    computed: {
-      formattedOptions() {
-        return this.options;
-      },
-      returnLoading() {
-        return this.loading;
-      },
-    },
-    methods: {
-      getPostTypes() {
-        self = this;
-
-        if (this.options.length > 0) {
-          console.log('saved');
+      this.uipress.callServer(uip_ajax.ajax_url, formData).then((response) => {
+        if (response.error) {
+          this.uipress.notify(response.error, 'error');
+          this.loading = false;
           return;
         }
-        self.loading = true;
-        let formData = new FormData();
-        formData.append('action', 'uip_get_post_types');
-        formData.append('security', uip_ajax.security);
 
-        self.uipress.callServer(uip_ajax.ajax_url, formData).then((response) => {
-          if (response.error) {
-            self.uipress.notify(response.error, 'error');
-            self.stopLoading();
-            return;
-          }
-
-          this.options = response.postTypes;
-          this.stopLoading();
-        });
-      },
-      stopLoading() {
+        this.options = response.postTypes;
         this.loading = false;
-      },
-      //////TITLE: ADDS A SELECTED OPTION//////////////////////////////////////////////////////////////////////////////////
-      /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-      /////DESCRIPTION: ADDS A SELECTED OPTION FROM OPTIONS
-      addSelected(selectedoption, options) {
-        //if selected then remove it
-        if (this.ifSelected(selectedoption, options)) {
-          this.removeSelected(selectedoption, options);
-          return;
-        }
-        if (this.single == true) {
-          options[0] = selectedoption;
-        } else {
-          options.push(selectedoption);
-        }
-      },
-      //////TITLE: REMOVES A SLECTED OPTION//////////////////////////////////////////////////////////////////////////////////
-      /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-      /////DESCRIPTION: ADDS A SELECTED OPTION FROM OPTIONS
-      removeSelected(option, options) {
-        let index = options.indexOf(option);
-        if (index > -1) {
-          options = options.splice(index, 1);
-        }
-      },
-      removeByIndex(index) {
-        this.selectedOptions.splice(index, 1);
-      },
-      //////TITLE:  CHECKS IF SELECTED OR NOT//////////////////////////////////////////////////////////////////////////////////
-      /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-      /////DESCRIPTION: ADDS A SELECTED OPTION FROM OPTIONS
-      ifSelected(option, options) {
-        let index = options.indexOf(option);
-        if (index > -1) {
-          return true;
-        } else {
-          return false;
-        }
-      },
-      //////TITLE:  CHECKS IF IN SEARCH//////////////////////////////////////////////////////////////////////////////////
-      /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-      /////DESCRIPTION: CHECKS IF ITEM CONTAINS STRING
-      ifInSearch(option, searchString) {
-        let item = option.toLowerCase();
-        let string = searchString.toLowerCase();
-
-        if (item.includes(string)) {
-          return true;
-        } else {
-          return false;
-        }
-      },
+      });
     },
-    template: `
-    <dropdown pos="left center" class="uip-w-100p" triggerClass="uip-w-100p" :onOpen="getPostTypes">
+    stopLoading() {
+      this.loading = false;
+    },
+    /**
+     * Adds selected item
+     *
+     * @param {Mixed} selectedoption
+     * @since 3.1.0
+     */
+    addSelected(selectedoption) {
+      //if selected then remove it
+      if (this.ifSelected(selectedoption)) {
+        this.removeSelected(selectedoption);
+        return;
+      }
+      if (this.single == true) {
+        this.selectedOptions[0] = selectedoption;
+      } else {
+        this.selectedOptions.push(selectedoption);
+      }
+    },
+    /**
+     * Removes selected option
+     *
+     * @param {Mixed} option
+     * @since 3.1.0
+     */
+    removeSelected(option) {
+      let index = this.selectedOptions.indexOf(option);
+      if (index > -1) {
+        this.selectedOptions.splice(index, 1);
+      }
+    },
+
+    /**
+     * Checks if item is in selected options already
+     *
+     * @param {Mixed} option
+     * @since 3.2.0
+     */
+    ifSelected(option) {
+      let index = this.selectedOptions.indexOf(option);
+      if (index > -1) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+    /**
+     * Check if item is in search
+     *
+     * @param {Mixed} option
+     * @since 3.1.0
+     */
+    ifInSearch(option) {
+      let item = option.toLowerCase();
+      let string = this.thisSearchInput.toLowerCase();
+
+      if (item.includes(string)) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+  },
+  template: `
       
-      <template v-slot:trigger>
+        <div class="uip-flex uip-flex-column uip-row-gap-s">
+                
+          <div class="uip-flex uip-background-muted uip-border-rounder uip-flex-center uip-padding-xxs uip-gap-xs">
+            <span class="uip-icon uip-text-muted">search</span>
+            <input class="uip-blank-input uip-flex-grow uip-text-s" type="search"  
+            :placeholder="searchPlaceHolder" v-model="thisSearchInput" autofocus>
+          </div>
+          
+          
+          <div v-if="returnLoading" class="uip-w-100p uip-flex uip-flex-center uip-flex-middle uip-h-200" :key="returnLoading">
+            <loading-chart></loading-chart>
+          </div>
+          
+          <div v-else class="uip-max-h-280 uip-flex uip-flex-column uip-row-gap-xxs" style="overflow:auto">
+            <template v-for="option in formattedOptions">
+            
+              <div class="uip-background-default uip-padding-xxs hover:uip-background-muted uip-border-rounder uip-flex uip-flex-row uip-flex-center" 
+              @click="addSelected(option.name, selectedOptions)" 
+              v-if="ifInSearch(option.name)" 
+              style="cursor: pointer">
+              
+                  <div class="uip-flex uip-flex-center uip-flex-middle uip-margin-right-xs">
+                    <input type="checkbox" :name="option.name" :value="option.name" class="uip-checkbox uip-margin-remove" 
+                    :checked="ifSelected(option.name, selectedOptions)">
+                  </div>
+                  
+                  <div class="uip-flex-grow uip-text-s uip-flex uip-gap-xxs">
+                    <div class="uip-text-bold uip-text-emphasis">{{option.label}}</div>
+                    <div class="uip-text-muted">{{option.name}}</div>
+                  </div>
+                
+              </div>
+              
+            </template>
+          </div>
+        </div>
+    `,
+};
+
+export const preview = {
+  components: {
+    PostTypeSelect: core,
+  },
+  props: {
+    selected: Array,
+    placeHolder: String,
+    searchPlaceHolder: String,
+    single: Boolean,
+    updateSelected: Function,
+  },
+  data() {
+    return {
+      thisSearchInput: '',
+      options: [],
+      loading: false,
+      selectedOptions: this.selected,
+      strings: {
+        postTypeSelect: __('Post type select', 'uipress-lite'),
+      },
+    };
+  },
+  methods: {
+    /**
+     * Removes from the selected options by index
+     *
+     * @param {Number} index - the index of the item to remove
+     */
+    removeByIndex(index) {
+      this.selectedOptions.splice(index, 1);
+    },
+  },
+  template: `
+  
       
         <div class="uip-padding-xxs uip-background-muted uip-border-rounder uip-w-100p uip-w-100p uip-cursor-pointer uip-border-box"> 
           <div class="uip-flex uip-flex-center">
@@ -146,7 +229,7 @@ export function moduleData() {
               <template v-for="(item, index) in selectedOptions">
                 <div class="uip-padding-left-xxs uip-padding-right-xxs uip-background-highlight uip-border-rounder uip-border uip-flex uip-gap-xxs uip-flex-center uip-shadow-small">
                   <span class="uip-text-s">{{item}}</span>
-                  <a @click="removeByIndex(index)" class="uip-link-muted uip-no-underline uip-icon">close</a>
+                  <a @click.prevent.stop="removeByIndex(index)" class="uip-link-muted uip-no-underline uip-icon">close</a>
                 </div>
               </template>
             </div>
@@ -155,53 +238,63 @@ export function moduleData() {
         
           </div>
         </div>
-        
-      </template>
-      
-      <template v-slot:content >
-      
-        <div class="uip-flex uip-flex-column uip-row-gap-xs uip-padding-xs">
-        
-          <div class="uip-flex uip-background-default uip-flex-center">
-            <span class="uip-icon uip-text-muted uip-margin-right-xs">search</span>
-            <input class="uip-blank-input uip-flex-grow" type="search"  
-            :placeholder="searchPlaceHolder" v-model="thisSearchInput" autofocus>
-          </div>
-          
-          <div class="uip-border-top"></div>
-          
-          <div v-if="returnLoading" class="uip-w-100p uip-flex uip-flex-center uip-flex-middle uip-h-200" :key="returnLoading">
-            <loading-chart></loading-chart>
-          </div>
-          
-          <div v-else class="uip-max-h-280 uip-overflow-auto" :key="'list-' + returnLoading">
-            <template v-for="option in formattedOptions">
-            
-              <div class="uip-background-default uip-padding-xxxs hover:uip-background-muted uip-border-rounder " 
-              @click="addSelected(option.name, selectedOptions)" 
-              v-if="ifInSearch(option.name, thisSearchInput)" 
-              style="cursor: pointer">
-              
-                <div class="uip-flex uip-flex-row uip-flex-center">
-                  <div class="uip-flex uip-flex-center uip-flex-middle uip-margin-right-xs">
-                  <input type="checkbox" :name="option.name" :value="option.name" class="uip-checkbox" :checked="ifSelected(option.name, selectedOptions)">
-                  </div>
-                  <div class="uip-flex-grow uip-text-s">
-                    <div class="uip-text-bold uip-text-emphasis">{{option.label}}</div>
-                    <div class="uip-text-muted">{{option.name}}</div>
-                  </div>
-                </div>
-                
-              </div>
-              
-            </template>
-          </div>
-        </div>
     
+  `,
+};
+
+export default {
+  components: {
+    PostTypeSelect: core,
+    PostTypePreview: preview,
+  },
+  props: {
+    selected: Array,
+    placeHolder: String,
+    searchPlaceHolder: String,
+    single: Boolean,
+    updateSelected: Function,
+  },
+  data() {
+    return {
+      strings: {
+        postTypeSelect: __('Post type select', 'uipress-lite'),
+      },
+    };
+  },
+  template: `
+  
+    <dropdown pos="left center" class="uip-w-100p" ref="postselect"
+    :snapX="['#uip-block-settings', '#uip-template-settings', '#uip-global-settings']">
+      
+      <template #trigger>
+      
+       <PostTypePreview :selected="selected" :placeHolder="placeHolder" :searchPlaceHolder="searchPlaceHolder" :single="single" :updateSelected="updateSelected"/>
+        
       </template>
       
       
+      <template #content>
+      
+        <div class="uip-padding-s uip-w-260 uip-flex uip-flex-column uip-row-gap-s">
+        
+          <div class="uip-flex uip-flex-between uip-flex-center">
+          
+            <div class="uip-text-emphasis uip-text-bold uip-text-s">{{ strings.postTypeSelect }}</div>
+            <div @click="$refs.postselect.close()"
+            class="uip-flex uip-flex-center uip-flex-middle uip-padding-xxs uip-link-muted hover:uip-background-muted uip-border-rounder">
+              <span class="uip-icon">close</span>
+            </div>
+            
+          </div>
+        
+          <PostTypeSelect :selected="selected" :placeHolder="placeHolder" :searchPlaceHolder="searchPlaceHolder" :single="single" :updateSelected="updateSelected"/>
+        
+        
+        </div>
+      
+      </template>
+    
     </dropdown>
-    `,
-  };
-}
+    
+  `,
+};

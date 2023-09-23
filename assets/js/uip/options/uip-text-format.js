@@ -434,7 +434,8 @@ export function moduleData() {
         <div class="uip-flex uip-gap-xs uip-flex-no-wrap uip-flex-center">
         
           
-          <dropdown pos="left center" :offsetX="130" ref="colorDrop" class="uip-w-100p">
+          <dropdown pos="left center" :snapX="['#uip-block-settings', '#uip-template-settings', '#uip-global-settings']"
+          ref="colorDrop" class="uip-w-100p">
             <template #trigger>
               <colorBox :backgroundStyle="returnTextColor" :text="option.color.value" :remove="()=>{option.color = {}}"/>
             </template>

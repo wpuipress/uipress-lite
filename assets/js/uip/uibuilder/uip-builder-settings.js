@@ -242,7 +242,8 @@ export default {
     },
   },
   template: `
-      <div class="uip-position-fixed uip-top-80 uip-right-16 uip-bottom-16 uip-background-default uip-w-320 uip-flex uip-flex-column uip-row-gap-s uip-overflow-auto uip-fade-in uip-shadow" style="border-radius: calc(var(--uip-border-radius-large) + var(--uip-padding-xs)); z-index: 2;">
+      <div class="uip-position-fixed uip-top-80 uip-right-16 uip-bottom-16 uip-background-default uip-w-320 uip-flex uip-flex-column uip-row-gap-s uip-overflow-auto uip-fade-in uip-shadow" style="border-radius: calc(var(--uip-border-radius-large) + var(--uip-padding-xs)); z-index: 2;"
+      id="uip-template-settings">
       
         <div class="uip-h-100p uip-w-100p uip-max-h-100p uip-max-w-100p uip-overflow-hidden uip-flex-grow uip-flex uip-flex-column uip-border-rounder uip-shadow uip-background-default">
         

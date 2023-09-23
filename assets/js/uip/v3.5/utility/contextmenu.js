@@ -10,6 +10,9 @@ export default {
       default: 0,
       type: Number,
     },
+    snapX: Array, // Optional selector to snap X axis to
+    snapY: Array, // Optional selector to snap Y axis to
+    snapRight: Boolean,
   },
   data() {
     return {
@@ -27,10 +30,28 @@ export default {
      * @since 0.0.1
      */
     show(evt, fixedPosition) {
-      let pos = evt;
+      // Set pos
+      let pos = {
+        clientX: evt.clientX,
+        clientY: evt.clientY,
+      };
+
+      // Update pos if fixed position was passed
       if (fixedPosition) {
         pos = fixedPosition;
       }
+
+      // Loop through snaps and update the trigger position
+      if (this.snapX && Array.isArray(this.snapX)) {
+        for (let selector of this.snapX) {
+          let snap = document.querySelector(selector);
+          if (!snap) continue;
+          let temprect = snap.getBoundingClientRect();
+          pos.clientX = temprect.left;
+          break;
+        }
+      }
+
       this.position.x = pos.clientX + this.offsetX;
       this.position.y = pos.clientY + this.offsetY;
       this.isVisible = true;
@@ -107,9 +128,12 @@ export default {
      * @since 0.0.1
      */
     returnPosition() {
-      if (!this.aboveClick) return `top: ${this.position.y}px; left: ${this.position.x}px`;
+      let transform = '';
+      if (this.snapRight) transform = 'transform:translateX(-100%)';
+
+      if (!this.aboveClick) return `top: ${this.position.y}px; left: ${this.position.x}px;${transform}`;
       let bottom = window.innerHeight - this.position.y;
-      if (this.aboveClick) return `bottom: ${bottom}px; left: ${this.position.x}px`;
+      if (this.aboveClick) return `bottom: ${bottom}px; left: ${this.position.x}px;${transform}`;
     },
   },
   template: `
