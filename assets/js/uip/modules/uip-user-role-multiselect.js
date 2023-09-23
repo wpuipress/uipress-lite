@@ -1,4 +1,5 @@
 const { __, _x, _n, _nx } = wp.i18n;
+import { defineAsyncComponent } from '../../libs/vue-esm-dev.js';
 export const core = {
   props: {
     selected: Array,
@@ -53,11 +54,15 @@ export const core = {
         this.queryUsersRoles();
       },
     },
+    selected: {
+      handler(newValue, oldValue) {
+        this.injectValue();
+      },
+      deep: true,
+      immediate: true,
+    },
   },
   mounted() {
-    if (Array.isArray(this.selected)) {
-      this.selectedOptions = this.selected;
-    }
     this.queryUsersRoles();
   },
   computed: {
@@ -88,6 +93,17 @@ export const core = {
   },
 
   methods: {
+    /**
+     * Updates selected from value
+     *
+     * @since 3.2.13
+     */
+    injectValue() {
+      if (Array.isArray(this.selected)) {
+        this.selectedOptions = this.selected;
+      }
+    },
+
     /**
      * Queries user roles and users
      *
@@ -247,36 +263,36 @@ export const core = {
             <loading-chart></loading-chart>
           </div>
           
-          <div class="uip-max-h-200" style="overflow:auto" v-if="formattedOptions.length > 0">
+          <div class="uip-max-h-200 uip-gap-xxxs uip-flex uip-flex-column" style="overflow:auto" v-if="formattedOptions.length > 0">
             
             <!--Roles-->
             <template v-if="!loading && activeTab == 'roles'" v-for="option in formattedRoles">
-              <div class="uip-background-default uip-padding-xxs uip-border-rounder uip-flex uip-flex-center uip-gap-xs uip-link-muted" 
+              <div class="uip-background-default uip-padding-xxs uip-border-rounder uip-flex uip-flex-center uip-gap-xs uip-link-muted hover:uip-background-muted" 
               @click="addSelected(option)" 
-              :class="{'uip-background-primary-wash uip-text-emphasis' : ifSelected(option), 'hover:uip-background-muted uip-link-muted' : !ifSelected(option)}"
+              :class="{'uip-text-emphasis' : ifSelected(option), 'uip-link-muted' : !ifSelected(option)}"
               v-if="ifInSearch(option)" 
               style="cursor: pointer">
                     
+                    
+                    <div class="uip-flex-grow uip-text-s uip-text-bold">{{option.label}}</div>
                     <input type="checkbox" :name="option.name" :value="option.name" class="uip-checkbox uip-margin-remove" 
                     :checked="ifSelected(option)">
-                    <div class="uip-flex-grow uip-text-s uip-text-bold">{{option.label}}</div>
-                    <div class="uip-icon">add</div>
                 
               </div>
             </template>
             
             <!--Users-->
             <template v-if="!loading && activeTab == 'users'" v-for="option in formattedUsers">
-              <div class="uip-background-default uip-padding-xxs uip-border-rounder uip-flex uip-flex-center uip-gap-xs uip-link-muted" 
+              <div class="uip-background-default uip-padding-xxs uip-border-rounder uip-flex uip-flex-center uip-gap-xs uip-link-muted hover:uip-background-muted" 
               @click="addSelected(option)" 
-              :class="{'uip-background-primary-wash uip-text-emphasis' : ifSelected(option), 'hover:uip-background-muted uip-link-muted' : !ifSelected(option)}"
+              :class="{'uip-text-emphasis' : ifSelected(option), 'uip-link-muted' : !ifSelected(option)}"
               v-if="ifInSearch(option)" 
               style="cursor: pointer">
                     
+                    
+                    <div class="uip-flex-grow uip-text-s uip-text-bold">{{option.label}}</div>
                     <input type="checkbox" :name="option.name" :value="option.name" class="uip-checkbox uip-margin-remove" 
                     :checked="ifSelected(option)">
-                    <div class="uip-flex-grow uip-text-s uip-text-bold">{{option.label}}</div>
-                    <div class="uip-icon">add</div>
                 
               </div>
             </template>
@@ -294,6 +310,9 @@ export const core = {
 };
 
 export const preview = {
+  components: {
+    contextmenu: defineAsyncComponent(() => import('../v3.5/utility/contextmenu.min.js?ver=3.2.12')),
+  },
   props: {
     selected: Array,
     placeHolder: String,
@@ -304,11 +323,14 @@ export const preview = {
   },
   data: function () {
     return {
+      hoverTimeout: null,
       selectedOptions: [],
       strings: {
         users: __('Users', 'uipress-lite'),
         roles: __('Roles', 'uipress-lite'),
         roleSelect: __('Role select', 'uipress-lite'),
+        others: __('others', 'uipress-lite'),
+        other: __('other', 'uipress-lite'),
       },
       ui: {
         dropOpen: false,
@@ -316,25 +338,59 @@ export const preview = {
     };
   },
   inject: ['uipress'],
-  mounted() {
-    if (Array.isArray(this.selected)) {
-      this.selectedOptions = this.selected;
-    }
-  },
   watch: {
     selectedOptions: {
       handler(newValue, oldValue) {
         this.updateSelected(this.selectedOptions);
+        // Closes multi select contextmenu
+        if (this.selectedOptions.length < 1) {
+          if (!this.$refs.showList) return;
+          this.$refs.showList.close();
+        }
       },
       deep: true,
     },
+    selected: {
+      handler(newValue, oldValue) {
+        this.injectValue();
+      },
+      deep: true,
+      immediate: true,
+    },
   },
-  created() {
-    if (!Array.isArray(this.selectedOptions)) {
-      this.selectedOptions = [];
-    }
+  computed: {
+    /**
+     * Returns the position of the multiselect to fix the contextmenu position
+     *
+     * @since 3.2.13
+     */
+    returnSelectPosition() {
+      const rect = this.$refs.multiselect.getBoundingClientRect();
+      return { clientX: rect.left, clientY: rect.bottom + 8 };
+    },
+
+    /**
+     * Returns width of multiselect
+     *
+     * @since 3.2.13
+     */
+    returnDropWidth() {
+      const rect = this.$refs.multiselect.getBoundingClientRect();
+      return { width: rect.width + 'px' };
+    },
   },
   methods: {
+    /**
+     * Updates selected from value
+     *
+     * @since 3.2.13
+     */
+    injectValue() {
+      if (Array.isArray(this.selected)) {
+        this.selectedOptions = this.selected;
+      }
+    },
+
     /**
      * Removes item by index
      *
@@ -344,32 +400,98 @@ export const preview = {
     removeByIndex(index) {
       this.selectedOptions.splice(index, 1);
     },
+
+    /**
+     * Shows all selected items and clears any timeout to close
+     *
+     * @param {Object} evt - mouseenter event
+     */
+    showSelected(evt) {
+      this.$refs.showList.show(evt, this.returnSelectPosition);
+      clearTimeout(this.hoverTimeout);
+    },
+    /**
+     * Starts a timeout to close after 1 second
+     *
+     * @since 3.1.0
+     */
+    dispatchClose() {
+      const handleTimeout = () => {
+        this.$refs.showList.close();
+      };
+      this.hoverTimeout = setTimeout(handleTimeout, 1000);
+    },
   },
   template: `
     
-        <div class="uip-padding-xxs uip-background-muted uip-border-rounder uip-w-100p uip-max-w-400 uip-cursor-pointer uip-border-box" :class="{'uip-active-outline' : ui.dropOpen}"> 
+        <div ref="multiselect" :class="{'uip-padding-xxxs' : selectedOptions.length > 0, 'uip-padding-xxs uip-padding-left-xs uip-padding-right-xs' : selectedOptions.length == 0, 'uip-active-outline' : ui.dropOpen }"
+        class="uip-padding-xxxs uip-background-muted uip-border-rounder uip-w-100p uip-max-w-400 uip-cursor-pointer uip-border-box"> 
         
           <div class="uip-flex uip-flex-center">
-          
-            <div class="uip-flex-grow uip-margin-right-s" v-if="selectedOptions.length < 1">
-              <div>
+            
+            <!-- Nothing selected -->
+            <div v-if="selectedOptions.length < 1" class="uip-flex-grow">
               <span class="uip-text-muted">{{placeHolder}}...</span>
-              </div>
             </div>
             
-            <div v-else class="uip-flex-grow uip-flex uip-flex-row uip-row-gap-xxs uip-gap-xxs uip-margin-right-s uip-flex-wrap">
-              <template v-for="(item, index) in selectedOptions">
-                <div class=" uip-padding-left-xxs uip-padding-right-xxs uip-background-highlight uip-border-rounder uip-border uip-flex uip-gap-xxs uip-flex-center uip-shadow-small">
-                  <span class="uip-text-s">{{item.name}}</span>
-                  <a @click="removeByIndex(index)" class="uip-link-muted uip-no-underline uip-icon">close</a>
-                </div>
-              </template>
-              
+            <!-- One selected -->
+            <div v-if="selectedOptions.length === 1" class="uip-padding-xs uip-padding-top-xxxs uip-padding-bottom-xxxs uip-background-highlight uip-border-rounder uip-border uip-flex uip-gap-xxs uip-flex-center uip-link-default uip-text-s">
+              <span class="uip-text-emphasis">{{selectedOptions[0].name}}</span>
+              <a @click.prevent.stop="removeByIndex(0)" class="uip-link-muted uip-no-underline uip-icon">close</a>
             </div>
             
-            <span class="uip-icon uip-text-muted">add</span>
+            <!-- Multiple selected -->
+            <div v-if="selectedOptions.length > 1" class="uip-padding-xs uip-padding-top-xxxs uip-padding-bottom-xxxs uip-background-highlight uip-border-rounder uip-border uip-flex uip-gap-xxs uip-flex-center uip-link-default uip-text-s" 
+            @mouseenter="showSelected($event)"
+            @mouseleave="dispatchClose()">
+              <span class="uip-text-emphasis uip-max-w-60 uip-overflow-hidden uip-no-wrap uip-text-ellipsis">{{selectedOptions[0].name}}</span>
+              <span class="uip-text-muted" v-if="selectedOptions.length < 3"> + {{ selectedOptions.length - 1 }} {{ strings.other }}</span>
+              <span class="uip-text-muted" v-if="selectedOptions.length > 2"> + {{ selectedOptions.length - 1 }} {{ strings.others }}</span>
+              <a @click.prevent.stop="selectedOptions.length = 0" class="uip-link-muted uip-no-underline uip-icon">close</a>
+            </div>
+            
+            <div class="uip-flex-grow uip-flex uip-flex-right">
+              <a class="uip-link-muted uip-no-underline uip-icon">expand_more</a>
+            </div>
+            
+            
             
           </div>
+          
+          <component is="style">
+            .selected-enter-active,
+            .selected-leave-active {
+              transition: all 0.3s ease;
+            }
+            .selected-enter-from,
+            .selected-leave-to {
+              opacity: 0;
+              transform: translateX(-30px);
+            }
+          </component>
+          
+          
+          <contextmenu ref="showList">
+          
+            <div class="uip-flex uip-gap-xxs uip-flex-wrap uip-padding-xs"
+            :style="returnDropWidth"
+            @mouseenter="showSelected($event)"
+            @mouseleave="$refs.showList.close()">
+              
+              <TransitionGroup name="selected">
+                <template v-for="(item, index) in selectedOptions" :key="item.name">
+                  
+                  <div class="uip-padding-xxs uip-padding-top-xxxs uip-padding-bottom-xxxs uip-background-muted uip-border-rounder uip-border uip-flex uip-gap-xxs uip-flex-center uip-link-default uip-text-xs">
+                    <span class="uip-text-emphasis">{{item.name}}</span>
+                    <a @click.prevent.stop="removeByIndex(index)" class="uip-link-muted uip-no-underline uip-icon">close</a>
+                  </div>
+                
+                </template>
+              </TransitionGroup>
+            
+            </div>
+          
+          </contextmenu>
           
         </div>
       
@@ -398,7 +520,7 @@ export default {
   },
 
   template: `
-    
+  
     <dropdown pos="left center" class="uip-w-100p" ref="userDropdown"
     :snapX="['#uip-block-settings', '#uip-template-settings', '#uip-global-settings']">
     

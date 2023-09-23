@@ -946,6 +946,7 @@ export default {
       strings: {
         query: __('Query', 'uipress-lite'),
         editQuery: __('Edit query', 'uipress-lite'),
+        add: __('Add', 'uipress-lite'),
       },
       enabledDisabled: {
         false: {
@@ -1029,7 +1030,15 @@ export default {
               <span class="uip-icon">all_inclusive</span>
             </div>
             
-            <div class="uip-no-wrap uip-text-ellipsis uip-overflow-hidden uip-w-80 uip-flex-grow">{{ block.query.settings.type }} | {{ block.query.settings.perPage }}</div>
+            <div class="uip-no-wrap uip-flex uip-gap-xxs uip-flex-grow uip-flex-center">
+              <span v-if="!block.query.settings.type && !block.query.settings.perPage" class="uip-text-muted">{{strings.add}}...</span>
+              <span v-if="block.query.settings.type">{{ block.query.settings.type }}</span>
+              <span class="uip-text-muted uip-text-s">|</span>
+              <span v-if="block.query.settings.perPage">{{ block.query.settings.perPage }}</span>
+            </div>
+            
+            <a @click.prevent.stop="block.query.settings = {}"
+            class="uip-link-muted uip-padding-xxxs uip-border-rounder uip-text-s hover:uip-background-muted uip-icon">close</a>
             
           </div>
           

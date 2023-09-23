@@ -399,7 +399,9 @@ export default {
 		  
 		</div>
 		
-		<BlockSettings/>
+        <KeepAlive>
+		    <BlockSettings/>
+        </KeepAlive>
 	
 		`,
 };
