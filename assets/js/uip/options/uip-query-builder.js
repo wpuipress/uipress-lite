@@ -68,7 +68,7 @@ const QueryBuilder = {
         roles: __('Roles', 'uipress-lite'),
         searchRoles: __('Search roles', 'uipress-lite'),
         search: __('Search', 'uipress-lite'),
-        usersOwnContent: __('Limit to users own content', 'uipress-lite'),
+        usersOwnContent: __('Own content', 'uipress-lite'),
         taxonomy: __('Taxonomy', 'uipress-lite'),
         field: __('Field', 'uipress-lite'),
         taxValue: __('Tax value', 'uipress-lite'),
@@ -108,6 +108,27 @@ const QueryBuilder = {
           label: __('Show', 'uipress-lite'),
         },
       },
+
+      activeSection: 'query',
+      metaSections: {
+        query: {
+          value: 'query',
+          label: __('Query', 'uipress-lite'),
+        },
+        meta: {
+          value: 'meta',
+          label: __('Meta', 'uipress-lite'),
+        },
+        tax: {
+          value: 'tax',
+          label: __('Tax', 'uipress-lite'),
+        },
+        settings: {
+          value: 'settings',
+          label: __('Settings', 'uipress-lite'),
+        },
+      },
+
       orderByOptions: OrderByOptions,
       orderByOptionsUser: OrderByOptionsUser,
       orderByOptionsSites: OrderByOptionsSites,
@@ -149,6 +170,21 @@ const QueryBuilder = {
       if (this.options.type == 'site') {
         return this.orderByOptionsSites;
       }
+    },
+    /**
+     * Returns and filters the available sections depending on query type
+     *
+     * @since 3.2.12
+     */
+    returnMetaSections() {
+      let temp = {};
+      temp = { ...this.metaSections };
+      if (this.options.type != 'post') {
+        delete temp.tax;
+        if (this.activeSection == 'tax') this.activeSection = 'query';
+      }
+
+      return temp;
     },
   },
   methods: {
@@ -336,316 +372,287 @@ const QueryBuilder = {
     },
   },
   template: `
-      <div class="uip-flex uip-flex-column uip-row-gap-xs uip-padding-left-xs">
-        
-        
-        <!--Type -->
-        <div class="uip-grid-col-1-3">
-        
-          <div class="uip-text-muted uip-flex uip-flex-center uip-text-s"><span>{{strings.type}}</span></div>
-            
-          <div class="uip-position-relative">
-            <toggle-switch :options="queryType" :activeValue="options.type" :returnValue="function(data){ options.type = data}"></toggle-switch>
-          </div>
+  
+      <div class="uip-flex uip-flex-column uip-row-gap-s">
+      
+        <toggle-switch :options="returnMetaSections" :activeValue="activeSection" :returnValue="(d)=>{ activeSection = d }"></toggle-switch>
+      
+        <div class="uip-flex uip-flex-column uip-row-gap-xs uip-padding-left-xs">
           
-        </div>
-        
-        
-        
-        
-        
-        <!--Post Type -->
-        <div v-if="options.type == 'post'" class="uip-grid-col-1-3">
-        
-          <div class="uip-text-muted uip-flex uip-flex-center uip-text-s"><span>{{strings.postType}}</span></div>
-            
-          <PostTypeSelectPreview @click="requestPostTypeScreen()"
-          :selected="options.postType" :placeHolder="strings.postTypes"
-          :searchPlaceHolder="strings.searchPostTypes" :updateSelected="(d)=>{options.postType = d}" />
+          <template v-if="activeSection=='query'">
           
-        </div>
-        
-        
-        <!--Role select -->
-        <div v-if="options.type == 'user'" class="uip-grid-col-1-3">
-        
-          <div class="uip-text-muted uip-flex uip-flex-center uip-text-s"><span>{{strings.roles}}</span></div>
+            <!--Type -->
+            <div class="uip-grid-col-1-3">
             
-          <UserRoleSelectPreview @click="requestPostStatusScreen()" 
-          type="roles" :selected="options.roles" :placeHolder="strings.roles"
-          :searchPlaceHolder="strings.searchRoles" :updateSelected="(d)=>{options.roles = d}" />
-          
-        </div>
-        
-        
-        <!--Status -->
-        <div class="uip-grid-col-1-3" v-if="options.type == 'post'">
-        
-          <div class="uip-text-muted uip-flex uip-flex-center uip-text-s"><span>{{strings.status}}</span></div>
-          
-          <StatusTypeSelectPreview
-          @click="requestPostStatusScreen()"
-          :availableOptions="uipData.options.post_statuses" :selected="options.status" :placeHolder="strings.postStatus"
-          :searchPlaceHolder="strings.seacrhStatus" :updateSelected="function(d){options.status = d}" />
-          
-        </div>
-        
-        
-        <!--Order by-->
-        <div class="uip-grid-col-1-3">
-        
-          <div class="uip-text-muted uip-flex uip-flex-center uip-text-s"><span>{{strings.order}}</span></div>
-            
-          
-          <div @click="requestOrderByScreen()" class="uip-background-muted uip-border-rounder uip-padding-xxs uip-padding-left-xs uip-flex uip-gap-xs uip-w-100p uip-pointer-cursor">
-            <div class="uip-text-capitalize uip-flex uip-gap-xxs">
-              <span>{{options.orderBy}}</span>
-              <span class="uip-text-muted">|</span>
-              <span class="uip-text-muted">{{options.order}}</span>
-            </div>
-          </div>
-          
-        </div>
-        
-        
-        
-        <div class="uip-border-top uip-margin-top-xs uip-margin-bottom-xs"></div>
-        
-        <!--Per page -->
-        <div class="uip-grid-col-1-3">
-        
-          <div class="uip-text-muted uip-flex uip-flex-center uip-text-s"><span>{{strings.perPage}}</span></div>
-            
-          <div class="uip-position-relative uip-flex uip-gap-xs">
-            <input type="number" min="1" class="uip-input uip-input-small uip-remove-steps uip-background-remove uip-padding-xxxs uip-flex-grow" style="width: 30px;" v-model="options.perPage">
-            
-            <div class="uip-padding-xxs uip-border-rounder uip-background-muted uip-flex uip-gap-xxs uip-no-text-select uip-flex-center">
-              <div class="uip-link-muted uip-icon" @click="options.perPage = parseInt(options.perPage) - 1">remove</div>
-              <div class="uip-border-right uip-h-12"></div>
-              <div class="uip-link-muted uip-icon" @click="options.perPage = parseInt(options.perPage) + 1">add</div>
-            </div>
-          </div>
-          
-        </div>
-        
-        
-        
-        
-        
-        <!--Offset -->
-        <div class="uip-grid-col-1-3">
-        
-          <div class="uip-text-muted uip-flex uip-flex-center uip-text-s"><span>{{strings.offset}}</span></div>
-            
-          <div class="uip-position-relative uip-flex uip-gap-xs">
-            <input type="number" min="0" class="uip-input uip-input-small uip-remove-steps uip-background-remove uip-padding-xxxs uip-flex-grow" style="width: 30px;" v-model="options.offset">
-            
-            <div class="uip-padding-xxs uip-border-rounder uip-background-muted uip-flex uip-gap-xxs uip-no-text-select uip-flex-center">
-              <div class="uip-link-muted uip-icon" @click="options.offset = parseInt(options.offset) - 1">remove</div>
-              <div class="uip-border-right uip-h-12"></div>
-              <div class="uip-link-muted uip-icon" @click="options.offset = parseInt(options.offset) + 1">add</div>
-            </div>
-          </div>
-          
-        </div>
-        
-        <div class="uip-border-top uip-margin-top-xs uip-margin-bottom-xs"></div>
-        
-        
-        
-        
-        
-        <!--Meta query-->
-        <div class="uip-grid-col-1-3">
-        
-          <div class="uip-text-muted uip-flex uip-flex-center uip-text-s uip-padding-top-xxxs uip-flex-start"><span>{{strings.metaQuery}}</span></div>
-            
-          <div class="uip-flex uip-flex-column uip-row-gap-xxs">
-          
-            <template v-for="(meta, index) in options.metaQuery">
-            
-              <div class="uip-flex uip-gap-xs uip-row-gap-xs uip-flex-center">
-              
-                <div @click="requestMetaScreen(meta)" class="uip-background-muted uip-border-rounder uip-padding-xxxs uip-padding-left-xs uip-flex uip-flex-center uip-text-s uip-gap-xxs uip-w-100p uip-cursor-pointer">
-                    
-                    <span class="uip-text-muted uip-flex-grow">{{meta.type}}</span>
-                    <span>{{meta.key}}</span>
-                    <span v-if="meta.type && meta.key" class="uip-text-muted">|</span>
-                    
-                    <a @click.prevent.stop="options.metaQuery.splice(index, 1)"
-                    class="uip-link-muted uip-icon uip-border-rounder uip-padding-xxs uip-link-muted" >
-                      close
-                    </a>
-                    
-                </div>
+              <div class="uip-text-muted uip-flex uip-flex-center uip-text-s"><span>{{strings.type}}</span></div>
                 
+              <toggle-switch :options="queryType" :activeValue="options.type" :returnValue="function(data){ options.type = data}"></toggle-switch>
+              
+            </div>
+            
+            
+            
+            
+            <!--Post Type -->
+            <div v-if="options.type == 'post'" class="uip-grid-col-1-3">
+            
+              <div class="uip-text-muted uip-flex uip-flex-center uip-text-s"><span>{{strings.postType}}</span></div>
+                
+              <PostTypeSelectPreview @click="requestPostTypeScreen()"
+              :selected="options.postType" :placeHolder="strings.postTypes"
+              :searchPlaceHolder="strings.searchPostTypes" :updateSelected="(d)=>{options.postType = d}" />
+              
+            </div>
+            
+            
+            <!--Role select -->
+            <div v-if="options.type == 'user'" class="uip-grid-col-1-3">
+            
+              <div class="uip-text-muted uip-flex uip-flex-center uip-text-s"><span>{{strings.roles}}</span></div>
+                
+              <UserRoleSelectPreview @click="requestPostStatusScreen()" 
+              type="roles" :selected="options.roles" :placeHolder="strings.roles"
+              :searchPlaceHolder="strings.searchRoles" :updateSelected="(d)=>{options.roles = d}" />
+              
+            </div>
+            
+            
+            <!--Status -->
+            <div class="uip-grid-col-1-3" v-if="options.type == 'post'">
+            
+              <div class="uip-text-muted uip-flex uip-flex-center uip-text-s"><span>{{strings.status}}</span></div>
+              
+              <StatusTypeSelectPreview
+              @click="requestPostStatusScreen()"
+              :availableOptions="uipData.options.post_statuses" :selected="options.status" :placeHolder="strings.postStatus"
+              :searchPlaceHolder="strings.seacrhStatus" :updateSelected="function(d){options.status = d}" />
+              
+            </div>
+            
+            
+            <!--Order by-->
+            <div class="uip-grid-col-1-3">
+            
+              <div class="uip-text-muted uip-flex uip-flex-center uip-text-s"><span>{{strings.order}}</span></div>
+                
+              
+              <div @click="requestOrderByScreen()" class="uip-background-muted uip-border-rounder uip-padding-xxs uip-padding-left-xs uip-flex uip-gap-xs uip-w-100p uip-pointer-cursor">
+                <div class="uip-text-capitalize uip-flex uip-gap-xxs">
+                  <span>{{options.orderBy}}</span>
+                  <span class="uip-text-muted">|</span>
+                  <span class="uip-text-muted">{{options.order}}</span>
+                </div>
               </div>
               
-            </template>
+            </div>
             
-            <button class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-w-100p uip-text-s" 
-            @click="addNewMeta()">add</button>
-          
-          </div>
-          
-          
-        </div>
-        
-        
-        
-        
-        <!--Relation -->
-        <div class="uip-grid-col-1-3" v-if="options.metaQuery.length > 0">
-        
-          <div class="uip-text-muted uip-flex uip-flex-center uip-text-s"><span>{{strings.relation}}</span></div>
             
-          <div class="uip-position-relative">
-            <toggle-switch :options="relationOptions" :activeValue="options.relation" :returnValue="function(data){ options.relation = data}"></toggle-switch>
-          </div>
-          
-        </div>
-        
-        <div class="uip-border-top uip-margin-top-xs uip-margin-bottom-xs"></div>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <!--Tax query-->
-        
-        <template v-if="options.type == 'post'">
-        
-          <div class="uip-grid-col-1-3">
-          
-            <div class="uip-text-muted uip-flex uip-flex-center uip-text-s uip-padding-top-xxxs uip-flex-start"><span>{{strings.taxQuery}}</span></div>
-              
-            <div class="uip-flex uip-flex-column uip-row-gap-xxs">
+            <!--Per page -->
+            <div class="uip-grid-col-1-3">
             
-              <template v-for="(tax, index) in options.taxQuery">
-              
-                <div class="uip-flex uip-gap-xs uip-row-gap-xs uip-flex-center">
+              <div class="uip-text-muted uip-flex uip-flex-center uip-text-s"><span>{{strings.perPage}}</span></div>
                 
-                  <div @click="requestTaxScreen(tax)" class="uip-background-muted uip-border-rounder uip-padding-xxxs uip-padding-left-xs uip-flex uip-flex-center uip-text-s uip-gap-xxs uip-w-100p uip-cursor-pointer">
-                      
-                      <div class="uip-flex uip-flex-center uip-flex-grow uip-gap-xxs">
-                        <span class="uip-text-muted">{{tax.fieldType}}</span>
-                        <span v-if="tax.taxonomy && tax.fieldType" class="uip-text-muted">|</span>
-                        <span class="uip-text-muted">{{tax.taxonomy}}</span>
-                      </div>
-                      
-                      <a @click.prevent.stop="options.taxQuery.splice(index, 1)"
-                      class="uip-link-muted uip-icon uip-border-rounder uip-padding-xxs uip-link-muted" >
-                        close
-                      </a>
-                      
+              <div class="uip-position-relative uip-flex uip-gap-xs">
+                <input type="number" min="1" class="uip-input uip-input-small uip-remove-steps uip-background-remove uip-padding-xxxs uip-flex-grow" style="width: 30px;" v-model="options.perPage">
+                
+                <div class="uip-padding-xxs uip-border-rounder uip-background-muted uip-flex uip-gap-xxs uip-no-text-select uip-flex-center">
+                  <div class="uip-link-muted uip-icon" @click="options.perPage = parseInt(options.perPage) - 1">remove</div>
+                  <div class="uip-border-right uip-h-12"></div>
+                  <div class="uip-link-muted uip-icon" @click="options.perPage = parseInt(options.perPage) + 1">add</div>
+                </div>
+              </div>
+              
+            </div>
+            
+            
+            
+            
+            
+            <!--Offset -->
+            <div class="uip-grid-col-1-3">
+            
+              <div class="uip-text-muted uip-flex uip-flex-center uip-text-s"><span>{{strings.offset}}</span></div>
+                
+              <div class="uip-position-relative uip-flex uip-gap-xs">
+                <input type="number" min="0" class="uip-input uip-input-small uip-remove-steps uip-background-remove uip-padding-xxxs uip-flex-grow" style="width: 30px;" v-model="options.offset">
+                
+                <div class="uip-padding-xxs uip-border-rounder uip-background-muted uip-flex uip-gap-xxs uip-no-text-select uip-flex-center">
+                  <div class="uip-link-muted uip-icon" @click="options.offset = parseInt(options.offset) - 1">remove</div>
+                  <div class="uip-border-right uip-h-12"></div>
+                  <div class="uip-link-muted uip-icon" @click="options.offset = parseInt(options.offset) + 1">add</div>
+                </div>
+              </div>
+              
+            </div>
+            
+            
+            
+            
+            
+            
+            
+            
+          </template>
+          <!-- End query section-->
+          
+          
+          
+          
+          <!-- Start meta section-->
+          <template v-if="activeSection=='meta'">
+          
+            <!--Meta query-->
+            <div class="uip-grid-col-1-3">
+            
+              <div class="uip-text-muted uip-flex uip-flex-center uip-text-s uip-padding-top-xxxs uip-flex-start"><span>{{strings.metaQuery}}</span></div>
+                
+              <div class="uip-flex uip-flex-column uip-row-gap-xxs">
+              
+                <template v-for="(meta, index) in options.metaQuery">
+                
+                  <div class="uip-flex uip-gap-xs uip-row-gap-xs uip-flex-center">
+                  
+                    <div @click="requestMetaScreen(meta)" class="uip-background-muted uip-border-rounder uip-padding-xxxs uip-padding-left-xs uip-flex uip-flex-center uip-text-s uip-gap-xxs uip-w-100p uip-cursor-pointer">
+                        
+                        <span class="uip-text-muted uip-flex-grow">{{meta.type}}</span>
+                        <span>{{meta.key}}</span>
+                        <span v-if="meta.type && meta.key" class="uip-text-muted">|</span>
+                        
+                        <a @click.prevent.stop="options.metaQuery.splice(index, 1)"
+                        class="uip-link-muted uip-icon uip-border-rounder uip-padding-xxs uip-link-muted" >
+                          close
+                        </a>
+                        
+                    </div>
+                    
                   </div>
                   
-                </div>
+                </template>
                 
-              </template>
+                <button class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-w-100p uip-text-s" 
+                @click="addNewMeta()">add</button>
               
-              <button class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-w-100p uip-text-s" 
-              @click="addNewTax()">add</button>
+              </div>
+              
+              
+            </div>
             
+            <!--Relation -->
+            <div class="uip-grid-col-1-3">
+            
+              <div class="uip-text-muted uip-flex uip-flex-center uip-text-s"><span>{{strings.relation}}</span></div>
+                
+              <div class="uip-position-relative">
+                <toggle-switch :options="relationOptions" :activeValue="options.relation" :returnValue="function(data){ options.relation = data}"></toggle-switch>
+              </div>
+              
+            </div>
+          
+          </template>
+          <!--End meta section-->
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          <!-- Start tax section-->
+          <template v-if="activeSection=='tax'">
+          
+            
+            <div class="uip-grid-col-1-3">
+            
+              <div class="uip-text-muted uip-flex uip-flex-center uip-text-s uip-padding-top-xxxs uip-flex-start"><span>{{strings.taxQuery}}</span></div>
+                
+              <div class="uip-flex uip-flex-column uip-row-gap-xxs">
+              
+                <template v-for="(tax, index) in options.taxQuery">
+                
+                  <div class="uip-flex uip-gap-xs uip-row-gap-xs uip-flex-center">
+                  
+                    <div @click="requestTaxScreen(tax)" class="uip-background-muted uip-border-rounder uip-padding-xxxs uip-padding-left-xs uip-flex uip-flex-center uip-text-s uip-gap-xxs uip-w-100p uip-cursor-pointer">
+                        
+                        <div class="uip-flex uip-flex-center uip-flex-grow uip-gap-xxs">
+                          <span class="uip-text-muted">{{tax.fieldType}}</span>
+                          <span v-if="tax.taxonomy && tax.fieldType" class="uip-text-muted">|</span>
+                          <span class="uip-text-muted">{{tax.taxonomy}}</span>
+                        </div>
+                        
+                        <a @click.prevent.stop="options.taxQuery.splice(index, 1)"
+                        class="uip-link-muted uip-icon uip-border-rounder uip-padding-xxs uip-link-muted" >
+                          close
+                        </a>
+                        
+                    </div>
+                    
+                  </div>
+                  
+                </template>
+                
+                <button class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-w-100p uip-text-s" 
+                @click="addNewTax()">add</button>
+              
+              </div>
+              
+              
             </div>
             
             
-          </div>
-          
-          
-          <!--TAX Relation -->
-          <div class="uip-grid-col-1-3" v-if="options.taxQuery.length > 0">
-          
-            <div class="uip-text-muted uip-flex uip-flex-center uip-text-s"><span>{{strings.relation}}</span></div>
+            <!--TAX Relation -->
+            <div class="uip-grid-col-1-3">
+            
+              <div class="uip-text-muted uip-flex uip-flex-center uip-text-s"><span>{{strings.relation}}</span></div>
+                
+              <div class="uip-position-relative">
+                <toggle-switch :options="relationOptions" :activeValue="options.taxRelation" :returnValue="function(data){ options.taxRelation = data}"></toggle-switch>
+              </div>
               
-            <div class="uip-position-relative">
-              <toggle-switch :options="relationOptions" :activeValue="options.taxRelation" :returnValue="function(data){ options.taxRelation = data}"></toggle-switch>
+            </div>
+          
+          
+          </template>
+          <!--End tax section-->
+          
+          
+          
+          
+          <!-- Start settings section-->
+          <template v-if="activeSection=='settings'">
+          
+            <!--Has own content -->
+            <div class="uip-grid-col-1-3">
+            
+              <div class="uip-text-muted uip-flex uip-flex-center uip-text-s"><span>{{strings.usersOwnContent}}</span></div>
+              <switch-select :args="{asText: true}" :activeValue="options.limitToAuthor" :returnValue="function(data){ options.limitToAuthor = data}"/>
+              
             </div>
             
-          </div>
-          
-          <div class="uip-border-top uip-margin-top-xs uip-margin-bottom-xs"></div>
-        
-        
-        </template>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <!--Has own content -->
-        <div class="uip-grid-col-1-3">
-        
-          <div class="uip-text-muted uip-flex uip-flex-center uip-text-s"><span>{{strings.usersOwnContent}}</span></div>
+            <!--Pagination -->
+            <div class="uip-grid-col-1-3">
             
-          <div class="uip-position-relative">
-            <switch-select :args="{asText: true}" :activeValue="options.limitToAuthor" :returnValue="function(data){ options.limitToAuthor = data}"></switch-select>
-          </div>
+              <div class="uip-text-muted uip-flex uip-flex-center uip-text-s"><span>{{strings.pagination}}</span></div>
+              <toggle-switch :options="showPagination" :activeValue="options.showPagination" :returnValue="function(data){ options.showPagination = data}"/>
+              
+            </div>
+            
+            <!--Search -->
+            <div class="uip-grid-col-1-3">
+            
+              <div class="uip-text-muted uip-flex uip-flex-center uip-text-s"><span>{{strings.search}}</span></div>
+              <toggle-switch :options="showPagination" :activeValue="options.search" :returnValue="function(data){ options.search = data}"/>
+              
+            </div>
+          
+          
+          </template>
+          <!--End settings section-->
+          
           
         </div>
-        
-        <!--Pagination -->
-        <div class="uip-grid-col-1-3">
-        
-          <div class="uip-text-muted uip-flex uip-flex-center uip-text-s"><span>{{strings.pagination}}</span></div>
-            
-          <div class="uip-position-relative">
-            <toggle-switch :options="showPagination" :activeValue="options.showPagination" :returnValue="function(data){ options.showPagination = data}"></toggle-switch>
-          </div>
-          
-        </div>
-        
-        <!--Search -->
-        <div class="uip-grid-col-1-3">
-        
-          <div class="uip-text-muted uip-flex uip-flex-center uip-text-s"><span>{{strings.search}}</span></div>
-            
-          <div class="uip-position-relative">
-            <toggle-switch :options="showPagination" :activeValue="options.search" :returnValue="function(data){ options.search = data}"></toggle-switch>
-          </div>
-          
-        </div>
-        
-        
-        
-        
-        
+      
       </div>`,
 };
 
