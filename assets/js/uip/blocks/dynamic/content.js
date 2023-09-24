@@ -188,7 +188,7 @@ export function moduleData() {
        * @since 3.2.13
        */
       removeWatchers() {
-        window.removeEventListener('message', this.handleFullscreenEvent, false);
+        window.removeEventListener('message', this.handleFrameMessages, false);
         window.removeEventListener('popstate', this.handleHashChanges, false);
         window.removeEventListener('hashchange', this.handleHashChanges, false);
         document.removeEventListener('uip_breadcrumbs_change', this.handleBreadCrumbChange, { once: false });
@@ -213,7 +213,7 @@ export function moduleData() {
       mountProductionFunctions() {
         // Only mount fullscreen listeners on production
         if (this.uiTemplate.display != 'prod') return;
-        window.addEventListener('message', this.handleFullscreenEvent, false);
+        window.addEventListener('message', this.handleFrameMessages, false);
         window.addEventListener('popstate', this.handleHashChanges, false);
         window.addEventListener('hashchange', this.handleHashChanges, false);
       },
@@ -374,7 +374,7 @@ export function moduleData() {
        * @param {Object} - event - Message event
        * @since 3.2.13
        */
-      handleFullscreenEvent(event) {
+      handleFrameMessages(event) {
         if (!event.data) return;
 
         const isRequestingFullscreen = event.data.eventName === 'uip_request_fullscreen';
@@ -483,6 +483,14 @@ export function moduleData() {
         // Get the iframe reference
         const frame = this.$refs.contentframe;
 
+        // Mount link watcher
+
+        const iframeClicker = (event) => {
+          if (event.target.tagName != 'A') return;
+          this.handleInsideFrameLink(event.target.href);
+        };
+        frame.contentWindow.document.addEventListener('click', iframeClicker);
+
         // Return early if not in 'prod' mode
         if (this.uiTemplate.display !== 'prod') return;
 
@@ -509,6 +517,43 @@ export function moduleData() {
           const form = frame.contentWindow.document.querySelector(`form[name="${name}"]`);
           if (form) handleFormSubmit(form);
         });
+      },
+
+      /**
+       * Handles links clicked on from within the iframe
+       * Checks if they are for same origin. If not reloads the whole page
+       *
+       * @since 3.2.13
+       */
+      handleInsideFrameLink(url) {
+        // No url so bail
+        if (!url) return;
+
+        const absoluteUrlPattern = /^(?:[a-z+]+:)?\/\//i;
+
+        // Link is not relative so bail
+        if (!absoluteUrlPattern.test(url)) return;
+
+        const domain = this.extractDomain(this.uipData.options.domain);
+
+        // URL contains domain so exit
+        if (url.includes(domain)) return;
+
+        // High chance we will run into cors issues so reload page outside frame
+        window.location.href = url;
+      },
+
+      extractDomain(urlString) {
+        const url = new URL(urlString);
+
+        // Split the hostname into parts
+        const parts = url.hostname.split('.');
+        if (parts.length <= 2) {
+          return url.hostname; // Return as is for hostnames like "google.com"
+        }
+
+        // Return last two parts for hostnames like "accounts.uipress.co"
+        return parts.slice(-2).join('.');
       },
 
       /**

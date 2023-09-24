@@ -107,6 +107,8 @@ class uip_app
             }
           } ?>
           <script>
+            
+            
             //Small function to prevent same origin errors when browsing in the iframe
             const uipWindowOpenMethod = window.open;
             window.open = function(url, target, windowFeatures){
