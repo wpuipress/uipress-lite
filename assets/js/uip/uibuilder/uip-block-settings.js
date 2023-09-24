@@ -192,6 +192,15 @@ export default {
     this.uipApp.blockSettings = this;
   },
   computed: {
+    /**
+     * Returns block query settings
+     *
+     * @since 3.2.13
+     */
+    returnBlockQuerySettings() {
+      if (!this.block.query) this.block.query = { settings: {} };
+      return this.block.query.settings;
+    },
     returnBlock() {
       return this.block;
     },
@@ -810,7 +819,7 @@ export default {
                   <div class="uip-padding-s uip-padding-right-remove uip-flex uip-flex-column uip-row-gap-xs" v-if="uiTemplate.proActivated">
                     
                     
-                    <QueryBuilder :block="block" :value="block.query.settings" :returnData="(d)=>{ block.query.settings = d}"/>
+                    <QueryBuilder :block="block" :value="returnBlockQuerySettings" :returnData="(d)=>{ block.query.settings = d}"/>
                   
                   </div>
                   

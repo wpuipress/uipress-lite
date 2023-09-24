@@ -78,6 +78,7 @@ export function moduleData() {
       clone(block) {
         let item = JSON.parse(JSON.stringify(block));
         item.tooltip = {};
+        item.settings = {};
 
         delete item.path;
         delete item.args;

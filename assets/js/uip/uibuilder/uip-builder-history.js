@@ -64,7 +64,7 @@ export default {
    * no args
    * @since 0.0.1
    */
-  beforeDestroy() {
+  beforeUnmount() {
     document.removeEventListener('keydown', this.watchHistoryKeys);
   },
   methods: {

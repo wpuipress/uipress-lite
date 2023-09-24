@@ -115,7 +115,7 @@ export default {
    * no args
    * @since 3.2.13
    */
-  beforeDestroy() {
+  beforeUnmount() {
     document.removeEventListener('keydown', this.watchBlockShortcuts);
   },
   computed: {

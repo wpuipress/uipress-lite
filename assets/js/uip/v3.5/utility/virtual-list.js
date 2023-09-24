@@ -197,7 +197,7 @@ export default {
    * Lifecycle hook before the component is destroyed.
    * Removes the scroll event listener.
    */
-  beforeDestroy() {
+  beforeUnmount() {
     // Remove scroll event listener
     this.$refs.root.removeEventListener('scroll', this.handleScroll);
   },

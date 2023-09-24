@@ -160,7 +160,7 @@ export function moduleData() {
     created() {
       this.setTheme();
     },
-    beforeDestroy() {
+    beforeUnmount() {
       this.$refs.previewCanvas.removeEventListener('wheel', this.scrollCanvas);
       window.addEventListener('keydown', this.watchShortCuts);
     },

@@ -79,7 +79,7 @@ uipress.uipAppData.settings = allUIPSettings;
 import * as UIbuilderToolbar from './uibuilder/uip-builder-toolbar.min.js?ver=3.2.12';
 import * as UIbuilderPreview from './uibuilder/uip-ui-preview.min.js?ver=3.2.12';
 import * as UIbuilderblocksList from './uibuilder/uip-builder-blocks-list.min.js?ver=3.2.12';
-import * as UIbuilderDropArea from './uibuilder/uip-builder-drop-area.min.js?ver=3.2.12';
+import UIbuilderDropArea from './uibuilder/uip-builder-drop-area.min.js?ver=3.2.12';
 import * as UIbuilderLibrary from './uibuilder/uip-template-library.min.js?ver=3.2.12';
 import * as UIbuilderSavePattern from './uibuilder/uip-save-pattern.min.js?ver=3.2.12';
 import * as UIbuilderDynamicDataWatcher from './uibuilder/uip-dynamic-data-watcher.min.js?ver=3.2.12';
@@ -273,7 +273,7 @@ uipUiBuilderApp.config.devtools = true;
 uipUiBuilderApp.use(uiBuilderrouter);
 uipUiBuilderApp.provide('router', uiBuilderrouter);
 
-uipUiBuilderApp.config.errorHandler = function (err, vm, info) {
+const errHandler = (err, vm, info) => {
   if (err == "TypeError: Cannot read properties of null (reading 'parent')") {
     uipress.notify(__('Please clear your cache', 'uipress-lite'), __('Thank you for updating uiPress. Please clear your cache to ensure the builder works correctly', 'warning', true));
     return;
@@ -283,6 +283,7 @@ uipUiBuilderApp.config.errorHandler = function (err, vm, info) {
   console.log(vm);
 };
 
+//uipUiBuilderApp.config.errorHandler = errHandler;
 //import to app
 //import * as navigation from "./modules/navigation.min.js";
 //import components
@@ -297,7 +298,7 @@ uipUiBuilderApp.component('accordion', UIbuilderAccordion.moduleData());
 uipUiBuilderApp.component('ui-preview', UIbuilderPreview.moduleData());
 uipUiBuilderApp.component('builder-blocks-list', UIbuilderblocksList.moduleData());
 uipUiBuilderApp.component('uip-tooltip', UIbuilderTooltip.moduleData());
-uipUiBuilderApp.component('uip-content-area', UIbuilderDropArea.moduleData());
+uipUiBuilderApp.component('uip-content-area', UIbuilderDropArea);
 uipUiBuilderApp.component('loading-chart', UIbuilderChartLoading.moduleData());
 uipUiBuilderApp.component('uip-offcanvas', UIbuilderOffcanvas.moduleData());
 uipUiBuilderApp.component('uip-save-button', UIbuilderSaveButton.moduleData());

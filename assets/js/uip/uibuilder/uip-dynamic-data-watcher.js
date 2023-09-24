@@ -290,7 +290,8 @@ export function moduleData() {
           this.ui.dynamicData.cursorPosition = this.getCaretPosition(input);
 
           // Show dynamic data
-          this.$refs.dynamicdatamenu.show(null, { clientX: coordinates.x - 220, clientY: coordinates.y });
+          const evt = { clientX: coordinates.x - 220, clientY: coordinates.y };
+          this.$refs.dynamicdatamenu.show(evt, evt);
 
           // Setup for detecting sequence closure
           this.ui.dynamicData.closeEvent = this.mountDynamicSequence('}}', this.closeDynamicData);
