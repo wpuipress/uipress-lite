@@ -11,11 +11,13 @@ export default {
     snapX: Array, // Optional selector to snap X axis to
     snapY: Array, // Optional selector to snap Y axis to
     shortCut: [Boolean, String, Array],
+    hover: Boolean,
   },
   data() {
     return {
       modelOpen: false,
       currentHeight: 0,
+      hoverTimeout: false,
       position: {
         left: 'auto',
         right: 'auto',
@@ -224,15 +226,50 @@ export default {
         this.position.opacity = 1;
       });
     },
+
+    /**
+     * If hover to open is set then opens the dropdown
+     *
+     * @since 3.2.13
+     */
+    maybeOpen() {
+      // Exit if hover isn't set
+      if (!this.hover) return;
+      clearTimeout(this.hoverTimeout);
+      this.show();
+    },
+
+    /**
+     * If hover to open is set then closes the dropdown
+     *
+     * @since 3.2.13
+     */
+    maybeClose() {
+      // Exit if hover isn't set
+      if (!this.hover) return;
+      this.hoverTimeout = setTimeout(this.close, 400);
+    },
+
+    /**
+     * Clears cose timeout
+     *
+     * @since 3.2.13
+     */
+    clearCloseTimeout() {
+      clearTimeout(this.hoverTimeout);
+    },
   },
   template: `
       <div ref="droptrigger"
+      @mouseenter="maybeOpen"
+      @mouseover="clearCloseTimeout()"
+      @mouseleave="maybeClose"
       @click="show($event)">
       
         <slot name="trigger"/>
         
         <teleport to="body">
-          <div v-if="modelOpen && $slots.content"
+          <div v-if="modelOpen && $slots.content" @mouseleave="maybeClose" @mouseover="clearCloseTimeout()"
           ref="uipdrop" class="uip-z-index-9 uip-position-fixed uip-shadow uip-background-default uip-border-rounder uip-body-font" 
           style="border-radius:calc(var(--uip-border-radius-large) + var(--uip-padding-xxs));" :style="position">
         
