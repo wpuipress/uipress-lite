@@ -28,7 +28,7 @@ export function moduleData() {
           searchPages: __('Search pages and posts', 'uipress-lite'),
           noneFound: __('No posts found for current query', 'uipress-lite'),
           newTab: __('Link mode', 'uipress-lite'),
-
+          linkSelect: __('Link select', 'uipress-lite'),
           currentValue: __('Current value', 'uipress-lite'),
           select: __('select', 'uipress-lite'),
         },
@@ -182,7 +182,9 @@ export function moduleData() {
       
         <div class="uip-flex uip-gap-xxs">
       
-          <dropdown pos="left center" :removeOverflow="true">
+          <dropdown pos="left center" 
+          ref="linkselect"
+          :snapX="['#uip-block-settings', '#uip-template-settings', '#uip-global-settings']">
               <template v-slot:trigger>
                 <div class="uip-flex uip-flex-row">
                   
@@ -196,18 +198,25 @@ export function moduleData() {
               
               <template v-slot:content>
               
-                <div class="uip-padding-xs uip-max-w-260">
-                  <div class="uip-margin-bottom-s">
-                    <toggle-switch :options="linkTypes" :activeValue="activeValue" :returnValue="function(data){ activeValue = data}"></toggle-switch>
+                <div class="uip-flex uip-flex-column uip-row-gap-s uip-padding-s uip-w-240">
+                
+                  <div class="uip-flex uip-flex-between uip-flex-center">
+                    <div class="uip-text-emphasis uip-text-bold uip-text-s">{{strings.linkSelect}}</div>
+                    <div @click.prevent.stop="$refs.linkselect.close()"
+                    class="uip-flex uip-flex-center uip-flex-middle uip-padding-xxs uip-link-muted hover:uip-background-muted uip-border-rounder">
+                      <span class="uip-icon">close</span>
+                    </div>
                   </div>
+                
+                
+                  <toggle-switch :options="linkTypes" :activeValue="activeValue" :returnValue="function(data){ activeValue = data}"></toggle-switch>
                   
                   <template v-if="activeValue == 'admin'">
                   
-                    <div class="uip-margin-bottom-s">
-                      <input type="text" class="uip-input-small uip-w-100p" v-model="searchString" :placeholder="strings.searchLinks">
-                    </div>
                     
-                    <div class="uip-flex uip-flex-column uip-max-h-200 uip-overflow-auto uip-scrollbar">
+                    <input type="text" class="uip-input-small uip-w-100p" v-model="searchString" :placeholder="strings.searchLinks">
+                    
+                    <div class="uip-flex uip-flex-column uip-max-h-200" style="overflow:auto">
                     
                       <template v-for="(menu, index) in adminMenu">
                       
@@ -235,11 +244,12 @@ export function moduleData() {
                   </template>
                   
                   <template v-if="activeValue == 'content'">
-                    <div class="uip-w-250">
-                      <div class="uip-margin-bottom-s">
-                        <input type="text" class="uip-input-small uip-w-100p" v-model="fetchSearchString" :placeholder="strings.searchPages">
-                      </div>
-                      <div class="uip-flex uip-flex-column uip-max-h-200 uip-overflow-auto uip-scrollbar">
+                  
+                      
+                      <input type="text" class="uip-input-small uip-w-100p" v-model="fetchSearchString" :placeholder="strings.searchPages">
+                      
+                      
+                      <div class="uip-flex uip-flex-column uip-max-h-200" style="overflow:auto">
                         <template v-for="post in getPosts">
                          <div class="uip-border-round hover:uip-background-muted uip-border-round uip-padding-xxs uip-flex uip-cursor-pointer" @click="chooseLink(post.link)">
                            <div class="">
@@ -250,7 +260,7 @@ export function moduleData() {
                         </template>
                         <div v-if="posts.length < 1 && fetchSearchString != ''" class="uip-text-muted uip-text-s uip-padding-xxs">{{strings.noneFound}}</div>
                       </div>
-                    </div>
+                      
                   </template>
                   
                   <template v-if="activeValue == 'dynamic' && link.dynamic">
