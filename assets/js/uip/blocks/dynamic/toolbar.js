@@ -1,4 +1,5 @@
 const { __, _x, _n, _nx } = wp.i18n;
+import { nextTick } from '../../../libs/vue-esm-dev.js';
 export function moduleData() {
   return {
     props: {
@@ -6,347 +7,389 @@ export function moduleData() {
       name: String,
       block: Object,
     },
-    data: function () {
+    data() {
       return {
         toolbar: {},
         rendered: false,
       };
     },
-    inject: ['uipData', 'uipress', 'uiTemplate'],
-    watch: {
-      'uipData.toolbar': {
-        handler(newValue, oldValue) {},
-        deep: true,
-      },
-    },
-    mounted: function () {
-      let self = this;
-
+    inject: ['uipData', 'uipress'],
+    async mounted() {
       this.dequeueAdminBarStyles();
+      this.importToolBar();
 
-      this.toolbar = JSON.parse(JSON.stringify(this.uipData.toolbar));
-      requestAnimationFrame(() => {
-        self.updateFromDom();
-      });
-      //Watch for toolbar changes in frame
-      document.addEventListener(
-        'uip_page_change_loaded',
-        (e) => {
-          self.updateToolBarFromFrame();
-          setTimeout(function () {
-            self.updateQM();
-            self.updateFromDom();
-          }, 100);
-        },
-        { once: false }
-      );
-
-      requestAnimationFrame(() => {
-        this.rendered = true;
-      });
+      await nextTick();
+      this.updateFromDom();
+      this.rendered = true;
+    },
+    beforeUnmount() {
+      document.removeEventListener('uip_page_change_loaded', this.handlePagechange);
     },
     computed: {
+      /**
+       * Returns list of hidden toolbar items
+       *
+       * @since 3.2.12
+       */
       getHidden() {
         let hidden = this.block.settings.block.options.hiddenToolbarItems.value;
-
-        if (this.uipress.isObject(hidden)) {
-          return [];
-        } else {
-          return hidden;
-        }
+        if (this.uipress.isObject(hidden)) return [];
+        return hidden;
       },
+
+      /**
+       * Returns toolbar object
+       *
+       * @since 3.2.13
+       */
       returnToolbar() {
         return this.toolbar;
       },
+
+      /**
+       * Returns dropdown position
+       *
+       * @since 3.2.12
+       */
       returnDropdownPosition() {
         let update = this.uipress.get_block_option(this.block, 'block', 'dropdownPosition');
-        if (this.uipress.isObject(update)) {
-          return update.value;
-        }
+        if (this.uipress.isObject(update)) return update.value;
 
-        if (update == '') {
-          return 'bottom-left';
-        }
+        if (!update == '') return 'bottom left';
         return update;
       },
+      /**
+       * Returns submenu items position
+       *
+       * @since 3.2.13
+       */
       returnSubDropdownPosition() {
         let update = this.uipress.get_block_option(this.block, 'block', 'subDropdownPosition');
-        if (this.uipress.isObject(update)) {
-          return update.value;
-        }
+        if (this.uipress.isObject(update)) return update.value;
 
-        if (update == '') {
-          return 'right';
-        }
+        if (!update == '') return 'right top';
         return update;
       },
     },
     methods: {
-      //Removes default admin bar styling
+      /**
+       * Imports the toolbar and mounts page change listener
+       *
+       * @since 3.2.13
+       */
+      importToolBar() {
+        this.toolbar = JSON.parse(JSON.stringify(this.uipData.toolbar));
+        document.addEventListener('uip_page_change_loaded', this.handlePagechange);
+      },
+      /**
+       * Handles page event
+       *
+       * @param {Object} evt - page change event
+       * @since 3.2.13
+       */
+      async handlePagechange(evt) {
+        this.updateToolBarFromFrame();
+        // Wait a short period for QM to update it's self before fetching results
+        setTimeout(() => {
+          this.updateQM();
+          this.updateFromDom();
+        }, 300);
+      },
+      /**
+       * Removes default toolbar styling
+       *
+       * @since 3.2.0
+       */
       dequeueAdminBarStyles() {
         let styleblock = document.querySelector('link[href*="load-styles.php?"]');
-        if (styleblock) {
-          let href = styleblock.href.replace('admin-bar,', '');
-          setTimeout(() => {
-            styleblock.href = href;
-          }, 100);
-        }
-      },
-      updateFromDom() {
-        let self = this;
-        //Get frame
-        let frames = document.getElementsByClassName('uip-page-content-frame');
-        let contentframe;
-        //Frame does not exist so use current dom
-        if (!frames[0]) {
-          contentframe = document;
-          console.log('helloooo');
+        if (!styleblock) return;
+
+        const newLink = styleblock.href.replace('admin-bar,', '');
+        const link = document.createElement('link');
+        link.href = newLink;
+        link.setAttribute('rel', 'stylesheet');
+
+        // Event listener function
+        const onLoad = () => {
+          styleblock.remove();
+          link.removeEventListener('load', onLoad); // Remove the event listener
+        };
+
+        const head = document.head;
+        if (head.firstChild) {
+          head.insertBefore(link, head.firstChild);
         } else {
-          contentframe = frames[0].contentWindow.document;
+          head.appendChild(link);
         }
 
-        let toolbarItems = contentframe.getElementById('wp-admin-bar-root-default');
-        let secondarytoolbarItems = contentframe.getElementById('wp-admin-bar-top-secondary');
+        // Add the event listener
+        link.addEventListener('load', onLoad);
+      },
+      /**
+       * Updates toolbar list from frame toolbar
+       *
+       * @returns {Promise}
+       * @since 3.2.13
+       */
+      async updateFromDom() {
+        // Determine the content frame.
+        const frameElement = document.querySelector('.uip-page-content-frame');
+        const contentFrame = frameElement ? frameElement.contentWindow.document : document;
+
+        const toolbarItems = contentFrame.getElementById('wp-admin-bar-root-default');
+        const secondaryToolbarItems = contentFrame.getElementById('wp-admin-bar-top-secondary');
+
+        // If there are no toolbar items, exit early.
         if (!toolbarItems) return;
 
-        //Get all toolbar items
-        let items = toolbarItems.children;
-        let secondaryitems = secondarytoolbarItems.children;
+        const primaryItems = Array.from(toolbarItems.children);
+        const secondaryItems = Array.from(secondaryToolbarItems.children);
 
-        var allitems = [];
-        allitems = Array.prototype.concat.apply(allitems, items);
-        allitems = Array.prototype.concat.apply(allitems, secondaryitems);
-        //console.log(items);
-        //console.log(self.toolbar);
-        let adminURL = self.uipData.options.adminURL;
-        let homeURL = self.uipData.options.domain;
-        let adminPath = adminURL.replace(homeURL, '');
+        const allItems = [...primaryItems, ...secondaryItems];
 
-        for (const child of allitems) {
-          let attr = child.getAttribute('id');
-          if (!attr) continue;
-          attr = attr.replace('wp-admin-bar-', '');
+        const adminURL = this.uipData.options.adminURL;
+        const homeURL = this.uipData.options.domain;
+        const adminPath = adminURL.replace(homeURL, '');
 
-          //Non existent toolbar item so let's add
-          if (!(attr in self.toolbar) && attr != 'site-name' && attr != 'menu-toggle' && attr != 'app-logo' && attr != 'my-account') {
-            let newObj = {
-              id: 'attr',
-              group: '',
-              meta: [],
-              parent: '',
-              submenu: {},
-              title: '',
-              href: '',
-            };
+        allItems.forEach((item) => {
+          let itemId = item.getAttribute('id');
+          itemId = itemId.replace('wp-admin-bar-', '');
 
-            let link = child.querySelector('a.ab-item');
+          // Continue if certain conditions aren't met.
+          if (!itemId || this.toolbar[itemId] || ['site-name', 'menu-toggle', 'app-logo', 'my-account'].includes(itemId)) return;
 
-            if (link) {
-              let href = link.getAttribute('href');
-              if (href) {
-                if (href.startsWith(adminPath)) {
-                  href = href.replace(adminPath, adminURL);
-                }
-              }
+          const newItem = this.createToolbarItem(item, adminPath, adminURL);
+          this.toolbar[itemId] = newItem;
+        });
+      },
+      /**
+       * Creates a new toolbar item
+       *
+       * @param {DomObject} item
+       * @param {String} adminPath
+       * @param {String} adminURL
+       */
+      createToolbarItem(item, adminPath, adminURL) {
+        const link = item.querySelector('a.ab-item');
+        let href = link.getAttribute('href') || '';
 
-              newObj.href = href;
-              newObj.title = link.innerHTML;
-            }
+        if (href.startsWith(adminPath)) {
+          href = href.replace(adminPath, adminURL);
+        }
 
-            let subWrap = child.querySelector('.ab-sub-wrapper .ab-submenu');
-            if (subWrap) {
-              for (const subchild of subWrap.children) {
-                let subattr = subchild.getAttribute('id');
-                if (!subattr) continue;
-                subattr = subattr.replace('wp-admin-bar-', '');
+        const newItem = {
+          id: 'attr',
+          group: '',
+          meta: [],
+          parent: '',
+          submenu: {},
+          title: link.innerHTML || '',
+          href: href || '',
+        };
 
-                let subLink = subchild.querySelector('a.ab-item');
+        const subItems = Array.from(item.querySelectorAll('.ab-sub-wrapper .ab-submenu > *'));
 
-                let newSubObj = {
-                  id: attr,
-                  group: '',
-                  meta: [],
-                  parent: attr,
-                  submenu: {},
-                  title: '',
-                  href: '',
-                };
-
-                if (subLink) {
-                  let subhref = subLink.getAttribute('href');
-                  if (subhref) {
-                    if (subhref.startsWith(adminPath)) {
-                      subhref = subhref.replace(adminPath, adminURL);
-                    }
-                  }
-
-                  newSubObj.href = subhref;
-                  newSubObj.title = subLink.innerHTML;
-                }
-
-                newObj.submenu[subattr] = newSubObj;
-              }
-            }
-
-            ///Push to toolbar
-            self.toolbar[attr] = newObj;
+        const processSubs = (subItem) => {
+          let subItemId = subItem.getAttribute('id');
+          subItemId = subItemId.replace('wp-admin-bar-', '');
+          if (subItemId) {
+            const subItemObject = createToolbarItem(subItem, adminPath, adminURL);
+            newItem.submenu[subItemId] = subItemObject;
           }
+        };
+
+        subItems.forEach(processSubs);
+
+        return newItem;
+      },
+
+      /**
+       * Update Query Monitor details in the toolbar based on the content frame.
+       *
+       * @since 3.2.13
+       */
+      async updateQM() {
+        // Check if query monitor is active
+        if (!this.toolbar['query-monitor']) return;
+        await nextTick();
+
+        const contentFrameElement = document.querySelector('.uip-page-content-frame');
+        if (!contentFrameElement) return;
+
+        const qmElement = contentFrameElement.contentWindow.document.querySelector('#wp-admin-bar-query-monitor');
+        if (!qmElement) return;
+
+        this.updateQMToolbarTitle(qmElement);
+        this.updateQMSubItems(qmElement);
+      },
+
+      /**
+       * Update the title for the Query Monitor toolbar item based on the QM element status.
+       *
+       * @param {HTMLElement} qmElement - The QM element to check.
+       * @since 3.2.13
+       */
+      updateQMToolbarTitle(qmElement) {
+        const labelElement = qmElement.querySelector('.ab-item');
+        const title = labelElement ? labelElement.innerHTML : this.toolbar['query-monitor'].title;
+        this.toolbar['query-monitor'].title = title;
+        this.toolbar['query-monitor'].frameLink = true;
+
+        if (qmElement.classList.contains('qm-warning')) {
+          this.appendToolbarStatusIndicator('red');
+        }
+
+        const alertClasses = ['qm-alert', 'qm-notice', 'qm-deprecated', 'qm-strict', 'qm-expensive'];
+        if (alertClasses.some((cls) => qmElement.classList.contains(cls))) {
+          this.appendToolbarStatusIndicator('orange');
         }
       },
-      updateQM() {
-        let self = this;
-        //Check if query monitor is active
-        if (!('query-monitor' in self.toolbar)) {
-          return;
-        }
-        //Get frame
-        let frames = document.getElementsByClassName('uip-page-content-frame');
-        //Frame does not exist so abort
-        if (!frames[0]) {
-          return;
-        }
-        let contentframe = frames[0];
-        //Get query monitor item from within frame
-        let qmObject = contentframe.contentWindow.document.getElementById('wp-admin-bar-query-monitor');
-        //No query monitor item inside frame
-        if (!qmObject) {
-          return;
-        }
 
-        let labelObj = qmObject.getElementsByClassName('ab-label');
-        self.toolbar['query-monitor'].title = labelObj[0].outerHTML;
-        self.toolbar['query-monitor'].frameLink = true;
+      /**
+       * Append a status indicator to the Query Monitor toolbar title.
+       *
+       * @param {string} color - Color of the indicator (e.g., 'red' or 'orange').
+       * @since 3.2.13
+       */
+      appendToolbarStatusIndicator(color) {
+        this.toolbar['query-monitor'].title += `<span class="uip-display-inline-block uip-border-circle uip-w-8 uip-ratio-1-1 uip-background-${color} uip-margin-left-xxs"></span>`;
+      },
 
-        //Check for errors
-        if (qmObject.classList.contains('qm-warning')) {
-          self.toolbar['query-monitor'].title += '<span class="uip-display-inline-block uip-border-circle uip-w-8 uip-ratio-1-1 uip-background-red uip-margin-left-xxs"></span>';
-        }
+      /**
+       * Update subitems for the Query Monitor toolbar item based on the QM element.
+       *
+       * @param {HTMLElement} qmElement - The QM element containing subitems.
+       * @since 3.2.13
+       */
+      updateQMSubItems(qmElement) {
+        const subItems = qmElement.querySelectorAll('#wp-admin-bar-query-monitor-default > li');
+        const newSubItems = {};
 
-        //Check for warnings
-        if (
-          qmObject.classList.contains('qm-alert') ||
-          qmObject.classList.contains('qm-notice') ||
-          qmObject.classList.contains('qm-deprecated') ||
-          qmObject.classList.contains('qm-strict') ||
-          qmObject.classList.contains('qm-expensive')
-        ) {
-          self.toolbar['query-monitor'].title += '<span class="uip-display-inline-block uip-border-circle uip-w-8 uip-ratio-1-1 uip-background-orange uip-margin-left-xxs"></span>';
-        }
+        subItems.forEach((subItem) => {
+          const originalId = subItem.getAttribute('id');
+          const itemId = originalId.replace('wp-admin-bar-query-monitor-', '');
+          const link = subItem.querySelector('a');
 
-        let items = qmObject.querySelectorAll('#wp-admin-bar-query-monitor-default > li');
-        let newSubs = {};
-        //Loop through links and pull relevant content
-        for (let sub of items) {
-          let ogid = sub.getAttribute('id');
-          let id = ogid.replace('wp-admin-bar-query-monitor-', '');
-          let link = sub.querySelector('a');
-          let href = link.getAttribute('href');
-          let title = link.textContent;
-
-          newSubs[id] = {
+          newSubItems[itemId] = {
             group: '',
-            href: href,
-            id: ogid,
+            href: link.getAttribute('href'),
+            id: originalId,
             meta: [],
             parent: 'query-monitor',
             submenu: {},
-            title: title,
+            title: link.textContent,
             frameLink: true,
           };
-        }
+        });
 
-        self.toolbar['query-monitor'].submenu = newSubs;
+        this.toolbar['query-monitor'].submenu = newSubItems;
       },
+
+      /**
+       * Updates the toolbar from the content inside an iframe.
+       *
+       * @since 3.2.13
+       */
       updateToolBarFromFrame() {
-        let frames = document.getElementsByClassName('uip-page-content-frame');
-        let self = this;
+        const frameElement = document.querySelector('.uip-page-content-frame');
 
-        if (frames[0]) {
-          let frame = frames[0];
-          //Update toolbar items when the page changes
-          if (frame.contentWindow.uipMasterToolbar && typeof frame.contentWindow.uipMasterToolbar !== 'undefined') {
-            let toolbar = frame.contentWindow.uipMasterToolbar;
-            if (!Array.isArray(toolbar)) {
-              self.toolbar = JSON.parse(JSON.stringify(toolbar));
-            }
+        // Ensure the frame exists and it has the required toolbar data.
+        if (frameElement && frameElement.contentWindow.uipMasterToolbar) {
+          const toolbar = frameElement.contentWindow.uipMasterToolbar;
+
+          // If the toolbar is not an array, clone it to the current component.
+          if (!Array.isArray(toolbar)) {
+            this.toolbar = { ...toolbar };
           }
         }
       },
-      ifHiden(uid) {
-        if (this.getHidden.includes(uid)) {
-          return false;
-        }
-
-        return true;
+      /**
+       * Determines if a given UID is hidden.
+       *
+       * @param {string} uid - The unique identifier to check.
+       * @returns {boolean} - Returns `false` if hidden, otherwise `true`.
+       * @since 3.2.13
+       */
+      ifHidden(uid) {
+        return !this.getHidden.includes(uid);
       },
+
+      /**
+       * Retrieves a custom icon for a given ID.
+       *
+       * @param {string} id - The ID for which to retrieve the icon.
+       * @returns {string|false} - Returns the custom icon if it exists, otherwise `false`.
+       * @since 3.2.13
+       */
       customIcon(id) {
-        let icons = this.uipress.get_block_option(this.block, 'block', 'editToolbarItems');
-        if (!this.uipress.isObject(icons)) {
-          return false;
+        const icons = this.uipress.get_block_option(this.block, 'block', 'editToolbarItems');
+
+        if (this.uipress.isObject(icons) && Object.hasOwn(icons, id) && icons[id].icon) {
+          return icons[id].icon;
         }
-        if (id in icons) {
-          let value = icons[id].icon;
-          if (value != '') {
-            return value;
-          }
-        }
+
         return false;
       },
+
+      /**
+       * Retrieves a custom title for a given ID.
+       *
+       * @param {string} id - The ID for which to retrieve the title.
+       * @returns {string|false} - Returns the custom title if it exists, otherwise `false`.
+       * @since 3.2.13
+       */
       customTitle(id) {
-        let icons = this.uipress.get_block_option(this.block, 'block', 'editToolbarItems');
+        const titles = this.uipress.get_block_option(this.block, 'block', 'editToolbarItems');
 
-        if (!this.uipress.isObject(icons)) {
-          return false;
+        if (this.uipress.isObject(titles) && Object.hasOwn(titles, id) && titles[id].title) {
+          return titles[id].title;
         }
-        if (Object.hasOwn(icons, id)) {
-          let value = icons[id].title;
-          if (value != '') {
-            return value;
-          }
-        }
+
         return false;
       },
 
-      updatePage(item, evt, forceReload) {
-        if (evt.ctrlKey || evt.shiftKey || evt.metaKey || (evt.button && evt.button == 1)) {
+      /**
+       * Navigates to a specified page or triggers an event based on conditions.
+       *
+       * @param {Object} item - The item containing navigation details.
+       * @param {Event} evt - The event that triggered the navigation.
+       * @param {boolean} [forceReload=false] - If `true`, forces the page to reload.
+       * @since 3.2.13
+       */
+      updatePage(item, evt, forceReload = false) {
+        if (evt.ctrlKey || evt.shiftKey || evt.metaKey || evt.button === 1) {
           return;
-        } else {
-          evt.preventDefault();
         }
+
+        evt.preventDefault();
 
         if (item.frameLink) {
-          //Get frame
-          let frames = document.getElementsByClassName('uip-page-content-frame');
-          //Frame does not exist so abort
-          if (!frames[0]) {
-            return;
-          }
-          let contentframe = frames[0];
+          const contentFrame = document.querySelector('.uip-page-content-frame');
 
-          //Find og query monitor click
-          let oglINK = contentframe.contentWindow.document.querySelector('#' + item.id + ' a');
-          if (oglINK) {
-            oglINK.click();
+          if (contentFrame) {
+            const originalLink = contentFrame.contentWindow.document.querySelector(`#${item.id} a`);
+            if (originalLink) originalLink.click();
           }
+
           return;
         }
 
-        if (forceReload) {
-          this.uipress.updatePage(this.formatHREF(item.href), forceReload);
-        } else {
-          this.uipress.updatePage(this.formatHREF(item.href));
-        }
+        this.uipress.updatePage(this.formatHREF(item.href), forceReload);
       },
-      formatHREF(link) {
-        let self = this;
-        let adminURL = self.uipData.options.adminURL;
-        let homeURL = self.uipData.options.domain;
-        let adminPath = adminURL.replace(homeURL, '');
 
-        if (link) {
-          if (link.startsWith(adminPath)) {
-            link = link.replace(adminPath, adminURL);
-          }
+      /**
+       * Formats a given link to make it suitable for navigation.
+       *
+       * @param {string} link - The original link to be formatted.
+       * @returns {string} - Returns the formatted link.
+       * @since 3.2.13
+       */
+      formatHREF(link) {
+        const { adminURL, domain: homeURL } = this.uipData.options;
+        const adminPath = adminURL.replace(homeURL, '');
+
+        if (link && link.startsWith(adminPath)) {
+          return link.replace(adminPath, adminURL);
         }
 
         return link;
@@ -366,7 +409,7 @@ export function moduleData() {
                 <div class="uip-admin-toolbar uip-flex">
                   <template v-for="item in returnToolbar">
                   
-                    <div class="" v-if="ifHiden(item.id)" :id="'wp-admin-bar-' + item.id" :class="item.meta.class">
+                    <div class="" v-if="ifHidden(item.id)" :id="'wp-admin-bar-' + item.id" :class="item.meta.class">
                       <!--FIRST DROP -->
                       <dropdown :hover="true" :pos="returnDropdownPosition">
                         <template v-slot:trigger>
