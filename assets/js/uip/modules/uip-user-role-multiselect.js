@@ -410,6 +410,7 @@ export const preview = {
       this.$refs.showList.show(evt, this.returnSelectPosition);
       clearTimeout(this.hoverTimeout);
     },
+
     /**
      * Starts a timeout to close after 1 second
      *
@@ -424,13 +425,13 @@ export const preview = {
   },
   template: `
     
-        <div ref="multiselect" :class="{'uip-padding-xxxs' : selectedOptions.length > 0, 'uip-padding-xxs uip-padding-left-xs uip-padding-right-xs' : selectedOptions.length == 0, 'uip-active-outline' : ui.dropOpen }"
-        class="uip-padding-xxxs uip-background-muted uip-border-rounder uip-w-100p uip-max-w-400 uip-cursor-pointer uip-border-box"> 
+        <div ref="multiselect"
+        class="uip-padding-xxxs uip-background-muted uip-border-rounder uip-w-100p uip-max-w-400 uip-cursor-pointer uip-border-box uip-padding-right-xs"> 
         
           <div class="uip-flex uip-flex-center">
             
             <!-- Nothing selected -->
-            <div v-if="selectedOptions.length < 1" class="uip-flex-grow">
+            <div v-if="selectedOptions.length < 1" class="uip-flex-grow uip-padding-xs uip-padding-top-xxxs uip-padding-bottom-xxxs uip-flex uip-gap-xxs uip-flex-center uip-link-default uip-text-s uip-border" style="border-color:transparent">
               <span class="uip-text-muted">{{placeHolder}}...</span>
             </div>
             
@@ -471,7 +472,7 @@ export const preview = {
           </component>
           
           
-          <contextmenu ref="showList">
+          <contextmenu ref="showList" :disableTeleport="true">
           
             <div class="uip-flex uip-gap-xxs uip-flex-wrap uip-padding-xs"
             :style="returnDropWidth"
