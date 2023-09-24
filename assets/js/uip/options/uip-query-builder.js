@@ -353,7 +353,7 @@ const QueryBuilder = {
      *
      * @since 3.2.13
      */
-    requestPostStatusScreen() {
+    requestRoleSelectScreen() {
       const screen = {
         component: 'UserRoleSelect',
         label: this.strings.roles,
@@ -410,7 +410,7 @@ const QueryBuilder = {
             
               <div class="uip-text-muted uip-flex uip-flex-center uip-text-s"><span>{{strings.roles}}</span></div>
                 
-              <UserRoleSelectPreview @click="requestPostStatusScreen()" 
+              <UserRoleSelectPreview @click="requestRoleSelectScreen()" 
               type="roles" :selected="options.roles" :placeHolder="strings.roles"
               :searchPlaceHolder="strings.searchRoles" :updateSelected="(d)=>{options.roles = d}" />
               
