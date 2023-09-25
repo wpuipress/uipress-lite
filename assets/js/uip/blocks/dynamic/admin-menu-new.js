@@ -1,10 +1,278 @@
 const { __, _x, _n, _nx } = wp.i18n;
+
+const SubMenuItem = {
+  inject: ['uipress'],
+  props: {
+    maybeFollowLink: Function,
+    item: Object,
+    collapsed: Boolean,
+    block: Object,
+  },
+  data() {
+    return {};
+  },
+  computed: {},
+  methods: {
+    /**
+     * Checks if a separator has a custom name. Returns name on success, false on failure
+     *
+     * @param {Object} item - the separator object
+     * @since 3.2.13
+     */
+    sepHasCustomName(item) {
+      return this.uipress.checkNestedValue(item, ['custom', 'name']);
+    },
+  },
+  template: `
+    
+          <div class="uip-admin-submenu">
+          
+              <template v-for="sub in item.submenu">
+              
+                  <!-- Normal subitem -->
+                  <div v-if="sub.type != 'sep'" class="uip-flex-grow uip-flex uip-gap-xs uip-flex-center">
+                    
+                    <!-- Main link -->
+                    <a :href="sub.url" @click="maybeFollowLink($event, sub)" :class="sub.customClasses" 
+                    class="uip-no-underline uip-link-muted uip-sub-level-item" :active="sub.active ? true : false">
+                      {{sub.name}}
+                    </a>
+                    
+                    <!-- Notifications count -->
+                    <div v-if="sub.notifications && sub.notifications > 0" 
+                    class="uip-border-circle uip-w-14 uip-h-14 uip-ratio-1-1 uip-background-secondary uip-text-inverse uip-text-xxs uip-flex uip-flex-center uip-flex-middle uip-menu-notification">
+                      <span>{{sub.notifications}}</span>
+                    </div>
+                    
+                  </div>
+                  
+                  <!-- Normal seperator-->
+                  <div v-else-if="!sepHasCustomName(sub)" class="uip-margin-bottom-s uip-menu-separator"></div>
+                  
+                  <!-- Named seperator-->
+                  <div v-else class="uip-margin-bottom-s uip-margin-top-s uip-flex uip-flex-row uip-gap-xxs uip-menu-separator">
+                    <span v-if="sub.custom.icon && sub.custom.icon != 'uipblank'" class="uip-icon">{{sub.custom.icon}}</span>
+                    <span>{{sub.custom.name}}</span>
+                  </div>
+                
+              </template>
+              
+          </div>
+    
+  `,
+};
+
+const TopLevelItem = {
+  inject: ['uipress'],
+  props: {
+    maybeFollowLink: Function,
+    item: Object,
+    collapsed: Boolean,
+    block: Object,
+  },
+  data() {
+    return {};
+  },
+  computed: {
+    /**
+     * Gets menu style. Returns style or 'dynamic' if not set
+     *
+     * @since 3.2.13
+     */
+    subMenuStyle() {
+      if (this.collapsed) return 'hover';
+
+      let style = this.uipress.get_block_option(this.block, 'block', 'subMenuStyle');
+      if (!this.uipress.isObject(style)) return 'dynamic';
+      if (style.value) return style.value;
+      return 'dynamic';
+    },
+
+    /**
+     * Returns custom submenu icon. Returns false on failure
+     *
+     * @since 3.2.13
+     */
+    subMenuCustomIcon() {
+      let icon = this.uipress.get_block_option(this.block, 'block', 'subMenuIcon');
+      if (!this.uipress.isObject(icon)) return false;
+      if (icon.value) return icon.value;
+      return false;
+    },
+
+    /**
+     * Returns whether the menu has icons for current state
+     *
+     * @returns {boolean} - whether to hide icons
+     * @since 3.2.13
+     */
+    hideIcons() {
+      // Don't hide icons if we are collapsed
+      if (this.collapsed) return false;
+
+      const icons = this.uipress.checkNestedValue(this.block, ['settings', 'block', 'options', 'hideIcons', 'value']);
+      if (this.uipress.isObject(icons)) return icons.value;
+      return icons;
+    },
+  },
+  methods: {
+    /**
+     * Utility function to catch uipblank in icon names
+     *
+     * @param {String} icon - the icon to check
+     */
+    returnTopIcon(icon) {
+      const status = icon ? icon.includes('uipblank') : false;
+      if (status) return icon.replace('uipblank', 'favorite');
+      return icon;
+    },
+
+    /**
+     * Returns the appropriate sub menu icon indicator for the given item
+     *
+     * @param {Object} item - top level menu item
+     * @since 3.2.13
+     */
+    returnSubIcon(item) {
+      // has custom icon so return that
+      if (this.subMenuCustomIcon) return this.subMenuCustomIcon;
+
+      // If dynamic menu always return chevron right
+      if (this.subMenuStyle == 'dynamic') return 'chevron_right';
+
+      // If hover menu always return chevron right
+      if (this.subMenuStyle == 'hover') return 'chevron_right';
+
+      // If item is open / active then return the open icon
+      if (item.open || item.active) return 'expand_more';
+      return 'chevron_left';
+    },
+  },
+  template: `
+    
+    <a :href="item.url" @click="maybeFollowLink($event, item, true)" class="uip-no-underline uip-link-default uip-top-level-item" :class="item.customClasses" :active="item.active ? true : false">
+    
+      <div v-if="!hideIcons && item.icon" v-html="returnTopIcon(item.icon)" class="uip-flex uip-flex-center uip-menu-icon uip-icon uip-icon-medium"></div>
+      
+      <div class="uip-flex-grow uip-flex uip-gap-xs uip-flex-center">
+        <div class="uip-line-height-1" v-html="item.name"></div>
+        <div v-if="item.notifications && item.notifications > 0" class="uip-border-round uip-h-14 uip-ratio-1-1 uip-background-secondary uip-text-inverse uip-text-xxs uip-text-bold uip-flex uip-flex-center uip-flex-middle uip-menu-notification"><span>{{item.notifications}}</span></div>
+      </div>
+      
+      <div v-if="item.submenu && item.submenu.length > 0" class="uip-icon uip-link-muted">{{returnSubIcon(item)}}</div>
+      
+    </a>
+    
+  `,
+};
+
+const DrillDown = {
+  inject: ['uipress'],
+  components: {
+    TopLevelItem: TopLevelItem,
+    SubMenuItem: SubMenuItem,
+  },
+  props: {
+    maybeFollowLink: Function,
+    item: Object,
+    collapsed: Boolean,
+    block: Object,
+    menuItems: Array,
+  },
+  watch: {
+    menuItems: {
+      handler() {
+        this.initializeMenu();
+      },
+      immediate: true,
+      deep: true,
+    },
+  },
+  data() {
+    return {
+      currentLevel: [], // This will store the current level of items being displayed.
+      levels: [],
+      currentItem: null,
+    };
+  },
+  computed: {
+    parentItemName() {
+      // If currentItem is not null and it has a parent, return the parent's name.
+      if (!this.currentItem) return __('Go back', 'uipress-lite');
+      return this.decodeHtmlEntities(this.currentItem.name);
+    },
+  },
+  methods: {
+    drillDown(item) {
+      this.levels.push(this.currentLevel);
+      this.currentItem = item;
+      this.currentLevel = item.submenu;
+    },
+    goBack() {
+      this.currentLevel = this.levels.pop();
+    },
+    initializeMenu() {
+      this.currentLevel = this.menuItems;
+    },
+    handleLinkClick(evt, item) {
+      if (item.submenu && item.submenu.length) return this.drillDown(item);
+      this.maybeFollowLink(item);
+    },
+    /**
+     * Decodes html entities from a given string
+     *
+     * @param {String} item - the item to be decoded
+     * @since 3.2.12
+     */
+    decodeHtmlEntities(item) {
+      // Return blank if item doesn't have a set value
+      if (!item) return '';
+
+      return item
+        .replace(/&amp;/g, '&')
+        .replace(/&lt;/g, '<')
+        .replace(/&gt;/g, '>')
+        .replace(/&quot;/g, '"')
+        .replace(/&apos;/g, "'")
+        .replace(/&#39;/g, "'")
+        .replace(/&nbsp;/g, ' ')
+        .replace(/%20/g, ' ');
+    },
+  },
+  template: `
+    
+              <!-- Display Back button if there are levels to go back to -->
+              <a v-if="levels.length" 
+              class="uip-flex uip-gap-xxs uip-flex-center uip-flex-row uip-flex-center uip-text-bold uip-text-l uip-sub-menu-header uip-link-default uip-margin-bottom-s uip-gap-xxs" 
+              @click="goBack">
+                <div class="uip-icon">arrow_back</div>
+                <div class="uip-flex-grow" v-html="parentItemName"></div>
+              </a>
+              
+              <Transition name="translate" mode="out-in">
+                <div :key="currentLevel">
+                  <!-- Loop through currentLevel and display each item -->
+                  <template v-for="item of currentLevel">
+                    <TopLevelItem :item="item" :maybeFollowLink="handleLinkClick" :collapsed="collapsed" :block="block"/>
+                  </template>
+                </div>
+              </Transition>
+              
+    
+  `,
+};
+
 export function moduleData() {
   return {
     props: {
       display: String,
       name: String,
       block: Object,
+    },
+    components: {
+      TopLevelItem: TopLevelItem,
+      SubMenuItem: SubMenuItem,
+      DrillDownMenu: DrillDown,
     },
     data() {
       return {
@@ -53,113 +321,140 @@ export function moduleData() {
         },
       },
     },
-    mounted() {
+    created() {
       this.setMenu();
       this.buildMenu();
+    },
+    mounted() {
       this.mountEventListeners();
-
-      if (this.uipData.userPrefs.menuCollapsed && this.showCollapse) {
-        this.collapsed = true;
-      }
     },
     computed: {
-      isCollapsed() {
-        return this.collapsed;
-      },
-      hasStaticMenu() {
-        let staticMenu = this.uipress.get_block_option(this.block, 'block', 'customMenu');
-        if (staticMenu == 'none') return false;
-        return staticMenu;
-      },
+      /**
+       * Gets menu style. Returns style or 'dynamic' if not set
+       *
+       * @since 3.2.13
+       */
       subMenuStyle() {
-        if (this.collapsed) {
-          return 'hover';
-        }
+        if (this.collapsed) return 'hover';
+
         let style = this.uipress.get_block_option(this.block, 'block', 'subMenuStyle');
-        if (this.uipress.isObject(style)) {
-          if ('value' in style) {
-            return style.value;
-          }
-        }
-        return style;
+        if (!this.uipress.isObject(style)) return 'dynamic';
+        if (style.value) return style.value;
+        return 'dynamic';
       },
 
+      /**
+       * Returns custom submenu icon. Returns false on failure
+       *
+       * @since 3.2.13
+       */
       subMenuCustomIcon() {
         let icon = this.uipress.get_block_option(this.block, 'block', 'subMenuIcon');
-        if (icon.value) {
-          return icon.value;
-        } else {
-          return false;
-        }
+        if (!this.uipress.isObject(icon)) return false;
+        if (icon.value) return icon.value;
+        return false;
       },
-      menuAutoUpdate() {
-        let update = this.uipress.get_block_option(this.block, 'block', 'disableAutoUpdate');
-        if (this.uipress.isObject(update)) {
-          return update.value;
-        }
-        return update;
+
+      /**
+       * Returns whether auto load is enabled / disabled
+       *
+       * @returns {boolean}
+       * @since 3.2.13
+       */
+      autoLoadIsDisabled() {
+        const disbaled = this.uipress.get_block_option(this.block, 'block', 'loadOnClick');
+        if (this.uipress.isObject(disbaled)) return disbaled.value;
+        return disbaled;
       },
-      disableAutoLoad() {
-        let update = this.uipress.get_block_option(this.block, 'block', 'loadOnClick');
-        if (this.uipress.isObject(update)) {
-          return update.value;
-        }
-        return update;
+
+      /**
+       * Returns whether the menu collapse option is available
+       *
+       * @returns {boolean}
+       * @since 3.2.13
+       */
+      hasMenuCollapse() {
+        const menuCollapse = this.uipress.get_block_option(this.block, 'block', 'menuCollapse');
+        if (this.uipress.isObject(menuCollapse)) return menuCollapse.value;
+        return menuCollapse;
       },
-      showCollapse() {
-        let update = this.uipress.get_block_option(this.block, 'block', 'menuCollapse');
-        if (this.uipress.isObject(update)) {
-          return update.value;
-        }
-        return update;
+
+      /**
+       * Returns whether the mneu search is enabled
+       *
+       * @returns {boolean}  - whether the search is enabled
+       * @since 3.2.13
+       */
+      hasMenuSearch() {
+        const showSearch = this.uipress.get_block_option(this.block, 'block', 'showSearch');
+        if (this.uipress.isObject(showSearch)) return showSearch.value;
+        return showSearch;
       },
-      showSearch() {
-        let update = this.uipress.get_block_option(this.block, 'block', 'showSearch');
-        if (this.uipress.isObject(update)) {
-          return update.value;
-        }
-        return update;
-      },
+
+      /**
+       * Returns the drop position of the submenu drop. Returns 'right top' if not set
+       *
+       * @since 3.2.13
+       */
       returnDropdownPosition() {
-        let update = this.uipress.get_block_option(this.block, 'block', 'dropdownPosition');
-        if (this.uipress.isObject(update)) {
-          return update.value;
-        }
+        const pos = this.uipress.get_block_option(this.block, 'block', 'dropdownPosition');
+        if (!this.uipress.isObject(pos)) return 'right top';
 
-        if (update == '') {
-          return 'right';
-        }
-        return update;
+        if (pos.value) return pos.value;
+        return 'right top';
       },
+
+      /**
+       * Returns collapsed class when necessary
+       *
+       * @since 3.2.13
+       */
+      returnClasses() {
+        if (this.collapsed) return 'uip-menu-collapsed';
+      },
+
+      /**
+       * Returns whether the menu has collapse options for current state
+       *
+       * @returns {boolean} - whether the menu has collapse options
+       * @since 3.2.13
+       */
+      collapseOptions() {
+        if (this.subMenuStyle != 'dynamic') return true;
+        if (!this.activeMenu.submenu) return true;
+        if (this.activeMenu.submenu) return false;
+      },
+
+      /**
+       * Returns whether the menu has icons for current state
+       *
+       * @returns {boolean} - whether to hide icons
+       * @since 3.2.13
+       */
+      hideIcons() {
+        // Don't hide icons if we are collapsed
+        if (this.collapsed) return false;
+
+        const icons = this.uipress.checkNestedValue(this.block, ['settings', 'block', 'options', 'hideIcons', 'value']);
+        if (this.uipress.isObject(icons)) return icons.value;
+        return icons;
+      },
+
+      /**
+       * Returns current menu items filtered by search term
+       *
+       * @returns {Array} - array of filtered items
+       * @since 3.2.13
+       */
       searchItems() {
-        let term = this.menuSearch.toLowerCase();
-        let results = [];
-        let self = this;
+        const term = this.menuSearch.toLowerCase();
 
-        for (let item of self.workingMenu) {
-          if (item.type == 'sep') {
-            continue;
-          }
-          let name = item.name.toLowerCase();
-          if (name.includes(term)) {
-            results.push(item);
-          }
+        const itemMatchesTerm = ({ name, type }) => type !== 'sep' && name.toLowerCase().includes(term);
 
-          if (!item.submenu) {
-            continue;
-          }
+        const results = this.workingMenu
+          .filter(itemMatchesTerm)
+          .concat(this.workingMenu.filter((item) => item.submenu).flatMap((item) => item.submenu.filter(itemMatchesTerm).map((sub) => ({ ...sub, parent: item.name }))));
 
-          for (let sub of item.submenu) {
-            if (sub.type == 'sep') {
-              continue;
-            }
-            let subname = sub.name.toLowerCase();
-            if (subname.includes(term)) {
-              sub.parent = item.name;
-              results.push(sub);
-            }
-          }
-        }
         return results;
       },
     },
@@ -181,6 +476,7 @@ export function moduleData() {
        */
       setMenu() {
         this.menu = JSON.parse(JSON.stringify(this.uipData.adminMenu.menu));
+        if (this.uipData.userPrefs.menuCollapsed && this.hasMenuCollapse) this.collapsed = true;
       },
 
       /**
@@ -225,6 +521,7 @@ export function moduleData() {
             break;
         }
       },
+
       /**
        * Builds menu from basic array
        *
@@ -242,8 +539,8 @@ export function moduleData() {
         // Main function for handling sub items
         const processSubItem = (sub) => {
           sub.active = false;
-          sub.url = sub.url ? this.santize(sub.url) : undefined;
-          sub.name = sub.name ? this.santize(sub.name) : undefined;
+          sub.url = sub.url ? this.decodeHtmlEntities(sub.url) : undefined;
+          sub.name = sub.name ? this.decodeHtmlEntities(sub.name) : undefined;
 
           if (sub.url === currentLink) {
             sub.active = true;
@@ -255,8 +552,8 @@ export function moduleData() {
         const processMenuItem = (item) => {
           item.active = false;
 
-          item.url = item.url ? this.santize(item.url) : undefined;
-          item.name = item.name ? this.santize(item.name) : undefined;
+          item.url = item.url ? this.decodeHtmlEntities(item.url) : undefined;
+          item.name = item.name ? this.decodeHtmlEntities(item.name) : undefined;
 
           const foundItem = this.workingMenu.find((obj) => obj.uid === item.uid);
           const state = foundItem ? foundItem.open : false;
@@ -297,161 +594,121 @@ export function moduleData() {
         this.menu = JSON.parse(JSON.stringify(masterMenu.menu));
         this.buildMenu();
       },
-      activeItem(item, evt, topLevel) {
-        if (evt.ctrlKey || evt.shiftKey || evt.metaKey || (evt.button && evt.button == 1)) {
+
+      /**
+       * Follows menu link. If modifier keys are pressed then follows browser default
+       *
+       * @param {Object} evt - click event
+       * @param {Object} item - The menu item clicked
+       * @param {Boolean} topLevel - Whether the item is top level or not
+       * @since 3.2.13
+       */
+      maybeFollowLink(evt, item, topLevel) {
+        // If modifier keys allow the event to happen naturally
+        if (evt.ctrlKey || evt.shiftKey || evt.metaKey || evt.button == 1) return;
+
+        // Prevent default link click
+        evt.preventDefault();
+
+        // If we have disabled autoload on top level items and there is a submenu just open the menu and return
+        if (topLevel && this.autoLoadIsDisabled && item.submenu && item.submenu.length > 0) {
+          item.open = !item.open;
+          this.activeMenu = item;
           return;
-        } else {
-          evt.preventDefault();
         }
 
-        //If auto load is disabled
-        if (topLevel) {
-          if (this.disableAutoLoad && item.submenu && item.submenu.length > 0) {
-            item.open = !item.open;
-            this.activeMenu = item;
-            //item.active = !item.active;
-            return;
-          } else {
-            item.active = true;
-          }
-        }
+        // Set item as active
+        item.active = true;
 
-        let self = this;
-
+        // If there is a submenu then set the active menu for dynamic menu
         if (item.submenu && item.submenu.length > 0) {
           this.activeMenu = item;
         }
 
-        let absoluteCheck = new RegExp('^(?:[a-z+]+:)?//', 'i');
-        let absoluteURL = item.url;
-        if (!absoluteCheck.test(absoluteURL)) {
-          absoluteURL = this.uipData.dynamicOptions.viewadmin.value + absoluteURL;
-        }
-
-        //Open without frame
-        if (item.withoutFrame) {
-          let url = new URL(absoluteURL);
-          url.searchParams.set('uip-framed-page', 1);
-          absoluteURL = url.href;
-        }
-
-        //Open without uipress
-        if (item.withoutUiPress) {
-          let url = new URL(absoluteURL);
-          let uid = self.uipress.createUID();
-          url.searchParams.set('uipwf', uid);
-          url.searchParams.set('uip-framed-page', 0);
-          absoluteURL = url.href;
-
-          //Set data
-          let formData = new FormData();
-          formData.append('action', 'uip_create_frame_switch');
-          formData.append('security', uip_ajax.security);
-          formData.append('uid', uid);
-
-          self.uipress.callServer(uip_ajax.ajax_url, formData).then((response) => {
-            if (item.newTab) {
-              this.$refs.newTab.href = absoluteURL;
-              this.$refs.newTab.click();
-              this.$refs.newTab.href = '';
-              this.$refs.newTab.blur();
-            } else {
-              this.uipress.updatePage(absoluteURL, true);
-            }
-          });
-          return;
-        }
-
-        //Open in new tab
-        if (item.newTab || item.withoutFrame) {
-          this.$refs.newTab.href = absoluteURL;
-          this.$refs.newTab.click();
-          this.$refs.newTab.href = '';
-          this.$refs.newTab.blur();
-          return;
-        }
-
+        // Update the active link
         this.uipress.updatePage(item.url);
-        //this.returnMenu;
       },
-      hideIcons() {
-        if (this.collapsed) {
-          return false;
-        }
 
-        let icons = this.uipress.checkNestedValue(this.block, ['settings', 'block', 'options', 'hideIcons', 'value']);
-        if (this.uipress.isObject(icons)) {
-          return icons.value;
-        }
-        return icons;
-      },
-      returnDropPos() {
-        let pos = this.uipress.get_block_option(this.block, 'block', 'menuDirection');
-        if (!pos) {
-          return 'bottom-left';
-        }
-        if (!('value' in pos)) {
-          return 'bottom-left';
-        }
-        if (pos.value == 'horizontal') {
-          return 'bottom-left';
-        } else {
-          return 'right';
-        }
-      },
-      returnClasses() {
-        let classes = '';
-        if (this.collapsed) {
-          classes += ' uip-menu-collapsed';
-        }
-        return classes;
-      },
+      /**
+       * Returns the appropriate sub menu icon indicator for the given item
+       *
+       * @param {Object} item - top level menu item
+       * @since 3.2.13
+       */
       returnSubIcon(item) {
-        if (this.subMenuCustomIcon) {
-          return this.subMenuCustomIcon;
-        }
-        if (this.subMenuStyle == 'dynamic') {
-          return 'chevron_right';
-        }
-        if (item.open || item.active) {
-          return 'expand_more';
-        }
+        // has custom icon so return that
+        if (this.subMenuCustomIcon) return this.subMenuCustomIcon;
+
+        // If dynamic menu always return chevron right
+        if (this.subMenuStyle == 'dynamic') return 'chevron_right';
+
+        // If item is open / active then return the open icon
+        if (item.open || item.active) return 'expand_more';
+
+        // No conditions met so return default
         return 'chevron_left';
       },
+
+      /**
+       * Utility function to catch uipblank in icon names
+       *
+       * @param {String} icon - the icon to check
+       */
       returnTopIcon(icon) {
-        if (icon && icon.includes('uipblank')) {
-          return icon.replace('uipblank', 'favorite');
-        }
+        const status = icon ? icon.includes('uipblank') : false;
+        if (status) return icon.replace('uipblank', 'favorite');
         return icon;
       },
-      santize(item) {
-        if (typeof item === 'undefined') {
-          return '';
-        }
-        if (item.url == '') {
-          return '';
-        }
-        return item.replace(/&amp;/g, '&');
+
+      /**
+       * Decodes html entities from a given string
+       *
+       * @param {String} item - the item to be decoded
+       * @since 3.2.12
+       */
+      decodeHtmlEntities(item) {
+        // Return blank if item doesn't have a set value
+        if (!item) return '';
+
+        return item
+          .replace(/&amp;/g, '&')
+          .replace(/&lt;/g, '<')
+          .replace(/&gt;/g, '>')
+          .replace(/&quot;/g, '"')
+          .replace(/&apos;/g, "'")
+          .replace(/&#39;/g, "'")
+          .replace(/&nbsp;/g, ' ')
+          .replace(/%20/g, ' ');
       },
-      collapseOptions() {
-        if (!this.activeMenu.submenu && this.subMenuStyle == 'dynamic') {
-          return true;
-        }
-        if (this.activeMenu.submenu && this.subMenuStyle == 'dynamic') {
-          return false;
-        }
-        return true;
-      },
+
+      /**
+       * Checks if a separator has a custom name. Returns name on success, false on failure
+       *
+       * @param {Object} item - the separator object
+       * @since 3.2.13
+       */
       sepHasCustomName(item) {
-        let name = this.uipress.checkNestedValue(item, ['custom', 'name']);
-        return name;
+        return this.uipress.checkNestedValue(item, ['custom', 'name']);
+      },
+
+      /**
+       * Returns whether the given item has an open submenu
+       *
+       * @param {Object} item - the menu item
+       * @since 3.2.13
+       */
+      itemHasOpenSubMenu(item) {
+        if (!item.submenu) return false;
+        if (!item.submenu.length) return false;
+        if (item.active || item.open) return true;
       },
     },
     template: `
     
-          <div class="uip-admin-menu uip-text-normal" :class="returnClasses()">
+          <div class="uip-admin-menu uip-text-normal" :class="returnClasses">
           
-            <div v-show="showSearch" class="uip-flex uip-menu-search uip-border-round uip-margin-bottom-s uip-flex-center" v-if="!collapsed">
+          
+            <div v-show="hasMenuSearch" class="uip-flex uip-menu-search uip-border-round uip-margin-bottom-s uip-flex-center" v-if="!collapsed">
               <span class="uip-icon uip-text-muted uip-margin-right-xs uip-icon">search</span>
               <input @keydown="watchForArrows" ref="menusearcher" class="uip-blank-input uip-flex-grow uip-text-s" type="search" :placeholder="strings.search" v-model="menuSearch">
             </div>
@@ -462,7 +719,7 @@ export function moduleData() {
               <template v-for="(item, index) in searchItems">
               
                   <a class="uip-flex uip-flex- uip-gap-xxxs uip-link-default uip-no-underline uip-flex-center uip-text-s uip-padding-xxxs uip-border-rounder"
-                  @click="activeItem(item, $event)"
+                  @click="maybeFollowLink($event, item)"
                   :class="menuSearchIndex == index ? 'uip-background-high-light' : ''" :href="item.url" :data-id="index">
                     
                     <span class="uip-text-muted" v-if="item.parent">{{item.parent}}</span>
@@ -476,6 +733,8 @@ export function moduleData() {
             </div>
     
             
+            
+            
             <!--INLINE DROP MENU-->
             <template v-if="subMenuStyle == 'inline' && menuSearch == ''">
             
@@ -483,40 +742,12 @@ export function moduleData() {
                 
                   <div v-if="item.type != 'sep'" class="uip-flex uip-flex-column uip-row-gap-xs">
                   
-                    <a :href="item.url" @click="activeItem(item, $event, true)" class="uip-no-underline uip-link-default uip-top-level-item" :class="item.customClasses" :active="item.active ? true : false">
-                    
-                      <div v-if="!hideIcons()" v-html="returnTopIcon(item.icon)" class="uip-flex uip-flex-center uip-menu-icon uip-icon uip-icon-medium"></div>
-                      
-                      <div class="uip-flex-grow uip-flex uip-gap-xs uip-flex-center">
-                        <div class="uip-line-height-1" v-html="item.name"></div>
-                        <div v-if="item.notifications && item.notifications > 0" class="uip-border-round uip-h-14 uip-ratio-1-1 uip-background-secondary uip-text-inverse uip-text-xxs uip-text-bold uip-flex uip-flex-center uip-flex-middle uip-menu-notification"><span>{{item.notifications}}</span></div>
-                      </div>
-                      
-                      <div v-if="item.submenu && item.submenu.length > 0" class="uip-icon uip-link-muted">{{returnSubIcon(item)}}</div>
-                      
-                    </a>
+                    <TopLevelItem :item="item" :maybeFollowLink="maybeFollowLink" :collapsed="collapsed" :block="block"/>
                     
                     <Transition name="slide-down">
-                      <div v-if="item.submenu && (item.active || item.open) && item.submenu.length > 0" class="uip-admin-submenu">
-                      
-                          <template v-for="sub in item.submenu">
-                          
-                              <div v-if="sub.type != 'sep'" class="uip-flex-grow uip-flex uip-gap-xs uip-flex-center">
-                                <a :href="sub.url" @click="activeItem(sub, $event)" :class="sub.customClasses" class="uip-no-underline uip-link-muted uip-sub-level-item" :active="sub.active ? true : false">{{sub.name}}</a>
-                                <div v-if="sub.notifications && sub.notifications > 0" class="uip-border-circle uip-w-14 uip-h-14 uip-ratio-1-1 uip-background-secondary uip-text-inverse uip-text-xxs uip-flex uip-flex-center uip-flex-middle uip-menu-notification"><span>{{sub.notifications}}</span></div>
-                              </div>
-                              
-                              <div v-else-if="!sepHasCustomName(sub)" class="uip-margin-bottom-s uip-menu-separator"></div>
-                              
-                              <div v-else class="uip-margin-bottom-s uip-margin-top-s uip-flex uip-flex-row uip-gap-xxs uip-menu-separator">
-                                <span v-if="sub.custom.icon && sub.custom.icon != 'uipblank'" class="uip-icon">{{sub.custom.icon}}</span>
-                                <span>{{sub.custom.name}}</span>
-                              </div>
-                            
-                          </template>
-                          
-                      </div>
+                      <SubMenuItem v-if="itemHasOpenSubMenu(item)" :item="item" :maybeFollowLink="maybeFollowLink" :collapsed="collapsed" :block="block"/>
                     </Transition>
+                    
                   </div>
                   
                   <div v-else-if="!sepHasCustomName(item)" class="uip-margin-bottom-s uip-menu-separator"></div>
@@ -525,7 +756,6 @@ export function moduleData() {
                     <span v-if="item.custom.icon && item.custom.icon != 'uipblank'" class="uip-icon">{{item.custom.icon}}</span>
                     <span>{{item.custom.name}}</span>
                   </div>
-                
                   
                 </template>
               
@@ -539,41 +769,18 @@ export function moduleData() {
             
                 <template v-for="item in workingMenu">
                 
-                  <dropdown v-if="item.type != 'sep'"  :pos="returnDropdownPosition" class="uip-flex uip-flex-column uip-row-gap-xs" :hover="true" slotClass="uip-admin-submenu" triggerClass="uip-flex uip-flex-grow uip-w-100p">
+                  <dropdown v-if="item.type != 'sep'"  :pos="returnDropdownPosition" class="uip-flex uip-flex-column uip-row-gap-xs" 
+                  :hover="true" :disableTeleport="true">
                     
                     <template v-slot:trigger>
                     
-                      <a :href="item.url" @click="activeItem(item, $event, true)" class="uip-no-underline uip-link-default uip-top-level-item" :class="item.customClasses" :active="item.active ? true : false">
-                      
-                        <div v-if="!hideIcons()" v-html="returnTopIcon(item.icon)" class="uip-flex uip-flex-center uip-menu-icon uip-icon uip-icon-medium"></div>
-                        
-                        <div v-if="!collapsed" class="uip-flex-grow uip-flex uip-gap-xs uip-flex-center">
-                          <div v-html="item.name"></div>
-                          <div v-if="item.notifications && item.notifications > 0" class="uip-border-round uip-h-14 uip-ratio-1-1 uip-background-secondary uip-text-inverse uip-text-xxs uip-text-bold uip-flex uip-flex-center uip-flex-middle uip-menu-notification"><span>{{item.notifications}}</span></div>
-                        </div>
-                        
-                        
-                      </a>
+                      <TopLevelItem :item="item" :maybeFollowLink="maybeFollowLink" :collapsed="collapsed" :block="block"/>
                       
                     </template>
                     
                     <template v-if="item.submenu && item.submenu.length > 0" v-slot:content>
                       
-                          <template v-for="sub in item.submenu">
-                          
-                              <div v-if="sub.type != 'sep'" class="uip-flex-grow uip-flex uip-gap-xs uip-flex-center">
-                                <a :href="sub.url" @click="activeItem(sub, $event)" :class="sub.customClasses" class="uip-no-underline uip-link-default uip-sub-level-item" :active="sub.active ? true : false">{{sub.name}}</a>
-                                <div v-if="sub.notifications && sub.notifications > 0" class="uip-border-circle uip-w-14 uip-h-14 uip-ratio-1-1 uip-background-secondary uip-text-inverse uip-text-xxs uip-flex uip-flex-center uip-flex-middle uip-menu-notification"><span>{{sub.notifications}}</span></div>
-                              </div>
-                              
-                              <div v-else-if="!sepHasCustomName(sub)" class="uip-margin-bottom-s uip-menu-separator"></div>
-                              
-                              <div v-else class="uip-margin-bottom-s uip-margin-top-s uip-flex uip-flex-row uip-gap-xxs uip-menu-separator">
-                                <span v-if="sub.custom.icon && sub.custom.icon != 'uipblank'" class="uip-icon">{{sub.custom.icon}}</span>
-                                <span>{{sub.custom.name}}</span>
-                              </div>
-                            
-                          </template>
+                          <SubMenuItem :item="item" :maybeFollowLink="maybeFollowLink" :collapsed="collapsed" :block="block"/>
                           
                     </template>
                   </dropdown>
@@ -592,10 +799,10 @@ export function moduleData() {
             </template>
             <!--END INLINE DROP MENU-->
             
-            
+            <DrillDownMenu v-if="subMenuStyle == 'dynamic'" :menuItems="workingMenu" :maybeFollowLink="maybeFollowLink" :collapsed="collapsed" :block="block"/>
             
             <!--DYNAMIC MENU-->
-            <template v-if="subMenuStyle == 'dynamic' && menuSearch == ''">
+            <template v-if="subMenuStyle == 'dynamic' && menuSearch == '' && 1==2">
                 
                 <TransitionGroup name="slide-left">
                 
@@ -603,9 +810,9 @@ export function moduleData() {
                   
                     <div v-if="item.type != 'sep'" class="uip-flex uip-flex-column uip-row-gap-xs">
                     
-                      <a :href="item.url" @click="activeItem(item, $event, true)" class="uip-no-underline uip-link-default uip-top-level-item" :class="item.customClasses" :active="item.active ? true : false">
+                      <a :href="item.url" @click="maybeFollowLink($event, item, true)" class="uip-no-underline uip-link-default uip-top-level-item" :class="item.customClasses" :active="item.active ? true : false">
                       
-                        <div v-if="!hideIcons()" v-html="returnTopIcon(item.icon)" class="uip-flex uip-flex-center uip-menu-icon uip-icon uip-icon-medium"></div>
+                        <div v-if="!hideIcons" v-html="returnTopIcon(item.icon)" class="uip-flex uip-flex-center uip-menu-icon uip-icon uip-icon-medium"></div>
                         
                         <div class="uip-flex-grow uip-flex uip-gap-xs uip-flex-center">
                           <div class="uip-line-height-1" v-html="item.name"></div>
@@ -643,7 +850,7 @@ export function moduleData() {
                       <template v-for="sub in activeMenu.submenu">
                       
                           <div v-if="sub.type != 'sep'" class="uip-flex-grow uip-flex uip-gap-xs uip-flex-center">
-                            <a :href="sub.url" @click="activeItem(sub, $event)" :class="sub.customClasses" class="uip-no-underline uip-link-muted uip-sub-level-item" :active="sub.active ? true : false">{{sub.name}}</a>
+                            <a :href="sub.url" @click="maybeFollowLink($event, sub)" :class="sub.customClasses" class="uip-no-underline uip-link-muted uip-sub-level-item" :active="sub.active ? true : false">{{sub.name}}</a>
                             <div v-if="sub.notifications && sub.notifications > 0" class="uip-border-circle uip-w-14 uip-h-14 uip-ratio-1-1 uip-background-secondary uip-text-inverse uip-text-xxs uip-flex uip-flex-center uip-flex-middle uip-menu-notification"><span>{{sub.notifications}}</span></div>
                           </div>
                           
@@ -670,7 +877,7 @@ export function moduleData() {
             
             
             
-            <div v-if="showCollapse && collapseOptions()" class="uip-flex uip-flex-row uip-gap-xs uip-flex-center uip-link-muted uip-margin-top-s uip-menu-collapse" @click="collapsed = !collapsed">
+            <div v-if="hasMenuCollapse && collapseOptions" class="uip-flex uip-flex-row uip-gap-xs uip-flex-center uip-link-muted uip-margin-top-s uip-menu-collapse" @click="collapsed = !collapsed">
               <div v-if="collapsed" class="uip-icon uip-text-">arrow_forward_ios</div>
               <div v-if="!collapsed" class="uip-icon uip-text-">arrow_back_ios</div>
               <div v-if="!collapsed">{{strings.collapseMenu}}</div>
