@@ -2743,12 +2743,12 @@ input[type='range'] {
 .translate-enter-active,
 .translate-leave-active {
   transition: all 0.2s ease;
-  opacity: 1;
+  opacity: 1 !important;
 }
 
 .translate-enter-from,
 .translate-leave-to {
-  opacity: 0;
+  opacity: 0 !important;
   transform: translateX(30px);
 }
 
@@ -2786,6 +2786,15 @@ input[type='range'] {
   animation-duration: 0.2s;
   animation-iteration-count: 1;
   transform-origin: top left;
+}
+.slideinout-enter-active,
+.slideinout-leave-active {
+  transition: all 0.2s ease;
+}
+.slideinout-enter-from,
+.slideinout-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
 }
 
 @keyframes slide-right {

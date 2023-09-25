@@ -1,5 +1,139 @@
 const { __, _x, _n, _nx } = wp.i18n;
 
+const MenuCollapse = {
+  inject: ['uipress'],
+  props: {
+    collapsed: Boolean,
+    returnData: Function,
+  },
+  data() {
+    return {
+      strings: {
+        collapseMenu: __('Collapse menu', 'uipress-lite'),
+      },
+      isCollapsed: this.collapsed,
+    };
+  },
+  methods: {
+    /**
+     * Toggle collapsed menu. Returns collapsed state back up the chain
+     *
+     * @since 3.2.13
+     */
+    toggleCollapse() {
+      this.isCollapsed = !this.isCollapsed;
+      this.returnData(this.isCollapsed);
+    },
+  },
+  template: `
+    
+          <div class="uip-flex uip-flex-row uip-gap-xs uip-flex-center uip-link-muted uip-margin-top-s uip-menu-collapse" 
+          @click="toggleCollapse()">
+            <div v-if="isCollapsed" class="uip-icon uip-text-">arrow_forward_ios</div>
+            <div v-if="!isCollapsed" class="uip-icon uip-text-">arrow_back_ios</div>
+            <div v-if="!isCollapsed">{{strings.collapseMenu}}</div>
+          </div>
+    
+  `,
+};
+
+const MenuSearch = {
+  inject: ['uipress'],
+  emits: ['searching'],
+  props: {
+    workingMenu: Array,
+    maybeFollowLink: Function,
+  },
+  data() {
+    return {
+      strings: {
+        search: __('Search menu', 'uipress-lite'),
+      },
+      menuSearch: '',
+      menuSearchIndex: 0,
+    };
+  },
+  watch: {
+    menuSearch: {
+      handler() {
+        this.menuSearchIndex = 0;
+        if (this.menuSearch == '') return this.$emit('searching', false);
+        this.$emit('searching', true);
+      },
+    },
+  },
+  computed: {
+    /**
+     * Returns current menu items filtered by search term
+     *
+     * @returns {Array} - array of filtered items
+     * @since 3.2.13
+     */
+    searchItems() {
+      const term = this.menuSearch.toLowerCase();
+
+      const itemMatchesTerm = ({ name, type }) => type !== 'sep' && name.toLowerCase().includes(term);
+
+      const results = this.workingMenu
+        .filter(itemMatchesTerm)
+        .concat(this.workingMenu.filter((item) => item.submenu).flatMap((item) => item.submenu.filter(itemMatchesTerm).map((sub) => ({ ...sub, parent: item.name }))));
+
+      return results;
+    },
+  },
+  methods: {
+    /**
+     * Watches keydown event for arrows up / down when searching
+     *
+     * @param {Object} event - the keydown event
+     * @since 3.2.13
+     */
+    watchForArrows(event) {
+      switch (event.key) {
+        case 'Enter':
+          const ele = document.querySelector(`#uip-menu-search-results [data-id="${this.menuSearchIndex}"]`);
+          if (ele) ele.click();
+          break;
+
+        case 'ArrowDown':
+          this.menuSearchIndex = this.menuSearchIndex >= this.searchItems.length - 1 ? 0 : this.menuSearchIndex++;
+          break;
+
+        case 'ArrowUp':
+          this.menuSearchIndex = this.menuSearchIndex <= 0 ? this.searchItems.length - 1 : this.menuSearchIndex--;
+          break;
+      }
+    },
+  },
+  template: `
+    
+          <div class="uip-flex uip-menu-search uip-border-round uip-margin-bottom-s uip-flex-center">
+            <span class="uip-icon uip-text-muted uip-margin-right-xs uip-icon">search</span>
+            <input @keydown="watchForArrows" ref="menusearcher" class="uip-blank-input uip-flex-grow uip-text-s" type="search" :placeholder="strings.search" v-model="menuSearch">
+          </div>
+          
+          
+          <div v-if="menuSearch" class="uip-flex uip-flex-column uip-row-gap-xxs" id="uip-menu-search-results">
+          
+            <template v-for="(item, index) in searchItems">
+            
+                <a class="uip-flex uip-flex- uip-gap-xxxs uip-link-default uip-no-underline uip-flex-center uip-text-s uip-padding-xxxs uip-border-rounder"
+                @click="maybeFollowLink($event, item)"
+                :class="menuSearchIndex == index ? 'uip-background-high-light' : ''" :href="item.url" :data-id="index">
+                  
+                  <span class="uip-text-muted" v-if="item.parent">{{item.parent}}</span>
+                  <span class="uip-icon" v-if="item.parent">chevron_right</span>
+                  <span class="">{{item.name}}</span>
+                  
+                </a>
+              
+            </template>
+          
+          </div>
+    
+  `,
+};
+
 const SubMenuItem = {
   inject: ['uipress'],
   props: {
@@ -154,12 +288,12 @@ const TopLevelItem = {
     
       <div v-if="!hideIcons && item.icon" v-html="returnTopIcon(item.icon)" class="uip-flex uip-flex-center uip-menu-icon uip-icon uip-icon-medium"></div>
       
-      <div class="uip-flex-grow uip-flex uip-gap-xs uip-flex-center">
+      <div v-if="!collapsed" class="uip-flex-grow uip-flex uip-gap-xs uip-flex-center">
         <div class="uip-line-height-1" v-html="item.name"></div>
         <div v-if="item.notifications && item.notifications > 0" class="uip-border-round uip-h-14 uip-ratio-1-1 uip-background-secondary uip-text-inverse uip-text-xxs uip-text-bold uip-flex uip-flex-center uip-flex-middle uip-menu-notification"><span>{{item.notifications}}</span></div>
       </div>
       
-      <div v-if="item.submenu && item.submenu.length > 0" class="uip-icon uip-link-muted">{{returnSubIcon(item)}}</div>
+      <div v-if="item.submenu && item.submenu.length > 0 && !collapsed" class="uip-icon uip-link-muted">{{returnSubIcon(item)}}</div>
       
     </a>
     
@@ -171,6 +305,7 @@ const DrillDown = {
   components: {
     TopLevelItem: TopLevelItem,
     SubMenuItem: SubMenuItem,
+    MenuSearch: MenuSearch,
   },
   props: {
     maybeFollowLink: Function,
@@ -193,31 +328,80 @@ const DrillDown = {
       currentLevel: [], // This will store the current level of items being displayed.
       levels: [],
       currentItem: null,
+      searching: false,
     };
   },
   computed: {
+    /**
+     * Returns name of parent menu item
+     *
+     * @since 3.2.13
+     */
     parentItemName() {
       // If currentItem is not null and it has a parent, return the parent's name.
       if (!this.currentItem) return __('Go back', 'uipress-lite');
       return this.decodeHtmlEntities(this.currentItem.name);
     },
+
+    /**
+     * Returns whether the mneu search is enabled
+     *
+     * @returns {boolean}  - whether the search is enabled
+     * @since 3.2.13
+     */
+    hasMenuSearch() {
+      const showSearch = this.uipress.get_block_option(this.block, 'block', 'showSearch');
+      if (this.uipress.isObject(showSearch)) return showSearch.value;
+      return showSearch;
+    },
   },
   methods: {
+    /**
+     * Sets new items as current menu and logs parent
+     *
+     * @param {Object} item - item to set as active
+     * @since 3.2.13
+     */
     drillDown(item) {
       this.levels.push(this.currentLevel);
       this.currentItem = item;
       this.currentLevel = item.submenu;
     },
+
+    /**
+     * Goes back up the drilldown list
+     *
+     * @since 3.2.13
+     */
     goBack() {
       this.currentLevel = this.levels.pop();
     },
+
+    /**
+     * Sets the menu from prop
+     *
+     * @since 3.2.13
+     */
     initializeMenu() {
       this.currentLevel = this.menuItems;
     },
+
+    /**
+     * Handles menu link clicks
+     *
+     * @param {Object} evt - Click event
+     * @param {Object} item - Menu item clicked
+     * @since 3.2.13
+     */
     handleLinkClick(evt, item) {
-      if (item.submenu && item.submenu.length) return this.drillDown(item);
-      this.maybeFollowLink(item);
+      if (item.submenu && item.submenu.length) {
+        this.drillDown(item);
+        evt.preventDefault();
+        return;
+      }
+      this.maybeFollowLink(evt, item);
     },
+
     /**
      * Decodes html entities from a given string
      *
@@ -241,16 +425,23 @@ const DrillDown = {
   },
   template: `
     
-              <!-- Display Back button if there are levels to go back to -->
-              <a v-if="levels.length" 
-              class="uip-flex uip-gap-xxs uip-flex-center uip-flex-row uip-flex-center uip-text-bold uip-text-l uip-sub-menu-header uip-link-default uip-margin-bottom-s uip-gap-xxs" 
-              @click="goBack">
-                <div class="uip-icon">arrow_back</div>
-                <div class="uip-flex-grow" v-html="parentItemName"></div>
-              </a>
+             
               
               <Transition name="translate" mode="out-in">
-                <div :key="currentLevel">
+                <div :key="currentLevel" class="uip-admin-menu uip-text-normal" :class="{'uip-menu-collapsed' : collapsed}">
+                
+                  <MenuSearch v-if="hasMenuSearch && !collapsed" 
+                  @searching="(d)=>{searching = d}"
+                  :maybeFollowLink="maybeFollowLink" :workingMenu="menuItems"/>
+                
+                  <!-- Display Back button if there are levels to go back to -->
+                  <a v-if="levels.length" 
+                  class="uip-flex uip-gap-xxs uip-flex-center uip-flex-row uip-flex-center uip-text-bold uip-text-l uip-sub-menu-header uip-link-default uip-margin-bottom-s uip-gap-xxs" 
+                  @click="goBack">
+                    <div class="uip-icon">chevron_left</div>
+                    <div class="uip-flex-grow" v-html="parentItemName"></div>
+                  </a>
+                  
                   <!-- Loop through currentLevel and display each item -->
                   <template v-for="item of currentLevel">
                     <TopLevelItem :item="item" :maybeFollowLink="handleLinkClick" :collapsed="collapsed" :block="block"/>
@@ -273,6 +464,8 @@ export function moduleData() {
       TopLevelItem: TopLevelItem,
       SubMenuItem: SubMenuItem,
       DrillDownMenu: DrillDown,
+      MenuSearch: MenuSearch,
+      MenuCollapse: MenuCollapse,
     },
     data() {
       return {
@@ -281,8 +474,7 @@ export function moduleData() {
         workingMenu: [],
         activeLink: '',
         breadCrumbs: [{ name: __('Home', 'uipress-lite'), url: this.uipData.dynamicOptions.viewadmin.value }],
-        menuSearch: '',
-        menuSearchIndex: 0,
+        searching: false,
         staticMenu: [],
         strings: {
           mainmenu: __('Main menu', 'uipress-lite'),
@@ -294,6 +486,11 @@ export function moduleData() {
     },
     inject: ['uipData', 'uipress', 'uiTemplate'],
     watch: {
+      /**
+       * Watches for changes to the breadcrumbs and emits event
+       *
+       * @since 3.2.13
+       */
       breadCrumbs: {
         handler(newValue, oldValue) {
           let self = this;
@@ -302,22 +499,17 @@ export function moduleData() {
         },
         deep: true,
       },
+      /**
+       * Watches for changes to the collapsed value and saves status
+       *
+       * @since 3.2.13
+       */
       collapsed: {
         handler(newVal, oldVal) {
-          if (newVal) {
-            document.documentElement.setAttribute('uip-menu-collapsed', 'true');
-            this.uiTemplate.menuCollapsed = true;
-          } else {
-            document.documentElement.setAttribute('uip-menu-collapsed', 'false');
-            this.uiTemplate.menuCollapsed = false;
-          }
-
-          this.uipress.saveUserPreference('menuCollapsed', newVal, false);
-        },
-      },
-      menuSearch: {
-        handler(newVal, oldVal) {
-          this.menuSearchIndex = 0;
+          let status = newVal ? true : false;
+          document.documentElement.setAttribute('uip-menu-collapsed', String(status));
+          this.uiTemplate.menuCollapsed = status;
+          this.uipress.saveUserPreference('menuCollapsed', status, false);
         },
       },
     },
@@ -414,18 +606,6 @@ export function moduleData() {
       },
 
       /**
-       * Returns whether the menu has collapse options for current state
-       *
-       * @returns {boolean} - whether the menu has collapse options
-       * @since 3.2.13
-       */
-      collapseOptions() {
-        if (this.subMenuStyle != 'dynamic') return true;
-        if (!this.activeMenu.submenu) return true;
-        if (this.activeMenu.submenu) return false;
-      },
-
-      /**
        * Returns whether the menu has icons for current state
        *
        * @returns {boolean} - whether to hide icons
@@ -438,24 +618,6 @@ export function moduleData() {
         const icons = this.uipress.checkNestedValue(this.block, ['settings', 'block', 'options', 'hideIcons', 'value']);
         if (this.uipress.isObject(icons)) return icons.value;
         return icons;
-      },
-
-      /**
-       * Returns current menu items filtered by search term
-       *
-       * @returns {Array} - array of filtered items
-       * @since 3.2.13
-       */
-      searchItems() {
-        const term = this.menuSearch.toLowerCase();
-
-        const itemMatchesTerm = ({ name, type }) => type !== 'sep' && name.toLowerCase().includes(term);
-
-        const results = this.workingMenu
-          .filter(itemMatchesTerm)
-          .concat(this.workingMenu.filter((item) => item.submenu).flatMap((item) => item.submenu.filter(itemMatchesTerm).map((sub) => ({ ...sub, parent: item.name }))));
-
-        return results;
       },
     },
 
@@ -500,29 +662,6 @@ export function moduleData() {
       },
 
       /**
-       * Watches keydown event for arrows up / down when searching
-       *
-       * @param {Object} event - the keydown event
-       * @since 3.2.13
-       */
-      watchForArrows(event) {
-        switch (event.key) {
-          case 'Enter':
-            const ele = document.querySelector(`#uip-menu-search-results [data-id="${this.menuSearchIndex}"]`);
-            if (ele) ele.click();
-            break;
-
-          case 'ArrowDown':
-            this.menuSearchIndex = this.menuSearchIndex >= this.searchItems.length - 1 ? 0 : this.menuSearchIndex++;
-            break;
-
-          case 'ArrowUp':
-            this.menuSearchIndex = this.menuSearchIndex <= 0 ? this.searchItems.length - 1 : this.menuSearchIndex--;
-            break;
-        }
-      },
-
-      /**
        * Builds menu from basic array
        *
        * @since 3.2.13
@@ -531,7 +670,7 @@ export function moduleData() {
         const currentLink = this.activeLink;
 
         // If no currentLink, no need to process items for active status
-        if (!currentLink) return this.menu;
+        if (!currentLink) return (this.workingMenu = this.menu);
 
         // Default breadcrumbs
         this.breadCrumbs = [{ name: __('Home', 'uipress-lite'), url: this.uipData.dynamicOptions.viewadmin.value }];
@@ -705,38 +844,17 @@ export function moduleData() {
     },
     template: `
     
-          <div class="uip-admin-menu uip-text-normal" :class="returnClasses">
-          
-          
-            <div v-show="hasMenuSearch" class="uip-flex uip-menu-search uip-border-round uip-margin-bottom-s uip-flex-center" v-if="!collapsed">
-              <span class="uip-icon uip-text-muted uip-margin-right-xs uip-icon">search</span>
-              <input @keydown="watchForArrows" ref="menusearcher" class="uip-blank-input uip-flex-grow uip-text-s" type="search" :placeholder="strings.search" v-model="menuSearch">
-            </div>
-            
-            
-            <div v-if="menuSearch != ''" class="uip-flex uip-flex-column uip-row-gap-xxs" id="uip-menu-search-results">
-            
-              <template v-for="(item, index) in searchItems">
-              
-                  <a class="uip-flex uip-flex- uip-gap-xxxs uip-link-default uip-no-underline uip-flex-center uip-text-s uip-padding-xxxs uip-border-rounder"
-                  @click="maybeFollowLink($event, item)"
-                  :class="menuSearchIndex == index ? 'uip-background-high-light' : ''" :href="item.url" :data-id="index">
-                    
-                    <span class="uip-text-muted" v-if="item.parent">{{item.parent}}</span>
-                    <span class="uip-icon" v-if="item.parent">chevron_right</span>
-                    <span class="">{{item.name}}</span>
-                    
-                  </a>
-                
-              </template>
-            
-            </div>
+          <DrillDownMenu v-if="subMenuStyle == 'dynamic'" :menuItems="workingMenu" :maybeFollowLink="maybeFollowLink" :collapsed="collapsed" :block="block"/>
     
+          <div v-else class="uip-admin-menu uip-text-normal" :class="returnClasses">
+          
             
-            
+            <MenuSearch v-if="hasMenuSearch && !collapsed" 
+            @searching="(d)=>{searching = d}"
+            :maybeFollowLink="maybeFollowLink" :workingMenu="workingMenu"/>
             
             <!--INLINE DROP MENU-->
-            <template v-if="subMenuStyle == 'inline' && menuSearch == ''">
+            <template v-if="subMenuStyle == 'inline' && !searching">
             
                 <template v-for="item in workingMenu">
                 
@@ -765,7 +883,7 @@ export function moduleData() {
             
             
             <!--HOVER MENU-->
-            <template v-if="subMenuStyle == 'hover' && menuSearch == ''">
+            <template v-if="subMenuStyle == 'hover' && !searching">
             
                 <template v-for="item in workingMenu">
                 
@@ -799,7 +917,7 @@ export function moduleData() {
             </template>
             <!--END INLINE DROP MENU-->
             
-            <DrillDownMenu v-if="subMenuStyle == 'dynamic'" :menuItems="workingMenu" :maybeFollowLink="maybeFollowLink" :collapsed="collapsed" :block="block"/>
+            <DrillDownMenu v-if="subMenuStyle == 'dynamic' && !searching" :menuItems="workingMenu" :maybeFollowLink="maybeFollowLink" :collapsed="collapsed" :block="block"/>
             
             <!--DYNAMIC MENU-->
             <template v-if="subMenuStyle == 'dynamic' && menuSearch == '' && 1==2">
@@ -875,13 +993,7 @@ export function moduleData() {
             
             <a ref="newTab" target="_BLANK" class="uip-hidden"></a>
             
-            
-            
-            <div v-if="hasMenuCollapse && collapseOptions" class="uip-flex uip-flex-row uip-gap-xs uip-flex-center uip-link-muted uip-margin-top-s uip-menu-collapse" @click="collapsed = !collapsed">
-              <div v-if="collapsed" class="uip-icon uip-text-">arrow_forward_ios</div>
-              <div v-if="!collapsed" class="uip-icon uip-text-">arrow_back_ios</div>
-              <div v-if="!collapsed">{{strings.collapseMenu}}</div>
-            </div>
+            <MenuCollapse :collapsed="collapsed" :returnData="(d) => {collapsed = d}"/>
             
           </div>`,
   };
