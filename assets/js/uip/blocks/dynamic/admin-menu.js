@@ -6,7 +6,7 @@ export function moduleData() {
       name: String,
       block: Object,
     },
-    data: function () {
+    data() {
       return {
         menu: this.returnAdminMenu(),
         activeMenu: false,
@@ -43,10 +43,8 @@ export function moduleData() {
         },
       },
     },
-    mounted: function () {
-      let self = this;
-
-      self.buildMenu();
+    mounted() {
+      this.buildMenu();
 
       if (this.uipData.userPrefs.menuCollapsed && this.showCollapse) {
         this.collapsed = true;
@@ -56,9 +54,9 @@ export function moduleData() {
         'uip_page_change',
         (e) => {
           if (e.detail.url == '') {
-            self.activeLink = e.detail.url;
+            this.activeLink = e.detail.url;
           } else {
-            self.activeLink = e.detail.url.replaceAll('%2F', '/');
+            this.activeLink = e.detail.url.replaceAll('%2F', '/');
           }
         },
         { once: false }
@@ -71,6 +69,8 @@ export function moduleData() {
         { once: false }
       );
     },
+    
+    
     computed: {
       subMenuStyle() {
         if (this.collapsed) {
@@ -94,6 +94,7 @@ export function moduleData() {
         }
         return update;
       },
+
       disableAutoLoad() {
         let update = this.uipress.get_block_option(this.block, 'block', 'loadOnClick');
         if (this.uipress.isObject(update)) {
@@ -111,6 +112,7 @@ export function moduleData() {
     },
     methods: {
       returnAdminMenu() {
+        
         let menu = this.uipress.checkNestedValue(this.uipData, ['adminMenu', 'menu']);
         if (!menu) {
           return [];
@@ -144,6 +146,7 @@ export function moduleData() {
             item.name = self.santize(item.name);
           }
 
+
           //Keep open states
           let foundItem = self.workingMenu.find((obj) => {
             return obj.uid == item.uid;
@@ -160,6 +163,7 @@ export function moduleData() {
             activeFound = true;
             self.breadCrumbs.push({ name: item.name, url: item.url });
           }
+
 
           let parentActive = false;
           if (item.submenu && item.submenu.length > 0) {
@@ -250,6 +254,7 @@ export function moduleData() {
         for (let parent of custom) {
           if ('uid' in parent) {
             allUIDs.push(parent.uid);
+
             //Look up original item from standard wp menu
             let newParent = allItems.find((obj) => {
               return obj.uid == parent.uid;

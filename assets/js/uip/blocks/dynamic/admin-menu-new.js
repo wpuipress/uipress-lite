@@ -6,9 +6,9 @@ export function moduleData() {
       name: String,
       block: Object,
     },
-    data: function () {
+    data() {
       return {
-        menu: JSON.parse(JSON.stringify(this.uipData.adminMenu.menu)),
+        menu: [],
         activeMenu: false,
         workingMenu: [],
         activeLink: '',
@@ -53,35 +53,14 @@ export function moduleData() {
         },
       },
     },
-    mounted: function () {
-      let self = this;
-
-      self.buildMenu();
+    mounted() {
+      this.setMenu();
+      this.buildMenu();
+      this.mountEventListeners();
 
       if (this.uipData.userPrefs.menuCollapsed && this.showCollapse) {
         this.collapsed = true;
       }
-
-      document.addEventListener(
-        'uip_page_change',
-        (e) => {
-          if (e.detail.url == '') {
-            self.activeLink = e.detail.url;
-          } else {
-            self.activeLink = e.detail.url.replaceAll('%2F', '/');
-          }
-        },
-        { once: false }
-      );
-      document.addEventListener(
-        'uip_page_change_loaded',
-        (e) => {
-          self.updateMenuFromFrame();
-        },
-        { once: false }
-      );
-
-      this.$refs.menusearcher.addEventListener('keydown', this.watchForArrows);
     },
     computed: {
       isCollapsed() {
@@ -184,194 +163,139 @@ export function moduleData() {
         return results;
       },
     },
+
+    /**
+     * Removes event listeners before unmount
+     *
+     * @since 3.2.13
+     */
+    beforeUnmount() {
+      document.removeEventListener('uip_page_change', this.updateActiveLink, { once: false });
+      document.removeEventListener('uip_page_change_loaded', this.updateMenuFromFrame, { once: false });
+    },
     methods: {
+      /**
+       * Sets menu from settings object
+       *
+       * @since 3.2.13
+       */
+      setMenu() {
+        this.menu = JSON.parse(JSON.stringify(this.uipData.adminMenu.menu));
+      },
+
+      /**
+       * Mounts event listeners for menu block
+       *
+       * @since 3.2.13
+       */
+      mountEventListeners() {
+        document.addEventListener('uip_page_change', this.updateActiveLink, { once: false });
+        document.addEventListener('uip_page_change_loaded', this.updateMenuFromFrame, { once: false });
+      },
+
+      /**
+       * Sets new active link from page change event
+       *
+       * @param {Object} e - page change event
+       * @since 3.2.13
+       */
+      updateActiveLink(e) {
+        this.activeLink = e.detail.url ? e.detail.url.replaceAll('%2F', '/') : e.detail.url;
+      },
+
+      /**
+       * Watches keydown event for arrows up / down when searching
+       *
+       * @param {Object} event - the keydown event
+       * @since 3.2.13
+       */
       watchForArrows(event) {
-        if (event.key === 'Enter') {
-          let ele = document.querySelector(`#uip-menu-search-results [data-id="${this.menuSearchIndex}"]`);
-          if (ele) {
-            ele.click();
-          }
-        }
-        if (event.key === 'ArrowDown') {
-          if (this.menuSearchIndex >= this.searchItems.length - 1) {
-            this.menuSearchIndex = 0;
-          } else {
-            this.menuSearchIndex += 1;
-          }
-        }
-        if (event.key === 'ArrowUp') {
-          if (this.menuSearchIndex <= 0) {
-            this.menuSearchIndex = this.searchItems.length - 1;
-          } else {
-            this.menuSearchIndex -= 1;
-          }
+        switch (event.key) {
+          case 'Enter':
+            const ele = document.querySelector(`#uip-menu-search-results [data-id="${this.menuSearchIndex}"]`);
+            if (ele) ele.click();
+            break;
+
+          case 'ArrowDown':
+            this.menuSearchIndex = this.menuSearchIndex >= this.searchItems.length - 1 ? 0 : this.menuSearchIndex++;
+            break;
+
+          case 'ArrowUp':
+            this.menuSearchIndex = this.menuSearchIndex <= 0 ? this.searchItems.length - 1 : this.menuSearchIndex--;
+            break;
         }
       },
-      getStaticMenu() {
-        let self = this;
-        let formData = new FormData();
-
-        if (self.staticMenu.length > 0) {
-          return self.staticMenu;
-        }
-
-        formData.append('action', 'uip_get_static_custom_menu');
-        formData.append('security', uip_ajax.security);
-        formData.append('menuID', this.hasStaticMenu);
-
-        self.uipress.callServer(uip_ajax.ajax_url, formData).then((response) => {
-          if (response.error) {
-            self.uipress.notify(response.message, '', 'error', true);
-            return;
-          }
-
-          self.staticMenu = [];
-          if ('menu' in response.menus) {
-            for (let item of response.menus.menu) {
-              if (item[2] in response.menus.submenu) {
-                item.submenu = response.menus.submenu[item[2]];
-              }
-              self.staticMenu.push(item);
-            }
-          }
-          self.buildMenu();
-        });
-      },
+      /**
+       * Builds menu from basic array
+       *
+       * @since 3.2.13
+       */
       buildMenu() {
-        let currentLink = this.activeLink;
-        let self = this;
-        let currentActive = {};
-        let activeFound = false;
+        const currentLink = this.activeLink;
 
-        let newMenu = this.menu;
+        // If no currentLink, no need to process items for active status
+        if (!currentLink) return this.menu;
 
-        self.breadCrumbs = [{ name: __('Home', 'uipress-lite'), url: self.uipData.dynamicOptions.viewadmin.value }];
+        // Default breadcrumbs
+        this.breadCrumbs = [{ name: __('Home', 'uipress-lite'), url: this.uipData.dynamicOptions.viewadmin.value }];
 
-        for (const item of newMenu) {
-          if (item.active) {
-            currentActive = item;
+        // Main function for handling sub items
+        const processSubItem = (sub) => {
+          sub.active = false;
+          sub.url = sub.url ? this.santize(sub.url) : undefined;
+          sub.name = sub.name ? this.santize(sub.name) : undefined;
+
+          if (sub.url === currentLink) {
+            sub.active = true;
+            this.breadCrumbs.push({ name: sub.name, url: sub.url });
           }
+        };
 
-          if (!('open' in newMenu)) {
-            newMenu.open = false;
-          }
-
-          if ('url' in item) {
-            item.url = self.santize(item.url);
-          }
-          if ('name' in item) {
-            item.name = self.santize(item.name);
-          }
-
-          //Keep open states
-          let foundItem = self.workingMenu.find((obj) => {
-            return obj.uid == item.uid;
-          });
-          if (typeof foundItem != 'undefined') {
-            if (foundItem.open) {
-              item.open = true;
-            }
-          }
-
+        // Top level item handler
+        const processMenuItem = (item) => {
           item.active = false;
-          if (currentLink != '' && item.url == currentLink) {
+
+          item.url = item.url ? this.santize(item.url) : undefined;
+          item.name = item.name ? this.santize(item.name) : undefined;
+
+          const foundItem = this.workingMenu.find((obj) => obj.uid === item.uid);
+          const state = foundItem ? foundItem.open : false;
+          if (state) item.open = true;
+
+          if (item.url === currentLink) {
             item.active = true;
-            activeFound = true;
-            self.breadCrumbs.push({ name: item.name, url: item.url });
+            this.breadCrumbs.push({ name: item.name, url: item.url });
           }
 
-          let parentActive = false;
-          if (item.submenu && item.submenu.length > 0) {
-            for (const sub of item.submenu) {
-              sub.active = false;
-
-              if ('url' in sub) {
-                sub.url = self.santize(sub.url);
-              }
-              if ('name' in sub) {
-                sub.name = self.santize(sub.name);
-              }
-
-              if (currentLink != '' && sub.url == currentLink) {
-                sub.active = true;
-                activeFound = true;
-                parentActive = sub;
-                self.breadCrumbs.push({ name: sub.name, url: sub.url });
-              }
-            }
+          if (item.submenu) {
+            item.submenu.forEach(processSubItem);
           }
+        };
 
-          if (parentActive) {
-            item.active = true;
-            self.activeMenu = item;
-            self.breadCrumbs = [{ name: __('Home', 'uipress-lite'), url: self.uipData.dynamicOptions.viewadmin.value }];
-            self.breadCrumbs.push({ name: item.name, url: item.url });
-            self.breadCrumbs.push({ name: parentActive.name, url: parentActive.url });
-          }
-        }
-
-        if (!activeFound) {
-          currentActive.active = true;
-        }
-
-        self.workingMenu = newMenu;
-        return self.workingMenu;
-      },
-      returnCustomMenu() {
-        let customMenu = this.uipress.get_block_option(this.block, 'block', 'advancedoptions');
-
-        if (typeof customMenu === 'undefined') {
-          return false;
-        }
-
-        if (!customMenu) {
-          return false;
-        }
-
-        if (!Array.isArray(customMenu)) {
-          return false;
-        }
-
-        if (customMenu.length < 1) {
-          return false;
-        }
-
-        return customMenu;
+        // Process the menu items
+        this.menu.forEach(processMenuItem);
+        this.workingMenu = this.menu;
       },
 
+      /**
+       * Checks content frame for an updated menu on page load
+       *
+       * @since 3.2.13
+       */
       updateMenuFromFrame() {
         //Watch for menu changes in frame
-        let frames = document.getElementsByClassName('uip-page-content-frame');
-        let self = this;
+        const frame = document.querySelector('.uip-page-content-frame');
 
-        if (frames[0]) {
-          let frame = frames[0];
-          //Update menu items when the page changes
-          if (frame.contentWindow.uipMasterMenu && typeof frame.contentWindow.uipMasterMenu != undefined) {
-            let mastermenu = frame.contentWindow.uipMasterMenu;
-            if (typeof mastermenu === 'undefined') {
-              return;
-            }
-            if (!('menu' in mastermenu)) {
-              return;
-            }
+        // Frame does not exist so bail
+        if (!frame) return;
 
-            //Ensure opened items remain open
-            let updateMenu = JSON.parse(JSON.stringify(mastermenu.menu));
-            if (1 == 2) {
-              for (let item of self.workingMenu) {
-                if (item.open) {
-                  let obj = updateMenu.find((o) => o.uid === item.uid);
-                  if (typeof obj != 'undefined') {
-                    obj.open = true;
-                  }
-                }
-              }
-            }
-            self.menu = updateMenu;
-            self.buildMenu();
-          }
-        }
+        const masterMenu = frame.contentWindow.uipMasterMenu;
+        if (!masterMenu || typeof masterMenu === 'undefined') return;
+        if (!('menu' in masterMenu)) return;
+
+        // Update menu
+        this.menu = JSON.parse(JSON.stringify(masterMenu.menu));
+        this.buildMenu();
       },
       activeItem(item, evt, topLevel) {
         if (evt.ctrlKey || evt.shiftKey || evt.metaKey || (evt.button && evt.button == 1)) {
@@ -529,7 +453,7 @@ export function moduleData() {
           
             <div v-show="showSearch" class="uip-flex uip-menu-search uip-border-round uip-margin-bottom-s uip-flex-center" v-if="!collapsed">
               <span class="uip-icon uip-text-muted uip-margin-right-xs uip-icon">search</span>
-              <input ref="menusearcher" class="uip-blank-input uip-flex-grow uip-text-s" type="search" :placeholder="strings.search" v-model="menuSearch">
+              <input @keydown="watchForArrows" ref="menusearcher" class="uip-blank-input uip-flex-grow uip-text-s" type="search" :placeholder="strings.search" v-model="menuSearch">
             </div>
             
             
