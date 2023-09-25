@@ -349,8 +349,10 @@ class uip_util
     $allowedposttags['p'] = $allowed_atts;
     $allowedposttags['a'] = $allowed_atts;
     $allowedposttags['b'] = $allowed_atts;
+    
     $allowedposttags['i'] = $allowed_atts;
     $allowedposttags['link'] = $allowed_atts;
+    $allowedposttags['source'] = $allowed_atts;
 
     if (is_object($values)) {
       foreach ($values as $index => $in) {
