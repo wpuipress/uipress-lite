@@ -6,93 +6,100 @@ export function moduleData() {
       name: String,
       block: Object,
     },
-    data: function () {
-      return {
-        loading: true,
-        dynamics: this.uipData.dynamicOptions,
-      };
+    data() {
+      return {};
     },
-    inject: ['uipData', 'uipress', 'uiTemplate'],
-    watch: {},
-    mounted: function () {},
+    inject: ['uipData', 'uipress'],
     computed: {
+      /**
+       * Returns text for button if exists
+       *
+       * @since 3.2.13
+       */
       returnText() {
         let item = this.uipress.get_block_option(this.block, 'block', 'buttonText', true);
-        if (!item) {
-          return '';
-        }
-        if (this.uipress.isObject(item)) {
-          if ('string' in item) {
-            return item.string;
-          } else {
-            return '';
-          }
-        }
-        return item;
+        if (!item) return '';
+
+        if (!this.uipress.isObject(item)) return item;
+        if (item.string) return item.string;
+        return '';
       },
+      /**
+       * Whether to open in new tab
+       *
+       * @since 3.2.13
+       */
       newTab() {
         let tab = this.uipress.get_block_option(this.block, 'block', 'openInNewTab');
-        if (!tab) {
-          return false;
-        }
         return tab;
       },
+
+      /**
+       * Whether to open widthout uipress
+       *
+       * @since 3.2.13
+       */
       withoutUiPress() {
         let tab = this.uipress.get_block_option(this.block, 'block', 'openWithoutUiPress');
-        if (!tab) {
-          return false;
-        }
         return tab;
       },
-      getIcon() {
+
+      /**
+       * Returns icon for button
+       *
+       * @since 3.2.13
+       */
+      returnIcon() {
         let icon = this.uipress.get_block_option(this.block, 'block', 'iconSelect');
-        if (!icon) {
-          return '';
-        }
-        if ('value' in icon) {
-          return icon.value;
-        }
-        return icon;
+        if (!icon) return '';
+        if (!this.uipress.isObject(icon)) return icon;
+        if (icon.value) return icon.value;
+        return '';
+      },
+
+      /**
+       * Returns the reverse class if icon position is right
+       *
+       * @since 3.2.13
+       */
+      returnClasses() {
+        const position = this.uipress.get_block_option(this.block, 'block', 'iconPosition');
+        if (!position) return;
+        if (!this.uipress.isObject(position) && position == 'right') return 'uip-flex-reverse';
+        if (position.value && position.value == 'right') return 'uip-flex-reverse';
       },
     },
     methods: {
-      returnClasses() {
-        let classes = '';
+      /**
+       * Opens the current page outside the frame
+       *
+       * @returns {Promise}
+       * @since 3.2.13
+       */
+      async openFramedContent() {
+        const uid = this.uipress.createUID();
+        const openInNewTab = this.newTab;
+        const frame = document.querySelector('.uip-page-content-frame');
 
-        let posis = this.uipress.get_block_option(this.block, 'block', 'iconPosition');
-        if (posis) {
-          if (posis.value == 'right') {
-            classes += 'uip-flex-reverse';
-          }
-        }
-        return classes;
-      },
-      openFramedContent() {
-        let self = this;
-        let uid = self.uipress.createUID();
-        let openInNewTab = this.newTab;
-        let frames = document.getElementsByClassName('uip-page-content-frame');
-        let iFrame = false;
-        if (frames[0]) {
-          iFrame = frames[0];
-        }
+        // No iframe to open from so bail
+        if (!frame) return;
 
-        if (!iFrame) {
-          return;
-        }
+        const currentURL = frame.contentWindow.location.href;
+        const url = new URL(currentURL);
 
-        let currentURL = iFrame.contentWindow.location.href;
-        let url = new URL(currentURL);
+        const newTabOpen = (newurl) => {
+          this.$refs.newTab.href = newurl.href;
+          this.$refs.newTab.click();
+          this.$refs.newTab.href = '';
+          this.$refs.newTab.blur();
+        };
 
+        // If its not a request to open without uiPress then we can perform a link click
         if (!this.withoutUiPress) {
-          if (openInNewTab) {
-            this.$refs.newTab.href = url.href;
-            this.$refs.newTab.click();
-            this.$refs.newTab.href = '';
-            this.$refs.newTab.blur();
-          } else {
-            window.location = url.href;
-          }
+          // Set new tab attributes and click
+          if (openInNewTab) newTabOpen(url);
+          // no new tab so just refresh the page
+          if (!openInNewTab) window.location = url.href;
           return;
         }
 
@@ -104,28 +111,26 @@ export function moduleData() {
         formData.append('security', uip_ajax.security);
         formData.append('uid', uid);
 
-        self.uipress.callServer(uip_ajax.ajax_url, formData).then((response) => {
-          let frames = document.getElementsByClassName('uip-page-content-frame');
-          if (frames[0]) {
-            if (openInNewTab) {
-              this.$refs.newTab.href = url.href;
-              this.$refs.newTab.click();
-              this.$refs.newTab.href = '';
-              this.$refs.newTab.blur();
-            } else {
-              window.location = url.href;
-            }
-          }
-        });
+        // Await the server to mark the link as requiring no frame
+        await this.uipress.callServer(uip_ajax.ajax_url, formData);
+
+        // Set new tab attributes and click
+        if (openInNewTab) newTabOpen(url);
+        // no new tab so just refresh the page
+        if (!openInNewTab) window.location = url.href;
       },
     },
     template: `
+    
             <button class="uip-button-default uip-flex uip-gap-xxs uip-flex-center"
-            :class="returnClasses()" @click="openFramedContent()">
-              <span class="uip-icon" v-if="getIcon">{{getIcon}}</span>
+            :class="returnClasses" @click="openFramedContent()">
+            
+              <span class="uip-icon" v-if="returnIcon">{{returnIcon}}</span>
               <span class="uip-flex-grow" v-if="returnText != ''">{{returnText}}</span>
               <a ref="newTab" target="_BLANK" class="uip-hidden"></a>
+              
             </button>
+            
             `,
   };
 }

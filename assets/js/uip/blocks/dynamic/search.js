@@ -28,122 +28,140 @@ export function moduleData() {
         searching: false,
       };
     },
-    inject: ['uipData', 'uipress', 'uiTemplate'],
+    inject: ['uipData', 'uipress'],
     watch: {
       searchString: {
         handler(newValue, oldValue) {
-          if (newValue != '') {
+          if (newValue) {
             this.page = 1;
             this.searchContent();
           } else {
             this.results = [];
           }
         },
-        deep: true,
       },
       page: {
         handler(newValue, oldValue) {
-          if (newValue != '') {
-            this.searchContent();
-          }
+          if (newValue) this.searchContent();
         },
-        deep: true,
       },
       activeType: {
         handler(newValue, oldValue) {
-          if (newValue != '') {
-            this.searchContent();
-          }
+          if (newValue) this.searchContent();
         },
-        deep: true,
       },
     },
     computed: {
+      /**
+       * Returns custom post types for search
+       *
+       * @since 3.2.13
+       */
       getPostTypes() {
-        let types = this.uipress.get_block_option(this.block, 'block', 'searchPostTypes');
-        return types;
+        return this.uipress.get_block_option(this.block, 'block', 'searchPostTypes');
       },
+
+      /**
+       * Returns whether the posts should be limited to the current author's own
+       *
+       * @since 3.2.13
+       */
       limitToAuthor() {
-        let temp = this.uipress.get_block_option(this.block, 'block', 'limitToAuthor');
-        if (this.uipress.isObject(temp)) {
-          if ('value' in temp) {
-            return temp.value;
-          }
-          return true;
-        }
-        return temp;
+        let limit = this.uipress.get_block_option(this.block, 'block', 'limitToAuthor');
+        if (!limit) return false;
+        if (!this.uipress.isObject(limit)) return limit;
+        if (limit.value) return limit.value;
+        return false;
       },
     },
     methods: {
-      searchContent() {
-        let self = this;
-        //Query already running
-        if (self.searching) {
-          return;
-        }
-        self.searching = true;
+      /**
+       * Search blog content
+       *
+       * @returns {Promise}
+       * @since 3.2.13
+       */
+      async searchContent() {
+        // Query already running so exit
+        if (this.searching) return;
+
+        this.searching = true;
+
         let postTypes = [];
-        if (typeof self.getPostTypes != 'undefined') {
-          if (Array.isArray(self.getPostTypes)) {
-            postTypes = self.getPostTypes;
-          }
+        const limitToauthor = this.limitToauthor;
+
+        if (Array.isArray(this.getPostTypes)) {
+          postTypes = this.getPostTypes;
         }
 
         postTypes = JSON.stringify(postTypes);
 
-        let limitToauthor = self.limitToauthor;
         //Build form data for fetch request
         let formData = new FormData();
         formData.append('action', 'uip_search_content');
         formData.append('security', uip_ajax.security);
-        formData.append('search', self.searchString);
-        formData.append('page', self.page);
+        formData.append('search', this.searchString);
+        formData.append('page', this.page);
         formData.append('limitToauthor', limitToauthor);
         formData.append('postTypes', postTypes);
         formData.append('filter', this.activeType);
 
-        self.uipress.callServer(uip_ajax.ajax_url, formData).then((response) => {
-          if (response.error) {
-            self.uipress.notify(response.message, 'uipress-lite', '', 'error', true);
-            self.searching = false;
-          }
-          if (response.success) {
-            self.searching = false;
-            self.results = response.posts;
-            self.totalPages = response.totalPages;
-            self.totalFound = response.totalFound;
-            self.types = response.types;
-          }
-        });
+        const response = await this.uipress.callServer(uip_ajax.ajax_url, formData);
+
+        // Something went very wrong
+        if (!response) {
+          this.uipress.notify(__('Unable to fetch posts at this tiem', 'uipress-lite'), '', '', 'error', true);
+          this.searching = false;
+          return;
+        }
+
+        // Handle error
+        if (response.error) {
+          this.uipress.notify(response.message, '', '', 'error', true);
+          this.searching = false;
+        }
+
+        // Handle success
+        if (response.success) {
+          this.searching = false;
+          this.results = response.posts;
+          this.totalPages = response.totalPages;
+          this.totalFound = response.totalFound;
+          this.types = response.types;
+        }
       },
+
+      /**
+       * Handles previous page requests
+       *
+       * @since 3.2.13
+       */
       goBack() {
-        if (this.page > 1) {
-          this.page = this.page - 1;
-        }
+        if (this.page > 1) this.page--;
       },
+
+      /**
+       * Handles next page requests
+       *
+       * @since 3.2.13
+       */
       goForward() {
-        if (this.page < this.totalPages) {
-          this.page = this.page + 1;
-        }
-      },
-      formatHighlight(name) {
-        return name;
+        if (this.page < this.totalPages) this.page++;
       },
     },
     template: `
             <div class="uip-flex uip-flex-column">
-              <div class="">
-                <div class="uip-flex uip-padding-xxs uip-border uip-search-block uip-border-round uip-flex-center uip-margin-bottom-s uip-position-relative">
-                  <span class="uip-icon uip-text-muted uip-margin-right-xs">search</span> 
-                  <input class="uip-blank-input uip-flex-grow uip-text-s" type="search" :placeholder="strings.searchPlaceHolder" v-model="searchString" autofocus="">
-                  
-                  <div class="uip-position-absolute uip-left-0 uip-bottom-0 uip-w-100p" v-if="searching">
-                    <div ref="loader" class="uip-ajax-loader">
-                      <div class="uip-loader-bar"></div>
-                    </div>
+            
+              <div class="uip-flex uip-padding-xxs uip-border uip-search-block uip-border-round uip-flex-center uip-margin-bottom-s uip-position-relative">
+                <span class="uip-icon uip-text-muted uip-margin-right-xs">search</span> 
+                <input class="uip-blank-input uip-flex-grow uip-text-s" type="search" :placeholder="strings.searchPlaceHolder" v-model="searchString" autofocus="">
+                
+                <div class="uip-position-absolute uip-left-0 uip-bottom-0 uip-w-100p" v-if="searching">
+                  <div ref="loader" class="uip-ajax-loader">
+                    <div class="uip-loader-bar"></div>
                   </div>
-                  
                 </div>
+                
               </div>
               
               
@@ -184,7 +202,7 @@ export function moduleData() {
                         <div class="">
                           <div class="uip-flex uip-flex-row uip-gap-xxs uip-flex-center" >
                           
-                            <div class="uip-text-bold uip-search-result-title uip-link-default uip-cursor-pointer"  @click="uipress.updatePage(item.link)" v-html="formatHighlight(item.name)"></div>
+                            <div class="uip-text-bold uip-search-result-title uip-link-default uip-cursor-pointer"  @click="uipress.updatePage(item.link)" v-html="item.name"></div>
                             
                             <div class="uip-text-xs uip-background-primary-wash uip-border-round uip-padding-xxxs uip-hidden">{{item.type}}</div>
                             

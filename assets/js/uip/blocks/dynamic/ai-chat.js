@@ -7,7 +7,7 @@ export function moduleData() {
       name: String,
       block: Object,
     },
-    data: function () {
+    data() {
       return {
         searchString: '',
         loading: false,
@@ -22,7 +22,7 @@ export function moduleData() {
         thinking: false,
       };
     },
-    inject: ['uipData', 'uipress', 'uiTemplate'],
+    inject: ['uipress'],
     watch: {
       'block.settings.block.options.welcomeMessage': {
         handler(newValue, oldvalue) {
@@ -37,36 +37,59 @@ export function moduleData() {
         deep: true,
       },
     },
-    created: function () {
-      let self = this;
-
+    created() {
       this.setMessages();
     },
     computed: {
+      /**
+       * Returns ai key
+       *
+       * @sine 3.2.12
+       */
       returnKey() {
         let key = this.uipress.get_block_option(this.block, 'block', 'apiKey');
         return key;
       },
+
+      /**
+       * Returns welcome message
+       *
+       * @sine 3.2.12
+       */
       returnWelcome() {
         let welcome = this.uipress.get_block_option(this.block, 'block', 'welcomeMessage');
         return welcome;
       },
+      /**
+       * Returns system message
+       *
+       * @sine 3.2.12
+       */
       returnSystem() {
         let system = this.uipress.get_block_option(this.block, 'block', 'systemMessage');
         return system;
       },
+
+      /**
+       * Returns ai model to use
+       *
+       * @sine 3.2.12
+       */
       returnModel() {
         let model = this.uipress.get_block_option(this.block, 'block', 'chatModel');
-        if (!model) {
-          return 'gpt-3.5-turbo';
-        }
+        if (!model) return 'gpt-3.5-turbo';
         return model;
       },
     },
     methods: {
+      /**
+       * Sets default messages
+       *
+       * @since 3.2.13
+       */
       setMessages() {
         if (this.returnSystem) {
-          let current = this.messages.findIndex((item) => item.role === 'system');
+          const current = this.messages.findIndex((item) => item.role === 'system');
           if (current) {
             this.messages[current].content = this.returnSystem;
           } else {
@@ -75,7 +98,7 @@ export function moduleData() {
         }
 
         if (this.returnWelcome) {
-          let current = this.messages.findIndex((item) => item.welcome === true);
+          const current = this.messages.findIndex((item) => item.welcome === true);
           if (current > -1) {
             this.messages[current].content = this.returnWelcome;
           } else {
@@ -83,9 +106,16 @@ export function moduleData() {
           }
         }
       },
+      /**
+       * Resizes text area automatically based on input
+       *
+       * @param {Object} event - Input event
+       * @since 3.2.13
+       */
       resizeTextarea(event) {
+        const newHeight = Math.min(event.target.scrollHeight, 500);
+
         event.target.style.height = '';
-        let newHeight = Math.min(event.target.scrollHeight, 500);
         event.target.style.height = newHeight + 'px';
 
         if (newHeight == 500) {
@@ -94,48 +124,57 @@ export function moduleData() {
           event.target.style.overflow = 'hidden';
         }
       },
+
+      /**
+       * Main method for submitting new messages
+       *
+       * @param {Object} e - Keyup event
+       * @since 3.2.13
+       */
       submiteNewMessage(e) {
-        if (e.shiftKey || e.metaKey) {
-          return;
-        } else {
-          e.preventDefault();
-        }
+        // If modifier keys or no key then bail and allow normal behaviour
+        if (e.shiftKey || e.metaKey || !this.returnKey) return;
 
-        if (!this.returnKey) {
-          return;
-        }
-        let self = this;
-        if (self.newMessage.trim() == '') {
-          return;
-        }
+        // Empty message so exit
+        if (this.newMessage.trim() == '') return;
 
-        self.messages.push({
+        e.preventDefault();
+
+        // Push new message
+        this.messages.push({
           content: this.newMessage,
           role: 'user',
         });
 
-        self.newMessage = '';
-        self.$refs.newMessage.style.height = '20px';
+        // Reset message input content and height
+        this.newMessage = '';
+        this.$refs.newMessage.style.height = '20px';
 
-        self.sendMessageToGPT();
+        // Submit message
+        this.sendMessageToGPT();
       },
-      sendMessageToGPT() {
-        let self = this;
+      /**
+       * Sends message to server for AI response
+       *
+       * @since 3.2.13
+       */
+      async sendMessageToGPT() {
+        const current = this.messages.findIndex((item) => item.welcome === true);
 
-        let current = this.messages.findIndex((item) => item.welcome === true);
+        // Locates welcome message before sending to AI
         if (current > -1) {
           delete this.messages[current].welcome;
         }
 
-        let stringMessages = JSON.stringify(self.messages);
-        let key = self.returnKey;
-        self.error = false;
+        const stringMessages = JSON.stringify(this.messages);
+        const key = this.returnKey;
+        this.error = false;
 
         if (current > -1) {
           this.messages[current].welcome = true;
         }
 
-        self.thinking = true;
+        this.thinking = true;
 
         //Build form data for fetch request
         let formData = new FormData();
@@ -145,30 +184,33 @@ export function moduleData() {
         formData.append('key', key);
         formData.append('model', this.returnModel);
 
-        self.uipress.callServer(uip_ajax.ajax_url, formData).then((response) => {
-          if (response.error) {
-            self.error = true;
-            self.errorMessage = response.message;
-            self.thinking = false;
-            return;
-          }
+        // Send request to server
+        const response = await this.uipress.callServer(uip_ajax.ajax_url, formData);
 
-          let error = self.uipress.checkNestedValue(response, ['message', 'error']);
-          if (error) {
-            self.error = true;
-            self.errorMessage = error.message + ' - error code: ' + error.code;
-            self.thinking = false;
-            return;
-          }
+        // Handle error
+        if (response.error) {
+          this.error = true;
+          this.errorMessage = response.message;
+          this.thinking = false;
+          return;
+        }
 
-          let choices = self.uipress.checkNestedValue(response, ['message', 'choices']);
-          if (Array.isArray(choices)) {
-            let mess = choices[0].message;
-            mess.content = marked.parse(mess.content);
-            self.messages.push(mess);
-          }
-          self.thinking = false;
-        });
+        const error = this.uipress.checkNestedValue(response, ['message', 'error']);
+        if (error) {
+          this.error = true;
+          this.errorMessage = error.message + ' - error code: ' + error.code;
+          this.thinking = false;
+          return;
+        }
+
+        // Update messages from response
+        let choices = this.uipress.checkNestedValue(response, ['message', 'choices']);
+        if (Array.isArray(choices)) {
+          let mess = choices[0].message;
+          mess.content = marked.parse(mess.content);
+          this.messages.push(mess);
+        }
+        this.thinking = false;
       },
     },
     template: `

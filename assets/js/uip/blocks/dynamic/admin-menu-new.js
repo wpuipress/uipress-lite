@@ -306,6 +306,7 @@ const DrillDown = {
     TopLevelItem: TopLevelItem,
     SubMenuItem: SubMenuItem,
     MenuSearch: MenuSearch,
+    MenuCollapse: MenuCollapse,
   },
   props: {
     maybeFollowLink: Function,
@@ -313,6 +314,7 @@ const DrillDown = {
     collapsed: Boolean,
     block: Object,
     menuItems: Array,
+    returnCollapsed: Function,
   },
   watch: {
     menuItems: {
@@ -322,6 +324,11 @@ const DrillDown = {
       immediate: true,
       deep: true,
     },
+    isCollapsed: {
+      handler() {
+        this.returnCollapsed(this.isCollapsed);
+      },
+    },
   },
   data() {
     return {
@@ -329,6 +336,7 @@ const DrillDown = {
       levels: [],
       currentItem: null,
       searching: false,
+      isCollapsed: this.collapsed,
     };
   },
   computed: {
@@ -430,7 +438,8 @@ const DrillDown = {
               <Transition name="translate" mode="out-in">
                 <div :key="currentLevel" class="uip-admin-menu uip-text-normal" :class="{'uip-menu-collapsed' : collapsed}">
                 
-                  <MenuSearch v-if="hasMenuSearch && !collapsed" 
+                  <MenuSearch v-if="hasMenuSearch" 
+                  key="menusearch"
                   @searching="(d)=>{searching = d}"
                   :maybeFollowLink="maybeFollowLink" :workingMenu="menuItems"/>
                 
@@ -444,8 +453,11 @@ const DrillDown = {
                   
                   <!-- Loop through currentLevel and display each item -->
                   <template v-for="item of currentLevel">
-                    <TopLevelItem :item="item" :maybeFollowLink="handleLinkClick" :collapsed="collapsed" :block="block"/>
+                    <TopLevelItem :item="item" :maybeFollowLink="handleLinkClick" :collapsed="isCollapsed" :block="block"/>
                   </template>
+                  
+                  <MenuCollapse :collapsed="isCollapsed" :returnData="(d) => {isCollapsed = d}"/>
+                  
                 </div>
               </Transition>
               
@@ -528,7 +540,6 @@ export function moduleData() {
        */
       subMenuStyle() {
         if (this.collapsed) return 'hover';
-
         let style = this.uipress.get_block_option(this.block, 'block', 'subMenuStyle');
         if (!this.uipress.isObject(style)) return 'dynamic';
         if (style.value) return style.value;
@@ -844,11 +855,12 @@ export function moduleData() {
     },
     template: `
     
-          <DrillDownMenu v-if="subMenuStyle == 'dynamic'" :menuItems="workingMenu" :maybeFollowLink="maybeFollowLink" :collapsed="collapsed" :block="block"/>
+          <DrillDownMenu v-if="subMenuStyle == 'dynamic'" :menuItems="workingMenu" 
+          :maybeFollowLink="maybeFollowLink" :collapsed="collapsed" :block="block"
+          :returnCollapsed="(d)=>{collapsed=d}"/>
     
           <div v-else class="uip-admin-menu uip-text-normal" :class="returnClasses">
           
-            
             <MenuSearch v-if="hasMenuSearch && !collapsed" 
             @searching="(d)=>{searching = d}"
             :maybeFollowLink="maybeFollowLink" :workingMenu="workingMenu"/>
@@ -915,77 +927,6 @@ export function moduleData() {
                 </template>
               
             </template>
-            <!--END INLINE DROP MENU-->
-            
-            <DrillDownMenu v-if="subMenuStyle == 'dynamic' && !searching" :menuItems="workingMenu" :maybeFollowLink="maybeFollowLink" :collapsed="collapsed" :block="block"/>
-            
-            <!--DYNAMIC MENU-->
-            <template v-if="subMenuStyle == 'dynamic' && menuSearch == '' && 1==2">
-                
-                <TransitionGroup name="slide-left">
-                
-                  <template v-if="activeMenu == false" v-for="item in workingMenu">
-                  
-                    <div v-if="item.type != 'sep'" class="uip-flex uip-flex-column uip-row-gap-xs">
-                    
-                      <a :href="item.url" @click="maybeFollowLink($event, item, true)" class="uip-no-underline uip-link-default uip-top-level-item" :class="item.customClasses" :active="item.active ? true : false">
-                      
-                        <div v-if="!hideIcons" v-html="returnTopIcon(item.icon)" class="uip-flex uip-flex-center uip-menu-icon uip-icon uip-icon-medium"></div>
-                        
-                        <div class="uip-flex-grow uip-flex uip-gap-xs uip-flex-center">
-                          <div class="uip-line-height-1" v-html="item.name"></div>
-                          <div v-if="item.notifications && item.notifications > 0" class="uip-border-round uip-h-14 uip-ratio-1-1 uip-background-secondary uip-text-inverse uip-text-xxs uip-text-bold uip-flex uip-flex-center uip-flex-middle uip-menu-notification"><span>{{item.notifications}}</span></div>
-                        </div>
-                        
-                        <div v-if="item.submenu && item.submenu.length > 0" class="uip-icon uip-link-muted">{{returnSubIcon(item, true)}}</div>
-                        
-                      </a>
-                      
-                    </div>
-                    
-                    <div v-else-if="!sepHasCustomName(item)" class="uip-margin-bottom-s uip-menu-separator"></div>
-                    
-                    <div v-else class="uip-margin-bottom-xs uip-margin-top-xs uip-flex uip-flex-row uip-gap-xxs uip-menu-separator">
-                      <span v-if="item.custom.icon && item.custom.icon != 'uipblank'" class="uip-icon">{{item.custom.icon}}</span>
-                      <span>{{item.custom.name}}</span>
-                    </div>
-                  
-                    
-                  </template>
-                  
-                </TransitionGroup>
-                
-                
-                <Transition name="slide-right">
-                  <div v-if="activeMenu.submenu && activeMenu.submenu.length > 0" class="uip-admin-submenu">
-                  
-                      
-                      <div class="uip-flex uip-gap-xxs uip-flex-center uip-flex-row uip-flex-center uip-text-bold uip-text-l uip-sub-menu-header uip-margin-bottom-s uip-gap-xxs" @click="activeMenu = false">
-                        <div class="uip-icon uip-icon-medium">arrow_back</div>
-                        <div class="uip-flex-grow" v-html="activeMenu.name"></div>
-                      </div>
-                  
-                      <template v-for="sub in activeMenu.submenu">
-                      
-                          <div v-if="sub.type != 'sep'" class="uip-flex-grow uip-flex uip-gap-xs uip-flex-center">
-                            <a :href="sub.url" @click="maybeFollowLink($event, sub)" :class="sub.customClasses" class="uip-no-underline uip-link-muted uip-sub-level-item" :active="sub.active ? true : false">{{sub.name}}</a>
-                            <div v-if="sub.notifications && sub.notifications > 0" class="uip-border-circle uip-w-14 uip-h-14 uip-ratio-1-1 uip-background-secondary uip-text-inverse uip-text-xxs uip-flex uip-flex-center uip-flex-middle uip-menu-notification"><span>{{sub.notifications}}</span></div>
-                          </div>
-                          
-                          <div v-else-if="!sepHasCustomName(sub)" class="uip-margin-bottom-s uip-menu-separator"></div>
-                          
-                          <div v-else class="uip-margin-bottom-s uip-margin-top-s uip-flex uip-flex-row uip-gap-xxs uip-menu-separator">
-                            <span v-if="sub.custom.icon && sub.custom.icon != 'uipblank'" class="uip-icon">{{sub.custom.icon}}</span>
-                            <span>{{sub.custom.name}}</span>
-                          </div>
-                        
-                      </template>
-                      
-                  </div>
-                </Transition>
-              
-            </template>
-            <!--END DYNAMIC-->
             
             
             

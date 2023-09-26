@@ -58,6 +58,7 @@ export function moduleData() {
         if (!update == '') return 'bottom left';
         return update;
       },
+
       /**
        * Returns submenu items position
        *
@@ -81,6 +82,7 @@ export function moduleData() {
         this.toolbar = JSON.parse(JSON.stringify(this.uipData.toolbar));
         document.addEventListener('uip_page_change_loaded', this.handlePagechange);
       },
+
       /**
        * Handles page event
        *
@@ -95,6 +97,7 @@ export function moduleData() {
           this.updateFromDom();
         }, 300);
       },
+
       /**
        * Removes default toolbar styling
        *
@@ -125,6 +128,7 @@ export function moduleData() {
         // Add the event listener
         link.addEventListener('load', onLoad);
       },
+
       /**
        * Updates toolbar list from frame toolbar
        *
@@ -162,6 +166,7 @@ export function moduleData() {
           this.toolbar[itemId] = newItem;
         });
       },
+
       /**
        * Creates a new toolbar item
        *
@@ -303,6 +308,7 @@ export function moduleData() {
           }
         }
       },
+
       /**
        * Determines if a given UID is hidden.
        *

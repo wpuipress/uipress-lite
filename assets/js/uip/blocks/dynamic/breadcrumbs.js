@@ -15,38 +15,58 @@ export function moduleData() {
       };
     },
     inject: ['uipress', 'uipData'],
-    watch: {},
-    mounted: function () {
-      let self = this;
-      document.addEventListener(
-        'uip_breadcrumbs_change',
-        (e) => {
-          self.breadCrumbs = e.detail.crumbs;
-        },
-        { once: false }
-      );
+    mounted() {
+      this.mountWatchers();
     },
-    computed: {},
-    methods: {
-      getIcon() {
+    beforeUnmount() {
+      document.removeEventListener('uip_breadcrumbs_change', this.handleCrumbs, { once: false });
+    },
+    computed: {
+      /**
+       * Returns icon separator for crumbs
+       *
+       * @since 3.2.13
+       */
+      returnIcon() {
         let icon = this.uipress.get_block_option(this.block, 'block', 'breadIcon');
-        if (!icon) {
-          return 'chevron_right';
-        }
-        if ('value' in icon) {
-          return icon.value;
-        }
-        return icon;
+        if (!icon) return 'chevron_right';
+        if (!this.uipress.isObject(icon)) return icon;
+        if (icon.value) return icon.value;
+        return 'chevron_right';
+      },
+    },
+    methods: {
+      /**
+       * Mounts event listeners
+       *
+       * @since 3.2.13
+       */
+      mountWatchers() {
+        document.addEventListener('uip_breadcrumbs_change', this.handleCrumbs, { once: false });
+      },
+      /**
+       * Handles breadcrumb change events
+       *
+       * @param {Object} e - Crumb change event
+       * @since 3.2.13
+       */
+      handleCrumbs(e) {
+        this.breadCrumbs = e.detail.crumbs;
       },
     },
     template: `
+    
         <div class="uip-flex uip-gap-xxxs uip-flex-center">
         
             <template v-for="(item, index) in breadCrumbs">
+            
               <div @click="uipress.updatePage(item.url)" class="uip-link-default uip-crumb" v-html="item.name"></div>
-              <div class="uip-icon uip-crumb-icon uip-text-muted" v-if="index < breadCrumbs.length - 1">{{getIcon()}}</div>
+              <div class="uip-icon uip-crumb-icon uip-text-muted" v-if="index < breadCrumbs.length - 1">{{returnIcon()}}</div>
+              
             </template>
             
-        </div>`,
+        </div>
+        
+        `,
   };
 }
