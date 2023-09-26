@@ -7,79 +7,81 @@ export function moduleData() {
       block: Object,
       contextualData: Object,
     },
-    data: function () {
+    data() {
       return {
-        loading: true,
         strings: {
           placeholder: __('Input placeholder...', 'uipress-lite'),
         },
       };
     },
-    inject: ['uipData', 'uipress', 'uiTemplate'],
-    watch: {},
-    mounted: function () {},
+    inject: ['uipress'],
     computed: {
+      /**
+       * Returns placeholder for input
+       *
+       * @since 3.2.13
+       */
       returnPlaceHolder() {
-        let item = this.uipress.get_block_option(this.block, 'block', 'inputPlaceHolder', true);
-        if (!item) {
-          return '';
-        }
-        if (this.uipress.isObject(item)) {
-          if ('string' in item) {
-            return item.string;
-          } else {
-            return '';
-          }
-        }
-        return item;
-      },
-      returnPopulated() {
-        if (typeof this.contextualData === 'undefined') {
-          return;
-        }
-        if (!this.uipress.isObject(this.contextualData)) {
-          return;
-        }
-        if (!('formData' in this.contextualData)) {
-          return;
-        }
+        const item = this.uipress.get_block_option(this.block, 'block', 'inputPlaceHolder', true);
+        if (!item) return '';
 
-        if (this.contextualData.formData) {
-          if (this.returnName in this.contextualData.formData) {
-            return this.contextualData.formData[this.returnName];
-          }
-        }
+        if (!this.uipress.isObject(item)) return item;
+        if (item.string) return item.string;
         return '';
       },
-      returnLabel() {
-        let item = this.uipress.get_block_option(this.block, 'block', 'inputLabel', true);
-        if (!item) {
-          return '';
+
+      /**
+       * Returns populated value
+       *
+       * @since 3.2.13
+       */
+      returnPopulated() {
+        if (!this.uipress.isObject(this.contextualData)) return;
+        if (!('formData' in this.contextualData)) return;
+
+        const formData = this.contextualData.formData;
+        if (!formData) return;
+
+        // If input name exists in pre populate then return it
+        if (this.returnName in formData) {
+          return formData[this.returnName];
         }
-        if (this.uipress.isObject(item)) {
-          if ('string' in item) {
-            return item.string;
-          } else {
-            return '';
-          }
-        }
-        return item;
       },
+
+      /**
+       * Returns label for input
+       *
+       * @since 3.2.13
+       */
+      returnLabel() {
+        const item = this.uipress.get_block_option(this.block, 'block', 'inputLabel', true);
+        if (!item) return '';
+
+        if (!this.uipress.isObject(item)) return item;
+        if (item.string) return item.string;
+        return '';
+      },
+
+      /**
+       * Returns whether the input field is required
+       *
+       * @since 3.2.13
+       */
       returnRequired() {
         let required = this.uipress.get_block_option(this.block, 'block', 'inputRequired');
-        if (this.uipress.isObject(required)) {
-          if ('value' in required) {
-            return required.value;
-          }
-        }
+        if (!this.uipress.isObject(required)) return false;
+        if (required.value) return required.value;
         return required;
       },
+      /**
+       * Returns the name of the input
+       *
+       * @since 3.2.13
+       */
       returnName() {
-        let required = this.uipress.get_block_option(this.block, 'block', 'inputName');
-        return required;
+        return this.uipress.get_block_option(this.block, 'block', 'inputName');
       },
     },
-    methods: {},
     template: `
 		  <label class="uip-flex uip-flex-column">
         <span class="uip-input-label uip-text-muted uip-margin-bottom-xxs">{{returnLabel}}</span>

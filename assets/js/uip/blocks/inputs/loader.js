@@ -76,7 +76,7 @@ export function fetchBlocks() {
           icon: 'sort',
           styleType: 'style',
           class: '.uip-form-area',
-          options: uipress.returnDefaultOptions(),
+          options: uipress.returnDefaultOptions(true),
         },
         //Container options group
         {

@@ -7,7 +7,7 @@ export function moduleData() {
       block: Object,
       contextualData: Object,
     },
-    data: function () {
+    data() {
       return {
         formSuccess: false,
         contextData: this.contextualData,
@@ -19,8 +19,13 @@ export function moduleData() {
         },
       };
     },
-    inject: ['uipData', 'uipress', 'uiTemplate'],
+    inject: ['uipData', 'uipress'],
     watch: {
+      /**
+       * Watches changes to block options and updates pre-populate data
+       *
+       * @since 3.2.13
+       */
       'block.settings.block.options': {
         handler(newValue, oldValue) {
           if (this.uipress.enviroment && this.uipress.enviroment == 'builder') {
@@ -29,6 +34,11 @@ export function moduleData() {
         },
         deep: true,
       },
+      /**
+       * Watches changes to block content and updates pre-populate data
+       *
+       * @since 3.2.13
+       */
       'block.content': {
         handler(newValue, oldValue) {
           if (this.uipress.enviroment && this.uipress.enviroment == 'builder') {
@@ -38,78 +48,82 @@ export function moduleData() {
         deep: true,
       },
     },
-    mounted: function () {
+    mounted() {
       this.getPrepopulate();
     },
     computed: {
+      /**
+       * Returns text for submit value
+       *
+       * @since 3.2.13
+       */
       getSubmitValue() {
-        let item = this.uipress.get_block_option(this.block, 'block', 'submitText', true);
-        if (!item) {
-          return '';
-        }
-        if (this.uipress.isObject(item)) {
-          if ('string' in item) {
-            return item.string;
-          } else {
-            return '';
-          }
-        }
-        return item;
+        const item = this.uipress.get_block_option(this.block, 'block', 'submitText', true);
+        if (!item) return '';
+
+        if (!this.uipress.isObject(item)) return item;
+        if (item.string) return item.string;
+        return '';
       },
+      /**
+       * Returns success message
+       *
+       * @since 3.2.13
+       */
       getSuccessMessage() {
-        let text = this.uipress.get_block_option(this.block, 'block', 'successMessage');
-        return text;
+        return this.uipress.get_block_option(this.block, 'block', 'successMessage');
       },
+      /**
+       * Returns context / form data
+       *
+       * @since 3.2.13
+       */
       returnFormData() {
-        if (typeof this.contextData === 'undefined') {
-          this.contextData = {};
-          this.contextData.formData = {};
-          return this.contextData;
-        }
         if (!this.uipress.isObject(this.contextData)) {
           this.contextData = {};
           this.contextData.formData = {};
-          return this.contextData;
         }
         if (!('formData' in this.contextData)) {
           this.contextData.formData = {};
-          return this.contextData;
         }
         return this.contextData;
       },
     },
     methods: {
-      //Fetches data to populate the forms input
-      getPrepopulate() {
-        let self = this;
+      /**
+       * Fetches pre populate data for the form
+       *
+       * @since 3.2.13
+       */
+      async getPrepopulate() {
         let formOptions = this.uipress.get_block_option(this.block, 'block', 'submitAction');
 
-        //Nothing to prepopulate
+        //Nothing to pre-populate
         if (formOptions.action == 'email' || formOptions.action == 'phpFunction') {
-          self.prePopulate = [];
+          this.prePopulate = [];
           return;
         }
 
+        // Pre populate is disabled
         if (!this.uipress.get_block_option(this.block, 'block', 'prePopulate')) {
-          self.prePopulate = false;
-          return;
-        }
-        //Currently fetching data
-        if (this.populating) {
+          this.prePopulate = false;
           return;
         }
 
-        self.populating = true;
+        // Currently fetching data
+        if (this.populating) return;
+
+        this.populating = true;
         let formKeys = [];
+
+        // Set form keys
         let data = new FormData(this.$refs.form);
         for (const [key, value] of data) {
           formKeys.push(key);
         }
 
-        //Only populate if we have keys
-        if (formKeys.length < 1) {
-          return;
-        }
+        // Only populate if we have keys
+        if (formKeys.length < 1) return;
 
         let formData = new FormData();
         formData.append('action', 'uip_pre_populate_form_data');
@@ -120,121 +134,122 @@ export function moduleData() {
         formData.append('userMetaObjectKey', formOptions.userMetaObjectKey);
         formData.append('siteOptionName', formOptions.siteOptionName);
 
-        self.uipress.callServer(uip_ajax.ajax_url, formData).then((response) => {
-          //Delay the the function so it doesn't overload the server
-          setTimeout(function () {
-            self.populating = false;
-          }, 2000);
-          if (response.error) {
-            self.uipress.notify(response.message, '', 'error', true);
-            return;
-          }
-          if (response.success) {
-            self.prePopulate = response.formValues;
-            if (typeof self.contextData === 'undefined') {
-              return;
-              self.contextData = {};
-            }
-            if (!self.uipress.isObject(self.contextData)) {
-              return;
-              self.contextData = {};
-            }
-            self.contextData.formData = self.prePopulate;
-          }
-        });
+        const response = this.uipress.callServer(uip_ajax.ajax_url, formData);
+        //Delay the the function so it doesn't overload the server
+
+        const finishPopulate = () => {
+          this.populating = false;
+        };
+        setTimeout(finishPopulate, 2000);
+
+        // Handle error
+        if (response.error) {
+          this.uipress.notify(response.message, '', 'error', true);
+          return;
+        }
+        if (!response.success) {
+          return;
+        }
+
+        this.prePopulate = response.formValues;
+
+        // No context data so exit
+        if (!this.uipress.isObject(this.contextData)) return;
+
+        // Update context data
+        this.contextData.formData = this.prePopulate;
       },
+
+      /**
+       * Handles submit action
+       *
+       * @since 3.2.13
+       */
       onSubmit() {
-        let data = new FormData(this.$refs.form);
+        const data = new FormData(this.$refs.form);
         let formattedData = {};
 
+        // Build formatted data
         for (const [key, value] of data) {
           formattedData[key] = value;
         }
 
-        let formOptions = this.uipress.get_block_option(this.block, 'block', 'submitAction');
+        // Get form submit action
+        const formOptions = this.uipress.get_block_option(this.block, 'block', 'submitAction');
+        const errorMessage = () => {
+          this.uipress.notify(__('Configuration error', 'uipress-lite'), __('No php function supplied to send form data to', 'uipress-lite'), 'error');
+        };
 
-        if (formOptions.action == 'phpFunction') {
-          if (!formOptions.phpFunction || formOptions.phpFunction == '') {
-            this.uipress.notify(__('Configuration error', 'uipress-lite'), __('No php function supplied to send form data to', 'uipress-lite'), 'error');
-            return;
-          } else {
+        switch (formOptions.action) {
+          // Handle PHP submit
+          case 'phpFunction':
+            if (!formOptions.phpFunction) return errorMessage();
             this.processPHPfunction(formattedData, formOptions.phpFunction);
-          }
-        }
 
-        if (formOptions.action == 'email') {
-          if (!formOptions.emailAddress || formOptions.emailAddress == '') {
-            this.uipress.notify(__('Configuration error', 'uipress-lite'), __('No email supplied to send form data to', 'uipress-lite'), 'error');
-            return;
-          } else {
+          // Handle Email submit
+          case 'email':
+            if (!formOptions.emailAddress) return errorMessage();
             this.processEmail(formattedData, formOptions);
-          }
-        }
 
-        if (formOptions.action == 'siteOption') {
-          if (!formOptions.siteOptionName || formOptions.siteOptionName == '') {
-            this.uipress.notify(__('Configuration error', 'uipress-lite'), __('No site option name supplied to save as', 'uipress-lite'), 'error');
-            return;
-          } else {
+          // Handle site option form
+          case 'siteOption':
+            if (!formOptions.siteOptionName) return errorMessage();
             this.processSaveAsSiteOption(formattedData, formOptions);
-          }
-        }
 
-        if (formOptions.action == 'userMeta') {
-          if (!formOptions.objectOrSingle || formOptions.objectOrSingle == '') {
-            this.uipress.notify(__('Configuration error', 'uipress-lite'), __('You have not specified how to save the data to the user meta', 'uipress-lite'), 'error');
-            return;
-          }
-
-          if (formOptions.objectOrSingle == 'object' && formOptions.userMetaObjectKey == '') {
-            this.uipress.notify(__('Configuration error', 'uipress-lite'), __('You need to specifiy a meta key to save the meta data to', 'uipress-lite'), 'error');
-            return;
-          }
-
-          this.processSaveAsUserOption(formattedData, formOptions);
+          // Handle site option form
+          case 'userMeta':
+            if (!formOptions.objectOrSingle) return errorMessage();
+            if (!formOptions.objectOrSingle == 'object' || formOptions.userMetaObjectKey == '') return errorMessage();
+            this.processSaveAsUserOption(formattedData, formOptions);
         }
       },
+
+      /**
+       * Handles redirect after form submit
+       *
+       * @since 3.2.13
+       */
       handleRedirect() {
-        let self = this;
-        let formOptions = this.uipress.get_block_option(this.block, 'block', 'submitAction');
+        const formOptions = this.uipress.get_block_option(this.block, 'block', 'submitAction');
 
-        if (formOptions.redirectURL.value == '') {
-          return;
-        }
+        // No redirect so exit early
+        if (!formOptions.redirectURL.value) return;
 
-        let redirectURL = formOptions.redirectURL;
+        const redirectURL = formOptions.redirectURL.value;
 
-        if (redirectURL.dynamic) {
-          if (self.uipData.dynamicOptions[redirectURL.dynamicKey]) {
-            redirectURL = self.uipData.dynamicOptions[redirectURL.dynamicKey].value;
-          }
-        } else {
-          redirectURL = redirectURL.value;
-        }
+        // No redirect so exit early
+        if (!redirectURL) return;
 
-        if (typeof redirectURL === 'undefined') {
-          return;
-        }
+        const redirectType = formOptions.redirectURL.newTab;
 
-        let type = formOptions.redirectURL.newTab;
-
-        if (type == '' || type == 'dynamic') {
+        // Dybamic redirect / update frame
+        if (redirectType == '' || redirectType == 'dynamic') {
           this.uipress.updatePage(redirectURL);
+          return;
         }
 
-        if (type == 'newTab') {
+        // New tab redirect
+        if (redirectType == 'newTab') {
           this.$refs.hiddenlink.href = redirectURL;
           this.$refs.hiddenlink.click();
         }
 
-        if (type == 'default') {
+        // Default window behaviour
+        if (redirectType == 'default') {
           window.location.assign(redirectURL);
         }
       },
-      processSaveAsUserOption(data, formOptions) {
-        let self = this;
-        let formatted = JSON.stringify(data);
-        self.loading = true;
+
+      /**
+       * Processes save as user submit
+       *
+       * @param {Object} data - form data
+       * @param {Object} formOptions - the form options
+       * @since 3.2.13
+       */
+      async processSaveAsUserOption(data, formOptions) {
+        const formatted = JSON.stringify(data);
+        this.loading = true;
 
         let formData = new FormData();
         formData.append('action', 'uip_save_form_as_user_option');
@@ -243,26 +258,37 @@ export function moduleData() {
         formData.append('objectOrSingle', formOptions.objectOrSingle);
         formData.append('userMetaObjectKey', formOptions.userMetaObjectKey);
 
-        self.uipress.callServer(uip_ajax.ajax_url, formData).then((response) => {
-          self.loading = false;
-          if (response.error) {
-            self.uipress.notify(response.message, '', 'error', true);
-            return;
-          }
-          if (response.success) {
-            self.handleRedirect();
-            self.formSuccess = true;
-            //this.$refs.form.reset();
-            setTimeout(function () {
-              self.formSuccess = false;
-            }, 10000);
-          }
-        });
+        const response = await this.uipress.callServer(uip_ajax.ajax_url, formData);
+        this.loading = false;
+
+        // Handle error state
+        if (response.error) {
+          this.uipress.notify(response.message, '', 'error', true);
+          return;
+        }
+        if (!response.success) {
+          return;
+        }
+
+        this.handleRedirect();
+        this.formSuccess = true;
+
+        const finishForm = () => {
+          this.formSuccess = false;
+        };
+        setTimeout(finishForm, 10000);
       },
-      processSaveAsSiteOption(data, formOptions) {
-        let self = this;
-        let formatted = JSON.stringify(data);
-        self.loading = true;
+
+      /**
+       * Processes save as site submit
+       *
+       * @param {Object} data - form data
+       * @param {Object} formOptions - the form options
+       * @since 3.2.13
+       */
+      async processSaveAsSiteOption(data, formOptions) {
+        const formatted = JSON.stringify(data);
+        this.loading = true;
 
         let formData = new FormData();
         formData.append('action', 'uip_save_form_as_option');
@@ -270,26 +296,37 @@ export function moduleData() {
         formData.append('formData', formatted);
         formData.append('optionKey', formOptions.siteOptionName);
 
-        self.uipress.callServer(uip_ajax.ajax_url, formData).then((response) => {
-          self.loading = false;
-          if (response.error) {
-            self.uipress.notify(response.message, '', 'error', true);
-            return;
-          }
-          if (response.success) {
-            self.handleRedirect();
-            self.formSuccess = true;
-            //this.$refs.form.reset();
-            setTimeout(function () {
-              self.formSuccess = false;
-            }, 10000);
-          }
-        });
+        const response = await this.uipress.callServer(uip_ajax.ajax_url, formData);
+        this.loading = false;
+
+        // Handle error
+        if (response.error) {
+          this.uipress.notify(response.message, '', 'error', true);
+          return;
+        }
+        if (!response.success) {
+          return;
+        }
+
+        this.handleRedirect();
+        this.formSuccess = true;
+
+        const finishForm = () => {
+          this.formSuccess = false;
+        };
+        setTimeout(finishForm, 10000);
       },
-      processEmail(data, formOptions) {
-        let self = this;
-        let formatted = JSON.stringify(data);
-        self.loading = true;
+
+      /**
+       * Processes form as email submit
+       *
+       * @param {Object} data - form data
+       * @param {Object} formOptions - the form options
+       * @since 3.2.13
+       */
+      async processEmail(data, formOptions) {
+        const formatted = JSON.stringify(data);
+        this.loading = true;
 
         let formData = new FormData();
         formData.append('action', 'uip_send_form_email');
@@ -299,26 +336,40 @@ export function moduleData() {
         formData.append('emailSubject', formOptions.emailSubject);
         formData.append('emailTemplate', formOptions.emailTemplate);
 
-        self.uipress.callServer(uip_ajax.ajax_url, formData).then((response) => {
-          self.loading = false;
-          if (response.error) {
-            self.uipress.notify(response.message, '', 'error', true);
-            return;
-          }
-          if (response.success) {
-            self.handleRedirect();
-            self.formSuccess = true;
-            self.$refs.form.reset();
-            setTimeout(function () {
-              self.formSuccess = false;
-            }, 10000);
-          }
-        });
+        const response = await this.uipress.callServer(uip_ajax.ajax_url, formData);
+        this.loading = false;
+
+        // Catch error
+        if (response.error) {
+          this.uipress.notify(response.message, '', 'error', true);
+          return;
+        }
+
+        if (!response.success) {
+          return;
+        }
+
+        this.handleRedirect();
+        this.formSuccess = true;
+
+        // Reset form
+        this.$refs.form.reset();
+        const finishForm = () => {
+          this.formSuccess = false;
+        };
+        setTimeout(finishForm, 10000);
       },
-      processPHPfunction(data, userFunction) {
-        let self = this;
-        let formatted = JSON.stringify(data);
-        self.loading = true;
+
+      /**
+       * Processes form as php function
+       *
+       * @param {Object} data - form data
+       * @param {String} userFunction - the form options
+       * @since 3.2.13
+       */
+      async processPHPfunction(data, userFunction) {
+        const formatted = JSON.stringify(data);
+        this.loading = true;
 
         let formData = new FormData();
         formData.append('action', 'uip_process_form_input');
@@ -326,43 +377,50 @@ export function moduleData() {
         formData.append('formData', formatted);
         formData.append('userFunction', userFunction);
 
-        self.uipress.callServer(uip_ajax.ajax_url, formData).then((response) => {
-          self.loading = false;
-          if (response.error) {
-            self.uipress.notify(response.message, '', 'error', true);
-            return;
-          }
-          if (response.success) {
-            self.handleRedirect();
-            self.formSuccess = true;
-            self.$refs.form.reset();
-            setTimeout(function () {
-              self.formSuccess = false;
-            }, 10000);
-          }
-        });
-      },
-      returnClasses() {
-        let classes = '';
+        const response = await this.uipress.callServer(uip_ajax.ajax_url, formData);
+        this.loading = false;
 
-        let advanced = this.uipress.get_block_option(this.block, 'advanced', 'classes');
-        classes += advanced;
-        return classes;
+        // Handle error
+        if (response.error) {
+          this.uipress.notify(response.message, '', 'error', true);
+          return;
+        }
+
+        if (!response.success) {
+          return;
+        }
+
+        this.handleRedirect();
+        this.formSuccess = true;
+
+        // Reset form
+        this.$refs.form.reset();
+        const finishForm = () => {
+          this.formSuccess = false;
+        };
+        setTimeout(finishForm, 10000);
       },
     },
-    template:
-      '\
-      <div :class="returnClasses()" :id="block.uid">\
-        <div v-if="formSuccess" class="uip-padding-xxs uip-border-round uip-background-green-wash uip-text-green uip-text-bold uip-margin-bottom-s uip-scale-in-top" v-html="getSuccessMessage"></div>\
-        <div class="uip-ajax-loader" v-if="loading">\
-          <div class="uip-loader-bar"></div>\
-        </div>\
-        <form ref="form" class="uip-form-area uip-body-font" @submit.prevent="onSubmit()">\
-          <uip-content-area :contextualData="returnFormData"\
-          :content="block.content" :returnData="function(data) {block.content = data} " layout="vertical" ></uip-content-area>\
-          <input type="submit" class="uip-button-primary uip-submit-button uip-body-font" :value="getSubmitValue"/>\
-        </form>\
-        <a ref="hiddenlink" target="_BLANK" class="uip-hidden"></a>\
-      </div>',
+    template: `
+    
+      <div>
+      
+        <div v-if="formSuccess" class="uip-padding-xxs uip-border-round uip-background-green-wash uip-text-green uip-text-bold uip-margin-bottom-s uip-scale-in-top" v-html="getSuccessMessage"></div>
+        
+        <div class="uip-ajax-loader" v-if="loading">
+          <div class="uip-loader-bar"></div>
+        </div>
+        
+        <form ref="form" class="uip-form-area uip-body-font" @submit.prevent="onSubmit()">
+          <uip-content-area :contextualData="returnFormData"
+          :content="block.content" :returnData="function(data) {block.content = data}"/>
+          <input type="submit" class="uip-button-primary uip-submit-button uip-body-font" :value="getSubmitValue"/>
+        </form>
+        
+        <a ref="hiddenlink" target="_BLANK" class="uip-hidden"></a>
+        
+      </div>
+      
+      `,
   };
 }
