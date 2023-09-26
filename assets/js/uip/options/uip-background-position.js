@@ -1,130 +1,72 @@
 const { __, _x, _n, _nx } = wp.i18n;
-export function moduleData() {
-  return {
-    props: {
-      returnData: Function,
-      value: Object,
-    },
-    inject: ['uipress'],
-    data: function () {
-      return {
-        option: {
-          position: '',
-          repeat: 'no-repeat',
-          size: 'cover',
-        },
-        options: {
-          positions: [
-            {
-              value: 'none',
-              label: __('None', 'uipress-lite'),
-            },
-            {
-              value: 'top left',
-              label: __('Top left', 'uipress-lite'),
-            },
-            {
-              value: 'top center',
-              label: __('Top center', 'uipress-lite'),
-            },
-            {
-              value: 'top right',
-              label: __('Top right', 'uipress-lite'),
-            },
-            ///
-            {
-              value: 'center left',
-              label: __('Center left', 'uipress-lite'),
-            },
-            {
-              value: 'center center',
-              label: __('Center center', 'uipress-lite'),
-            },
-            {
-              value: 'center right',
-              label: __('Center right', 'uipress-lite'),
-            },
-            ///
-            {
-              value: 'bottom left',
-              label: __('Bottom left', 'uipress-lite'),
-            },
-            {
-              value: 'bottom center',
-              label: __('Bottom center', 'uipress-lite'),
-            },
-            {
-              value: 'bottom right',
-              label: __('Bottom right', 'uipress-lite'),
-            },
-          ],
-          repeat: [
-            {
-              value: 'no-repeat',
-              label: __('No repeat', 'uipress-lite'),
-            },
-            {
-              value: 'repeat-x',
-              label: __('Repeat x', 'uipress-lite'),
-            },
-            {
-              value: 'repeat-y',
-              label: __('Repeat y', 'uipress-lite'),
-            },
-            {
-              value: 'repeat',
-              label: __('Repeat', 'uipress-lite'),
-            },
-          ],
-          size: [
-            {
-              value: 'auto',
-              label: __('Auto', 'uipress-lite'),
-            },
-            {
-              value: 'cover',
-              label: __('Cover', 'uipress-lite'),
-            },
-            {
-              value: 'contain',
-              label: __('Contain', 'uipress-lite'),
-            },
-          ],
-        },
-        strings: {
-          position: __('Position', 'uipress-light'),
-          repeat: __('Repeat', 'uipress-light'),
-          size: __('Size', 'uipress-light'),
-        },
-      };
-    },
-    watch: {
+import BackgroundPositions from '../v3.5/lists/background_positions.min.js';
+import BackgroundRepeat from '../v3.5/lists/background_repeat.min.js';
+import BackgroundSize from '../v3.5/lists/background_size.min.js';
+
+export default {
+  props: {
+    returnData: Function,
+    value: Object,
+  },
+  inject: ['uipress'],
+  data() {
+    return {
       option: {
-        handler(newValue, oldValue) {
-          this.returnData(this.option);
-        },
-        deep: true,
+        position: '',
+        repeat: 'no-repeat',
+        size: 'cover',
       },
-    },
-    mounted: function () {
-      this.formatInput(this.value);
-    },
-    computed: {
-      returnOption() {
-        return this.option;
+      options: {
+        positions: BackgroundPositions,
+        repeat: BackgroundRepeat,
+        size: BackgroundSize,
       },
-    },
-    methods: {
-      formatInput(value) {
-        if (typeof value === 'undefined') {
-          return;
-        }
-        if (this.uipress.isObject(value)) {
-          this.option = { ...this.option, ...value };
-        }
+      strings: {
+        position: __('Position', 'uipress-light'),
+        repeat: __('Repeat', 'uipress-light'),
+        size: __('Size', 'uipress-light'),
       },
+    };
+  },
+  watch: {
+    /**
+     * Watches for changes to the options and returns the value
+     *
+     * @since 3.2.13
+     */
+    option: {
+      handler(newValue, oldValue) {
+        this.returnData(this.option);
+      },
+      deep: true,
     },
-    template: `
+  },
+  mounted() {
+    this.formatInput(this.value);
+  },
+  computed: {
+    /**
+     * Returns options
+     *
+     * @since 3.2.13
+     */
+    returnOption() {
+      return this.option;
+    },
+  },
+  methods: {
+    /**
+     * Formats the input value
+     *
+     * @param {Mixed} value - the input value
+     * @since 3.2.13
+     */
+    formatInput(value) {
+      if (!this.uipress.isObject(value)) return;
+      this.option = { ...this.option, ...value };
+    },
+  },
+  template: `
     <div class="uip-flex uip-flex-column uip-row-gap-xs">
     
     
@@ -170,5 +112,4 @@ export function moduleData() {
     
     
     </div>`,
-  };
-}
+};

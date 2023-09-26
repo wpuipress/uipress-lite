@@ -1,79 +1,93 @@
 const { __, _x, _n, _nx } = wp.i18n;
-export function moduleData() {
-  return {
-    props: {
-      returnData: Function,
-      value: Array,
-    },
-    data: function () {
-      return {
-        items: this.value,
-        strings: {
-          addNew: __('New item', 'uipress-lite'),
-        },
-      };
-    },
-    inject: ['uipress'],
-    mounted: function () {},
-    watch: {
-      items: {
-        handler(newValue, oldValue) {
-          this.returnData(this.items);
-        },
-        deep: true,
+export default {
+  props: {
+    returnData: Function,
+    value: Array,
+  },
+  data() {
+    return {
+      items: this.value,
+      strings: {
+        addNew: __('New item', 'uipress-lite'),
       },
+    };
+  },
+  inject: ['uipress'],
+  watch: {
+    /**
+     * Watches for changes to the items and returns the value
+     *
+     * @since 3.2.13
+     */
+    items: {
+      handler(newValue, oldValue) {
+        this.returnData(this.items);
+      },
+      deep: true,
     },
-    computed: {
-      returnItems() {
-        return this.items;
-      },
+  },
+  computed: {
+    /**
+     * Returns array list
+     *
+     * @since 3.2.13
+     */
+    returnItems() {
+      return this.items;
     },
-    methods: {
-      deleteTab(index) {
-        this.items.splice(index, 1);
-      },
-      newTab() {
-        this.items.push({ value: '', id: this.uipress.createUID() });
-      },
-      setdropAreaStyles() {
-        let returnData = [];
-        returnData.class = 'uip-flex uip-flex-column uip-row-gap-xs uip-w-100p';
-        return returnData;
-      },
+  },
+  methods: {
+    /**
+     * Deletes an item from the list
+     *
+     * @param {Number} index - the index of the item
+     * @since 3.2.13
+     */
+    deleteTab(index) {
+      this.items.splice(index, 1);
     },
-    template: `
+
+    /**
+     * Creates a new item
+     *
+     * @since 3.2.13
+     */
+    newTab() {
+      this.items.push({ value: '', id: this.uipress.createUID() });
+    },
+  },
+  template: `
     
-    <div class="uip-flex uip-flex-column uip-row-gap-xs">
+      <div class="uip-flex uip-flex-column uip-row-gap-xs">
       
-      <uip-draggable v-if="items.length > 0"
-      :list="items" 
-      class="uip-flex uip-flex-column uip-row-gap-xs uip-w-100p"
-      :group="{ name: 'tabs', pull: false, put: false  }"
-      animation="300"
-      handle=".uip-cursor-drag"
-      @start="drag=true"
-      @end="drag=false"
-      :sort="true"
-      itemKey="id">
-      
-        <template v-for="(element, index) in items" :key="element.value" :index="index">
+        <uip-draggable v-if="items.length > 0"
+        :list="items" 
+        class="uip-flex uip-flex-column uip-row-gap-xs uip-w-100p"
+        :group="{ name: 'tabs', pull: false, put: false  }"
+        animation="300"
+        handle=".uip-cursor-drag"
+        @start="drag=true"
+        @end="drag=false"
+        :sort="true"
+        itemKey="id">
         
-			    <div class="uip-flex uip-flex-row uip-gap-xs uip-flex-center">
+          <template v-for="(element, index) in items" :key="element.value" :index="index">
           
-				    <div @click="deleteTab(index)" class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-cursor-drag">drag_indicator</div>
+		      <div class="uip-flex uip-flex-row uip-gap-xs uip-flex-center">
             
-				    <input type="text" v-model="element.value" class="uip-input-small uip-flex-grow" placeholder="/path/to/file">
-  
-            <div @click="deleteTab(index)" class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted">close</div>
+			    <div @click="deleteTab(index)" class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-cursor-drag">drag_indicator</div>
+              
+			    <input type="text" v-model="element.value" class="uip-input-small uip-flex-grow" placeholder="/path/to/file">
+    
+                <div @click="deleteTab(index)" class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted">close</div>
+              
+              </div>  
             
-          </div>  
+		  </template>
           
-			  </template>
+	    </uip-draggable>
         
-		  </uip-draggable>
-      
-      <button @click="newTab()" class="uip-button-default uip-border-rounder uip-padding-xxs uip-w-100p"><span class="uip-icon">add</span></button>
+        <button @click="newTab()" class="uip-button-default uip-border-rounder uip-padding-xxs uip-w-100p"><span class="uip-icon">add</span></button>
       
 	  </div>`,
-  };
-}
+};

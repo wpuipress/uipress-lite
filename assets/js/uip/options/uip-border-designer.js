@@ -1,5 +1,8 @@
 const { __, _x, _n, _nx } = wp.i18n;
 import { defineAsyncComponent, nextTick } from '../../libs/vue-esm-dev.js';
+import BorderPositions from '../v3.5/lists/border_positions.min.js';
+import BorderTypes from '../v3.5/lists/border_types.min.js';
+
 export default {
   components: {
     colorBox: defineAsyncComponent(() => import('../v3.5/utility/color-box.min.js?ver=3.2.12')),
@@ -8,7 +11,7 @@ export default {
     returnData: Function,
     value: Object,
   },
-  data: function () {
+  data() {
     return {
       borderOptions: {
         width: {
@@ -44,82 +47,40 @@ export default {
         position: __('Position', 'uipress-lite'),
         borderColor: __('Border colour', 'uipress-lite'),
       },
-      borderPositions: {
-        solid: {
-          icon: 'border_outer',
-          value: 'solid',
-        },
-        left: {
-          icon: 'border_left',
-          value: 'left',
-        },
-        top: {
-          icon: 'border_top',
-          value: 'top',
-        },
-        right: {
-          icon: 'border_right',
-          value: 'right',
-        },
-        bottom: {
-          icon: 'border_bottom',
-          value: 'bottom',
-        },
-      },
-      borderTypes: [
-        {
-          label: __('Solid', 'uipress-lite'),
-          value: 'solid',
-        },
-        {
-          label: __('Dashed', 'uipress-lite'),
-          value: 'dashed',
-        },
-        {
-          label: __('Dotted', 'uipress-lite'),
-          value: 'dotted',
-        },
-        {
-          label: __('Double', 'uipress-lite'),
-          value: 'double',
-        },
-        {
-          label: __('Groove', 'uipress-lite'),
-          value: 'groove',
-        },
-        {
-          label: __('Ridge', 'uipress-lite'),
-          value: 'ridge',
-        },
-        {
-          label: __('Inset', 'uipress-lite'),
-          value: 'inset',
-        },
-      ],
+      borderPositions: BorderPositions,
+      borderTypes: BorderTypes,
     };
   },
   inject: ['uipress'],
   watch: {
+    /**
+     * Watches for changes to border options and sends the data back
+     *
+     * @since 3.2.13
+     */
     borderOptions: {
       handler(newValue, oldValue) {
-        let self = this;
-        self.returnData(newValue);
+        this.returnData(newValue);
       },
       deep: true,
     },
+    /**
+     * Watches for changes to border left and syncs with other border sides
+     *
+     * @since 3.2.13
+     */
     'borderOptions.radius.value.topleft': {
       handler(newValue, oldValue) {
-        if (this.borderOptions.radius.value.sync) {
-          this.borderOptions.radius.value.topright = this.borderOptions.radius.value.topleft;
-          this.borderOptions.radius.value.bottomleft = this.borderOptions.radius.value.topleft;
-          this.borderOptions.radius.value.bottomright = this.borderOptions.radius.value.topleft;
-        }
+        if (!this.borderOptions.radius.value.sync) return;
+        this.borderOptions.radius.value.topright = this.borderOptions.radius.value.topleft;
+        this.borderOptions.radius.value.bottomleft = this.borderOptions.radius.value.topleft;
+        this.borderOptions.radius.value.bottomright = this.borderOptions.radius.value.topleft;
       },
       deep: true,
     },
   },
-  mounted: function () {
-    this.formatValue(this.value);
+  mounted() {
+    this.formatValue();
   },
   computed: {
     /**
@@ -134,6 +95,7 @@ export default {
       }
       return `background-color:${this.borderOptions.color.value}`;
     },
+
     /**
      * Returns a new fill screen for border colour
      *
@@ -156,14 +118,14 @@ export default {
     },
   },
   methods: {
-    formatValue(value) {
-      if (typeof value === 'undefined') {
-        return;
-      }
-      if (this.uipress.isObject(value)) {
-        this.borderOptions = { ...this.borderOptions, ...value };
-        return;
-      }
+    /**
+     * Formats imput value
+     *
+     * @since 3.2.13
+     */
+    formatValue() {
+      if (!this.uipress.isObject(this.value)) return;
+      this.borderOptions = { ...this.borderOptions, ...this.value };
     },
   },
   template: `

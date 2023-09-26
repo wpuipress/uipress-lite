@@ -1,92 +1,48 @@
-export function moduleData() {
-  return {
-    props: {
-      returnData: Function,
-      value: String,
-      placeHolder: String,
-      args: Object,
-      size: String,
-    },
-    inject: ['uipData', 'uipress'],
-    data: function () {
-      return {
-        option: this.value,
-        userInput: '',
-        selected: [],
-        rendered: false,
-        search: '',
-        allRules: [],
-        strings: {
-          manualPlaceHolder: __('Enter classes seperated by a space', 'uipress-lite'),
-          searchClasses: __('Search classess', 'uipress-lite'),
-        },
-      };
-    },
-    watch: {
-      option: {
-        handler(newValue, oldValue) {
-          this.returnData(this.option);
-
-          if (!this.args) {
-            return;
-          }
-        },
-        deep: true,
+export default {
+  props: {
+    returnData: Function,
+    value: String,
+    placeHolder: String,
+    args: Object,
+    size: String,
+  },
+  inject: ['uipData', 'uipress'],
+  data() {
+    return {
+      option: '',
+      userInput: '',
+      selected: [],
+      rendered: false,
+      search: '',
+      allRules: [],
+      strings: {
+        manualPlaceHolder: __('Enter classes seperated by a space', 'uipress-lite'),
+        searchClasses: __('Search classes', 'uipress-lite'),
+        search: __('Search', 'uipress-lite'),
       },
-      userInput: {
-        handler(newValue, oldValue) {
-          if (!newValue || !this.rendered) return;
-          if (!newValue.includes(' ')) return;
-          let parts = newValue.split(' ');
-          for (const userClass of parts) {
-            if (userClass) {
-              this.selected.push(userClass);
-            }
-          }
-          this.userInput = '';
-        },
+    };
+  },
+  watch: {
+    /**
+     * Watches for changes to option and returns the data
+     *
+     * @since 3.2.13
+     */
+    option: {
+      handler(newValue, oldValue) {
+        this.returnData(this.option);
       },
-      selected: {
-        handler(newValue, oldValue) {
-          this.returnData(this.selected.join(' '));
-        },
-        deep: true,
-      },
+      deep: true,
     },
-    created: function () {
-      if (!this.option || !this.option.includes(' ')) {
-        if (this.option != '') {
-          this.selected.push(this.option);
-        }
-        this.rendered = true;
-        this.getClassNames();
-        return;
-      }
-      let parts = this.option.split(' ');
-      for (const userClass of parts) {
-        if (userClass) {
-          this.selected.push(userClass);
-        }
-      }
-      this.rendered = true;
-
-      this.getClassNames();
-    },
-    computed: {
-      allClasses() {
-        return this.allRules;
-      },
-    },
-    methods: {
-      submiteNewClass(evt) {
-        let newValue = this.userInput;
-
+    /**
+     * Watches changes to the user input and pushes when it detects spaces
+     *
+     * @since 3.2.13
+     */
+    userInput: {
+      handler(newValue, oldValue) {
         if (!newValue || !this.rendered) return;
-        if (!newValue.includes(' ')) {
-          this.selected.push(newValue);
-          this.userInput = '';
-          return;
-        }
+        if (!newValue.includes(' ')) return;
         let parts = newValue.split(' ');
         for (const userClass of parts) {
           if (userClass) {
@@ -95,85 +51,195 @@ export function moduleData() {
         }
         this.userInput = '';
       },
-      getClassNames() {
-        let tempRules = [];
-        let sSheetList = document.styleSheets;
-        for (let sSheet = 0; sSheet < sSheetList.length; sSheet++) {
-          let ruleList = {};
-          try {
-            ruleList = document.styleSheets[sSheet].cssRules;
-          } catch (err) {
-            continue;
-          }
-          for (let rule in ruleList) {
-            let selector = ruleList[rule].selectorText;
-            if (!selector) continue;
-            if (
-              selector.includes('::') ||
-              selector.includes(' ') ||
-              selector.includes('[') ||
-              selector.includes('>') ||
-              selector.includes(':') ||
-              selector.includes('~') ||
-              selector.includes('#') ||
-              !selector.includes('.')
-            ) {
-              continue;
-            }
-
-            if (selector[0] != '.') continue;
-
-            let className = selector.replace('.', '');
-            if (className.includes('.')) continue;
-            tempRules.push(className);
-          }
-        }
-
-        tempRules.sort();
-        let userClasses = this.uipData.options.customClasses;
-        if (userClasses) {
-          if (Array.isArray(userClasses)) {
-            userClasses.sort();
-            tempRules = [].concat(userClasses, tempRules);
-          }
-        }
-        this.allRules = [...new Set(tempRules)];
-      },
-      removeSelected(index) {
-        this.selected.splice(index, 1);
-      },
-      inSearch(className) {
-        if (!this.search) return true;
-
-        let lc = className.toLowerCase();
-        let slc = this.search.toLowerCase();
-
-        if (lc.includes(slc)) {
-          return true;
-        }
-
-        return false;
-      },
     },
-    template: `
+    /**
+     * Watches selected and returns the selected options back as a string
+     *
+     * @since 3.2.13
+     */
+    selected: {
+      handler(newValue, oldValue) {
+        this.returnData(this.selected.join(' '));
+      },
+      deep: true,
+    },
+  },
+  created() {
+    this.parseInput();
+    this.getClassNames();
+  },
+  computed: {
+    allClasses() {
+      return this.allRules;
+    },
+  },
+  methods: {
+    /**
+     * Parses input value
+     *
+     * @since 3.2.13
+     */
+    parseInput() {
+      // No value so exit
+      if (!this.value) return;
+
+      this.option = this.value;
+
+      // No spaces so just a single class
+      if (!this.option.includes(' ')) {
+        this.selected.push(this.option);
+        return;
+      }
+
+      const parts = this.option.split(' ');
+
+      for (const userClass of parts) {
+        if (!userClass) continue;
+        this.selected.push(userClass);
+      }
+    },
+
+    /**
+     * Handles new class submit on return press
+     *
+     * @param {Object} evt - keyup event
+     * @since 3.2.13
+     */
+    submiteNewClass(evt) {
+      let newValue = this.userInput;
+      if (!newValue) return;
+
+      if (!newValue.includes(' ')) {
+        this.selected.push(newValue);
+        this.userInput = '';
+        return;
+      }
+
+      let parts = newValue.split(' ');
+
+      for (const userClass of parts) {
+        if (!userClass) continue;
+        this.selected.push(userClass);
+      }
+      this.userInput = '';
+    },
+    /**
+     * Retrieves and sets unique class names from stylesheets.
+     *
+     * Scans all available stylesheets for class selectors. It ignores class selectors that
+     * have pseudoelements, special characters or are mixed with other types of selectors.
+     * Additionally, it merges these detected classes with custom classes specified in the component's data.
+     * The final set of classes are stored in the `allRules` data property.
+     *
+     * @since 3.2.13
+     */
+    getClassNames() {
+      const collectedClasses = [];
+
+      // Loop through stylesheets to collect classes
+      const styleSheets = Array.from(document.styleSheets);
+      for (const styleSheet of styleSheets) {
+        let cssRules;
+
+        try {
+          cssRules = Array.from(styleSheet.cssRules);
+        } catch (err) {
+          continue;
+        }
+
+        for (const cssRule of cssRules) {
+          const selector = cssRule.selectorText;
+          if (!this.isValidClassSelector(selector)) continue;
+
+          const className = selector.slice(1);
+          collectedClasses.push(className);
+        }
+      }
+
+      // Deduplicate and sort
+      collectedClasses.sort();
+
+      const userClasses = this.uipData.options.customClasses;
+      if (Array.isArray(userClasses)) {
+        userClasses.sort();
+        collectedClasses.unshift(...userClasses);
+      }
+
+      this.allRules = [...new Set(collectedClasses)];
+    },
+
+    /**
+     * Validates if a given selector is a valid and simple class selector.
+     *
+     * @param {string} selector - The CSS selector string.
+     * @returns {boolean} - True if valid class selector, false otherwise.
+     */
+    isValidClassSelector(selector) {
+      if (!selector) return false;
+
+      const invalidPatterns = ['::', ' ', '[', '>', ':', '~', '#'];
+      const hasInvalidPattern = invalidPatterns.some((pattern) => selector.includes(pattern));
+
+      return selector.startsWith('.') && !hasInvalidPattern && !selector.slice(1).includes('.');
+    },
+
+    /**
+     * Removes selected class by index
+     *
+     * @param {Number} index - The index of the item to remove
+     * @since 3.2.13
+     */
+    removeSelected(index) {
+      this.selected.splice(index, 1);
+    },
+    /**
+     * Returns whether a given item matches the search string
+     *
+     * @param {String} className - the class name to check
+     * @since 3.2.13
+     */
+    inSearch(className) {
+      if (!this.search) return true;
+
+      let lc = className.toLowerCase();
+      let slc = this.search.toLowerCase();
+
+      if (lc.includes(slc)) return true;
+    },
+  },
+  template: `
     <div class="uip-flex uip-flex-column uip-gap-xs uip-w-100p">
       <div class="uip-flex uip-gap-xxs uip-w-100p uip-flex-wrap">
       
-        <dropdown pos="left center">
+        <dropdown pos="left center"  :snapX="['#uip-block-settings', '#uip-template-settings', '#uip-global-settings']"
+        ref="classDrop">
           <template v-slot:trigger>
             <div class="uip-button-default uip-border-rounder uip-icon uip-padding-xxs uip-link-muted">search</div>
           </template>
           
           <template v-slot:content>
           
-            <div class="uip-padding-xs uip-flex uip-flex-column uip-row-gap-xs">
+            <div class="uip-flex uip-flex-column uip-row-gap-s uip-padding-s uip-w-240">
             
-              <input type="text" class="uip-input uip-input-small" autofocus v-model="search" :placeholder="strings.searchClasses">
+              <div class="uip-flex uip-flex-between uip-flex-center">
+                <div class="uip-text-emphasis uip-text-bold uip-text-s">{{strings.searchClasses}}</div>
+                <div @click.prevent.stop="$refs.classDrop.close()"
+                class="uip-flex uip-flex-center uip-flex-middle uip-padding-xxs uip-link-muted hover:uip-background-muted uip-border-rounder">
+                  <span class="uip-icon">close</span>
+                </div>
+              </div>
               
-              <div class="uip-flex uip-flex-column uip-row-gap-xxxs uip-max-h-400 uip-overflow-auto uip-padding-xxs">
+              <div class="uip-flex uip-background-muted uip-border-rounder uip-padding-xxs uip-flex-center">
+               <span class="uip-icon uip-text-muted uip-margin-right-xs">search</span>
+               <input class="uip-blank-input uip-flex-grow uip-text-s" type="search"  
+               :placeholder="strings.search" v-model="search" autofocus>
+              </div>
+            
+              
+              <div class="uip-flex uip-flex-column uip-max-h-400" style="overflow:auto">
               
                 <template v-for="className in allClasses">
-                  <div  v-if="inSearch(className)" class="uip-link-muted uip-flex-between uip-flex uip-padding-xxxs uip-border-rounder hover:uip-background-muted uip-flex-center"
+                  <div  v-if="inSearch(className)" class="uip-link-muted uip-flex-between uip-flex uip-padding-xxs uip-border-rounder hover:uip-background-muted uip-flex-center"
                   @click="selected.push(className)">
                     <div class="">{{className}}</div>
                     <div class="uip-icon">add</div>
@@ -203,5 +269,4 @@ export function moduleData() {
         
       </div>
     `,
-  };
-}
+};
