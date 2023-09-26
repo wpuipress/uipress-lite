@@ -1,31 +1,36 @@
-export function moduleData() {
-  return {
-    props: {
-      closeRoute: String,
-      constrainHeight: Boolean,
-      id: String,
+export default {
+  props: {
+    closeRoute: String,
+    constrainHeight: Boolean,
+    id: String,
+  },
+  data() {
+    return {
+      loading: true,
+    };
+  },
+  computed: {
+    /**
+     * Returns max height if set
+     *
+     * @since 3.2.13
+     */
+    returnClass() {
+      if (this.constrainHeight) return 'uip-h-100p';
     },
-    data: function () {
-      return {
-        loading: true,
-      };
+  },
+  methods: {
+    /**
+     * Closes the floating panel
+     *
+     * @since 3.2.13
+     */
+    closeOffcanvas() {
+      this.$router.push(this.closeRoute);
     },
-    mounted: function () {},
-    computed: {
-      returnClass() {
-        if (this.constrainHeight) {
-          return 'uip-h-100p';
-        }
-      },
-    },
-    methods: {
-      closeOffcanvas() {
-        let self = this;
-        self.$router.push(self.closeRoute);
-      },
-    },
+  },
 
-    template: `
+  template: `
 	  
 	  
 	  
@@ -40,6 +45,7 @@ export function moduleData() {
 		<div class="uip-flex uip-w-100p uip-h-100p" :class="returnClass">
 		  
 		  <div class="uip-flex-grow" @click="closeOffcanvas()"></div>
+		  
 		  <div ref="offCanvasBody" class="uip-w-500 uip-border-box uip-offcanvas-panel uip-position-relative uip-padding-s uip-padding-right-remove uip-margin-right-s" style="max-height: 100%;min-height: 100%;height:100%">
 	  
 			<div :id="id" class="uip-flex uip-slide-in-right uip-background-default uip-overflow-hidden uip-border-rounder uip-position-relative uip-shadow uip-border uip-border-box uip-h-100p uip-position-relative" style="max-height: 100%;min-height: 100%;height:100%">
@@ -63,6 +69,4 @@ export function moduleData() {
 			  
 			  
 			  `,
-  };
-  return compData;
-}
+};

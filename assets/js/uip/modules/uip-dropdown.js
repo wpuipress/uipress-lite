@@ -19,6 +19,7 @@ export default {
       modelOpen: false,
       currentHeight: 0,
       hoverTimeout: false,
+      pressedKeys: null,
       position: {
         left: 'auto',
         right: 'auto',
@@ -36,6 +37,8 @@ export default {
    */
   beforeUnmount() {
     document.removeEventListener('scroll', this.handleScroll, true);
+    window.removeEventListener('keydown', this.handleKeyDown);
+    window.removeEventListener('keyup', this.handleKeyUp);
   },
 
   mounted() {
@@ -55,24 +58,46 @@ export default {
       // Return early if shortcut is not defined
       if (!this.shortCut) return;
 
-      // Create a clone of the shortcut to prevent accidental mutations
-      const shortcut = [...this.shortCut];
-      let pressedKeys = new Set(); // Use a Set for performance and uniqueness
+      // Initialize pressedKeys set
+      this.pressedKeys = new Set();
 
-      window.addEventListener('keydown', (event) => {
-        pressedKeys.add(event.key);
+      // Clone the shortcut for immutability
+      this.shortcut = [...this.shortCut];
 
-        // Check if all keys in the shortcut are pressed
-        const shortcutPressed = shortcut.every((key) => pressedKeys.has(key));
+      // Add event listeners
+      window.addEventListener('keydown', this.handleKeyDown);
+      window.addEventListener('keyup', this.handleKeyUp);
+    },
 
-        if (shortcutPressed) {
-          this.show();
-        }
-      });
+    /**
+     * Handles the 'keydown' event.
+     *
+     * Adds the pressed key to the `pressedKeys` set and checks if the
+     * shortcut keys are pressed to show the component.
+     *
+     * @param {KeyboardEvent} event - The 'keydown' event.
+     * @since 3.2.13
+     */
+    handleKeyDown(event) {
+      this.pressedKeys.add(event.key);
 
-      window.addEventListener('keyup', () => {
-        pressedKeys.clear();
-      });
+      // Check if all keys in the shortcut are pressed
+      const shortcutPressed = this.shortcut.every((key) => this.pressedKeys.has(key));
+
+      if (shortcutPressed) {
+        this.show();
+      }
+    },
+
+    /**
+     * Handles the 'keyup' event.
+     *
+     * Clears the `pressedKeys` set.
+     *
+     * @since 3.2.13
+     */
+    handleKeyUp() {
+      this.pressedKeys.clear();
     },
 
     /**

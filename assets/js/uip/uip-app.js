@@ -53,7 +53,6 @@ import * as uipAppSwitchToggle from './modules/uip-switch-toggle.min.js?ver=3.2.
 import * as uipAppTooltip from './modules/uip-tooltip.min.js?ver=3.2.12';
 import * as uipAppChartLoading from './modules/uip-loading-chart.min.js?ver=3.2.12';
 import * as uipAppOffcanvas from './modules/uip-offcanvas.min.js?ver=3.2.12';
-import * as uipAppBlockContainer from './modules/uip-prod-block-container.min.js?ver=3.2.12';
 import * as uipAppContentArea from './modules/uip-content-area.min.js?ver=3.2.12';
 import * as uipAppChart from './modules/uip-chart.min.js?ver=3.2.12';
 import * as uipAppModal from './modules/uip-modal.min.js?ver=3.2.12';
