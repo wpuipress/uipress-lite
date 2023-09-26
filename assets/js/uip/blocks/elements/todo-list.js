@@ -6,7 +6,7 @@ export function moduleData() {
       name: String,
       block: Object,
     },
-    data: function () {
+    data() {
       return {
         todoList: [],
         loading: false,
@@ -40,89 +40,128 @@ export function moduleData() {
       };
     },
     inject: ['uipress'],
-    mounted: function () {
+    mounted() {
       this.getToDoList();
     },
     watch: {
+      /**
+       * Watches changes to the todo list and saves. There is a large timeout as this fires on every change
+       *
+       * @since 3.2.13
+       */
       todoList: {
-        //This fires every time a list item changes so we only allow a save every 8 seconds maximum.
         handler(newValue, oldValue) {
           let self = this;
 
-          if (self.queued) {
+          if (this.queued) {
             return;
           }
 
-          self.queued = true;
+          this.queued = true;
           setTimeout(function () {
-            self.queued = false;
-            self.uipress.saveUserPreference('uip-todo-list', newValue, false);
+            this.queued = false;
+            this.uipress.saveUserPreference('uip-todo-list', newValue, false);
           }, 8000);
         },
         deep: true,
       },
     },
     computed: {
+      /**
+       * Returns the list of to dos based on the current tab
+       *
+       * @since 3.2.13
+       */
       returnToDos() {
-        if (this.activeTab == 'all') {
-          return this.todoList;
-        }
-        if (this.activeTab == 'todo') {
-          return this.todoList.filter(function (el) {
-            return el.done == false;
-          });
-        }
-        if (this.activeTab == 'completed') {
-          return this.todoList.filter(function (el) {
-            return el.done == true;
-          });
+        switch (this.activeTab) {
+          case 'all':
+            return this.todoList;
+
+          case 'todo':
+            return this.todoList.filter((el) => el.done === false);
+
+          case 'completed':
+            return this.todoList.filter((el) => el.done === true);
+
+          default:
+            return []; // This will return an empty array if none of the above conditions match
         }
       },
     },
     methods: {
+      /**
+       * Adds a new todo item to the list
+       *
+       * @since 3.2.13
+       */
       addNewToDo() {
         let newItem = Object.assign({}, this.newToDo);
         this.todoList.push(newItem);
 
-        this.newToDo = {
-          name: '',
-          description: '',
-          done: false,
-        };
+        // Reset new todo
+        this.newToDo = { name: '', description: '', done: false };
       },
-      getToDoList() {
-        let self = this;
-        self.loading = true;
-        this.uipress.getUserPreference('uip-todo-list').then((response) => {
-          self.loading = false;
-          if (response.error) {
-            self.uipress.notify(response.message, '', 'error', true);
-            return false;
-          } else {
-            //success
-            if (response != false && Array.isArray(response)) {
-              self.todoList = response;
-            }
-          }
-        });
+
+      /**
+       * Gets the todo list
+       *
+       * @since 3.2.13
+       */
+      async getToDoList() {
+        this.loading = true;
+
+        // Get users list
+        const response = await this.uipress.getUserPreference('uip-todo-list');
+
+        this.loading = false;
+
+        // Handle error
+        if (response.error) {
+          this.uipress.notify(response.message, '', 'error', true);
+          return;
+        }
+
+        // Handle success
+        if (response && Array.isArray(response)) {
+          this.todoList = response;
+        }
       },
+
+      /**
+       * Deletes a todo item
+       *
+       * @param {Number} index - The current index to delete
+       * @since 3.2.13
+       */
       deleteItem(index) {
         this.todoList.splice(index, 1);
       },
+
+      /**
+       * Duplicates a todo item
+       *
+       * @param {Object} item - the todo item to duplicate
+       * @since 3.2.13
+       */
       duplicateItem(item) {
         let newItem = Object.assign({}, item);
         this.todoList.push(newItem);
       },
+
+      /**
+       * Resizes the textarea automatically to stop scrolling
+       *
+       * @param {Object} event - the keyup event
+       * @since 3.2.13
+       */
       resizeTextarea(event) {
+        const newHeight = Math.min(event.target.scrollHeight, 500);
+
         event.target.style.height = '';
-        let newHeight = Math.min(event.target.scrollHeight, 500);
         event.target.style.height = newHeight + 'px';
 
-        if (newHeight == 500) {
-          event.target.style.overflow = 'auto';
-        } else {
-          event.target.style.overflow = 'hidden';
-        }
+        const overflow = newHeight == 500 ? 'auto' : 'hidden';
+        event.target.style.overflow = overflow;
       },
     },
     template: `

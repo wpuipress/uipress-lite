@@ -6,22 +6,25 @@ export function moduleData() {
       name: String,
       block: Object,
     },
-    data: function () {
+    data() {
       return {};
     },
     inject: ['uipress'],
-    watch: {},
-    mounted: function () {},
     computed: {
+      /**
+       * Returns text for button if exists
+       *
+       * @since 3.2.13
+       */
       returnText() {
-        let item = this.uipress.get_block_option(this.block, 'block', 'paragraph');
-        if (!item) {
-          return '';
-        }
-        return item;
+        const item = this.uipress.get_block_option(this.block, 'block', 'paragraph', true);
+        if (!item) return '';
+
+        if (!this.uipress.isObject(item)) return item;
+        if (item.string) return item.string;
+        return '';
       },
     },
-    methods: {},
     template: `
           <div class="uip-paragraph-block" v-html="returnText">
           </div>

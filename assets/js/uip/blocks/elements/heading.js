@@ -6,67 +6,76 @@ export function moduleData() {
       name: String,
       block: Object,
     },
-    data: function () {
+    data() {
       return {};
     },
-    inject: ['uipData', 'uipress', 'uiTemplate'],
+    inject: ['uipress'],
     watch: {},
     computed: {
+      /**
+       * Returns text for button if exists
+       *
+       * @since 3.2.13
+       */
       returnText() {
-        let item = this.uipress.get_block_option(this.block, 'block', 'headingText', true);
-        if (!item) {
-          return '';
-        }
-        if (this.uipress.isObject(item)) {
-          if ('string' in item) {
-            return item.string;
-          } else {
-            return '';
-          }
-        }
+        const item = this.uipress.get_block_option(this.block, 'block', 'headingText', true);
+        if (!item) return '';
 
-        return item;
+        if (!this.uipress.isObject(item)) return item;
+        if (item.string) return item.string;
+        return '';
       },
-    },
-    methods: {
+
+      /**
+       * Returns the reverse class if icon position is right
+       *
+       * @since 3.2.13
+       */
       returnClasses() {
-        let classes = '';
-
-        let posis = this.uipress.get_block_option(this.block, 'block', 'iconPosition');
-        if (posis) {
-          if (posis.value == 'right') {
-            classes += 'uip-flex-reverse';
-          }
-        }
-        return classes;
+        const position = this.uipress.get_block_option(this.block, 'block', 'iconPosition');
+        if (!position) return;
+        if (!this.uipress.isObject(position) && position == 'right') return 'uip-flex-reverse';
+        if (position.value && position.value == 'right') return 'uip-flex-reverse';
       },
+
+      /**
+       * Returns heading tag
+       *
+       * @since 3.2.13
+       */
       getHeadingType() {
-        let type = this.uipress.get_block_option(this.block, 'block', 'headingType');
-        if (!type) {
-          return 'h2';
-        }
+        const type = this.uipress.get_block_option(this.block, 'block', 'headingType');
+        if (!type) return 'h2';
         return type;
       },
-      getIcon() {
+
+      /**
+       * Returns icon for button
+       *
+       * @since 3.2.13
+       */
+      returnIcon() {
         let icon = this.uipress.get_block_option(this.block, 'block', 'iconSelect');
-        if (!icon) {
-          return '';
-        }
-        if ('value' in icon) {
-          return icon.value;
-        }
-        return icon;
+        if (!icon) return '';
+        if (!this.uipress.isObject(icon)) return icon;
+        if (icon.value) return icon.value;
+        return '';
       },
     },
     template: `
-          <component :is="getHeadingType()"  
+    
+          <component :is="getHeadingType"  
           class="uip-flex uip-gap-xxs uip-flex-center"
-          :class="returnClasses()" >
-            <span class="uip-icon" v-if="getIcon()">
-              {{getIcon()}}
+          :class="returnClasses" >
+          
+            <span class="uip-icon" v-if="returnIcon">
+              {{returnIcon}}
             </span>
+            
             <span v-if="returnText != ''">{{returnText}}</span>
+            
           </component>
+          
           `,
   };
 }

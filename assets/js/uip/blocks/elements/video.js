@@ -10,29 +10,32 @@ export function moduleData() {
       return {};
     },
     inject: ['uipress'],
-    watch: {},
     computed: {
+      /**
+       * Returns video URL
+       *
+       * @since 3.2.13
+       */
       returnVideo() {
-        let item = this.uipress.get_block_option(this.block, 'block', 'videoURL');
-        if (!item) {
-          return '';
-        } else {
-          return item;
-        }
+        const video = this.uipress.get_block_option(this.block, 'block', 'videoURL');
+        if (!video) return;
+        return video;
       },
+
+      /**
+       * Returns youtube video URL
+       *
+       * @since 3.2.13
+       */
       returnYoutube() {
-        let item = this.uipress.get_block_option(this.block, 'block', 'youtube');
-        if (!item) {
-          return false;
-        } else {
-          return item;
-        }
+        const video = this.uipress.get_block_option(this.block, 'block', 'youtube');
+        if (!video) return;
+        return video;
       },
     },
-    methods: {},
     template: `
-            <div class="uip-flex">\
-              <video v-if="returnVideo" :src="returnVideo" class="uip-video uip-w-100p" controls playsinline hidden></video>\
+            <div class="uip-flex">
+              <video v-if="returnVideo" :src="returnVideo" class="uip-video uip-w-100p" controls playsinline hidden></video>
               <div v-if="returnYoutube" v-html="returnYoutube" class="uip-video"></div>
             </div>
             `,

@@ -6,66 +6,40 @@ export function moduleData() {
       name: String,
       block: Object,
     },
-    data: function () {
+    data() {
       return {};
     },
-    inject: ['uipData', 'uipress', 'uiTemplate'],
-    watch: {},
+    inject: ['uipress'],
     computed: {
+      /**
+       * Returns text for button if exists
+       *
+       * @since 3.2.13
+       */
       returnText() {
         let item = this.uipress.get_block_option(this.block, 'block', 'headingText', true);
-        if (!item) {
-          return '';
-        }
-        if (this.uipress.isObject(item)) {
-          if ('string' in item) {
-            return item.string;
-          } else {
-            return '';
-          }
-        }
-        return item;
-      },
-      returnDropStyles() {
-        let options = this.uipress.checkNestedValue(this.block, ['settings', 'contentStyle', 'options']);
+        if (!item) return '';
 
-        if (!options) {
-          return;
-        }
-        let styles = this.uipress.explodeSpecificBlockSettings(options, 'style', this.uipData.templateDarkMode, null, 'flexLayout');
-
-        if (typeof styles == 'undefined') {
-          return '';
-        }
-        if (styles.includes('display:grid;')) {
-          this.forceFlex = true;
-        } else {
-          this.forceFlex = false;
-        }
-        return styles;
-      },
-    },
-    methods: {
-      returnIconPos() {
-        if (this.block.settings.block.options.iconPosition.value) {
-          if (this.block.settings.block.options.iconPosition.value.value == 'right') {
-            return 'uip-flex-reverse';
-          }
-        }
+        if (!this.uipress.isObject(item)) return item;
+        if (item.string) return item.string;
+        return '';
       },
     },
     template: `
           <accordion :openOnTick="false">
+          
             <template v-slot:title>
               <div class="uip-flex-grow uip-flex uip-gap-xxs uip-flex-center">
                 <div class="uip-icon" v-if="block.settings.block.options.iconSelect.value.value">{{block.settings.block.options.iconSelect.value.value}}</div>
                 <div class="uip-">{{returnText}}</div>
               </div>
             </template>
+            
             <template v-slot:content>
-              <uip-content-area :dropAreaStyle="returnDropStyles" class="uip-accordion-body"
-              :content="block.content" :returnData="function(data) {block.content = data} "></uip-content-area>
+              <uip-content-area class="uip-accordion-body"
+              :content="block.content" :returnData="(data)=>{block.content = data}"></uip-content-area>
             </template>
+            
           </accordion>
         `,
   };

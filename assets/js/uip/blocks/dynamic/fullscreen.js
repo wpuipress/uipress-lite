@@ -24,6 +24,7 @@ export function moduleData() {
         if (item.string) return item.string;
         return '';
       },
+
       /**
        * Returns icon for button
        *

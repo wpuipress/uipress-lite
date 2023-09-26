@@ -6,46 +6,45 @@ export function moduleData() {
       name: String,
       block: Object,
     },
-    data: function () {
+    data() {
       return {};
     },
-    inject: ['uipData', 'uipress', 'uiTemplate'],
-    watch: {},
+    inject: ['uipress'],
     computed: {
+      /**
+       * Returns quote if exists
+       *
+       * @since 3.2.13
+       */
       returnQuote() {
-        let item = this.uipress.get_block_option(this.block, 'block', 'quote', true);
-        if (!item) {
-          return '';
-        }
-        if (this.uipress.isObject(item)) {
-          if ('string' in item) {
-            return item.string;
-          } else {
-            return '';
-          }
-        }
-        return item;
+        const item = this.uipress.get_block_option(this.block, 'block', 'quote', true);
+        if (!item) return '';
+
+        if (!this.uipress.isObject(item)) return item;
+        if (item.string) return item.string;
+        return '';
       },
+
+      /**
+       * Returns quote author if exists
+       *
+       * @since 3.2.13
+       */
       returnAuthor() {
-        let item = this.uipress.get_block_option(this.block, 'block', 'quoteAuthor', true);
-        if (!item) {
-          return '';
-        }
-        if (this.uipress.isObject(item)) {
-          if ('string' in item) {
-            return item.string;
-          } else {
-            return '';
-          }
-        }
-        return item;
+        const item = this.uipress.get_block_option(this.block, 'block', 'quoteAuthor', true);
+        if (!item) return '';
+
+        if (!this.uipress.isObject(item)) return item;
+        if (item.string) return item.string;
+        return '';
       },
     },
-    methods: {},
     template: `
             <div >
+            
               <div class="uip-text-xxl uip-text-bold uip-block-quote uip-margin-bottom-m uip-text-italic uip-text-emphasis">{{returnQuote}}</div>
               <div class="uip-quote-meta uip-text-muted">— {{returnAuthor}}</div>
+              
             </div>
             `,
   };

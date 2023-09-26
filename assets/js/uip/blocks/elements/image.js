@@ -6,49 +6,68 @@ export function moduleData() {
       name: String,
       block: Object,
     },
-    data: function () {
+    data() {
       return {
         error: false,
-        currentImg: false,
+        currentImg: null,
       };
     },
     inject: ['uipress'],
     watch: {
+      /**
+       * Resets error state when image changes
+       *
+       * @since 3.2.13
+       */
       'block.settings.block.options.userImage.url': {
         handler(newValue, oldValue) {
           if (newValue != this.currentImg) {
             this.error = false;
+            this.setImage();
           }
         },
         deep: true,
       },
     },
-    mounted: function () {
-      this.currentImg = this.uipress.checkNestedValue(this.block, ['settings', 'block', 'options', 'userImage', 'url']);
+    created() {
+      this.setImage();
     },
     computed: {
+      /**
+       * Returns the block image. Sets error state to true if no image
+       *
+       * @since 3.2.13
+       */
       returnImg() {
-        if (this.error) {
-          return;
-        }
+        // If we are in an error state return
+        if (this.error) return;
+
         this.error = false;
         let item = this.uipress.get_block_option(this.block, 'block', 'userImage', true);
-        if (!item) {
-          this.error = true;
-          return '';
-        }
-        if (this.uipress.isObject(item)) {
-          if ('url' in item) {
-            return item.url;
-          } else {
-            this.error = true;
-            return '';
-          }
-        }
-        return item;
+
+        if (!this.uipress.isObject(item)) return (this.error = true);
+
+        // Image has url attribute so return it
+        if (item.url) return item.url;
+
+        // Nothing was found so set error state
+        this.error = true;
+        return;
       },
     },
     methods: {
+      /**
+       * Sets an image from the current settings
+       */
+      setImage() {
+        this.currentImg = this.returnImg;
+      },
+
+      /**
+       * Sets the main error state when image fails to load
+       *
+       * @since 3.2.13
+       */
       replaceWithDefault() {
         this.error = true;
       },

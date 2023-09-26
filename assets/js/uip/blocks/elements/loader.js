@@ -471,7 +471,7 @@ export function fetchBlocks() {
           icon: 'smart_button',
           styleType: 'style',
           class: '.uip-tab-content-area',
-          options: uipress.returnDefaultOptions(),
+          options: uipress.returnDefaultOptions(true),
         },
         //Advanced options group
         {

@@ -6,12 +6,12 @@ export function moduleData() {
       name: String,
       block: Object,
     },
-    data: function () {
+    data() {
       return {
-        darkToggle: this.returnSetting(),
+        darkToggle: this.returnSetting,
       };
     },
-    inject: ['uipData', 'uipress', 'uiTemplate'],
+    inject: ['uipData', 'uipress'],
     watch: {
       'block.settings.block.options.prefersColorScheme.value': {
         handler(newValue, oldValue) {
@@ -27,52 +27,82 @@ export function moduleData() {
         deep: true,
       },
     },
-    mounted: function () {
+    mounted() {
       this.checkAutoDark();
       this.setTheme();
     },
-    computed: {},
-    methods: {
+    computed: {
+      /**
+       * Returns whether the current pref is dark or light
+       *
+       * @since 3.2.13
+       */
       returnSetting() {
-        if (this.uipData.userPrefs.darkTheme) {
-          return true;
-        } else {
-          return false;
-        }
+        const userPref = this.uipData.userPrefs.darkTheme;
+        if (userPref) return true;
+        return false;
       },
+
+      /**
+       * Returns whether auto detect color mode is enabled
+       *
+       * @since 3.2.13
+       */
+      returnAutoDetect() {
+        const auto = this.uipress.get_block_option(this.block, 'block', 'prefersColorScheme', true);
+        if (!auto) return;
+
+        if (!this.uipress.isObject(auto)) return auto;
+        if (auto.value) return auto.value;
+      },
+    },
+    methods: {
+      /**
+       * Sets theme for iframes
+       *
+       * @since 3.2.13
+       */
       setTheme() {
-        let theme = 'light';
-        if (this.uipData.userPrefs.darkTheme) {
-          theme = 'dark';
-          this.uipData.userPrefs.darkTheme = true;
-        } else {
-          this.uipData.userPrefs.darkTheme = false;
-        }
+        const darkTheme = this.uipData.userPrefs.darkTheme;
+        const theme = darkTheme ? 'dark' : 'light';
+
         document.documentElement.setAttribute('data-theme', theme);
-        let frames = document.getElementsByClassName('uip-page-content-frame');
-        if (frames[0]) {
-          for (const iframe of frames) {
-            if (iframe.contentWindow.document.documentElement) {
-              iframe.contentWindow.document.documentElement.setAttribute('data-theme', theme);
-            }
-          }
+        const frames = document.querySelectorAll('iframe');
+
+        // No iframes to update so bail
+        if (!frames) return;
+
+        // Update all iframes with data theme tag
+        for (const iframe of frames) {
+          const head = iframe.contentWindow.document.documentElement;
+          if (!head) continue;
+          head.setAttribute('data-theme', theme);
         }
       },
+
+      /**
+       * Checks if auto detect 'prefers color scheme' is enabled and sets dark mode
+       *
+       * @since 3.2.13
+       */
       checkAutoDark() {
-        let userPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-        let blockSetting = this.block.settings.block.options.prefersColorScheme.value;
-        if (userPrefersDark && blockSetting) {
-          this.uipData.userPrefs.darkTheme = true;
-        } else if (blockSetting) {
-          this.uipData.userPrefs.darkTheme = false;
-        }
+        const userPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const autoEnabled = this.returnAutoDetect;
+
+        // Feature is disabled so exit
+        if (!autoEnabled) return;
+
+        const state = userPrefersDark ? true : false;
+        this.uipData.userPrefs.darkTheme = state;
       },
     },
     template: `
+    
           <label class="uip-dark-switch uip-overflow-hidden">
             <input type="checkbox" v-model='uipData.userPrefs.darkTheme' >
             <span class="uip-slider"></span>
           </label>
+          
           `,
   };
 }
