@@ -55,7 +55,7 @@ export function moduleData() {
         let update = this.uipress.get_block_option(this.block, 'block', 'dropdownPosition');
         if (this.uipress.isObject(update)) return update.value;
 
-        if (!update == '') return 'bottom left';
+        if (!update) return 'bottom left';
         return update;
       },
 
@@ -68,7 +68,7 @@ export function moduleData() {
         let update = this.uipress.get_block_option(this.block, 'block', 'subDropdownPosition');
         if (this.uipress.isObject(update)) return update.value;
 
-        if (!update == '') return 'right top';
+        if (!update) return 'right top';
         return update;
       },
     },

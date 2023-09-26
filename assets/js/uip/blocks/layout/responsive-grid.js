@@ -1,4 +1,10 @@
 const { __, _x, _n, _nx } = wp.i18n;
+/**
+ * THIS BLOCK IS NO LONGER IN USE.
+ *
+ * This block was redundant once we implemented better layout controls for all blocks.
+ * It is still loaded up to ensure peoples layouts don't break but it is not visible in the block selector anymore
+ */
 export function moduleData() {
   return {
     props: {
@@ -7,13 +13,16 @@ export function moduleData() {
       block: Object,
       contextualData: Object,
     },
-    data: function () {
+    data() {
       return {};
     },
-    inject: ['uipData', 'uipress', 'uiTemplate'],
-    watch: {},
-    computed: {},
+    inject: ['uipData', 'uipress'],
     methods: {
+      /**
+       * Returns styled grid for the content area
+       *
+       * @since 3.0.0
+       */
       returnContentAreaStyles() {
         let styles = this.uipress.explodeBlockSettings(this.block.settings.block.options, 'style', this.uipData.templateDarkMode);
 
