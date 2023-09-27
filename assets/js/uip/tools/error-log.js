@@ -103,16 +103,18 @@ export default {
     },
   },
   template: `
-      <div class="uip-body-font uip-h-100p uip-flex uip-max-h-100p uip-overflow-hidden" style="font-size:14px">
+  
+    <uip-floating-panel closeRoute="/" id="uip-global-settings">
+    
+      <div class="uip-body-font uip-h-100p uip-flex uip-max-h-100p uip-overflow-hidden uip-flex uip-flex-column uip-row-gap-s uip-padding-m" style="font-size:14px">
        
         
-        <div class="uip-flex uip-flex-column uip-h-100p uip-flex uip-flex-column uip-h-100p uip-max-h-100p uip-w-100p uip-overflow-hidden">
           
           
           <!-- Titles and search -->
-          <div class="uip-flex uip-cursor-pointer uip-margin-bottom-xs uip-background-muted uip-border-rounded uip-padding-xs uip-border-round uip-text-bold uip-text-emphasis">{{strings.errorLog}}</div>
+          <div class="uip-text-bold uip-text-emphasis">{{strings.errorLog}}</div>
         
-          <div class="uip-flex uip-gap-xxs uip-flex-center uip-padding-xs">
+          <div class="uip-flex uip-gap-xxs uip-flex-center">
             
             <dropdown pos="bottom left">
               <template v-slot:trigger>
@@ -154,7 +156,7 @@ export default {
           
           <!--End title and search -->
           
-          <div class="uip-flex uip-flex-column uip-gap-s uip-padding-xs uip-flex-grow uip-overflow-auto">
+          <div class="uip-flex uip-flex-column uip-gap-s uip-flex-grow uip-overflow-auto">
           
             
             
@@ -231,10 +233,10 @@ export default {
           
           
         
-        </div>
-        
         
         
       </div>
+      
+    </uip-floating-panel>  
     `,
 };
