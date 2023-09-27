@@ -1,6 +1,6 @@
 /*!
- * vue-router v4.1.6
- * (c) 2022 Eduardo San Martin Morote
+ * vue-router v4.2.5
+ * (c) 2023 Eduardo San Martin Morote
  * @license MIT
  */
 import {
@@ -19,10 +19,9 @@ import {
   ref,
   watch,
   shallowRef,
+  shallowReactive,
   nextTick,
-  createApp,
 } from './vue-esm-dev.js';
-//import { setupDevtoolsPlugin } from '@vue/devtools-api';
 const setupDevtoolsPlugin = false;
 
 const isBrowser = typeof window !== 'undefined';
@@ -122,6 +121,7 @@ function stripBase(pathname, base) {
  * pointing towards the same {@link RouteRecord} and that all `params`, `query`
  * parameters and `hash` are the same
  *
+ * @param stringifyQuery - A function that takes a query object of type LocationQueryRaw and returns a string representation of it.
  * @param a - first {@link RouteLocation}
  * @param b - second {@link RouteLocation}
  */
@@ -185,6 +185,12 @@ function resolveRelativePath(to, from) {
   if (!to) return from;
   const fromSegments = from.split('/');
   const toSegments = to.split('/');
+  const lastToSegment = toSegments[toSegments.length - 1];
+  // make . and ./ the same (../ === .., ../../ === ../..)
+  // this is the same behavior as new URL()
+  if (lastToSegment === '..' || lastToSegment === '.') {
+    toSegments.push('');
+  }
   let position = fromSegments.length - 1;
   let toPosition;
   let segment;
@@ -363,7 +369,8 @@ function getSavedScrollPosition(key) {
 let createBaseLocation = () => location.protocol + '//' + location.host;
 /**
  * Creates a normalized history location from a window.location object
- * @param location -
+ * @param base - The base path
+ * @param location - The window.location object
  */
 function createCurrentLocation(base, location) {
   const { pathname, search, hash } = location;
@@ -402,7 +409,6 @@ function useHistoryListeners(base, historyState, currentLocation, replace) {
     } else {
       replace(to);
     }
-    // console.log({ deltaFromCurrent })
     // Here we could also revert the navigation by calling history.go(-delta)
     // this listener will have to be adapted to not trigger again and to wait for the url
     // to be updated before triggering the listeners. Some kind of validation function would also
@@ -442,7 +448,11 @@ function useHistoryListeners(base, historyState, currentLocation, replace) {
   }
   // set up the listeners and prepare teardown callbacks
   window.addEventListener('popstate', popStateHandler);
-  window.addEventListener('beforeunload', beforeUnloadListener);
+  // TODO: could we use 'pagehide' or 'visibilitychange' instead?
+  // https://developer.chrome.com/blog/page-lifecycle-api/
+  window.addEventListener('beforeunload', beforeUnloadListener, {
+    passive: true,
+  });
   return {
     pauseListeners,
     listen,
@@ -612,14 +622,11 @@ function createMemoryHistory(base = '') {
   base = normalizeBase(base);
   function setLocation(location) {
     position++;
-    if (position === queue.length) {
-      // we are at the end, we can simply append a new entry
-      queue.push(location);
-    } else {
+    if (position !== queue.length) {
       // we are in the middle, we remove everything from here in the queue
       queue.splice(position);
-      queue.push(location);
     }
+    queue.push(location);
   }
   function triggerListeners(to, from, { direction, delta }) {
     const info = {
@@ -1373,7 +1380,7 @@ function createRouterMatcher(routes, globalOptions) {
       path = location.path;
       if (!path.startsWith('/')) {
         warn(
-          `The Matcher cannot resolve relative paths but received "${path}". Unless you directly called \`matcher.resolve("${path}")\`, this is probably a bug in vue-router. Please open an issue at https://new-issue.vuejs.org/?repo=vuejs/router.`
+          `The Matcher cannot resolve relative paths but received "${path}". Unless you directly called \`matcher.resolve("${path}")\`, this is probably a bug in vue-router. Please open an issue at https://github.com/vuejs/router/issues/new/choose.`
         );
       }
       matcher = matchers.find((m) => m.re.test(path));
@@ -1461,7 +1468,7 @@ function normalizeRecordProps(record) {
   } else {
     // NOTE: we could also allow a function to be applied to every component.
     // Would need user feedback for use cases
-    for (const name in record.components) propsObject[name] = typeof props === 'boolean' ? props : props[name];
+    for (const name in record.components) propsObject[name] = typeof props === 'object' ? props[name] : props;
   }
   return propsObject;
 }
@@ -1812,7 +1819,7 @@ function useCallbacks() {
   }
   return {
     add,
-    list: () => handlers,
+    list: () => handlers.slice(),
     reset,
   };
 }
@@ -2386,7 +2393,8 @@ const RouterView = RouterViewImpl;
 function warnDeprecatedUsage() {
   const instance = getCurrentInstance();
   const parentName = instance.parent && instance.parent.type.name;
-  if (parentName && (parentName === 'KeepAlive' || parentName.includes('Transition'))) {
+  const parentSubTreeType = instance.parent && instance.parent.subTree && instance.parent.subTree.type;
+  if (parentName && (parentName === 'KeepAlive' || parentName.includes('Transition')) && typeof parentSubTreeType === 'object' && parentSubTreeType.name === 'RouterView') {
     const comp = parentName === 'KeepAlive' ? 'keep-alive' : 'transition';
     warn(
       `<router-view> can no longer be used directly inside <transition> or <keep-alive>.\n` +
@@ -2432,7 +2440,6 @@ function formatDisplay(display) {
 // to support multiple router instances
 let routerId = 0;
 function addDevtools(app, router, matcher) {
-  return;
   // Take over router.beforeEach and afterEach
   // make sure we are not registering the devtool twice
   if (router.__hasDevtools) return;
@@ -2602,7 +2609,13 @@ function addDevtools(app, router, matcher) {
         if (!activeRoutesPayload) return;
         const payload = activeRoutesPayload;
         // children routes will appear as nested
-        let routes = matcher.getRoutes().filter((route) => !route.parent);
+        let routes = matcher.getRoutes().filter(
+          (route) =>
+            !route.parent ||
+            // these routes have a parent with no component which will not appear in the view
+            // therefore we still need to include them
+            !route.parent.record.components
+        );
         // reset match state to false
         routes.forEach(resetMatchStateOnRouteRecord);
         // apply a match state if there is a payload
@@ -2916,12 +2929,7 @@ function createRouter(options) {
         // @ts-expect-error: the type is never
         Object.keys(rawLocation.params).length
       ) {
-        warn(
-          `Path "${
-            // @ts-expect-error: the type is never
-            rawLocation.path
-          }" was passed with params but they will be ignored. Use a named route alongside params instead.`
-        );
+        warn(`Path "${rawLocation.path}" was passed with params but they will be ignored. Use a named route alongside params instead.`);
       }
       matcherLocation = assign({}, rawLocation, {
         path: parseURL(parseQuery$1, rawLocation.path, currentLocation.path).path,
@@ -2936,7 +2944,7 @@ function createRouter(options) {
       }
       // pass encoded values to the matcher, so it can produce encoded path and fullPath
       matcherLocation = assign({}, rawLocation, {
-        params: encodeParams(rawLocation.params),
+        params: encodeParams(targetParams),
       });
       // current location params are decoded, we need to encode them in case the
       // matcher merges the params
@@ -3091,10 +3099,10 @@ function createRouter(options) {
               (redirectedFrom._count = redirectedFrom._count
                 ? // @ts-expect-error
                   redirectedFrom._count + 1
-                : 1) > 10
+                : 1) > 30
             ) {
               warn(
-                `Detected an infinite redirection in a navigation guard when going from "${from.fullPath}" to "${toLocation.fullPath}". Aborting to avoid a Stack Overflow. This will break in production if not fixed.`
+                `Detected a possibly infinite redirection in a navigation guard when going from "${from.fullPath}" to "${toLocation.fullPath}". Aborting to avoid a Stack Overflow.\n Are you always returning a new location within a navigation guard? That would lead to this error. Only return when redirecting or aborting, that should fix this. This might break in production if not fixed.`
               );
               return Promise.reject(new Error('Infinite redirect in navigation guard'));
             }
@@ -3131,6 +3139,11 @@ function createRouter(options) {
   function checkCanceledNavigationAndReject(to, from) {
     const error = checkCanceledNavigation(to, from);
     return error ? Promise.reject(error) : Promise.resolve();
+  }
+  function runWithContext(fn) {
+    const app = installedApps.values().next().value;
+    // support Vue < 3.3
+    return app && typeof app.runWithContext === 'function' ? app.runWithContext(fn) : fn();
   }
   // TODO: refactor the whole before guards by internally using router.beforeEach
   function navigate(to, from) {
@@ -3173,9 +3186,9 @@ function createRouter(options) {
         .then(() => {
           // check the route beforeEnter
           guards = [];
-          for (const record of to.matched) {
+          for (const record of enteringRecords) {
             // do not trigger beforeEnter on reused views
-            if (record.beforeEnter && !from.matched.includes(record)) {
+            if (record.beforeEnter) {
               if (isArray(record.beforeEnter)) {
                 for (const beforeEnter of record.beforeEnter) guards.push(guardToPromiseFn(beforeEnter, to, from));
               } else {
@@ -3213,7 +3226,7 @@ function createRouter(options) {
   function triggerAfterEach(to, from, failure) {
     // navigation is confirmed, call afterGuards
     // TODO: wrap with error handlers
-    for (const guard of afterGuards.list()) guard(to, from, failure);
+    afterGuards.list().forEach((guard) => runWithContext(() => guard(to, from, failure)));
   }
   /**
    * - Cleans up any navigation guards
@@ -3337,15 +3350,16 @@ function createRouter(options) {
           }
           triggerAfterEach(toLocation, from, failure);
         })
+        // avoid warnings in the console about uncaught rejections, they are logged by triggerErrors
         .catch(noop);
     });
   }
   // Initialization and Errors
   let readyHandlers = useCallbacks();
-  let errorHandlers = useCallbacks();
+  let errorListeners = useCallbacks();
   let ready;
   /**
-   * Trigger errorHandlers added via onError and throws the error as well
+   * Trigger errorListeners added via onError and throws the error as well
    *
    * @param error - error to throw
    * @param to - location we were navigating to when the error happened
@@ -3354,7 +3368,7 @@ function createRouter(options) {
    */
   function triggerError(error, to, from) {
     markAsReady(error);
-    const list = errorHandlers.list();
+    const list = errorListeners.list();
     if (list.length) {
       list.forEach((handler) => handler(error, to, from));
     } else {
@@ -3363,6 +3377,7 @@ function createRouter(options) {
       }
       console.error(error);
     }
+    // reject the error no matter there were error listeners or not
     return Promise.reject(error);
   }
   function isReady() {
@@ -3411,7 +3426,7 @@ function createRouter(options) {
     beforeEach: beforeGuards.add,
     beforeResolve: beforeResolveGuards.add,
     afterEach: afterGuards.add,
-    onError: errorHandlers.add,
+    onError: errorListeners.add,
     isReady,
     install(app) {
       const router = this;
@@ -3440,11 +3455,13 @@ function createRouter(options) {
       }
       const reactiveRoute = {};
       for (const key in START_LOCATION_NORMALIZED) {
-        // @ts-expect-error: the key matches
-        reactiveRoute[key] = computed(() => currentRoute.value[key]);
+        Object.defineProperty(reactiveRoute, key, {
+          get: () => currentRoute.value[key],
+          enumerable: true,
+        });
       }
       app.provide(routerKey, router);
-      app.provide(routeLocationKey, reactive(reactiveRoute));
+      app.provide(routeLocationKey, shallowReactive(reactiveRoute));
       app.provide(routerViewLocationKey, currentRoute);
       const unmountApp = app.unmount;
       installedApps.add(app);
@@ -3464,14 +3481,15 @@ function createRouter(options) {
       };
       // TODO: this probably needs to be updated so it can be used by vue-termui
       if (isBrowser) {
-        addDevtools(app, router, matcher);
+        //addDevtools(app, router, matcher);
       }
     },
   };
+  // TODO: type this as NavigationGuardReturn or similar instead of any
+  function runGuardQueue(guards) {
+    return guards.reduce((promise, guard) => promise.then(() => runWithContext(guard)), Promise.resolve());
+  }
   return router;
-}
-function runGuardQueue(guards) {
-  return guards.reduce((promise, guard) => promise.then(() => guard()), Promise.resolve());
 }
 function extractChangingRecords(to, from) {
   const leavingRecords = [];
