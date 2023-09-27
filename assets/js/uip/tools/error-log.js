@@ -1,7 +1,7 @@
 const { __, _x, _n, _nx } = wp.i18n;
 export default {
   props: {},
-  data: function () {
+  data() {
     return {
       loading: false,
       search: '',
@@ -37,7 +37,7 @@ export default {
       },
     };
   },
-  inject: ['uipData', 'uipress'],
+  inject: ['uipress'],
   watch: {
     order: {
       handler(newVal, oldVal) {
@@ -52,49 +52,66 @@ export default {
       deep: true,
     },
   },
-  mounted: function () {
+  mounted() {
     this.fetchErrorLog();
   },
   methods: {
-    fetchErrorLog() {
-      let self = this;
-      if (self.loading) {
-        return;
-      }
-      self.loading = true;
-      self.error.state = false;
+    /**
+     * Fetches error log
+     *
+     * @returns {Promise}
+     * @since 3.2.13
+     */
+    async fetchErrorLog() {
+      if (this.loading) return;
+
+      this.loading = true;
+      this.error.state = false;
       //Build form data for fetch request
       let formData = new FormData();
       formData.append('action', 'uip_get_php_errors');
       formData.append('security', uip_ajax.security);
-      formData.append('perPage', self.perPage);
-      formData.append('search', self.search);
-      formData.append('order', self.order);
-      formData.append('page', self.page);
+      formData.append('perPage', this.perPage);
+      formData.append('search', this.search);
+      formData.append('order', this.order);
+      formData.append('page', this.page);
 
-      self.uipress.callServer(uip_ajax.ajax_url, formData).then((response) => {
-        self.loading = false;
-        if (response.error) {
-          //self.uipress.notify(response.message, '', 'error', true, false);
+      const response = await this.uipress.callServer(uip_ajax.ajax_url, formData);
+      this.loading = false;
 
-          self.error.state = true;
-          self.error.message = response.message;
-          self.error.description = response.description;
-          self.loading = false;
-        }
-        if (response.success) {
-          self.allErrrors = response.errors;
-          self.totalFound = response.totalFound;
-          self.totalPages = response.totalPages;
-        }
-      });
+      // Handle error
+      if (response.error) {
+        this.error.state = true;
+        this.error.message = response.message;
+        this.error.description = response.description;
+        this.loading = false;
+      }
+
+      // Handle success
+      if (response.success) {
+        this.allErrrors = response.errors;
+        this.totalFound = response.totalFound;
+        this.totalPages = response.totalPages;
+      }
     },
+
+    /**
+     * Navigated back a page
+     *
+     * @since 3.2.13
+     */
     goBack() {
       if (this.page > 0) {
         this.page = this.page - 1;
         this.fetchErrorLog();
       }
     },
+
+    /**
+     * Navigates forward a page
+     *
+     * @since 3.2.13
+     */
     goForward() {
       if (this.page < this.totalPages) {
         this.page = this.page + 1;
