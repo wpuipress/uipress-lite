@@ -111,8 +111,6 @@ const uipAppArgs = {
 const uipApp = createApp(uipAppArgs);
 //Allow reactive data from inject
 uipApp.config.unwrapInjectedRef = true;
-//Import router
-uipApp.provide('router', []);
 
 /**
  * Handles app errors
