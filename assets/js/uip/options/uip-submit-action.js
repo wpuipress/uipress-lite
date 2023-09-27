@@ -1,71 +1,92 @@
 const { __, _x, _n, _nx } = wp.i18n;
-export function moduleData() {
-  return {
-    props: {
-      returnData: Function,
-      value: Object,
-    },
-    data: function () {
-      return {
-        option: this.value,
-        submitOptions: [
-          {
-            label: __('Email', 'uipress-lite'),
-            name: 'email',
-          },
-          {
-            label: __('Save as site option', 'uipress-lite'),
-            name: 'siteOption',
-          },
-          {
-            label: __('Save as user meta', 'uipress-lite'),
-            name: 'userMeta',
-          },
-          {
-            label: __('Send to PHP function', 'uipress-lite'),
-            name: 'phpFunction',
-          },
-        ],
-        userMetaOptions: [
-          {
-            label: __('Individual keys', 'uipress-lite'),
-            name: 'single',
-          },
-          {
-            label: __('Group object', 'uipress-lite'),
-            name: 'object',
-          },
-        ],
-        strings: {
-          pixels: __('Pixels', 'uipress-lite'),
-          submitType: __('Submit type', 'uipress-lite'),
-          functionName: __('PHP function', 'uipress-lite'),
-          siteOptionName: __('Option name', 'uipress-lite'),
-          recipientEmail: __('Recipient email', 'uipress-lite'),
-          emailSubject: __('Email subject', 'uipress-lite'),
-          emailTemplate: __('Email template', 'uipress-lite'),
-          templateDescription: __('Use form values in the email template by using {{meta_keys}} set inside from input blocks', 'uipress-lite'),
-          siteOptionDescription: __(
-            "The form data will be saved as an object to your database using the function update_site_option(). You will then be able to access your data using the function get_site_option('your_option_key')",
-            'uipress-lite'
-          ),
-          saveAs: __('Save as', 'uipress-lite'),
-          metaKey: __('Meta key', 'uipress-lite'),
-          redirectAfterSubmission: __('Submission redirect', 'uipress-lite'),
-          action: __('Action', 'uipress-lite'),
+export default {
+  props: {
+    returnData: Function,
+    value: Object,
+  },
+  data() {
+    return {
+      option: null,
+      submitOptions: [
+        {
+          label: __('Email', 'uipress-lite'),
+          name: 'email',
         },
-      };
-    },
-    watch: {
-      option: {
-        handler(newValue, oldValue) {
-          this.returnData(this.option);
+        {
+          label: __('Save as site option', 'uipress-lite'),
+          name: 'siteOption',
         },
-        deep: true,
+        {
+          label: __('Save as user meta', 'uipress-lite'),
+          name: 'userMeta',
+        },
+        {
+          label: __('Send to PHP function', 'uipress-lite'),
+          name: 'phpFunction',
+        },
+      ],
+      userMetaOptions: [
+        {
+          label: __('Individual keys', 'uipress-lite'),
+          name: 'single',
+        },
+        {
+          label: __('Group object', 'uipress-lite'),
+          name: 'object',
+        },
+      ],
+      strings: {
+        pixels: __('Pixels', 'uipress-lite'),
+        submitType: __('Submit type', 'uipress-lite'),
+        functionName: __('PHP function', 'uipress-lite'),
+        siteOptionName: __('Option name', 'uipress-lite'),
+        recipientEmail: __('Recipient email', 'uipress-lite'),
+        emailSubject: __('Email subject', 'uipress-lite'),
+        emailTemplate: __('Email template', 'uipress-lite'),
+        templateDescription: __('Use form values in the email template by using {{meta_keys}} set inside from input blocks', 'uipress-lite'),
+        siteOptionDescription: __(
+          "The form data will be saved as an object to your database using the function update_site_option(). You will then be able to access your data using the function get_site_option('your_option_key')",
+          'uipress-lite'
+        ),
+        saveAs: __('Save as', 'uipress-lite'),
+        metaKey: __('Meta key', 'uipress-lite'),
+        redirectAfterSubmission: __('Submission redirect', 'uipress-lite'),
+        action: __('Action', 'uipress-lite'),
       },
+    };
+  },
+  watch: {
+    /**
+     * Watches changes to options and returns value to caller
+     *
+     * @since 3.2.13
+     */
+    option: {
+      handler(newValue, oldValue) {
+        this.returnData(this.option);
+      },
+      deep: true,
     },
-    methods: {},
-    template: `
+  },
+  mounted() {
+    this.parseInput();
+  },
+  methods: {
+    /**
+     * Parses prop input value
+     *
+     * @since 3.2.13
+     */
+    parseInput() {
+      // No value so exit
+      if (!this.value) return;
+
+      this.option = this.value;
+    },
+  },
+  template: `
+  
+  
       <div class="uip-flex uip-flex-column uip-row-gap-xs uip-w-100p">
         <!--Submit type -->
         
@@ -164,5 +185,4 @@ export function moduleData() {
           </div>
         </div>
       </div>`,
-  };
-}
+};

@@ -8,7 +8,7 @@ export default {
     returnData: Function,
     value: Object,
   },
-  data: function () {
+  data() {
     return {
       outlineOptions: {
         width: {
@@ -72,14 +72,13 @@ export default {
   watch: {
     outlineOptions: {
       handler(newValue, oldValue) {
-        let self = this;
-        self.returnData(newValue);
+        this.returnData(newValue);
       },
       deep: true,
     },
   },
-  mounted: function () {
-    this.formatValue(this.value);
+  mounted() {
+    this.formatValue();
   },
   computed: {
     /**
@@ -94,6 +93,7 @@ export default {
       }
       return `background-color:${this.outlineOptions.color.value}`;
     },
+
     /**
      * Returns a new fill screen for border colour
      *
@@ -116,14 +116,14 @@ export default {
     },
   },
   methods: {
-    formatValue(value) {
-      if (typeof value === 'undefined') {
-        return;
-      }
-      if (this.uipress.isObject(value)) {
-        this.outlineOptions = { ...this.outlineOptions, ...value };
-        return;
-      }
+    /**
+     * Injects value to component
+     *
+     * @since 3.2.13
+     */
+    formatValue() {
+      if (!this.uipress.isObject(this.value)) return;
+      this.outlineOptions = { ...this.outlineOptions, ...this.value };
     },
   },
   template: `

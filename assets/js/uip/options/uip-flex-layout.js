@@ -1,227 +1,144 @@
 const { __, _x, _n, _nx } = wp.i18n;
-export function moduleData() {
-  return {
-    props: {
-      returnData: Function,
-      value: Object,
-      blockSettings: Object,
-    },
-    data: function () {
-      return {
-        open: false,
-        options: {
-          direction: 'row',
-          distribute: 'start',
-          align: 'flex-start',
-          wrap: 'wrap',
-          type: 'stack',
-          placeContent: 'normal',
-          gap: {
-            value: 0,
-            units: 'px',
-          },
-          columns: 2,
-          rows: 2,
-          columnWidth: {
-            value: 200,
-            units: 'px',
-          },
-          minColumnWidth: {
-            value: 200,
-            units: 'px',
-          },
-          responsive: false,
-        },
-        strings: {
-          direction: __('Direction', 'uipress-lite'),
-          distribute: __('Distribute', 'uipress-lite'),
-          align: __('Align', 'uipress-lite'),
-          wrap: __('Wrap', 'uipress-lite'),
-          gap: __('Gap', 'uipress-lite'),
-          type: __('Type', 'uipress-lite'),
-          columns: __('Columns', 'uipress-lite'),
-          rows: __('Rows', 'uipress-lite'),
-          columnWidth: __('Column width', 'uipress-lite'),
-          place: __('Place', 'uipress-lite'),
-          minimumColumnWidth: __('Min col width', 'uipress-lite'),
-          responsive: __('Responsive', 'uipress-lite'),
-        },
-        layoutType: {
-          stack: {
-            value: 'stack',
-            label: __('Stack', 'uipress-lite'),
-          },
-          grid: {
-            value: 'grid',
-            label: __('Grid', 'uipress-lite'),
-          },
-        },
-        directions: {
-          row: {
-            value: 'row',
-            icon: 'arrow_right_alt',
-            tip: __('Horizontal', 'uipress-lite'),
-          },
-          column: {
-            value: 'column',
-            icon: 'height',
-            tip: __('Vertical', 'uipress-lite'),
-          },
-        },
-        distribution: [
-          {
-            value: 'start',
-            label: __('Start', 'uipress-lite'),
-          },
-          {
-            value: 'center',
-            label: __('Center', 'uipress-lite'),
-          },
-          {
-            value: 'end',
-            label: __('End', 'uipress-lite'),
-          },
-          {
-            value: 'space-around',
-            label: __('Space around', 'uipress-lite'),
-          },
-          {
-            value: 'space-between',
-            label: __('Space between', 'uipress-lite'),
-          },
-          {
-            value: 'space-evenly',
-            label: __('Space evenly', 'uipress-lite'),
-          },
-        ],
-        alignments: {
-          'flex-start': {
-            value: 'flex-start',
-            tip: __('Start', 'uipress-lite'),
-            icon: 'align_vertical_top',
-          },
-          center: {
-            value: 'center',
-            tip: __('Center', 'uipress-lite'),
-            icon: 'align_vertical_center',
-          },
-          end: {
-            value: 'end',
-            tip: __('End', 'uipress-lite'),
-            icon: 'align_vertical_bottom',
-          },
-          stretch: {
-            value: 'stretch',
-            tip: __('Stretch', 'uipress-lite'),
-            icon: 'expand',
-          },
-        },
-        verticalAlignments: {
-          'flex-start': {
-            value: 'flex-start',
-            tip: __('Start', 'uipress-lite'),
-            icon: 'align_horizontal_left',
-          },
-          center: {
-            value: 'center',
-            tip: __('Center', 'uipress-lite'),
-            icon: 'align_horizontal_center',
-          },
-          end: {
-            value: 'end',
-            tip: __('End', 'uipress-lite'),
-            icon: 'align_horizontal_right',
-          },
-          stretch: {
-            value: 'stretch',
-            tip: __('Stretch', 'uipress-lite'),
-            icon: 'expand',
-          },
-        },
-        flexWrap: {
-          wrap: {
-            value: 'wrap',
-            label: __('Yes', 'uipress-lite'),
-          },
-          nowrap: {
-            value: 'nowrap',
-            label: __('No', 'uipress-lite'),
-          },
-        },
-        alignContent: {
-          normal: {
-            value: 'normal',
-            label: __('Normal', 'uipress-lite'),
-          },
-          baseline: {
-            value: 'baseline',
-            label: __('Baseline', 'uipress-lite'),
-          },
-          center: {
-            value: 'center',
-            label: __('Center', 'uipress-lite'),
-          },
-          end: {
-            value: 'end',
-            label: __('End', 'uipress-lite'),
-          },
-          'space-around': {
-            value: 'space-around',
-            label: __('Space around', 'uipress-lite'),
-          },
-          'space-between': {
-            value: 'space-between',
-            label: __('Space between', 'uipress-lite'),
-          },
-          'space-evenly': {
-            value: 'space-evenly',
-            label: __('Space evenly', 'uipress-lite'),
-          },
-        },
-        responsiveOptions: {
-          false: {
-            value: false,
-            label: __('No', 'uipress-lite'),
-          },
-          true: {
-            value: true,
-            label: __('Yes', 'uipress-lite'),
-          },
-        },
-      };
-    },
-    inject: ['uipress'],
-    watch: {
+import FlexDistribution from '../v3.5/lists/flex_distribution.min.js';
+import FlexAlignContent from '../v3.5/lists/flex_align_content.min.js';
+import FlexVerticalAlign from '../v3.5/lists/flex_vertical_align.min.js';
+import FlexAlign from '../v3.5/lists/flex_align.min.js';
+export default {
+  props: {
+    returnData: Function,
+    value: Object,
+    blockSettings: Object,
+  },
+  data() {
+    return {
+      open: false,
       options: {
-        handler(newValue, oldValue) {
-          this.returnData(newValue);
+        direction: 'row',
+        distribute: 'start',
+        align: 'flex-start',
+        wrap: 'wrap',
+        type: 'stack',
+        placeContent: 'normal',
+        gap: {
+          value: 0,
+          units: 'px',
         },
-        deep: true,
+        columns: 2,
+        rows: 2,
+        columnWidth: {
+          value: 200,
+          units: 'px',
+        },
+        minColumnWidth: {
+          value: 200,
+          units: 'px',
+        },
+        responsive: false,
       },
-    },
-    mounted: function () {
-      this.formatValue(this.value);
-    },
-    computed: {
-      returnAlignOptions() {
-        if (this.options.direction == 'row') {
-          return this.alignments;
-        }
-        return this.verticalAlignments;
+      strings: {
+        direction: __('Direction', 'uipress-lite'),
+        distribute: __('Distribute', 'uipress-lite'),
+        align: __('Align', 'uipress-lite'),
+        wrap: __('Wrap', 'uipress-lite'),
+        gap: __('Gap', 'uipress-lite'),
+        type: __('Type', 'uipress-lite'),
+        columns: __('Columns', 'uipress-lite'),
+        rows: __('Rows', 'uipress-lite'),
+        columnWidth: __('Column width', 'uipress-lite'),
+        place: __('Place', 'uipress-lite'),
+        minimumColumnWidth: __('Min col width', 'uipress-lite'),
+        responsive: __('Responsive', 'uipress-lite'),
       },
-    },
-    methods: {
-      formatValue(value) {
-        if (typeof value === 'undefined') {
-          return;
-        }
-        if (this.uipress.isObject(value)) {
-          this.options = { ...this.options, ...value };
-          return;
-        }
+      layoutType: {
+        stack: {
+          value: 'stack',
+          label: __('Stack', 'uipress-lite'),
+        },
+        grid: {
+          value: 'grid',
+          label: __('Grid', 'uipress-lite'),
+        },
       },
+      directions: {
+        row: {
+          value: 'row',
+          icon: 'arrow_right_alt',
+          tip: __('Horizontal', 'uipress-lite'),
+        },
+        column: {
+          value: 'column',
+          icon: 'height',
+          tip: __('Vertical', 'uipress-lite'),
+        },
+      },
+      distribution: FlexDistribution,
+      alignments: FlexAlign,
+      verticalAlignments: FlexVerticalAlign,
+      flexWrap: {
+        wrap: {
+          value: 'wrap',
+          label: __('Yes', 'uipress-lite'),
+        },
+        nowrap: {
+          value: 'nowrap',
+          label: __('No', 'uipress-lite'),
+        },
+      },
+      alignContent: FlexAlignContent,
+      responsiveOptions: {
+        false: {
+          value: false,
+          label: __('No', 'uipress-lite'),
+        },
+        true: {
+          value: true,
+          label: __('Yes', 'uipress-lite'),
+        },
+      },
+    };
+  },
+  inject: ['uipress'],
+  watch: {
+    /**
+     * Watches changes to options and returns data back to caller
+     *
+     * @since 3.2.13
+     */
+    options: {
+      handler(newValue, oldValue) {
+        this.returnData(newValue);
+      },
+      deep: true,
     },
-    template: `
+  },
+  mounted() {
+    this.formatValue(this.value);
+  },
+  computed: {
+    /**
+     * Returns align options based on flex direction
+     *
+     * @since 3.2.13
+     */
+    returnAlignOptions() {
+      if (this.options.direction == 'row') {
+        return this.alignments;
+      }
+      return this.verticalAlignments;
+    },
+  },
+  methods: {
+    /**
+     * Injects value into component
+     *
+     * @since 3.2.13
+     */
+    formatValue() {
+      if (!this.uipress.isObject(this.value)) return;
+      this.options = { ...this.options, ...this.value };
+    },
+  },
+  template: `
       <div class="uip-flex uip-flex-column uip-row-gap-xs">
         
         
@@ -408,5 +325,4 @@ export function moduleData() {
         
         
       </div>`,
-  };
-}
+};

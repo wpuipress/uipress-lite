@@ -1,67 +1,72 @@
 const { __, _x, _n, _nx } = wp.i18n;
-export function moduleData() {
-  return {
-    inject: ['uipress'],
-    props: {
-      returnData: Function,
-      value: Object,
-    },
-    data: function () {
-      return {
-        option: {
-          mobile: false,
-          tablet: false,
-          desktop: false,
-        },
-        strings: {
-          mobile: __('Mobile', 'uipress-lite'),
-          tablet: __('Tablet', 'uipress-lite'),
-          desktop: __('Desktop', 'uipress-lite'),
-        },
-        options: {
-          false: {
-            value: false,
-            label: __('Show', 'uipress-lite'),
-          },
-          true: {
-            value: true,
-            label: __('Hide', 'uipress-lite'),
-          },
-        },
-      };
-    },
-    watch: {
+export default {
+  inject: ['uipress'],
+  props: {
+    returnData: Function,
+    value: Object,
+  },
+  data() {
+    return {
       option: {
-        handler(newValue, oldValue) {
-          let responsiveSet = {};
-          if (newValue.mobile) {
-            responsiveSet.mobile = true;
-          }
-          if (newValue.tablet) {
-            responsiveSet.tablet = true;
-          }
-          if (newValue.desktop) {
-            responsiveSet.desktop = true;
-          }
-          this.returnData(responsiveSet);
+        mobile: false,
+        tablet: false,
+        desktop: false,
+      },
+      strings: {
+        mobile: __('Mobile', 'uipress-lite'),
+        tablet: __('Tablet', 'uipress-lite'),
+        desktop: __('Desktop', 'uipress-lite'),
+      },
+      options: {
+        false: {
+          value: false,
+          label: __('Show', 'uipress-lite'),
         },
-        deep: true,
+        true: {
+          value: true,
+          label: __('Hide', 'uipress-lite'),
+        },
       },
-    },
-    created: function () {
-      this.formatValue(this.value);
-    },
-    methods: {
-      formatValue(value) {
-        if (typeof value === 'undefined') {
-          return;
-        }
-        if (this.uipress.isObject(value)) {
-          this.option = { ...this.option, ...value };
-        }
+    };
+  },
+  watch: {
+    /**
+     * Watches changes to the responsive object and returns
+     *
+     * @since 3.2.13
+     */
+    option: {
+      handler(newValue, oldValue) {
+        this.updateOptions();
       },
+      deep: true,
     },
-    template: `
+  },
+  created() {
+    this.formatValue();
+  },
+  methods: {
+    /**
+     * Injects prop value if valid
+     *
+     * @since 3.2.13
+     */
+    formatValue() {
+      if (!this.uipress.isObject(this.value)) return;
+      this.option = { ...this.option, ...this.value };
+    },
+
+    /**
+     * Returns data to caller
+     *
+     * @since 3.2.13
+     */
+    updateOptions() {
+      let responsiveSet = { ...this.option };
+      this.returnData(responsiveSet);
+    },
+  },
+  template: `
       <div class="uip-flex uip-flex-column uip-row-gap-xs">
       
         <!--Mobile-->
@@ -115,5 +120,4 @@ export function moduleData() {
         </div>
         
     </div>`,
-  };
-}
+};

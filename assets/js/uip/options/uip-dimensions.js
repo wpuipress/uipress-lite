@@ -1,108 +1,117 @@
 const { __, _x, _n, _nx } = wp.i18n;
-export function moduleData() {
-  return {
-    props: {
-      returnData: Function,
-      value: Object,
-    },
-    inject: ['uipress'],
-    data: function () {
-      return {
-        option: {
-          grow: 'none',
-          flexShrink: 'none',
-          enabled: {
-            maxHeight: false,
-            minHeight: false,
-            maxWidth: false,
-            minWidth: false,
-            flexShrink: false,
-          },
-          width: {
-            value: '',
-            units: '%',
-          },
-          height: {
-            value: '',
-            units: '%',
-          },
-          maxWidth: {
-            value: '',
-            units: '%',
-          },
-          maxHeight: {
-            value: '',
-            units: '%',
-          },
-          minWidth: {
-            value: '',
-            units: '%',
-          },
-          minHeight: {
-            value: '',
-            units: '%',
-          },
-        },
-        growOptions: {
-          grow: {
-            value: 'grow',
-            label: __('Yes', 'uipress-lite'),
-          },
-          none: {
-            value: 'none',
-            label: __('No', 'uipress-lite'),
-          },
-        },
-        shrinkOptions: {
-          none: {
-            value: 'none',
-            label: __('No', 'uipress-lite'),
-          },
-          shrink: {
-            value: 'shrink',
-            label: __('Yes', 'uipress-lite'),
-          },
-        },
-        strings: {
-          height: __('Height', 'uipress-light'),
-          width: __('Width', 'uipress-light'),
-          maxHeight: __('Max height', 'uipress-light'),
-          maxWidth: __('Max width', 'uipress-light'),
-          minHeight: __('Min height', 'uipress-light'),
-          minWidth: __('Min width', 'uipress-light'),
-          grow: __('Grow', 'uipress-lite'),
-          flexShrink: __('Shrink', 'uipress-lite'),
-        },
-      };
-    },
-    watch: {
+export default {
+  props: {
+    returnData: Function,
+    value: Object,
+  },
+  inject: ['uipress'],
+  data() {
+    return {
       option: {
-        handler(newValue, oldValue) {
-          this.returnData(this.option);
+        grow: 'none',
+        flexShrink: 'none',
+        enabled: {
+          maxHeight: false,
+          minHeight: false,
+          maxWidth: false,
+          minWidth: false,
+          flexShrink: false,
         },
-        deep: true,
+        width: {
+          value: '',
+          units: '%',
+        },
+        height: {
+          value: '',
+          units: '%',
+        },
+        maxWidth: {
+          value: '',
+          units: '%',
+        },
+        maxHeight: {
+          value: '',
+          units: '%',
+        },
+        minWidth: {
+          value: '',
+          units: '%',
+        },
+        minHeight: {
+          value: '',
+          units: '%',
+        },
       },
-    },
-    mounted: function () {
-      this.formatInput(this.value);
-    },
-    computed: {
-      returnOption() {
-        return this.option;
+      growOptions: {
+        grow: {
+          value: 'grow',
+          label: __('Yes', 'uipress-lite'),
+        },
+        none: {
+          value: 'none',
+          label: __('No', 'uipress-lite'),
+        },
       },
-    },
-    methods: {
-      formatInput(value) {
-        if (typeof value === 'undefined') {
-          return;
-        }
-        if (this.uipress.isObject(value)) {
-          this.option = { ...this.option, ...value };
-          return;
-        }
+      shrinkOptions: {
+        none: {
+          value: 'none',
+          label: __('No', 'uipress-lite'),
+        },
+        shrink: {
+          value: 'shrink',
+          label: __('Yes', 'uipress-lite'),
+        },
       },
+      strings: {
+        height: __('Height', 'uipress-light'),
+        width: __('Width', 'uipress-light'),
+        maxHeight: __('Max height', 'uipress-light'),
+        maxWidth: __('Max width', 'uipress-light'),
+        minHeight: __('Min height', 'uipress-light'),
+        minWidth: __('Min width', 'uipress-light'),
+        grow: __('Grow', 'uipress-lite'),
+        flexShrink: __('Shrink', 'uipress-lite'),
+      },
+    };
+  },
+  watch: {
+    /**
+     * Returns data back to caller on option change
+     *
+     * @since 3.2.13
+     */
+    option: {
+      handler(newValue, oldValue) {
+        this.returnData(this.option);
+      },
+      deep: true,
     },
-    template: `
+  },
+  mounted() {
+    this.formatInput();
+  },
+  computed: {
+    /**
+     * Returns option object
+     *
+     * @since 3.2.13
+     */
+    returnOption() {
+      return this.option;
+    },
+  },
+  methods: {
+    /**
+     * Injects input object
+     *
+     * @since 3.2.13
+     */
+    formatInput() {
+      if (!this.uipress.isObject(this.value)) return;
+      this.option = { ...this.option, ...this.value };
+    },
+  },
+  template: `
     
     <div class="uip-flex uip-flex-column uip-row-gap-xs">
         
@@ -230,5 +239,4 @@ export function moduleData() {
         </div>
         
       </div>`,
-  };
-}
+};

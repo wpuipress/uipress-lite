@@ -7,43 +7,69 @@ import '../../libs/ace-editor-html.min.js';
 import '../../libs/ace-theme-dracular.min.js';
 import '../../libs/ace-editor-beautify.min.js';
 
-export function moduleData() {
-  return {
-    props: {
-      returnData: Function,
-      value: String,
-      args: Object,
+export default {
+  props: {
+    returnData: Function,
+    value: String,
+    args: Object,
+  },
+  data() {
+    return {
+      option: '',
+      editor: Object,
+      language: this.args.language,
+      fullScreen: false,
+      finalVal: '',
+      modalOpen: false,
+      strings: {
+        openFullscreen: __('Fullscreen', 'uipress-lite'),
+        closeFullscreen: __('Exit fullscreen', 'uipress-lite'),
+        codeEditor: __('Code editor', 'uipress-lite'),
+        editCode: __('Edit code', 'uipress-lite'),
+        add: __('Add', 'uipress-lite'),
+      },
+    };
+  },
+  inject: ['uipress'],
+  mounted() {
+    this.option = this.value;
+    this.initiateEditor();
+  },
+  watch: {
+    option: {
+      handler(newValue, oldValue) {
+        this.returnData(this.option);
+      },
+      deep: true,
     },
-    data: function () {
-      return {
-        option: this.value,
-        editor: Object,
-        language: this.args.language,
-        fullScreen: false,
-        finalVal: '',
-        modalOpen: false,
-        strings: {
-          openFullscreen: __('Fullscreen', 'uipress-lite'),
-          closeFullscreen: __('Exit fullscreen', 'uipress-lite'),
-          codeEditor: __('Code editor', 'uipress-lite'),
-          editCode: __('Edit code', 'uipress-lite'),
-        },
-      };
+  },
+  computed: {
+    /**
+     * Returns the current code value
+     */
+    returnCode() {
+      return this.option;
     },
-    inject: ['uipress'],
-    mounted: function () {
-      let self = this;
-      self.beautify = ace.require('ace/ext/beautify');
-      self.editor = ace.edit(this.$refs.codeeditor);
-      self.editor.setTheme('ace/theme/dracula');
-      self.editor.setOptions({ useWorker: false, fontSize: '12px' });
-      self.editor.session.setUseWrapMode(true);
-      self.editor.setShowPrintMargin(false);
-      self.editor.renderer.setScrollMargin(14, 14);
-      self.editor.container.style.lineHeight = 1.6;
-      self.editor.renderer.updateFontSize();
+  },
+  methods: {
+    /**
+     * Builds editor and sets code editor options
+     *
+     * @since 3.2.13
+     */
+    initiateEditor() {
+      this.beautify = ace.require('ace/ext/beautify');
+      this.editor = ace.edit(this.$refs.codeeditor);
+      this.editor.setTheme('ace/theme/dracula');
+      this.editor.session.setUseWrapMode(true);
+      this.editor.setShowPrintMargin(false);
+      this.editor.renderer.setScrollMargin(14, 14);
+      this.editor.container.style.lineHeight = 1.6;
+      this.editor.renderer.updateFontSize();
+      this.editor.renderer.setPadding(16);
+      this.editor.setHighlightActiveLine(false);
 
-      self.editor.setOptions({
+      this.editor.setOptions({
         maxLines: Infinity,
         tabSize: 3,
         wrap: 0, // wrap text to view
@@ -51,75 +77,83 @@ export function moduleData() {
         fontSize: '0.8rem',
         wrap: 1, // wrap text to view
         indentedSoftWrap: true,
+        useWorker: false,
+        fontSize: '12px',
       });
 
-      self.editor.renderer.setPadding(16);
-      self.editor.setHighlightActiveLine(false);
+      if (!this.language) this.language = 'css';
 
-      if (!self.language) self.language = 'css';
+      switch (this.language) {
+        case 'css':
+          this.editor.session.setMode('ace/mode/css');
 
-      if (self.language == 'css') {
-        self.editor.session.setMode('ace/mode/css');
-      }
-      if (self.language == 'javascript') {
-        self.editor.session.setMode('ace/mode/javascript');
-      }
-      if (self.language == 'html') {
-        self.editor.session.setMode('ace/mode/html');
+        case 'javascript':
+          this.editor.session.setMode('ace/mode/javascript');
+
+        case 'html':
+          this.editor.session.setMode('ace/mode/html');
       }
 
-      const thisCode = structuredClone(self.option);
-      self.editor.setValue(thisCode, -1);
+      // Set start code
+      const thisCode = structuredClone(this.option);
+      this.editor.setValue(thisCode, -1);
 
-      self.beautify.beautify(self.editor.session);
+      // Beautify
+      this.beautify.beautify(this.editor.session);
 
-      self.editor.session.on('change', function (delta) {
-        let val = self.editor.getValue();
-        self.finalVal = val;
-      });
+      const onChange = () => {
+        this.finalVal = this.editor.getValue();
+      };
+      this.editor.session.on('change', onChange);
     },
-    watch: {
-      option: {
-        handler(newValue, oldValue) {
-          this.returnData(this.option);
-        },
-        deep: true,
-      },
-    },
-    computed: {
-      returnCode() {
-        return this.option;
-      },
-    },
-    methods: {
-      returnFullscreenClass() {
-        let self = this;
 
-        if (self.fullScreen) {
-          return 'uip-position-fixed uip-top-0 uip-bottom-0 uip-left-0 uip-right-0 uip-z-index-9999';
-        }
-      },
-      closeModal(evt) {
-        if (evt.target) {
-          if (evt.target.contains(this.$refs.modalInner)) {
-            this.modalOpen = false;
-          }
-        }
-      },
-      saveCode() {
-        this.option = this.finalVal;
-        this.modalOpen = false;
-        this.uipress.notify(__('Code updated', 'uipress-lite'), '', 'success');
-      },
+    /**
+     * Closes code modal
+     *
+     * @param {Object} evt - the click event
+     * @since 3.2.13
+     */
+    closeModal(evt) {
+      if (!evt.target.contains(this.$refs.modalInner)) return;
+      this.modalOpen = false;
     },
-    template: `
+
+    /**
+     * Saves code, closes model and returns back to caller
+     *
+     * @since 3.2.13
+     */
+    saveCode() {
+      this.option = this.finalVal;
+      this.modalOpen = false;
+      this.uipress.notify(__('Code updated', 'uipress-lite'), '', 'success');
+    },
+
+    /**
+     * Clears code
+     *
+     * @since 3.2.13
+     */
+    clearCode() {
+      this.option = '';
+    },
+  },
+  template: `
     
     
     <div class="uip-w-100p">
     
-        <button class="uip-button-default uip-border-rounder uip-padding-xxs uip-w-100p" @click="modalOpen = true">
-          <span v-if="returnCode == ''" class="uip-icon">add</span>
-          <span v-else class="uip-w-100p uip-text-s uip-text-muted uip-no-wrap uip-text-ellipsis uip-overflow-hidden">{{strings.editCode}}</span>
+        <button class="uip-button-default uip-border-rounder uip-padding-xxs uip-w-100p uip-flex uip-gap-xs uip-flex-center uip-text-left" @click="modalOpen = true">
+        
+          <div class="uip-background-primary uip-text-inverse uip-border-round uip-padding-xxxs"><span class="uip-icon">code</span></div>
+          
+          <span v-if="!returnCode" class="uip-text-s uip-link-muted uip-flex-grow">{{strings.add}}...</span>
+          <span v-else class="uip-text-s uip-flex-grow">{{strings.editCode}}</span>
+          
+          <a @click.prevent.stop="clearCode"
+          v-if="returnCode"
+          class="uip-no-underline uip-border-rounder uip-padding-xxxs uip-link-muted uip-text-s"><span class="uip-icon">close</span></a>
+          
         </button>
         
         
@@ -156,5 +190,4 @@ export function moduleData() {
     </div>
     
     `,
-  };
-}
+};

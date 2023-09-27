@@ -20,6 +20,11 @@ export default {
     };
   },
   watch: {
+    /**
+     * Watches changes to icons and returns to caller
+     *
+     * @since 3.2.13
+     */
     icon: {
       handler() {
         this.returnData(this.icon);

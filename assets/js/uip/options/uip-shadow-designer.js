@@ -8,7 +8,7 @@ export default {
     returnData: Function,
     value: Object,
   },
-  data: function () {
+  data() {
     return {
       loading: true,
       shadowOptions: {
@@ -49,6 +49,11 @@ export default {
   },
   inject: ['uipress'],
   watch: {
+    /**
+     * Watches shadow options and returns to caller
+     *
+     * @since 3.2.13
+     */
     shadowOptions: {
       handler(newValue, oldValue) {
         this.returnData(this.shadowOptions);
@@ -56,13 +61,19 @@ export default {
       deep: true,
     },
   },
-  mounted: function () {
-    this.processInput(this.value);
+  mounted() {
+    this.processInput();
   },
   computed: {
+    /**
+     * Returns shadow options
+     *
+     * @since 3.2.13
+     */
     returnShadow() {
       return this.shadowOptions;
     },
+
     /**
      * Returns the shadow color as a background css style
      *
@@ -75,6 +86,7 @@ export default {
       }
       return `background-color:${this.shadowOptions.color.value}`;
     },
+
     /**
      * Returns a new fill screen for border colour
      *
@@ -97,29 +109,29 @@ export default {
     },
   },
   methods: {
-    processInput(value) {
-      if (typeof value === 'undefined') {
-        return;
+    /**
+     * Injects props value into component
+     *
+     * @since 3.2.13
+     */
+    processInput() {
+      // Exit if not object
+      if (!this.uipress.isObject(this.value)) return;
+
+      if ('horizDistance' in this.value) {
+        this.shadowOptions.horizDistance = { ...this.shadowOptions.horizDistance, ...this.value.horizDistance };
       }
-
-      if (this.uipress.isObject(value)) {
-        if ('horizDistance' in value) {
-          this.shadowOptions.horizDistance = { ...this.shadowOptions.horizDistance, ...value.horizDistance };
-        }
-        if ('verticalDistance' in value) {
-          this.shadowOptions.verticalDistance = { ...this.shadowOptions.verticalDistance, ...value.verticalDistance };
-        }
-        if ('blur' in value) {
-          this.shadowOptions.blur = { ...this.shadowOptions.blur, ...value.blur };
-        }
-        if ('color' in value) {
-          this.shadowOptions.color = { ...this.shadowOptions.color, ...value.color };
-        }
-        if ('position' in value) {
-          this.shadowOptions.position = value.position;
-        }
-
-        return;
+      if ('verticalDistance' in this.value) {
+        this.shadowOptions.verticalDistance = { ...this.shadowOptions.verticalDistance, ...this.value.verticalDistance };
+      }
+      if ('blur' in this.value) {
+        this.shadowOptions.blur = { ...this.shadowOptions.blur, ...this.value.blur };
+      }
+      if ('color' in this.value) {
+        this.shadowOptions.color = { ...this.shadowOptions.color, ...this.value.color };
+      }
+      if ('position' in this.value) {
+        this.shadowOptions.position = this.value.position;
       }
     },
   },

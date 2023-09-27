@@ -22,7 +22,7 @@ const QueryBuilder = {
     value: Object,
     blockSettings: Object,
   },
-  data: function () {
+  data() {
     return {
       open: false,
       options: {
@@ -143,23 +143,16 @@ const QueryBuilder = {
       deep: true,
     },
   },
-  mounted: function () {
+  mounted() {
     this.formatValue(this.value);
-
-    if (this.uipData.options.multisite) {
-      this.queryType.site = {
-        value: 'site',
-        label: __('Sites', 'uipress-lite'),
-      };
-    }
+    this.maybePushSiteOption();
   },
   computed: {
-    returnAlignOptions() {
-      if (this.options.direction == 'horizontal') {
-        return this.alignments;
-      }
-      return this.verticalAlignments;
-    },
+    /**
+     * Returns order options for query type
+     *
+     * @since 3.2.13
+     */
     returnOrderOptions() {
       if (this.options.type == 'post') {
         return this.orderByOptions;
@@ -177,8 +170,7 @@ const QueryBuilder = {
      * @since 3.2.12
      */
     returnMetaSections() {
-      let temp = {};
-      temp = { ...this.metaSections };
+      let temp = { ...this.metaSections };
       if (this.options.type != 'post') {
         delete temp.tax;
         if (this.activeSection == 'tax') this.activeSection = 'query';
@@ -188,15 +180,34 @@ const QueryBuilder = {
     },
   },
   methods: {
-    formatValue(value) {
-      if (typeof value === 'undefined') {
-        return;
-      }
-      if (this.uipress.isObject(value)) {
-        this.options = { ...this.options, ...value };
-        return;
-      }
+    /**
+     * Injects prop value
+     *
+     * @since 3.2.13
+     */
+    formatValue() {
+      if (!this.uipress.isObject(this.value)) return;
+      this.options = { ...this.options, ...this.value };
     },
+
+    /**
+     * Checks if we are on multisite. If so then push site option to the query
+     *
+     * @since 3.2.13
+     */
+    maybePushSiteOption() {
+      if (!this.uipData.options.multisite) return;
+      this.queryType.site = {
+        value: 'site',
+        label: __('Sites', 'uipress-lite'),
+      };
+    },
+
+    /**
+     * Returns default meta query
+     *
+     * @since 3.2.13
+     */
     defaultMetaQuery() {
       return structuredClone({
         key: '',
@@ -205,6 +216,12 @@ const QueryBuilder = {
         type: 'CHAR',
       });
     },
+
+    /**
+     * Returns default tax query
+     *
+     * @since 3.2.13
+     */
     defaultTaxQuery() {
       return structuredClone({
         taxonomy: '',
@@ -214,9 +231,17 @@ const QueryBuilder = {
         includeChildren: true,
       });
     },
+
+    /**
+     * Returns tax post types as string
+     *
+     * @param {Array} postTypes - array of post types for conversion
+     * @since 3.2.13
+     */
     returnTaxPostTypes(postTypes) {
       return postTypes.toString();
     },
+
     /**
      * Returns the meta editor screen
      *
@@ -234,6 +259,7 @@ const QueryBuilder = {
 
       this.$emit('request-screen', screen);
     },
+
     /**
      * Pushes new meta query and opens the meta editor
      *
@@ -325,6 +351,7 @@ const QueryBuilder = {
 
       this.$emit('request-screen', screen);
     },
+
     /**
      * Returns the post status select screen
      *
@@ -788,6 +815,12 @@ const TaxQuery = {
     this.tax = this.value;
   },
   methods: {
+    /**
+     * Returns post types as string
+     *
+     * @param {Array} postTypes - array of post types for conversion
+     * @since 3.2.13
+     */
     returnTaxPostTypes(postTypes) {
       return postTypes.toString();
     },

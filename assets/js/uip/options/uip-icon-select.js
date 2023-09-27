@@ -21,6 +21,11 @@ export default {
   },
   inject: ['uipress'],
   watch: {
+    /**
+     * Watch changes to the icon and return to caller
+     *
+     * @since 3.2.13
+     */
     icon: {
       handler(newValue, oldValue) {
         this.returnData(newValue);
@@ -28,7 +33,7 @@ export default {
       deep: true,
     },
   },
-  mounted: function () {
+  mounted() {
     this.formatIcon(this.value);
   },
   computed: {

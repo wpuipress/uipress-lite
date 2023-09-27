@@ -8,6 +8,7 @@ export default {
   inject: ['uipData', 'router', 'uipress', 'uiTemplate'],
   components: {
     QueryBuilder: defineAsyncComponent(() => import('../options/uip-query-builder.min.js?ver=3.2.12')),
+    responsiveControls: defineAsyncComponent(() => import('../options/uip-responsive.min.js?ver=3.2.12')),
   },
   data() {
     return {
@@ -836,7 +837,7 @@ export default {
                 <div class="">
                   <div class="uip-margin-bottom-xxs uip-text-bold uip-text-emphasis">{{strings.hiddenOnDevice}}</div>
                   <div class="uip-padding-s uip-padding-right-remove">
-                    <hidden-responsive :value="block.responsive" :returnData="function(e){block.responsive = e}"></hidden-responsive>
+                    <responsiveControls :value="block.responsive" :returnData="(e)=>{block.responsive = e}"/>
                   </div>
                 </div>
                 

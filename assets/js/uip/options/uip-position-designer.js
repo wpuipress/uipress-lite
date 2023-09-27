@@ -1,170 +1,168 @@
 const { __, _x, _n, _nx } = wp.i18n;
-export function moduleData() {
-  return {
-    props: {
-      returnData: Function,
-      value: Object,
-    },
-    data: function () {
-      return {
-        option: {
-          position: '',
-          display: '',
-          verticalAlign: 'none',
-          horizontalAlign: 'none',
-          zIndex: '',
-          offset: {
-            units: 'px',
-            left: 0,
-            right: 0,
-            top: 0,
-            bottom: 0,
-          },
-        },
-        loading: true,
-        verticalAlignOptions: {
-          none: {
-            value: 'none',
-            icon: 'block',
-            tip: __('None', 'uipress-lite'),
-          },
-          top: {
-            value: 'top',
-            icon: 'align_vertical_top',
-            tip: __('Top', 'uipress-lite'),
-          },
-          center: {
-            value: 'center',
-            icon: 'align_vertical_center',
-            tip: __('Center', 'uipress-lite'),
-          },
-          bottom: {
-            value: 'bottom',
-            icon: 'align_vertical_bottom',
-            tip: __('Bottom', 'uipress-lite'),
-          },
-        },
-        horizontalAlignOptions: {
-          none: {
-            value: 'none',
-            icon: 'block',
-            tip: __('None', 'uipress-lite'),
-          },
-          left: {
-            value: 'left',
-            icon: 'align_horizontal_left',
-            tip: __('Left', 'uipress-lite'),
-          },
-          center: {
-            value: 'center',
-            icon: 'align_horizontal_center',
-            tip: __('Center', 'uipress-lite'),
-          },
-          right: {
-            value: 'right',
-            icon: 'align_horizontal_right',
-            tip: __('Right', 'uipress-lite'),
-          },
-        },
-        positionOptions: [
-          {
-            label: __('Relative', 'uipress-lite'),
-            value: 'relative',
-          },
-          {
-            label: __('Absolute', 'uipress-lite'),
-            value: 'absolute',
-          },
-          {
-            label: __('Fixed', 'uipress-lite'),
-            value: 'fixed',
-          },
-          {
-            label: __('Sticky', 'uipress-lite'),
-            value: 'sticky',
-          },
-          {
-            label: __('Static', 'uipress-lite'),
-            value: 'static',
-          },
-        ],
-        displayOptions: [
-          {
-            label: __('Block', 'uipress-lite'),
-            value: 'block',
-          },
-          {
-            label: __('Inline', 'uipress-lite'),
-            value: 'inline',
-          },
-          {
-            label: __('Flex', 'uipress-lite'),
-            value: 'flex',
-          },
-          {
-            label: __('Grid', 'uipress-lite'),
-            value: 'grid',
-          },
-          {
-            label: __('Inherit', 'uipress-lite'),
-            value: 'inherit',
-          },
-          {
-            label: __('None', 'uipress-lite'),
-            value: 'none',
-          },
-        ],
-        strings: {
-          position: __('Position', 'uipress-lite'),
-          left: __('Left', 'uipress-lite'),
-          top: __('Top', 'uipress-lite'),
-          right: __('Right', 'uipress-lite'),
-          bottom: __('Bottom', 'uipress-lite'),
-          inset: __('Inset', 'uipress-lite'),
-          verticalAlign: __('Vertical align', 'uipress-lite'),
-          horizontalAlign: __('Horizontal align', 'uipress-lite'),
-          zIndex: __('z-index', 'uipress-lite'),
-          display: __('Display', 'uipress-lite'),
-        },
-      };
-    },
-    inject: ['uipress'],
-    watch: {
+export default {
+  props: {
+    returnData: Function,
+    value: Object,
+  },
+  data() {
+    return {
       option: {
-        handler(newValue, oldValue) {
-          this.returnData(this.option);
+        position: '',
+        display: '',
+        verticalAlign: 'none',
+        horizontalAlign: 'none',
+        zIndex: '',
+        offset: {
+          units: 'px',
+          left: 0,
+          right: 0,
+          top: 0,
+          bottom: 0,
         },
-        deep: true,
       },
-    },
-    mounted: function () {
-      this.processInput(this.value);
-    },
-    methods: {
-      processInput(value) {
-        if (typeof value === 'undefined') {
-          return;
-        }
-        if (this.uipress.isObject(value)) {
-          this.option = { ...this.option, ...value };
-          if ('offset' in value) {
-            this.option.offset = value.offset;
-          }
-          if ('position' in value) {
-            this.option.position = value.position;
-          }
-          return;
-        }
+      loading: true,
+      verticalAlignOptions: {
+        none: {
+          value: 'none',
+          icon: 'block',
+          tip: __('None', 'uipress-lite'),
+        },
+        top: {
+          value: 'top',
+          icon: 'align_vertical_top',
+          tip: __('Top', 'uipress-lite'),
+        },
+        center: {
+          value: 'center',
+          icon: 'align_vertical_center',
+          tip: __('Center', 'uipress-lite'),
+        },
+        bottom: {
+          value: 'bottom',
+          icon: 'align_vertical_bottom',
+          tip: __('Bottom', 'uipress-lite'),
+        },
       },
-      formatNumber(value) {
-        if (value == '') {
-          return 1;
-        }
+      horizontalAlignOptions: {
+        none: {
+          value: 'none',
+          icon: 'block',
+          tip: __('None', 'uipress-lite'),
+        },
+        left: {
+          value: 'left',
+          icon: 'align_horizontal_left',
+          tip: __('Left', 'uipress-lite'),
+        },
+        center: {
+          value: 'center',
+          icon: 'align_horizontal_center',
+          tip: __('Center', 'uipress-lite'),
+        },
+        right: {
+          value: 'right',
+          icon: 'align_horizontal_right',
+          tip: __('Right', 'uipress-lite'),
+        },
+      },
+      positionOptions: [
+        {
+          label: __('Relative', 'uipress-lite'),
+          value: 'relative',
+        },
+        {
+          label: __('Absolute', 'uipress-lite'),
+          value: 'absolute',
+        },
+        {
+          label: __('Fixed', 'uipress-lite'),
+          value: 'fixed',
+        },
+        {
+          label: __('Sticky', 'uipress-lite'),
+          value: 'sticky',
+        },
+        {
+          label: __('Static', 'uipress-lite'),
+          value: 'static',
+        },
+      ],
+      displayOptions: [
+        {
+          label: __('Block', 'uipress-lite'),
+          value: 'block',
+        },
+        {
+          label: __('Inline', 'uipress-lite'),
+          value: 'inline',
+        },
+        {
+          label: __('Flex', 'uipress-lite'),
+          value: 'flex',
+        },
+        {
+          label: __('Grid', 'uipress-lite'),
+          value: 'grid',
+        },
+        {
+          label: __('Inherit', 'uipress-lite'),
+          value: 'inherit',
+        },
+        {
+          label: __('None', 'uipress-lite'),
+          value: 'none',
+        },
+      ],
+      strings: {
+        position: __('Position', 'uipress-lite'),
+        left: __('Left', 'uipress-lite'),
+        top: __('Top', 'uipress-lite'),
+        right: __('Right', 'uipress-lite'),
+        bottom: __('Bottom', 'uipress-lite'),
+        inset: __('Inset', 'uipress-lite'),
+        verticalAlign: __('Vertical align', 'uipress-lite'),
+        horizontalAlign: __('Horizontal align', 'uipress-lite'),
+        zIndex: __('z-index', 'uipress-lite'),
+        display: __('Display', 'uipress-lite'),
+      },
+    };
+  },
+  inject: ['uipress'],
+  watch: {
+    /**
+     * Watches changes to options and returns to caller
+     *
+     * @since 3.2.13
+     */
+    option: {
+      handler(newValue, oldValue) {
+        this.returnData(this.option);
+      },
+      deep: true,
+    },
+  },
+  mounted() {
+    this.processInput();
+  },
+  methods: {
+    /**
+     * Injects input value and formats args
+     *
+     * @since 3.2.13
+     */
+    processInput() {
+      if (!this.uipress.isObject(this.value)) return;
+      this.option = { ...this.option, ...this.value };
 
-        return parseFloat(value);
-      },
+      if (this.value.offset) {
+        this.option.offset = this.value.offset;
+      }
+      if (this.value.position) {
+        this.option.position = this.value.position;
+      }
     },
-    template: `
+  },
+  template: `
     
     <div class="uip-flex uip-flex-column uip-row-gap-xs">
     
@@ -276,21 +274,10 @@ export function moduleData() {
       
         <div class="uip-text-muted uip-flex uip-flex-center uip-text-s"><span>{{strings.zIndex}}</span></div>
         
-        <div class="uip-flex uip-gap-xs uip-flex-no-wrap uip-flex-center">
-        
-          <input type="number" min="0" step="0.1" class="uip-input uip-remove-steps uip-background-remove uip-padding-xxxs uip-flex-grow" style="width: 30px;" v-model="option.zIndex">
-          
-          <div class="uip-padding-xxs uip-border-rounder uip-background-muted uip-flex uip-gap-xxs uip-no-text-select">
-            <div class="uip-link-muted uip-icon uip-text-l" @click="option.zIndex = formatNumber(option.zIndex) - 1">remove</div>
-            <div class="uip-border-right"></div>
-            <div class="uip-link-muted uip-icon uip-text-l" @click="option.zIndex = formatNumber(option.zIndex) + 1">add</div>
-          </div>
-          
-        </div>
+        <uip-number :value="option.zIndex" :returnData="(d)=>{option.zIndex = d}" placeHolder="" :step="0.1"/>
         
       </div>
       
     </div>
     `,
-  };
-}
+};

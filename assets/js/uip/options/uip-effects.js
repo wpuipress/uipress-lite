@@ -1,272 +1,110 @@
 const { __, _x, _n, _nx } = wp.i18n;
-export function moduleData() {
-  return {
-    props: {
-      returnData: Function,
-      value: Object,
-    },
-    data: function () {
-      return {
-        options: {
-          transform: {
-            translateX: { value: '', units: 'px' },
-            translateY: { value: '', units: 'px' },
-            scaleX: '',
-            scaleY: '',
-            rotateX: '',
-            rotateY: '',
-            rotateZ: '',
-            skewX: '',
-            skewY: '',
-            cursor: 'auto',
-          },
-          filters: {
-            //Filters
-            mixBlendMode: '',
-            grayscale: '',
-            blur: '',
-            saturate: '',
-            contrast: '',
-            backdropBlur: '',
-          },
-          transitionType: '',
-          transitionTime: '',
-          transitionDelay: '',
-        },
-        loading: true,
-        verticalAlignOptions: {
-          none: {
-            value: 'none',
-            icon: 'block',
-            tip: __('None', 'uipress-lite'),
-          },
-          top: {
-            value: 'top',
-            icon: 'align_vertical_top',
-            tip: __('Top', 'uipress-lite'),
-          },
-          center: {
-            value: 'center',
-            icon: 'align_vertical_center',
-            tip: __('Center', 'uipress-lite'),
-          },
-          bottom: {
-            value: 'bottom',
-            icon: 'align_vertical_bottom',
-            tip: __('Bottom', 'uipress-lite'),
-          },
-        },
-        mixBlendModes: [
-          {
-            label: __('Normal', 'uipress-lite'),
-            value: 'normal',
-          },
-          {
-            label: __('Multiply', 'uipress-lite'),
-            value: 'multiply',
-          },
-          {
-            label: __('Screen', 'uipress-lite'),
-            value: 'screen',
-          },
-          {
-            label: __('Overlay', 'uipress-lite'),
-            value: 'overlay',
-          },
-          {
-            label: __('Darken', 'uipress-lite'),
-            value: 'darken',
-          },
-          {
-            label: __('Lighten', 'uipress-lite'),
-            value: 'lighten',
-          },
-          {
-            label: __('Color dodge', 'uipress-lite'),
-            value: 'color-dodge',
-          },
-          {
-            label: __('Color burn', 'uipress-lite'),
-            value: 'color-burn',
-          },
-          {
-            label: __('Hard light', 'uipress-lite'),
-            value: 'hard-light',
-          },
-          {
-            label: __('Soft light', 'uipress-lite'),
-            value: 'soft-light',
-          },
-          {
-            label: __('Difference', 'uipress-lite'),
-            value: 'difference',
-          },
-          {
-            label: __('Exclusion', 'uipress-lite'),
-            value: 'exclusion',
-          },
-          {
-            label: __('Hue', 'uipress-lite'),
-            value: 'hue',
-          },
-          {
-            label: __('Saturation', 'uipress-lite'),
-            value: 'saturation',
-          },
-          {
-            label: __('Color', 'uipress-lite'),
-            value: 'color',
-          },
-          {
-            label: __('Luminosity', 'uipress-lite'),
-            value: 'luminosity',
-          },
-          {
-            label: __('Initial', 'uipress-lite'),
-            value: 'initial',
-          },
-          {
-            label: __('Inherit', 'uipress-lite'),
-            value: 'Inherit',
-          },
-          {
-            label: __('Unset', 'uipress-lite'),
-            value: 'Unset',
-          },
-        ],
-        transitionTypes: [
-          {
-            label: __('Linear', 'uipress-lite'),
-            value: 'linear',
-          },
-          {
-            label: __('Ease', 'uipress-lite'),
-            value: 'ease',
-          },
-          {
-            label: __('Ease in', 'uipress-lite'),
-            value: 'ease-in',
-          },
-          {
-            label: __('Ease in out', 'uipress-lite'),
-            value: 'ease-in-out',
-          },
-          {
-            label: __('Ease out', 'uipress-lite'),
-            value: 'ease-out',
-          },
-          {
-            label: __('Out sine', 'uipress-lite'),
-            value: 'cubic-bezier(0.39, 0.58, 0.57, 1)',
-          },
-          {
-            label: __('Out quadratic', 'uipress-lite'),
-            value: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-          },
-          {
-            label: __('Back out', 'uipress-lite'),
-            value: 'cubic-bezier(0.18, 0.89, 0.32, 1.28)',
-          },
-        ],
+import BlendModes from '../v3.5/lists/mix_blend_modes.min.js';
+import TransitionTypes from '../v3.5/lists/css_transitions.min.js';
+import CursorTypes from '../v3.5/lists/cursor_types.min.js';
+import CursorTypesResize from '../v3.5/lists/cursor_resize_types.min.js';
 
-        cursorTypes: [
-          'auto',
-          'default',
-          'none',
-          'context-menu',
-          'help',
-          'pointer',
-          'progress',
-          'wait',
-          'cell',
-          'crosshair',
-          'text',
-          'vertical-text',
-          'alias',
-          'copy',
-          'move',
-          'no-drop',
-          'not-allowed',
-          'all-scroll',
-        ],
-        resizeCursors: [
-          'col-resize',
-          'row-resize',
-          'n-resize',
-          'e-resize',
-          's-resize',
-          'w-resize',
-          'ns-resize',
-          'ew-resize',
-          'ne-resize',
-          'nw-resize',
-          'se-resize',
-          'sw-resize',
-          'nesw-resize',
-          'nwse-resize',
-        ],
-
-        strings: {
-          transform: __('Transform', 'uipress-lite'),
-          translate: __('Translate', 'uipress-lite'),
-          scale: __('Scale', 'uipress-lite'),
-          rotate: __('Rotate', 'uipress-lite'),
-          skew: __('Skew', 'uipress-lite'),
-          settings: __('Settings', 'uipress-lite'),
-          filters: __('Filters', 'uipress-lite'),
-          //Filters
-          mixBlendMode: __('Mix blend mode', 'uipress-lite'),
-          grayscale: __('Grayscale', 'uipress-lite'),
-          blur: __('Blur', 'uipress-lite'),
-          saturate: __('Saturate', 'uipress-lite'),
-          contrast: __('Contrast', 'uipress-lite'),
-          backdropBlur: __('Backdrop blur', 'uipress-lite'),
-          transitionType: __('Ease', 'uipress-lite'),
-          transitionTime: __('Time', 'uipress-lite'),
-          transitionDelay: __('Delay', 'uipress-lite'),
-          cursor: __('Cursor', 'uipress-lite'),
-          general: __('General', 'uipress-lite'),
-          resizing: __('Resizing', 'uipress-lite'),
-        },
-      };
-    },
-    inject: ['uipress'],
-    watch: {
+export default {
+  props: {
+    returnData: Function,
+    value: Object,
+  },
+  data() {
+    return {
       options: {
-        handler(newValue, oldValue) {
-          this.returnData(this.options);
+        transform: {
+          translateX: { value: '', units: 'px' },
+          translateY: { value: '', units: 'px' },
+          scaleX: '',
+          scaleY: '',
+          rotateX: '',
+          rotateY: '',
+          rotateZ: '',
+          skewX: '',
+          skewY: '',
+          cursor: 'auto',
         },
-        deep: true,
+        filters: {
+          //Filters
+          mixBlendMode: '',
+          grayscale: '',
+          blur: '',
+          saturate: '',
+          contrast: '',
+          backdropBlur: '',
+        },
+        transitionType: '',
+        transitionTime: '',
+        transitionDelay: '',
       },
-    },
-    mounted: function () {
-      this.processInput(this.value);
-    },
-    methods: {
-      processInput(value) {
-        if (typeof value === 'undefined') {
-          return;
-        }
-        if (this.uipress.isObject(value)) {
-          this.options = { ...this.options, ...value };
-          if ('transform' in value) {
-            this.options.transform = { ...this.options.transform, ...value.transform };
-          }
-          if ('filters' in value) {
-            this.options.filter = { ...this.options.filter, ...value.filters };
-          }
-          return;
-        }
-      },
-      formatNumber(value) {
-        if (value == '') {
-          return 0;
-        }
+      loading: true,
+      mixBlendModes: BlendModes,
+      transitionTypes: TransitionTypes,
 
-        return parseFloat(value);
+      cursorTypes: CursorTypes,
+      resizeCursors: CursorTypesResize,
+
+      strings: {
+        transform: __('Transform', 'uipress-lite'),
+        translate: __('Translate', 'uipress-lite'),
+        scale: __('Scale', 'uipress-lite'),
+        rotate: __('Rotate', 'uipress-lite'),
+        skew: __('Skew', 'uipress-lite'),
+        settings: __('Settings', 'uipress-lite'),
+        filters: __('Filters', 'uipress-lite'),
+        //Filters
+        mixBlendMode: __('Mix blend mode', 'uipress-lite'),
+        grayscale: __('Grayscale', 'uipress-lite'),
+        blur: __('Blur', 'uipress-lite'),
+        saturate: __('Saturate', 'uipress-lite'),
+        contrast: __('Contrast', 'uipress-lite'),
+        backdropBlur: __('Backdrop blur', 'uipress-lite'),
+        transitionType: __('Ease', 'uipress-lite'),
+        transitionTime: __('Time', 'uipress-lite'),
+        transitionDelay: __('Delay', 'uipress-lite'),
+        cursor: __('Cursor', 'uipress-lite'),
+        general: __('General', 'uipress-lite'),
+        resizing: __('Resizing', 'uipress-lite'),
       },
+    };
+  },
+  inject: ['uipress'],
+  watch: {
+    /**
+     * Watches changes to options and returns to caller
+     *
+     * @since 3.2.13
+     */
+    options: {
+      handler(newValue, oldValue) {
+        this.returnData(this.options);
+      },
+      deep: true,
     },
-    template: `
+  },
+  mounted() {
+    this.processInput(this.value);
+  },
+  methods: {
+    /**
+     * Injects value if it's object
+     *
+     * @since 3.2.13
+     */
+    processInput() {
+      if (!this.uipress.isObject(this.value)) return;
+
+      // Update values
+      this.options = { ...this.options, ...this.value };
+      if ('transform' in this.value) {
+        this.options.transform = { ...this.options.transform, ...this.value.transform };
+      }
+      if ('filters' in this.value) {
+        this.options.filter = { ...this.options.filter, ...this.value.filters };
+      }
+    },
+  },
+  template: `
     
     <div class="uip-flex uip-flex-column uip-row-gap-s">
     
@@ -280,8 +118,11 @@ export function moduleData() {
         
         <div class="uip-flex uip-gap-xs uip-flex-no-wrap uip-flex-center">
         
-          <dropdown pos="left center" triggerClass="uip-flex uip-flex-grow uip-w-100p" containerClass="uip-flex uip-flex-grow uip-w-100p" :dontAnimate="true">
-            <template v-slot:trigger>
+          <dropdown pos="left center" class="uip-flex uip-flex-grow uip-w-100p" 
+          ref="transformDrop"
+          :snapX="['#uip-block-settings', '#uip-template-settings', '#uip-global-settings']">
+          
+            <template #trigger>
               <button class="uip-button-default uip-border-rounder uip-padding-xxs uip-link-muted uip-w-100p uip-flex uip-gap-xxs uip-flex-center uip-flex-middle">
               
                 <span class="uip-icon">add</span>
@@ -297,63 +138,46 @@ export function moduleData() {
                 
               </button>
             </template>
-            <template v-slot:content>
-              <div class="uip-padding-s uip-border-bottom uip-text-bold">
-                {{strings.transform}}
-              </div>
-              <div class="uip-padding-s uip-min-w-250 uip-flex uip-flex-column uip-gap-xs">
-                
+            <template #content>
+            
+            
+            
+              <div class="uip-flex uip-flex-column uip-row-gap-s uip-padding-s uip-w-240">
+              
+                <div class="uip-flex uip-flex-between uip-flex-center">
+                  <div class="uip-text-emphasis uip-text-bold uip-text-s">{{strings.transform}}</div>
+                  <div @click.prevent.stop="$refs.transformDrop.close()"
+                  class="uip-flex uip-flex-center uip-flex-middle uip-padding-xxs uip-link-muted hover:uip-background-muted uip-border-rounder">
+                    <span class="uip-icon">close</span>
+                  </div>
+                </div>
+              
                 
                 <!--translateX -->
-                <div class="uip-grid-col-1-3">
+                <div class="uip-grid-col-1-3 uip-padding-left-xs">
                 
                   <div class="uip-text-muted uip-flex uip-flex-center uip-text-s"><span>{{strings.translate}} X</span></div>
                   
-                  <div class="uip-flex uip-flex-center">
                   <value-units :value="options.transform.translateX" :returnData="function(data){options.transform.translateX = data}" />
-                  </div>
                   
                 
                 <!--translateY -->
                 
                   <div class="uip-text-muted uip-flex uip-flex-center uip-text-s"><span>{{strings.translate}} Y</span></div>
                   
-                  <div class="uip-flex uip-flex-center">
                   <value-units :value="options.transform.translateY" :returnData="function(data){options.transform.translateY = data}"/>
-                  </div>
                   
                 <!--ScaleX -->
                 
                   <div class="uip-text-muted uip-flex uip-flex-center uip-text-s"><span>{{strings.scale}} X</span></div>
-                  
-                  <div class="uip-flex uip-gap-xs uip-flex-no-wrap uip-flex-center">
-                  
-                    <input type="number" min="0" step="0.1" class="uip-input uip-remove-steps uip-background-remove uip-padding-xxxs uip-flex-grow" style="width: 30px;" v-model="options.transform.scaleX">
-                    
-                    <div class="uip-padding-xxs uip-border-rounder uip-background-muted uip-flex uip-gap-xxs uip-no-text-select">
-                      <div class="uip-link-muted uip-icon uip-text-l" @click="options.transform.scaleX = (formatNumber(options.transform.scaleX) - 0.1).toFixed(2)">remove</div>
-                      <div class="uip-border-right"></div>
-                      <div class="uip-link-muted uip-icon uip-text-l" @click="options.transform.scaleX = (formatNumber(options.transform.scaleX) + 0.1).toFixed(2)">add</div>
-                    </div>
-                    
-                  </div>
+                  <uip-number :value="options.transform.scaleX" :returnData="(d)=>{options.transform.scaleX = d}" placeHolder="" :step="0.1"/>
                   
                 
                 <!--ScaleY -->
                 
                   <div class="uip-text-muted uip-flex uip-flex-center uip-text-s"><span>{{strings.scale}} Y</span></div>
-                  
-                  <div class="uip-flex uip-gap-xs uip-flex-no-wrap uip-flex-center">
-                  
-                    <input type="number" min="0" class="uip-input uip-remove-steps uip-background-remove uip-padding-xxxs uip-flex-grow" step="0.1" style="width: 30px;" v-model="options.transform.scaleY">
-                    
-                    <div class="uip-padding-xxs uip-border-rounder uip-background-muted uip-flex uip-gap-xxs uip-no-text-select">
-                      <div class="uip-link-muted uip-icon uip-text-l" @click="options.transform.scaleY = (formatNumber(options.transform.scaleY) - 0.1).toFixed(2)">remove</div>
-                      <div class="uip-border-right"></div>
-                      <div class="uip-link-muted uip-icon uip-text-l" @click="options.transform.scaleY = (formatNumber(options.transform.scaleY) + 0.1).toFixed(2)">add</div>
-                    </div>
-                    
-                  </div>
+                  <uip-number :value="options.transform.scaleY" :returnData="(d)=>{options.transform.scaleY = d}" placeHolder="" :step="0.1"/>
+                 
                   
                 
                 
@@ -361,10 +185,10 @@ export function moduleData() {
                 
                   <div class="uip-text-muted uip-flex uip-flex-center uip-text-s"><span>{{strings.rotate}} X (°)</span></div>
                   
-                  <div class="uip-flex uip-gap-xs uip-flex-no-wrap uip-flex-center">
+                  <div class="uip-flex uip-gap-xs uip-flex-no-wrap uip-flex-center uip-w-100p">
                   
                     <input type="number" class="uip-input uip-padding-xxxs uip-w-60 uip-border-rounder" style="border-radius:var(--uip-border-radius-large)" v-model="options.transform.rotateX">
-                    <input type="range" min="-360" max="360" v-model="options.transform.rotateX" step="10" class="uip-range uip-w-100">
+                    <input type="range" min="-360" max="360" v-model="options.transform.rotateX" step="10" class="uip-range uip-w-30 uip-flex-grow">
                   
                   </div>
                   
@@ -373,10 +197,10 @@ export function moduleData() {
                 
                   <div class="uip-text-muted uip-flex uip-flex-center uip-text-s"><span>{{strings.rotate}} Y (°)</span></div>
                   
-                  <div class="uip-flex uip-gap-xs uip-flex-no-wrap uip-flex-center">
+                  <div class="uip-flex uip-gap-xs uip-flex-no-wrap uip-flex-center uip-w-100p">
                   
                     <input type="number" class="uip-input uip-padding-xxxs uip-w-60 uip-border-rounder" style="border-radius:var(--uip-border-radius-large)" v-model="options.transform.rotateY">
-                    <input type="range" min="-360" max="360" v-model="options.transform.rotateY" step="10" class="uip-range uip-w-100">
+                    <input type="range" min="-360" max="360" v-model="options.transform.rotateY" step="10" class="uip-range uip-w-30 uip-flex-grow">
                   
                   </div>
                   
@@ -385,10 +209,10 @@ export function moduleData() {
                 
                   <div class="uip-text-muted uip-flex uip-flex-center uip-text-s"><span>{{strings.rotate}} Z (°)</span></div>
                    
-                  <div class="uip-flex uip-gap-xs uip-flex-no-wrap uip-flex-center">
+                  <div class="uip-flex uip-gap-xs uip-flex-no-wrap uip-flex-center uip-w-100p">
                   
                     <input type="number" class="uip-input uip-padding-xxxs uip-w-60 uip-border-rounder" style="border-radius:var(--uip-border-radius-large)" v-model="options.transform.rotateZ">
-                    <input type="range" min="-360" max="360" v-model="options.transform.rotateZ" step="10" class="uip-range uip-w-100">
+                    <input type="range" min="-360" max="360" v-model="options.transform.rotateZ" step="10" class="uip-range uip-w-30 uip-flex-grow">
                   
                   </div>
                   
@@ -397,10 +221,10 @@ export function moduleData() {
                 
                   <div class="uip-text-muted uip-flex uip-flex-center uip-text-s"><span>{{strings.skew}} X (°)</span></div>
                   
-                  <div class="uip-flex uip-gap-xs uip-flex-no-wrap uip-flex-center">
+                  <div class="uip-flex uip-gap-xs uip-flex-no-wrap uip-flex-center uip-w-100p">
                   
                     <input type="number" class="uip-input uip-padding-xxxs uip-w-60 uip-border-rounder" style="border-radius:var(--uip-border-radius-large)" v-model="options.transform.skewX">
-                    <input type="range" min="-360" max="360" v-model="options.transform.skewX" step="10" class="uip-range uip-w-100">
+                    <input type="range" min="-360" max="360" v-model="options.transform.skewX" step="10" class="uip-range uip-w-30 uip-flex-grow">
                   
                   </div>
                   
@@ -409,10 +233,10 @@ export function moduleData() {
                 
                   <div class="uip-text-muted uip-flex uip-flex-center uip-text-s"><span>{{strings.skew}} Y (°)</span></div>
                   
-                  <div class="uip-flex uip-gap-xs uip-flex-no-wrap uip-flex-center">
+                  <div class="uip-flex uip-gap-xs uip-flex-no-wrap uip-flex-center uip-w-100p">
                   
                     <input type="number" class="uip-input uip-padding-xxxs uip-w-60 uip-border-rounder" style="border-radius:var(--uip-border-radius-large)" v-model="options.transform.skewY">
-                    <input type="range" min="-360" max="360" v-model="options.transform.skewY" step="10" class="uip-range uip-w-100">
+                    <input type="range" min="-360" max="360" v-model="options.transform.skewY" step="10" class="uip-range uip-w-30 uip-flex-grow">
                   
                   </div>
                   
@@ -438,8 +262,13 @@ export function moduleData() {
         
         <div class="uip-flex uip-gap-xs uip-flex-no-wrap uip-flex-center">
         
-          <dropdown pos="left center" triggerClass="uip-flex uip-flex-grow uip-w-100p" containerClass="uip-flex uip-flex-grow uip-w-100p" :dontAnimate="true">
-            <template v-slot:trigger>
+          <dropdown pos="left center" class="uip-flex uip-flex-grow uip-w-100p" 
+          ref="filtersDrop"
+          :snapX="['#uip-block-settings', '#uip-template-settings', '#uip-global-settings']">
+          
+          
+            <template #trigger>
+            
               <button class="uip-button-default uip-border-rounder uip-padding-xxs uip-link-muted uip-w-100p uip-flex uip-gap-xxs uip-flex-center uip-flex-middle">
               
                 
@@ -454,15 +283,21 @@ export function moduleData() {
               
               </button>
             </template>
-            <template v-slot:content>
-              <div class="uip-padding-s uip-border-bottom uip-text-bold">
-                {{strings.filters}}
-              </div>
-              <div class="uip-padding-s uip-min-w-300 uip-flex uip-flex-column uip-gap-xs">
+            
+            <template #content>
+            
+              <div class="uip-flex uip-flex-column uip-row-gap-s uip-padding-s uip-w-240">
               
+                <div class="uip-flex uip-flex-between uip-flex-center">
+                  <div class="uip-text-emphasis uip-text-bold uip-text-s">{{strings.filters}}</div>
+                  <div @click.prevent.stop="$refs.filtersDrop.close()"
+                  class="uip-flex uip-flex-center uip-flex-middle uip-padding-xxs uip-link-muted hover:uip-background-muted uip-border-rounder">
+                    <span class="uip-icon">close</span>
+                  </div>
+                </div>
               
                
-                <div class="uip-grid-col-1-3 uip-w-300">
+                <div class="uip-grid-col-1-3 uip-padding-left-xs">
                 
                   <!--mixBlendMode-->
                   
@@ -480,22 +315,10 @@ export function moduleData() {
                 
                 
                 
-                <!--grayscale -->
+                  <!--grayscale -->
                 
                   <div class="uip-text-muted uip-flex uip-flex-center uip-text-s"><span>{{strings.grayscale}}</span></div>
-                  
-                  
-                  <div class="uip-flex uip-gap-xs uip-flex-no-wrap uip-flex-center">
-                  
-                    <input type="number" min="0" class="uip-input uip-remove-steps uip-background-remove uip-padding-xxxs uip-flex-grow" step="0.1" style="width: 30px;" v-model="options.filters.grayscale">
-                    
-                    <div class="uip-padding-xxs uip-border-rounder uip-background-muted uip-flex uip-gap-xxs uip-no-text-select">
-                      <div class="uip-link-muted uip-icon uip-text-l" @click="options.filters.grayscale = (formatNumber(options.filters.grayscale) - 0.1).toFixed(2)">remove</div>
-                      <div class="uip-border-right"></div>
-                      <div class="uip-link-muted uip-icon uip-text-l" @click="options.filters.grayscale = (formatNumber(options.filters.grayscale) + 0.1).toFixed(2)">add</div>
-                    </div>
-                    
-                  </div>
+                  <uip-number :value="options.filters.grayscale" :returnData="(d)=>{options.filters.grayscale = d}" placeHolder="" :step="0.1"/>
                   
                 
                 
@@ -506,7 +329,7 @@ export function moduleData() {
                   <div class="uip-flex uip-gap-xs uip-flex-no-wrap uip-flex-center">
                   
                     <input type="number" min="0" max="100" class="uip-input uip-padding-xxxs uip-w-60 uip-border-rounder" style="border-radius:var(--uip-border-radius-large)" v-model="options.filters.blur">
-                    <input type="range" min="0" max="100" v-model="options.filters.blur" step="1" class="uip-range uip-w-100">
+                    <input type="range" min="0" max="100" v-model="options.filters.blur" step="1" class="uip-range uip-w-30 uip-flex-grow">
                   
                   </div>
                 
@@ -518,7 +341,7 @@ export function moduleData() {
                   <div class="uip-flex uip-gap-xs uip-flex-no-wrap uip-flex-center">
                   
                     <input type="number" min="0" max="100" class="uip-input uip-padding-xxxs uip-w-60 uip-border-rounder" style="border-radius:var(--uip-border-radius-large)" v-model="options.filters.backdropBlur">
-                    <input type="range" min="0" max="100" v-model="options.filters.backdropBlur" step="1" class="uip-range uip-w-100">
+                    <input type="range" min="0" max="100" v-model="options.filters.backdropBlur" step="1" class="uip-range uip-w-30 uip-flex-grow">
                   
                   </div>
                   
@@ -527,37 +350,13 @@ export function moduleData() {
                 <!--saturate -->
                 
                   <div class="uip-text-muted uip-flex uip-flex-center uip-text-s"><span>{{strings.saturate}}</span></div>
-                  
-                  
-                  <div class="uip-flex uip-gap-xs uip-flex-no-wrap uip-flex-center">
-                  
-                    <input type="number" min="0" class="uip-input uip-remove-steps uip-background-remove uip-padding-xxxs uip-flex-grow" step="0.1" style="width: 30px;" v-model="options.filters.saturate">
-                    
-                    <div class="uip-padding-xxs uip-border-rounder uip-background-muted uip-flex uip-gap-xxs uip-no-text-select">
-                      <div class="uip-link-muted uip-icon uip-text-l" @click="options.filters.saturate = (formatNumber(options.filters.saturate) - 0.1).toFixed(2)">remove</div>
-                      <div class="uip-border-right"></div>
-                      <div class="uip-link-muted uip-icon uip-text-l" @click="options.filters.saturate = (formatNumber(options.filters.saturate) + 0.1).toFixed(2)">add</div>
-                    </div>
-                    
-                  </div>
+                  <uip-number :value="options.filters.saturate" :returnData="(d)=>{options.filters.saturate = d}" placeHolder="" :step="0.1"/>
                 
                 
                 <!--contrast -->
                 
                   <div class="uip-text-muted uip-flex uip-flex-center uip-text-s"><span>{{strings.contrast}}</span></div>
-                  
-                  
-                  <div class="uip-flex uip-gap-xs uip-flex-no-wrap uip-flex-center">
-                  
-                    <input type="number" min="0" class="uip-input uip-remove-steps uip-background-remove uip-padding-xxxs uip-flex-grow" step="0.1" style="width: 30px;" v-model="options.filters.contrast">
-                    
-                    <div class="uip-padding-xxs uip-border-rounder uip-background-muted uip-flex uip-gap-xxs uip-no-text-select">
-                      <div class="uip-link-muted uip-icon uip-text-l" @click="options.filters.contrast = (formatNumber(options.filters.contrast) - 0.1).toFixed(2)">remove</div>
-                      <div class="uip-border-right"></div>
-                      <div class="uip-link-muted uip-icon uip-text-l" @click="options.filters.contrast = (formatNumber(options.filters.contrast) + 0.1).toFixed(2)">add</div>
-                    </div>
-                    
-                  </div>
+                  <uip-number :value="options.filters.contrast" :returnData="(d)=>{options.filters.contrast = d}" placeHolder="" :step="0.1"/>
                   
                 </div>
                 
@@ -596,36 +395,14 @@ export function moduleData() {
       <div class="uip-grid-col-1-3">
       
         <div class="uip-text-muted uip-flex uip-flex-center uip-text-s"><span>{{strings.transitionTime}}</span></div>
-        
-        <div class="uip-flex uip-gap-xs uip-flex-no-wrap uip-flex-center">
-        
-          <input type="number" min="0" step="0.1" class="uip-input uip-remove-steps uip-background-remove uip-padding-xxxs uip-flex-grow" style="width: 30px;" v-model="options.transitionTime">
-          
-          <div class="uip-padding-xxs uip-border-rounder uip-background-muted uip-flex uip-gap-xxs uip-no-text-select">
-            <div class="uip-link-muted uip-icon uip-text-l" @click="options.transitionTime = (formatNumber(options.transitionTime) - 0.1).toFixed(2)">remove</div>
-            <div class="uip-border-right"></div>
-            <div class="uip-link-muted uip-icon uip-text-l" @click="options.transitionTime = (formatNumber(options.transitionTime) + 0.1).toFixed(2)">add</div>
-          </div>
-          
-        </div>
+        <uip-number :value="options.transitionTime" :returnData="(d)=>{options.transitionTime = d}" placeHolder="" :step="0.1"/>
       </div>
       
       <!--Transition delay -->
       <div class="uip-grid-col-1-3">
       
         <div class="uip-text-muted uip-flex uip-flex-center uip-text-s"><span>{{strings.transitionDelay}}</span></div>
-        
-        <div class="uip-flex uip-gap-xs uip-flex-no-wrap uip-flex-center">
-        
-          <input type="number" min="0" step="0.1" class="uip-input uip-remove-steps uip-background-remove uip-padding-xxxs uip-flex-grow" style="width: 30px;" v-model="options.transitionDelay">
-          
-          <div class="uip-padding-xxs uip-border-rounder uip-background-muted uip-flex uip-gap-xxs uip-no-text-select">
-            <div class="uip-link-muted uip-icon uip-text-l" @click="options.transitionDelay = (formatNumber(options.transitionDelay) - 0.1).toFixed(2)">remove</div>
-            <div class="uip-border-right"></div>
-            <div class="uip-link-muted uip-icon uip-text-l" @click="options.transitionDelay = (formatNumber(options.transitionDelay) + 0.1).toFixed(2)">add</div>
-          </div>
-          
-        </div>
+        <uip-number :value="options.transitionDelay" :returnData="(d)=>{options.transitionDelay = d}" placeHolder="" :step="0.1"/>
       </div>  
       
       
@@ -654,5 +431,4 @@ export function moduleData() {
       
     </div>
     `,
-  };
-}
+};

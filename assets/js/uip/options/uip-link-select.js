@@ -1,89 +1,133 @@
 const { __, _x, _n, _nx } = wp.i18n;
-export function moduleData() {
-  return {
-    props: {
-      returnData: Function,
-      value: Object,
-      args: Object,
+export default {
+  props: {
+    returnData: Function,
+    value: Object,
+    args: Object,
+  },
+  inject: ['uipData', 'uipress'],
+  data() {
+    return {
+      open: false,
+      link: {
+        value: '',
+        newTab: 'dynamic',
+        dynamic: false,
+        dynamicKey: '',
+        dynamicType: '',
+      },
+      hideLinkType: false,
+      adminMenu: this.uipData.adminMenu.menu,
+      dynamics: this.uipData.dynamicOptions,
+      posts: [],
+      searchString: '',
+      fetchSearchString: '',
+      serverActive: false,
+      strings: {
+        searchLinks: __('Search admin pages', 'uipress-lite'),
+        searchPages: __('Search pages and posts', 'uipress-lite'),
+        noneFound: __('No posts found for current query', 'uipress-lite'),
+        newTab: __('Link mode', 'uipress-lite'),
+        linkSelect: __('Link select', 'uipress-lite'),
+        currentValue: __('Current value', 'uipress-lite'),
+        select: __('select', 'uipress-lite'),
+      },
+      linkTypes: {
+        admin: {
+          value: 'admin',
+          label: __('Admin', 'uipress-lite'),
+        },
+        content: {
+          value: 'content',
+          label: __('Content', 'uipress-lite'),
+        },
+      },
+      linkModes: {
+        dynamic: {
+          value: 'dynamic',
+          label: __('Dynamic', 'uipress-lite'),
+          placeHolder: __('Dynamic links will load in the available content frame without page refresh. If none exists then it will perform a normal relead.'),
+        },
+        default: {
+          value: 'default',
+          label: __('Default', 'uipress-lite'),
+          placeHolder: __('Default links load like a normal link and will refresh the whole page.'),
+        },
+        newTab: {
+          value: 'newTab',
+          label: __('New tab', 'uipress-lite'),
+          placeHolder: __('New tab links open in a new browser tab.'),
+        },
+      },
+      activeValue: 'admin',
+    };
+  },
+
+  watch: {
+    fetchSearchString: {
+      handler(newValue, oldValue) {
+        this.searchPosts();
+      },
+      deep: true,
     },
-    data: function () {
+    link: {
+      handler(newValue, oldValue) {
+        this.returnData(newValue);
+      },
+      deep: true,
+    },
+  },
+  mounted() {
+    this.formatValue();
+    this.formatArgs();
+  },
+  computed: {
+    /**
+     * Returns posts parameter
+     *
+     * @returns {Array}
+     * @since 3.2.13
+     */
+    getPosts() {
+      return this.posts;
+    },
+
+    /**
+     * Returns blank options object
+     *
+     * @returns {object}
+     * @since 3.2.13
+     */
+    createOptionObject() {
       return {
-        open: false,
-        link: {
-          value: '',
-          newTab: 'dynamic',
-          dynamic: false,
-          dynamicKey: '',
-          dynamicType: '',
-        },
-        hideLinkType: false,
-        adminMenu: this.uipData.adminMenu.menu,
-        dynamics: this.uipData.dynamicOptions,
-        posts: [],
-        searchString: '',
-        fetchSearchString: '',
-        serverActive: false,
-        strings: {
-          searchLinks: __('Search admin pages', 'uipress-lite'),
-          searchPages: __('Search pages and posts', 'uipress-lite'),
-          noneFound: __('No posts found for current query', 'uipress-lite'),
-          newTab: __('Link mode', 'uipress-lite'),
-          linkSelect: __('Link select', 'uipress-lite'),
-          currentValue: __('Current value', 'uipress-lite'),
-          select: __('select', 'uipress-lite'),
-        },
-        linkTypes: {
-          admin: {
-            value: 'admin',
-            label: __('Admin', 'uipress-lite'),
-          },
-          content: {
-            value: 'content',
-            label: __('Content', 'uipress-lite'),
-          },
-        },
-        linkModes: {
-          dynamic: {
-            value: 'dynamic',
-            label: __('Dynamic', 'uipress-lite'),
-            placeHolder: __('Dynamic links will load in the available content frame without page refresh. If none exists then it will perform a normal relead.'),
-          },
-          default: {
-            value: 'default',
-            label: __('Default', 'uipress-lite'),
-            placeHolder: __('Default links load like a normal link and will refresh the whole page.'),
-          },
-          newTab: {
-            value: 'newTab',
-            label: __('New tab', 'uipress-lite'),
-            placeHolder: __('New tab links open in a new browser tab.'),
-          },
-        },
-        activeValue: 'admin',
+        value: '',
+        newTab: 'dynamic',
+        dynamic: false,
+        dynamicKey: '',
       };
     },
-    inject: ['uipData', 'uipress'],
-    watch: {
-      fetchSearchString: {
-        handler(newValue, oldValue) {
-          this.searchPosts();
-        },
-        deep: true,
-      },
-      link: {
-        handler(newValue, oldValue) {
-          this.returnData(newValue);
-        },
-        deep: true,
-      },
+  },
+  methods: {
+    /**
+     * Injects input value if object
+     *
+     * @since 3.2.13
+     */
+    formatValue() {
+      if (!this.uipress.isObject(this.value)) return;
+      this.link = { ...this.link, ...this.value };
     },
-    mounted: function () {
-      this.formatValue(this.value);
 
-      if (this.args) {
-        if ('hideLinkType' in this.args) {
-          this.hideLinkType = this.args.hideLinkType;
-        }
+    /**
+     * Injects args if they are available
+     *
+     * @since 3.2.13
+     */
+    formatArgs() {
+      if (!this.args) return;
+
+      if (this.args.hideLinkType) {
+        this.hideLinkType = this.args.hideLinkType;
       }
 
       //Only add this option if it was already as it uses the old dynamic system
@@ -94,89 +138,94 @@ export function moduleData() {
         };
       }
     },
-    computed: {
-      getPosts() {
-        return this.posts;
-      },
-      createOptionObject() {
-        let defaultlink = {
-          value: '',
-          newTab: 'dynamic',
-          dynamic: false,
-          dynamicKey: '',
-        };
-        return defaultlink;
-      },
+
+    /**
+     * Searches posts, pages and admin pages
+     *
+     * @returns {Promise}
+     * @since 3.2.13
+     */
+    async searchPosts() {
+      // Bail early if no search or search currently active
+      if (!this.fetchSearchString || this.serverActive) return;
+
+      this.serverActive = true;
+
+      const str = this.fetchSearchString.toLowerCase();
+
+      //Build form data for fetch request
+      let formData = new FormData();
+      formData.append('action', 'uip_search_posts_pages');
+      formData.append('security', uip_ajax.security);
+      formData.append('searchStr', str);
+
+      const response = await this.uipress.callServer(uip_ajax.ajax_url, formData);
+
+      // Exit if error
+      if (!response) return;
+
+      this.posts = response.posts;
+      this.serverActive = false;
     },
-    methods: {
-      formatValue(value) {
-        if (this.uipress.isObject(value)) {
-          this.link = { ...this.link, ...value };
-        }
-      },
-      searchPosts() {
-        if (this.fetchSearchString == '') {
-          return;
-        }
-        if (this.serverActive) {
-          return;
-        }
-        this.serverActive = true;
-        let str = this.fetchSearchString.toLowerCase();
 
-        let self = this;
-
-        //Build form data for fetch request
-        let formData = new FormData();
-        formData.append('action', 'uip_search_posts_pages');
-        formData.append('security', uip_ajax.security);
-        formData.append('searchStr', str);
-        self.uipress.callServer(uip_ajax.ajax_url, formData).then((response) => {
-          self.posts = response.posts;
-          self.serverActive = false;
-        });
-      },
-      chooseLink(option) {
-        this.link.value = option;
-        this.link.dynamic = false;
-        this.link.dynamicKey = '';
-        this.returnData(this.link);
-      },
-      inSearch(menu) {
-        if (this.searchString == '') {
-          return true;
-        }
-
-        if (menu[0] == '') {
-          return true;
-        }
-
-        let lowStr = this.searchString.toLowerCase();
-
-        if (menu[0].toLowerCase().includes(lowStr) || menu[2].toLowerCase().includes(lowStr)) {
-          return true;
-        }
-
-        return false;
-      },
-      chooseItem(item) {
-        this.link.dynamic = true;
-        this.link.dynamicKey = item.key;
-        this.link.value = item.value;
-        this.link.dynamicType = 'link';
-
-        this.returnData(this.link);
-      },
-      removeDynamicItem() {
-        this.link.dynamic = false;
-        this.link.dynamicKey = '';
-        this.link.value = '';
-        this.link.dynamicType = '';
-
-        this.returnData(this.link);
-      },
+    /**
+     * Choose given option
+     *
+     * @param {Object} option - the selected option
+     * @since 3.2.13
+     */
+    chooseLink(option) {
+      this.link.value = option;
+      this.link.dynamic = false;
+      this.link.dynamicKey = '';
+      this.returnData(this.link);
     },
-    template: `
+
+    /**
+     * Checks if item is in the search
+     *
+     * @param {Object} menu - menu object
+     * @since 3.2.13
+     */
+    inSearch(menu) {
+      if (!this.searchString) return true;
+      if (!menu[0]) return true;
+
+      const lowStr = this.searchString.toLowerCase();
+      const name = menu[0].toLowerCase();
+      const id = menu[2].toLowerCase();
+
+      if (name.includes(lowStr) || id.includes(lowStr)) return true;
+
+      return false;
+    },
+
+    /**
+     * Selects menu option and returns to caller
+     *
+     * @param {Object} item - the selected menu item
+     * @since 3.2.13
+     */
+    chooseItem(item) {
+      this.link.dynamic = true;
+      this.link.dynamicKey = item.key;
+      this.link.value = item.value;
+      this.link.dynamicType = 'link';
+    },
+
+    /**
+     * Removes dynamic options and returns to caller
+     *
+     * @since 3.2.13
+     */
+    removeDynamicItem() {
+      this.link.dynamic = false;
+      this.link.dynamicKey = '';
+      this.link.value = '';
+      this.link.dynamicType = '';
+    },
+  },
+  template: `
       <div class="uip-w-100p uip-flex uip-flex-column uip-row-gap-xs">
       
       
@@ -185,7 +234,8 @@ export function moduleData() {
           <dropdown pos="left center" 
           ref="linkselect"
           :snapX="['#uip-block-settings', '#uip-template-settings', '#uip-global-settings']">
-              <template v-slot:trigger>
+          
+              <template #trigger>
                 <div class="uip-flex uip-flex-row">
                   
                   <span class="uip-border-rounder uip-text-l uip-flex uip-icon uip-padding-xxxs uip-text-center uip-link-default uip-background-muted"
@@ -196,7 +246,7 @@ export function moduleData() {
                 </div>
               </template>
               
-              <template v-slot:content>
+              <template #content>
               
                 <div class="uip-flex uip-flex-column uip-row-gap-s uip-padding-s uip-w-240">
                 
@@ -303,5 +353,4 @@ export function moduleData() {
         </div>
         
       </div>`,
-  };
-}
+};

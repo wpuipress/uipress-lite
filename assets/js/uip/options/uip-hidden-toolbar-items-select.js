@@ -1,71 +1,95 @@
 const { __, _x, _n, _nx } = wp.i18n;
-export function moduleData() {
-  return {
-    props: {
-      returnData: Function,
-      value: Array,
-    },
-    data: function () {
-      return {
-        toolbar: this.uipData.toolbar,
-        selected: this.formatInput(),
-        strings: {
-          selectItems: __('Hidden toolbar items', 'uipress-lite'),
-          searchItems: __('Search toolbar items', 'uipress-lite'),
-        },
-      };
-    },
-    inject: ['uipData', 'uipress'],
-    watch: {
-      selected: {
-        handler(newValue, oldValue) {
-          this.returnData(this.selected);
-        },
-        deep: true,
+export default {
+  props: {
+    returnData: Function,
+    value: Array,
+  },
+  data() {
+    return {
+      toolbar: this.uipData.toolbar,
+      selected: [],
+      strings: {
+        selectItems: __('Hidden toolbar items', 'uipress-lite'),
+        searchItems: __('Search toolbar items', 'uipress-lite'),
       },
+    };
+  },
+  inject: ['uipData', 'uipress'],
+  watch: {
+    selected: {
+      handler(newValue, oldValue) {
+        this.returnData(this.selected);
+      },
+      deep: true,
     },
-    computed: {
-      returnFormatedToolbar() {
-        self = this;
-        let returndata = [];
+  },
+  mounted() {
+    this.formatInput();
+  },
+  computed: {
+    /**
+     * Returns a formatted toolbar data structure.
+     *
+     * Processes the toolbar items and their potential submenus. It retrieves the id of
+     * each item, and also creates a label for it by removing any HTML tags from the id.
+     * The result is an array of objects, each having a `name` and `label` property.
+     *
+     * @since 3.2.13
+     * @returns {Array} - The formatted toolbar data.
+     */
+    returnFormattedToolbar() {
+      const formattedData = [];
 
-        console.log(this.toolbar);
+      for (const key in this.toolbar) {
+        const item = this.toolbar[key];
 
-        for (const key in self.toolbar) {
-          let temp = {};
-          let item = self.toolbar[key];
-          temp.name = item.id;
+        formattedData.push({
+          name: item.id,
+          label: this.removeHTMLTags(item.id),
+        });
 
-          temp.label = item.id.replace(/<[^>]*>?/gm, '');
-          returndata.push(temp);
+        if (!item.submenu) continue;
+        if (!item.submenu.length) continue;
 
-          if (item.submenu && item.submenu.length > 0) {
-            for (const subKey in item.submenu) {
-              let subtemp = {};
-              let sub = item.submenu[subKey];
-              subtemp.name = sub.id;
-              subtemp.label = sub.id.replace(/<[^>]*>?/gm, '');
-              returndata.push(subtemp);
-            }
-          }
+        // Process submenu
+        for (const sub of item.submenu) {
+          formattedData.push({
+            name: sub.id,
+            label: this.removeHTMLTags(sub.id),
+          });
         }
-        return returndata;
-      },
+      }
+
+      return formattedData;
     },
-    mounted: function () {
-      console.log(this.returnFormatedToolbar);
+  },
+
+  methods: {
+    /**
+     * Injects input value
+     *
+     * @snce 3.2.13
+     */
+    formatInput() {
+      if (!this.value) return;
+      if (!Array.isArray(this.value)) return;
+      this.selected = this.value;
     },
-    methods: {
-      formatInput() {
-        if (this.uipress.isObject(this.value)) {
-          return [];
-        } else {
-          return this.value;
-        }
-      },
+
+    /**
+     * Removes any HTML tags from a given string.
+     *
+     * @param {string} str - The input string.
+     * @returns {string} - String without HTML tags.
+     */
+    removeHTMLTags(str) {
+      return str.replace(/<[^>]*>?/gm, '');
     },
-    template: `
-		  <multi-select metaKey="url" :selected="selected" :availableOptions="returnFormatedToolbar" :placeHolder="strings.selectItems" :searchPlaceHolder="strings.searchItems" :single="false" :updateSelected="function(data){selected = data} "></multi-select>
+  },
+  template: `
+		  <multi-select metaKey="url" :selected="selected" 
+          :availableOptions="returnFormattedToolbar" 
+          :placeHolder="strings.selectItems" :searchPlaceHolder="strings.searchItems" 
+          :single="false" :updateSelected="function(data){selected = data} "/>
 	  `,
-  };
-}
+};

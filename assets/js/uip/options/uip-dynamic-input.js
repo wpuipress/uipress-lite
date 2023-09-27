@@ -1,94 +1,105 @@
 const { __, _x, _n, _nx } = wp.i18n;
-export function moduleData() {
-  return {
-    props: {
-      returnData: Function,
-      value: Object,
-    },
-    data: function () {
-      return {
-        open: false,
-        input: {
-          string: '',
-          dynamicPos: 'left',
-        },
-        dynamics: this.uipData.dynamicOptions,
-        strings: {
-          dynamicData: __('Dynamic data', 'uipress-lite'),
-          currentValue: __('Current value', 'uipress-lite'),
-          select: __('select', 'uipress-lite'),
-          dataPos: __('Dynamic data position', 'uipress-lite'),
-        },
-        positionOptions: {
-          left: {
-            label: __('Left', 'uipress-lite'),
-            value: 'left',
-            placeHolder: '',
-          },
-          right: {
-            label: __('Right', 'uipress-lite'),
-            value: 'right',
-            placeHolder: '',
-          },
-        },
-      };
-    },
-    inject: ['uipData', 'uipress'],
-    watch: {
+export default {
+  props: {
+    returnData: Function,
+    value: Object,
+  },
+  data() {
+    return {
+      open: false,
       input: {
-        handler(newValue, oldValue) {
-          this.returnData({ string: this.input.string, dynamic: this.input.dynamic, dynamicKey: this.input.dynamicKey, dynamicPos: this.input.dynamicPos, dynamicType: 'text' });
+        string: '',
+        dynamicPos: 'left',
+      },
+      dynamics: this.uipData.dynamicOptions,
+      strings: {
+        dynamicData: __('Dynamic data', 'uipress-lite'),
+        currentValue: __('Current value', 'uipress-lite'),
+        select: __('select', 'uipress-lite'),
+        dataPos: __('Dynamic data position', 'uipress-lite'),
+      },
+      positionOptions: {
+        left: {
+          label: __('Left', 'uipress-lite'),
+          value: 'left',
+          placeHolder: '',
         },
-        deep: true,
+        right: {
+          label: __('Right', 'uipress-lite'),
+          value: 'right',
+          placeHolder: '',
+        },
       },
+    };
+  },
+  inject: ['uipData', 'uipress'],
+  watch: {
+    input: {
+      handler(newValue, oldValue) {
+        const data = { string: this.input.string, dynamic: this.input.dynamic, dynamicKey: this.input.dynamicKey, dynamicPos: this.input.dynamicPos, dynamicType: 'text' };
+        this.returnData(data);
+      },
+      deep: true,
     },
-    mounted: function () {
-      this.formatValue(this.value);
+  },
+  mounted() {
+    this.formatValue(this.value);
+  },
+  methods: {
+    /**
+     * Injects input value
+     *
+     * @since 3.2.13
+     */
+    formatValue() {
+      if (!this.uipress.isObject(this.value)) return;
+      this.input = { ...this.input, ...this.value };
     },
-    computed: {},
-    methods: {
-      createOptionObject() {
-        return {
-          value: '',
-          dynamic: false,
-          dynamicKey: '',
-          dynamicPos: '',
-        };
-      },
-      formatValue(value) {
-        let self = this;
-        if (self.uipress.isObject(value)) {
-          this.input = { ...this.input, ...value };
-        }
-      },
-      chooseItem(item) {
-        if (item.key == this.input.dynamicKey) {
-          return;
-        }
-        this.input.dynamic = true;
-        this.input.dynamicKey = item.key;
 
-        this.returnData({ string: this.input.string, dynamic: this.input.dynamic, dynamicKey: this.input.dynamicKey, dynamicPos: this.input.dynamicPos });
-      },
-      removeDynamicItem() {
-        this.input.dynamic = false;
-        this.input.dynamicKey = '';
+    /**
+     * Chooses an item
+     *
+     * @param {Object} item - the selected option
+     * @since 3.2.13
+     */
+    chooseItem(item) {
+      // Already selected
+      if (item.key == this.input.dynamicKey) return;
 
-        this.returnData({ string: this.input.string, dynamic: this.input.dynamic, dynamicKey: this.input.dynamicKey, dynamicPos: this.input.dynamicPos });
-      },
+      this.input.dynamic = true;
+      this.input.dynamicKey = item.key;
+
+      this.returnData({ string: this.input.string, dynamic: this.input.dynamic, dynamicKey: this.input.dynamicKey, dynamicPos: this.input.dynamicPos });
     },
-    template: `
+
+    /**
+     * Removes a dynamic item and returns data
+     *
+     * @since 3.2.13
+     */
+    removeDynamicItem() {
+      this.input.dynamic = false;
+      this.input.dynamicKey = '';
+
+      this.returnData({ string: this.input.string, dynamic: this.input.dynamic, dynamicKey: this.input.dynamicKey, dynamicPos: this.input.dynamicPos });
+    },
+  },
+  template: `
+    
     <div class="uip-flex uip-gap-xxs uip-w-100p uip-flex-wrap">
     
         <!--Old dynamic data only show if data has been set-->
-        <dropdown pos="left center" v-if="input.dynamic">
-            <template v-slot:trigger>
+        <dropdown pos="left center" v-if="input.dynamic"
+        :snapX="['#uip-block-settings', '#uip-template-settings', '#uip-global-settings']">
+        
+            <template #trigger>
                 <span class="uip-border-rounder uip-text-l uip-flex uip-icon uip-padding-xxxs uip-text-center uip-link-default uip-background-muted"
                 :class="{'uip-background-primary uip-text-inverse' : this.input.dynamic}">
                   database
                 </span>
             </template>
-            <template v-slot:content>
+            
+            <template #content>
               <div class="uip-padding-xs uip-max-w-260">
                 <div class="uip-flex uip-flex-wrap uip-flex-start uip-gap-xs uip-row-gap-xs uip-w-250 uip-max-h-200 uip-scrollbar uip-overflow-auto">
                   <template v-for="dynamic in dynamics">
@@ -110,6 +121,7 @@ export function moduleData() {
                 </div>
               </div>
             </template>
+            
         </dropdown>
                 
         
@@ -127,5 +139,4 @@ export function moduleData() {
         
     </div>
         `,
-  };
-}
+};

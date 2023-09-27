@@ -28,7 +28,7 @@ export default {
       deep: true,
     },
   },
-  mounted: function () {
+  mounted() {
     this.formatIcon(this.value);
   },
   computed: {

@@ -1,150 +1,161 @@
 const { __, _x, _n, _nx } = wp.i18n;
-export function moduleData() {
-  return {
-    props: {
-      returnData: Function,
-      value: Object,
-    },
-    data: function () {
-      return {
-        spacing: {
-          padding: {
-            preset: '0',
-            sync: true,
-            units: 'px',
-          },
-          margin: {
-            preset: '0',
-            sync: true,
-            units: 'px',
-          },
-        },
+export default {
+  props: {
+    returnData: Function,
+    value: Object,
+  },
+  data() {
+    return {
+      spacing: {
         padding: {
           preset: '0',
+          sync: true,
+          units: 'px',
         },
-        strings: {
-          right: __('Right', 'uipress-lite'),
-          left: __('Left', 'uipress-lite'),
-          top: __('Top', 'uipress-lite'),
-          bottom: __('Bottom', 'uipress-lite'),
-          custom: __('Custom', 'uipress-lite'),
-          padding: __('Paddding', 'uipress-lite'),
-          margin: __('Margin', 'uipress-lite'),
+        margin: {
+          preset: '0',
+          sync: true,
+          units: 'px',
         },
-        spacingOptions: {
-          0: {
-            value: '0',
-            label: '0',
-            tip: __('Remove', 'uipress-lite'),
-          },
-          XS: {
-            value: 'XS',
-            label: 'XS',
-            tip: __('Extra small', 'uipress-lite'),
-          },
-          S: {
-            value: 'S',
-            label: 'S',
-            tip: __('Small', 'uipress-lite'),
-          },
-          M: {
-            value: 'M',
-            label: 'M',
-            tip: __('Medium', 'uipress-lite'),
-          },
-          L: {
-            value: 'L',
-            label: 'L',
-            tip: __('Large', 'uipress-lite'),
-          },
-          XL: {
-            value: 'XL',
-            label: 'XL',
-            tip: __('Extra large', 'uipress-lite'),
-          },
-          custom: {
-            value: 'custom',
-            icon: 'more_vert',
-            tip: __('Custom', 'uipress-lite'),
-          },
-        },
-      };
-    },
-    inject: ['uipress'],
-    mounted: function () {
-      this.formatValue(this.value);
-    },
-    watch: {
-      spacing: {
-        handler(newValue, oldValue) {
-          let self = this;
-          if (self.spacing.padding.sync == true) {
-            self.spacing.padding.right = self.spacing.padding.left;
-            self.spacing.padding.top = self.spacing.padding.left;
-            self.spacing.padding.bottom = self.spacing.padding.left;
-          }
-          if (self.spacing.margin.sync == true) {
-            self.spacing.margin.right = self.spacing.margin.left;
-            self.spacing.margin.top = self.spacing.margin.left;
-            self.spacing.margin.bottom = self.spacing.margin.left;
-          }
-
-          self.returnData(self.spacing);
-        },
-        deep: true,
       },
-    },
-    methods: {
-      formatValue(value) {
-        if (typeof value === 'undefined') {
-          return;
-        }
-        if (this.uipress.isObject(value)) {
-          if ('padding' in value) {
-            this.spacing.padding = { ...this.spacing.padding, ...value.padding };
-          }
-          if ('margin' in value) {
-            this.spacing.margin = { ...this.spacing.margin, ...value.margin };
-          }
-
-          if (this.spacing.margin.preset == 'remove') {
-            this.spacing.margin.preset = '0';
-          }
-
-          if (this.spacing.margin.preset == 'small') {
-            this.spacing.margin.preset = 'S';
-          }
-
-          if (this.spacing.margin.preset == 'medium') {
-            this.spacing.margin.preset = 'M';
-          }
-
-          if (this.spacing.margin.preset == 'large') {
-            this.spacing.margin.preset = 'L';
-          }
-
-          //PADDING
-          if (this.spacing.padding.preset == 'remove') {
-            this.spacing.padding.preset = '0';
-          }
-
-          if (this.spacing.padding.preset == 'small') {
-            this.spacing.padding.preset = 'S';
-          }
-
-          if (this.spacing.padding.preset == 'medium') {
-            this.spacing.padding.preset = 'M';
-          }
-
-          if (this.spacing.padding.preset == 'large') {
-            this.spacing.padding.preset = 'L';
-          }
-
-          return;
-        }
+      padding: {
+        preset: '0',
       },
+      strings: {
+        right: __('Right', 'uipress-lite'),
+        left: __('Left', 'uipress-lite'),
+        top: __('Top', 'uipress-lite'),
+        bottom: __('Bottom', 'uipress-lite'),
+        custom: __('Custom', 'uipress-lite'),
+        padding: __('Paddding', 'uipress-lite'),
+        margin: __('Margin', 'uipress-lite'),
+      },
+      spacingOptions: {
+        0: {
+          value: '0',
+          label: '0',
+          tip: __('Remove', 'uipress-lite'),
+        },
+        XS: {
+          value: 'XS',
+          label: 'XS',
+          tip: __('Extra small', 'uipress-lite'),
+        },
+        S: {
+          value: 'S',
+          label: 'S',
+          tip: __('Small', 'uipress-lite'),
+        },
+        M: {
+          value: 'M',
+          label: 'M',
+          tip: __('Medium', 'uipress-lite'),
+        },
+        L: {
+          value: 'L',
+          label: 'L',
+          tip: __('Large', 'uipress-lite'),
+        },
+        XL: {
+          value: 'XL',
+          label: 'XL',
+          tip: __('Extra large', 'uipress-lite'),
+        },
+        custom: {
+          value: 'custom',
+          icon: 'more_vert',
+          tip: __('Custom', 'uipress-lite'),
+        },
+      },
+    };
+  },
+  inject: ['uipress'],
+  mounted() {
+    this.formatValue();
+  },
+  watch: {
+    /**
+     * Watches options and returns to caller on change
+     *
+     * @since 3.2.13
+     */
+    spacing: {
+      handler(newValue, oldValue) {
+        this.maybeSyncSides();
+      },
+      deep: true,
     },
-    template: `
+  },
+  methods: {
+    /**
+     * Syncs sides of padding / margin when sync is on
+     *
+     * @since 3.2.13
+     */
+    maybeSyncSides() {
+      if (this.spacing.padding.sync == true) {
+        this.spacing.padding.right = this.spacing.padding.left;
+        this.spacing.padding.top = this.spacing.padding.left;
+        this.spacing.padding.bottom = this.spacing.padding.left;
+      }
+
+      if (this.spacing.margin.sync == true) {
+        this.spacing.margin.right = this.spacing.margin.left;
+        this.spacing.margin.top = this.spacing.margin.left;
+        this.spacing.margin.bottom = this.spacing.margin.left;
+      }
+
+      this.returnData(this.spacing);
+    },
+
+    /**
+     * Injects props value into component
+     *
+     * @since 3.2.13
+     */
+    formatValue(value) {
+      if (!this.uipress.isObject(this.value)) return;
+
+      // Update padding
+      if ('padding' in this.value) {
+        this.spacing.padding = { ...this.spacing.padding, ...this.value.padding };
+      }
+
+      // Update margin
+      if ('margin' in this.value) {
+        this.spacing.margin = { ...this.spacing.margin, ...this.value.margin };
+      }
+
+      switch (this.spacing.margin.preset) {
+        case 'remove':
+          this.spacing.margin.preset = '0';
+
+        case 'small':
+          this.spacing.margin.preset = 'S';
+
+        case 'medium':
+          this.spacing.margin.preset = 'M';
+
+        case 'large':
+          this.spacing.margin.preset = 'L';
+      }
+
+      switch (this.spacing.padding.preset) {
+        case 'remove':
+          this.spacing.padding.preset = '0';
+
+        case 'small':
+          this.spacing.padding.preset = 'S';
+
+        case 'medium':
+          this.spacing.padding.preset = 'M';
+
+        case 'large':
+          this.spacing.padding.preset = 'L';
+      }
+    },
+  },
+  template: `
     
     
     <div class="uip-flex uip-flex-column uip-row-gap-xs">
@@ -292,5 +303,4 @@ export function moduleData() {
     </div>
     
     `,
-  };
-}
+};

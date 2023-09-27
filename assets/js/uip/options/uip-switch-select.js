@@ -1,57 +1,78 @@
-export function moduleData() {
-  return {
-    props: {
-      returnData: Function,
-      value: [Boolean, String],
-      args: Object,
-    },
-    inject: ['uipress'],
-    data: function () {
-      return {
-        option: this.value,
-        yesNoOptions: {
-          false: {
-            value: false,
-            label: __('No', 'uipress-lite'),
-          },
-          true: {
-            value: true,
-            label: __('Yes', 'uipress-lite'),
-          },
+export default {
+  props: {
+    returnData: Function,
+    value: [Boolean, String],
+    args: Object,
+  },
+  inject: ['uipress'],
+  data() {
+    return {
+      option: this.value,
+      yesNoOptions: {
+        false: {
+          value: false,
+          label: __('No', 'uipress-lite'),
         },
-      };
-    },
-    created: function () {
-      if (this.uipress.isObject(this.args)) {
-        if ('options' in this.args) {
-          this.yesNoOptions = this.args.options;
-        }
-      }
-    },
-    mounted: function () {},
-    watch: {
-      option: {
-        handler(newValue, oldValue) {
-          console.log(this.option);
-          this.returnData(this.option);
+        true: {
+          value: true,
+          label: __('Yes', 'uipress-lite'),
         },
       },
-    },
-    computed: {
-      asText() {
-        if (this.uipress.isObject(this.args)) {
-          if ('asText' in this.args) {
-            return true;
-          }
-        }
-        return false;
+    };
+  },
+  created() {
+    this.injectProp();
+  },
+  watch: {
+    /**
+     * Watches changes to option and returns to caller
+     *
+     * @since 3.2.13
+     */
+    option: {
+      handler(newValue, oldValue) {
+        this.returnData(this.option);
       },
     },
-    template: `
-    <toggle-switch v-if="asText" :options="yesNoOptions" :activeValue="option" :returnValue="function(data){ option = data}"></toggle-switch>
+  },
+  computed: {
+    /**
+     * Returns whether the switch should be shown as text
+     *
+     * @since 3.2.13
+     */
+    asText() {
+      if (!this.uipress.isObject(this.args)) return false;
+      if (!this.args.asText) return;
+      return true;
+    },
+  },
+  methods: {
+    /**
+     * Injects prop value
+     *
+     * @since 3.2.13
+     */
+    injectProp() {
+      if (!this.uipress.isObject(this.args)) return;
+      if (!this.args.options) return;
+      this.yesNoOptions = this.args.options;
+    },
+
+    /**
+     * Handles option changes from toggle-switch
+     *
+     * @param {Boolean} data - the return value
+     */
+    updateValue(data) {
+      this.option = data;
+    },
+  },
+  template: `
+    <toggle-switch v-if="asText" :options="yesNoOptions" :activeValue="option" :returnValue="updateValue"/>
+    
     <label v-else class="uip-switch">
       <input type="checkbox" v-model="option">
       <span class="uip-slider"></span>
     </label>`,
-  };
-}
+};

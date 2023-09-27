@@ -10,7 +10,7 @@ export default {
     value: Object,
     args: Object,
   },
-  data: function () {
+  data() {
     return {
       img: {
         url: '',
@@ -33,8 +33,8 @@ export default {
       deep: true,
     },
   },
-  mounted: function () {
-    this.formatInput(this.value);
+  mounted() {
+    this.formatInput();
   },
   computed: {
     /**
@@ -47,14 +47,7 @@ export default {
     returnBackgroundImage() {
       if (this.img.url) return `background-size:contain;background-image: url(${this.img.url})`;
     },
-    /**
-     * Returns the curent value
-     *
-     * @since 3.2.13
-     */
-    returnValue() {
-      return this.value;
-    },
+
     /**
      * Resets the image object
      *
@@ -72,23 +65,15 @@ export default {
   },
   methods: {
     /**
-     * Formats the given input value. If the input is an object,
-     * it merges the object with the `img` property of the instance.
+     * Injects value to component
      *
-     * @param {any} value - The input value to format.
      * @returns {void}
      *
      * @since 3.2.13
      */
-    formatInput(value) {
-      // Check for undefined values
-      if (typeof value === 'undefined') return;
-
-      // Check if the input is an object and merge it with the `img` property
-      if (this.uipress.isObject(value)) {
-        this.img = { ...this.img, ...this.returnValue };
-        return;
-      }
+    formatInput() {
+      if (!this.uipress.isObject(this.value)) return;
+      this.img = { ...this.img, ...this.value };
     },
   },
   template: `
