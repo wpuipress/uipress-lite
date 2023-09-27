@@ -186,14 +186,16 @@ const appArgs = defineComponent({
  * Defines and create ui builder routes
  * @since 3.0.0
  */
+
 const BuilderSettings = () => import(`./uibuilder/builder-settings.min.js?ver=${pluginVersion}`);
 const TemplateTable = () => import(`./uibuilder/template-table.min.js?ver=${pluginVersion}`);
 const SetupWizard = () => import(`./uibuilder/setup-wizard.min.js?ver=${pluginVersion}`);
 const GlobalExport = () => import(`./uibuilder/global-export.min.js?ver=${pluginVersion}`);
 const GlobalImport = () => import(`./uibuilder/global-import.min.js?ver=${pluginVersion}`);
 const SiteSync = () => import(`./uibuilder/site-sync.min.js?ver=${pluginVersion}`);
-const SiteSettings = () => import(`./uibuilder/site-settings.min.js?ver=${pluginVersion}`);
+const SiteSettings = () => import(`./uibuilder/site-settings.min.js?ver=${pluginVersion}`).catch((error) => console.error('Failed to load BuilderSettings', error));
 const Framework = () => import(`./uibuilder/framework.min.js?ver=${pluginVersion}`);
+const Errorlog = () => import(`./tools/error-log.min.js?ver=${pluginVersion}`);
 
 const routes = [
   {
@@ -226,6 +228,11 @@ const routes = [
         name: __('Site settings', 'uipress-lite'),
         path: '/site-settings/',
         component: SiteSettings,
+      },
+      {
+        name: __('Error log', 'uipress-lite'),
+        path: '/errorlog/',
+        component: Errorlog,
       },
     ],
   },
