@@ -67,7 +67,7 @@ export default {
       },
     };
   },
-  inject: ['uipress', 'uipData', 'uiTemplate', 'router'],
+  inject: ['uipress', 'uipData'],
   watch: {
     currentStep: {
       handler(newValue, oldValue) {
@@ -77,11 +77,16 @@ export default {
       },
     },
   },
-  created: function () {
+  created() {
     this.getSyncOptions();
   },
-  mounted: function () {},
   computed: {
+    /**
+     * Returns whether the sync button is enabled
+     *
+     * @returns {boolean}
+     * @since 3.2.13
+     */
     isDisabledButton() {
       if (!this.syncOptions.importOptions.templates && !this.syncOptions.importOptions.siteSettings && !this.syncOptions.importOptions.themeStyles && !this.syncOptions.importOptions.adminMenus) {
         return true;
@@ -89,115 +94,143 @@ export default {
     },
   },
   methods: {
-    getSyncOptions() {
+    /**
+     * Gets sync options
+     *
+     * @returns {Promise}
+     * @since 3.2.13
+     */
+    async getSyncOptions() {
       let self = this;
 
       let formData = new FormData();
       formData.append('action', 'uip_get_sync_options');
       formData.append('security', uip_ajax.security);
 
-      self.uipress.callServer(uip_ajax.ajax_url, formData).then((response) => {
-        self.fetchingSettings = false;
-        if (response.error) {
-          self.uipress.notify(response.message, '', 'error', true);
-          return;
-        }
+      const response = await this.uipress.callServer(uip_ajax.ajax_url, formData);
+      this.fetchingSettings = false;
 
-        self.importPath = response.restURL;
+      // Handle error
+      if (response.error) {
+        this.uipress.notify(response.message, '', 'error', true);
+        return;
+      }
 
-        if (response.options) {
-          if ('key' in response.options) {
-            self.hostOptions.key = response.options.key;
-          }
-          if ('hostEnabled' in response.options) {
-            self.hostOptions.hostEnabled = response.options.hostEnabled;
-          }
+      this.importPath = response.restURL;
 
-          if (!('syncOptions' in response.options)) return;
+      // No options so exit
+      if (!response.options) return;
 
-          if ('importOptions' in response.options.syncOptions) {
-            self.syncOptions.importOptions = { ...self.syncOptions.importOptions, ...response.options.syncOptions.importOptions };
-          }
+      if ('key' in response.options) {
+        this.hostOptions.key = response.options.key;
+      }
+      if ('hostEnabled' in response.options) {
+        this.hostOptions.hostEnabled = response.options.hostEnabled;
+      }
 
-          if ('key' in response.options.syncOptions) {
-            self.syncOptions.key = response.options.syncOptions.key;
-          }
+      if (!('syncOptions' in response.options)) return;
 
-          if ('keepUpToDate' in response.options.syncOptions) {
-            self.syncOptions.keepUpToDate = response.options.syncOptions.keepUpToDate;
-          }
+      if ('importOptions' in response.options.syncOptions) {
+        this.syncOptions.importOptions = { ...this.syncOptions.importOptions, ...response.options.syncOptions.importOptions };
+      }
 
-          if ('path' in response.options.syncOptions) {
-            self.syncOptions.path = response.options.syncOptions.path;
-          }
-        }
-      });
+      if ('key' in response.options.syncOptions) {
+        this.syncOptions.key = response.options.syncOptions.key;
+      }
+
+      if ('keepUpToDate' in response.options.syncOptions) {
+        this.syncOptions.keepUpToDate = response.options.syncOptions.keepUpToDate;
+      }
+
+      if ('path' in response.options.syncOptions) {
+        this.syncOptions.path = response.options.syncOptions.path;
+      }
     },
-    refreshKey() {
-      let self = this;
-
+    /**
+     * Refreshes the site sync key
+     *
+     * @returns {Promise}
+     * @since 3.2.13
+     */
+    async refreshKey() {
       let formData = new FormData();
       formData.append('action', 'uip_refresh_sync_key');
       formData.append('security', uip_ajax.security);
 
-      self.uipress.callServer(uip_ajax.ajax_url, formData).then((response) => {
-        self.fetchingSettings = false;
-        if (response.error) {
-          self.uipress.notify(response.message, '', 'error', true);
-          return;
-        }
-        if (response.options) {
-          if ('key' in response.options) {
-            self.hostOptions.key = response.options.key;
-          }
-        }
-      });
+      const response = await this.uipress.callServer(uip_ajax.ajax_url, formData);
+      this.fetchingSettings = false;
+
+      // Handle error
+      if (response.error) {
+        this.uipress.notify(response.message, '', 'error', true);
+        return;
+      }
+
+      if (!response.options) return;
+
+      // Update the key
+      if ('key' in response.options) {
+        this.hostOptions.key = response.options.key;
+      }
     },
-    saveHostSettings() {
+    /**
+     * Saves host settings
+     *
+     * @returns {Promise}
+     * @since 3.2.13
+     */
+    async saveHostSettings() {
       let self = this;
 
       let formData = new FormData();
       formData.append('action', 'uip_save_sync_options');
       formData.append('security', uip_ajax.security);
-      formData.append('options', self.uipress.uipEncodeJson(self.hostOptions));
-      formData.append('syncOptions', self.uipress.uipEncodeJson(self.syncOptions));
+      formData.append('options', this.uipress.uipEncodeJson(this.hostOptions));
+      formData.append('syncOptions', this.uipress.uipEncodeJson(this.syncOptions));
 
-      self.uipress.callServer(uip_ajax.ajax_url, formData).then((response) => {
-        self.fetchingSettings = false;
-        if (response.error) {
-          self.uipress.notify(response.message, '', 'error', true);
-          return;
-        }
-        self.uipress.notify(__('Settings saved', 'uipress-lite'), '', 'success');
-      });
-    },
-    closeThisComponent() {
-      document.documentElement.removeEventListener('click', this.onClickOutside, false);
-      this.$router.push('/');
-    },
-    syncNow() {
-      let self = this;
+      const response = await this.uipress.callServer(uip_ajax.ajax_url, formData);
+      this.fetchingSettings = false;
 
+      // Handle error
+      if (response.error) {
+        this.uipress.notify(response.message, '', 'error', true);
+        return;
+      }
+
+      // Settings saved
+      this.uipress.notify(__('Settings saved', 'uipress-lite'), '', 'success');
+    },
+
+    /**
+     * Initiates an immediate sync
+     *
+     * @returns {Promise}
+     * @since 3.2.13
+     */
+    async syncNow() {
       let formData = new FormData();
       formData.append('action', 'uip_start_site_sync');
       formData.append('security', uip_ajax.security);
-      formData.append('options', JSON.stringify(self.syncOptions));
-      let notID = self.uipress.notify(__('Importing uiPress content', 'uipress-lite'), '', 'default', false, true);
+      formData.append('options', JSON.stringify(this.syncOptions));
+      const notificationID = this.uipress.notify(__('Importing uiPress content', 'uipress-lite'), '', 'default', false, true);
 
-      self.uipress.callServer(uip_ajax.ajax_url, formData).then((response) => {
-        self.uipress.destroy_notification(notID);
-        if (response.error) {
-          self.uipress.notify(response.message, '', 'error', true);
-          return;
-        }
-        self.uipress.notify(__('Import complete', 'uipress-lite'), '', 'success');
+      const response = await this.uipress.callServer(uip_ajax.ajax_url, formData);
+      this.uipress.destroy_notification(notificationID);
 
-        self.$router.push('/');
+      // Handle error
+      if (response.error) {
+        this.uipress.notify(response.message, '', 'error', true);
+        return;
+      }
 
-        setTimeout(function () {
-          location.reload();
-        }, 600);
-      });
+      // Success
+      this.uipress.notify(__('Import complete', 'uipress-lite'), '', 'success');
+      this.$router.push('/');
+
+      // Reload page after short timeout to refresh settings
+      setTimeout(function () {
+        location.reload();
+      }, 600);
     },
   },
   template: `
