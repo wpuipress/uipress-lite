@@ -575,6 +575,11 @@ class uip_ui_builder extends uip_app
         $filter = sanitize_text_field($_POST['filter']);
       }
 
+      add_filter('posts_orderby', function ($orderby) {
+        global $wpdb;
+        return "{$wpdb->posts}.post_status DESC"; // You can change ASC to DESC if you want descending order
+      });
+
       //Get template
       $args = [
         'post_type' => 'uip-ui-template',
@@ -939,6 +944,7 @@ class uip_ui_builder extends uip_app
       $utils = new uip_util();
       $templateID = sanitize_text_field($_POST['templateid']);
       $status = sanitize_text_field($_POST['status']);
+      $templateFor = $utils->clean_ajax_input(json_decode(stripslashes($_POST['templatefor'])));
 
       if (!$templateID || !$status) {
         $returndata['error'] = true;
@@ -970,6 +976,27 @@ class uip_ui_builder extends uip_app
         $settings->status = 'uipfalse';
       }
 
+      // Update template for items
+      if (is_array($templateFor)) {
+        $settings->rolesAndUsers = $templateFor;
+
+        // Template for settings
+        $roles = [];
+        $users = [];
+        foreach ($templateFor as $item) {
+          if ($item->type == 'User') {
+            $users[] = $item->id;
+          }
+
+          if ($item->type == 'Role') {
+            $roles[] = $item->name;
+          }
+        }
+
+        update_post_meta($templateID, 'uip-template-for-roles', $roles);
+        update_post_meta($templateID, 'uip-template-for-users', $users);
+      }
+
       update_post_meta($templateID, 'uip-template-settings', $settings);
 
       if (!$updated) {
@@ -980,7 +1007,7 @@ class uip_ui_builder extends uip_app
 
       $returndata = [];
       $returndata['success'] = true;
-      $returndata['message'] = __('Template status updated', 'uipress-lite');
+      $returndata['message'] = __('Template updated', 'uipress-lite');
       wp_send_json($returndata);
     }
     die();
