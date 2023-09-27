@@ -1,5 +1,9 @@
 const { __, _x, _n, _nx } = wp.i18n;
+import { defineAsyncComponent, nextTick } from '../../libs/vue-esm-dev.js';
 export default {
+  components: {
+    errorLog: defineAsyncComponent(() => import('../tools/error-log.min.js?ver=3.2.12')),
+  },
   data() {
     return {
       templates: [],
@@ -21,7 +25,7 @@ export default {
         active: __('Active', 'uipress-lite'),
         draft: __('Draft', 'uipress-lite'),
         results: __('results', 'uipress-lite'),
-        searchTemplates: __('Search templates...', 'uipress-lite'),
+        searchTemplates: __('Search templates and settings', 'uipress-lite'),
         templateDuplicated: __('Template duplicated', 'uipress-lite'),
         templateDeleted: __('Template deleted', 'uipress-lite'),
         deleteSelected: __('Delete selected', 'uipress-lite'),
@@ -54,6 +58,7 @@ export default {
         welcomeTov32: __('Welcome to version 3.2!', 'uipress-lite'),
         globalImport: __('Global import', 'uipress-lite'),
         siteSync: __('Remote sync', 'uipress-lite'),
+        new: __('New', 'uipress-lite'),
       },
       activeTableTab: 'all',
       tabletabs: [
@@ -129,7 +134,7 @@ export default {
       },
     };
   },
-  inject: ['uipData', 'router', 'uipress', 'uipMediaLibrary'],
+  inject: ['uipData', 'router', 'uipress'],
   mounted: function () {
     let query = this.$route.query;
 
@@ -396,9 +401,45 @@ export default {
     },
   },
   template: `
+  
+  <div class="uip-flex uip-flex-column uip-h-100p uip-w-100p uip-background-muted">
+  
+    <!--Toolbar-->
+    
+    <div class="uip-padding-s uip-background-default uip-border-bottom uip-border-bottom uip-flex uip-flex-between">
+    
+      <!--Logo-->
+      <div class="uip-flex uip-gap-xs uip-flex-center uip-link-default uip-border-rounder uip-background-muted uip-padding-xs uip-padding-top-xxs uip-padding-bottom-xxs">
+        <div class="uip-logo uip-w-18 uip-ratio-1-1"></div>
+        <div class="uip-icon uip-text-l uip-text-muted">expand_more</div>
+      </div>
+      
+      <!--Global search-->
+      <div class="uip-flex uip-background-muted uip-border-rounder uip-padding-xxs uip-flex-center uip-w-240">
+        <span class="uip-icon uip-text-muted uip-margin-right-xs">search</span>
+        <input class="uip-blank-input uip-flex-grow uip-text-s" type="search" v-model="search" :placeholder="strings.searchTemplates" autofocus="">
+      </div>
+      
+      <!--Right actions-->
+      <div class="uip-flex uip-flex-gap-xs uip-flex-center">
+      
+        
+        <!--New template-->
+        <div class="uip-button-primary uip-flex uip-flex-row uip-gap-xxs uip-flex-center uip-text-s" @click="createNewUI('ui-template')">
+          
+          <span>{{strings.newTemplate}}</span>
+          
+        </div>
+      
+      </div>
+      
+    
+    </div>
+  
+  </div>
     
     
-  <div class="uip-padding-m uip-background-default uip-body-font uip-text-normal uip-app-frame uip-border-box uip-overflow-auto" style="min-height: calc(100vh - 32px); max-height: calc(100vh - 32px)">
+  <div v-if="1==2" class="uip-padding-m uip-background-default uip-body-font uip-text-normal uip-app-frame uip-border-box uip-overflow-auto" style="min-height: calc(100vh - 32px); max-height: calc(100vh - 32px)">
 		<div class="uip-flex uip-flex-between uip-margin-bottom-m uip-flex-center">
       <div class="uip-flex uip-flex-row uip-gap-xs uip-flex-center">
       
@@ -441,7 +482,7 @@ export default {
                 </template>
                 <template v-slot:content>
                   <div class="uip-w-100p">
-                    <uip-error-log></uip-error-log>
+                    <errorLog/>
                   </div>
                 </template>
               </uip-offcanvas>

@@ -1,5 +1,5 @@
 import { nextTick } from '../../libs/vue-esm-dev.js';
-import blockRender from './uip-block-render.min.js?ver=3.2.12';
+import blockRender from './block-render.min.js?ver=3.2.12';
 export default {
   components: {
     BlockRender: blockRender,

@@ -3,7 +3,7 @@ const { __, _x, _n, _nx } = wp.i18n;
 export default {
   inject: ['uipress'],
   components: {
-    BlockSettings: defineAsyncComponent(() => import('./uip-block-settings.min.js?ver=3.2.12')),
+    BlockSettings: defineAsyncComponent(() => import('./block-settings.min.js?ver=3.2.12')),
   },
   data() {
     return {

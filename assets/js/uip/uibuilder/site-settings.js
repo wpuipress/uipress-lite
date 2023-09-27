@@ -6,7 +6,7 @@ const { __, _x, _n, _nx } = wp.i18n;
 import { defineAsyncComponent } from '../../libs/vue-esm-dev.js';
 export default {
   components: {
-    globalVariables: defineAsyncComponent(() => import('./uip-builder-variables.min.js?ver=3.2.12')),
+    globalVariables: defineAsyncComponent(() => import('./variables.min.js?ver=3.2.12')),
   },
   data() {
     return {

@@ -1,9 +1,13 @@
 const { __, _x, _n, _nx } = wp.i18n;
+import { defineAsyncComponent, nextTick } from '../../libs/vue-esm-dev.js';
 export default {
   name: 'layersRecursive',
   props: {
     content: Array,
     returnData: Function,
+  },
+  components: {
+    BlockList: defineAsyncComponent(() => import('./block-list.min.js?ver=3.2.12')),
   },
   data() {
     return {
@@ -175,16 +179,18 @@ export default {
                       
                       <!--Block selector-->
                       <div class="uip-flex uip-flex-center uip-flex-middle uip-flex-row uip-margin-bottom-xxs">
+                      
                         <dropdown width="260" pos="right center" :onOpen="function(){uiTemplate.activePath = []}" triggerClass="uip-w-100p" class="uip-w-100p">
                           <template v-slot:trigger>
                             <div ref="footer" class="uip-text-muted uip-text-center uip-padding-xxs uip-text-center uip-icon uip-link-muted uip-border-rounder uip-border uip-cursor-pointer uip-w-100p uip-text-s" >add</div>
                           </template>
                           <template v-slot:content>
                             <div class="uip-padding-s uip-max-w-300 uip-w-300 uip-max-h-300 uip-overflow-auto uip-scrollbar">
-                              <builder-blocks-list mode="click" :insertArea="element.content"></builder-blocks-list>
+                              <BlockList mode="click" :insertArea="element.content"/>
                             </div>
                           </template>
                         </dropdown>
+                        
                       </div>
                       <!--End block selector-->
                     

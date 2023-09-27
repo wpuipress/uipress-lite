@@ -6,8 +6,13 @@ const { __, _x, _n, _nx } = wp.i18n;
 import { defineAsyncComponent, nextTick } from '../../libs/vue-esm-dev.js';
 export default {
   components: {
-    layersPanels: defineAsyncComponent(() => import('./uip-layers.min.js?ver=3.2.12')),
-    blockcontextmenu: defineAsyncComponent(() => import('./uip-block-contextmenu.min.js?ver=3.2.12')),
+    layersPanels: defineAsyncComponent(() => import('./layers.min.js?ver=3.2.12')),
+    blockcontextmenu: defineAsyncComponent(() => import('./block-contextmenu.min.js?ver=3.2.12')),
+    ToolBar: defineAsyncComponent(() => import('./toolbar.min.js?ver=3.2.12')),
+    Canvas: defineAsyncComponent(() => import('./canvas.min.js?ver=3.2.12')),
+    BlockList: defineAsyncComponent(() => import('./block-list.min.js?ver=3.2.12')),
+    TemplateLibrary: defineAsyncComponent(() => import('./template-library.min.js?ver=3.2.12')),
+    DynamicData: defineAsyncComponent(() => import('./dynamic-data-watcher.min.js?ver=3.2.12')),
   },
   inject: ['uipData', 'router', 'uipress'],
   data: function () {
@@ -679,11 +684,11 @@ export default {
       <div v-if="layoutFetched" class="uip-background-default uip-body-font uip-h-viewport uip-max-h-viewport uip-flex uip-text-normal uip-app-frame uip-border-box uip-builder-frame uip-flex uip-flex-column uip-w-100p" >
           
           <!--Dynamic data watcher-->
-          <uip-dynamic-data-watcher></uip-dynamic-data-watcher>
+          <DynamicData/>
           
         
-          
-          <builder-toolbar></builder-toolbar>
+          <!--Builder Toolbar-->
+          <ToolBar/>
           
           
       
@@ -709,9 +714,9 @@ export default {
                   <!-- OUTPUT SETTINGS OR BLOCKS -->
                   <div class="uip-flex-grow uip-overflow-auto uip-padding-s uip-scrollbar">
                   
-                    <uip-template-library v-if="ui.sideBar.activeTab == 'library'"></uip-template-library>
+                    <TemplateLibrary v-if="ui.sideBar.activeTab == 'library'"/>
                     
-                    <builder-blocks-list v-if="ui.sideBar.activeTab == 'blocks'"></builder-blocks-list>
+                    <BlockList v-if="ui.sideBar.activeTab == 'blocks'"/>
                    
                     
                     <!--LAYERS-->
@@ -728,7 +733,7 @@ export default {
                             </template>
                             <template v-slot:content>
                               <div class="uip-padding-s uip-max-w-300 uip-w-300 uip-max-h-300 uip-overflow-auto uip-scrollbar">
-                                <builder-blocks-list mode="click" :insertArea="template.content"></builder-blocks-list>
+                                <BlockList mode="click" :insertArea="template.content"/>
                               </div>
                             </template>
                           </dropdown>
@@ -777,11 +782,11 @@ export default {
             </div>
             <!--End Layers panel -->
             
-            <!-- Preview -->
+            <!-- Main canvas -->
             <div class="uip-flex-grow uip-canvas-background">
-              <ui-preview></ui-preview>
+              <Canvas/>
             </div>
-            <!--End preview-->
+            <!--End canvas-->
             
             
             <!--Right bar -->

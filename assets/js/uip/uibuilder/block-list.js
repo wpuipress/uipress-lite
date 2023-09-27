@@ -4,134 +4,133 @@
  */
 const { __, _x, _n, _nx } = wp.i18n;
 import { defineAsyncComponent, nextTick } from '../../libs/vue-esm-dev.js';
-export function moduleData() {
-  return {
-    props: {
-      mode: String,
-      insertArea: Array,
-    },
-    data: function () {
-      return {
-        loading: true,
-        categories: [],
-        search: '',
-        sortedBlocks: this.uipData.blocks.sort((a, b) => a.name.localeCompare(b.name)),
-        strings: {
-          proBlock: __('This block requires uipress pro. Upgrade to unlock.', 'uipress-lite'),
-          seachBlocks: __('Search blocks...', 'uipress-lite'),
-        },
-      };
-    },
-    inject: ['uipData', 'router', 'uipress', 'uiTemplate'],
-    mounted: function () {
-      this.loading = false;
-      this.returnGroups;
-      let newGrouping = [];
-      for (let [index, block] of this.sortedBlocks.entries()) {
-        if (block.moduleName != 'responsive-grid' && block.moduleName != 'uip-admin-menu' && block.moduleName != 'uip-user-meta-block') {
-          newGrouping.push(block);
+export default {
+  props: {
+    mode: String,
+    insertArea: Array,
+  },
+  data: function () {
+    return {
+      loading: true,
+      categories: [],
+      search: '',
+      sortedBlocks: this.uipData.blocks.sort((a, b) => a.name.localeCompare(b.name)),
+      strings: {
+        proBlock: __('This block requires uipress pro. Upgrade to unlock.', 'uipress-lite'),
+        seachBlocks: __('Search blocks...', 'uipress-lite'),
+      },
+    };
+  },
+  inject: ['uipData', 'router', 'uipress', 'uiTemplate'],
+  mounted: function () {
+    this.loading = false;
+    this.returnGroups;
+    let newGrouping = [];
+    for (let [index, block] of this.sortedBlocks.entries()) {
+      if (block.moduleName != 'responsive-grid' && block.moduleName != 'uip-admin-menu' && block.moduleName != 'uip-user-meta-block') {
+        newGrouping.push(block);
+      }
+    }
+
+    this.sortedBlocks = newGrouping;
+  },
+  computed: {
+    returnCats() {
+      let cats = [];
+      let self = this;
+      let organisedBlocks = [];
+
+      for (let cat in this.returnGroups) {
+        let categoryBlocks = this.uipData.blocks.filter((c) => c.group == cat);
+        let tempers = categoryBlocks.sort((a, b) => a.name.localeCompare(b.name));
+        let sortedBlocks = [];
+
+        for (let block of tempers) {
+          if (block.moduleName != 'responsive-grid' && block.moduleName != 'uip-admin-menu' && block.moduleName != 'uip-user-meta-block') {
+            sortedBlocks.push(block);
+          }
         }
+
+        let temp = {
+          name: this.returnGroups[cat].label,
+          blocks: sortedBlocks,
+        };
+        organisedBlocks.push(temp);
       }
 
-      this.sortedBlocks = newGrouping;
+      return organisedBlocks;
     },
-    computed: {
-      returnCats() {
-        let cats = [];
-        let self = this;
-        let organisedBlocks = [];
-
-        for (let cat in this.returnGroups) {
-          let categoryBlocks = this.uipData.blocks.filter((c) => c.group == cat);
-          let tempers = categoryBlocks.sort((a, b) => a.name.localeCompare(b.name));
-          let sortedBlocks = [];
-
-          for (let block of tempers) {
-            if (block.moduleName != 'responsive-grid' && block.moduleName != 'uip-admin-menu' && block.moduleName != 'uip-user-meta-block') {
-              sortedBlocks.push(block);
-            }
-          }
-
-          let temp = {
-            name: this.returnGroups[cat].label,
-            blocks: sortedBlocks,
-          };
-          organisedBlocks.push(temp);
-        }
-
-        return organisedBlocks;
-      },
-      returnGroups() {
-        return this.uipData.blockGroups;
-      },
+    returnGroups() {
+      return this.uipData.blockGroups;
     },
-    methods: {
-      catHasChildren(cat) {
-        let show = false;
-        for (let [index, block] of cat.blocks.entries()) {
-          if (this.inSearch(block)) {
-            show = true;
-          }
+  },
+  methods: {
+    catHasChildren(cat) {
+      let show = false;
+      for (let [index, block] of cat.blocks.entries()) {
+        if (this.inSearch(block)) {
+          show = true;
         }
-        return show;
-      },
-      clone(block) {
-        let item = JSON.parse(JSON.stringify(block));
-        item.tooltip = {};
-        item.settings = {};
+      }
+      return show;
+    },
+    clone(block) {
+      let item = JSON.parse(JSON.stringify(block));
+      item.tooltip = {};
+      item.settings = {};
 
-        delete item.path;
-        delete item.args;
+      delete item.path;
+      delete item.args;
 
-        delete item.category;
+      delete item.category;
 
-        delete item.description;
+      delete item.description;
 
-        delete item.path;
+      delete item.path;
 
-        return item;
-      },
-      componentExists(mod) {
-        if (mod.premium && !this.uiTemplate.proActivated) {
-          return false;
-        }
-        let name = mod.moduleName;
-        if (this.$root._.appContext.components[name]) {
-          return true;
-        } else {
-          return false;
-        }
-      },
-      async insertAtPos(block) {
-        //Check if we allowing click from modal list
-        if (this.mode != 'click') {
-          return;
-        }
-        if (Array.isArray(this.insertArea)) {
-          let item = this.clone(block);
-          item.uid = this.uipress.createUID();
-          this.insertArea.push(item);
-          await nextTick();
-          const addedBlock = this.insertArea[this.insertArea.length - 1];
-          this.uipApp.blockControl.setActive(addedBlock, this.insertArea);
-        }
-      },
-      inSearch(block) {
-        if (this.search == '') {
-          return true;
-        }
-        let str = this.search.toLowerCase();
-
-        if (block.name.toLowerCase().includes(str)) {
-          return true;
-        }
-        if (block.description.toLowerCase().includes(str)) {
-          return true;
-        }
+      return item;
+    },
+    componentExists(mod) {
+      if (mod.premium && !this.uiTemplate.proActivated) {
         return false;
-      },
+      }
+      let name = mod.moduleName;
+      if (this.$root._.appContext.components[name]) {
+        return true;
+      } else {
+        return false;
+      }
     },
-    template: `
+    async insertAtPos(block) {
+      //Check if we allowing click from modal list
+      if (this.mode != 'click') {
+        return;
+      }
+      if (Array.isArray(this.insertArea)) {
+        let item = this.clone(block);
+        item.uid = this.uipress.createUID();
+        this.insertArea.push(item);
+        await nextTick();
+        const addedBlock = this.insertArea[this.insertArea.length - 1];
+        this.uipApp.blockControl.setActive(addedBlock, this.insertArea);
+      }
+    },
+    inSearch(block) {
+      if (this.search == '') {
+        return true;
+      }
+      let str = this.search.toLowerCase();
+
+      if (block.name.toLowerCase().includes(str)) {
+        return true;
+      }
+      if (block.description.toLowerCase().includes(str)) {
+        return true;
+      }
+      return false;
+    },
+  },
+  template: `
     
     <div class="">
     
@@ -220,6 +219,4 @@ export function moduleData() {
           
         </template>
       </div>`,
-  };
-  return compData;
-}
+};

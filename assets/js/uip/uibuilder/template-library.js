@@ -31,305 +31,324 @@ const screenOverlay = {
   `,
 };
 
-export function moduleData() {
-  return {
-    inject: ['uipData', 'router', 'uipress', 'uiTemplate'],
-    components: { screenOverlay: screenOverlay },
-    data() {
-      return {
-        loading: true,
-        themes: [],
-        search: '',
-        activeTemplate: false,
-        imageIndex: 0,
-        imageHover: false,
-        draggingBlock: false,
-        strings: {
-          missingMessage: __('This block no longer exists', 'uipress-lite'),
-          templateLibrary: __('Template library', 'uipress-lite'),
-          pro: __('Pro', 'uipress-lite'),
-          searchTemplates: __('Search templates', 'uipress-lite'),
-          backToAllThemes: __('Back to all templates', 'uipress-lite'),
-          includesProBlocks: __('Includes pro blocks', 'uipress-lite'),
-          createdBy: __('Created by', 'uipress-lite'),
-          addToTemplate: __('Add to template', 'uipress-lite'),
-          replaceContent: __('Replace current layout', 'uipress-lite'),
-          addAtEndOfContent: __('Add to end of layout', 'uipress-lite'),
-          requires: __('Requires uipress', 'uipress-lite'),
-          downloadcount: __('How many times this template has been downloaded', 'uipress-lite'),
-          sortBy: __('Sort by', 'uipress-lite'),
-          include: __('Include', 'uipress-lite'),
-          uiTemplates: __('UI templates', 'uipress-lite'),
-          pages: __('Pages', 'uipress-lite'),
-          sections: __('Sections', 'uipress-lite'),
-          patterns: __('Patterns', 'uipress-lite'),
-          patternTitle: __('Name', 'uipress-lite'),
-          patternType: __('Type', 'uipress-lite'),
-          savePattern: __('Save pattern', 'uipress-lite'),
-          description: __('Description', 'uipress-lite'),
-          patternIcon: __('Icon', 'uipress-lite'),
-        },
-        patternTypes: {
-          layout: { name: 'layout', label: __('Layout', 'uipress-lite') },
-          block: { name: 'block', label: __('Block', 'uipress-lite') },
-        },
-        sortby: 'newest',
-        typeOptions: {
-          uiTemplates: {
-            label: __('UI templates', 'uipress-lite'),
-            value: 'ui-template',
-            selected: true,
-          },
-          adminPages: {
-            label: __('Admin pages', 'uipress-lite'),
-            value: 'ui-admin-page',
-            selected: true,
-          },
-        },
-      };
-    },
-    watch: {
-      sortby: {
-        handler(newValue, oldValue) {
-          this.fetchThemes();
-        },
+export default {
+  inject: ['uipData', 'router', 'uipress', 'uiTemplate'],
+  components: { screenOverlay: screenOverlay },
+  data() {
+    return {
+      loading: true,
+      themes: [],
+      search: '',
+      activeTemplate: false,
+      imageIndex: 0,
+      imageHover: false,
+      draggingBlock: false,
+      strings: {
+        missingMessage: __('This block no longer exists', 'uipress-lite'),
+        templateLibrary: __('Template library', 'uipress-lite'),
+        pro: __('Pro', 'uipress-lite'),
+        searchTemplates: __('Search templates', 'uipress-lite'),
+        backToAllThemes: __('Back to all templates', 'uipress-lite'),
+        includesProBlocks: __('Includes pro blocks', 'uipress-lite'),
+        createdBy: __('Created by', 'uipress-lite'),
+        addToTemplate: __('Add to template', 'uipress-lite'),
+        replaceContent: __('Replace current layout', 'uipress-lite'),
+        addAtEndOfContent: __('Add to end of layout', 'uipress-lite'),
+        requires: __('Requires uipress', 'uipress-lite'),
+        downloadcount: __('How many times this template has been downloaded', 'uipress-lite'),
+        sortBy: __('Sort by', 'uipress-lite'),
+        include: __('Include', 'uipress-lite'),
+        uiTemplates: __('UI templates', 'uipress-lite'),
+        pages: __('Pages', 'uipress-lite'),
+        sections: __('Sections', 'uipress-lite'),
+        patterns: __('Patterns', 'uipress-lite'),
+        patternTitle: __('Name', 'uipress-lite'),
+        patternType: __('Type', 'uipress-lite'),
+        savePattern: __('Save pattern', 'uipress-lite'),
+        description: __('Description', 'uipress-lite'),
+        patternIcon: __('Icon', 'uipress-lite'),
       },
+      patternTypes: {
+        layout: { name: 'layout', label: __('Layout', 'uipress-lite') },
+        block: { name: 'block', label: __('Block', 'uipress-lite') },
+      },
+      sortby: 'newest',
       typeOptions: {
-        handler(newValue, oldValue) {
-          this.fetchThemes();
+        uiTemplates: {
+          label: __('UI templates', 'uipress-lite'),
+          value: 'ui-template',
+          selected: true,
         },
-        deep: true,
+        adminPages: {
+          label: __('Admin pages', 'uipress-lite'),
+          value: 'ui-admin-page',
+          selected: true,
+        },
+      },
+    };
+  },
+  watch: {
+    sortby: {
+      handler(newValue, oldValue) {
+        this.fetchThemes();
       },
     },
-    mounted: function () {
-      this.fetchThemes();
+    typeOptions: {
+      handler(newValue, oldValue) {
+        this.fetchThemes();
+      },
+      deep: true,
     },
-    computed: {
-      /**
-       * Returns an array of themes filtered by type "Layout".
-       *
-       * @returns {Array} - Array of themes of type "Layout".
-       * @since 3.2.13
-       */
-      returnThemes() {
-        return this.themes.filter((obj) => obj.type === 'Layout');
-      },
-
-      /**
-       * Returns an array of themes filtered by type "Admin Page".
-       *
-       * @returns {Array} - Array of themes of type "Admin Page".
-       * @since 3.2.13
-       */
-      returnPages() {
-        return this.themes.filter((obj) => obj.type === 'Admin Page');
-      },
-
-      /**
-       * Returns an array of themes filtered by type "Section".
-       *
-       * @returns {Array} - Array of themes of type "Section".
-       * @since 3.2.13
-       */
-      returnSections() {
-        return this.themes.filter((obj) => obj.type === 'Section');
-      },
-
-      /**
-       * Returns the current sorting criteria.
-       *
-       * @returns {string} - The current sorting criteria.
-       * @since 3.2.13
-       */
-      returnSortBy() {
-        return this.sortby;
-      },
-
-      /**
-       * Constructs and returns the filter string based on selected type options.
-       *
-       * @returns {string} - The filter string based on selected type options.
-       * @since 3.2.13
-       */
-      returnFilter() {
-        let filter = Object.values(this.typeOptions)
-          .filter((option) => option.selected)
-          .map((option) => option.value)
-          .join('||');
-
-        if (!filter) {
-          this.typeOptions.uiTemplates.selected = true;
-        }
-        return filter;
-      },
+  },
+  mounted() {
+    this.fetchThemes();
+  },
+  computed: {
+    /**
+     * Returns an array of themes filtered by type "Layout".
+     *
+     * @returns {Array} - Array of themes of type "Layout".
+     * @since 3.2.13
+     */
+    returnThemes() {
+      return this.themes.filter((obj) => obj.type === 'Layout');
     },
-    methods: {
-      /**
-       * Fetch available themes from the API.
-       *
-       * @since 3.2.13
-       */
-      fetchThemes() {
-        this.loading = true;
-        const formData = new FormData();
-        const URL = `https://api.uipress.co/templates/list/?sort=${this.returnSortBy}&filter=${this.returnFilter}&v321=true`;
 
-        this.uipress.callServer(URL, formData).then((response) => {
-          this.loading = false;
-          if (response.error) {
-            this.uipress.notify(response.message, 'uipress-lite', '', 'error', true);
-          } else {
-            this.themes = response;
-          }
-        });
-      },
+    /**
+     * Returns an array of themes filtered by type "Admin Page".
+     *
+     * @returns {Array} - Array of themes of type "Admin Page".
+     * @since 3.2.13
+     */
+    returnPages() {
+      return this.themes.filter((obj) => obj.type === 'Admin Page');
+    },
 
-      /**
-       * Navigate forward through theme images.
-       *
-       * @param {Object} theme - The theme object.
-       * @since 3.2.13
-       */
-      navImagesForward(theme) {
-        theme.imageIndex = (theme.imageIndex + 1) % theme.images.length;
-      },
+    /**
+     * Returns an array of themes filtered by type "Section".
+     *
+     * @returns {Array} - Array of themes of type "Section".
+     * @since 3.2.13
+     */
+    returnSections() {
+      return this.themes.filter((obj) => obj.type === 'Section');
+    },
 
-      /**
-       * Navigate backward through theme images.
-       *
-       * @param {Object} theme - The theme object.
-       * @since 3.2.13
-       */
-      navImagesBackward(theme) {
-        theme.imageIndex = (theme.imageIndex - 1 + theme.images.length) % theme.images.length;
-      },
+    /**
+     * Returns the current sorting criteria.
+     *
+     * @returns {string} - The current sorting criteria.
+     * @since 3.2.13
+     */
+    returnSortBy() {
+      return this.sortby;
+    },
 
-      /**
-       * Returns the current theme image index, initializing it if not set.
-       *
-       * @param {Object} theme - The theme object.
-       * @returns {number} - Current theme image index.
-       * @since 3.2.13
-       */
-      returnThemeIndex(theme) {
-        if (!('imageIndex' in theme)) theme.imageIndex = 0;
-        return theme.imageIndex;
-      },
+    /**
+     * Constructs and returns the filter string based on selected type options.
+     *
+     * @returns {string} - The filter string based on selected type options.
+     * @since 3.2.13
+     */
+    returnFilter() {
+      let filter = Object.values(this.typeOptions)
+        .filter((option) => option.selected)
+        .map((option) => option.value)
+        .join('||');
 
-      /**
-       * Prepare a template for cloning by generating the relevant URL.
-       *
-       * @param {Object} template - The template to be cloned.
-       * @returns {Object} - An object containing the remote status and path.
-       * @since 3.2.13
-       */
-      clone(template) {
-        const URL = `https://api.uipress.co/templates/get/?templateid=${template.ID}`;
-        return { remote: true, path: URL };
-      },
+      if (!filter) {
+        this.typeOptions.uiTemplates.selected = true;
+      }
+      return filter;
+    },
+  },
+  methods: {
+    /**
+     * Fetch available themes from the API.
+     *
+     * @since 3.2.13
+     */
+    fetchThemes() {
+      this.loading = true;
+      const formData = new FormData();
+      const URL = `https://api.uipress.co/templates/list/?sort=${this.returnSortBy}&filter=${this.returnFilter}&v321=true`;
 
-      /**
-       * Import a specified template.
-       *
-       * @param {Object} template - The template to import.
-       * @param {boolean} replaceContent - Whether to replace the current content or append to it.
-       * @since 3.2.13
-       */
-      importThis(template, replaceContent) {
-        const URL = `https://api.uipress.co/templates/get/?templateid=${template.ID}`;
-        const item = { remote: true, path: URL };
-
-        if (replaceContent) {
-          this.uiTemplate.content = [item];
+      this.uipress.callServer(URL, formData).then((response) => {
+        this.loading = false;
+        if (response.error) {
+          this.uipress.notify(response.message, 'uipress-lite', '', 'error', true);
         } else {
-          this.uiTemplate.content.push(item);
+          this.themes = response;
         }
-      },
-      /**
-       * Imports the given pattern into the UI template content.
-       *
-       * @param {Object} template - The template pattern to import.
-       * @since 3.2.13
-       */
-      importThisPattern(template) {
-        this.uiTemplate.content.push(this.clonePattern(template));
-      },
+      });
+    },
 
-      /**
-       * Returns an appropriate icon based on the pattern's properties.
-       *
-       * @param {Object} pattern - The pattern for which to return the icon.
-       * @returns {string} - The name of the icon.
-       * @since 3.2.13
-       */
-      returnIcon(pattern) {
-        if (pattern.icon && pattern.icon !== '') {
-          return pattern.icon;
+    /**
+     * Navigate forward through theme images.
+     *
+     * @param {Object} theme - The theme object.
+     * @since 3.2.13
+     */
+    navImagesForward(theme) {
+      theme.imageIndex = (theme.imageIndex + 1) % theme.images.length;
+    },
+
+    /**
+     * Navigate backward through theme images.
+     *
+     * @param {Object} theme - The theme object.
+     * @since 3.2.13
+     */
+    navImagesBackward(theme) {
+      theme.imageIndex = (theme.imageIndex - 1 + theme.images.length) % theme.images.length;
+    },
+
+    /**
+     * Returns the current theme image index, initializing it if not set.
+     *
+     * @param {Object} theme - The theme object.
+     * @returns {number} - Current theme image index.
+     * @since 3.2.13
+     */
+    returnThemeIndex(theme) {
+      if (!('imageIndex' in theme)) theme.imageIndex = 0;
+      return theme.imageIndex;
+    },
+
+    /**
+     * Prepare a template for cloning by generating the relevant URL.
+     *
+     * @param {Object} template - The template to be cloned.
+     * @returns {Object} - An object containing the remote status and path.
+     * @since 3.2.13
+     */
+    clone(template) {
+      const URL = `https://api.uipress.co/templates/get/?templateid=${template.ID}`;
+      return { remote: true, path: URL };
+    },
+
+    /**
+     * Import a specified template.
+     *
+     * @param {Object} template - The template to import.
+     * @param {boolean} replaceContent - Whether to replace the current content or append to it.
+     * @since 3.2.13
+     */
+    importThis(template, replaceContent) {
+      const URL = `https://api.uipress.co/templates/get/?templateid=${template.ID}`;
+      const item = { remote: true, path: URL };
+
+      if (replaceContent) {
+        this.uiTemplate.content = [item];
+      } else {
+        this.uiTemplate.content.push(item);
+      }
+    },
+    /**
+     * Imports the given pattern into the UI template content.
+     *
+     * @param {Object} template - The template pattern to import.
+     * @since 3.2.13
+     */
+    importThisPattern(template) {
+      this.uiTemplate.content.push(this.clonePattern(template));
+    },
+
+    /**
+     * Returns an appropriate icon based on the pattern's properties.
+     *
+     * @param {Object} pattern - The pattern for which to return the icon.
+     * @returns {string} - The name of the icon.
+     * @since 3.2.13
+     */
+    returnIcon(pattern) {
+      if (pattern.icon && pattern.icon !== '') {
+        return pattern.icon;
+      }
+      if (pattern.type === 'layout') {
+        return 'account_tree';
+      } else if (pattern.type === 'block') {
+        return 'add_box';
+      }
+      return 'interests';
+    },
+
+    /**
+     * Deletes an item based on its post ID and refreshes the patterns.
+     *
+     * @param {number|string} postID - The ID of the post to be deleted.
+     * @since 3.2.13
+     */
+    deleteThisItem(postID) {
+      this.uipress.deletePost(postID).then((response) => {
+        if (response) {
+          this.getPatterns();
         }
-        if (pattern.type === 'layout') {
-          return 'account_tree';
-        } else if (pattern.type === 'block') {
-          return 'add_box';
+      });
+    },
+    /**
+     * Fetches available UI patterns.
+     *
+     * @since 3.2.13
+     */
+    getPatterns() {
+      const formData = new FormData();
+      formData.append('action', 'uip_get_ui_patterns_list');
+      formData.append('security', uip_ajax.security);
+
+      this.uipress.callServer(uip_ajax.ajax_url, formData).then((response) => {
+        if (response.error) {
+          this.uipress.notify(response.message, 'uipress-lite', '', 'error', true);
         }
-        return 'interests';
-      },
+        if (response.success) {
+          this.uiTemplate.patterns = response.patterns;
+        }
+      });
+    },
 
-      /**
-       * Deletes an item based on its post ID and refreshes the patterns.
-       *
-       * @param {number|string} postID - The ID of the post to be deleted.
-       * @since 3.2.13
-       */
-      deleteThisItem(postID) {
-        this.uipress.deletePost(postID).then((response) => {
-          if (response) {
-            this.getPatterns();
-          }
-        });
-      },
-      /**
-       * Fetches available UI patterns.
-       *
-       * @since 3.2.13
-       */
-      getPatterns() {
-        const formData = new FormData();
-        formData.append('action', 'uip_get_ui_patterns_list');
-        formData.append('security', uip_ajax.security);
+    /**
+     * Clones a given block pattern, ensuring unique UIDs.
+     *
+     * @param {Object} block - The block pattern to clone.
+     * @returns {Object} - The cloned block pattern.
+     * @since 3.2.13
+     */
+    clonePattern(block) {
+      const itemFreshIDs = this.duplicateBlock(block.template);
+      return JSON.parse(JSON.stringify(itemFreshIDs));
+    },
 
-        this.uipress.callServer(uip_ajax.ajax_url, formData).then((response) => {
-          if (response.error) {
-            this.uipress.notify(response.message, 'uipress-lite', '', 'error', true);
-          }
-          if (response.success) {
-            this.uiTemplate.patterns = response.patterns;
-          }
-        });
-      },
+    /**
+     * Duplicates a block, generating new UIDs for it and its children.
+     *
+     * @param {Object} block - The block to duplicate.
+     * @returns {Object} - The duplicated block with new UIDs.
+     * @since 3.2.13
+     */
+    duplicateBlock(block) {
+      const item = { ...block };
+      item.uid = this.uipress.createUID();
+      item.options = [];
+      item.settings = JSON.parse(JSON.stringify(item.settings));
 
-      /**
-       * Clones a given block pattern, ensuring unique UIDs.
-       *
-       * @param {Object} block - The block pattern to clone.
-       * @returns {Object} - The cloned block pattern.
-       * @since 3.2.13
-       */
-      clonePattern(block) {
-        const itemFreshIDs = this.duplicateBlock(block.template);
-        return JSON.parse(JSON.stringify(itemFreshIDs));
-      },
+      if (item.content) {
+        item.content = this.duplicateChildren(item.content);
+      }
 
-      /**
-       * Duplicates a block, generating new UIDs for it and its children.
-       *
-       * @param {Object} block - The block to duplicate.
-       * @returns {Object} - The duplicated block with new UIDs.
-       * @since 3.2.13
-       */
-      duplicateBlock(block) {
+      return item;
+    },
+
+    /**
+     * Duplicates the children blocks, generating new UIDs for them.
+     *
+     * @param {Array} content - The children blocks to duplicate.
+     * @returns {Array} - The duplicated children blocks with new UIDs.
+     * @since 3.2.13
+     */
+    duplicateChildren(content) {
+      return content.map((block) => {
         const item = { ...block };
         item.uid = this.uipress.createUID();
-        item.options = [];
         item.settings = JSON.parse(JSON.stringify(item.settings));
 
         if (item.content) {
@@ -337,30 +356,10 @@ export function moduleData() {
         }
 
         return item;
-      },
-
-      /**
-       * Duplicates the children blocks, generating new UIDs for them.
-       *
-       * @param {Array} content - The children blocks to duplicate.
-       * @returns {Array} - The duplicated children blocks with new UIDs.
-       * @since 3.2.13
-       */
-      duplicateChildren(content) {
-        return content.map((block) => {
-          const item = { ...block };
-          item.uid = this.uipress.createUID();
-          item.settings = JSON.parse(JSON.stringify(item.settings));
-
-          if (item.content) {
-            item.content = this.duplicateChildren(item.content);
-          }
-
-          return item;
-        });
-      },
+      });
     },
-    template: `
+  },
+  template: `
     
     <div class="uip-background-default uip-flex uip-flex-column uip-border-box uip-max-h-100p">
         
@@ -722,6 +721,4 @@ export function moduleData() {
           
         </div>
       </div>`,
-  };
-  return compData;
-}
+};
