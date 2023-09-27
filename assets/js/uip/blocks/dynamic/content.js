@@ -543,6 +543,12 @@ export function moduleData() {
         window.location.href = url;
       },
 
+      /**
+       * Extracts domain name from url
+       *
+       * @param {String} urlString
+       * @since 3.2.13
+       */
       extractDomain(urlString) {
         const url = new URL(urlString);
 
@@ -802,9 +808,8 @@ export function moduleData() {
         let lastDispatched = null;
 
         const dispatchChange = () => {
-          if (!iframe.contentWindow) {
-            return;
-          }
+          if (!iframe.contentWindow) return;
+
           let newHref = '';
           try {
             newHref = iframe.contentWindow.location.href;

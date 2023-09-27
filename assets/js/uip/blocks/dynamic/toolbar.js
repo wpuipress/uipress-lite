@@ -107,7 +107,7 @@ export function moduleData() {
         let styleblock = document.querySelector('link[href*="load-styles.php?"]');
         if (!styleblock) return;
 
-        const newLink = styleblock.href.replace('admin-bar,', '');
+        const newLink = styleblock.href.replace('admin-bar,', ',');
         const link = document.createElement('link');
         link.href = newLink;
         link.setAttribute('rel', 'stylesheet');
