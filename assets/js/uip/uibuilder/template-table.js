@@ -441,14 +441,14 @@ export default {
               
             <router-link to="/site-settings/" 
             @click="$refs.logodrop.close()"
-            class="uip-link-muted uip-flex uip-flex-center uip-flex-between uip-gap-m uip-padding-xxs hover:uip-background-muted uip-border-rounder uip-no-underline">
+            class="uip-link-default uip-flex uip-flex-center uip-flex-between uip-gap-m uip-padding-xxs hover:uip-background-muted uip-border-rounder uip-no-underline">
               <span class="">{{strings.siteSettings}}</span>
               <span class="uip-icon">tune</span>
             </router-link>  
           
             <router-link to="/setupWizard/" 
             @click="$refs.logodrop.close()"
-            class="uip-link-muted uip-flex uip-flex-center uip-flex-between uip-gap-m uip-padding-xxs hover:uip-background-muted uip-border-rounder uip-no-underline">
+            class="uip-link-default uip-flex uip-flex-center uip-flex-between uip-gap-m uip-padding-xxs hover:uip-background-muted uip-border-rounder uip-no-underline">
               <span class="">{{strings.setupWizard}}</span>
               <span class="uip-icon">magic_button</span>
             </router-link>
@@ -457,7 +457,7 @@ export default {
             
             <a href="https://uipress.co/docs/" target="_BLANK"
             @click="$refs.logodrop.close()"
-            class="uip-link-muted uip-flex uip-flex-center uip-flex-between uip-gap-m uip-padding-xxs hover:uip-background-muted uip-border-rounder uip-no-underline">
+            class="uip-link-default uip-flex uip-flex-center uip-flex-between uip-gap-m uip-padding-xxs hover:uip-background-muted uip-border-rounder uip-no-underline">
               <span class="">{{strings.documentation}}</span>
               <span class="uip-icon">import_contacts</span>
             </a>
@@ -466,21 +466,21 @@ export default {
             
             <router-link to="/globalexport/" 
             @click="$refs.logodrop.close()"
-            class="uip-link-muted uip-flex uip-flex-center uip-flex-between uip-gap-m uip-padding-xxs hover:uip-background-muted uip-border-rounder uip-no-underline">
+            class="uip-link-default uip-flex uip-flex-center uip-flex-between uip-gap-m uip-padding-xxs hover:uip-background-muted uip-border-rounder uip-no-underline">
               <span class="">{{strings.globalExport}}</span>
               <span class="uip-icon">file_download</span>
             </router-link>
             
             <router-link to="/globalimport/" 
             @click="$refs.logodrop.close()"
-            class="uip-link-muted uip-flex uip-flex-center uip-flex-between uip-gap-m uip-padding-xxs hover:uip-background-muted uip-border-rounder uip-no-underline">
+            class="uip-link-default uip-flex uip-flex-center uip-flex-between uip-gap-m uip-padding-xxs hover:uip-background-muted uip-border-rounder uip-no-underline">
               <span class="">{{strings.globalImport}}</span>
               <span class="uip-icon">file_upload</span>
             </router-link>
             
             <router-link to="/sitesync/" 
             @click="$refs.logodrop.close()"
-            class="uip-link-muted uip-flex uip-flex-center uip-flex-between uip-gap-m uip-padding-xxs hover:uip-background-muted uip-border-rounder uip-no-underline">
+            class="uip-link-default uip-flex uip-flex-center uip-flex-between uip-gap-m uip-padding-xxs hover:uip-background-muted uip-border-rounder uip-no-underline">
               <span class="">{{strings.siteSync}}</span>
               <span class="uip-icon">sync</span>
             </router-link>
@@ -489,7 +489,7 @@ export default {
             
             <router-link to="/errorlog/" 
             @click="$refs.logodrop.close()"
-            class="uip-link-muted uip-flex uip-flex-center uip-flex-between uip-gap-m uip-padding-xxs hover:uip-background-muted uip-border-rounder uip-no-underline">
+            class="uip-link-default uip-flex uip-flex-center uip-flex-between uip-gap-m uip-padding-xxs hover:uip-background-muted uip-border-rounder uip-no-underline">
               <span class="">{{strings.phpErrorLog}}</span>
               <span class="uip-icon">code</span>
             </router-link>
