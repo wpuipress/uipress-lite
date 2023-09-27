@@ -16,7 +16,7 @@ export default {
       drag: false,
     };
   },
-  inject: ['uipData', 'uiTemplate', 'router', 'uipress'],
+  inject: ['uipData', 'uiTemplate', 'uipress'],
   watch: {
     content: {
       handler(newValue, oldValue) {

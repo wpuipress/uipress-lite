@@ -47,6 +47,12 @@ export default {
     },
   },
   computed: {
+    /**
+     * Returns whether the export button is disabled
+     *
+     * @returns {boolean}
+     * @since 3.2.13
+     */
     isDisabledButton() {
       if (!this.exportOptions.templates && !this.exportOptions.siteSettings && !this.exportOptions.themeStyles && !this.exportOptions.adminMenus) {
         return true;
@@ -54,27 +60,42 @@ export default {
     },
   },
   methods: {
-    exportEverything() {
-      let self = this;
-
+    /**
+     * Exports all selected settings
+     *
+     * @returns {Promise}
+     * @since 3.2.13
+     */
+    async exportEverything() {
       let formData = new FormData();
       formData.append('action', 'uip_global_export');
       formData.append('security', uip_ajax.security);
-      formData.append('options', JSON.stringify(self.exportOptions));
-      let notID = self.uipress.notify(__('Exporting uiPress content', 'uipress-lite'), '', 'default', false, true);
+      formData.append('options', JSON.stringify(this.exportOptions));
+      const notificationID = this.uipress.notify(__('Exporting uiPress content', 'uipress-lite'), '', 'default', false, true);
 
-      self.uipress.callServer(uip_ajax.ajax_url, formData).then((response) => {
-        if (response.error) {
-          self.uipress.notify(response.message, '', 'error', true);
-          return;
-        }
-        self.downloadExport(response.export, notID);
-      });
+      const response = await this.uipress.callServer(uip_ajax.ajax_url, formData);
+
+      // Handle error
+      if (!response || response.error) {
+        this.uipress.notify(response.message, '', 'error', true);
+        return;
+      }
+
+      // Download exported
+      this.downloadExport(response.export, notificationID);
     },
-    downloadExport(exported, notID) {
-      self = this;
+
+    /**
+     * Downloads exported data
+     *
+     * @param {String | JSON} exported - the exported string
+     * @param {Number} notificationID - the notification id
+     * @returns {Promise}
+     * @since 3.2.13
+     */
+    async downloadExport(exported, notificationID) {
       let namer = 'uip-global-export-';
-      let formateExport = self.uipress.uipEncodeJson({ uipGlobalExport: exported });
+      let formateExport = this.uipress.uipEncodeJson({ uipGlobalExport: exported });
 
       let today = new Date();
       let dd = String(today.getDate()).padStart(2, '0');
@@ -85,13 +106,13 @@ export default {
       let filename = namer + '-' + date_today + '.json';
 
       let dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(formateExport);
-      let dlAnchorElem = self.$refs.globalExport;
+      let dlAnchorElem = this.$refs.globalExport;
       dlAnchorElem.setAttribute('href', dataStr);
       dlAnchorElem.setAttribute('download', filename);
       dlAnchorElem.click();
 
-      self.uipress.notify(__('Export complete', 'uipress-lite'), '', 'success');
-      self.uipress.destroy_notification(notID);
+      this.uipress.notify(__('Export complete', 'uipress-lite'), '', 'success');
+      this.uipress.destroy_notification(notificationID);
     },
   },
   template: `

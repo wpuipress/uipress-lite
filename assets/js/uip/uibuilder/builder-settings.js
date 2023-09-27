@@ -90,7 +90,7 @@ export default {
       },
     };
   },
-  inject: ['uipData', 'router', 'uipress', 'uiTemplate'],
+  inject: ['uipData', 'uipress', 'uiTemplate'],
   mounted: function () {
     this.loading = false;
   },
@@ -212,7 +212,7 @@ export default {
     },
     openSettings(panel) {
       let ID = this.$route.params.templateID;
-      this.router.push('/uibuilder/' + ID + '/settings/' + panel);
+      this.$router.push('/uibuilder/' + ID + '/settings/' + panel);
     },
     returnPageLink() {
       this.formatPageName();

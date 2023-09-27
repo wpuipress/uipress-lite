@@ -2,6 +2,7 @@ import { defineAsyncComponent } from '../../libs/vue-esm-dev.js';
 export default {
   components: {
     contextmenu: defineAsyncComponent(() => import('../v3.5/utility/contextmenu.min.js?ver=3.2.12')),
+    SaveAsPattern: defineAsyncComponent(() => import('./save-as-pattern.min.js?ver=3.2.12')),
   },
   inject: ['uiTemplate', 'uipress', 'openModal'],
   data() {
@@ -154,7 +155,7 @@ export default {
           label: __('Save as pattern', 'uipress-lite'),
           icon: 'bookmark_add',
           action: () => {
-            this.openModal('saveaspattern', __('Save as pattern', 'uipress-lite'), { blockitem: this.block });
+            this.$refs.saveaspattern.show(this.block);
             this.$refs.blockcontextmenu.close();
           },
         },
@@ -648,6 +649,8 @@ export default {
 	      <a class="uip-hidden" ref="templateexport"></a>
 			  
 		</contextmenu>
+    
+        <SaveAsPattern ref="saveaspattern"/>
 		  
 	
 		`,

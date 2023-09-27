@@ -77,7 +77,7 @@ export default {
       },
     };
   },
-  inject: ['uipress', 'uipData', 'router'],
+  inject: ['uipress', 'uipData'],
   watch: {
     currentStep: {
       handler(newValue, oldValue) {
@@ -127,7 +127,7 @@ export default {
     },
     closeThisComponent() {
       document.documentElement.removeEventListener('click', this.onClickOutside, false);
-      this.router.push('/');
+      this.$router.push('/');
     },
     finishSetup() {
       let self = this;

@@ -21,7 +21,7 @@ export default {
       },
     };
   },
-  inject: ['uipData', 'router', 'uipress', 'uiTemplate'],
+  inject: ['uipData', 'uipress', 'uiTemplate'],
   mounted: function () {
     this.loading = false;
     this.returnGroups;

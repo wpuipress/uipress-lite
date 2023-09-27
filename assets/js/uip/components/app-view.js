@@ -1,7 +1,7 @@
 export function moduleData() {
   return {
     props: {},
-    inject: ['uipData', 'router', 'uipress'],
+    inject: ['uipData', 'uipress'],
     data: function () {
       return {
         template: {

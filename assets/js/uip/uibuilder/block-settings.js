@@ -5,7 +5,7 @@
 const { __, _x, _n, _nx } = wp.i18n;
 import { defineAsyncComponent, nextTick } from '../../libs/vue-esm-dev.js';
 export default {
-  inject: ['uipData', 'router', 'uipress', 'uiTemplate'],
+  inject: ['uipData', 'uipress', 'uiTemplate'],
   components: {
     QueryBuilder: defineAsyncComponent(() => import('../options/uip-query-builder.min.js?ver=3.2.12')),
     responsiveControls: defineAsyncComponent(() => import('../options/uip-responsive.min.js?ver=3.2.12')),

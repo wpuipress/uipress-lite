@@ -14,7 +14,7 @@ export default {
     TemplateLibrary: defineAsyncComponent(() => import('./template-library.min.js?ver=3.2.12')),
     DynamicData: defineAsyncComponent(() => import('./dynamic-data-watcher.min.js?ver=3.2.12')),
   },
-  inject: ['uipData', 'router', 'uipress'],
+  inject: ['uipData', 'uipress'],
   data: function () {
     return {
       loading: true,
@@ -494,7 +494,7 @@ export default {
     },
     openThemeLibrary() {
       //let ID = this.$route.params.templateID;
-      //this.router.push('/uibuilder/' + ID);
+      //this.$router.push('/uibuilder/' + ID);
       this.$router.push({
         query: { tab: 'library' },
       });
@@ -578,7 +578,7 @@ export default {
     },
     openSettings(uid) {
       let ID = this.$route.params.templateID;
-      this.router.push('/uibuilder/' + ID + '/settings/blocks/' + uid);
+      this.$router.push('/uibuilder/' + ID + '/settings/blocks/' + uid);
     },
     showOptions(evt, item) {
       let self = this;

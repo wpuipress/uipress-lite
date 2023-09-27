@@ -8,7 +8,7 @@ export default {
   components: {
     templateHistory: defineAsyncComponent(() => import('./history.min.js?ver=3.2.12')),
   },
-  inject: ['uipData', 'router', 'uipress', 'uiTemplate', 'layersPanel', 'unsavedChanges'],
+  inject: ['uipData', 'uipress', 'uiTemplate', 'layersPanel', 'unsavedChanges'],
   data: function () {
     return {
       loading: true,
@@ -383,11 +383,11 @@ export default {
       if (this.unsavedChanges) {
         this.uipress.confirm(__('You have unsaved changes!', 'uipress-lite'), __('If you leave this page all unsaved changes will be discarded', 'uipress-lite')).then((response) => {
           if (response) {
-            this.router.push('/');
+            this.$router.push('/');
           }
         });
       } else {
-        this.router.push('/');
+        this.$router.push('/');
       }
     },
     returnLoadStyle() {
@@ -519,19 +519,19 @@ export default {
 
     openThemeLibrary() {
       let ID = this.$route.params.templateID;
-      this.router.push('/uibuilder/' + ID + '/library');
+      this.$router.push('/uibuilder/' + ID + '/library');
     },
     switchLayout(id) {
       let self = this;
       if (this.unsavedChanges) {
         this.uipress.confirm(__('You have unsaved changes!', 'uipress-lite'), __('If you leave this page all unsaved changes will be discarded', 'uipress-lite')).then((response) => {
           if (response) {
-            self.router.push('/uibuilder/' + id + '/');
+            self.$router.push('/uibuilder/' + id + '/');
             self.unsavedChanges = false;
           }
         });
       } else {
-        self.router.push('/uibuilder/' + id + '/');
+        self.$router.push('/uibuilder/' + id + '/');
       }
     },
     confirmNewPage(id) {
@@ -560,8 +560,8 @@ export default {
 
       self.uipress.callServer(uip_ajax.ajax_url, formData).then((response) => {
         self.uipress.notify(__('New template created', 'uipress-lite'), '', 'success', true, false);
-        self.router.push('/');
-        self.router.push('/uibuilder/' + response.id + '/');
+        self.$router.push('/');
+        self.$router.push('/uibuilder/' + response.id + '/');
         self.returnAllUiTemplates;
       });
     },
@@ -581,7 +581,7 @@ export default {
 
       //Open block settings
       let ID = self.$route.params.templateID;
-      this.router.push({
+      this.$router.push({
         path: '/uibuilder/' + ID + '/settings/blocks/' + targetUID,
         query: { ...this.$route.query },
       });

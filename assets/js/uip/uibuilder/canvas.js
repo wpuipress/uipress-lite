@@ -9,7 +9,7 @@ export default {
   components: {
     blockControl: BlockControl,
   },
-  inject: ['uipData', 'router', 'uipress', 'uiTemplate', 'layersPanel', 'unsavedChanges'],
+  inject: ['uipData', 'uipress', 'uiTemplate', 'layersPanel', 'unsavedChanges'],
   data: function () {
     return {
       loading: true,

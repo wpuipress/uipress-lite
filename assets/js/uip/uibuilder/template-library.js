@@ -32,7 +32,7 @@ const screenOverlay = {
 };
 
 export default {
-  inject: ['uipData', 'router', 'uipress', 'uiTemplate'],
+  inject: ['uipData', 'uipress', 'uiTemplate'],
   components: { screenOverlay: screenOverlay },
   data() {
     return {

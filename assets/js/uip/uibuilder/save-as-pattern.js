@@ -1,8 +1,8 @@
 const { __, _x, _n, _nx } = wp.i18n;
+import { defineAsyncComponent, nextTick } from '../../libs/vue-esm-dev.js';
 export default {
-  props: {
-    args: Object,
-    triggerClass: String, // Allows custom classes to be set on the trigger container
+  components: {
+    Modal: defineAsyncComponent(() => import('../v3.5/utility/modal.min.js?ver=3.2.12')),
   },
   data() {
     return {
@@ -10,7 +10,7 @@ export default {
       dropWidth: 0,
       position: this.dropPos,
       saving: false,
-      theBlock: this.args.blockitem,
+      theBlock: null,
       strings: {
         saveAsPattern: __('Save as pattern', 'uipress-lite'),
         patternTitle: __('Pattern title', 'uipress-lite'),
@@ -35,34 +35,43 @@ export default {
     };
   },
   inject: ['uipress', 'uiTemplate'],
-  watch: {},
-  mounted: function () {},
-  computed: {
-    returnBlockName() {
-      return this.blockitem.name;
-    },
-    returnBlock() {
-      this.theBlock = this.args.blockitem;
-      return this.theBlock;
-    },
-  },
   methods: {
-    savePattern() {
+    /**
+     * Opens modal adn sets block
+     *
+     * @param {Object} block - the block to save as a pattern
+     * @since 3.2.13
+     */
+    show(block) {
+      this.theBlock = {};
+      this.theBlock = { ...block };
+      this.$refs.saveaspattern.open();
+    },
+
+    /**
+     * Saves block as a pattern
+     *
+     * @since 3.2.13
+     */
+    async savePattern() {
       this.saving = true;
-      let saveBlock = this.args.blockitem;
 
       if (!this.newPattern.name || this.newPattern.name == '') {
         this.uipress.notify(__('Pattern not saved', 'uipress-lite'), __('Pattern title is required', 'uipress-lite'), 'warning', true);
         this.saving = false;
       }
 
-      let self = this;
-      self.uipress.blockHouseKeeping(saveBlock).then((response) => {
-        self.savePatternToDb(saveBlock);
-      });
+      const response = await this.uipress.blockHouseKeeping(this.theBlock);
+      this.savePatternToDb(this.theBlock);
     },
-    savePatternToDb(saveBlock) {
-      let self = this;
+
+    /**
+     * Saves pattern to DB
+     *
+     * @param {Object} saveBlock - the block pattern
+     * @since 3.2.13
+     */
+    async savePatternToDb(saveBlock) {
       let uid = saveBlock.uid;
       let pattern = JSON.stringify(saveBlock, (k, v) => (v === 'true' ? 'uiptrue' : v === true ? 'uiptrue' : v === 'false' ? 'uipfalse' : v === false ? 'uipfalse' : v === '' ? 'uipblank' : v));
 
@@ -70,34 +79,43 @@ export default {
       formData.append('action', 'uip_save_ui_pattern');
       formData.append('security', uip_ajax.security);
       formData.append('pattern', pattern);
-      formData.append('name', self.newPattern.name);
-      formData.append('type', self.newPattern.type);
-      formData.append('description', self.newPattern.description);
-      formData.append('icon', self.newPattern.icon.value);
+      formData.append('name', this.newPattern.name);
+      formData.append('type', this.newPattern.type);
+      formData.append('description', this.newPattern.description);
+      formData.append('icon', this.newPattern.icon.value);
 
-      self.uipress.callServer(uip_ajax.ajax_url, formData).then((response) => {
-        if (response.error) {
-          self.uipress.notify(response.message, 'uipress-lite', '', 'error', true);
-          self.saving = false;
-        }
-        if (response.success) {
-          self.uipress.notify(__('Pattern saved', 'uipress-lite'), '', 'success', true);
-          self.saving = false;
-          self.uiTemplate.patterns = response.patterns;
-          let patternID = response.patternid;
+      const response = await this.uipress.callServer(uip_ajax.ajax_url, formData);
 
-          //Inject pattern id into block
-          self.uipress.searchForBlock(self.uiTemplate.content, uid).then((response) => {
-            if (response) {
-              response.patternID = patternID;
-            }
-          });
-        }
-      });
+      // Handle error
+      if (response.error) {
+        this.uipress.notify(response.message, 'uipress-lite', '', 'error', true);
+        this.saving = false;
+        return;
+      }
+      if (!response.success) returnData();
+
+      this.uipress.notify(__('Pattern saved', 'uipress-lite'), '', 'success', true);
+      this.saving = false;
+      this.uiTemplate.patterns = response.patterns;
+      const patternID = response.patternid;
+
+      // Inject pattern id into block
+      const foundBlock = await this.uipress.searchForBlock(this.uiTemplate.content, uid);
+      if (!foundBlock) return;
+      foundBlock.patternID = patternID;
     },
   },
   template: `
-          <div class="uip-flex uip-flex-column uip-row-gap-xs">
+  
+  <Modal ref="saveaspattern">
+  
+      <div  class="uip-flex uip-flex-column uip-row-gap-s uip-w-500 uip-padding-m">
+      
+            <!-- title -->
+            <div class="uip-flex uip-flex-between uip-flex-center">
+              <div class="uip-text-bold">{{strings.saveAsPattern}}</div>
+              <div class="uip-icon uip-link-muted uip-padding-xxs uip-border-round hover:uip-background-muted" @click="$refs.saveaspattern.close()">close</div>
+            </div>
         
           
             <div class="uip-flex uip-flex-column uip-row-gap-xxs">
@@ -128,5 +146,7 @@ export default {
               <uip-save-button :saving="saving" :buttonText="strings.savePattern" :saveFunction="savePattern"></uip-save-button>
             </div>
           
-		    </div>`,
+	  </div>
+        
+  </Modal>`,
 };

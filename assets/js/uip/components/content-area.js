@@ -36,7 +36,7 @@ export function moduleData() {
         },
       };
     },
-    inject: ['uipData', 'uiTemplate', 'router', 'uipress'],
+    inject: ['uipData', 'uiTemplate', 'uipress'],
     watch: {
       content: {
         handler(newValue, oldValue) {
@@ -221,7 +221,7 @@ export function moduleData() {
 
             //Open block
             let ID = self.$route.params.templateID;
-            this.router.push({
+            this.$router.push({
               path: '/uibuilder/' + ID + '/settings/blocks/' + newElement.uid,
               query: { ...this.$route.query },
             });

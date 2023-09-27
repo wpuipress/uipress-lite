@@ -8,7 +8,7 @@ export default {
     args: Object,
     triggerClass: String, // Allows custom classes to be set on the trigger container
   },
-  data: function () {
+  data() {
     return {
       modelOpen: true,
       themeLoading: false,
@@ -173,7 +173,7 @@ export default {
     },
     closeThisComponent() {
       document.documentElement.removeEventListener('click', this.onClickOutside, false);
-      this.router.push('/');
+      this.$router.push('/');
     },
     syncNow() {
       let self = this;
@@ -192,7 +192,7 @@ export default {
         }
         self.uipress.notify(__('Import complete', 'uipress-lite'), '', 'success');
 
-        self.router.push('/');
+        self.$router.push('/');
 
         setTimeout(function () {
           location.reload();

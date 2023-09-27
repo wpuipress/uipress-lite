@@ -8,7 +8,7 @@ export default {
     args: Object,
     triggerClass: String, // Allows custom classes to be set on the trigger container
   },
-  data: function () {
+  data() {
     return {
       modelOpen: true,
       themeLoading: false,
@@ -32,8 +32,13 @@ export default {
       },
     },
   },
-  mounted: function () {},
   computed: {
+    /**
+     * Returns whether the submit button is enabled
+     *
+     * @returns {boolean}
+     * @since 3.2.13
+     */
     isDisabledButton() {
       if (!this.exportOptions.templates && !this.exportOptions.siteSettings && !this.exportOptions.themeStyles && !this.exportOptions.adminMenus) {
         return true;
@@ -41,12 +46,19 @@ export default {
     },
   },
   methods: {
+    /**
+     * Imports from JSON file
+     *
+     * @param {Object} evt - File change event
+     * @param {Boolean} dragged - Wheteher it was dragged in or from file input
+     * @since 3.2.13
+     */
     importEverything(evt, dragged) {
-      let self = this;
-      self.validDrop = false;
+      this.validDrop = false;
 
-      let notiID = self.uipress.notify(__('Importing uiPress content', 'uipress-lite'), '', 'default', false, true);
+      const notificationID = this.uipress.notify(__('Importing uiPress content', 'uipress-lite'), '', 'default', false, true);
       let thefile;
+
       if (dragged) {
         thefile = evt.dataTransfer.files[0];
       } else {
@@ -55,76 +67,90 @@ export default {
       }
 
       if (thefile.type != 'application/json') {
-        self.uipress.notify(__('Global exports must be in valid JSON format', 'uipress-lite'), '', 'error', true, false);
-        self.uipress.destroy_notification(notiID);
+        this.uipress.notify(__('Global exports must be in valid JSON format', 'uipress-lite'), '', 'error', true, false);
+        this.uipress.destroy_notification(notificationID);
         return;
       }
 
       let reader = new FileReader();
       reader.readAsText(thefile, 'UTF-8');
 
-      reader.onload = function (evt) {
-        let json_settings = evt.target.result;
-        let parsed;
-
-        //Check for valid JSON data
-        try {
-          parsed = JSON.parse(json_settings);
-        } catch (error) {
-          self.uipress.notify(error, '', 'error', true, false);
-          self.uipress.destroy_notification(notiID);
-          return;
-        }
-
-        //Empty file
-        if (!parsed) {
-          self.uipress.notify(__('JSON parse failed', 'uipress-lite'), '', 'error', true, false);
-          self.uipress.destroy_notification(notiID);
-          return;
-        }
-        //Invalid format
-        if (!Array.isArray(parsed) && !self.uipress.isObject(parsed)) {
-          self.uipress.notify('Export is not valid', '', 'error', true, false);
-          self.uipress.destroy_notification(notiID);
-          return;
-        }
-
-        let temper = false;
-        if ('uipGlobalExport' in parsed) {
-          temper = parsed.uipGlobalExport;
-        } else {
-          self.uipress.notify(__('Template mismatch', 'uipress-lite'), '', 'error', true, false);
-          self.uipress.destroy_notification(notiID);
-          return;
-        }
-
-        self.sendImportToServer(temper, notiID);
-      };
-
-      return;
+      reader.onload = (evt) => this.handleReaderLoad(evt, notificationID);
     },
-    sendImportToServer(temper, notiID) {
-      let self = this;
 
+    /**
+     * Handles read loaded event. Attempts to parse JSON and imports
+     *
+     * @param {Object} evt - Reader load event
+     * @since 3.2.13
+     */
+    handleReaderLoad(evt, notificationID) {
+      let json_settings = evt.target.result;
+      let parsed;
+
+      //Check for valid JSON data
+      try {
+        parsed = JSON.parse(json_settings);
+      } catch (error) {
+        this.uipress.notify(error, '', 'error', true, false);
+        this.uipress.destroy_notification(notificationID);
+        return;
+      }
+
+      //Empty file
+      if (!parsed) {
+        this.uipress.notify(__('JSON parse failed', 'uipress-lite'), '', 'error', true, false);
+        this.uipress.destroy_notification(notificationID);
+        return;
+      }
+      //Invalid format
+      if (!Array.isArray(parsed) && !this.uipress.isObject(parsed)) {
+        this.uipress.notify('Export is not valid', '', 'error', true, false);
+        this.uipress.destroy_notification(notificationID);
+        return;
+      }
+
+      let temper = false;
+      if ('uipGlobalExport' in parsed) {
+        temper = parsed.uipGlobalExport;
+      } else {
+        this.uipress.notify(__('Template mismatch', 'uipress-lite'), '', 'error', true, false);
+        this.uipress.destroy_notification(notificationID);
+        return;
+      }
+
+      this.sendImportToServer(temper, notificationID);
+    },
+
+    /**
+     * Sends imported data to server
+     *
+     * @param {Object} temper - New settings
+     * @param {type} notificationID
+     * @since 3.2.13
+     */
+    async sendImportToServer(temper, notificationID) {
       let formData = new FormData();
       formData.append('action', 'uip_global_import');
       formData.append('security', uip_ajax.security);
       formData.append('content', JSON.stringify(temper));
 
-      self.uipress.callServer(uip_ajax.ajax_url, formData).then((response) => {
-        if (response.error) {
-          self.uipress.notify(response.message, '', 'error', true);
-          return;
-        }
-        self.uipress.notify(__('Content imported succesfully', 'uipress-lite'), '', 'success');
-        self.uipress.destroy_notification(notiID);
+      const response = await this.uipress.callServer(uip_ajax.ajax_url, formData);
 
-        self.router.push('/');
+      // Handle errpr
+      if (response.error) {
+        this.uipress.notify(response.message, '', 'error', true);
+        return;
+      }
 
-        setTimeout(function () {
-          location.reload();
-        }, 600);
-      });
+      this.uipress.notify(__('Content imported succesfully', 'uipress-lite'), '', 'success');
+      this.uipress.destroy_notification(notificationID);
+
+      this.$router.push('/');
+
+      setTimeout(function () {
+        location.reload();
+      }, 600);
     },
   },
   template: `

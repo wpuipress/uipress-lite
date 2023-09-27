@@ -105,7 +105,6 @@ uipress.uipAppData.settings = uipress.loadSettings();
 
 // Import Core components
 import DropZone from './uibuilder/block-drop-zone.min.js?ver=3.2.12';
-import SaveAsPattern from './uibuilder/save-as-pattern.min.js?ver=3.2.12';
 import DropDown from './components/dropdown.min.js?ver=3.2.12';
 import MultiSelect from './components/multiselect.min.js?ver=3.2.12';
 import UserMultiSelect from './components/user-role-multiselect.min.js?ver=3.2.12';
@@ -269,7 +268,6 @@ const Router = createRouter({
 
 const app = createApp(appArgs);
 app.use(Router);
-app.provide('router', Router);
 
 app.component('multi-select', MultiSelect);
 app.component('user-role-select', UserMultiSelect);
@@ -282,7 +280,6 @@ app.component('loading-chart', LoadingChart);
 app.component('uip-offcanvas', Offcanvas);
 app.component('uip-save-button', SaveButton);
 app.component('dropdown', DropDown);
-app.component('saveaspattern', SaveAsPattern);
 app.component('uip-chart', ChartComp);
 app.component('uip-modal', Modal);
 app.component('uip-floating-panel', FloatingPanel);

@@ -76,7 +76,7 @@ export default {
       },
     };
   },
-  inject: ['uipData', 'router', 'uipress'],
+  inject: ['uipData', 'uipress'],
   mounted() {
     this.getTemplates();
     this.enqueueAdminBarStyles();
