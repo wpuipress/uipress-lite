@@ -1572,7 +1572,7 @@ export class uip {
     }
     let modal =
       '<div class="uip-position-fixed uip-top-0 uip-left-0 uip-h-viewport uip-w-vw uip-background-black-wash uip-flex uip-flex-center uip-flex-middle uip-fade-in uip-text-normal uip-z-index-9999" tabindex="1" id="uip-modal-confirm">\
-    <div class="uip-background-default uip-border-rounder uip-border uip-padding-s uip-flex uip-flex-column uip-row-gap-s uip-scale-in uip-min-w-350 uip-z-index-9999">\
+    <div class="uip-background-default uip-border uip-padding-m uip-flex uip-flex-column uip-row-gap-s uip-scale-in uip-min-w-350 uip-z-index-9999" style="border-radius: calc(var(--uip-border-radius-large) + var(--uip-padding-xs));">\
       <div class="uip-text-bold uip-text-l uip-text-emphasis">' +
       title +
       '</div>\
