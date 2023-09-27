@@ -2,11 +2,15 @@ export default {
   props: {
     closeFunction: Function,
     disableTeleport: Boolean,
+    startOpen: Boolean,
   },
   data() {
     return {
       isVisible: false,
     };
+  },
+  mounted() {
+    if (this.startOpen) this.open();
   },
   methods: {
     open() {

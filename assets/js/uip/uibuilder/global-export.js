@@ -1,10 +1,14 @@
 const { __, _x, _n, _nx } = wp.i18n;
+import { defineAsyncComponent, nextTick } from '../../libs/vue-esm-dev.js';
 export default {
+  components: {
+    Modal: defineAsyncComponent(() => import('../v3.5/utility/modal.min.js?ver=3.2.12')),
+  },
   props: {
     args: Object,
     triggerClass: String, // Allows custom classes to be set on the trigger container
   },
-  data: function () {
+  data() {
     return {
       modelOpen: true,
       themeLoading: false,
@@ -32,7 +36,7 @@ export default {
       },
     };
   },
-  inject: ['uipress', 'uipData', 'uiTemplate', 'router'],
+  inject: ['uipress', 'uipData'],
   watch: {
     currentStep: {
       handler(newValue, oldValue) {
@@ -42,7 +46,6 @@ export default {
       },
     },
   },
-  mounted: function () {},
   computed: {
     isDisabledButton() {
       if (!this.exportOptions.templates && !this.exportOptions.siteSettings && !this.exportOptions.themeStyles && !this.exportOptions.adminMenus) {
@@ -51,10 +54,6 @@ export default {
     },
   },
   methods: {
-    closeThisComponent() {
-      document.documentElement.removeEventListener('click', this.onClickOutside, false);
-      this.router.push('/');
-    },
     exportEverything() {
       let self = this;
 
@@ -98,18 +97,18 @@ export default {
   template: `
     
     
-      <div class="uip-position-fixed uip-top-0 uip-left-0 uip-h-viewport uip-w-vw uip-background-black-wash uip-flex uip-flex-center uip-flex-middle uip-fade-in uip-text-normal uip-z-index-1" tabindex="1">
-        <div ref="uipmodal" class="uip-background-default uip-border-rounder uip-border uip-flex uip-flex-column uip-row-gap-s uip-scale-in uip-w-400 uip-z-index-1 uip-transition-all uip-padding-s">
+      <Modal :startOpen="true" ref="globalexportwrap">
+      
+        <div ref="uipmodal" class="uip-flex uip-flex-column uip-row-gap-m uip-w-400 uip-padding-m">
           
           
           <!-- title -->
           <div class="uip-flex uip-flex-between uip-flex-center">
             <div class="uip-text-bold">{{strings.globalExport}}</div>
-            <div class="uip-icon uip-link-muted uip-padding-xxs uip-border-round hover:uip-background-muted" @click="closeThisComponent()">close</div>
+            <div class="uip-icon uip-link-muted uip-padding-xxs uip-border-round hover:uip-background-muted" @click="$refs.globalexportwrap.close();this.$router.push('/');">close</div>
           </div>
           <!-- end title -->
           
-          <div class="uip-border-top"></div>
           
           <div class="uip-text-muted">{{strings.settingsExplanation}}</div>
           
@@ -137,7 +136,6 @@ export default {
           
           </div>
           
-          <div class="uip-border-top"></div>
           
           <div class="uip-flex uip-flex-between uip-gap-xs">
             <router-link to="/" class="uip-button-default uip-no-underline">{{strings.cancel}}</router-link>
@@ -150,7 +148,8 @@ export default {
           
           
         </div>
-      </div>
+        
+      </Modal>
     
     `,
 };

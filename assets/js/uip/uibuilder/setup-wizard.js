@@ -1,5 +1,10 @@
 const { __, _x, _n, _nx } = wp.i18n;
+import { defineAsyncComponent, nextTick } from '../../libs/vue-esm-dev.js';
 export default {
+  components: {
+    Modal: defineAsyncComponent(() => import('../v3.5/utility/modal.min.js?ver=3.2.12')),
+    Variables: defineAsyncComponent(() => import('./variables.min.js?ver=3.2.12')),
+  },
   props: {
     args: Object,
     triggerClass: String, // Allows custom classes to be set on the trigger container
@@ -72,7 +77,7 @@ export default {
       },
     };
   },
-  inject: ['uipress', 'uipData', 'uiTemplate', 'router'],
+  inject: ['uipress', 'uipData', 'router'],
   watch: {
     currentStep: {
       handler(newValue, oldValue) {
@@ -218,12 +223,13 @@ export default {
   template: `
     
     
-      <div class="uip-position-fixed uip-top-0 uip-left-0 uip-h-viewport uip-w-vw uip-background-black-wash uip-flex uip-flex-center uip-flex-middle uip-fade-in uip-text-normal uip-z-index-1" tabindex="1">
-        <div ref="uipmodal" class="uip-background-default uip-border-rounder uip-border uip-flex uip-flex-column uip-row-gap-m uip-scale-in uip-w-500 uip-z-index-1 uip-transition-all">
+     <Modal :startOpen="true">
+     
+        <div ref="uipmodal" class="uip-flex uip-flex-column uip-row-gap-m uip-scale-in uip-w-500 uip-padding-m">
           
           
           <!-- title -->
-          <div class="uip-flex uip-flex-between uip-flex-center uip-padding-s uip-border-bottom">
+          <div class="uip-flex uip-flex-between uip-flex-center">
             <div class="uip-text-bold">{{strings.setupWizard}}</div>
             <div class="uip-icon uip-link-muted uip-padding-xxs uip-border-round hover:uip-background-muted" @click="closeThisComponent()">close</div>
           </div>
@@ -233,13 +239,13 @@ export default {
          
           <template v-if="returnFinished()">
           
-            <div class="uip-padding-s uip-padding-remove-bottom uip-padding-remove-top uip-text-center uip-flex uip-flex-column uip-row-gap-s">
+            <div class=" uip-text-center uip-flex uip-flex-column uip-row-gap-s">
               <div class="uip-icon uip-text-green" style="font-size:80px">check_circle</div>
               <div class="uip-text-bold uip-margin-bottom-xxs uip-text-xl">{{strings.setupComplete}}</div>
               <div class="uip-text-muted">{{strings.finishedDescription}}</div>
             </div>
             
-            <div class="uip-flex uip-gap-xs uip-padding-s uip-padding-remove-top uip-flex-between">
+            <div class="uip-flex uip-gap-xs uip-padding-remove-top uip-flex-between">
             
               <button class="uip-button-default" @click="closeThisComponent">{{strings.close}}</button>
               
@@ -253,7 +259,7 @@ export default {
           
             <!-- step display --> 
             <div class="uip-flex uip-flex-middle">
-              <div class="uip-flex uip-flex-row uip-flex-between uip-flex-center uip-padding-s uip-padding-remove-top uip-padding-remove-bottom uip-w-250">
+              <div class="uip-flex uip-flex-row uip-flex-between uip-flex-center uip-w-250">
                 <template v-for="step in steps">
                   <div class="uip-border-circle uip-w-22 uip-ratio-1-1 uip-background-muted uip-flex uip-flex-center uip-flex-middle uip-transition-all uip-link-default" :class="{'uip-text-inverse uip-background-primary' : currentStep == step.key || currentStep > step.key}" @click="currentStep = step.key">
                     <span>{{step.key}}</span>
@@ -268,7 +274,7 @@ export default {
           
             <!-- Description -->
             
-            <div class="uip-padding-s uip-padding-remove-bottom uip-padding-remove-top uip-text-center">
+            <div class=" uip-padding-remove-top uip-text-center">
               <div class="uip-text-bold uip-margin-bottom-xxs uip-text-l">{{steps[currentStep - 1].title}}</div>
               <div class="uip-text-muted">{{steps[currentStep - 1].description}}</div>
             </div>
@@ -276,7 +282,7 @@ export default {
             <!-- End description -->
             
             <!--Step 1 -->
-            <div v-if="currentStep == 1" class="uip-grid-col-1-3 uip-padding-s uip-padding-remove-bottom uip-padding-remove-top uip-fade-in">
+            <div v-if="currentStep == 1" class="uip-grid-col-1-3  uip-padding-remove-top uip-fade-in">
             
                 <div class="uip-text-muted uip-flex uip-flex-center">{{strings.lightMode}}</div>
                 <inline-image-select :value="setupDetails.logo" :returnData='function(d){ setupDetails.logo = d}' :args="{ hasPositioning: false }"></inline-image-select>
@@ -287,7 +293,7 @@ export default {
             </div>
             
             <!--Step 2 -->
-            <div v-if="currentStep == 2" class="uip-flex uip-flex-column uip-row-gap-m uip-max-h-500 uip-overflow-auto uip-scrollbar uip-padding-s uip-padding-remove-bottom uip-padding-remove-top uip-fade-in uip-max-w-100p">
+            <div v-if="currentStep == 2" class="uip-flex uip-flex-column uip-row-gap-m uip-max-h-500 uip-overflow-auto uip-scrollbar  uip-padding-remove-top uip-fade-in uip-max-w-100p">
               
               <div v-if="themeLoading" class="uip-padding-m uip-flex uip-flex-center uip-flex-middle"><loading-chart></loading-chart></div>
               
@@ -333,13 +339,13 @@ export default {
             </div>
             
             <!--Step 3 -->
-            <div v-if="currentStep == 3" class="uip-flex uip-flex-column uip-row-gap-m uip-max-h-500 uip-overflow-auto uip-padding-s uip-padding-remove-bottom uip-padding-remove-top uip-fade-in">
-              <list-variables></list-variables>
+            <div v-if="currentStep == 3" class="uip-flex uip-flex-column uip-row-gap-m uip-max-h-500 uip-overflow-auto  uip-padding-remove-top uip-fade-in">
+              <Variables/>
             </div>
             
             
             <!--Step 4 -->
-            <div v-if="currentStep == 4" class="uip-grid-col-1-3 uip-padding-s uip-padding-remove-bottom uip-padding-remove-top uip-fade-in">
+            <div v-if="currentStep == 4" class="uip-grid-col-1-3  uip-padding-remove-top uip-fade-in">
                 
                 <div class="uip-text-muted uip-flex uip-flex-center">{{strings.appliesTo}}</div>
                 <user-role-select :selected="setupDetails.appliesTo" 
@@ -357,7 +363,7 @@ export default {
             </div>
             
             <!--Step 5 -->
-            <div v-if="currentStep == 5" class="uip-grid-col-1-3 uip-padding-s uip-padding-remove-bottom uip-padding-remove-top uip-fade-in">
+            <div v-if="currentStep == 5" class="uip-grid-col-1-3  uip-padding-remove-top uip-fade-in">
               
               <div class="uip-text-muted uip-flex uip-flex-center">{{strings.enableLoginTheme}}</div>
               <switch-select :value="setupDetails.enableLoginTheme" :returnData='function(d){ setupDetails.enableLoginTheme = d}' :args="{asText: true}"></switch-select>
@@ -374,7 +380,7 @@ export default {
             
             <!--Navigation -->
             
-            <div class="uip-flex uip-gap-xs uip-padding-s uip-padding-remove-top">
+            <div class="uip-flex uip-gap-xs">
               <button class="uip-button-default" @click="currentStep -= 1"
               :disabled="currentStep <= 1">{{strings.previous}}</button>
               <button v-if="currentStep < steps.length" class="uip-button-default" @click="currentStep += 1">{{strings.next}}</button>
@@ -396,7 +402,7 @@ export default {
           
           
         </div>
-      </div>
+      </Modal>
     
     `,
 };

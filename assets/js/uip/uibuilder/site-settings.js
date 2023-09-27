@@ -26,9 +26,10 @@ export default {
     };
   },
   inject: ['uipData', 'router', 'uipress'],
-  mounted: function () {
+  mounted() {
     this.loading = false;
     this.getSettings();
+    console.log('cheese');
   },
   watch: {
     'uiTemplate.globalSettings': {
