@@ -1,8 +1,8 @@
 const { __, _x, _n, _nx } = wp.i18n;
 import { defineAsyncComponent, nextTick } from '../../libs/vue-esm-dev.js';
-import { core as PostTypeSelect, preview as PostTypeSelectPreview } from '../modules/uip-post-type-select.min.js?ver=3.2.12';
-import { core as StatusTypeSelect, preview as StatusTypeSelectPreview } from '../modules/uip-multiselect.min.js?ver=3.2.12';
-import { core as UserRoleSelect, preview as UserRoleSelectPreview } from '../modules/uip-user-role-multiselect.min.js?ver=3.2.12';
+import { core as PostTypeSelect, preview as PostTypeSelectPreview } from '../components/post-type-select.min.js?ver=3.2.12';
+import { core as StatusTypeSelect, preview as StatusTypeSelectPreview } from '../components/multiselect.min.js?ver=3.2.12';
+import { core as UserRoleSelect, preview as UserRoleSelectPreview } from '../components/user-role-multiselect.min.js?ver=3.2.12';
 
 import Comparisons from '../v3.5/lists/comparisons.min.js';
 import DataTypes from '../v3.5/lists/query_data_types.min.js';
