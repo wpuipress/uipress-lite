@@ -48,11 +48,8 @@ export default {
 		  
 		  <div ref="offCanvasBody" class="uip-w-500 uip-border-box uip-offcanvas-panel uip-position-relative uip-padding-s uip-padding-right-remove uip-margin-right-s" style="max-height: 100%;min-height: 100%;height:100%">
 	  
-			<div :id="id" class="uip-flex uip-slide-in-right uip-background-default uip-overflow-hidden uip-border-rounder uip-position-relative uip-shadow uip-border uip-border-box uip-h-100p uip-position-relative" style="max-height: 100%;min-height: 100%;height:100%">
+			<div :id="id" class="uip-flex uip-slide-in-right uip-background-default uip-overflow-hidden uip-position-relative uip-shadow uip-border uip-border-box uip-h-100p uip-position-relative" style="max-height: 100%;min-height: 100%;height:100%;border-radius:calc(var(--uip-border-radius-large) + var(--uip-padding-xs));">
 			  
-			  <div class="uip-position-absolute uip-top-0 uip-padding-m uip-right-0 uip-z-index-1">
-				<span @click="closeOffcanvas()" class="uip-icon uip-padding-xxs uip-border-round hover:uip-background-grey uip-cursor-pointer uip-link-muted uip-text-l"> close </span>
-			  </div>
 	  
 			  <div class="uip-position-relative uip-h-100p uip-flex uip-w-100p uip-flex uip-max-h-100p uip-flex uip-flex-column uip-h-100p uip-max-h-100p">
 				<slot></slot>
