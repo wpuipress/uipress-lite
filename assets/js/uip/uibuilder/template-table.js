@@ -571,18 +571,30 @@ export default {
           .list-leave-active {
             position: absolute;
           }
+          
+          tr:hover {
+           box-shadow: var(--uip-box-shadow);
+          }
+          
+          tr:hover td:first-child{
+            border-radius:8px 0 0 8px;
+          }
+          tr:hover td:last-child{
+            border-radius:0 8px 8px 0;
+          }
         </component>
         
         <!-- Table -->
-        <TransitionGroup name="list" tag="table" class="uip-background-default uip-border uip-border-rounder uip-overflow-hidden">
+        <TransitionGroup name="list" tag="table" class="uip-background-default uip-border uip-border-rounder" style="border-collapse: collapse;
+        border-spacing: 0;">
         
           <template v-for="(template, index) in returnTableData" :key="template.id">
             
           
-            <tr class="uip-link-default" @click="loadTemplate(template.id)"
+            <tr class="uip-link-default uip-border-rounder" @click="loadTemplate(template.id)"
             @contextmenu.prevent.stop="$refs['templatemenu-'+index][0].show($event)">
               <!-- Template Title -->
-              <td class="uip-border-bottom uip-padding-s">
+              <td class="uip-border-bottom uip-padding-s uip-background-default">
                 <div class="uip-flex uip-flex-column uip-gap-xxs">
                   
                   <div class="uip-flex uip-gap-xs uip-flex-center">
@@ -602,12 +614,12 @@ export default {
               </td>
               
               <!-- Template type -->
-              <td class="uip-border-bottom uip-padding-s uip-max-w-160">
+              <td class="uip-border-bottom uip-padding-s uip-max-w-160 uip-background-default">
                 <div class="uip-background-primary-wash uip-text-accent uip-padding-xxxs uip-border-round uip-text-s uip-border uip-display-inline">{{ template.type }}</div>
               </td>
               
               <!-- Active state -->
-              <td class="uip-border-bottom uip-padding-s uip-max-w-100">
+              <td class="uip-border-bottom uip-padding-s uip-max-w-100 uip-background-default">
                 
                 <switch-select :args="{asText:true, small:true, options: activeSwitchOptions}" 
                 @click.stop
@@ -619,7 +631,7 @@ export default {
               
               
               <!-- Applies to -->
-              <td class="uip-border-bottom uip-padding-s uip-max-w-160">
+              <td class="uip-border-bottom uip-padding-s uip-max-w-160 uip-background-default">
                 
                 <user-role-select :selected="returnRoleClone(template.for)"
                 @click.stop
@@ -632,7 +644,7 @@ export default {
               
               
               <!-- Dropdown -->
-              <td class="uip-border-bottom uip-padding-s uip-text-right">
+              <td class="uip-border-bottom uip-padding-s uip-text-right uip-background-default">
                 
                 <a @click.prevent.stop="$refs['templatemenu-'+index][0].show($event)"
                 class="uip-link-muted hover:uip-background-muted uip-border-rounder uip-padding-xxs uip-inline-flex uip-flex-centers uip-text-l">

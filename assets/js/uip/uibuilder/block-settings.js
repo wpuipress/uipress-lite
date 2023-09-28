@@ -4,18 +4,364 @@
  */
 const { __, _x, _n, _nx } = wp.i18n;
 import { defineAsyncComponent, nextTick } from '../../libs/vue-esm-dev.js';
+const BlockStyleHandler = {
+  emits: ['update'],
+  inject: ['uipress'],
+  components: {
+    flexLayout: defineAsyncComponent(() => import('../options/flex-layout.min.js?ver=3.2.12')),
+    contextmenu: defineAsyncComponent(() => import('../v3.5/utility/contextmenu.min.js?ver=3.2.12')),
+    Dimensions: defineAsyncComponent(() => import('../options/dimensions.min.js?ver=3.2.12')),
+    Styles: defineAsyncComponent(() => import('../options/styles.min.js?ver=3.2.12')),
+    Spacing: defineAsyncComponent(() => import('../options/spacing.min.js?ver=3.2.12')),
+    TextFormat: defineAsyncComponent(() => import('../options/text-format.min.js?ver=3.2.12')),
+    PositionDesigner: defineAsyncComponent(() => import('../options/position-designer.min.js?ver=3.2.12')),
+    EffectsDesigner: defineAsyncComponent(() => import('../options/effects.min.js?ver=3.2.12')),
+  },
+  props: {
+    styleSettings: Object,
+    component: String,
+    title: String,
+    startOpen: Boolean,
+    styleName: String,
+  },
+  data() {
+    return {
+      blockStyle: {},
+      open: false,
+      activeState: 'default',
+      colorTheme: 'light',
+      loading: false,
+      strings: {
+        toggleColour: __('Toggle dark / light mode', 'uipress-lite'),
+        resetSection: __('Reset section', 'uipress-lite'),
+      },
+      pseudoSelectors: [
+        { value: 'default', label: __('Default', 'uipress-lite') },
+        { value: ':active', label: __(':active', 'uipress-lite') },
+        { value: ':focus', label: __(':focus', 'uipress-lite') },
+        { value: ':hover', label: __(':hover', 'uipress-lite') },
+        { value: ':visited', label: __(':visited', 'uipress-lite') },
+        { value: '::before', label: __('::before', 'uipress-lite') },
+        { value: '::after', label: __('::after', 'uipress-lite') },
+        { value: ':menu-collapsed', label: __('Menu collapsed', 'uipress-lite') },
+        { value: 'tablet', label: __('Tablet', 'uipress-lite') },
+        { value: 'mobile', label: __('Mobile', 'uipress-lite') },
+      ],
+    };
+  },
+  watch: {
+    /**
+     * Watch for changes to incoming style settings
+     *
+     * @since 3.2.13
+     */
+    styleSettings: {
+      handler() {
+        this.injectPropValue();
+      },
+      deep: true,
+      immediate: true,
+    },
+  },
+  computed: {
+    /**
+     * Returns the icon depending on open status
+     *
+     * @since 3.2.13
+     */
+    returnVisibilityIcon() {
+      if (this.open) return 'expand_more';
+      if (!this.open) return 'chevron_left';
+    },
+
+    /**
+     * Returns the current style for block
+     *
+     * @since 3.2.13
+     */
+    returnCurrentBlockStyle() {
+      let style;
+      switch (this.activeState) {
+        case 'default':
+          style = this.colorTheme == 'light' ? this.blockStyle.value : this.blockStyle.darkValue;
+          break;
+
+        default:
+          const state = this.activeState;
+          const theme = this.colorTheme;
+          // Create pseudo object
+          this.ensureNestedObject(this.blockStyle, 'pseudo', theme, state);
+          style = this.blockStyle.pseudo[theme][state];
+          break;
+      }
+
+      if (!style) style = {};
+
+      return style;
+    },
+
+    /**
+     * Returns the current active setting state
+     *
+     * @since 3.2.13
+     */
+    returnActiveState() {
+      const index = this.pseudoSelectors.findIndex((item) => item.value == this.activeState);
+      return this.pseudoSelectors[index].label;
+    },
+
+    /**
+     * Returns the current theme
+     *
+     * @since 3.2.13
+     */
+    returnThemeIcon() {
+      if (this.colorTheme == 'light') return 'light_mode';
+      return 'dark_mode';
+    },
+  },
+  mounted() {
+    if (this.startOpen) this.open = true;
+  },
+  methods: {
+    /**
+     * Injects prop value if exists
+     *
+     * @since 3.2.13
+     */
+    injectPropValue() {
+      // Reset block style if value doesn't exist
+      if (!this.uipress.isObject(this.styleSettings)) return (this.blockStyle = {});
+      // Update block style
+      this.blockStyle = this.styleSettings;
+    },
+
+    /**
+     * Checks if a nested object exists. if not, it creates each step
+     *
+     * @param {Object} obj - the object to check against
+     * @param {Array} keys - The nested keys to check
+     * @since 3.2.13
+     */
+    ensureNestedObject(obj, ...keys) {
+      keys.reduce((acc, key, index, arr) => {
+        if (!acc[key]) acc[key] = {};
+        return acc[key];
+      }, obj);
+    },
+
+    /**
+     * Checks if a nested object exists. Returns false if not, true if so
+     *
+     * @param {Object} obj - the object to check against
+     * @param {Array} keys - The nested keys to check
+     * @returns {Boolean | Mixed} - returns false on path doesn't exist. Returns value otherwise
+     * @since 3.2.13
+     */
+    hasNestedPath(obj, ...keys) {
+      for (let key of keys) {
+        if (obj.hasOwnProperty(key)) {
+          obj = obj[key];
+        } else {
+          return false; // or undefined, or any other suitable value to indicate "not found"
+        }
+      }
+      return obj;
+    },
+
+    /**
+     * Toggles section visibility
+     *
+     * @since 3.2.13
+     */
+    toggleVisibility() {
+      this.open = !this.open;
+    },
+
+    /**
+     * Handles style updates
+     *
+     * @since 3.2.13
+     */
+    handleStyleUpdate(newStyle) {
+      if (!this.blockStyle.settingName) this.blockStyle.settingName = this.styleName;
+
+      switch (this.activeState) {
+        case 'default':
+          const key = this.colorTheme == 'light' ? 'value' : 'darkValue';
+          this.blockStyle[key] = newStyle;
+
+          this.break;
+
+        default:
+          const state = this.activeState;
+          const theme = this.colorTheme;
+          // Create pseudo object
+          this.ensureNestedObject(this.blockStyle, 'pseudo', theme, state);
+          this.blockStyle.pseudo[theme][state] = newStyle;
+          break;
+      }
+    },
+
+    /**
+     * Returns whether an item has styles in pseudo
+     *
+     * @param {String} pseudo - name of pseudo
+     * @since 3.2.13
+     */
+    itemHasPseudo(pseudo) {
+      const theme = this.colorTheme;
+      let exists = this.hasNestedPath(this.blockStyle, 'pseudo', theme, pseudo);
+
+      // Doesn't exist or is empty
+      if (!exists) return false;
+      if (Object.keys(exists).length === 0) return false;
+
+      // Exists
+      return true;
+    },
+
+    /**
+     * Toggles colour mode
+     *
+     * @since 3.2.13
+     */
+    toggleColorMode() {
+      const state = this.colorTheme == 'light' ? 'dark' : 'light';
+      this.colorTheme = state;
+    },
+
+    /**
+     * Clears block pseudo settings
+     *
+     * @param {String} pseudo - pseudo name
+     * @since 3.2.13
+     */
+    clearPseudo(pseudo) {
+      let existsLight = this.hasNestedPath(this.blockStyle, 'pseudo', 'light', pseudo);
+      if (existsLight) delete this.blockStyle.pseudo.light[pseudo];
+
+      let existsDark = this.hasNestedPath(this.blockStyle, 'pseudo', 'dark', pseudo);
+      if (existsDark) delete this.blockStyle.pseudo.dark[pseudo];
+    },
+
+    /**
+     * Resets whole style section and removes all pseudos
+     *
+     * @since 3.2.13
+     */
+    resetStyleSection() {
+      delete this.blockStyle.value;
+      delete this.blockStyle.darkValue;
+      delete this.blockStyle.pseudo;
+      this.$refs.styleoptions.close();
+    },
+  },
+  template: `
+  
+    <div class="uip-flex uip-flex-column uip-row-gap-s">
+    
+      <!-- Title -->
+      <div class="uip-flex uip-gap-s uip-flex-center uip-flex-between" @contextmenu.prevent.stop="$refs.styleoptions.show($event)">
+        
+       
+        <div class="uip-flex uip-gap-xxs uip-flex-center uip-cursor-pointer uip-flex-between"
+        :class="{'uip-flex-grow' : !open}"
+        @click="toggleVisibility()">
+          
+          
+          <span class="uip-text-bold uip-text-emphasis">{{ title }}</span> 
+          
+          <a class="uip-link-muted uip-icon">{{ returnVisibilityIcon }}</a>
+          
+          
+        </div>
+        
+        
+        <div @click.prevent.stop="$refs.blockstates.show($event)" 
+        class="uip-flex uip-gap-xs uip-fade-in" v-if="open">
+        
+          <span @click.prevent.stop="toggleColorMode" :title="strings.toggleColour"
+          class="uip-link-default hover:uip-background-muted uip-border-rounder uip-icon uip-padding-xxs uip-padding-top-xxxs uip-padding-bottom-xxxs">
+            {{returnThemeIcon}}
+          </span>
+        
+          <div @click.prevent.stop="$refs.blockstates.show($event)" 
+          class="uip-text-xs uip-padding-xxxs uip-padding-left-xs uip-padding-right-xxs uip-border-rounder uip-background-muted uip-link-default uip-flex uip-gap-xxs uip-flex-center">
+            <span>{{returnActiveState}}</span>
+            <a class="uip-link-muted uip-icon">expand_more</a>
+          </div>
+        
+        </div>
+      
+      </div>
+      
+      <div v-if="open" class="uip-padding-left-s">
+        <component :is="component" :value="returnCurrentBlockStyle" @update="handleStyleUpdate"/>
+      </div>
+      
+      
+      <contextmenu ref="blockstates">
+      
+        <div class="uip-padding-xs uip-flex uip-flex-column uip-text-weight-normal uip-text-s">
+        
+          <template v-for="item in pseudoSelectors">
+          
+            <a @click="activeState = item.value; $refs.blockstates.close()"
+            :class="activeState == item.value ? 'uip-background-muted uip-text-emphasis' : 'hover:uip-background-muted'"
+            class="uip-link-default uip-padding-xxs uip-border-rounder uip-text-s uip-no-wrap uip-flex uip-flex-center uip-flex-between uip-gap-s">
+              
+              
+              <span>{{ item.label }}</span>
+              
+              
+              <a v-if="itemHasPseudo(item.value)" 
+              @click.prevent.stop="clearPseudo(item.value)" class="uip-link-muted uip-icon uip-link-muted">close</a>
+            
+            </a>
+            
+          </template>
+        
+        </div>
+      
+      </contextmenu>
+      
+      
+      <contextmenu ref="styleoptions">
+      
+        <div class="uip-padding-xs uip-flex uip-flex-column uip-text-weight-normal uip-text-s">
+        
+          <a @click="resetStyleSection"
+          class="hover:uip-background-muted uip-link-danger uip-padding-xxs uip-border-rounder uip-text-s uip-no-wrap uip-flex uip-flex-center uip-flex-between uip-gap-s">
+          
+            <span>{{ strings.resetSection }}</span>
+            
+            <span class="uip-icon">delete</span>
+          
+          </a>
+        
+        </div>
+      
+      </contextmenu>
+    
+    </div>
+  
+  `,
+};
+
 export default {
   inject: ['uipData', 'uipress', 'uiTemplate'],
   components: {
-    QueryBuilder: defineAsyncComponent(() => import('../options/uip-query-builder.min.js?ver=3.2.12')),
-    responsiveControls: defineAsyncComponent(() => import('../options/uip-responsive.min.js?ver=3.2.12')),
+    QueryBuilder: defineAsyncComponent(() => import('../options/query-builder.min.js?ver=3.2.12')),
+    responsiveControls: defineAsyncComponent(() => import('../options/responsive.min.js?ver=3.2.12')),
+    BlockStyleHandler: BlockStyleHandler,
   },
   data() {
     return {
       block: {},
       uid: this.$route.params.uid,
       mode: 'light',
-      section: 'settings',
+      section: 'style',
       missing: true,
       groups: [],
       loading: true,
@@ -70,6 +416,13 @@ export default {
         clearState: __('Clear state', 'uipress-lite'),
         discontinued: __('This block has now been discontinued. We recommend replacing it with the new menu block from the blocks list.', 'uipress-lite'),
         general: __('General', 'uipress-lite'),
+        layout: __('Layout', 'uipress-lite'),
+        size: __('Size', 'uipress-lite'),
+        style: __('Style', 'uipress-lite'),
+        spacing: __('Spacing', 'uipress-lite'),
+        text: __('Text', 'uipress-lite'),
+        position: __('Position', 'uipress-lite'),
+        effects: __('Effects', 'uipress-lite'),
       },
       pseudoSelectors: [
         {
@@ -109,16 +462,6 @@ export default {
           label: __('Mobile', 'uipress-lite'),
         },
       ],
-      switchOptions: {
-        light: {
-          value: 'light',
-          label: __('Light mode', 'uipress-lite'),
-        },
-        dark: {
-          value: 'dark',
-          label: __('Dark mode', 'uipress-lite'),
-        },
-      },
       enabledDisabled: {
         false: {
           value: false,
@@ -127,18 +470,6 @@ export default {
         true: {
           value: true,
           label: __('Enabled', 'uipress-lite'),
-        },
-      },
-      lightModeSwitchOptions: {
-        light: {
-          value: 'light',
-          icon: 'light_mode',
-          tip: __('Light mode styles'),
-        },
-        dark: {
-          value: 'dark',
-          icon: 'dark_mode',
-          tip: __('Dark mode styles', 'uipress-lite'),
         },
       },
       optionsSections: {
@@ -160,17 +491,6 @@ export default {
     };
   },
   watch: {
-    componenetSettings: {
-      handler(newValue, oldValue) {
-        let self = this;
-        if (!self.loading) {
-          if (JSON.stringify(self.componenetSettings) != JSON.stringify(self.block.settings)) {
-            this.passSettingsToBlock();
-          }
-        }
-      },
-      deep: true,
-    },
     'block.uid': {
       handler(newValue, oldValue) {
         if (newValue == '') {
@@ -185,9 +505,6 @@ export default {
       },
       deep: true,
     },
-  },
-  updated: function () {
-    this.firstLoad = true;
   },
   created() {
     this.uipApp.blockSettings = this;
@@ -276,6 +593,12 @@ export default {
      */
     async show(block, tab) {
       this.block = block;
+
+      await nextTick();
+      this.showSettings = true;
+      this.loading = false;
+
+      return;
       this.componenetSettings = {};
       const status = await this.build_block_settings(this.block);
       if (!status) return;
@@ -291,6 +614,8 @@ export default {
       if (this.uipData.options.block_preset_styles && this.uipress.isObject(this.uipData.options.block_preset_styles)) {
         this.block_preset_styles = this.uipData.options.block_preset_styles;
       }
+
+      await nextTick();
       this.showSettings = true;
       this.loading = false;
     },
@@ -727,6 +1052,46 @@ export default {
     clearPseudoState(pseudoName, option) {
       delete option.pseudo.light[pseudoName];
     },
+
+    /**
+     * Handles tab changes and pushes to query params
+     *
+     * @param {String} tab - new tab to switch to
+     * @since 3.2.13
+     */
+    handleActiveTabChange(tab) {
+      this.section = tab;
+      const newparams = { query: { ...this.$route.query, section: section } };
+      this.$router.push(newparams);
+    },
+
+    /**
+     * Handles changes to a block style object
+     *
+     * @param {String} styleName - the name of the current style
+     * @param {Object} newValue - the new style value
+     * @since 3.2.13
+     */
+    updateBlockStyle(styleName, newValue) {
+      //this.block.settings.style.options[styleName] = newValue;
+      //this.block.settings.style.options[styleName] = newValue;
+      //console.log(this.block.settings.style.options);
+    },
+
+    /**
+     * Returns current style for block
+     *
+     * @param {String} styleName - the name of the current style
+     * @param {Object} newValue - the new style value
+     * @since 3.2.13
+     */
+    returnBlockStylePart(styleName) {
+      if (!this.block.settings) this.block.settings = {};
+      if (!this.block.settings.style) this.block.settings.style = {};
+      if (!this.block.settings.style.options) this.block.settings.style.options = {};
+      if (!this.block.settings.style.options[styleName]) this.block.settings.style.options[styleName] = {};
+      return this.block.settings.style.options[styleName];
+    },
   },
   template: `
     
@@ -735,505 +1100,99 @@ export default {
     <div v-if="showSettings" id="uip-block-settings"
     class="uip-position-fixed uip-top-80 uip-right-16 uip-bottom-16 uip-background-default uip-w-320 uip-flex uip-flex-column uip-row-gap-s uip-overflow-auto uip-fade-in uip-shadow" style="border-radius: calc(var(--uip-border-radius-large) + var(--uip-padding-xs)); z-index: 2;">
     
-        <div v-if="loading" class="uip-padding-m uip-flex uip-flex-center uip-flex-middle "><loading-chart></loading-chart></div>
-        <div v-if="buildingSettings" class="uip-text-muted uip-text-center">{{strings.buildingSettings}}</div>
         
-		<div class="uip-flex uip-flex-column uip-h-100p uip-max-h-100p uip-h-vh uip-position-relative uip-flex-grow" v-if="!loading">
-          
+        <div class="uip-flex uip-flex-column uip-gap-m uip-padding-s">
           
           <!-- Block settings header -->
-          <div class="uip-padding-s uip-padding-remove-bottom">
+          <div class="uip-flex uip-flex-between uip-flex-center">
           
-            <div class="uip-flex uip-gap-xxs uip-flex-center">
-            
-            
-              <div class="uip-flex uip-flex-column uip-flex-grow">
-                <input class="uip-text-bold uip-blank-input uip-text-l uip-text-emphasis" v-model="block.name">
-              </div>
-              
-              <a class="uip-link-muted hover:uip-background-muted uip-border-rounder uip-icon uip-padding-xxs" @click="close()">close</a>
-              
+            <div class="uip-flex uip-flex-column">
+              <input class="uip-text-bold uip-blank-input uip-text-l uip-text-emphasis" v-model="block.name">
             </div>
+            
+            <a class="uip-link-muted hover:uip-background-muted uip-border-rounder uip-icon uip-padding-xxs" @click="close()">close</a>
             
           </div>
           <!-- End block settings header -->
           
-          <!-- Settings group -->
-          <div class="uip-padding-s uip-border-box ">
-            <toggle-switch :options="optionsSections" :activeValue="section" :dontAccentActive="true" :returnValue="function(data){ section = data; pushActiveSection(data)}"></toggle-switch>
-          </div>
           
+          <!-- Toggle active tab -->
+          <toggle-switch :options="optionsSections" :activeValue="section" :returnValue="handleActiveTabChange"/>
           
-          <!-- End settings group -->
+          <!-- Styles tab -->
+          <template v-if="section == 'style'">
           
-          <div class="uip-padding-s uip-padding-top-remove uip-overflow-auto uip-scrollbar">
-            
-            <!--BLOCK SETTINGS -->
-            <div class="uip-margin-bottom-m" v-if="section == 'settings'">
-              <div class=" uip-flex uip-flex-column uip-gap-s">
+            <div class="uip-flex uip-flex-column uip-gap-s">
+          
+              <!-- Layout -->
+              <BlockStyleHandler 
+              v-if="block.content"
+              :startOpen="true"
+              :styleSettings="returnBlockStylePart('flexLayout')" component="flexLayout" 
+              styleName="flexLayout"
+              :title="strings.layout" @update="(emittedValue) => updateBlockStyle('flexLayout', emittedValue)"/>
               
-                <div v-if="block.moduleName == 'uip-admin-menu'" class="uip-border-rounder uip-background-orange-wash uip-padding-xs">
-                  {{strings.discontinued}}
-                </div>
-                
-                <div>
-                  <div class="uip-margin-bottom-xxs uip-text-bold uip-text-emphasis">{{strings.general}}</div>
-                
-                  <div class="uip-padding-s uip-padding-right-remove">
-                    
-                    <div class="uip-grid-col-1-3">
-                    
-                      
-                        <div class="uip-text-muted uip-flex uip-flex-center uip-text-s"><span>{{strings.name}}</span></div>
-                        <input class="uip-input uip-input-small" type="text" v-model="block.name">
-                      
-                        <div class="uip-text-muted uip-flex uip-flex-center uip-text-s"><span>{{strings.blockID}}</span></div>
-                        <uip-tooltip :message="strings.blockUniqueID" :delay="200">
-                          <div class="uip-flex uip-flex-center uip-background-muted uip-border-rounder uip-padding-xxxs uip-padding-left-xxs uip-padding-right-xxs">
-                            <div class="uip-text-muted uip-text-xs">#</div>
-                            <input class="uip-blank-input uip-text-muted uip-text-xs uip-padding-remove uip-w-100p" style="color:var(--uip-text-color-muted) !important" v-model="block.uid">
-                          </div>
-                        </uip-tooltip>
-                        
-                        <div class="uip-text-muted uip-flex uip-flex-center uip-text-s uip-max-h-30"><span>{{strings.link}}</span></div>
-                        <link-select :value="block.linkTo" :returnData="function(d){block.linkTo = d}"></link-select>
-                        
-                        <!--Tooltip text -->
-                        <div class="uip-text-muted uip-flex uip-flex-center uip-text-s"><span>{{strings.tooltip}}</span></div>
-                        
-                        <uip-input :value="block.tooltip.message" :returnData="function(d){block.tooltip.message = d}"/>
-                                            
-                    </div>
-                    
-                  </div>
-                
-                </div>
-                
-                
-                <div class="uip-border-top"></div>
-                
-                
-                <!--Query builder-->
-                <div class="" >
-                  <div class="uip-margin-bottom-xxs uip-text-bold uip-text-emphasis">{{strings.queryLoop}}</div>
-                  
-                  <div class="uip-padding-s uip-padding-right-remove uip-flex uip-flex-column uip-row-gap-xs" v-if="uiTemplate.proActivated">
-                    
-                    
-                    <QueryBuilder :block="block" :value="returnBlockQuerySettings" :returnData="(d)=>{ block.query.settings = d}"/>
-                  
-                  </div>
-                  
-                  <div v-else class="uip-padding-s uip-padding-right-remove">
-                    <div class="uip-padding-xxs uip-border-rounder uip-background-green-wash uip-text-s">{{strings.proOption}}</div>
-                  </div>
-                  
-                  
-                </div>
-                
-                <div class="uip-border-top"></div>
+              <div v-if="block.content" class="uip-border-top"></div>
               
-                
-                <div class="">
-                  <div class="uip-margin-bottom-xxs uip-text-bold uip-text-emphasis">{{strings.hiddenOnDevice}}</div>
-                  <div class="uip-padding-s uip-padding-right-remove">
-                    <responsiveControls :value="block.responsive" :returnData="(e)=>{block.responsive = e}"/>
-                  </div>
-                </div>
-                
-                <div class="uip-border-top"></div>
-                
-                <div v-if="returnSettings.block" class="uip-flex uip-flex-column">
-                
-                
-                  <div class="uip-margin-bottom-xxs uip-text-bold uip-text-emphasis">{{strings.options}}</div>
-                  
-                  <div class="uip-padding-s uip-padding-right-remove uip-flex uip-flex-column uip-row-gap-s">
-                  
-                  
-                    <template v-for="option in returnSettings.block.options">
-                    
-                    
-                      <!--Options -->
-                      <div :class="optionFullWidth(option) ? 'uip-flex uip-flex-column uip-row-gap-xxs' : 'uip-grid-col-1-3'">
-                      
-                        <div class="uip-text-muted uip-flex uip-flex-center uip-text-s uip-h-30 uip-gap-xs">
-                          <span>{{option.label}}</span>
-                          
-                          <uip-tooltip v-if="option.help" :message="option.help">
-                            <span class="uip-icon uip-border-circle uip-background-grey uip-cursor-pointer" style="font-size:12px">question_mark</span>
-                          </uip-tooltip>
-                          
-                        </div>
-                          
-                        <div class="uip-flex uip-flex-center uip-w-100p">
-                          <component v-if="componentExists(option.component)" :is="option.component" :value="option.value" :args="option.args" :returnData="function(data){option.value = data}"></component>
-                          
-                          <div v-else class="uip-padding-xxs uip-border-rounder uip-background-green-wash uip-text-s">
-                             {{strings.proOption}}
-                          </div>
-                        </div>
-                        
-                      </div>
-                      
-                    </template>
-                  
-                  </div>
-                  
-                </div>
-              </div>
-            </div>
-            
-            
-            
-            <!--Block styles -->
-            <div class="uip-flex uip-flex-column uip-row-gap-s uip-margin-bottom-l" v-if="section == 'style'">
-            
-              <dropdown pos="left top" 
-              :snapX="['#uip-block-settings', '#uip-template-settings', '#uip-global-settings']"
-              v-if="returnBlockPartsCount > 0" class="uip-position-sticky uip-top-0" style="z-index:2">
-                
-                <template v-slot:trigger>
-                  
-                  <div class="uip-padding-xs uip-flex uip-flex-between uip-border-rounder uip-flex-center uip-background-muted">
-                  
-                    <div class="uip-flex uip-flex-column">
-                      <div class="uip-text-muted">{{strings.blockPart}}</div>
-                      <div>{{returnActivePart()}}</div>
-                    </div>
-                    
-                    <div class="uip-icon">expand_more</div>
-                  
-                  </div>
-                  
-                </template>
-                
-                <template v-slot:content> 
-                  
-                  <div class="uip-padding-xs uip-flex uip-flex-column">
-                    
-                    <div class="uip-flex uip-gap-xs uip-padding-xs hover:uip-background-muted uip-link-default uip-border-rounder uip-flex-center" @click="setSubComponent('style')"
-                    :class="{'uip-background-muted' : activeSelector == 'style'}">
-                      <div class="uip-icon uip-text-l">crop_free</div>
-                      <div class="uip-flex uip-flex-grow uip-flex-center uip-flex-between">
-                        <span class="">{{block.name}} {{strings.blockRoot}}</span>
-                        <span v-if="activeSelector == 'style'" class="uip-icon uip-icon-large">done</span>
-                      </div>
-                    </div>
-                    
-                      
-                    <template v-for="(group, index) in returnSettings">
-                      <div class="uip-flex uip-gap-xxs uip-gap-xs uip-flex-center uip-padding-xs hover:uip-background-muted uip-link-default uip-border-rounder" v-if="checkIfEmpty(group) && group.name != 'block' && group.name != 'style' && group.name != 'advanced' && group.name != 'container'" @click="setSubComponent(group.name)" :class="{'uip-background-muted' : activeSelector == group.name}">
-                        <div class="uip-icon uip-text-l">{{group.icon}}</div>
-                        <div class="uip-flex uip-flex-row uip-flex-grow uip-gap-xxs uip-flex-center">
-                          <span class="">{{group.label}}</span>
-                          <span v-if="group.class" class="uip-text-muted">({{group.class}})</span>
-                        </div>
-                        <span v-if="activeSelector == group.name" class="uip-icon uip-icon-large">done</span>
-                      </div>
-                      
-                    </template>
-                    
-                  </div>
-                  
-                </template>
+              <!-- Dimensions -->
+              <BlockStyleHandler 
+              :startOpen="true"
+              styleName="dimensions"
+              :styleSettings="returnBlockStylePart('dimensions')" component="Dimensions" 
+              :title="strings.size" @update="(emittedValue) => updateBlockStyle('dimensions', emittedValue)"/>
               
-              </dropdown>
+              <div class="uip-border-top"></div>
+              
+              <!-- Styles -->
+              <BlockStyleHandler 
+              :startOpen="true"
+              styleName="styles"
+              :styleSettings="returnBlockStylePart('styles')" component="Styles" 
+              :title="strings.style" @update="(emittedValue) => updateBlockStyle('styles', emittedValue)"/>
+              
+              <div class="uip-border-top"></div>
+              
+              <!-- Spacing -->
+              <BlockStyleHandler 
+              :startOpen="true"
+              styleName="spacing"
+              :styleSettings="returnBlockStylePart('spacing')" component="Spacing" 
+              :title="strings.spacing" @update="(emittedValue) => updateBlockStyle('spacing', emittedValue)"/>
+              
+              <div class="uip-border-top"></div>
+              
+              <!-- Text -->
+              <BlockStyleHandler 
+              styleName="textFormat"
+              :styleSettings="returnBlockStylePart('textFormat')" component="TextFormat" 
+              :title="strings.text" @update="(emittedValue) => updateBlockStyle('textFormat', emittedValue)"/>
+              
+              <div class="uip-border-top"></div>
+              
+              <!-- Position -->
+              <BlockStyleHandler 
+              styleName="positionDesigner"
+              :styleSettings="returnBlockStylePart('positionDesigner')" component="PositionDesigner" 
+              :title="strings.position" @update="(emittedValue) => updateBlockStyle('positionDesigner', emittedValue)"/>
+              
+              <div class="uip-border-top"></div>
+              
+              <!-- Effects -->
+              <BlockStyleHandler 
+              styleName="effectsDesigner"
+              :styleSettings="returnBlockStylePart('effectsDesigner')" component="EffectsDesigner" 
+              :title="strings.effects" @update="(emittedValue) => updateBlockStyle('effectsDesigner', emittedValue)"/>
+              
+            </div>  
               
               
-              <div v-if="switchingComponent" class="uip-padding-m uip-flex uip-flex-center uip-flex-middle "><loading-chart></loading-chart></div>
-            
-              <div v-else class="uip-flex uip-flex-column uip-row-gap-s uip-fade-in">
-              
-                <!--Style preset warning-->
-                
-                <div v-if="ifUsingPreset" class="uip-background-orange-wash uip-border-rounder uip-text-s uip-padding-xs uip-scale-in-top uip-flex uip-flex-column uip-row-gap-xs">
-                  {{strings.presetActive}}
-                </div>
-              
-              
-                <!--Pseudo-->
-                
-                <div v-if="hasPseudo()">
-                  <div class="uip-margin-bottom-xxs uip-flex uip-flex-center uip-flex-between">
-                   <div class="uip-flex uip-gap-xxs uip-flex-center uip-text-bold uip-text-emphasis">{{strings.pseudoContent}}</div>
-                  </div> 
-                
-                  <div class="uip-padding-s uip-padding-right-remove uip-flex uip-flex-column uip-row-gap-xs">
-                    
-                    <!--Before -->
-                    <div class="uip-grid-col-1-3">
-                    
-                      <div class="uip-text-muted uip-flex uip-flex-center"><span>{{strings.beforeContent}}</span></div>
-                        
-                      <input class="uip-input uip-w-100p" type="text" v-model="componenetSettings[returnActiveComp].beforeContent">
-                      
-                      
-                    </div>
-                    
-                    <!--After -->
-                    <div class="uip-grid-col-1-3">
-                    
-                      <div class="uip-text-muted uip-flex uip-flex-center"><span>{{strings.afterContent}}</span></div>
-                        
-                      <input class="uip-input uip-w-100p" type="text" v-model="componenetSettings[returnActiveComp].afterContent">
-                      
-                      
-                    </div>
-                    
-                  </div>
-                </div>
-                
-                <!--Pseudo-->
-              
-                <template v-for="option in returnCompSettings.options">
-                
-                  <div class="">
-                  
-                    <div class="uip-margin-bottom-xxs uip-flex uip-flex-center uip-flex-between">
-                       <div class="uip-flex uip-gap-xxs uip-flex-center">
-                        <span class="uip-text-bold uip-text-emphasis">{{option.label}}</span>
-                        <span class="uip-text-muted" v-if="option.activePseudo && option.activePseudo != 'none'">{{option.activePseudo}}</span>
-                        
-                        <span v-if="returnLightModeSetting(option.themeMode) == 'dark'"
-                        :title="strings.editingDarkMode" class="uip-icon uip-text-muted uip-padding-xxxs uip-border-round uip-link-default uip-background-grey uip-margin-left-xxs"  @click="switchOptionTheme(option)">dark_mode</span>
-                        
-                        <span v-else
-                        :title="strings.editingLightMode" class="uip-icon uip-text-muted uip-padding-xxxs uip-border-round uip-link-default uip-background-grey uip-margin-left-xxs" @click="switchOptionTheme(option)">light_mode</span>
-                        
-                       </div>
-                       
-                       <dropdown pos="left top" :snapX="['#uip-block-settings', '#uip-template-settings', '#uip-global-settings']">
-                        <template v-slot:trigger>
-                          <div v-if="'pseudo' in option" class="uip-w-6 uip-ratio-1-1 uip-border-circle uip-background-green-wash" style="border:1px solid var(--uip-color-green)"></div>
-                          <div class="uip-icon uip-link-default uip-text-l">add</div>
-                        </template>
-                        <template v-slot:content>
-                        
-                          <div class="uip-padding-s uip-flex uip-flex-column uip-row-gap-s uip-min-w-200">
-                          
-                            <div class="">{{strings.pseudoClasses}}</div>
-                            
-                            <div class="uip-flex uip-flex-column uip-row-gap-xxs">
-                            
-                              <div class="uip-link-muted uip-padding-xxs uip-border-rounder hover:uip-background-muted uip-flex uip-flex-between uip-flex-center" 
-                              :class="{'uip-background-muted' : !option.activePseudo || option.activePseudo == 'none' }" @click="switchPseudo(option, 'none')">
-                                <span>none</span>
-                                <span v-if="!option.activePseudo || option.activePseudo == 'none'" class="uip-icon">done</span>
-                              </div>
-                              
-                              <template v-for="pseudo in pseudoSelectors">
-                              
-                                <div class="uip-flex uip-gap-xxs">
-                                
-                                  <div class="uip-link-muted uip-padding-xxs uip-border-rounder hover:uip-background-muted uip-flex uip-flex-between uip-flex-center uip-gap-xxs uip-flex-grow" 
-                                  :class="{'uip-background-muted' : option.activePseudo == pseudo.value }" @click="switchPseudo(option, pseudo.value)">
-                                    
-                                    <span class="uip-flex-grow">{{pseudo.label}}</span>
-                                    <div v-if="hasPseudoSpecific(pseudo.value,option)" class="uip-w-6 uip-ratio-1-1 uip-border-circle uip-background-green-wash" style="border:1px solid var(--uip-color-green)"></div>
-                                    
-                                    <span v-if="option.activePseudo == pseudo.value" class="uip-icon">done</span>
-                                    
-                                  </div>
-                                  
-                                  <button :title="strings.clearState" v-if="hasPseudoSpecific(pseudo.value,option)" @click="clearPseudoState(pseudo.value,option)"
-                                  class="uip-button-default uip-border-rounder uip-icon uip-padding-xxs uip-link-muted uip-margin-left-xs">close</button>
-                                  
-                                </div>
-                                
-                                
-                                
-                              </template>
-                              
-                              
-                            </div>
-                          </div>
-                          
-                        </template>
-                      </dropdown>
-                      
-                    </div>
-                    
-                    <div class="uip-padding-s uip-padding-right-remove">
-                    
-                      <div v-if="option.loading" class="uip-padding-m uip-flex uip-flex-center uip-flex-middle "><loading-chart></loading-chart></div>
-                    
-                      <template v-else-if="!option.activePseudo || option.activePseudo == 'none'">
-                      
-                       <component v-if="option.themeMode == 'light' || !option.themeMode" :is="option.component" :value="option.value" :args="option.args" 
-                       :returnData="function(data){option.value = data}" 
-                       :blockSettings="block.settings"/>
-                       
-                       <component v-else :is="option.component" :args="option.args" :value="option.darkValue" 
-                       :returnData="function(data){option.darkValue = data}"
-                       :blockSettings="block.settings"/>
-                       
-                      </template>
-                      
-                      <template v-else>
-                      
-                       <component :is="option.component" :value="formatPseudoValue(option)" :args="option.args" 
-                       :returnData="function(data){option.pseudo[returnOptionTheme(option)][option.activePseudo] = data}" 
-                       :blockSettings="block.settings"/>
-                       
-                      </template>
-                       
-                    </div>
-                    <div v-if="!componentExists(option.component)" class="uip-padding-xxs uip-border-rounder uip-background-green-wash uip-text-s">
-                       {{strings.proOption}}
-                    </div>
-                  </div>
-                  
-                  <div class="uip-border-top"></div>
-                </template>
-                
-                
-                
-                <!--Style presets-->
-                <div v-if="!switchingComponent">
-                  <div class="uip-margin-bottom-xxs uip-text-bold uip-text-emphasis">{{strings.stylePresets}}</div>
-                  
-                  <div v-if="returnPresetLoading" class="uip-padding-m uip-flex uip-flex-center uip-flex-middle "><loading-chart></loading-chart></div>
-                  
-                  <!--Options -->
-                  <div class="uip-padding-s uip-padding-right-remove">
-                  
-                    <div class="uip-grid-col-1-3">
-                  
-                      <div class="uip-text-muted uip-flex uip-flex-center uip-text-s uip-h-30 uip-gap-xs">
-                        {{strings.usePreset}}
-                      </div>
-                        
-                      <div class="uip-flex uip-flex-center uip-gap-xxs">
-                      
-                        
-                        <dropdown pos="left center" class="uip-w-100p" :snapX="['#uip-block-settings', '#uip-template-settings', '#uip-global-settings']">
-                          
-                          <template v-slot:trigger>
-                          
-                            <button v-if="!componenetSettings[returnActiveComp].preset" class="uip-button-default uip-border-rounder uip-padding-xxs uip-link-muted uip-w-100p uip-flex uip-gap-xxs uip-flex-center uip-flex-middle">
-                              <span class="uip-icon">add</span>
-                            </button>  
-                            
-                            <button v-else class="uip-button-default uip-border-rounder uip-padding-xxs uip-w-100p uip-flex uip-gap-xxs uip-flex-center uip-flex-between">
-                              <span>{{returnPresetName()}}</span>
-                              <span class="uip-icon">expand_more</span>
-                            </button>  
-                          
-                          </template>
-                          
-                          <template v-slot:content>
-                            
-                              <div class="uip-padding-xs uip-flex uip-flex-column uip-w-200 uip-overflow-auto" style="max-height:300px">
-                                
-                                <div class="uip-link-muted uip-padding-xxs uip-border-rounder hover:uip-background-muted uip-flex uip-flex-between" @click="updatePresetValue(false)"
-                                :class="!componenetSettings[returnActiveComp].preset ? 'uip-background-muted' : ''">
-                                  <span>{{strings.none}}</span>
-                                </div>
-                                
-                                <template v-for="(item, index) in block_preset_styles">
-                                    <div class="uip-link-muted uip-padding-xxs uip-border-rounder hover:uip-background-muted uip-flex-grow uip-flex uip-flex-between uip-flex-center"
-                                    :class="componenetSettings[returnActiveComp].preset == index ? 'uip-background-muted'  : ''">
-                                      <span class="uip-flex" @click="updatePresetValue(index)">{{item.name}}</span>
-                                      <div class="uip-icon uip-link-danger" @click="deleteStylePreset(index)">delete</div>
-                                    </div>
-                                    
-                                    
-                                    
-                                </template>
-                              </div>
-                            
-                          </template>
-                        
-                        
-                        </dropdown>
-                        
-                        <button v-if="componenetSettings[returnActiveComp].preset" class="uip-button-default uip-border-rounder uip-icon uip-padding-xxs uip-link-muted uip-margin-left-xs" @click="updatePresetValue(false)">close</button>
-                        
-                      </div> 
-                      
-                      <template v-if="!componenetSettings[returnActiveComp].preset">
-                      
-                        <div class="uip-text-muted uip-flex uip-flex-center uip-text-s uip-h-30 uip-gap-xs">
-                          {{strings.newPreset}}
-                        </div>
-                        
-                        <div class="uip-flex uip-flex-center uip-w-100p">
-                          <input type="text" class="uip-input uip-input-small uip-w-100p" v-model="newPresetName" :placeholder="strings.name">
-                        </div>
-                         
-                        <div></div>
-                         
-                        <div class="uip-flex uip-flex-center">
-                          <button class="uip-button-default uip-border-rounder uip-w-100p" @click="createNewPreset()">{{strings.createNewPreset}}</button>
-                        </div>
-                      
-                      </template>
-                      
-                      
-                    
-                    </div>
-                    
-                    
-                    
-                  </div>
-                  
-                  
-                </div>  
-                
-                <div class="uip-border-top"></div>
-                
-                <button class="uip-button-warning" @click="clearStyles()">
-                Clear all styles
-                </button>
-                
-              </div>
-              
-              
-              
-              
-            </div>
-            
-            
-            
-            
-            
-            
-            
-            
-            <!--Advanced settings -->
-            <div class="uip-flex uip-flex-column uip-row-gap-xs uip-margin-bottom-l uip-padding-s uip-padding-right-remove" v-if="section == 'advanced' && returnSettings.advanced">
-              <div class="uip-grid-col-1-3">
-                <template v-for="option in returnSettings.advanced.options">
-                  
-                  
-                    <div class="uip-text-muted uip-flex uip-flex-center uip-text-s uip-gap-xs uip-h-30">
-                      <span>{{option.label}}</span>
-                      
-                      <uip-tooltip v-if="option.help" :message="option.help">
-                        <span class="uip-icon uip-border-circle uip-background-grey uip-cursor-pointer" style="font-size:12px">question_mark</span>
-                      </uip-tooltip>
-                      
-                    </div>
-                      
-                    <div class="uip-flex uip-flex-center uip-flex-right uip-w-100p uip-margin-bottom-s">
-                      <component v-if="componentExists(option.component)" :is="option.component" :value="option.value" :args="option.args" :returnData="function(data){option.value = data}"></component>
-                      
-                      <div v-else class="uip-padding-xxs uip-border-rounder uip-background-green-wash uip-text-s">
-                         {{strings.proOption}}
-                      </div>
-                    </div>
-                    
-                  
-                </template>
-              </div>
-            </div>
-            
-            
-          </div>
-	</div>
+          </template>
         
-  </div>
+        
+        </div>
+        
+        
+    </div>
         
         `,
 };
