@@ -80,15 +80,19 @@ export default {
       switch (self.returnType) {
         case 'userrole':
           this.updateSelected(selectedoption.label);
+          break;
 
         case 'userlogin':
           this.updateSelected(selectedoption.login);
+          break;
 
         case 'userid':
           this.updateSelected(selectedoption.id);
+          break;
 
         case 'useremail':
           this.updateSelected(selectedoption.email);
+          break;
       }
 
       // Close select

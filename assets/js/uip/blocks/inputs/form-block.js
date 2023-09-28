@@ -185,22 +185,26 @@ export function moduleData() {
           case 'phpFunction':
             if (!formOptions.phpFunction) return errorMessage();
             this.processPHPfunction(formattedData, formOptions.phpFunction);
+            break;
 
           // Handle Email submit
           case 'email':
             if (!formOptions.emailAddress) return errorMessage();
             this.processEmail(formattedData, formOptions);
+            break;
 
           // Handle site option form
           case 'siteOption':
             if (!formOptions.siteOptionName) return errorMessage();
             this.processSaveAsSiteOption(formattedData, formOptions);
+            break;
 
           // Handle site option form
           case 'userMeta':
             if (!formOptions.objectOrSingle) return errorMessage();
             if (!formOptions.objectOrSingle == 'object' || formOptions.userMetaObjectKey == '') return errorMessage();
             this.processSaveAsUserOption(formattedData, formOptions);
+            break;
         }
       },
 
