@@ -198,7 +198,7 @@ export function moduleData() {
           let subItemId = subItem.getAttribute('id');
           subItemId = subItemId.replace('wp-admin-bar-', '');
           if (subItemId) {
-            const subItemObject = createToolbarItem(subItem, adminPath, adminURL);
+            const subItemObject = this.createToolbarItem(subItem, adminPath, adminURL);
             newItem.submenu[subItemId] = subItemObject;
           }
         };
