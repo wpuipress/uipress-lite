@@ -270,7 +270,7 @@ export default {
 	  </div>
 	  
 	  
-	  <div class="uip-flex uip-flex-column uip-max-h-160 uip-overflow-auto" @scroll="checkForBottomScroll">
+	  <div class="uip-flex uip-flex-column uip-max-h-160" @scroll="checkForBottomScroll" style="overflow:auto">
 		
 		
 	  
