@@ -46,16 +46,6 @@ export default {
   },
   computed: {
     /**
-     * Returns options
-     *
-     * @since 3.2.13
-     */
-    returnOption() {
-      this.formatValue(this.value);
-      return this.option;
-    },
-
-    /**
      * Returns units value
      *
      * @since 3.2.13
@@ -70,7 +60,7 @@ export default {
      *
      * @since 3.2.13
      */
-    formatValue(item) {
+    formatValue() {
       if (!this.uipress.isObject(this.value)) return;
       this.option = { ...this.option, ...this.value };
     },
