@@ -342,6 +342,13 @@ export default {
       }
       return style;
     },
+    /**
+     * Handles units / value change for padding and margin
+     */
+    handleUnitChange(option, data) {
+      option.topleft = data.value;
+      option.units = data.units;
+    },
   },
   template: `
     
@@ -466,7 +473,7 @@ export default {
           <div class="uip-flex uip-gap-xs uip-flex-center">
           
             <value-units :value="{value: styles.radius.topleft, units:styles.radius.units}" :returnData="(data)=>{handleUnitChange(styles.radius, data)}" class="uip-flex-grow"/>
-            <toggle-switch :options="syncOptions" :activeValue="styles.radius.sync" :returnValue="(data)=>{ styles.radius.sync = data}" style="width:50%"></toggle-switch>
+            <toggle-switch :options="syncOptions" :activeValue="styles.radius.sync" :returnValue="(data)=>{ styles.radius.sync = data}" style="width:50%"/>
             
           </div>
           
