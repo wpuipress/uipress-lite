@@ -22,9 +22,9 @@ export default {
         size: BackgroundSize,
       },
       strings: {
-        position: __('Position', 'uipress-light'),
-        repeat: __('Repeat', 'uipress-light'),
-        size: __('Size', 'uipress-light'),
+        position: __('Position', 'uipress-lite'),
+        repeat: __('Repeat', 'uipress-lite'),
+        size: __('Size', 'uipress-lite'),
       },
     };
   },

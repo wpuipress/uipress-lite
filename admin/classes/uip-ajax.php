@@ -1052,7 +1052,7 @@ class uip_ajax
 
       if (!$status) {
         $returndata['error'] = true;
-        $returndata['message'] = __('Unable to send mail at this time', 'uipress-light');
+        $returndata['message'] = __('Unable to send mail at this time', 'uipress-lite');
         wp_send_json($returndata);
       }
 
