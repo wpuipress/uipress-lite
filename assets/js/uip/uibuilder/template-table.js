@@ -582,10 +582,15 @@ export default {
           tr:hover td:last-child{
             border-radius:0 8px 8px 0;
           }
+          .uip-template-table tr:first-child td:first-child {border-radius: 8px 0 0 0;}
+          .uip-template-table tr:first-child td:last-child {border-radius: 0 8px 0 0;}
+          .uip-template-table tr:last-child td:first-child {border-radius: 0 0 0 8px;}
+          .uip-template-table tr:last-child td:last-child {border-radius: 0 0 8px 0;}
+          .uip-template-table tr:last-child td {border: none !important;}
         </component>
         
         <!-- Table -->
-        <TransitionGroup name="list" tag="table" class="uip-background-default uip-border uip-border-rounder" style="border-collapse: collapse;
+        <TransitionGroup name="list" tag="table" class="uip-background-transparent uip-template-table" style="border-collapse: collapse;
         border-spacing: 0;">
         
           <template v-for="(template, index) in returnTableData" :key="template.id">
