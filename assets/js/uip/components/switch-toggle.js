@@ -49,11 +49,12 @@ export default {
      */
     activeValue: {
       async handler() {
-        this.optionValue = this.activeValue;
+        this.injectProp();
         await nextTick();
         this.returnBGstyle();
       },
       deep: true,
+      immediate: true,
     },
     /**
      * Watches options and updates
@@ -67,12 +68,8 @@ export default {
       deep: true,
     },
   },
-  created() {
-    if (!this.options) return;
-    this.enabledOptions = this.options;
-  },
+  created() {},
   mounted() {
-    this.optionValue = typeof this.activeValue === 'undefined' ? this.default : this.activeValue;
     this.returnBGstyle();
   },
   computed: {
@@ -96,6 +93,20 @@ export default {
     },
   },
   methods: {
+    /**
+     * Injects prop value if it exists
+     *
+     * @since 3.2.13
+     */
+    injectProp() {
+      this.optionValue = typeof this.activeValue === 'undefined' ? '' : this.activeValue;
+      if (this.optionValue === 'true') this.optionValue = true;
+      if (this.optionValue === 'false') this.optionValue = false;
+
+      // Inject options
+      if (!this.options) return;
+      this.enabledOptions = this.options;
+    },
     /**
      * Compute background style for the item
      *
