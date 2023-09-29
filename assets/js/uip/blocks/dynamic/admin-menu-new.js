@@ -362,6 +362,18 @@ const DrillDown = {
       if (this.uipress.isObject(showSearch)) return showSearch.value;
       return showSearch;
     },
+
+    /**
+     * Returns whether the menu collapse option is available
+     *
+     * @returns {boolean}
+     * @since 3.2.13
+     */
+    hasMenuCollapse() {
+      const menuCollapse = this.uipress.get_block_option(this.block, 'block', 'menuCollapse');
+      if (this.uipress.isObject(menuCollapse)) return menuCollapse.value;
+      return menuCollapse;
+    },
   },
   methods: {
     /**
@@ -456,7 +468,7 @@ const DrillDown = {
                     <TopLevelItem :item="item" :maybeFollowLink="handleLinkClick" :collapsed="isCollapsed" :block="block"/>
                   </template>
                   
-                  <MenuCollapse :collapsed="isCollapsed" :returnData="(d) => {isCollapsed = d}"/>
+                  <MenuCollapse v-if="hasMenuCollapse" :collapsed="isCollapsed" :returnData="(d) => {isCollapsed = d}"/>
                   
                 </div>
               </Transition>
@@ -934,7 +946,7 @@ export function moduleData() {
             
             <a ref="newTab" target="_BLANK" class="uip-hidden"></a>
             
-            <MenuCollapse :collapsed="collapsed" :returnData="(d) => {collapsed = d}"/>
+            <MenuCollapse v-if="hasMenuCollapse" :collapsed="collapsed" :returnData="(d) => {collapsed = d}"/>
             
           </div>`,
   };
