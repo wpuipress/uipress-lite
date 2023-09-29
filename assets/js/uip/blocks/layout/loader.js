@@ -116,7 +116,7 @@ const Dropdown = {
           },
           value: 'bottom-left',
         },
-        { option: 'keyboardShortcut', label: __('Keyboard shortcut to open', 'uipress-lite') },
+        { option: 'keyboardShortcut', label: __('Keyboard shortcut', 'uipress-lite') },
       ],
     },
 
