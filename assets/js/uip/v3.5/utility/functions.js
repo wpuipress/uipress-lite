@@ -89,3 +89,14 @@ export async function copyToClipboard(textToCopy) {
     }
   }
 }
+
+/**
+ * Checks if given item is a plain object
+ *
+ * @param {*} obj - The item to check
+ * @returns {boolean} - True if obj is a plain object, otherwise false
+ * @since 3.0.0
+ */
+function isObject(obj) {
+  return obj !== null && typeof obj === 'object' && obj.constructor === Object;
+}
