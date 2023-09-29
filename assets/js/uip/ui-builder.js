@@ -311,6 +311,18 @@ app.component('uip-select-post-types', UIbuilderSelectPostTypes);
 app.component('inline-image-select', UIbuilderInlineImageSelect);
 app.component('uip-effects', UIbuilderEffects);
 
+/**
+ * Import helper functions
+ *
+ * @since 3.2.13
+ */
+
+import { ensureNestedObject, hasNestedPath, prepareJSON, deepClone, copyToClipboard } from './v3.5/utility/functions.min.js?ver=3.2.12';
+app.config.globalProperties.ensureNestedObject = ensureNestedObject;
+app.config.globalProperties.hasNestedPath = hasNestedPath;
+app.config.globalProperties.prepareJSON = prepareJSON;
+app.config.globalProperties.deepClone = deepClone;
+app.config.globalProperties.copyToClipboard = copyToClipboard;
 app.config.globalProperties.uipApp = reactive({
   scrolling: false,
 });
