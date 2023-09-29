@@ -9,7 +9,7 @@ export default {
     mode: String,
     insertArea: Array,
   },
-  data: function () {
+  data() {
     return {
       loading: true,
       categories: [],
@@ -22,58 +22,53 @@ export default {
     };
   },
   inject: ['uipData', 'uipress', 'uiTemplate'],
-  mounted: function () {
-    this.loading = false;
-    this.returnGroups;
-    let newGrouping = [];
-    for (let [index, block] of this.sortedBlocks.entries()) {
-      if (block.moduleName != 'responsive-grid' && block.moduleName != 'uip-admin-menu' && block.moduleName != 'uip-user-meta-block') {
-        newGrouping.push(block);
-      }
-    }
-
-    this.sortedBlocks = newGrouping;
+  mounted() {
+    this.removeOldBlocks();
   },
   computed: {
+    /**
+     * Returns filters categories with blocks as children
+     *
+     * @since 3.2.13
+     */
     returnCats() {
-      let cats = [];
-      let self = this;
-      let organisedBlocks = [];
+      const excludedModules = ['responsive-grid', 'uip-admin-menu', 'uip-user-meta-block'];
 
-      for (let cat in this.returnGroups) {
-        let categoryBlocks = this.uipData.blocks.filter((c) => c.group == cat);
-        let tempers = categoryBlocks.sort((a, b) => a.name.localeCompare(b.name));
-        let sortedBlocks = [];
+      return Object.entries(this.returnGroups).map(([catKey, catValue]) => {
+        const sortedBlocks = this.uipData.blocks.filter((block) => block.group === catKey && !excludedModules.includes(block.moduleName)).sort((a, b) => a.name.localeCompare(b.name));
 
-        for (let block of tempers) {
-          if (block.moduleName != 'responsive-grid' && block.moduleName != 'uip-admin-menu' && block.moduleName != 'uip-user-meta-block') {
-            sortedBlocks.push(block);
-          }
-        }
-
-        let temp = {
-          name: this.returnGroups[cat].label,
+        return {
+          name: catValue.label,
           blocks: sortedBlocks,
         };
-        organisedBlocks.push(temp);
-      }
-
-      return organisedBlocks;
+      });
     },
+
+    /**
+     * Returns categories / groups for blocks
+     *
+     * @since 3.2.13
+     */
     returnGroups() {
       return this.uipData.blockGroups;
     },
   },
   methods: {
-    catHasChildren(cat) {
-      let show = false;
-      for (let [index, block] of cat.blocks.entries()) {
-        if (this.inSearch(block)) {
-          show = true;
-        }
-      }
-      return show;
+    /**
+     * Removes old blocks from list
+     *
+     * @since 3.2.13
+     */
+    removeOldBlocks() {
+      const excludedModules = ['responsive-grid', 'uip-admin-menu', 'uip-user-meta-block'];
+      this.sortedBlocks = this.sortedBlocks.filter((block) => !excludedModules.includes(block.moduleName));
     },
+    /**
+     * Clones block upon succesful drag
+     *
+     * @param {Object} block
+     * @since 3.2.13
+     */
     clone(block) {
       let item = JSON.parse(JSON.stringify(block));
       item.tooltip = {};
@@ -90,31 +85,47 @@ export default {
 
       return item;
     },
+
+    /**
+     * Checks whether a component exists
+     *
+     * @param {String} mod - component name
+     * @since 3.2.13
+     */
     componentExists(mod) {
-      if (mod.premium && !this.uiTemplate.proActivated) {
-        return false;
-      }
-      let name = mod.moduleName;
-      if (this.$root._.appContext.components[name]) {
-        return true;
-      } else {
-        return false;
-      }
+      if (mod.premium && !this.uiTemplate.proActivated) return false;
+
+      const name = mod.moduleName;
+      if (this.$root._.appContext.components[name]) return true;
     },
+
+    /**
+     * Inserts block at a given position
+     *
+     * @param {Object} block
+     * @returns {Promise}
+     * @since 3.2.13
+     */
     async insertAtPos(block) {
       //Check if we allowing click from modal list
       if (this.mode != 'click') {
         return;
       }
-      if (Array.isArray(this.insertArea)) {
-        let item = this.clone(block);
-        item.uid = this.uipress.createUID();
-        this.insertArea.push(item);
-        await nextTick();
-        const addedBlock = this.insertArea[this.insertArea.length - 1];
-        this.uipApp.blockControl.setActive(addedBlock, this.insertArea);
-      }
+      if (!Array.isArray(this.insertArea)) return;
+      let item = this.clone(block);
+      item.uid = this.uipress.createUID();
+      this.insertArea.push(item);
+      await nextTick();
+      const addedBlock = this.insertArea[this.insertArea.length - 1];
+      this.uipApp.blockControl.setActive(addedBlock, this.insertArea);
     },
+
+    /**
+     * Checks whether the block is in the search
+     *
+     * @param {Object} block - the block to check
+     * @since 3.2.13
+     */
     inSearch(block) {
       if (this.search == '') {
         return true;
