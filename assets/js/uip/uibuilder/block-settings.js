@@ -645,7 +645,7 @@ const BlockParts = {
   },
   template: `
   
-    <dropdown pos="left top" :snapX="['#uip-block-settings']" v-if="returnBlockPartsLength > 0" ref="blockPartSwitcher" class="uip-position-sticky uip-top-16 uip-z-index-2">
+    <dropdown pos="left top" :snapX="['#uip-block-settings']" v-if="returnBlockPartsLength" ref="blockPartSwitcher" class="uip-position-sticky uip-top-16 uip-z-index-2">
       
       <template #trigger>
         <div class="uip-background-muted uip-border-rounder uip-padding-xs uip-flex uip-flex-between uip-flex-center uip-link-default">
@@ -1110,62 +1110,24 @@ export default {
     return {
       block: {},
       uid: this.$route.params.uid,
-      mode: 'light',
       section: 'settings',
-      missing: true,
-      groups: [],
       loading: true,
-      options: {},
       activeTab: false,
-      buildingSettings: false,
-      switchingComponent: false,
-      componenetSettings: {},
-      block_preset_styles: {},
-      activeSelector: 'advanced',
-      newPresetName: '',
-      firstLoad: false,
       showSettings: false,
       activePart: 'root',
       strings: {
-        missingMessage: __('This block no longer exists', 'uipress-lite'),
-        goBack: __('Go back', 'uipress-lite'),
         blockID: __('ID', 'uipress-lite'),
         proOption: __('This is a pro option. Upgrade to unlock', 'uipress-lite'),
-        theme: __('Theme', 'uipress-lite'),
         options: __('Options', 'uipress-lite'),
-        buildingSettings: __('Building settings object...', 'uipress-lite'),
-        blockUniqueID: __('Block unique id. If you change this it must remain unique and can not be blank', 'uipress-lite'),
         hiddenOnDevice: __('Hidden on device', 'uipress-lite'),
         tooltip: __('Tooltip', 'uipress-lite'),
         tooltipMessage: __('Message', 'uipress-lite'),
-        delay: __('Delay (ms)', 'uipress-lite'),
         styles: __('Styles', 'uipress-lite'),
-        blockSettings: __('Block options', 'uipress-lite'),
-        currentlyEditing: __('Currently editing', 'uipress-lite'),
-        blockPart: __('Block part', 'uipress-lite'),
-        blockRoot: __('root', 'uipress-lite'),
-        options: __('Options', 'uipress-lite'),
-        pseudoClasses: __('Element states', 'uipress-lite'),
-        editingLightMode: __('Editing for light mode'),
-        editingDarkMode: __('Editing for dark mode'),
-        pseudoContent: __('Pseudo content', 'uipress-lite'),
-        beforeContent: __('::before', 'uipress-lite'),
-        afterContent: __('::after', 'uipress-lite'),
         queryLoop: __('Query loop', 'uipress-lite'),
         query: __('Query', 'uipress-lite'),
-        stylePresets: __('Style presets', 'uipress-lite'),
-        usePreset: __('Use preset', 'uipress-lite'),
         none: __('None', 'uipress-lite'),
-        newPreset: __('New preset', 'uipress-lite'),
-        createNewPreset: __('Create preset', 'uipress-lite'),
         name: __('Name', 'uipress-lite'),
-        presetActive: __('You are currently editing a style preset. Changes made here will apply to all blocks using the same preset.'),
         link: __('Link', 'uipress-lite'),
-        menuCollapsed: __('Menu collapsed', 'uipress-lite'),
-        tablet: __('Tablet', 'uipress-lite'),
-        mobile: __('Mobile', 'uipress-lite'),
-        clearState: __('Clear state', 'uipress-lite'),
-        discontinued: __('This block has now been discontinued. We recommend replacing it with the new menu block from the blocks list.', 'uipress-lite'),
         general: __('General', 'uipress-lite'),
         layout: __('Layout', 'uipress-lite'),
         size: __('Size', 'uipress-lite'),
@@ -1178,54 +1140,6 @@ export default {
         code: __('Code', 'uipress-lite'),
         classes: __('Classes', 'uipress-lite'),
         conditions: __('Conditions', 'uipress-lite'),
-      },
-      pseudoSelectors: [
-        {
-          value: ':active',
-          label: __(':active', 'uipress-lite'),
-        },
-        {
-          value: ':focus',
-          label: __(':focus', 'uipress-lite'),
-        },
-        {
-          value: ':hover',
-          label: __(':hover', 'uipress-lite'),
-        },
-        {
-          value: ':visited',
-          label: __(':visited', 'uipress-lite'),
-        },
-        {
-          value: '::before',
-          label: __('::before', 'uipress-lite'),
-        },
-        {
-          value: '::after',
-          label: __('::after', 'uipress-lite'),
-        },
-        {
-          value: ':menu-collapsed',
-          label: __('Menu collapsed', 'uipress-lite'),
-        },
-        {
-          value: 'tablet',
-          label: __('Tablet', 'uipress-lite'),
-        },
-        {
-          value: 'mobile',
-          label: __('Mobile', 'uipress-lite'),
-        },
-      ],
-      enabledDisabled: {
-        false: {
-          value: false,
-          label: __('Disabled', 'uipress-lite'),
-        },
-        true: {
-          value: true,
-          label: __('Enabled', 'uipress-lite'),
-        },
       },
       optionsSections: {
         settings: {
@@ -1245,22 +1159,6 @@ export default {
       },
     };
   },
-  watch: {
-    'block.uid': {
-      handler(newValue, oldValue) {
-        if (newValue == '') {
-          this.block.uid = this.uipress.createUID();
-        }
-      },
-      deep: true,
-    },
-    block_preset_styles: {
-      handler(newValue, oldValue) {
-        this.uipress.uipAppData.options.block_preset_styles = this.block_preset_styles;
-      },
-      deep: true,
-    },
-  },
   created() {
     this.uipApp.blockSettings = this;
   },
@@ -1273,70 +1171,6 @@ export default {
     returnBlockQuerySettings() {
       if (!this.block.query) this.block.query = { settings: {} };
       return this.block.query.settings;
-    },
-    returnBlock() {
-      return this.block;
-    },
-    returnSettings() {
-      return this.componenetSettings;
-    },
-    returnBlockPartsCount() {
-      let items = Object.keys(this.returnSettings);
-
-      const advancedIndex = items.indexOf('advanced');
-      const styleIndex = items.indexOf('style');
-      const blockIndex = items.indexOf('block');
-
-      if (advancedIndex >= 0) {
-        items.splice(advancedIndex, 1);
-      }
-      if (styleIndex >= 0) {
-        items.splice(styleIndex, 1);
-      }
-      if (blockIndex >= 0) {
-        items.splice(blockIndex, 1);
-      }
-
-      return items.length;
-    },
-    returnCompSettings() {
-      let preset = this.uipress.checkNestedValue(this.componenetSettings[this.returnActiveComp], ['preset']);
-
-      if (preset) {
-        if (preset in this.block_preset_styles) {
-          return this.block_preset_styles[preset].preset;
-        }
-      }
-
-      return this.componenetSettings[this.returnActiveComp];
-    },
-    ifUsingPreset() {
-      let preset = this.uipress.checkNestedValue(this.componenetSettings[this.returnActiveComp], ['preset']);
-
-      if (preset) {
-        if (preset in this.block_preset_styles) {
-          return true;
-        }
-      }
-      return false;
-    },
-    ifBlockExists() {
-      let self = this;
-      let dataAsString = JSON.stringify(self.uiTemplate.content);
-      if (dataAsString.includes(self.uid)) {
-        return false;
-      } else {
-        return true;
-      }
-    },
-    returnBlock() {
-      return this.block;
-    },
-    returnActiveComp() {
-      return this.activeSelector;
-    },
-    returnPresetLoading() {
-      return this.uipress.checkNestedValue(this.componenetSettings[this.returnActiveComp], ['preset', 'loading']);
     },
     /**
      * Returns options for current block
@@ -1359,7 +1193,6 @@ export default {
 
       // No block specific settings so bail
       if (blockOptionsIndex < 0) return [];
-      console.log(allBlockSettings[blockOptionsIndex].options);
       return allBlockSettings[blockOptionsIndex].options;
     },
   },
@@ -1407,388 +1240,18 @@ export default {
       this.showSettings = false;
       this.block = null;
     },
-    /**
-     * Returns settings back to block. Filters out empty options and unnecessary parameters
-     * Types: 'error', 'default', 'success', 'warning'
-     * @since 3.0.0
-     */
-    passSettingsToBlock() {
-      let self = this;
-      //No settings or something has gone wrong so let's not set anything.
-      if (!self.isObject(self.componenetSettings)) {
-        return;
-      }
-
-      //Make a copy of the settings so it isn't reactive
-      let clonedSettings = JSON.parse(JSON.stringify(self.componenetSettings));
-
-      const formattedSettings = {};
-      //Loop through setting groups
-      for (let groupKey in clonedSettings) {
-        let groupOptions = clonedSettings[groupKey];
-
-        formattedSettings[groupKey] = {};
-        formattedSettings[groupKey].options = {};
-        if ('styleType' in groupOptions) {
-          formattedSettings[groupKey].styleType = groupOptions.styleType;
-        }
-        if ('class' in groupOptions) {
-          formattedSettings[groupKey].class = groupOptions.class;
-        }
-
-        if ('afterContent' in groupOptions) {
-          formattedSettings[groupKey].afterContent = groupOptions.afterContent;
-        }
-
-        if ('beforeContent' in groupOptions) {
-          formattedSettings[groupKey].beforeContent = groupOptions.beforeContent;
-        }
-
-        if ('preset' in groupOptions) {
-          formattedSettings[groupKey].preset = groupOptions.preset;
-        }
-
-        if ('options' in groupOptions) {
-          for (let optKey in groupOptions.options) {
-            //Light mode
-            if ('value' in groupOptions.options[optKey] || 'darkValue' in groupOptions.options[optKey] || 'pseudo' in groupOptions.options[optKey]) {
-              //Grab light value
-              let settingValue;
-              if ('value' in groupOptions.options[optKey]) {
-                settingValue = groupOptions.options[optKey].value;
-              }
-              //Grab light value
-              let darkValue;
-              if ('darkValue' in groupOptions.options[optKey]) {
-                darkValue = groupOptions.options[optKey].darkValue;
-              }
-              //Grab hover value
-              let pseudo;
-              if ('pseudo' in groupOptions.options[optKey]) {
-                pseudo = groupOptions.options[optKey]['pseudo'];
-              }
-              ///console.log(hoverValue);
-              //Check if the value is set;
-              let lightVal;
-              if (typeof settingValue !== 'undefined') {
-                if (self.isObject(settingValue)) {
-                  lightVal = this.clear_empty_values_from_object(settingValue);
-                } else {
-                  lightVal = settingValue;
-                }
-              }
-
-              //Check if the darkValue is set;
-              let darkVal;
-              if (typeof darkValue !== 'undefined') {
-                if (self.isObject(settingValue)) {
-                  darkVal = this.clear_empty_values_from_object(darkValue);
-                } else {
-                  darkVal = darkValue;
-                }
-              }
-
-              //Check if pseudo is set
-              if (self.isObject(pseudo)) {
-                pseudo = this.clear_empty_values_from_object(pseudo);
-              }
-
-              if (typeof lightVal !== 'undefined' || typeof darkVal !== 'undefined' || typeof pseudo !== 'undefined') {
-                formattedSettings[groupKey].options[optKey] = {};
-                formattedSettings[groupKey].options[optKey].settingName = groupOptions.options[optKey].settingName;
-                if (typeof lightVal !== 'undefined') {
-                  formattedSettings[groupKey].options[optKey].value = lightVal;
-                }
-                if (typeof darkVal !== 'undefined') {
-                  formattedSettings[groupKey].options[optKey].darkValue = darkVal;
-                }
-                if (typeof pseudo !== 'undefined') {
-                  formattedSettings[groupKey].options[optKey]['pseudo'] = pseudo;
-                }
-              }
-            }
-          }
-        }
-      }
-
-      //console.log(formattedSettings);
-
-      //Ensure the settings were created correctly
-      if (self.isObject(formattedSettings)) {
-        self.block.settings = formattedSettings;
-      }
-    },
 
     /**
-     * Loops through settings and only passes back values that are set
-     * Types: 'error', 'default', 'success', 'warning'
-     * @since 3.0.0
+     * Checks whether a component exists
+     *
+     * @param {String} name - the name of the component
      */
-    clear_empty_values_from_object(values) {
-      let self = this;
-      for (let valueKey in values) {
-        let val = values[valueKey];
-
-        if (typeof val === 'undefined') {
-          delete values[valueKey];
-        }
-
-        if (val == '' && val !== false && val !== 0 && val !== '0') {
-          delete values[valueKey];
-        }
-
-        if (self.isObject(val)) {
-          if (Object.keys(val).length === 0) {
-            delete values[valueKey];
-          } else {
-            val = self.clear_empty_values_from_object(val);
-            //Check if the object is now empty after iterating it's children
-            if (Object.keys(values[valueKey]).length === 0) {
-              delete values[valueKey];
-            }
-          }
-        }
-      }
-      return values;
-    },
-
-    /**
-     * Loops through groups in options enabled and builds a usable options object
-     * Types: 'error', 'default', 'success', 'warning'
-     * @since 3.0.0
-     */
-    async build_block_settings(block) {
-      let self = this;
-      let blockMobule = block.moduleName;
-      let allBlocks = this.uipData.blocks;
-      let blockCurrentSettings = block.settings;
-
-      //Find the originally registered block's enabled settings
-      let masterblock = allBlocks.filter((obj) => {
-        return obj.moduleName === blockMobule;
-      });
-      if (masterblock.length < 1) {
-        self.missing = true;
-        self.loading = false;
-        self.buildingSettings = false;
-        self.strings.missingMessage = __('This block has no settings', 'uipress-lite');
-        return false;
-      }
-
-      if (typeof masterblock[0].optionsEnabled === 'undefined') {
-        self.missing = true;
-        self.loading = false;
-        self.buildingSettings = false;
-        self.strings.missingMessage = __('This is a pro block. Upgrade to unlock', 'uipress-lite');
-        return false;
-      }
-
-      //Make a copy of the originally registered block's enabled settings
-
-      let optionsEnabled = JSON.parse(JSON.stringify(masterblock[0].optionsEnabled));
-
-      let tempSettings = JSON.parse(JSON.stringify(self.componenetSettings));
-
-      for (var i = 0; i < optionsEnabled.length; i++) {
-        let group = optionsEnabled[i];
-        let groupName = group.name;
-
-        let valuesAlreadySet = {};
-        if (groupName in blockCurrentSettings) {
-          valuesAlreadySet = blockCurrentSettings[groupName];
-        }
-
-        if (Object.keys(valuesAlreadySet).length === 0) {
-          self.uipress.format_block_presets(group.options, block.settings, group);
-          if (groupName in block.settings) {
-            valuesAlreadySet = block.settings[groupName];
-          }
-        }
-
-        self.uipress.format_block_option(group, valuesAlreadySet, self.componenetSettings);
-      }
-
-      return true;
-    },
     componentExists(name) {
       if (this.$root._.appContext.components[name]) {
         return true;
       } else {
         return false;
       }
-    },
-    checkIfEmpty(group) {
-      let groupOptions = group.options;
-
-      if (this.mode != 'dark') {
-        return true;
-      }
-
-      for (const [key, value] of Object.entries(groupOptions)) {
-        if ('dark' in groupOptions[key]) {
-          if (groupOptions[key].dark) {
-            return true;
-          }
-        }
-      }
-
-      return false;
-    },
-    pushActiveSection(section) {
-      this.$router.push({
-        query: { ...this.$route.query, section: section },
-      });
-    },
-    returnActivePart() {
-      if (this.activeSelector == 'style') {
-        return this.block.name;
-      }
-
-      return this.returnSettings[this.activeSelector].label;
-    },
-    setSubComponent(comp) {
-      let self = this;
-      self.activeSelector = comp;
-      self.switchingComponent = true;
-
-      //Force the styles to re-rener
-      setTimeout(function () {
-        self.switchingComponent = false;
-      }, 250);
-    },
-    returnLightModeSetting(mode) {
-      if (!mode || typeof mode === 'undefined') {
-        return 'light';
-      } else {
-        return mode;
-      }
-    },
-    formatPseudoValue(val) {
-      let isSet = this.uipress.checkNestedValue(val, ['pseudo', this.returnOptionTheme(val), val.activePseudo]);
-
-      if (!isSet) {
-        this.uipress.createNestedObject(val, ['pseudo', this.returnOptionTheme(val), val.activePseudo]);
-        return {};
-      }
-      return isSet;
-    },
-    returnOptionTheme(val) {
-      let theme = 'light';
-      if (val.themeMode == 'dark') {
-        theme = 'dark';
-      }
-      return theme;
-    },
-    switchOptionTheme(option) {
-      option.loading = true;
-      if (option.themeMode == 'dark') {
-        option.themeMode = 'light';
-      } else {
-        option.themeMode = 'dark';
-      }
-      //Force the styles to re-rener
-      setTimeout(function () {
-        option.loading = false;
-      }, 250);
-    },
-    hasPseudo() {
-      let stringer = JSON.stringify(this.componenetSettings[this.returnActiveComp]);
-      if (typeof stringer === 'undefined') {
-        return;
-      }
-      if (stringer.includes(':before') || stringer.includes(':after')) {
-        return true;
-      }
-    },
-    switchPseudo(option, pseudo) {
-      option.loading = true;
-      option.activePseudo = pseudo;
-      //Force the styles to re-rener
-      setTimeout(function () {
-        option.loading = false;
-      }, 250);
-    },
-    returnQueryVal() {
-      if (!('query' in this.block)) {
-        this.block.query = {
-          enabled: false,
-          settings: {},
-        };
-        return this.block.query.enabled;
-      }
-
-      return this.block.query.enabled;
-    },
-    createNewPreset() {
-      let self = this;
-
-      if (this.newPresetName == '') {
-        this.uipress.notify(__('Preset name is required', 'uipress-lite'), '', 'error', true);
-        return;
-      }
-
-      let uid = this.uipress.createUID();
-      this.block_preset_styles[uid] = {
-        preset: this.componenetSettings[this.returnActiveComp],
-        name: this.newPresetName,
-      };
-      this.newPresetName = '';
-
-      this.saveStylePresets();
-    },
-
-    saveStylePresets() {
-      let self = this;
-      let options = JSON.stringify(this.block_preset_styles, (k, v) =>
-        v === 'true' ? 'uiptrue' : v === true ? 'uiptrue' : v === 'false' ? 'uipfalse' : v === false ? 'uipfalse' : v === '' ? 'uipblank' : v
-      );
-
-      let formData = new FormData();
-      formData.append('action', 'uip_save_site_option');
-      formData.append('security', uip_ajax.security);
-      formData.append('option', options);
-      formData.append('optionName', 'block_preset_styles');
-
-      self.uipress.callServer(uip_ajax.ajax_url, formData).then((response) => {
-        if (response.success) {
-          this.uipress.notify(__('Presets updated', 'uipress-lite'), '', 'success', true);
-        }
-      });
-    },
-
-    forceLoad() {
-      let self = this;
-
-      for (const key in self.returnCompSettings.options) {
-        self.returnCompSettings.options[key].loading = true;
-      }
-
-      setTimeout(function () {
-        for (const key in self.returnCompSettings.options) {
-          self.returnCompSettings.options[key].loading = false;
-        }
-      }, 250);
-    },
-    returnPresetName() {
-      if (this.componenetSettings[this.returnActiveComp].preset in this.block_preset_styles) {
-        return this.block_preset_styles[this.componenetSettings[this.returnActiveComp].preset].name;
-      }
-      return __('Preset missing', 'uipress-lite');
-    },
-    updatePresetValue(value) {
-      this.componenetSettings[this.returnActiveComp].preset = value;
-      this.forceLoad();
-    },
-    deleteStylePreset(style) {
-      let self = this;
-      self.uipress.confirm(__('Are yous sure?', 'uipress-lite'), __('Are you sure you want to delete this style preset?', 'uipress-lite')).then((response) => {
-        if (response) {
-          if (style in this.block_preset_styles) {
-            delete self.block_preset_styles[style];
-            self.saveStylePresets();
-          }
-        }
-      });
     },
 
     /**
@@ -1799,41 +1262,6 @@ export default {
      */
     optionFullWidth(option) {
       return this.hasNestedPath(option, 'args', 'fullWidth');
-    },
-    clearStyles() {
-      for (let option in this.componenetSettings[this.returnActiveComp].options) {
-        if ('value' in this.componenetSettings[this.returnActiveComp].options[option]) {
-          this.componenetSettings[this.returnActiveComp].options[option].loading = true;
-          delete this.componenetSettings[this.returnActiveComp].options[option].value;
-        }
-        if ('pseudo' in this.componenetSettings[this.returnActiveComp].options[option]) {
-          this.componenetSettings[this.returnActiveComp].options[option].loading = true;
-          delete this.componenetSettings[this.returnActiveComp].options[option].pseudo;
-        }
-      }
-      requestAnimationFrame(() => {
-        for (let option in this.componenetSettings[this.returnActiveComp].options) {
-          this.componenetSettings[this.returnActiveComp].options[option].loading = false;
-        }
-      });
-    },
-    hasPseudoSpecific(pseudoName, option) {
-      if (!('pseudo' in option)) {
-        return false;
-      }
-      if (!('light' in option.pseudo)) {
-        return false;
-      }
-      if (!(pseudoName in option.pseudo.light)) {
-        return false;
-      }
-      if (Object.keys(option.pseudo.light[pseudoName]).length === 0) {
-        return false;
-      }
-      return true;
-    },
-    clearPseudoState(pseudoName, option) {
-      delete option.pseudo.light[pseudoName];
     },
 
     /**
@@ -1846,19 +1274,6 @@ export default {
       this.section = tab;
       const newparams = { query: { ...this.$route.query, section: this.section } };
       this.$router.push(newparams);
-    },
-
-    /**
-     * Handles changes to a block style object
-     *
-     * @param {String} styleName - the name of the current style
-     * @param {Object} newValue - the new style value
-     * @since 3.2.13
-     */
-    updateBlockStyle(styleName, newValue) {
-      //this.block.settings.style.options[styleName] = newValue;
-      //this.block.settings.style.options[styleName] = newValue;
-      //console.log(this.block.settings.style.options);
     },
 
     /**
@@ -1972,7 +1387,7 @@ export default {
         <div class="uip-flex uip-flex-column uip-gap-s uip-padding-s">
           
           <!-- Block settings header -->
-          <div class="uip-flex uip-flex-between uip-flex-center uip-margin-bottom-s">
+          <div class="uip-flex uip-flex-between uip-flex-center">
           
             <div class="uip-flex uip-flex-column">
               <input class="uip-text-bold uip-blank-input uip-text-l uip-text-emphasis" v-model="block.name">
@@ -1985,7 +1400,7 @@ export default {
           
           
           <!-- Toggle active tab -->
-          <toggle-switch :options="optionsSections" :activeValue="section" :returnValue="handleActiveTabChange"/>
+          <toggle-switch :options="optionsSections" :activeValue="section" :returnValue="handleActiveTabChange" class="uip-margin-bottom-xxs"/>
           
           
           <!-- Settings Tab -->
@@ -2136,8 +1551,6 @@ export default {
           
             <BlockParts :block="block" :activePart="activePart" @update="(d)=>{activePart=d}"/>
             
-            <div class="uip-border-top"></div>
-            
             <!-- Presets -->
             <StylePresets :activePart="activePart" :block="block"/>
             
@@ -2148,7 +1561,7 @@ export default {
             :startOpen="!!block.content"
             :styleSettings="returnBlockStylePart('flexLayout')" component="flexLayout" 
             styleName="flexLayout"
-            :title="strings.layout" @update="(emittedValue) => updateBlockStyle('flexLayout', emittedValue)"/>
+            :title="strings.layout"/>
             
             <div class="uip-border-top"></div>
             
@@ -2157,7 +1570,7 @@ export default {
             :startOpen="true"
             styleName="dimensions"
             :styleSettings="returnBlockStylePart('dimensions')" component="Dimensions" 
-            :title="strings.size" @update="(emittedValue) => updateBlockStyle('dimensions', emittedValue)"/>
+            :title="strings.size"/>
             
             <div class="uip-border-top"></div>
             
@@ -2166,7 +1579,7 @@ export default {
             :startOpen="true"
             styleName="styles"
             :styleSettings="returnBlockStylePart('styles')" component="Styles" 
-            :title="strings.style" @update="(emittedValue) => updateBlockStyle('styles', emittedValue)"/>
+            :title="strings.style"/>
             
             <div class="uip-border-top"></div>
             
@@ -2175,7 +1588,7 @@ export default {
             :startOpen="true"
             styleName="spacing"
             :styleSettings="returnBlockStylePart('spacing')" component="Spacing" 
-            :title="strings.spacing" @update="(emittedValue) => updateBlockStyle('spacing', emittedValue)"/>
+            :title="strings.spacing"/>
             
             <div class="uip-border-top"></div>
             
@@ -2183,7 +1596,7 @@ export default {
             <BlockStyleHandler 
             styleName="textFormat"
             :styleSettings="returnBlockStylePart('textFormat')" component="TextFormat" 
-            :title="strings.text" @update="(emittedValue) => updateBlockStyle('textFormat', emittedValue)"/>
+            :title="strings.text"/>
             
             <div class="uip-border-top"></div>
             
@@ -2191,7 +1604,7 @@ export default {
             <BlockStyleHandler 
             styleName="positionDesigner"
             :styleSettings="returnBlockStylePart('positionDesigner')" component="PositionDesigner" 
-            :title="strings.position" @update="(emittedValue) => updateBlockStyle('positionDesigner', emittedValue)"/>
+            :title="strings.position"/>
             
             <div class="uip-border-top"></div>
             
@@ -2199,7 +1612,7 @@ export default {
             <BlockStyleHandler 
             styleName="effectsDesigner"
             :styleSettings="returnBlockStylePart('effectsDesigner')" component="EffectsDesigner" 
-            :title="strings.effects" @update="(emittedValue) => updateBlockStyle('effectsDesigner', emittedValue)"/>
+            :title="strings.effects"/>
             
             <div class="uip-border-top"></div>
             
