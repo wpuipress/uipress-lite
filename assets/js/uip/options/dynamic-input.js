@@ -1,4 +1,5 @@
 const { __, _x, _n, _nx } = wp.i18n;
+import { nextTick } from '../../libs/vue-esm-dev.js';
 export default {
   props: {
     returnData: Function,
@@ -7,10 +8,7 @@ export default {
   data() {
     return {
       open: false,
-      input: {
-        string: '',
-        dynamicPos: 'left',
-      },
+      input: this.returnDefaultOptions,
       dynamics: this.uipData.dynamicOptions,
       strings: {
         dynamicData: __('Dynamic data', 'uipress-lite'),
@@ -34,26 +32,56 @@ export default {
   },
   inject: ['uipData', 'uipress'],
   watch: {
+    /**
+     * Watches changes to value prop and injects
+     *
+     * @since 3.2.13
+     */
+    value: {
+      handler(newValue, oldValue) {
+        if (this.updating) return;
+        this.injectProp();
+      },
+      deep: true,
+      immediate: true,
+    },
+
     input: {
       handler(newValue, oldValue) {
+        if (this.updating) return;
         const data = { string: this.input.string, dynamic: this.input.dynamic, dynamicKey: this.input.dynamicKey, dynamicPos: this.input.dynamicPos, dynamicType: 'text' };
         this.returnData(data);
       },
       deep: true,
     },
   },
-  mounted() {
-    this.formatValue(this.value);
-  },
-  methods: {
+  computed: {
     /**
-     * Injects input value
+     * Returns default options
      *
      * @since 3.2.13
      */
-    formatValue() {
-      if (!this.isObject(this.value)) return;
-      this.input = { ...this.input, ...this.value };
+    returnDefaultOptions() {
+      return {
+        string: '',
+        dynamicPos: 'left',
+      };
+    },
+  },
+  methods: {
+    /**
+     * Injects value into component
+     *
+     * @since 3.2.13
+     */
+    async injectProp() {
+      this.updating = true;
+      const defaultOptions = this.returnDefaultOptions;
+      const newOptions = this.isObject(this.value) ? this.value : {};
+      this.input = { ...defaultOptions, ...newOptions };
+
+      await nextTick();
+      this.updating = false;
     },
 
     /**
