@@ -522,7 +522,7 @@ export default [
         label: __('Block options', 'uipress-lite'),
         icon: 'check_box_outline_blank',
         options: [
-          { option: 'choiceSelect', args: { type: 'hideShow' }, uniqueKey: 'hideScreenOptions', label: __('Screen options', 'uipress-lite') },
+          { option: 'choiceSelect', moduleName: 'choice-select', args: { type: 'hideShow' }, uniqueKey: 'hideScreenOptions', label: __('Screen options', 'uipress-lite') },
           { option: 'choiceSelect', args: { type: 'hideShow' }, uniqueKey: 'hideHelpTab', label: __('Help tab', 'uipress-lite') },
           { option: 'choiceSelect', args: { type: 'enabledDisabled' }, uniqueKey: 'disableTheme', label: __('Admin theme', 'uipress-lite') },
           { option: 'choiceSelect', args: { type: 'enabledDisabled' }, uniqueKey: 'disableFullScreen', label: __('Fullscreen', 'uipress-lite') },
