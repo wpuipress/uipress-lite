@@ -86,7 +86,7 @@ export default {
     
       <input v-if="option.units != 'auto'" @focus="focus = true" @blur="focus = false" style="width:30px" type="text" class="uip-input-small uip-blank-input uip-remove-steps uip-background-remove uip-flex-grow" v-model="option.value">
       
-      <units-select :value="returnUnits" :returnData="function(e){option.units = e}" :class=" option.units == 'auto' ? 'uip-flex-grow' : '' "></units-select>
+      <units-select :value="returnUnits" :returnData="(e)=>{option.units = e}" :class=" option.units == 'auto' ? 'uip-flex-grow' : '' "/>
       
     </div>`,
 };
