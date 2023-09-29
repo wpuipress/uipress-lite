@@ -35,9 +35,9 @@ html {
   --uip-color-active: #fff;
   --uip-color-highlight: rgba(0, 0, 0, 0.2);
   //Base
-  --uip-text-color-base: #445;
-  --uip-text-color-emphasis: #001;
-  --uip-text-color-muted: #757588;
+  --uip-text-color-base: rgba(8, 8, 16, 0.75);
+  --uip-text-color-emphasis: rgba(8, 8, 16, 1);
+  --uip-text-color-muted: rgba(8, 8, 16, 0.56);
   --uip-text-color-inverse: #fff;
   //
   --uip-canvas-background: var(--uip-color-base-2);
@@ -72,13 +72,13 @@ html {
   --uip-header-font-family: var(--uip-body-font-family);
   --uip-text-bold: 500;
   //#52b;
-  --uip-text-xxs: 0.6em;
-  --uip-text-xs: 0.8em;
-  --uip-text-s: 0.9em;
+  --uip-text-xxs: 0.512em;
+  --uip-text-xs: 0.62em;
+  --uip-text-s: 0.8em;
   --uip-text-m: 1em;
-  --uip-text-l: 1.3em;
-  --uip-text-xl: 1.8em;
-  --uip-text-xxl: 2.5em;
+  --uip-text-l: 1.25em;
+  --uip-text-xl: 1.618em;
+  --uip-text-xxl: 2.618em;
   --uip-body-font-size: 13px;
   //Links
 
@@ -2557,6 +2557,9 @@ input[type='range'] {
 }
 .uip-top--8 {
   top: -8px;
+}
+.uip-top-16 {
+  top: 16px;
 }
 .uip-top-50p {
   top: 50%;
