@@ -129,7 +129,6 @@ import UIbuilderUnits from './options/units.min.js?ver=3.2.12';
 import UIbuilderColorSelect from './options/color-select.min.js?ver=3.2.12';
 import UIbuilderInput from './options/input.min.js?ver=3.2.12';
 import UIbuilderTextarea from './options/textarea.min.js?ver=3.2.12';
-import UIbuilderClasses from './options/classes.min.js?ver=3.2.12';
 import UIbuilderNumber from './options/number.min.js?ver=3.2.12';
 import UIbuilderPostTypes from './options/post-types.min.js?ver=3.2.12';
 import UIbuilderParagraphInput from './options/paragraph-input.min.js?ver=3.2.12';
@@ -289,7 +288,6 @@ app.component('color-select', UIbuilderColorSelect);
 app.component('toggle-switch', SwitchToggle);
 app.component('uip-input', UIbuilderInput);
 app.component('uip-textarea', UIbuilderTextarea);
-app.component('uip-classes', UIbuilderClasses);
 app.component('post-types', UIbuilderPostTypes);
 app.component('uip-number', UIbuilderNumber);
 app.component('uip-paragraph-input', UIbuilderParagraphInput);
@@ -317,12 +315,13 @@ app.component('uip-effects', UIbuilderEffects);
  * @since 3.2.13
  */
 
-import { ensureNestedObject, hasNestedPath, prepareJSON, deepClone, copyToClipboard } from './v3.5/utility/functions.min.js?ver=3.2.12';
+import { ensureNestedObject, hasNestedPath, prepareJSON, deepClone, copyToClipboard, isObject } from './v3.5/utility/functions.min.js?ver=3.2.12';
 app.config.globalProperties.ensureNestedObject = ensureNestedObject;
 app.config.globalProperties.hasNestedPath = hasNestedPath;
 app.config.globalProperties.prepareJSON = prepareJSON;
 app.config.globalProperties.deepClone = deepClone;
 app.config.globalProperties.copyToClipboard = copyToClipboard;
+app.config.globalProperties.isObject = isObject;
 app.config.globalProperties.uipApp = reactive({
   scrolling: false,
 });

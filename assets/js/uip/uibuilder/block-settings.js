@@ -1099,6 +1099,8 @@ export default {
   components: {
     QueryBuilder: defineAsyncComponent(() => import('../options/query-builder.min.js?ver=3.2.12')),
     responsiveControls: defineAsyncComponent(() => import('../options/responsive.min.js?ver=3.2.12')),
+    Classes: defineAsyncComponent(() => import('../options/classes.min.js?ver=3.2.12')),
+    Conditions: defineAsyncComponent(() => import('../options/conditions.min.js?ver=3.2.12')),
     BlockStyleHandler: BlockStyleHandler,
     BlockParts: BlockParts,
     StylePresets: StylePresets,
@@ -1119,7 +1121,7 @@ export default {
       switchingComponent: false,
       componenetSettings: {},
       block_preset_styles: {},
-      activeSelector: 'style',
+      activeSelector: 'advanced',
       newPresetName: '',
       firstLoad: false,
       showSettings: false,
@@ -1173,6 +1175,9 @@ export default {
         position: __('Position', 'uipress-lite'),
         effects: __('Effects', 'uipress-lite'),
         general: __('General', 'uipress-lite'),
+        code: __('Code', 'uipress-lite'),
+        classes: __('Classes', 'uipress-lite'),
+        conditions: __('Conditions', 'uipress-lite'),
       },
       pseudoSelectors: [
         {
@@ -1880,6 +1885,81 @@ export default {
       this.ensureNestedObject(this.block, 'settings', part, 'options', styleName);
       return this.block.settings[part].options[styleName];
     },
+
+    /**
+     * Returns whether the setting is available to the current plugin
+     *
+     * @param {Object} option - the object to check
+     * @returns {boolean}
+     * @since 3.2.13
+     */
+    isAvailable(option) {
+      if (!option.requiresUpgrade) return true;
+      if (this.uiTemplate.proActivated) return true;
+      return false;
+    },
+
+    /**
+     * Returns the block setting value for specific option if it exists
+     *
+     * @param {Object} option - the requested option
+     * @since 3.2.13
+     */
+    returnBlockSettingValue(option) {
+      const blockOptions = this.hasNestedPath(this.block, 'settings', 'block', 'options');
+      if (!blockOptions) return;
+
+      // Get the option key
+      const key = option.uniqueKey ? option.uniqueKey : option;
+
+      // Key doesn't exist
+      if (!(key in blockOptions)) return;
+
+      return blockOptions[key].value;
+    },
+
+    /**
+     * Handles block option updates
+     *
+     * @param {Object} option - the requested option
+     * @param {Mixed} data - the new option value
+     * @since 3.2.13
+     */
+    handleBlockSettingUpdate(option, data) {
+      // Get the option key
+      const key = option.uniqueKey ? option.uniqueKey : option;
+
+      this.ensureNestedObject(this.block, 'settings', 'block', 'options', key);
+      this.block.settings.block.options[key].value = data;
+    },
+
+    /**
+     * Returns specific value for advanced settings
+     *
+     * @param {String} option - the name of the required option
+     * @since 3.2.13
+     */
+    returnAdvancedValue(option) {
+      const blockOptions = this.hasNestedPath(this.block, 'settings', 'advanced', 'options');
+      if (!blockOptions) return;
+
+      // Key doesn't exist
+      if (!(option in blockOptions)) return;
+
+      return blockOptions[option].value;
+    },
+
+    /**
+     * Handles block option updates
+     *
+     * @param {Object} option - the requested option
+     * @param {Mixed} data - the new option value
+     * @since 3.2.13
+     */
+    handleBlockAdavancedUpdate(option, data) {
+      this.ensureNestedObject(this.block, 'settings', 'advanced', 'options', option);
+      this.block.settings.advanced.options[option].value = data;
+    },
   },
   template: `
     
@@ -1962,10 +2042,10 @@ export default {
             </ToggleSection>
             <!-- End Responsive -->
             
-            <div class="uip-border-top"></div>
+            <div class="uip-border-top" v-if="returnBlockOptions.length"></div>
             
             <!-- Block options  -->
-            <ToggleSection :title="strings.options" :startOpen="true">
+            <ToggleSection :title="strings.options" :startOpen="true" v-if="returnBlockOptions.length">
                   
                   <div class="uip-flex uip-flex-column uip-row-gap-xs">
                   
@@ -1984,9 +2064,11 @@ export default {
                           
                         <div class="uip-flex uip-flex-center uip-w-100p">
                         
-                          <component v-if="componentExists(option.moduleName)" 
-                          :is="option.moduleName" :value="option.value" :args="option.args" 
-                          :returnData="function(data){option.value = data}"/>
+                          <component v-if="componentExists(option.componentName) && isAvailable(option)" 
+                          :is="option.componentName"
+                          v-bind="option"
+                          :value="returnBlockSettingValue(option)"
+                          :returnData="(data)=>handleBlockSettingUpdate(option, data)"/>
                           
                           <div v-else class="uip-padding-xxs uip-border-rounder uip-background-green-wash uip-text-s">
                              {{strings.proOption}}
@@ -2002,11 +2084,51 @@ export default {
             </ToggleSection>
             <!-- End block options -->
             
-            
-            <div class="uip-border-top"></div>
           
           </div>
+          <!-- End setting tab -->
           
+          
+          <!-- Advanced Tab -->
+          <div v-if="section == 'advanced'" class="uip-flex uip-flex-column uip-gap-s">
+          
+            <!-- Classes  -->
+            <ToggleSection :title="strings.classes" :startOpen="true">
+              <div class="uip-grid-col-1-3">
+              
+                  <div class="uip-text-muted uip-flex uip-flex-center uip-text-s uip-padding-top-xxs uip-flex-start"><span>{{strings.classes}}</span></div>
+                  <Classes :value="returnAdvancedValue('classes')" :returnData="(d)=>{handleBlockAdavancedUpdate('classes', d)}"/>
+                                      
+              </div>
+            </ToggleSection>
+
+
+            <!-- Conditions  -->
+            <ToggleSection :title="strings.conditions" :startOpen="true">
+              <div class="uip-grid-col-1-3">
+              
+                  <div class="uip-text-muted uip-flex uip-flex-center uip-text-s uip-padding-top-xxs uip-flex-start"><span>{{strings.conditions}}</span></div>
+                  <Conditions :value="returnAdvancedValue('conditions')" :returnData="(d)=>{handleBlockAdavancedUpdate('conditions', d)}"/>
+                                      
+              </div>
+            </ToggleSection>
+                      
+            <!-- Code  -->
+            <ToggleSection :title="strings.code" :startOpen="true">
+              <div class="uip-grid-col-1-3">
+              
+                  <div class="uip-text-muted uip-flex uip-flex-center uip-text-s"><span>css</span></div>
+                  <code-editor :args="{language:'css'}" :value="returnAdvancedValue('css')" :returnData="(d)=>{handleBlockAdavancedUpdate('css', d)}"/>
+                
+                  <div class="uip-text-muted uip-flex uip-flex-center uip-text-s"><span>Javscript</span></div>
+                  <code-editor :args="{language:'javascript'}" :value="returnAdvancedValue('css')" :returnData="(d)=>{handleBlockAdavancedUpdate('js', d)}"/>
+                                      
+              </div>
+            </ToggleSection>
+            
+          
+          </div>
+          <!-- Advanced tab-->
           
           
           <!-- Styles tab -->
