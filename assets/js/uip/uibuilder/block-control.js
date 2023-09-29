@@ -327,13 +327,7 @@ export default {
     setHoverWrapPosition() {
       if (!this.hoverBlock) return (this.hoverWrapVisible = false);
 
-      let domBlock;
-      if (!this.hovernode) {
-        domBlock = document.querySelector(`[block-uid="${this.hoverBlock.id}"]`);
-      } else {
-        domBlock = this.hovernode;
-      }
-
+      let domBlock = !this.hovernode ? document.querySelector(`[block-uid="${this.hoverBlock.uid}"]`) : this.hovernode;
       if (!domBlock) return (this.hoverWrapVisible = false);
 
       // Get domBlock position
