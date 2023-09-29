@@ -154,6 +154,8 @@ export default {
                     <div class="uip-flex ui-flex-middle uip-flex-center uip-gap-xxs uip-block" style="min-width:160px" 
                     :class="buildClasses(element)" 
                     @click="openSettings(element)"
+                    @mouseenter.prevent.stop="uipApp.blockControl.setHover({},element)"
+                    @mouseleave.prevent.stop="uipApp.blockControl.removeHover({},element)"
                     @contextmenu.prevent.stop="uipApp.blockcontextmenu.show({event: $event, list: items, index: index, block: element})">
                       
                       
