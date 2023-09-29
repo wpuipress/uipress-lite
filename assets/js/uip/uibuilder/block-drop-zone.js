@@ -89,6 +89,38 @@ export default {
     },
 
     /**
+     * Injects blocks preset settings
+     *
+     * @param {Object} block
+     * @since 3.2.13
+     */
+    inject_block_presets(block) {
+      const blockModule = block.moduleName;
+      const allBlocks = this.uipData.blocks;
+
+      // Find the originally registered block's enabled settings
+      const masterblockIndex = allBlocks.findIndex((block) => block.moduleName === blockModule);
+      // No block settings so bail
+      if (masterblockIndex < 0) return;
+      const masterBlock = allBlocks[masterblockIndex];
+
+      const allBlockSettings = masterBlock.optionsEnabled;
+      const blockOptionsIndex = allBlockSettings.findIndex((option) => option.name === 'block');
+
+      // No settings for block so bail
+      if (blockOptionsIndex < 0) return;
+      const presets = allBlockSettings[blockOptionsIndex].options;
+
+      // Ensure the nested object
+      this.ensureNestedObject(block, 'settings', 'block', 'options');
+      for (let preset of presets) {
+        if (!('value' in preset)) continue;
+        const key = preset.uniqueKey ? preset.uniqueKey : preset.option;
+        block.settings.block.options[key] = { value: preset.value };
+      }
+    },
+
+    /**
      * Updates current list of items
      *
      * @since 3.2.13
@@ -105,7 +137,7 @@ export default {
         }
 
         if (Object.keys(item.settings).length === 0) {
-          this.uipress.inject_block_presets(item, item.settings);
+          this.inject_block_presets(item, item.settings);
         }
       };
       this.items.forEach(processItems);
@@ -224,7 +256,7 @@ export default {
 
       // New block so let's add settings
       if (Object.keys(newElement.settings).length === 0) {
-        this.uipress.inject_block_presets(newElement, newElement.settings);
+        this.inject_block_presets(newElement, newElement.settings);
       }
 
       //Open block
