@@ -1,13 +1,17 @@
 const { __, _x, _n, _nx } = wp.i18n;
-
+import { defineAsyncComponent, nextTick } from '../../libs/vue-esm-dev.js';
 import '../../libs/ace-editor.min.js';
 import '../../libs/ace-editor-css.min.js';
 import '../../libs/ace-editor-javascript.min.js';
 import '../../libs/ace-editor-html.min.js';
 import '../../libs/ace-theme-dracular.min.js';
 import '../../libs/ace-editor-beautify.min.js';
+import '../../libs/ace-theme-xcode.min.js';
 
 export default {
+  components: {
+    Modal: defineAsyncComponent(() => import('../v3.5/utility/modal.min.js?ver=3.2.12')),
+  },
   props: {
     returnData: Function,
     value: String,
@@ -27,13 +31,14 @@ export default {
         codeEditor: __('Code editor', 'uipress-lite'),
         editCode: __('Edit code', 'uipress-lite'),
         add: __('Add', 'uipress-lite'),
+        updateCode: __('Update code', 'uipress-lite'),
+        discard: __('Discard changes', 'uipress-lite'),
       },
     };
   },
   inject: ['uipress'],
   mounted() {
     this.option = this.value;
-    this.initiateEditor();
   },
   watch: {
     option: {
@@ -60,22 +65,19 @@ export default {
     initiateEditor() {
       this.beautify = ace.require('ace/ext/beautify');
       this.editor = ace.edit(this.$refs.codeeditor);
-      this.editor.setTheme('ace/theme/dracula');
+      this.editor.setTheme('ace/theme/xcode');
       this.editor.session.setUseWrapMode(true);
       this.editor.setShowPrintMargin(false);
-      this.editor.renderer.setScrollMargin(14, 14);
       this.editor.container.style.lineHeight = 1.6;
       this.editor.renderer.updateFontSize();
-      this.editor.renderer.setPadding(16);
       this.editor.setHighlightActiveLine(false);
 
       this.editor.setOptions({
         maxLines: Infinity,
         tabSize: 3,
-        wrap: 0, // wrap text to view
+        wrap: 1, // wrap text to view
         indentedSoftWrap: false,
         fontSize: '0.8rem',
-        wrap: 1, // wrap text to view
         indentedSoftWrap: true,
         useWorker: false,
         fontSize: '12px',
@@ -111,24 +113,13 @@ export default {
     },
 
     /**
-     * Closes code modal
-     *
-     * @param {Object} evt - the click event
-     * @since 3.2.13
-     */
-    closeModal(evt) {
-      if (!evt.target.contains(this.$refs.modalInner)) return;
-      this.modalOpen = false;
-    },
-
-    /**
      * Saves code, closes model and returns back to caller
      *
      * @since 3.2.13
      */
     saveCode() {
       this.option = this.finalVal;
-      this.modalOpen = false;
+      this.$refs.codemodal.close();
       this.uipress.notify(__('Code updated', 'uipress-lite'), '', 'success');
     },
 
@@ -140,13 +131,43 @@ export default {
     clearCode() {
       this.option = '';
     },
+
+    /**
+     * Opens code editor and starts code editor
+     *
+     * @since 3.2.13
+     */
+    async showModal() {
+      this.$refs.codemodal.open();
+      await nextTick();
+      this.initiateEditor();
+    },
   },
   template: `
     
     
     <div class="uip-w-100p">
     
-        <button class="uip-button-default uip-border-rounder uip-padding-xxs uip-w-100p uip-flex uip-gap-xs uip-flex-center uip-text-left" @click="modalOpen = true">
+        <component is="style">
+          .ace-xcode .ace_gutter{background:transparent;}
+          .ace_gutter-cell{color:var(--uip-text-color-muted);opacity:0.6}
+          .ace-xcode .ace_gutter-active-line {
+              background:transparent;
+              color: var(--uip-text-color-emphasis);
+              font-weight: bolder;
+              opacity:1;
+          }
+          .ace_scrollbar {
+              display: none;
+          }
+          .ace_editor:hover .ace_scrollbar {
+              display: block;
+          }
+          .ace_editor {background:transparent}
+          html[data-theme="dark"] .ace_editor .ace_scroller{filter: invert(100%) saturate(0.8);}
+        </component>
+    
+        <button class="uip-button-default uip-border-rounder uip-padding-xxs uip-w-100p uip-flex uip-gap-xs uip-flex-center uip-text-left" @click="showModal">
         
           <div class="uip-background-primary uip-text-inverse uip-border-round uip-padding-xxxs"><span class="uip-icon">code</span></div>
           
@@ -160,34 +181,34 @@ export default {
         </button>
         
         
-        <div v-show="modalOpen" class="uip-position-fixed uip-top-0 uip-left-0 uip-h-viewport uip-w-vw uip-background-black-wash uip-flex uip-flex-center uip-flex-middle uip-fade-in uip-z-index-9999" @click="closeModal($event)">
-        
-          <div class="uip-background-muted uip-border-rounder uip-border uip-flex uip-flex-column uip-scale-in uip-min-w-600 uip-min-w-200 uip-max-w-100p uip-text-normal uip-position-relative uip-modal-body uip-flex uip-flex-column uip-dark-mode" ref="modalInner">
+        <Modal ref="codemodal">
             
+            <div class="uip-padding-m uip-w-600 uip-flex uip-flex-column uip-row-gap-m">
             
-            <div class="uip-padding-xs uip-border-bottom uip-flex uip-flex-between">
-              <span>{{strings.codeEditor}}</span>
-              <span class="uip-icon uip-text-l uip-link-muted" @click="modalOpen = false">close</span>
-            </div>
-          
-            <div class="">
+              <div class="uip-flex uip-flex-between uip-flex-center">
+                <span class="uip-text-bold">{{strings.codeEditor}}</span>
+                <span class="uip-icon uip-link-muted hover:uip-background-muted uip-padding-xxs uip-border-rounder" @click="$refs.codemodal.close()">close</span>
+              </div>
             
-              <div class="uip-min-h-400 uip-w-100p uip-scrollbar uip-flex-grow" style="border-radius: 0 0 var(--uip-border-radius-large) var(--uip-border-radius-large)" ref="codeeditor">
+              
+              <div class="uip-max-h-500 uip-min-h-400" style="overflow:scroll">
+                <div class="" ref="codeeditor">
+                </div>
               </div>
               
-            </div>  
+              
+              <div class="uip-flex uip-flex-between">
+                <button class="uip-button-default uip-background-grey" @click="$refs.codemodal.close()">{{strings.discard}}</button>
+                <button class="uip-button-primary" @click="saveCode()">{{strings.updateCode}}</button>
+              </div>
             
-            
-            <div class="uip-padding-xs uip-flex uip-flex-between">
-              <button class="uip-button-default uip-background-grey" @click="modalOpen = false">Cancel</button>
-              <button class="uip-button-primary" @click="saveCode()">Save</button>
-            </div>
+            </div> 
             
           
-          </div>
+        </Modal>
           
           
-        </div>  
+         
     
     
     </div>
