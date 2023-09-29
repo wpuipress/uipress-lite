@@ -20,7 +20,7 @@ export function moduleData() {
         const item = this.uipress.get_block_option(this.block, 'block', 'buttonText', true);
         if (!item) return '';
 
-        if (!this.uipress.isObject(item)) return item;
+        if (!this.isObject(item)) return item;
         if (item.string) return item.string;
         return '';
       },
@@ -33,7 +33,7 @@ export function moduleData() {
       closeOnPageChange() {
         let status = this.uipress.get_block_option(this.block, 'block', 'closeOnPageChange');
         if (!status) return false;
-        if (!this.uipress.isObject(status)) return status;
+        if (!this.isObject(status)) return status;
         if (status.value) return status.value;
         return false;
       },
@@ -67,7 +67,7 @@ export function moduleData() {
       returnIcon() {
         let icon = this.uipress.get_block_option(this.block, 'block', 'iconSelect');
         if (!icon) return '';
-        if (!this.uipress.isObject(icon)) return icon;
+        if (!this.isObject(icon)) return icon;
         if (icon.value) return icon.value;
         return '';
       },
@@ -90,7 +90,7 @@ export function moduleData() {
        */
       getShortcutValue() {
         const shortcut = this.uipress.get_block_option(this.block, 'block', 'keyboardShortcut');
-        if (!this.uipress.isObject(shortcut)) return;
+        if (!this.isObject(shortcut)) return;
 
         // Shortcut is not enabled so bail
         if (!shortcut.enabled || !shortcut.display || !shortcut.selected) return false;
@@ -110,7 +110,7 @@ export function moduleData() {
       returnClasses() {
         const position = this.uipress.get_block_option(this.block, 'block', 'iconPosition');
         if (!position) return;
-        if (!this.uipress.isObject(position) && position == 'right') return 'uip-flex-reverse';
+        if (!this.isObject(position) && position == 'right') return 'uip-flex-reverse';
         if (position.value && position.value == 'right') return 'uip-flex-reverse';
       },
     },

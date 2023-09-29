@@ -50,7 +50,7 @@ const EditPreset = {
       const presets = this.uipData.options.block_preset_styles;
 
       if (!this.presetID) return false;
-      if (!this.uipress.isObject(presets)) return;
+      if (!this.isObject(presets)) return;
       if (!(this.presetID in presets)) return;
       this.presetName = presets[this.presetID].name;
     },
@@ -151,7 +151,7 @@ const NewPreset = {
      */
     newPreset() {
       const maybePresets = this.uipData.options.block_preset_styles;
-      let presets = this.uipress.isObject(maybePresets) ? maybePresets : {};
+      let presets = this.isObject(maybePresets) ? maybePresets : {};
 
       const part = this.activePart == 'root' ? 'style' : this.activePart;
       this.ensureNestedObject(this.block, 'settings', part);
@@ -224,7 +224,7 @@ const PresetList = {
       const maybePresets = this.uipData.options.block_preset_styles;
       const search = this.search.toLowerCase();
 
-      let presets = this.uipress.isObject(maybePresets) ? maybePresets : {};
+      let presets = this.isObject(maybePresets) ? maybePresets : {};
       let searched = {};
 
       for (let key in presets) {
@@ -408,7 +408,7 @@ const StylePresets = {
       const presets = this.uipData.options.block_preset_styles;
 
       if (!presetID) return false;
-      if (!this.uipress.isObject(presets)) return;
+      if (!this.isObject(presets)) return;
       if (!(presetID in presets)) return;
       return presets[presetID].name;
     },
@@ -909,7 +909,7 @@ const BlockStyleHandler = {
      */
     injectPropValue() {
       // Reset block style if value doesn't exist
-      if (!this.uipress.isObject(this.styleSettings)) return (this.blockStyle = {});
+      if (!this.isObject(this.styleSettings)) return (this.blockStyle = {});
       // Update block style
       this.blockStyle = this.styleSettings;
     },
@@ -1390,7 +1390,7 @@ export default {
       if (tab) this.section = tab;
 
       // Get block presets
-      if (this.uipData.options.block_preset_styles && this.uipress.isObject(this.uipData.options.block_preset_styles)) {
+      if (this.uipData.options.block_preset_styles && this.isObject(this.uipData.options.block_preset_styles)) {
         this.block_preset_styles = this.uipData.options.block_preset_styles;
       }
 
@@ -1415,7 +1415,7 @@ export default {
     passSettingsToBlock() {
       let self = this;
       //No settings or something has gone wrong so let's not set anything.
-      if (!self.uipress.isObject(self.componenetSettings)) {
+      if (!self.isObject(self.componenetSettings)) {
         return;
       }
 
@@ -1471,7 +1471,7 @@ export default {
               //Check if the value is set;
               let lightVal;
               if (typeof settingValue !== 'undefined') {
-                if (self.uipress.isObject(settingValue)) {
+                if (self.isObject(settingValue)) {
                   lightVal = this.clear_empty_values_from_object(settingValue);
                 } else {
                   lightVal = settingValue;
@@ -1481,7 +1481,7 @@ export default {
               //Check if the darkValue is set;
               let darkVal;
               if (typeof darkValue !== 'undefined') {
-                if (self.uipress.isObject(settingValue)) {
+                if (self.isObject(settingValue)) {
                   darkVal = this.clear_empty_values_from_object(darkValue);
                 } else {
                   darkVal = darkValue;
@@ -1489,7 +1489,7 @@ export default {
               }
 
               //Check if pseudo is set
-              if (self.uipress.isObject(pseudo)) {
+              if (self.isObject(pseudo)) {
                 pseudo = this.clear_empty_values_from_object(pseudo);
               }
 
@@ -1514,7 +1514,7 @@ export default {
       //console.log(formattedSettings);
 
       //Ensure the settings were created correctly
-      if (self.uipress.isObject(formattedSettings)) {
+      if (self.isObject(formattedSettings)) {
         self.block.settings = formattedSettings;
       }
     },
@@ -1537,7 +1537,7 @@ export default {
           delete values[valueKey];
         }
 
-        if (self.uipress.isObject(val)) {
+        if (self.isObject(val)) {
           if (Object.keys(val).length === 0) {
             delete values[valueKey];
           } else {
@@ -1874,7 +1874,7 @@ export default {
       const presets = this.uipData.options.block_preset_styles;
 
       // Return preset style if set and exists
-      if (presetID && this.uipress.isObject(presets)) {
+      if (presetID && this.isObject(presets)) {
         if (presetID in presets) {
           const preset = presets[presetID];
           this.ensureNestedObject(preset, 'preset', 'options', styleName);

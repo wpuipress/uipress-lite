@@ -37,7 +37,7 @@ export default {
      * @since 3.2.13
      */
     formatInput() {
-      if (!this.uipress.isObject(this.value)) return;
+      if (!this.isObject(this.value)) return;
       this.selected = this.value;
     },
 
@@ -49,7 +49,7 @@ export default {
      */
     returnIcon(id) {
       // Not object so create one
-      if (!this.uipress.isObject(this.selected)) return '';
+      if (!this.isObject(this.selected)) return '';
 
       /// Id exists
       if (this.selected.id) return this.selected[id].icon;
@@ -89,7 +89,7 @@ export default {
      */
     returnTitle(id) {
       // Not object so create one
-      if (!this.uipress.isObject(this.selected)) return '';
+      if (!this.isObject(this.selected)) return '';
 
       /// Id exists
       if (this.selected.id) return this.selected[id].title;

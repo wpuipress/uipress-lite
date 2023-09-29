@@ -155,7 +155,7 @@ export function moduleData() {
             parsed = parsed[0];
             parsed.uid = self.uipress.createUID();
 
-            if (!self.uipress.isObject(parsed)) {
+            if (!self.isObject(parsed)) {
               self.uipress.notify(__('Unable to import template right now', 'uipress-lite'), '', 'error', true);
               self.uipress.destroy_notification(notiID);
             }
@@ -272,7 +272,7 @@ export function moduleData() {
           return true;
         }
 
-        if (!this.uipress.isObject(conditions)) {
+        if (!this.isObject(conditions)) {
           return true;
         }
 

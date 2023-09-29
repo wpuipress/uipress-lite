@@ -26,7 +26,7 @@ export function moduleData() {
         const item = this.uipress.get_block_option(this.block, 'block', 'inputPlaceHolder', true);
         if (!item) return '';
 
-        if (!this.uipress.isObject(item)) return item;
+        if (!this.isObject(item)) return item;
         if (item.string) return item.string;
         return '';
       },
@@ -37,7 +37,7 @@ export function moduleData() {
        * @since 3.2.13
        */
       returnPopulated() {
-        if (!this.uipress.isObject(this.contextualData)) return;
+        if (!this.isObject(this.contextualData)) return;
         if (!('formData' in this.contextualData)) return;
 
         const formData = this.contextualData.formData;
@@ -58,7 +58,7 @@ export function moduleData() {
         const item = this.uipress.get_block_option(this.block, 'block', 'inputLabel', true);
         if (!item) return '';
 
-        if (!this.uipress.isObject(item)) return item;
+        if (!this.isObject(item)) return item;
         if (item.string) return item.string;
         return '';
       },
@@ -70,7 +70,7 @@ export function moduleData() {
        */
       returnRequired() {
         let required = this.uipress.get_block_option(this.block, 'block', 'inputRequired');
-        if (!this.uipress.isObject(required)) return false;
+        if (!this.isObject(required)) return false;
         if (required.value) return required.value;
         return required;
       },

@@ -33,7 +33,7 @@ export function moduleData() {
        */
       getHidden() {
         let hidden = this.block.settings.block.options.hiddenToolbarItems.value;
-        if (this.uipress.isObject(hidden)) return [];
+        if (this.isObject(hidden)) return [];
         return hidden;
       },
 
@@ -53,7 +53,7 @@ export function moduleData() {
        */
       returnDropdownPosition() {
         let update = this.uipress.get_block_option(this.block, 'block', 'dropdownPosition');
-        if (this.uipress.isObject(update)) return update.value;
+        if (this.isObject(update)) return update.value;
 
         if (!update) return 'bottom left';
         return update;
@@ -66,7 +66,7 @@ export function moduleData() {
        */
       returnSubDropdownPosition() {
         let update = this.uipress.get_block_option(this.block, 'block', 'subDropdownPosition');
-        if (this.uipress.isObject(update)) return update.value;
+        if (this.isObject(update)) return update.value;
 
         if (!update) return 'right top';
         return update;
@@ -330,7 +330,7 @@ export function moduleData() {
       customIcon(id) {
         const icons = this.uipress.get_block_option(this.block, 'block', 'editToolbarItems');
 
-        if (this.uipress.isObject(icons) && Object.hasOwn(icons, id) && icons[id].icon) {
+        if (this.isObject(icons) && Object.hasOwn(icons, id) && icons[id].icon) {
           return icons[id].icon;
         }
 
@@ -347,7 +347,7 @@ export function moduleData() {
       customTitle(id) {
         const titles = this.uipress.get_block_option(this.block, 'block', 'editToolbarItems');
 
-        if (this.uipress.isObject(titles) && Object.hasOwn(titles, id) && titles[id].title) {
+        if (this.isObject(titles) && Object.hasOwn(titles, id) && titles[id].title) {
           return titles[id].title;
         }
 

@@ -19,7 +19,7 @@ export function moduleData() {
       returnIcon() {
         let icon = this.uipress.get_block_option(this.block, 'block', 'iconSelect');
         if (!icon) return '';
-        if (!this.uipress.isObject(icon)) return icon;
+        if (!this.isObject(icon)) return icon;
         if (icon.value) return icon.value;
         return '';
       },

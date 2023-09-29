@@ -104,7 +104,7 @@ export default {
         return;
       }
       //Invalid format
-      if (!Array.isArray(parsed) && !this.uipress.isObject(parsed)) {
+      if (!Array.isArray(parsed) && !this.isObject(parsed)) {
         this.uipress.notify('Export is not valid', '', 'error', true, false);
         this.uipress.destroy_notification(notificationID);
         return;

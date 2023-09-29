@@ -45,7 +45,7 @@ export function moduleData() {
         this.error = false;
         let item = this.uipress.get_block_option(this.block, 'block', 'userImage', true);
 
-        if (!this.uipress.isObject(item)) return (this.error = true);
+        if (!this.isObject(item)) return (this.error = true);
 
         // Image has url attribute so return it
         if (item.url) return item.url;

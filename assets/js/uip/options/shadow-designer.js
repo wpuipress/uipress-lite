@@ -116,7 +116,7 @@ export default {
      */
     processInput() {
       // Exit if not object
-      if (!this.uipress.isObject(this.value)) return;
+      if (!this.isObject(this.value)) return;
 
       if ('horizDistance' in this.value) {
         this.shadowOptions.horizDistance = { ...this.shadowOptions.horizDistance, ...this.value.horizDistance };

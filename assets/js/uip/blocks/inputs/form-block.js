@@ -61,7 +61,7 @@ export function moduleData() {
         const item = this.uipress.get_block_option(this.block, 'block', 'submitText', true);
         if (!item) return '';
 
-        if (!this.uipress.isObject(item)) return item;
+        if (!this.isObject(item)) return item;
         if (item.string) return item.string;
         return '';
       },
@@ -79,7 +79,7 @@ export function moduleData() {
        * @since 3.2.13
        */
       returnFormData() {
-        if (!this.uipress.isObject(this.contextData)) {
+        if (!this.isObject(this.contextData)) {
           this.contextData = {};
           this.contextData.formData = {};
         }
@@ -154,7 +154,7 @@ export function moduleData() {
         this.prePopulate = response.formValues;
 
         // No context data so exit
-        if (!this.uipress.isObject(this.contextData)) return;
+        if (!this.isObject(this.contextData)) return;
 
         // Update context data
         this.contextData.formData = this.prePopulate;

@@ -30,7 +30,7 @@ export function moduleData() {
       returnIcon() {
         let icon = this.uipress.get_block_option(this.block, 'block', 'breadIcon');
         if (!icon) return 'chevron_right';
-        if (!this.uipress.isObject(icon)) return icon;
+        if (!this.isObject(icon)) return icon;
         if (icon.value) return icon.value;
         return 'chevron_right';
       },

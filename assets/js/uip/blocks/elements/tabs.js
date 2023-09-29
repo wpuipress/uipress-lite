@@ -37,7 +37,7 @@ export function moduleData() {
        */
       returnTabs() {
         const tabs = this.uipress.get_block_option(this.block, 'block', 'tabs', true);
-        if (!this.uipress.isObject(tabs)) return [];
+        if (!this.isObject(tabs)) return [];
         if (tabs.tabs) return tabs.tabs;
         return [];
       },

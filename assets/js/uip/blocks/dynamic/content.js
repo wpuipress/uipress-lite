@@ -436,7 +436,7 @@ export function moduleData() {
       getBlockOption(optNmae, propertyName, returnValue) {
         const opt = this.uipress.get_block_option(this.block, 'block', optNmae, true);
 
-        if (this.uipress.isObject(opt)) {
+        if (this.isObject(opt)) {
           return propertyName in opt ? opt[propertyName] : returnValue;
         }
 

@@ -69,7 +69,7 @@ export default {
       };
 
       // Handle custom data backgrounds if provided
-      if (this.uipress.isObject(this.acceptedData.custom)) {
+      if (this.isObject(this.acceptedData.custom)) {
         datasetDefaults.dataBackground = this.acceptedData.custom.dataBackground || '';
         datasetDefaults.fillDataBackground = Boolean(datasetDefaults.dataBackground);
         datasetDefaults.compBackground = this.acceptedData.custom.compBackground || '';
@@ -158,7 +158,7 @@ export default {
       let showYaxisGrid = true;
       let showXaxisGrid = false;
       let borderWidth = 3;
-      if (this.uipress.isObject(this.acceptedData.custom)) {
+      if (this.isObject(this.acceptedData.custom)) {
         tension = this.acceptedData.custom.tension;
 
         //Axis

@@ -42,7 +42,7 @@ export default {
      * @since 3.2.13
      */
     asText() {
-      if (!this.uipress.isObject(this.args)) return false;
+      if (!this.isObject(this.args)) return false;
       if (!this.args.asText) return;
       return true;
     },
@@ -54,7 +54,7 @@ export default {
      * @since 3.2.13
      */
     injectProp() {
-      if (!this.uipress.isObject(this.args)) return;
+      if (!this.isObject(this.args)) return;
       if (!this.args.options) return;
       this.yesNoOptions = this.args.options;
     },

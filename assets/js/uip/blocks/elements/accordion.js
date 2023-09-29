@@ -20,7 +20,7 @@ export function moduleData() {
         let item = this.uipress.get_block_option(this.block, 'block', 'headingText', true);
         if (!item) return '';
 
-        if (!this.uipress.isObject(item)) return item;
+        if (!this.isObject(item)) return item;
         if (item.string) return item.string;
         return '';
       },

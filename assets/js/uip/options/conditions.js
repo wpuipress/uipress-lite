@@ -128,7 +128,7 @@ export default {
     async injectProp() {
       this.updating = true;
       const defaultOptions = this.returnDefaultOptions;
-      const newOptions = this.uipress.isObject(this.value) ? this.value : {};
+      const newOptions = this.isObject(this.value) ? this.value : {};
       this.option = { ...defaultOptions, ...newOptions };
 
       await nextTick();

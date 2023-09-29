@@ -67,7 +67,7 @@ export default {
     this.formatInput(this.value);
 
     if (this.args) {
-      if (this.uipress.isObject(this.args)) {
+      if (this.isObject(this.args)) {
         if ('hasPositioning' in this.args) {
           this.hasPositioning = this.args.hasPositioning;
         }
@@ -93,7 +93,7 @@ export default {
       if (typeof value === 'undefined') {
         return;
       }
-      if (this.uipress.isObject(value)) {
+      if (this.isObject(value)) {
         this.img = { ...this.img, ...this.returnValue };
         return;
       }

@@ -52,7 +52,7 @@ export function moduleData() {
         const auto = this.uipress.get_block_option(this.block, 'block', 'prefersColorScheme', true);
         if (!auto) return;
 
-        if (!this.uipress.isObject(auto)) return auto;
+        if (!this.isObject(auto)) return auto;
         if (auto.value) return auto.value;
       },
     },

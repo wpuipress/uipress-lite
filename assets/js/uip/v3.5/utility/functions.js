@@ -97,6 +97,6 @@ export async function copyToClipboard(textToCopy) {
  * @returns {boolean} - True if obj is a plain object, otherwise false
  * @since 3.0.0
  */
-function isObject(obj) {
+export function isObject(obj) {
   return obj !== null && typeof obj === 'object' && obj.constructor === Object;
 }

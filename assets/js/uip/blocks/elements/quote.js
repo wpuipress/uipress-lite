@@ -20,7 +20,7 @@ export function moduleData() {
         const item = this.uipress.get_block_option(this.block, 'block', 'quote', true);
         if (!item) return '';
 
-        if (!this.uipress.isObject(item)) return item;
+        if (!this.isObject(item)) return item;
         if (item.string) return item.string;
         return '';
       },
@@ -34,7 +34,7 @@ export function moduleData() {
         const item = this.uipress.get_block_option(this.block, 'block', 'quoteAuthor', true);
         if (!item) return '';
 
-        if (!this.uipress.isObject(item)) return item;
+        if (!this.isObject(item)) return item;
         if (item.string) return item.string;
         return '';
       },

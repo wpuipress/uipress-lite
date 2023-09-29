@@ -89,7 +89,7 @@ export function moduleData() {
       },
       menuAutoUpdate() {
         let update = this.uipress.get_block_option(this.block, 'block', 'disableAutoUpdate');
-        if (this.uipress.isObject(update)) {
+        if (this.isObject(update)) {
           return update.value;
         }
         return update;
@@ -97,14 +97,14 @@ export function moduleData() {
 
       disableAutoLoad() {
         let update = this.uipress.get_block_option(this.block, 'block', 'loadOnClick');
-        if (this.uipress.isObject(update)) {
+        if (this.isObject(update)) {
           return update.value;
         }
         return update;
       },
       showCollapse() {
         let update = this.uipress.get_block_option(this.block, 'block', 'menuCollapse');
-        if (this.uipress.isObject(update)) {
+        if (this.isObject(update)) {
           return update.value;
         }
         return update;

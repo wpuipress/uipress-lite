@@ -262,7 +262,7 @@ export default {
       if (tab) this.section = tab;
 
       // Get block presets
-      if (this.uipData.options.block_preset_styles && this.uipress.isObject(this.uipData.options.block_preset_styles)) {
+      if (this.uipData.options.block_preset_styles && this.isObject(this.uipData.options.block_preset_styles)) {
         this.block_preset_styles = this.uipData.options.block_preset_styles;
       }
 
@@ -287,7 +287,7 @@ export default {
     passSettingsToBlock() {
       let self = this;
       //No settings or something has gone wrong so let's not set anything.
-      if (!self.uipress.isObject(self.componenetSettings)) {
+      if (!self.isObject(self.componenetSettings)) {
         return;
       }
 
@@ -343,7 +343,7 @@ export default {
               //Check if the value is set;
               let lightVal;
               if (typeof settingValue !== 'undefined') {
-                if (self.uipress.isObject(settingValue)) {
+                if (self.isObject(settingValue)) {
                   lightVal = this.clear_empty_values_from_object(settingValue);
                 } else {
                   lightVal = settingValue;
@@ -353,7 +353,7 @@ export default {
               //Check if the darkValue is set;
               let darkVal;
               if (typeof darkValue !== 'undefined') {
-                if (self.uipress.isObject(settingValue)) {
+                if (self.isObject(settingValue)) {
                   darkVal = this.clear_empty_values_from_object(darkValue);
                 } else {
                   darkVal = darkValue;
@@ -361,7 +361,7 @@ export default {
               }
 
               //Check if pseudo is set
-              if (self.uipress.isObject(pseudo)) {
+              if (self.isObject(pseudo)) {
                 pseudo = this.clear_empty_values_from_object(pseudo);
               }
 
@@ -386,7 +386,7 @@ export default {
       //console.log(formattedSettings);
 
       //Ensure the settings were created correctly
-      if (self.uipress.isObject(formattedSettings)) {
+      if (self.isObject(formattedSettings)) {
         self.block.settings = formattedSettings;
       }
     },
@@ -409,7 +409,7 @@ export default {
           delete values[valueKey];
         }
 
-        if (self.uipress.isObject(val)) {
+        if (self.isObject(val)) {
           if (Object.keys(val).length === 0) {
             delete values[valueKey];
           } else {

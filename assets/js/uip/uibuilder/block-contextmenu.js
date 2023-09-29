@@ -344,7 +344,7 @@ export default {
         }
 
         if (parsed) {
-          if (!Array.isArray(parsed) && !this.uipress.isObject(parsed)) {
+          if (!Array.isArray(parsed) && !this.isObject(parsed)) {
             this.uipress.notify('Template is not valid', '', 'error', true, false);
             return;
           }

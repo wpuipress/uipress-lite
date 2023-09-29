@@ -474,7 +474,7 @@ export default {
         }
 
         if (parsed != null) {
-          if (!Array.isArray(parsed) && !self.uipress.isObject(parsed)) {
+          if (!Array.isArray(parsed) && !self.isObject(parsed)) {
             self.uipress.notify('Template is not valid', '', 'error', true, false);
             self.uipress.destroy_notification(notiID);
             return;

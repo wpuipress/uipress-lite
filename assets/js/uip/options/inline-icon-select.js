@@ -50,7 +50,7 @@ export default {
      * @since 3.2.13
      */
     formatIcon(value) {
-      if (this.uipress.isObject(value)) {
+      if (this.isObject(value)) {
         this.icon = { ...this.icon, ...value };
       }
     },

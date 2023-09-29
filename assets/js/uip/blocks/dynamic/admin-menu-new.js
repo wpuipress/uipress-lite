@@ -217,7 +217,7 @@ const TopLevelItem = {
       if (this.collapsed) return 'hover';
 
       let style = this.uipress.get_block_option(this.block, 'block', 'subMenuStyle');
-      if (!this.uipress.isObject(style)) return 'dynamic';
+      if (!this.isObject(style)) return 'dynamic';
       if (style.value) return style.value;
       return 'dynamic';
     },
@@ -229,7 +229,7 @@ const TopLevelItem = {
      */
     subMenuCustomIcon() {
       let icon = this.uipress.get_block_option(this.block, 'block', 'subMenuIcon');
-      if (!this.uipress.isObject(icon)) return false;
+      if (!this.isObject(icon)) return false;
       if (icon.value) return icon.value;
       return false;
     },
@@ -245,7 +245,7 @@ const TopLevelItem = {
       if (this.collapsed) return false;
 
       const icons = this.uipress.checkNestedValue(this.block, ['settings', 'block', 'options', 'hideIcons', 'value']);
-      if (this.uipress.isObject(icons)) return icons.value;
+      if (this.isObject(icons)) return icons.value;
       return icons;
     },
   },
@@ -359,7 +359,7 @@ const DrillDown = {
      */
     hasMenuSearch() {
       const showSearch = this.uipress.get_block_option(this.block, 'block', 'showSearch');
-      if (this.uipress.isObject(showSearch)) return showSearch.value;
+      if (this.isObject(showSearch)) return showSearch.value;
       return showSearch;
     },
 
@@ -371,7 +371,7 @@ const DrillDown = {
      */
     hasMenuCollapse() {
       const menuCollapse = this.uipress.get_block_option(this.block, 'block', 'menuCollapse');
-      if (this.uipress.isObject(menuCollapse)) return menuCollapse.value;
+      if (this.isObject(menuCollapse)) return menuCollapse.value;
       return menuCollapse;
     },
   },
@@ -553,7 +553,7 @@ export function moduleData() {
       subMenuStyle() {
         if (this.collapsed) return 'hover';
         let style = this.uipress.get_block_option(this.block, 'block', 'subMenuStyle');
-        if (!this.uipress.isObject(style)) return 'dynamic';
+        if (!this.isObject(style)) return 'dynamic';
         if (style.value) return style.value;
         return 'dynamic';
       },
@@ -565,7 +565,7 @@ export function moduleData() {
        */
       subMenuCustomIcon() {
         let icon = this.uipress.get_block_option(this.block, 'block', 'subMenuIcon');
-        if (!this.uipress.isObject(icon)) return false;
+        if (!this.isObject(icon)) return false;
         if (icon.value) return icon.value;
         return false;
       },
@@ -578,7 +578,7 @@ export function moduleData() {
        */
       autoLoadIsDisabled() {
         const disbaled = this.uipress.get_block_option(this.block, 'block', 'loadOnClick');
-        if (this.uipress.isObject(disbaled)) return disbaled.value;
+        if (this.isObject(disbaled)) return disbaled.value;
         return disbaled;
       },
 
@@ -590,7 +590,7 @@ export function moduleData() {
        */
       hasMenuCollapse() {
         const menuCollapse = this.uipress.get_block_option(this.block, 'block', 'menuCollapse');
-        if (this.uipress.isObject(menuCollapse)) return menuCollapse.value;
+        if (this.isObject(menuCollapse)) return menuCollapse.value;
         return menuCollapse;
       },
 
@@ -602,7 +602,7 @@ export function moduleData() {
        */
       hasMenuSearch() {
         const showSearch = this.uipress.get_block_option(this.block, 'block', 'showSearch');
-        if (this.uipress.isObject(showSearch)) return showSearch.value;
+        if (this.isObject(showSearch)) return showSearch.value;
         return showSearch;
       },
 
@@ -613,7 +613,7 @@ export function moduleData() {
        */
       returnDropdownPosition() {
         const pos = this.uipress.get_block_option(this.block, 'block', 'dropdownPosition');
-        if (!this.uipress.isObject(pos)) return 'right top';
+        if (!this.isObject(pos)) return 'right top';
 
         if (pos.value) return pos.value;
         return 'right top';
@@ -639,7 +639,7 @@ export function moduleData() {
         if (this.collapsed) return false;
 
         const icons = this.uipress.checkNestedValue(this.block, ['settings', 'block', 'options', 'hideIcons', 'value']);
-        if (this.uipress.isObject(icons)) return icons.value;
+        if (this.isObject(icons)) return icons.value;
         return icons;
       },
     },

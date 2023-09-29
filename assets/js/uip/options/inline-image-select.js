@@ -72,7 +72,7 @@ export default {
      * @since 3.2.13
      */
     formatInput() {
-      if (!this.uipress.isObject(this.value)) return;
+      if (!this.isObject(this.value)) return;
       this.img = { ...this.img, ...this.value };
     },
   },

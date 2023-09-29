@@ -32,7 +32,7 @@ export default {
      * @since 3.2.13
      */
     formatInput() {
-      if (!this.uipress.isObject(this.value)) return;
+      if (!this.isObject(this.value)) return;
       if (!Array.isArray(this.value.options)) return;
       this.options = this.value.options;
     },

@@ -109,7 +109,7 @@ export function moduleData() {
       limitToAuthor() {
         let limit = this.uipress.get_block_option(this.block, 'block', 'limitToAuthor');
         if (!limit) return false;
-        if (!this.uipress.isObject(limit)) return limit;
+        if (!this.isObject(limit)) return limit;
         if (limit.value) return limit.value;
         return false;
       },
@@ -122,7 +122,7 @@ export function moduleData() {
       searchDisabled() {
         let disabled = this.uipress.get_block_option(this.block, 'block', 'searchDisabled');
         if (!disabled) return false;
-        if (!this.uipress.isObject(disabled)) return disabled;
+        if (!this.isObject(disabled)) return disabled;
         if (disabled.value) return disabled.value;
         return false;
       },

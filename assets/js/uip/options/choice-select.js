@@ -83,7 +83,7 @@ export default {
     formatArgs() {
       // Set basic options
       this.options = this.yesNo;
-      if (!this.uipress.isObject(this.args)) return;
+      if (!this.isObject(this.args)) return;
 
       // Update options
       if (this.args.options) {
@@ -113,7 +113,7 @@ export default {
     formatInput() {
       if (typeof this.value === 'undefined') return;
 
-      if (this.uipress.isObject(this.value)) {
+      if (this.isObject(this.value)) {
         this.option = { ...this.option, ...this.value };
         return;
       }

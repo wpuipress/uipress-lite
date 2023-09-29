@@ -72,7 +72,7 @@ export default {
         this.getUserStyles();
 
         if (response.options) {
-          if (self.uipress.isObject(response.options)) {
+          if (self.isObject(response.options)) {
             if (Object.keys(response.options).length > 0) {
               self.globalSettings = response.options;
             }
@@ -240,7 +240,7 @@ export default {
         }
 
         if (parsed != null) {
-          if (!Array.isArray(parsed) && !self.uipress.isObject(parsed)) {
+          if (!Array.isArray(parsed) && !self.isObject(parsed)) {
             self.uipress.notify('Settings is not valid', '', 'error', true, false);
             self.uipress.destroy_notification(notiID);
             return;
@@ -249,7 +249,7 @@ export default {
           let temper;
 
           if ('uipSettings' in parsed) {
-            if (self.uipress.isObject(parsed.uipSettings)) {
+            if (self.isObject(parsed.uipSettings)) {
               temper = parsed.uipSettings;
             } else {
               self.uipress.notify(__('Settings mismatch', 'uipress-lite'), '', 'error', true, false);

@@ -35,7 +35,7 @@ export default {
      * @since 3.2.13
      */
     injectValue() {
-      if (!this.uipress.isObject(this.value)) return;
+      if (!this.isObject(this.value)) return;
       if (!Array.isArray(this.value)) return;
 
       this.tabs = this.value.tabs;

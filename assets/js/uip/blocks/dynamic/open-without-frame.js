@@ -20,7 +20,7 @@ export function moduleData() {
         let item = this.uipress.get_block_option(this.block, 'block', 'buttonText', true);
         if (!item) return '';
 
-        if (!this.uipress.isObject(item)) return item;
+        if (!this.isObject(item)) return item;
         if (item.string) return item.string;
         return '';
       },
@@ -52,7 +52,7 @@ export function moduleData() {
       returnIcon() {
         let icon = this.uipress.get_block_option(this.block, 'block', 'iconSelect');
         if (!icon) return '';
-        if (!this.uipress.isObject(icon)) return icon;
+        if (!this.isObject(icon)) return icon;
         if (icon.value) return icon.value;
         return '';
       },
@@ -65,7 +65,7 @@ export function moduleData() {
       returnClasses() {
         const position = this.uipress.get_block_option(this.block, 'block', 'iconPosition');
         if (!position) return;
-        if (!this.uipress.isObject(position) && position == 'right') return 'uip-flex-reverse';
+        if (!this.isObject(position) && position == 'right') return 'uip-flex-reverse';
         if (position.value && position.value == 'right') return 'uip-flex-reverse';
       },
     },

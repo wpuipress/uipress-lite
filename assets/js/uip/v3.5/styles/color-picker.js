@@ -48,7 +48,7 @@ export default {
      */
     hasStyleManager() {
       if (!this.args) return true;
-      if (!this.uipress.isObject(this.args)) return true;
+      if (!this.isObject(this.args)) return true;
       if (!('hasStyleManager' in this.args)) return true;
       return this.args.hasStyleManager;
     },

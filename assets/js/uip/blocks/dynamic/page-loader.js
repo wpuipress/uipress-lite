@@ -39,7 +39,7 @@ export function moduleData() {
        */
       getImage() {
         let temp = this.uipress.get_block_option(this.block, 'block', 'loaderImage');
-        if (!this.uipress.isObject(temp)) return false;
+        if (!this.isObject(temp)) return false;
         if (temp.url) return temp.url;
         return false;
       },

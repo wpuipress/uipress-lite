@@ -73,7 +73,7 @@ export function moduleData() {
       limitToAuthor() {
         let limit = this.uipress.get_block_option(this.block, 'block', 'limitToAuthor');
         if (!limit) return false;
-        if (!this.uipress.isObject(limit)) return limit;
+        if (!this.isObject(limit)) return limit;
         if (limit.value) return limit.value;
         return false;
       },
