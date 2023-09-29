@@ -258,7 +258,7 @@ export default {
         
       </div>  
         
-      <div class="uip-flex uip-gap-xxs uip-w-100p uip-flex-wrap">  
+      <div class="uip-flex uip-gap-xxs uip-w-100p uip-flex-wrap" v-if="selected.length">  
         <template v-for="(item, index) in selected">
           <div class="uip-padding-left-xxs uip-padding-right-xxs uip-background-muted uip-border-rounder hover:uip-background-grey uip-flex uip-gap-xxs uip-flex-center">
             <span class="uip-text-s">{{item}}</span>
