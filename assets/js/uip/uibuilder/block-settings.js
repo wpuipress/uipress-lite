@@ -1054,7 +1054,7 @@ const BlockStyleHandler = {
           
             <a @click="activeState = item.value; $refs.blockstates.close()"
             :class="activeState == item.value ? 'uip-background-muted uip-text-emphasis' : 'hover:uip-background-muted'"
-            class="uip-link-default uip-padding-xxs uip-border-rounder uip-text-s uip-no-wrap uip-flex uip-flex-center uip-flex-between uip-gap-s">
+            class="uip-link-default uip-padding-xxs uip-border-rounder uip-no-wrap uip-flex uip-flex-center uip-flex-between uip-gap-s">
               
               
               <span>{{ item.label }}</span>
