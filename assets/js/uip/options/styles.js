@@ -344,10 +344,36 @@ export default {
     },
     /**
      * Handles units / value change for padding and margin
+     *
+     * @since 3.2.13
      */
     handleUnitChange(option, data) {
       option.topleft = data.value;
       option.units = data.units;
+    },
+
+    /**
+     * Pushes a new border and opens the dropdown
+     *
+     * @since 3.2.13
+     */
+    async pushNewBorder() {
+      this.styles.borders.push({});
+      await nextTick();
+      const newIndex = this.styles.borders.length - 1;
+      this.$refs['borderDrop-' + newIndex][0].show();
+    },
+
+    /**
+     * Pushes a new border and opens the dropdown
+     *
+     * @since 3.2.13
+     */
+    async pushNewShadow() {
+      this.styles.shadows.push({});
+      await nextTick();
+      const newIndex = this.styles.shadows.length - 1;
+      this.$refs['shadowDrop-' + newIndex][0].show();
     },
   },
   template: `
@@ -571,7 +597,7 @@ export default {
           
           <button 
           class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-line-height-1" 
-          @click="styles.borders.push({})">add</button>
+          @click="pushNewBorder()">add</button>
           
         </div>
         
@@ -625,7 +651,7 @@ export default {
           
           <button 
           class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-line-height-1" 
-          @click="styles.shadows.push({})">add</button>
+          @click="pushNewShadow()">add</button>
           
         </div>
         
