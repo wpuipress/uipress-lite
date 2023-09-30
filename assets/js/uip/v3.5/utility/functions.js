@@ -13,7 +13,7 @@ export function ensureNestedObject(obj, ...keys) {
 }
 
 /**
- * Checks if a nested object exists. Returns false if not, true if so
+ * Checks if a nested object exists. Returns false if not, object value if so
  *
  * @param {Object} obj - the object to check against
  * @param {Array} keys - The nested keys to check
@@ -99,4 +99,15 @@ export async function copyToClipboard(textToCopy) {
  */
 export function isObject(obj) {
   return obj !== null && typeof obj === 'object' && obj.constructor === Object;
+}
+
+/**
+ * Checks whether an item is defined and not empty
+ *
+ * @param {*} value - The item to check
+ * @returns {boolean} - True if value undefined, otherwise false
+ * @since 3.2.13
+ */
+export function isUnDefined(value) {
+  return typeof value === 'undefined' || value === null || value === '';
 }
