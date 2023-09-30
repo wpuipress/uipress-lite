@@ -315,13 +315,14 @@ app.component('uip-effects', UIbuilderEffects);
  * @since 3.2.13
  */
 
-import { ensureNestedObject, hasNestedPath, prepareJSON, deepClone, copyToClipboard, isObject } from './v3.5/utility/functions.min.js?ver=3.2.12';
+import { ensureNestedObject, hasNestedPath, prepareJSON, deepClone, copyToClipboard, isObject, isUnDefined } from './v3.5/utility/functions.min.js?ver=3.2.12';
 app.config.globalProperties.ensureNestedObject = ensureNestedObject;
 app.config.globalProperties.hasNestedPath = hasNestedPath;
 app.config.globalProperties.prepareJSON = prepareJSON;
 app.config.globalProperties.deepClone = deepClone;
 app.config.globalProperties.copyToClipboard = copyToClipboard;
 app.config.globalProperties.isObject = isObject;
+app.config.globalProperties.isUnDefined = isUnDefined;
 app.config.globalProperties.uipApp = reactive({
   scrolling: false,
 });
