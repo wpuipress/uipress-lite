@@ -274,9 +274,6 @@ app.component('dropdown', DropDown);
 app.component('uip-chart', ChartComp);
 app.component('uip-floating-panel', FloatingPanel);
 
-//Import libs
-app.component('uip-draggable', VueDraggableNext);
-
 //OPTION MODS
 app.component('background-position', UIbuilderBackgroundPosition);
 app.component('switch-select', UIbuilderSwitch);
@@ -307,6 +304,8 @@ app.component('uip-select-post-types', UIbuilderSelectPostTypes);
 app.component('inline-image-select', UIbuilderInlineImageSelect);
 app.component('uip-effects', UIbuilderEffects);
 
+//Import libs
+app.component('uip-draggable', VueDraggableNext);
 /**
  * Import helper functions
  *

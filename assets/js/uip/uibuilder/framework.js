@@ -23,7 +23,6 @@ export default {
       unsavedChanges: false,
       welcomeMessage: true,
       updating: false,
-      blocksForUpdating: [],
       selectedBlocks: [],
       ui: {
         contextualMenu: {
@@ -128,37 +127,6 @@ export default {
         });
       },
       deep: true,
-    },
-    'template.content': {
-      handler(newValue, oldValue) {
-        let self = this;
-        ///Finds outdated blocks / settings that need updating
-        self.blocksForUpdating = [];
-        self.uipress.findOutdatedBlocks(self.template.content, self.blocksForUpdating);
-      },
-      deep: true,
-    },
-    'blocksForUpdating': {
-      handler(newValue, oldValue) {
-        let self = this;
-        if (!self.updating) {
-          self.updating = true;
-          let holdingBlocks = self.blocksForUpdating;
-          self.uipress.updateBlocksV312(self.blocksForUpdating).then((response) => {
-            for (let holder of self.blocksForUpdating) {
-              let index = self.blocksForUpdating.findIndex((item) => item.uid === holder.uid);
-              if (index > -1) {
-                self.blocksForUpdating.splice(index, 1);
-              }
-            }
-            self.blocksForUpdating = [];
-            requestAnimationFrame(() => {
-              self.updating = false;
-            });
-            //self.items = response;
-          });
-        }
-      },
     },
     '$route.params.templateID': {
       handler() {
@@ -348,7 +316,6 @@ export default {
         type: 'stack',
       };
 
-      this.uipress.inject_block_presets(copiedConatiner, copiedConatiner.settings);
       this.template.content.push(copiedConatiner);
     },
 
