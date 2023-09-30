@@ -4,7 +4,7 @@
  * @since 3.2.13
  */
 const { __, _x, _n, _nx } = wp.i18n;
-import { createApp, getCurrentInstance, defineComponent, ref, reactive } from './../libs/vue-esm-dev.js';
+import { createApp, getCurrentInstance, defineComponent, defineAsyncComponent, ref, reactive } from './../libs/vue-esm-dev.js';
 import { VueDraggableNext } from './../libs/VueDraggableNext.js';
 import { createRouter, createWebHistory, createWebHashHistory } from './../libs/vue-router-esm.js';
 
@@ -60,9 +60,9 @@ uipress.uipAppData.dynamicOptions = uipress.loadDynamics();
  *
  * @since 3.2.13
  */
-import * as UIPsettings from './options/settings-loader.min.js?ver=3.2.12';
-let dynamicSettings = UIPsettings.getSettings(uipress.uipAppData.dynamicOptions, 'builder');
-uipress.register_new_block_settings(dynamicSettings);
+//import * as UIPsettings from './options/settings-loader.min.js?ver=3.2.12';
+//let dynamicSettings = UIPsettings.getSettings(uipress.uipAppData.dynamicOptions, 'builder');
+//uipress.register_new_block_settings(dynamicSettings);
 
 /**
  * Register theme styles
@@ -103,51 +103,34 @@ uipress.uipAppData.blockGroups = uipress.loadBlockGroups();
 uipress.uipAppData.blocks = uipress.loadBlocks();
 uipress.uipAppData.settings = uipress.loadSettings();
 
-// Import Core components
-import DropZone from './uibuilder/block-drop-zone.min.js?ver=3.2.12';
-import DropDown from './components/dropdown.min.js?ver=3.2.12';
-import MultiSelect from './components/multiselect.min.js?ver=3.2.12';
-import UserMultiSelect from './components/user-role-multiselect.min.js?ver=3.2.12';
-import UserSearch from './components/user-role-search.min.js?ver=3.2.12';
-import PostTypeMultiselect from './components/post-type-select.min.js?ver=3.2.12';
-import Accordion from './components/accordion.min.js?ver=3.2.12';
-import SwitchToggle from './components/switch-toggle.min.js?ver=3.2.12';
-import Tooltip from './components/tooltip.min.js?ver=3.2.12';
-import LoadingChart from './components/loading-chart.min.js?ver=3.2.12';
-import Offcanvas from './components/offcanvas.min.js?ver=3.2.12';
-import SaveButton from './components/save-button.min.js?ver=3.2.12';
-import ChartComp from './components/chart.min.js?ver=3.2.12';
-import Modal from './components/modal.min.js?ver=3.2.12';
-import FloatingPanel from './components/floating-panel.min.js?ver=3.1.12';
-
 //Option components
-import UIbuilderInlineImageSelect from './options/inline-image-select.min.js?ver=3.2.12';
-import UIbuilderBackgroundPosition from './options/background-position.min.js?ver=3.2.12';
-import UIbuilderSwitch from './options/switch-select.min.js?ver=3.2.12';
-import UIbuilderValueUnits from './options/value-units.min.js?ver=3.2.12';
-import UIbuilderUnits from './options/units.min.js?ver=3.2.12';
-import UIbuilderColorSelect from './options/color-select.min.js?ver=3.2.12';
-import UIbuilderInput from './options/input.min.js?ver=3.2.12';
-import UIbuilderTextarea from './options/textarea.min.js?ver=3.2.12';
-import UIbuilderNumber from './options/number.min.js?ver=3.2.12';
-import UIbuilderPostTypes from './options/post-types.min.js?ver=3.2.12';
-import UIbuilderParagraphInput from './options/paragraph-input.min.js?ver=3.2.12';
-import UIbuilderDynamicInput from './options/dynamic-input.min.js?ver=3.2.12';
-import UIbuilderIconSelect from './options/icon-select.min.js?ver=3.2.12';
-import UIbuilderInlineIconSelect from './options/inline-icon-select.min.js?ver=3.2.12';
-import UIbuilderChoiceSelect from './options/choice-select.min.js?ver=3.2.12';
-import UIbuilderDefaultSelect from './options/default-select.min.js?ver=3.2.12';
-import UIbuilderLinkSelect from './options/link-select.min.js?ver=3.2.12';
-import UIbuilderTabBuilder from './options/tab-builder.min.js?ver=3.2.12';
-import UIbuilderHiddenToolbarItems from './options/hidden-toolbar-items-select.min.js?ver=3.2.12';
-import UIbuilderEditToolbarItems from './options/edit-toolbar-items.min.js?ver=3.2.12';
-import MultiSelectOption from './options/multi-select.min.js?ver=3.2.12';
-import UIbuilderCodeEditor from './options/code-editor.min.js?ver=3.2.12';
-import UIbuilderSubmitAction from './options/submit-action.min.js?ver=3.2.12';
-import UIbuilderSelectOptionBuilder from './options/select-option-builder.min.js?ver=3.2.12';
-import UIbuilderArrayList from './options/array-list.min.js?ver=3.2.12';
-import UIbuilderSelectPostTypes from './options/select-post-types.min.js?ver=3.2.12';
-import UIbuilderEffects from './options/effects.min.js?ver=3.2.12';
+const UIbuilderInlineImageSelect = defineAsyncComponent(() => import(`./options/inline-image-select.min.js?ver=${pluginVersion}`));
+const UIbuilderBackgroundPosition = defineAsyncComponent(() => import(`./options/background-position.min.js?ver=${pluginVersion}`));
+const UIbuilderSwitch = defineAsyncComponent(() => import(`./options/switch-select.min.js?ver=${pluginVersion}`));
+const UIbuilderValueUnits = defineAsyncComponent(() => import(`./options/value-units.min.js?ver=${pluginVersion}`));
+const UIbuilderUnits = defineAsyncComponent(() => import(`./options/units.min.js?ver=${pluginVersion}`));
+const UIbuilderColorSelect = defineAsyncComponent(() => import(`./options/color-select.min.js?ver=${pluginVersion}`));
+const UIbuilderInput = defineAsyncComponent(() => import(`./options/input.min.js?ver=${pluginVersion}`));
+const UIbuilderTextarea = defineAsyncComponent(() => import(`./options/textarea.min.js?ver=${pluginVersion}`));
+const UIbuilderNumber = defineAsyncComponent(() => import(`./options/number.min.js?ver=${pluginVersion}`));
+const UIbuilderPostTypes = defineAsyncComponent(() => import(`./options/post-types.min.js?ver=${pluginVersion}`));
+const UIbuilderParagraphInput = defineAsyncComponent(() => import(`./options/paragraph-input.min.js?ver=${pluginVersion}`));
+const UIbuilderDynamicInput = defineAsyncComponent(() => import(`./options/dynamic-input.min.js?ver=${pluginVersion}`));
+const UIbuilderIconSelect = defineAsyncComponent(() => import(`./options/icon-select.min.js?ver=${pluginVersion}`));
+const UIbuilderInlineIconSelect = defineAsyncComponent(() => import(`./options/inline-icon-select.min.js?ver=${pluginVersion}`));
+const UIbuilderChoiceSelect = defineAsyncComponent(() => import(`./options/choice-select.min.js?ver=${pluginVersion}`));
+const UIbuilderDefaultSelect = defineAsyncComponent(() => import(`./options/default-select.min.js?ver=${pluginVersion}`));
+const UIbuilderLinkSelect = defineAsyncComponent(() => import(`./options/link-select.min.js?ver=${pluginVersion}`));
+const UIbuilderTabBuilder = defineAsyncComponent(() => import(`./options/tab-builder.min.js?ver=${pluginVersion}`));
+const UIbuilderHiddenToolbarItems = defineAsyncComponent(() => import(`./options/hidden-toolbar-items-select.min.js?ver=${pluginVersion}`));
+const UIbuilderEditToolbarItems = defineAsyncComponent(() => import(`./options/edit-toolbar-items.min.js?ver=${pluginVersion}`));
+const MultiSelectOption = defineAsyncComponent(() => import(`./options/multi-select.min.js?ver=${pluginVersion}`));
+const UIbuilderCodeEditor = defineAsyncComponent(() => import(`./options/code-editor.min.js?ver=${pluginVersion}`));
+const UIbuilderSubmitAction = defineAsyncComponent(() => import(`./options/submit-action.min.js?ver=${pluginVersion}`));
+const UIbuilderSelectOptionBuilder = defineAsyncComponent(() => import(`./options/select-option-builder.min.js?ver=${pluginVersion}`));
+const UIbuilderArrayList = defineAsyncComponent(() => import(`./options/array-list.min.js?ver=${pluginVersion}`));
+const UIbuilderSelectPostTypes = defineAsyncComponent(() => import(`./options/select-post-types.min.js?ver=${pluginVersion}`));
+const UIbuilderEffects = defineAsyncComponent(() => import(`./options/effects.min.js?ver=${pluginVersion}`));
 
 /**
  * Builds main args for ui builder
@@ -261,6 +244,22 @@ const Router = createRouter({
 const app = createApp(appArgs);
 app.use(Router);
 
+// Import Core components
+const DropZone = defineAsyncComponent(() => import(`./uibuilder/block-drop-zone.min.js?ver=${pluginVersion}`));
+const DropDown = defineAsyncComponent(() => import(`./components/dropdown.min.js?ver=${pluginVersion}`));
+const MultiSelect = defineAsyncComponent(() => import(`./components/multiselect.min.js?ver=${pluginVersion}`));
+const UserMultiSelect = defineAsyncComponent(() => import(`./components/user-role-multiselect.min.js?ver=${pluginVersion}`));
+const UserSearch = defineAsyncComponent(() => import(`./components/user-role-search.min.js?ver=${pluginVersion}`));
+const PostTypeMultiselect = defineAsyncComponent(() => import(`./components/post-type-select.min.js?ver=${pluginVersion}`));
+const Accordion = defineAsyncComponent(() => import(`./components/accordion.min.js?ver=${pluginVersion}`));
+const SwitchToggle = defineAsyncComponent(() => import(`./components/switch-toggle.min.js?ver=${pluginVersion}`));
+const Tooltip = defineAsyncComponent(() => import(`./components/tooltip.min.js?ver=${pluginVersion}`));
+const LoadingChart = defineAsyncComponent(() => import(`./components/loading-chart.min.js?ver=${pluginVersion}`));
+const Offcanvas = defineAsyncComponent(() => import(`./components/offcanvas.min.js?ver=${pluginVersion}`));
+const SaveButton = defineAsyncComponent(() => import(`./components/save-button.min.js?ver=${pluginVersion}`));
+const ChartComp = defineAsyncComponent(() => import(`./components/chart.min.js?ver=${pluginVersion}`));
+const FloatingPanel = defineAsyncComponent(() => import(`./components/floating-panel.min.js?ver=${pluginVersion}`));
+
 app.component('multi-select', MultiSelect);
 app.component('user-role-select', UserMultiSelect);
 app.component('user-role-search', UserSearch);
@@ -273,7 +272,6 @@ app.component('uip-offcanvas', Offcanvas);
 app.component('uip-save-button', SaveButton);
 app.component('dropdown', DropDown);
 app.component('uip-chart', ChartComp);
-app.component('uip-modal', Modal);
 app.component('uip-floating-panel', FloatingPanel);
 
 //Import libs
