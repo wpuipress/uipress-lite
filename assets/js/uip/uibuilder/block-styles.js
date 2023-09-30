@@ -13,19 +13,72 @@ export default {
 
       let masterSelector = `#${block.uid}`;
       let innerStyles = '';
+      let pseudoString = '';
+      // Dark styles
+      let darkInnerStyles = '';
+      let darkPseudoString = '';
 
       for (let stylePart of blockParts) {
         let subSelector = stylePart.class ? `${stylePart.class} {` : '';
-        subSelector = subSelector.startsWith(':') ? `&${subSelector}` : subSelector;
+        subSelector = subSelector.startsWith(':') ? `&${subSelector} {` : subSelector;
         const subSelectorEnd = stylePart.class ? `}` : '';
 
-        let substyle = this.processBlockPartStyleSection(stylePart);
+        // Handle light styles
+        let { substyle, formattedPseudo } = this.processBlockPartStyleSection(stylePart, 'value');
+        pseudoString += formattedPseudo.length ? this.handleParsedPseudos(formattedPseudo, masterSelector, subSelector, subSelectorEnd) : '';
         innerStyles += substyle ? `${subSelector} ${substyle} ${subSelectorEnd}` : '';
+
+        // Handle dark styles
+        let { substyle: darkSubstyle, formattedPseudo: darkFormattedPseudo } = this.processBlockPartStyleSection(stylePart, 'darkValue');
+        darkPseudoString += darkFormattedPseudo.length ? this.handleParsedPseudos(darkFormattedPseudo, `[data-theme="dark"] ${masterSelector}`, subSelector, subSelectorEnd) : '';
+        darkInnerStyles += darkSubstyle ? `${subSelector} ${darkSubstyle} ${subSelectorEnd}` : '';
       }
 
-      // Close css style
+      // Light styles
+      let setStyles = innerStyles.trim() ? `${masterSelector} { ${innerStyles} }` : '';
+      setStyles += pseudoString.trim() ? pseudoString : '';
 
-      const setStyles = innerStyles.trim() ? `${masterSelector} { ${innerStyles} }` : '';
+      let darkSetStyles = darkInnerStyles.trim() ? `[data-theme="dark"] ${masterSelector} { ${darkInnerStyles} }` : '';
+      darkSetStyles += darkPseudoString.trim() ? darkPseudoString : '';
+
+      return setStyles + darkSetStyles;
+    },
+
+    /**
+     * Handles array of pseudo styles
+     *
+     * @param {Array} formattedPseudo - the formatted array of pseudo styles
+     * @param {String} masterSelector - the main block selector
+     * @param {String} subSelector - the current sub selector
+     * @param {String} subSelectorEnd - the ending for subselector if it exists
+     * @since 3.2.13
+     */
+    handleParsedPseudos(formattedPseudo, masterSelector, subSelector, subSelectorEnd) {
+      if (!Array.isArray(formattedPseudo)) return '';
+
+      let innerStyles = '';
+      let outerStyles = '';
+      let outerKeys = [
+        { key: ':menu-collapsed', selector: 'html[uip-menu-collapsed="true"]' },
+        { key: 'tablet', selector: '.uip-tablet-view' },
+        { key: 'mobile', selector: '.uip-phone-view' },
+      ];
+
+      // Loop through all inner styles
+      for (let pseudo of formattedPseudo) {
+        // Item is for the outer css loop so process seperately
+        const outerKey = outerKeys.find((item) => item.key === pseudo.key);
+        if (outerKey) {
+          outerStyles += pseudo.style.trim() ? `${outerKey.selector} ${masterSelector} {  ${subSelector} ${pseudo.style} ${subSelectorEnd} }` : '';
+          continue;
+        }
+
+        const key = pseudo.key === ':active' ? `${pseudo.key}, &[active="true"]` : pseudo.key;
+        innerStyles += pseudo.style ? `&${key} { ${pseudo.style} }` : '';
+      }
+
+      let setStyles = innerStyles.trim() ? `${masterSelector} {  ${subSelector} ${innerStyles} ${subSelectorEnd} }` : '';
+      setStyles += outerStyles.trim() ? outerStyles : '';
       return setStyles;
     },
 
@@ -53,48 +106,117 @@ export default {
         .map((registered) => ({
           ...registered,
           styleSettings: blockSettings[registered.name].options,
+          beforeContent: blockSettings[registered.name].beforeContent,
+          afterContent: blockSettings[registered.name].afterContent,
         }));
     },
+
     /**
      * Processes an individual block part style section
      *
      * @param {Object} stylePart - the settings object
+     * @param {String} property - The property value of the current color mode 'value' or 'darkValue'
      * @since 3.2.13
      */
-    processBlockPartStyleSection(stylePart) {
-      let style = '';
+    processBlockPartStyleSection(stylePart, property) {
+      let substyle = '';
+      let pseudoStyle = '';
+      let formattedPseudo = [];
       const styleSettings = stylePart.styleSettings;
 
       // If it's not an object bail
-      if (!this.isObject(styleSettings)) return style;
+      if (!this.isObject(styleSettings)) return substyle;
+
+      const afterContent = stylePart.afterContent ? stylePart.afterContent : '';
+      const beforeContent = stylePart.beforeContent ? stylePart.beforeContent : '';
 
       /** Process layout styles */
-      style += this.isObject(styleSettings.flexLayout) ? this.processLayoutStyle(styleSettings.flexLayout) : '';
-      /** Process dimensions styles */
-      style += this.isObject(styleSettings.dimensions) ? this.processDimensionsStyle(styleSettings.dimensions) : '';
-      /** Process styling */
-      style += this.isObject(styleSettings.styles) ? this.processStylesStyle(styleSettings.styles) : '';
-      /** Process spacing styles */
-      style += this.isObject(styleSettings.spacing) ? this.processSpacingStyle(styleSettings.spacing) : '';
-      /** Process spacing styles */
-      style += this.isObject(styleSettings.textFormat) ? this.processTextStyle(styleSettings.textFormat) : '';
-      /** Process Position styles */
-      style += this.isObject(styleSettings.positionDesigner) ? this.processPositionStyle(styleSettings.positionDesigner) : '';
-      /** Process Position styles */
-      style += this.isObject(styleSettings.effectsDesigner) ? this.processEffectsStyle(styleSettings.effectsDesigner) : '';
+      substyle += this.isObject(styleSettings.flexLayout) ? this.processLayoutStyle(styleSettings.flexLayout, property) : '';
+      pseudoStyle = this.hasNestedPath(styleSettings, 'flexLayout', 'pseudo')
+        ? this.handlePseudoStyle(styleSettings.flexLayout.pseudo, this.processLayoutStyle, property, beforeContent, afterContent)
+        : '';
+      formattedPseudo = pseudoStyle.length ? [...formattedPseudo, ...pseudoStyle] : formattedPseudo;
 
-      return style;
+      /** Process dimensions styles */
+      substyle += this.isObject(styleSettings.dimensions) ? this.processDimensionsStyle(styleSettings.dimensions, property) : '';
+      pseudoStyle = this.hasNestedPath(styleSettings, 'dimensions', 'pseudo')
+        ? this.handlePseudoStyle(styleSettings.dimensions.pseudo, this.processDimensionsStyle, property, beforeContent, afterContent)
+        : '';
+      formattedPseudo = pseudoStyle.length ? [...formattedPseudo, ...pseudoStyle] : formattedPseudo;
+
+      /** Process styling */
+      substyle += this.isObject(styleSettings.styles) ? this.processStylesStyle(styleSettings.styles, property) : '';
+      pseudoStyle = this.hasNestedPath(styleSettings, 'styles', 'pseudo') ? this.handlePseudoStyle(styleSettings.styles.pseudo, this.processStylesStyle, property, beforeContent, afterContent) : '';
+      formattedPseudo = pseudoStyle.length ? [...formattedPseudo, ...pseudoStyle] : formattedPseudo;
+
+      /** Process spacing styles */
+      substyle += this.isObject(styleSettings.spacing) ? this.processSpacingStyle(styleSettings.spacing, property) : '';
+      pseudoStyle = this.hasNestedPath(styleSettings, 'spacing', 'pseudo') ? this.handlePseudoStyle(styleSettings.spacing.pseudo, this.processSpacingStyle, property, beforeContent, afterContent) : '';
+      formattedPseudo = pseudoStyle.length ? [...formattedPseudo, ...pseudoStyle] : formattedPseudo;
+
+      /** Process spacing styles */
+      substyle += this.isObject(styleSettings.textFormat) ? this.processTextStyle(styleSettings.textFormat, property) : '';
+      pseudoStyle = this.hasNestedPath(styleSettings, 'textFormat', 'pseudo')
+        ? this.handlePseudoStyle(styleSettings.textFormat.pseudo, this.processTextStyle, property, beforeContent, afterContent)
+        : '';
+      formattedPseudo = pseudoStyle.length ? [...formattedPseudo, ...pseudoStyle] : formattedPseudo;
+
+      /** Process Position styles */
+      substyle += this.isObject(styleSettings.positionDesigner) ? this.processPositionStyle(styleSettings.positionDesigner, property) : '';
+      pseudoStyle = this.hasNestedPath(styleSettings, 'positionDesigner', 'pseudo')
+        ? this.handlePseudoStyle(styleSettings.positionDesigner.pseudo, this.processPositionStyle, property, beforeContent, afterContent)
+        : '';
+      formattedPseudo = pseudoStyle.length ? [...formattedPseudo, ...pseudoStyle] : formattedPseudo;
+
+      /** Process Position styles */
+      substyle += this.isObject(styleSettings.effectsDesigner) ? this.processEffectsStyle(styleSettings.effectsDesigner, property) : '';
+      pseudoStyle = this.hasNestedPath(styleSettings, 'effectsDesigner', 'pseudo')
+        ? this.handlePseudoStyle(styleSettings.effectsDesigner.pseudo, this.processEffectsStyle, property, beforeContent, afterContent)
+        : '';
+      formattedPseudo = pseudoStyle.length ? [...formattedPseudo, ...pseudoStyle] : formattedPseudo;
+
+      return { substyle, formattedPseudo };
+    },
+
+    /**
+     * Handles pseudo styles
+     *
+     * @param {Object} pseudo - the pseudo object
+     * @param {Function} callBack - the callback function
+     * @param {String} property - The property value of the current color mode 'value' or 'darkValue'
+     * @param {String} beforeContent - The text for css content property for ::before
+     * @param {String} afterContent - The text for css content property for ::after
+     * @since 3.2.13
+     */
+    handlePseudoStyle(pseudo, callBack, property, beforeContent, afterContent) {
+      const colorMode = property == 'value' ? 'light' : 'dark';
+      if (!(colorMode in pseudo)) return [];
+      let styleString = [];
+
+      if (this.isObject(pseudo[colorMode])) {
+        for (const key in pseudo[colorMode]) {
+          let pseudoStyles = callBack({ value: pseudo[colorMode][key] }, 'value');
+
+          pseudoStyles += key == '::before' ? `content:"${beforeContent}";` : '';
+          pseudoStyles += key == '::after' ? `content:"${afterContent}";` : '';
+
+          styleString.push({ key: key, style: pseudoStyles });
+        }
+      }
+
+      return styleString;
     },
 
     /**
      * Processes block effects styles
      *
      * @param {Object} options - effects object
+     * @param {String} property - The property value of the current color mode 'value' or 'darkValue'
      * @since 3.2.13
      */
-    processEffectsStyle(options) {
-      if (!this.isObject(options.value)) return '';
-      const effects = options.value;
+    processEffectsStyle(options, property) {
+      if (!this.isObject(options[property])) return '';
+      const effects = options[property];
 
       let styleString = '';
 
@@ -176,11 +298,12 @@ export default {
      * Processes block position styles
      *
      * @param {Object} options - position object
+     * @param {String} property - The property value of the current color mode 'value' or 'darkValue'
      * @since 3.2.13
      */
-    processPositionStyle(options) {
-      if (!this.isObject(options.value)) return '';
-      const position = options.value;
+    processPositionStyle(options, property) {
+      if (!this.isObject(options[property])) return '';
+      const position = options[property];
 
       let styleString = '';
 
@@ -211,11 +334,12 @@ export default {
      * Processes block text styles
      *
      * @param {Object} options - text object
+     * @param {String} property - The property value of the current color mode 'value' or 'darkValue'
      * @since 3.2.13
      */
-    processTextStyle(options) {
-      if (!this.isObject(options.value)) return '';
-      const text = options.value;
+    processTextStyle(options, property) {
+      if (!this.isObject(options[property])) return '';
+      const text = options[property];
 
       let preset = this.hasNestedPath(text, 'size', 'preset');
       const fontSize = this.hasNestedPath(text, 'size', 'value');
@@ -247,7 +371,10 @@ export default {
       styleString += text.strikethrough || text.decoration == 'strikethrough' ? `text-decoration: strikethrough;` : '';
       styleString += !this.isUnDefined(text.weight) ? `font-weight: ${text.weight};` : '';
       styleString += text.transform ? `text-transform: ${text.transform};` : '';
-      styleString += this.isObject(text.color) ? `color: ${this.handleColorOutput(text.color.value)};` : '';
+
+      if (this.isObject(text.color)) {
+        styleString += text.color.value ? `color: ${this.handleColorOutput(text.color.value)};` : '';
+      }
 
       /** Font family */
       styleString += text.font && text.font != 'custom' ? `font-family: ${text.font};` : '';
@@ -262,11 +389,12 @@ export default {
      * Processes block layout styles
      *
      * @param {Object} options - spacing object
+     * @param {String} property - The property value of the current color mode 'value' or 'darkValue'
      * @since 3.2.13
      */
-    processSpacingStyle(options) {
-      if (!this.isObject(options.value)) return '';
-      const spacing = options.value;
+    processSpacingStyle(options, property) {
+      if (!this.isObject(options[property])) return '';
+      const spacing = options[property];
 
       let styleString = '';
       const padding = spacing.padding;
@@ -317,11 +445,12 @@ export default {
      * Processes block layout styles
      *
      * @param {Object} options - flex layout object
+     * @param {String} property - The property value of the current color mode 'value' or 'darkValue'
      * @since 3.2.13
      */
-    processLayoutStyle(options) {
-      if (!this.isObject(options.value)) return '';
-      const layout = options.value;
+    processLayoutStyle(options, property) {
+      if (!this.isObject(options[property])) return '';
+      const layout = options[property];
 
       switch (layout.type) {
         case 'grid':
@@ -398,11 +527,12 @@ export default {
      * Processes block dimensions styles
      *
      * @param {Object} options - dimensions object
+     * @param {String} property - The property value of the current color mode 'value' or 'darkValue'
      * @since 3.2.13
      */
-    processDimensionsStyle(options) {
-      if (!this.isObject(options.value)) return '';
-      const dimensions = options.value;
+    processDimensionsStyle(options, property) {
+      if (!this.isObject(options[property])) return '';
+      const dimensions = options[property];
 
       let style = '';
 
@@ -444,41 +574,17 @@ export default {
     },
 
     /**
-     * Handles pseudo styles
-     *
-     * @param {Object} pseudo - the pseudo object
-     * @param {Function} callBack - the callback function
-     * @since 3.2.13
-     */
-    handlePseudoStyle(pseudo, callBack) {
-      const colorMode = 'light';
-      if (!(colorMode in pseudo)) return '';
-      let styleString = '';
-
-      if (this.isObject(pseudo[colorMode])) {
-        for (const key in pseudo[colorMode]) {
-          let pseudoStyles = callBack({ value: pseudo[colorMode][key] });
-          styleString += pseudoStyles ? `&${key}{${pseudoStyles}}` : '';
-        }
-      }
-      return styleString;
-    },
-
-    /**
      * Processes block styles into css
      *
      * @param {Object} options - styles object
+     * @param {String} property - The property value of the current color mode 'value' or 'darkValue'
      * @since 3.2.13
      */
-    processStylesStyle(options) {
+    processStylesStyle(options, property) {
       let styleString = '';
 
-      // Pseudo
-      const pseudo = this.hasNestedPath(options, 'pseudo');
-      styleString += pseudo ? this.handlePseudoStyle(options.pseudo, this.processStylesStyle) : '';
-
-      if (!this.isObject(options.value)) return styleString;
-      const styles = options.value;
+      if (!this.isObject(options[property])) return styleString;
+      const styles = options[property];
 
       /** Opacity */
       styleString += !this.isUnDefined(styles.opacity) ? `opacity: ${styles.opacity};` : '';

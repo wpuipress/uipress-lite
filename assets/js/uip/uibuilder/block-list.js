@@ -81,6 +81,8 @@ export default {
 
       delete item.description;
 
+      delete item.optionsEnabled;
+
       delete item.path;
 
       return item;

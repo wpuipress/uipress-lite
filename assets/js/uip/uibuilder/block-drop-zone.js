@@ -11,7 +11,7 @@ export default {
     dropAreaStyle: String,
     contextualData: Object,
   },
-  data: function () {
+  data() {
     return {
       items: this.content,
       footerhideen: false,
@@ -107,11 +107,26 @@ export default {
       const allBlockSettings = masterBlock.optionsEnabled;
       const blockOptionsIndex = allBlockSettings.findIndex((option) => option.name === 'block');
 
+      // Inject preset styles
+      const ignoreParts = ['block', 'advanced'];
+      for (let part of allBlockSettings) {
+        if (ignoreParts.includes(part.name)) continue;
+        if (!'presets' in part) continue;
+
+        const stylePresets = part.presets;
+        if (!this.isObject(stylePresets)) continue;
+
+        for (let stylePresetKey in stylePresets) {
+          this.ensureNestedObject(block, 'settings', part.name, 'options', stylePresetKey, 'value');
+          block.settings[part.name].options[stylePresetKey].value = { ...stylePresets[stylePresetKey] };
+        }
+      }
+
       // No settings for block so bail
       if (blockOptionsIndex < 0) return;
       const presets = allBlockSettings[blockOptionsIndex].options;
 
-      // Ensure the nested object
+      // Ensure the nested object and inject preset values
       this.ensureNestedObject(block, 'settings', 'block', 'options');
       for (let preset of presets) {
         if (!('value' in preset)) continue;

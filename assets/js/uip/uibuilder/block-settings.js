@@ -1140,6 +1140,7 @@ export default {
         code: __('Code', 'uipress-lite'),
         classes: __('Classes', 'uipress-lite'),
         conditions: __('Conditions', 'uipress-lite'),
+        content: __('Content', 'uipress-lite'),
       },
       optionsSections: {
         settings: {
@@ -1375,6 +1376,31 @@ export default {
       this.ensureNestedObject(this.block, 'settings', 'advanced', 'options', option);
       this.block.settings.advanced.options[option].value = data;
     },
+
+    /**
+     * Returns the current value of the pseudo content
+     *
+     * @param {type} pseudo - type of pseudo (beforeContent | afterContent)
+     * @since 3.2.13
+     */
+    returnBlockPseudo(pseudo) {
+      const part = this.activePart == 'root' ? 'style' : this.activePart;
+      const value = this.hasNestedPath(this.block, 'settings', part, pseudo);
+      if (!value) return '';
+      return value;
+    },
+
+    /**
+     * Handles pseudo change and updates the requested content setting
+     *
+     * @param {type} pseudo - type of pseudo (::before | ::after)
+     * @since 3.2.13
+     */
+    handleBlockPseudoChange(data, pseudo) {
+      const part = this.activePart == 'root' ? 'style' : this.activePart;
+      this.ensureNestedObject(this.block, 'settings', part, pseudo);
+      this.block.settings[part][pseudo] = data;
+    },
   },
   template: `
     
@@ -1597,6 +1623,21 @@ export default {
             styleName="textFormat"
             :styleSettings="returnBlockStylePart('textFormat')" component="TextFormat" 
             :title="strings.text"/>
+            
+            <div class="uip-border-top"></div>
+            
+            <!-- Before / after  -->
+            <ToggleSection :title="strings.content">
+              <div class="uip-grid-col-1-3">
+              
+                  <div class="uip-text-muted uip-flex uip-flex-center uip-text-s"><span>::before</span></div>
+                  <uip-input :value="returnBlockPseudo('beforeContent')" :returnData="(data) => { handleBlockPseudoChange(data,'beforeContent') }"/>
+                
+                  <div class="uip-text-muted uip-flex uip-flex-center uip-text-s"><span>::after</span></div>
+                  <uip-input :value="returnBlockPseudo('afterContent')" :returnData="(data) => handleBlockPseudoChange(data,'afterContent')"/>
+                                      
+              </div>
+            </ToggleSection>
             
             <div class="uip-border-top"></div>
             
