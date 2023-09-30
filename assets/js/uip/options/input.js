@@ -1,3 +1,4 @@
+import { nextTick } from '../../libs/vue-esm-dev.js';
 export default {
   props: {
     returnData: Function,
@@ -8,12 +9,26 @@ export default {
   },
   data() {
     return {
-      option: this.value,
+      option: '',
       password: false,
+      updating: false,
     };
   },
 
   watch: {
+    /**
+     * Watches for changes value prop and updates
+     *
+     * @since 3.2.13
+     */
+    value: {
+      handler(newValue, oldValue) {
+        if (this.updating) return;
+        this.injectProp();
+      },
+      immediate: true,
+    },
+
     /**
      * Watches for changes to option and returns to caller
      *
@@ -21,6 +36,7 @@ export default {
      */
     option: {
       handler(newValue, oldValue) {
+        if (this.updating) return;
         this.returnData(this.option);
         this.maybeFormatForMeta();
       },
@@ -68,6 +84,19 @@ export default {
       if (!this.args) return;
       if (!this.args.password) return;
       this.password = true;
+    },
+
+    /**
+     * Injects the input prop
+     *
+     * @returns {Promise}
+     * @since 3.2.13
+     */
+    async injectProp() {
+      this.updating = true;
+      this.option = this.value;
+      await nextTick();
+      this.updating = false;
     },
   },
   template: `
