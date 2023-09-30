@@ -1,0 +1,660 @@
+export default {
+  computed: {},
+  methods: {
+    /**
+     * Returns block styles as css string
+     *
+     * @since 3.2.13
+     */
+    returnBlockStylesAsCss(block) {
+      const blockParts = this.returnBlockParts(block);
+      // No style to process
+      if (!blockParts.length) return;
+
+      let masterSelector = `#${block.uid}`;
+      let innerStyles = '';
+
+      for (let stylePart of blockParts) {
+        let subSelector = stylePart.class ? `${stylePart.class} {` : '';
+        subSelector = subSelector.startsWith(':') ? `&${subSelector}` : subSelector;
+        const subSelectorEnd = stylePart.class ? `}` : '';
+
+        let substyle = this.processBlockPartStyleSection(stylePart);
+        innerStyles += substyle ? `${subSelector} ${substyle} ${subSelectorEnd}` : '';
+      }
+
+      // Close css style
+
+      const setStyles = innerStyles.trim() ? `${masterSelector} { ${innerStyles} }` : '';
+      return setStyles;
+    },
+
+    /**
+     * Returns block parts list
+     *
+     * @since 3.2.13
+     */
+    returnBlockParts(block) {
+      const { moduleName, settings: blockSettings } = block;
+      const allBlocks = this.uipData.blocks;
+
+      // No settings in the block so no css
+      if (!this.isObject(blockSettings)) return [];
+
+      const blockInfo = allBlocks.find((block) => block.moduleName === moduleName);
+
+      if (!blockInfo || !blockInfo.optionsEnabled) return [];
+
+      const keysToRemove = new Set(['advanced', 'block']);
+      const registeredBlockSettings = blockInfo.optionsEnabled.filter((option) => !keysToRemove.has(option.name));
+
+      return registeredBlockSettings
+        .filter((registered) => registered.name in blockSettings && blockSettings[registered.name].options)
+        .map((registered) => ({
+          ...registered,
+          styleSettings: blockSettings[registered.name].options,
+        }));
+    },
+    /**
+     * Processes an individual block part style section
+     *
+     * @param {Object} stylePart - the settings object
+     * @since 3.2.13
+     */
+    processBlockPartStyleSection(stylePart) {
+      let style = '';
+      const styleSettings = stylePart.styleSettings;
+
+      // If it's not an object bail
+      if (!this.isObject(styleSettings)) return style;
+
+      /** Process layout styles */
+      style += this.isObject(styleSettings.flexLayout) ? this.processLayoutStyle(styleSettings.flexLayout) : '';
+      /** Process dimensions styles */
+      style += this.isObject(styleSettings.dimensions) ? this.processDimensionsStyle(styleSettings.dimensions) : '';
+      /** Process styling */
+      style += this.isObject(styleSettings.styles) ? this.processStylesStyle(styleSettings.styles) : '';
+      /** Process spacing styles */
+      style += this.isObject(styleSettings.spacing) ? this.processSpacingStyle(styleSettings.spacing) : '';
+      /** Process spacing styles */
+      style += this.isObject(styleSettings.textFormat) ? this.processTextStyle(styleSettings.textFormat) : '';
+      /** Process Position styles */
+      style += this.isObject(styleSettings.positionDesigner) ? this.processPositionStyle(styleSettings.positionDesigner) : '';
+      /** Process Position styles */
+      style += this.isObject(styleSettings.effectsDesigner) ? this.processEffectsStyle(styleSettings.effectsDesigner) : '';
+
+      return style;
+    },
+
+    /**
+     * Processes block effects styles
+     *
+     * @param {Object} options - effects object
+     * @since 3.2.13
+     */
+    processEffectsStyle(options) {
+      if (!this.isObject(options.value)) return '';
+      const effects = options.value;
+
+      let styleString = '';
+
+      let transform = '';
+      let filters = '';
+
+      const translateX = this.hasNestedPath(effects, 'transform', 'translateX', 'value');
+      const translateXunits = this.hasNestedPath(effects, 'transform', 'translateX', 'units');
+      transform += translateX && translateXunits ? `translateX(${translateX}${translateXunits}) ` : '';
+
+      let translateY = this.hasNestedPath(effects, 'transform', 'translateY', 'value');
+      let translateYunits = this.hasNestedPath(effects, 'transform', 'translateY', 'units');
+      transform += translateY && translateYunits ? `translateY(${translateY}${translateXunits}) ` : '';
+
+      let scaleX = this.hasNestedPath(effects, 'transform', 'scaleX');
+      transform += scaleX ? `scaleX(${scaleX}) ` : '';
+
+      let scaleY = this.hasNestedPath(effects, 'transform', 'scaleY');
+      transform += scaleY ? `scaleY(${scaleY}) ` : '';
+
+      let rotateX = this.hasNestedPath(effects, 'transform', 'rotateX');
+      transform += rotateX ? `rotateX(${rotateX}deg) ` : '';
+
+      let rotateY = this.hasNestedPath(effects, 'transform', 'rotateY');
+      transform += rotateY ? `rotateY(${rotateY}deg) ` : '';
+
+      let rotateZ = this.hasNestedPath(effects, 'transform', 'rotateZ');
+      transform += rotateZ ? `rotateZ(${rotateZ}deg) ` : '';
+
+      let skewX = this.hasNestedPath(effects, 'transform', 'skewX');
+      transform += skewX ? `skewX(${skewX}deg) ` : '';
+
+      let skewY = this.hasNestedPath(effects, 'transform', 'skewY');
+      transform += skewY ? `skewY(${skewY}deg) ` : '';
+
+      styleString += transform ? `transform:${transform};` : '';
+
+      // mixBlendMode
+      let mixBlendMode = this.hasNestedPath(effects, 'filters', 'mixBlendMode');
+      styleString += mixBlendMode ? `mix-blend-mode:${mixBlendMode};` : '';
+
+      // grayscale
+      let grayscale = this.hasNestedPath(effects, 'filters', 'grayscale');
+      filters += grayscale ? `grayscale(${grayscale}) ` : '';
+
+      //blur
+      let blur = this.hasNestedPath(effects, 'filters', 'blur');
+      filters += blur ? `blur(${blur}px) ` : '';
+
+      // saturate
+      let saturate = this.hasNestedPath(effects, 'filters', 'saturate');
+      filters += saturate ? `saturate(${saturate}) ` : '';
+
+      // contrast
+      let contrast = this.hasNestedPath(effects, 'filters', 'contrast');
+      filters += contrast ? `contrast(${contrast}) ` : '';
+
+      // backdropBlur
+      let backdropBlur = this.hasNestedPath(effects, 'filters', 'backdropBlur');
+      styleString += backdropBlur ? `backdrop-filter:blur(${backdropBlur}px);` : '';
+
+      // Push all filters to style
+      styleString += filters ? `filter:${filters};` : '';
+
+      // Transition animations
+      let transitionType = this.hasNestedPath(effects, 'transitionType');
+      let transitionTime = this.hasNestedPath(effects, 'transitionTime');
+      let transitionDelay = this.hasNestedPath(effects, 'transitionDelay');
+      let cursor = this.hasNestedPath(effects, 'cursor');
+
+      styleString += transitionType && !this.isUnDefined(transitionTime) ? `transition:all ${transitionType} ${transitionTime}s;` : '';
+      styleString += transitionDelay ? `transition-delay: ${transitionDelay}s;` : '';
+      styleString += cursor ? `cursor: ${cursor};` : '';
+
+      return styleString;
+    },
+
+    /**
+     * Processes block position styles
+     *
+     * @param {Object} options - position object
+     * @since 3.2.13
+     */
+    processPositionStyle(options) {
+      if (!this.isObject(options.value)) return '';
+      const position = options.value;
+
+      let styleString = '';
+
+      styleString += position.position ? `position:${position.position};` : '';
+      styleString += position.display ? `display:${position.display};` : '';
+      styleString += !this.isUnDefined(position.zIndex) ? `z-index:${position.zIndex};` : '';
+
+      const offsetUnits = this.hasNestedPath(position, 'offset', 'units');
+      if (offsetUnits) {
+        styleString += !this.isUnDefined(position.offset.left) ? `left:${position.offset.left}${offsetUnits};` : '';
+        styleString += !this.isUnDefined(position.offset.top) ? `top:${position.offset.top}${offsetUnits};` : '';
+        styleString += !this.isUnDefined(position.offset.right) ? `right:${position.offset.right}${offsetUnits};` : '';
+        styleString += !this.isUnDefined(position.offset.bottom) ? `bottom:${position.offset.bottom}${offsetUnits};` : '';
+      }
+
+      styleString += position.verticalAlign == 'top' ? 'margin-bottom: auto;' : '';
+      styleString += position.verticalAlign == 'bottom' ? 'margin-top: auto;' : '';
+      styleString += position.verticalAlign == 'center' ? 'margin-top: auto;margin-bottom: auto;' : '';
+
+      styleString += position.horizontalAlign == 'left' ? 'margin-right: auto;' : '';
+      styleString += position.horizontalAlign == 'right' ? 'margin-left:auto;align-self: flex-end;' : '';
+      styleString += position.horizontalAlign == 'center' ? 'margin-right:auto;margin-left:auto;align-self: center;' : '';
+
+      return styleString;
+    },
+
+    /**
+     * Processes block text styles
+     *
+     * @param {Object} options - text object
+     * @since 3.2.13
+     */
+    processTextStyle(options) {
+      if (!this.isObject(options.value)) return '';
+      const text = options.value;
+
+      let preset = this.hasNestedPath(text, 'size', 'preset');
+      const fontSize = this.hasNestedPath(text, 'size', 'value');
+      const lineHeight = this.hasNestedPath(text, 'lineHeight', 'value');
+
+      let styleString = '';
+
+      if (preset && preset != 'custom') {
+        preset = preset.toUpperCase();
+        styleString += preset == 'XS' ? `font-size: var(--uip-text-xs);` : '';
+        styleString += preset == 'SMALL' || preset == 'S' ? `font-size: var(--uip-text-s);` : '';
+        styleString += preset == 'MEDIUM' || preset == 'M' ? `font-size: var(--uip-text-m);` : '';
+        styleString += preset == 'LARGE' || preset == 'L' ? `font-size: var(--uip-text-l);` : '';
+        styleString += preset == 'XL' ? `font-size: var(--uip-text-xl);` : '';
+      }
+
+      if (preset == 'custom' && !this.isUnDefined(fontSize)) {
+        styleString += text.size.units ? `font-size:${fontSize}${text.size.units};` : '';
+      }
+
+      if (!this.isUnDefined(lineHeight)) {
+        styleString += text.lineHeight.units ? `line-height:${lineHeight}${text.lineHeight.units};` : '';
+      }
+
+      styleString += text.align ? `text-align: ${text.align};` : '';
+      styleString += text.bold ? `font-weight: bold;` : '';
+      styleString += text.italic || text.decoration == 'italic' ? `font-style: italic;` : '';
+      styleString += text.underline || text.decoration == 'underline' ? `text-decoration: underline;` : '';
+      styleString += text.strikethrough || text.decoration == 'strikethrough' ? `text-decoration: strikethrough;` : '';
+      styleString += !this.isUnDefined(text.weight) ? `font-weight: ${text.weight};` : '';
+      styleString += text.transform ? `text-transform: ${text.transform};` : '';
+      styleString += this.isObject(text.color) ? `color: ${this.handleColorOutput(text.color.value)};` : '';
+
+      /** Font family */
+      styleString += text.font && text.font != 'custom' ? `font-family: ${text.font};` : '';
+      /** Custom font family */
+      styleString += text.customName && text.font == 'custom' ? `font-family: ${text.customName};` : '';
+      styleString += text.customURL ? `@import url('${text.customURL}');` : '';
+
+      return styleString;
+    },
+
+    /**
+     * Processes block layout styles
+     *
+     * @param {Object} options - spacing object
+     * @since 3.2.13
+     */
+    processSpacingStyle(options) {
+      if (!this.isObject(options.value)) return '';
+      const spacing = options.value;
+
+      let styleString = '';
+      const padding = spacing.padding;
+      const margin = spacing.margin;
+
+      /** No spacing to exit */
+      if (!padding && !margin) return styleString;
+
+      const handleSpacing = (obj, type) => {
+        let style = '';
+        const preset = obj.preset;
+
+        /** Has preset */
+        if (preset && preset !== 'custom') {
+          style += preset == '0' ? `${type}: 0;` : '';
+          style += preset == 'XS' ? `${type}: var(--uip-${type}-xxs);` : '';
+          style += preset == 'S' ? `${type}: var(--uip-${type}-xs);` : '';
+          style += preset == 'M' ? `${type}: var(--uip-${type}-s);` : '';
+          style += preset == 'L' ? `${type}: var(--uip-${type}-m);` : '';
+          style += preset == 'XL' ? `${type}: var(--uip-${type}-l);` : '';
+          return style;
+        }
+
+        if (preset == 'custom' && obj.sync) {
+          style = !this.isUnDefined(obj.left) && obj.units ? `${type}:${obj.left}${obj.units};` : '';
+          return style;
+        }
+
+        if (preset == 'custom' && !obj.sync) {
+          if (!obj.units) return '';
+          style += !this.isUnDefined(obj.left) ? `${type}-left:${obj.left}${obj.units};` : '';
+          style += !this.isUnDefined(obj.top) ? `${type}-top:${obj.top}${obj.units};` : '';
+          style += !this.isUnDefined(obj.right) ? `${type}-right:${obj.right}${obj.units};` : '';
+          style += !this.isUnDefined(obj.bottom) ? `${type}-bottom:${obj.bottom}${obj.units};` : '';
+          return style;
+        }
+      };
+
+      /** Padding */
+      styleString += padding ? handleSpacing(padding, 'padding') : '';
+      /** Margin */
+      styleString += margin ? handleSpacing(margin, 'margin') : '';
+
+      return styleString;
+    },
+
+    /**
+     * Processes block layout styles
+     *
+     * @param {Object} options - flex layout object
+     * @since 3.2.13
+     */
+    processLayoutStyle(options) {
+      if (!this.isObject(options.value)) return '';
+      const layout = options.value;
+
+      switch (layout.type) {
+        case 'grid':
+          return this.generateGridStyles(layout);
+        case 'stack':
+          return this.generateStackStyles(layout);
+        default:
+          return '';
+      }
+    },
+
+    /**
+     * Generates grid css
+     *
+     * @param {Object} value - the grid object
+     * @since 3.2.13
+     */
+    generateGridStyles(value) {
+      let style = 'display:grid;';
+
+      // Check required values
+      if (!value.columns) return '';
+      if (!value.columnWidth) return '';
+      if (this.isUnDefined(value.columnWidth.value)) return '';
+
+      /**  Process responsive grid styles */
+      if (!value.responsive) {
+        style += `grid-template-columns: repeat(${value.columns}, minmax(${value.columnWidth.value}${value.columnWidth.units}, 1fr));`;
+        style += 'justify-content: center;';
+        style += 'grid-auto-rows: minmax(0, 1fr);';
+        style += `grid-template-rows: repeat(${value.rows}, minmax(0, 1fr));`;
+        if ('gap' in value) {
+          style += `gap: ${value.gap.value}${value.gap.units};`;
+        }
+      } else {
+        /**  Process grid styles */
+        style += `
+		  --grid-layout-gap: ${value.gap.value}${value.gap.units};
+		  --grid-column-count:${value.columns};
+		  --grid-item--min-width: ${value.minColumnWidth.value}${value.minColumnWidth.units};
+		  --gap-count: calc(var(--grid-column-count) - 1);
+		  --total-gap-width: calc(var(--gap-count) * var(--grid-layout-gap));
+		  --grid-item--max-width: calc((100% - var(--total-gap-width)) / var(--grid-column-count));
+		  grid-template-columns: repeat(auto-fill, minmax(max(var(--grid-item--min-width), var(--grid-item--max-width)), 1fr));
+		  grid-gap: var(--grid-layout-gap);
+		  grid-auto-rows: min-content;
+		`;
+      }
+      return style;
+    },
+
+    /**
+     * Generates flexbox / stack styles css
+     *
+     * @param {Object} value - the grid object
+     * @since 3.2.13
+     */
+    generateStackStyles(value) {
+      let style = 'display:flex;';
+
+      style += value.direction ? `flex-direction: ${value.direction};` : '';
+      style += value.distribute ? `justify-content: ${value.distribute};` : '';
+      style += value.align ? `align-items: ${value.align};` : '';
+      style += value.wrap ? `flex-wrap: ${value.wrap};` : '';
+      style += value.placeContent ? `align-content: ${value.placeContent};` : '';
+
+      if ('gap' in value) {
+        style += value.gap.value && value.gap.units ? `gap: ${value.gap.value}${value.gap.units};` : '';
+      }
+      return style;
+    },
+
+    /**
+     * Processes block dimensions styles
+     *
+     * @param {Object} options - dimensions object
+     * @since 3.2.13
+     */
+    processDimensionsStyle(options) {
+      if (!this.isObject(options.value)) return '';
+      const dimensions = options.value;
+
+      let style = '';
+
+      /** Width */
+      if (this.isObject(dimensions.width)) {
+        style += !this.isUnDefined(dimensions.width.value) && dimensions.width.units ? `width:${dimensions.width.value}${dimensions.width.units};` : '';
+      }
+
+      /** Max width */
+      if (this.isObject(dimensions.maxWidth)) {
+        style += !this.isUnDefined(dimensions.maxWidth.value) && dimensions.maxWidth.units ? `max-width:${dimensions.maxWidth.value}${dimensions.maxWidth.units};` : '';
+      }
+
+      /** Min width */
+      if (this.isObject(dimensions.minWidth)) {
+        style += !this.isUnDefined(dimensions.minWidth.value) && dimensions.minWidth.units ? `min-width:${dimensions.minWidth.value}${dimensions.minWidth.units};` : '';
+      }
+
+      /** Height */
+      if (this.isObject(dimensions.height)) {
+        style += !this.isUnDefined(dimensions.height.value) && dimensions.height.units ? `height:${dimensions.height.value}${dimensions.height.units};` : '';
+      }
+
+      /** Min height */
+      if (this.isObject(dimensions.minHeight)) {
+        style += !this.isUnDefined(dimensions.minHeight.value) && dimensions.minHeight.units ? `min-height:${dimensions.minHeight.value}${dimensions.minHeight.units};` : '';
+      }
+
+      /** Max height */
+      if (this.isObject(dimensions.maxHeight)) {
+        style += !this.isUnDefined(dimensions.maxHeight.value) && dimensions.maxHeight.units ? `min-height:${dimensions.maxHeight.value}${dimensions.maxHeight.units};` : '';
+      }
+
+      style += dimensions.grow === 'grow' ? `flex-grow:1;` : '';
+      style += dimensions.flexShrink === 'shrink' ? `flex-shrink:1;` : '';
+      style += dimensions.flexShrink === 'none' ? `flex-shrink:0;` : '';
+
+      return style;
+    },
+
+    /**
+     * Handles pseudo styles
+     *
+     * @param {Object} pseudo - the pseudo object
+     * @param {Function} callBack - the callback function
+     * @since 3.2.13
+     */
+    handlePseudoStyle(pseudo, callBack) {
+      const colorMode = 'light';
+      if (!(colorMode in pseudo)) return '';
+      let styleString = '';
+
+      if (this.isObject(pseudo[colorMode])) {
+        for (const key in pseudo[colorMode]) {
+          let pseudoStyles = callBack({ value: pseudo[colorMode][key] });
+          styleString += pseudoStyles ? `&${key}{${pseudoStyles}}` : '';
+        }
+      }
+      return styleString;
+    },
+
+    /**
+     * Processes block styles into css
+     *
+     * @param {Object} options - styles object
+     * @since 3.2.13
+     */
+    processStylesStyle(options) {
+      let styleString = '';
+
+      // Pseudo
+      const pseudo = this.hasNestedPath(options, 'pseudo');
+      styleString += pseudo ? this.handlePseudoStyle(options.pseudo, this.processStylesStyle) : '';
+
+      if (!this.isObject(options.value)) return styleString;
+      const styles = options.value;
+
+      /** Opacity */
+      styleString += !this.isUnDefined(styles.opacity) ? `opacity: ${styles.opacity};` : '';
+      /** Overflow */
+      styleString += styles.overflow ? `overflow: ${styles.overflow};` : '';
+
+      /** Outline */
+      const outline = this.hasNestedPath(styles, 'outline');
+      if (this.hasNestedPath(outline, 'width', 'value') && this.hasNestedPath(outline, 'color', 'value')) {
+        const outlineWidth = outline.width;
+        const outlineColor = this.handleColorOutput(outline.color.value);
+        const outlineOffset = outline.offset;
+        const hasRequiredVals = !this.isUnDefined(outlineWidth.value) && outlineWidth.units && outline.style && outlineColor;
+        styleString += hasRequiredVals ? `outline:${outlineWidth.value}${outlineWidth.units} ${outline.style} ${outlineColor};` : '';
+      }
+      /** Outline offset */
+      if (this.hasNestedPath(outline, 'offset', 'value')) {
+        const hasOffset = !this.isUnDefined(outline.offset.value) && outline.offset.units;
+        styleString += hasOffset ? `outline-offset:${outline.offset.value}${outline.offset.units};` : '';
+      }
+
+      /** Background color / gradient */
+      if (this.hasNestedPath(styles, 'fill', 'value')) {
+        const fillColor = styles.fill.value ? this.handleColorOutput(styles.fill.value) : '';
+        const gradient = fillColor.includes('gradient') ? true : false;
+
+        if (gradient) styleString += fillColor ? `background: ${fillColor};` : '';
+        if (!gradient) styleString += fillColor ? `background-color: ${fillColor};` : '';
+      }
+
+      /** Background Image */
+      if (this.hasNestedPath(styles, 'backgroundImage', 'url')) {
+        const bgImage = styles.backgroundImage.url;
+        styleString += bgImage ? `background-image: url(${bgImage});` : '';
+
+        /** Background sizing */
+        if (this.hasNestedPath(styles, 'backgroundImage', 'sizing', 'position')) {
+          const bgSizing = styles.backgroundImage.sizing;
+          styleString += bgSizing.position ? `background-position:${bgSizing.position};` : '';
+          styleString += bgSizing.repeat ? `background-repeat:${bgSizing.repeat};` : '';
+          styleString += bgSizing.size ? `background-size:${bgSizing.size};` : `background-size:contain;`;
+        }
+      }
+
+      /** Borders */
+      if (styles.borders && Array.isArray(styles.borders)) {
+        for (let border of styles.borders) {
+          styleString += this.processBorderStyle(border);
+        }
+      }
+
+      /** Master Border radius */
+      if (this.hasNestedPath(styles, 'radius', 'topleft')) {
+        const borderRadius = styles.radius;
+
+        /** Border synced */
+        if (borderRadius.sync && borderRadius.units) {
+          styleString += !this.isUnDefined(borderRadius.topleft) && borderRadius.units ? `border-radius: ${borderRadius.topleft}${borderRadius.units};` : '';
+        }
+        // Unlinked border
+        else if (borderRadius.units) {
+          const topleft = !this.isUnDefined(borderRadius.topleft) ? borderRadius.topleft + borderRadius.units : 0;
+          const topright = !this.isUnDefined(borderRadius.topright) ? borderRadius.topright + borderRadius.units : 0;
+          const bottomright = !this.isUnDefined(borderRadius.bottomright) ? borderRadius.bottomright + borderRadius.units : 0;
+          const bottomleft = !this.isUnDefined(borderRadius.bottomleft) ? borderRadius.bottomleft + borderRadius.units : 0;
+          styleString += `border-radius: ${topleft} ${topright} ${bottomright} ${bottomleft};`;
+        }
+      }
+
+      /** Shadows */
+      if (styles.shadows && Array.isArray(styles.shadows)) {
+        styleString += this.processShadowStyle(styles.shadows);
+      }
+
+      return styleString;
+    },
+
+    /**
+     * Processes border style object
+     *
+     * @param {Object} border
+     * @since 3.2.13
+     */
+    processBorderStyle(border = {}) {
+      let styleString = '';
+
+      let borderColor = this.hasNestedPath(border, 'color', 'value');
+      let borderPosition = this.hasNestedPath(border, 'position');
+      let borderStyle = this.hasNestedPath(border, 'style');
+      let borderWidth = this.hasNestedPath(border, 'width', 'value');
+      let borderUnits = this.hasNestedPath(border, 'width', 'units');
+      let borderRadius = this.hasNestedPath(border, 'radius', 'value');
+
+      /** Exit early if no border colour and no border radius */
+      if (!borderColor && !borderRadius) return styleString;
+
+      /** If there is a border color then output border */
+      if (borderColor && borderWidth && borderUnits) {
+        let borderPosMap = {
+          'solid': 'border:',
+          'left': 'border-left:',
+          'right': 'border-right:',
+          'top': 'border-top:',
+          'bottom': 'border-bottom:',
+        };
+
+        let borderPos = borderPosMap[borderPosition] || '';
+        borderColor = this.handleColorOutput(borderColor);
+
+        styleString += `${borderPos}${borderWidth}${borderUnits} ${borderStyle} ${borderColor};`;
+      }
+
+      /** No border radius so exit */
+      if (!borderRadius) return styleString;
+
+      /**   Border radius */
+      if (borderRadius.sync) {
+        styleString += !this.isUnDefined(borderRadius.topleft) && borderRadius.units ? `border-radius: ${borderRadius.topleft}${borderRadius.units};` : '';
+      } else if (borderRadius.units) {
+        const topleft = !this.isUnDefined(borderRadius.topleft) ? borderRadius.topleft + borderRadius.units : 0;
+        const topright = !this.isUnDefined(borderRadius.topright) ? borderRadius.topright + borderRadius.units : 0;
+        const bottomright = !this.isUnDefined(borderRadius.bottomright) ? borderRadius.bottomright + borderRadius.units : 0;
+        const bottomleft = !this.isUnDefined(borderRadius.bottomleft) ? borderRadius.bottomleft + borderRadius.units : 0;
+        styleString += `border-radius: ${topleft} ${topright} ${bottomright} ${bottomleft};`;
+      }
+
+      return styleString;
+    },
+
+    /**
+     * Processes border style object
+     *
+     * @param {Array} shadows
+     * @since 3.2.13
+     */
+    processShadowStyle(shadows = []) {
+      let styleString = '';
+      let formattedShadows = '';
+      let formattedInsideShadows = [];
+
+      for (let shadow of shadows) {
+        let shadowColour = this.hasNestedPath(shadow, 'color', 'value');
+        let horiz = this.hasNestedPath(shadow, 'verticalDistance', 'value');
+        let vert = this.hasNestedPath(shadow, 'verticalDistance', 'value');
+        let blur = this.hasNestedPath(shadow, 'blur', 'value');
+        let position = this.hasNestedPath(shadow, 'position');
+
+        /** Exit if not shadow color */
+        if (!shadowColour || !horiz || !vert || !blur) continue;
+
+        shadowColour = this.handleColorOutput(shadowColour);
+
+        const shadowValue = `${horiz}px ${vert}px ${blur}px ${shadowColour}`;
+        if (position === 'inside') {
+          formattedInsideShadows.push(`inset ${shadowValue}`);
+        } else {
+          formattedShadows += `drop-shadow(${shadowValue}) `;
+        }
+      }
+
+      styleString += formattedShadows ? `filter: ${formattedShadows};` : '';
+      styleString += formattedInsideShadows.length ? `box-shadow: ${formattedInsideShadows.join(',')};` : '';
+
+      return styleString;
+    },
+    /**
+     * Handles colour variables output
+     *
+     * @param {Object}
+     * @since 3.2.13
+     */
+    handleColorOutput(value) {
+      if (!value) return;
+      const color = value.trim();
+      if (color.startsWith('--')) return `var(${color})`;
+      return color;
+    },
+  },
+};

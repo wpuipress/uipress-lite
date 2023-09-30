@@ -1,6 +1,8 @@
 import { nextTick, h, Teleport } from '../../libs/vue-esm-dev.js';
+import BlockStyles from './block-styles.min.js';
 export default {
   inject: ['uipress', 'uiTemplate', 'uipData'],
+  mixins: [BlockStyles],
   props: {
     block: Object,
     list: Array,
@@ -16,6 +18,9 @@ export default {
         totalItems: __('total items', 'uipress-lite'),
       },
     };
+  },
+  mounted() {
+    this.returnBlockParts;
   },
   watch: {
     'block.query': {
@@ -91,7 +96,7 @@ export default {
       const screenWidth = window.innerWidth;
 
       let dynamic = this.formatDynamicMatches;
-      let style = this.uipress.render_block_styles(dynamic, id, darkmode, screenWidth);
+      let style = this.returnBlockStylesAsCss(this.block);
       let custom = this.returnCustomCSS;
       return style + custom;
     },
@@ -309,7 +314,7 @@ export default {
       const darkmode = this.uipData.templateDarkMode;
       const screenWidth = window.innerWidth;
 
-      let style = this.uipress.render_block_styles(block, id, darkmode, screenWidth);
+      let style = this.returnBlockStylesAsCss(block);
       return style.replace('#' + block.uid, '.uip-query-id-' + ID + '#' + block.uid);
     },
 
