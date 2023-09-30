@@ -37,6 +37,7 @@ export default {
    */
   beforeUnmount() {
     document.removeEventListener('scroll', this.handleScroll, true);
+    document.body.removeEventListener('click', this.onClickOutside, true);
     window.removeEventListener('keydown', this.handleKeyDown);
     window.removeEventListener('keyup', this.handleKeyUp);
   },
