@@ -20,7 +20,7 @@ export default {
       windowWidth: window.innerWidth,
       drag: false,
       queries: {},
-      randomClass: this.uipress.createUID(),
+      randomClass: this.createUID(),
       strings: {
         doesntExist: __("This component is missing or can't be loaded", 'uipress-lite'),
         totalItems: __('Total items', 'uipress-lite'),
@@ -184,7 +184,7 @@ export default {
         let parsed = JSON.parse(response);
         if (Array.isArray(parsed)) {
           parsed = parsed[0];
-          parsed.uid = self.uipress.createUID();
+          parsed.uid = self.createUID();
 
           if (!self.isObject(parsed)) {
             self.uipress.notify(__('Unable to import template right now', 'uipress-lite'), '', 'error', true);
@@ -215,7 +215,7 @@ export default {
      */
     cleanBlock(block) {
       let item = Object.assign({}, block);
-      //item.uid = this.uipress.createUID();
+      //item.uid = this.createUID();
       item.options = [];
       item.settings = JSON.parse(JSON.stringify(item.settings));
 
@@ -236,7 +236,7 @@ export default {
 
       for (let block of content) {
         let item = Object.assign({}, block);
-        //item.uid = this.uipress.createUID();
+        //item.uid = this.createUID();
         item.settings = JSON.parse(JSON.stringify(item.settings));
 
         if (item.content) {
@@ -266,7 +266,7 @@ export default {
       let newElement = evt.added.element;
       // New block, add uid
       if (!('uid' in newElement)) {
-        newElement.uid = this.uipress.createUID();
+        newElement.uid = this.createUID();
       }
 
       // New block so let's add settings

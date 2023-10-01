@@ -139,3 +139,68 @@ export function get_block_option(block, group, key) {
 
   return value;
 }
+
+/**
+ * Creates a unique ID - primarily used for blocks in the ui builder
+ *
+ * @since 3.2.13
+ */
+export function createUID() {
+  let uniqid = Date.now().toString(16) + Math.random().toString(16).slice(2);
+  uniqid += Math.random().toString(16).slice(2) + performance.now().toString(16);
+  const forward = generateRandomString(3);
+  return (forward + uniqid).substring(0, 24);
+}
+
+/**
+ * Generates a random string
+ *
+ * @since 3.2.13
+ */
+export function generateRandomString(length = 4) {
+  const characters = 'abcdefghijklmnopqrstuvwxyz';
+  let result = '';
+
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    result += characters[randomIndex];
+  }
+
+  return result;
+}
+
+/**
+ * Main fetch action for the app
+ *
+ * @param {String} url - the action url
+ * @param {Object} data - the post data
+ * @since 3.0.0
+ */
+export async function sendServerRequest(url, data) {
+  const errorMessage = __('Bad request', 'uipress-lite');
+  const emitError = () => {
+    this.notify(errorMessage, '', 'error');
+  };
+
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Length': '0' },
+    body: data,
+  });
+
+  // Throw error if failed
+  if (!response.ok) {
+    errorMessage(errorMessage);
+    return { error: true, message: errorMessage };
+  }
+
+  const responseData = await response.text();
+  const parsedData = this.uipParsJson(responseData);
+
+  if (!parsedData) {
+    errorMessage(errorMessage);
+    return { error: true, message: errorMessage };
+  }
+
+  return parsedData;
+}

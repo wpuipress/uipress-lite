@@ -37,7 +37,7 @@ export default {
      * @since 3.2.13
      */
     getImage() {
-      let temp = this.uipress.get_block_option(this.block, 'block', 'loaderImage');
+      let temp = this.get_block_option(this.block, 'block', 'loaderImage');
       if (!this.isObject(temp)) return false;
       if (temp.url) return temp.url;
       return false;

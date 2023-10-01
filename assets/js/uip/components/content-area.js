@@ -13,7 +13,7 @@ export function moduleData() {
         emptyMessage: __('Drag blocks here', 'uipress-lite'),
         footerhideen: false,
         rendered: false,
-        randomClass: this.uipress.createUID(),
+        randomClass: this.createUID(),
         test: [1, 2, 6, 5, 3, 8, 9, 4],
         activeTab: 'blocks',
         windowWidth: window.innerWidth,
@@ -153,7 +153,7 @@ export function moduleData() {
           let parsed = JSON.parse(response);
           if (Array.isArray(parsed)) {
             parsed = parsed[0];
-            parsed.uid = self.uipress.createUID();
+            parsed.uid = self.createUID();
 
             if (!self.isObject(parsed)) {
               self.uipress.notify(__('Unable to import template right now', 'uipress-lite'), '', 'error', true);
@@ -178,7 +178,7 @@ export function moduleData() {
       },
       cleanBlock(block) {
         let item = Object.assign({}, block);
-        //item.uid = this.uipress.createUID();
+        //item.uid = this.createUID();
         item.options = [];
         item.settings = JSON.parse(JSON.stringify(item.settings));
 
@@ -194,7 +194,7 @@ export function moduleData() {
 
         for (let block of content) {
           let item = Object.assign({}, block);
-          //item.uid = this.uipress.createUID();
+          //item.uid = this.createUID();
           item.settings = JSON.parse(JSON.stringify(item.settings));
 
           if (item.content) {
@@ -217,7 +217,7 @@ export function moduleData() {
           let newElement = evt.added.element;
           //New block, add uid
           if (!('uid' in newElement)) {
-            newElement.uid = this.uipress.createUID();
+            newElement.uid = this.createUID();
 
             //Open block
             let ID = self.$route.params.templateID;
@@ -262,7 +262,7 @@ export function moduleData() {
         }
       },
       metConditions(block) {
-        let conditions = this.uipress.get_block_option(block, 'advanced', 'conditions');
+        let conditions = this.get_block_option(block, 'advanced', 'conditions');
 
         if (typeof conditions === 'undefined') {
           return true;
@@ -671,7 +671,7 @@ export function moduleData() {
       },
       getBlockClasses(block, query) {
         let classes = '';
-        let advanced = this.uipress.get_block_option(block, 'advanced', 'classes');
+        let advanced = this.get_block_option(block, 'advanced', 'classes');
         classes += advanced;
 
         //Check if block is active

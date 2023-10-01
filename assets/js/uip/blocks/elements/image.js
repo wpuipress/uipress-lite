@@ -42,7 +42,7 @@ export default {
       if (this.error) return;
 
       this.error = false;
-      let item = this.uipress.get_block_option(this.block, 'block', 'userImage', true);
+      let item = this.get_block_option(this.block, 'block', 'userImage', true);
 
       if (!this.isObject(item)) return (this.error = true);
 

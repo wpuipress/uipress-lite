@@ -53,7 +53,7 @@ export default {
      * @since 3.2.13
      */
     newTab() {
-      this.items.push({ value: '', id: this.uipress.createUID() });
+      this.items.push({ value: '', id: this.createUID() });
     },
   },
   template: `

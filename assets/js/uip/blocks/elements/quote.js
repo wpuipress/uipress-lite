@@ -16,7 +16,7 @@ export default {
      * @since 3.2.13
      */
     returnQuote() {
-      const item = this.uipress.get_block_option(this.block, 'block', 'quote', true);
+      const item = this.get_block_option(this.block, 'block', 'quote', true);
       if (!item) return '';
 
       if (!this.isObject(item)) return item;
@@ -30,7 +30,7 @@ export default {
      * @since 3.2.13
      */
     returnAuthor() {
-      const item = this.uipress.get_block_option(this.block, 'block', 'quoteAuthor', true);
+      const item = this.get_block_option(this.block, 'block', 'quoteAuthor', true);
       if (!item) return '';
 
       if (!this.isObject(item)) return item;

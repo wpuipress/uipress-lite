@@ -16,7 +16,7 @@ export default {
      * @since 3.2.13
      */
     returnVideo() {
-      const video = this.uipress.get_block_option(this.block, 'block', 'videoURL');
+      const video = this.get_block_option(this.block, 'block', 'videoURL');
       if (!video) return;
       return video;
     },
@@ -27,7 +27,7 @@ export default {
      * @since 3.2.13
      */
     returnYoutube() {
-      const video = this.uipress.get_block_option(this.block, 'block', 'youtube');
+      const video = this.get_block_option(this.block, 'block', 'youtube');
       if (!video) return;
       return video;
     },

@@ -20,7 +20,7 @@ export default {
       collapsed: false,
     };
   },
-  inject: [ 'uipress', 'uiTemplate'],
+  inject: ['uipress', 'uiTemplate'],
   watch: {
     breadCrumbs: {
       handler(newValue, oldValue) {
@@ -78,7 +78,7 @@ export default {
     },
 
     subMenuCustomIcon() {
-      let icon = this.uipress.get_block_option(this.block, 'block', 'subMenuIcon');
+      let icon = this.get_block_option(this.block, 'block', 'subMenuIcon');
       if (icon.value) {
         return icon.value;
       } else {
@@ -86,7 +86,7 @@ export default {
       }
     },
     menuAutoUpdate() {
-      let update = this.uipress.get_block_option(this.block, 'block', 'disableAutoUpdate');
+      let update = this.get_block_option(this.block, 'block', 'disableAutoUpdate');
       if (this.isObject(update)) {
         return update.value;
       }
@@ -94,14 +94,14 @@ export default {
     },
 
     disableAutoLoad() {
-      let update = this.uipress.get_block_option(this.block, 'block', 'loadOnClick');
+      let update = this.get_block_option(this.block, 'block', 'loadOnClick');
       if (this.isObject(update)) {
         return update.value;
       }
       return update;
     },
     showCollapse() {
-      let update = this.uipress.get_block_option(this.block, 'block', 'menuCollapse');
+      let update = this.get_block_option(this.block, 'block', 'menuCollapse');
       if (this.isObject(update)) {
         return update.value;
       }
@@ -110,7 +110,7 @@ export default {
   },
   methods: {
     returnAdminMenu() {
-      let menu = this.uipress.checkNestedValue(this.uipData, ['adminMenu', 'menu']);
+      let menu = this.uipress.checkNestedValue(this.uipApp.data, ['adminMenu', 'menu']);
       if (!menu) {
         return [];
       }
@@ -198,7 +198,7 @@ export default {
       return self.workingMenu;
     },
     returnCustomMenu() {
-      let customMenu = this.uipress.get_block_option(this.block, 'block', 'advancedoptions');
+      let customMenu = this.get_block_option(this.block, 'block', 'advancedoptions');
 
       if (typeof customMenu === 'undefined') {
         return false;
@@ -458,7 +458,7 @@ export default {
       //Open without uipress
       if (item.withoutUiPress) {
         let url = new URL(absoluteURL);
-        let uid = self.uipress.createUID();
+        let uid = self.createUID();
         url.searchParams.set('uipwf', uid);
         url.searchParams.set('uip-framed-page', 0);
         absoluteURL = url.href;
@@ -501,7 +501,7 @@ export default {
       return this.block.settings.block.options.hideIcons.value;
     },
     returnDirection() {
-      let pos = this.uipress.get_block_option(this.block, 'block', 'menuDirection');
+      let pos = this.get_block_option(this.block, 'block', 'menuDirection');
       if (!pos) {
         return 'uip-flex-column';
       }
@@ -515,7 +515,7 @@ export default {
       }
     },
     returnDropPos() {
-      let pos = this.uipress.get_block_option(this.block, 'block', 'menuDirection');
+      let pos = this.get_block_option(this.block, 'block', 'menuDirection');
       if (!pos) {
         return 'bottom-left';
       }

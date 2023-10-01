@@ -52,7 +52,7 @@ export default {
      * @since 3.2.13
      */
     postTypes() {
-      return this.uipress.get_block_option(this.block, 'block', 'activePostTypes');
+      return this.get_block_option(this.block, 'block', 'activePostTypes');
     },
 
     /**
@@ -61,7 +61,7 @@ export default {
      * @since 3.2.13
      */
     perPage() {
-      return this.uipress.get_block_option(this.block, 'block', 'postsPerPage');
+      return this.get_block_option(this.block, 'block', 'postsPerPage');
     },
 
     /**
@@ -70,7 +70,7 @@ export default {
      * @since 3.2.13
      */
     limitToAuthor() {
-      let limit = this.uipress.get_block_option(this.block, 'block', 'limitToAuthor');
+      let limit = this.get_block_option(this.block, 'block', 'limitToAuthor');
       if (!limit) return false;
       if (!this.isObject(limit)) return limit;
       if (limit.value) return limit.value;

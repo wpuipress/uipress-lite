@@ -199,7 +199,7 @@ export default {
       function traverse(arr) {
         for (let item of arr) {
           // Update the id
-          item.uid = self.uipress.createUID();
+          item.uid = self.createUID();
 
           // If the item has children, recursively traverse them
           if (item.content && item.content.length > 0) {
@@ -228,7 +228,7 @@ export default {
 
       // Create the new block
       let newBlock = JSON.parse(JSON.stringify(this.block));
-      newBlock.uid = this.uipress.createUID();
+      newBlock.uid = this.createUID();
       if (newBlock.content && newBlock.content.length > 0) {
         newBlock.content = this.uniqueIds(newBlock.content);
       }

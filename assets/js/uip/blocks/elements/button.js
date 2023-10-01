@@ -53,7 +53,6 @@ export default {
      */
     returnIcon() {
       let icon = this.get_block_option(this.block, 'block', 'iconSelect');
-      console.log(icon);
       if (!icon) return '';
       if (!this.isObject(icon)) return icon;
       if (icon.value) return icon.value;

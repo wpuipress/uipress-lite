@@ -18,7 +18,7 @@ export default {
       scrollOver: true,
     };
   },
-  inject: [ 'uipress', 'uiTemplate'],
+  inject: ['uipress', 'uiTemplate'],
   watch: {
     'uipApp.data.themeStyles': {
       handler(newValue, oldValue) {
@@ -176,7 +176,7 @@ export default {
      * @since 3.2.13
      */
     returnAdminPage() {
-      let url = this.uipress.checkNestedValue(this.uipData, ['dynamicOptions', 'viewadmin', 'value']);
+      let url = this.uipress.checkNestedValue(this.uipApp.data, ['dynamicOptions', 'viewadmin', 'value']);
       return url;
     },
   },
@@ -254,6 +254,7 @@ export default {
       const stopLoader = () => (this.loading = false);
       setTimeout(stopLoader, 2000);
     },
+
     /**
      * Checks if we should force reload the page
      *
@@ -264,6 +265,7 @@ export default {
       const forceReload = typeof UIPfrontEndReload !== 'undefined' && UIPfrontEndReload;
       return forceReload && this.uiTemplate.display !== 'builder' && !url.href.includes(this.returnAdminPage);
     },
+
     /**
      * Handles iframe content changes
      *
@@ -406,7 +408,7 @@ export default {
      * @since 3.2.13
      */
     updateStartPage() {
-      const { dynamicOptions } = this.uipData;
+      const { dynamicOptions } = this.uipApp.data;
       const adminLink = dynamicOptions.viewadmin.value;
 
       // If 'returnHomePage' is set and current page is an admin link
@@ -433,7 +435,7 @@ export default {
      * @since 3.2.13
      */
     getBlockOption(optNmae, propertyName, returnValue) {
-      const opt = this.uipress.get_block_option(this.block, 'block', optNmae, true);
+      const opt = this.get_block_option(this.block, 'block', optNmae, true);
 
       if (this.isObject(opt)) {
         return propertyName in opt ? opt[propertyName] : returnValue;

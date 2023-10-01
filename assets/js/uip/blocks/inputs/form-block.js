@@ -57,7 +57,7 @@ export default {
      * @since 3.2.13
      */
     getSubmitValue() {
-      const item = this.uipress.get_block_option(this.block, 'block', 'submitText', true);
+      const item = this.get_block_option(this.block, 'block', 'submitText', true);
       if (!item) return '';
 
       if (!this.isObject(item)) return item;
@@ -70,7 +70,7 @@ export default {
      * @since 3.2.13
      */
     getSuccessMessage() {
-      return this.uipress.get_block_option(this.block, 'block', 'successMessage');
+      return this.get_block_option(this.block, 'block', 'successMessage');
     },
     /**
      * Returns context / form data
@@ -95,7 +95,7 @@ export default {
      * @since 3.2.13
      */
     async getPrepopulate() {
-      let formOptions = this.uipress.get_block_option(this.block, 'block', 'submitAction');
+      let formOptions = this.get_block_option(this.block, 'block', 'submitAction');
 
       //Nothing to pre-populate
       if (formOptions.action == 'email' || formOptions.action == 'phpFunction') {
@@ -104,7 +104,7 @@ export default {
       }
 
       // Pre populate is disabled
-      if (!this.uipress.get_block_option(this.block, 'block', 'prePopulate')) {
+      if (!this.get_block_option(this.block, 'block', 'prePopulate')) {
         this.prePopulate = false;
         return;
       }
@@ -174,7 +174,7 @@ export default {
       }
 
       // Get form submit action
-      const formOptions = this.uipress.get_block_option(this.block, 'block', 'submitAction');
+      const formOptions = this.get_block_option(this.block, 'block', 'submitAction');
       const errorMessage = () => {
         this.uipress.notify(__('Configuration error', 'uipress-lite'), __('No php function supplied to send form data to', 'uipress-lite'), 'error');
       };
@@ -213,7 +213,7 @@ export default {
      * @since 3.2.13
      */
     handleRedirect() {
-      const formOptions = this.uipress.get_block_option(this.block, 'block', 'submitAction');
+      const formOptions = this.get_block_option(this.block, 'block', 'submitAction');
 
       // No redirect so exit early
       if (!formOptions.redirectURL.value) return;

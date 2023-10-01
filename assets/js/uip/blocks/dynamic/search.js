@@ -57,7 +57,7 @@ export default {
      * @since 3.2.13
      */
     getPostTypes() {
-      return this.uipress.get_block_option(this.block, 'block', 'searchPostTypes');
+      return this.get_block_option(this.block, 'block', 'searchPostTypes');
     },
 
     /**
@@ -66,7 +66,7 @@ export default {
      * @since 3.2.13
      */
     limitToAuthor() {
-      let limit = this.uipress.get_block_option(this.block, 'block', 'limitToAuthor');
+      let limit = this.get_block_option(this.block, 'block', 'limitToAuthor');
       if (!limit) return false;
       if (!this.isObject(limit)) return limit;
       if (limit.value) return limit.value;

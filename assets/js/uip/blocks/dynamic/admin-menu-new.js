@@ -216,7 +216,7 @@ const TopLevelItem = {
     subMenuStyle() {
       if (this.collapsed) return 'hover';
 
-      let style = this.uipress.get_block_option(this.block, 'block', 'subMenuStyle');
+      let style = this.get_block_option(this.block, 'block', 'subMenuStyle');
       if (!this.isObject(style)) return 'dynamic';
       if (style.value) return style.value;
       return 'dynamic';
@@ -228,7 +228,7 @@ const TopLevelItem = {
      * @since 3.2.13
      */
     subMenuCustomIcon() {
-      let icon = this.uipress.get_block_option(this.block, 'block', 'subMenuIcon');
+      let icon = this.get_block_option(this.block, 'block', 'subMenuIcon');
       if (!this.isObject(icon)) return false;
       if (icon.value) return icon.value;
       return false;
@@ -358,7 +358,7 @@ const DrillDown = {
      * @since 3.2.13
      */
     hasMenuSearch() {
-      const showSearch = this.uipress.get_block_option(this.block, 'block', 'showSearch');
+      const showSearch = this.get_block_option(this.block, 'block', 'showSearch');
       if (this.isObject(showSearch)) return showSearch.value;
       return showSearch;
     },
@@ -370,7 +370,7 @@ const DrillDown = {
      * @since 3.2.13
      */
     hasMenuCollapse() {
-      const menuCollapse = this.uipress.get_block_option(this.block, 'block', 'menuCollapse');
+      const menuCollapse = this.get_block_option(this.block, 'block', 'menuCollapse');
       if (this.isObject(menuCollapse)) return menuCollapse.value;
       return menuCollapse;
     },
@@ -551,7 +551,7 @@ export default {
      */
     subMenuStyle() {
       if (this.collapsed) return 'hover';
-      let style = this.uipress.get_block_option(this.block, 'block', 'subMenuStyle');
+      let style = this.get_block_option(this.block, 'block', 'subMenuStyle');
       if (!this.isObject(style)) return 'dynamic';
       if (style.value) return style.value;
       return 'dynamic';
@@ -563,7 +563,7 @@ export default {
      * @since 3.2.13
      */
     subMenuCustomIcon() {
-      let icon = this.uipress.get_block_option(this.block, 'block', 'subMenuIcon');
+      let icon = this.get_block_option(this.block, 'block', 'subMenuIcon');
       if (!this.isObject(icon)) return false;
       if (icon.value) return icon.value;
       return false;
@@ -576,7 +576,7 @@ export default {
      * @since 3.2.13
      */
     autoLoadIsDisabled() {
-      const disbaled = this.uipress.get_block_option(this.block, 'block', 'loadOnClick');
+      const disbaled = this.get_block_option(this.block, 'block', 'loadOnClick');
       if (this.isObject(disbaled)) return disbaled.value;
       return disbaled;
     },
@@ -588,7 +588,7 @@ export default {
      * @since 3.2.13
      */
     hasMenuCollapse() {
-      const menuCollapse = this.uipress.get_block_option(this.block, 'block', 'menuCollapse');
+      const menuCollapse = this.get_block_option(this.block, 'block', 'menuCollapse');
       if (this.isObject(menuCollapse)) return menuCollapse.value;
       return menuCollapse;
     },
@@ -600,7 +600,7 @@ export default {
      * @since 3.2.13
      */
     hasMenuSearch() {
-      const showSearch = this.uipress.get_block_option(this.block, 'block', 'showSearch');
+      const showSearch = this.get_block_option(this.block, 'block', 'showSearch');
       if (this.isObject(showSearch)) return showSearch.value;
       return showSearch;
     },
@@ -611,7 +611,7 @@ export default {
      * @since 3.2.13
      */
     returnDropdownPosition() {
-      const pos = this.uipress.get_block_option(this.block, 'block', 'dropdownPosition');
+      const pos = this.get_block_option(this.block, 'block', 'dropdownPosition');
       if (!this.isObject(pos)) return 'right top';
 
       if (pos.value) return pos.value;

@@ -48,7 +48,7 @@ export default {
      * @since 3.2.13
      */
     returnAutoDetect() {
-      const auto = this.uipress.get_block_option(this.block, 'block', 'prefersColorScheme', true);
+      const auto = this.get_block_option(this.block, 'block', 'prefersColorScheme', true);
       if (!auto) return;
 
       if (!this.isObject(auto)) return auto;

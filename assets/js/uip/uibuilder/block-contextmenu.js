@@ -486,7 +486,7 @@ export default {
 
       //Duplicate it
       let item = Object.assign({}, this.uiTemplate.copied);
-      item.uid = this.uipress.createUID();
+      item.uid = this.createUID();
       item.options = [];
       item.settings = JSON.parse(JSON.stringify(item.settings));
 

@@ -304,7 +304,7 @@ export default {
 
       delete copiedConatiner.path;
 
-      copiedConatiner.uid = this.uipress.createUID();
+      copiedConatiner.uid = this.createUID();
       copiedConatiner.name = __('Canvas', 'uipress-lite');
 
       this.uipress.createNestedObject(copiedConatiner, ['settings', 'style', 'options', 'flexLayout', 'value']);

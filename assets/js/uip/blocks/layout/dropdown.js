@@ -16,7 +16,7 @@ export default {
      * @since 3.2.13
      */
     returnText() {
-      const item = this.uipress.get_block_option(this.block, 'block', 'buttonText', true);
+      const item = this.get_block_option(this.block, 'block', 'buttonText', true);
       if (!item) return '';
 
       if (!this.isObject(item)) return item;
@@ -41,7 +41,7 @@ export default {
      * @since 3.2.13
      */
     getShortcutValue() {
-      const shortcut = this.uipress.get_block_option(this.block, 'block', 'keyboardShortcut');
+      const shortcut = this.get_block_option(this.block, 'block', 'keyboardShortcut');
       if (!this.isObject(shortcut)) return;
 
       // Shortcut is not enabled so bail
@@ -60,7 +60,7 @@ export default {
      *  @since 3.2.13
      */
     returnDropPosition() {
-      let dropPosition = this.uipress.get_block_option(this.block, 'block', 'dropDirection');
+      let dropPosition = this.get_block_option(this.block, 'block', 'dropDirection');
       if (this.isObject(dropPosition)) return dropPosition.value;
 
       if (!dropPosition) return 'bottom left';
@@ -73,7 +73,7 @@ export default {
      * @since 3.2.13
      */
     returnClasses() {
-      const position = this.uipress.get_block_option(this.block, 'block', 'iconPosition');
+      const position = this.get_block_option(this.block, 'block', 'iconPosition');
       if (!position) return;
       if (!this.isObject(position) && position == 'right') return 'uip-flex-reverse';
       if (position.value && position.value == 'right') return 'uip-flex-reverse';
@@ -85,7 +85,7 @@ export default {
      * @since 3.2.13
      */
     returnIcon() {
-      let icon = this.uipress.get_block_option(this.block, 'block', 'iconSelect');
+      let icon = this.get_block_option(this.block, 'block', 'iconSelect');
       if (!icon) return '';
       if (!this.isObject(icon)) return icon;
       if (icon.value) return icon.value;

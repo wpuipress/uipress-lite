@@ -22,7 +22,7 @@ export default {
      * @since 3.2.13
      */
     returnPlaceHolder() {
-      const item = this.uipress.get_block_option(this.block, 'block', 'inputPlaceHolder', true);
+      const item = this.get_block_option(this.block, 'block', 'inputPlaceHolder', true);
       if (!item) return '';
 
       if (!this.isObject(item)) return item;
@@ -54,7 +54,7 @@ export default {
      * @since 3.2.13
      */
     returnLabel() {
-      const item = this.uipress.get_block_option(this.block, 'block', 'inputLabel', true);
+      const item = this.get_block_option(this.block, 'block', 'inputLabel', true);
       if (!item) return '';
 
       if (!this.isObject(item)) return item;
@@ -68,7 +68,7 @@ export default {
      * @since 3.2.13
      */
     returnRequired() {
-      let required = this.uipress.get_block_option(this.block, 'block', 'inputRequired');
+      let required = this.get_block_option(this.block, 'block', 'inputRequired');
       if (!this.isObject(required)) return false;
       if (required.value) return required.value;
       return required;
@@ -79,7 +79,7 @@ export default {
      * @since 3.2.13
      */
     returnName() {
-      return this.uipress.get_block_option(this.block, 'block', 'inputName');
+      return this.get_block_option(this.block, 'block', 'inputName');
     },
     /**
      * Returns select options
@@ -87,7 +87,7 @@ export default {
      * @since 3.2.13
      */
     returnOptions() {
-      const options = this.uipress.get_block_option(this.block, 'block', 'selectOptions');
+      const options = this.get_block_option(this.block, 'block', 'selectOptions');
       if (Array.isArray(options.options)) return options.options;
       return [];
     },

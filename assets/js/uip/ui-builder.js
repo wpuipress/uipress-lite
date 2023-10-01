@@ -314,7 +314,19 @@ app.component('uip-draggable', VueDraggableNext);
  * @since 3.2.13
  */
 
-import { ensureNestedObject, hasNestedPath, prepareJSON, deepClone, copyToClipboard, isObject, isUnDefined, get_block_option } from './v3.5/utility/functions.min.js?ver=3.2.12';
+import {
+  ensureNestedObject,
+  hasNestedPath,
+  prepareJSON,
+  deepClone,
+  copyToClipboard,
+  isObject,
+  isUnDefined,
+  get_block_option,
+  createUID,
+  sendServerRequest,
+} from './v3.5/utility/functions.min.js?ver=3.2.12';
+
 app.config.globalProperties.ensureNestedObject = ensureNestedObject;
 app.config.globalProperties.hasNestedPath = hasNestedPath;
 app.config.globalProperties.prepareJSON = prepareJSON;
@@ -323,6 +335,8 @@ app.config.globalProperties.copyToClipboard = copyToClipboard;
 app.config.globalProperties.isObject = isObject;
 app.config.globalProperties.isUnDefined = isUnDefined;
 app.config.globalProperties.get_block_option = get_block_option;
+app.config.globalProperties.createUID = createUID;
+app.config.globalProperties.sendServerRequest = sendServerRequest;
 
 app.config.globalProperties.uipApp = reactive({
   scrolling: false,

@@ -115,7 +115,7 @@ export default {
       }
       if (!Array.isArray(this.insertArea)) return;
       let item = this.clone(block);
-      item.uid = this.uipress.createUID();
+      item.uid = this.createUID();
       this.insertArea.push(item);
       await nextTick();
       const addedBlock = this.insertArea[this.insertArea.length - 1];

@@ -16,7 +16,7 @@ export default {
      * @since 3.2.13
      */
     returnText() {
-      const item = this.uipress.get_block_option(this.block, 'block', 'paragraph', true);
+      const item = this.get_block_option(this.block, 'block', 'paragraph', true);
       if (!item) return '';
 
       if (!this.isObject(item)) return item;

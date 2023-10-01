@@ -46,7 +46,7 @@ export default {
      * @sine 3.2.12
      */
     returnKey() {
-      let key = this.uipress.get_block_option(this.block, 'block', 'apiKey');
+      let key = this.get_block_option(this.block, 'block', 'apiKey');
       return key;
     },
 
@@ -56,7 +56,7 @@ export default {
      * @sine 3.2.12
      */
     returnWelcome() {
-      let welcome = this.uipress.get_block_option(this.block, 'block', 'welcomeMessage');
+      let welcome = this.get_block_option(this.block, 'block', 'welcomeMessage');
       return welcome;
     },
     /**
@@ -65,7 +65,7 @@ export default {
      * @sine 3.2.12
      */
     returnSystem() {
-      let system = this.uipress.get_block_option(this.block, 'block', 'systemMessage');
+      let system = this.get_block_option(this.block, 'block', 'systemMessage');
       return system;
     },
 
@@ -75,7 +75,7 @@ export default {
      * @sine 3.2.12
      */
     returnModel() {
-      let model = this.uipress.get_block_option(this.block, 'block', 'chatModel');
+      let model = this.get_block_option(this.block, 'block', 'chatModel');
       if (!model) return 'gpt-3.5-turbo';
       return model;
     },

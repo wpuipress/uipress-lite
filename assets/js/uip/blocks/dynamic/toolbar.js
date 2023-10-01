@@ -50,7 +50,7 @@ export default {
      * @since 3.2.12
      */
     returnDropdownPosition() {
-      let update = this.uipress.get_block_option(this.block, 'block', 'dropdownPosition');
+      let update = this.get_block_option(this.block, 'block', 'dropdownPosition');
       if (this.isObject(update)) return update.value;
 
       if (!update) return 'bottom left';
@@ -63,7 +63,7 @@ export default {
      * @since 3.2.13
      */
     returnSubDropdownPosition() {
-      let update = this.uipress.get_block_option(this.block, 'block', 'subDropdownPosition');
+      let update = this.get_block_option(this.block, 'block', 'subDropdownPosition');
       if (this.isObject(update)) return update.value;
 
       if (!update) return 'right top';
@@ -327,7 +327,7 @@ export default {
      * @since 3.2.13
      */
     customIcon(id) {
-      const icons = this.uipress.get_block_option(this.block, 'block', 'editToolbarItems');
+      const icons = this.get_block_option(this.block, 'block', 'editToolbarItems');
 
       if (this.isObject(icons) && Object.hasOwn(icons, id) && icons[id].icon) {
         return icons[id].icon;
@@ -344,7 +344,7 @@ export default {
      * @since 3.2.13
      */
     customTitle(id) {
-      const titles = this.uipress.get_block_option(this.block, 'block', 'editToolbarItems');
+      const titles = this.get_block_option(this.block, 'block', 'editToolbarItems');
 
       if (this.isObject(titles) && Object.hasOwn(titles, id) && titles[id].title) {
         return titles[id].title;

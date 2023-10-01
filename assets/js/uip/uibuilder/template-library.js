@@ -327,7 +327,7 @@ export default {
      */
     duplicateBlock(block) {
       const item = { ...block };
-      item.uid = this.uipress.createUID();
+      item.uid = this.createUID();
       item.options = [];
       item.settings = JSON.parse(JSON.stringify(item.settings));
 
@@ -348,7 +348,7 @@ export default {
     duplicateChildren(content) {
       return content.map((block) => {
         const item = { ...block };
-        item.uid = this.uipress.createUID();
+        item.uid = this.createUID();
         item.settings = JSON.parse(JSON.stringify(item.settings));
 
         if (item.content) {

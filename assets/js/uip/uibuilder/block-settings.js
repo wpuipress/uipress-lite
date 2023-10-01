@@ -157,7 +157,7 @@ const NewPreset = {
       this.ensureNestedObject(this.block, 'settings', part);
       const presetStyle = this.deepClone(this.block.settings[part]);
 
-      const uid = this.uipress.createUID();
+      const uid = this.createUID();
       presets[uid] = {
         preset: presetStyle,
         name: this.newName,

@@ -106,7 +106,7 @@ export default {
      * @since 3.2.13
      */
     limitToAuthor() {
-      let limit = this.uipress.get_block_option(this.block, 'block', 'limitToAuthor');
+      let limit = this.get_block_option(this.block, 'block', 'limitToAuthor');
       if (!limit) return false;
       if (!this.isObject(limit)) return limit;
       if (limit.value) return limit.value;
@@ -119,7 +119,7 @@ export default {
      * @since 3.2.13
      */
     searchDisabled() {
-      let disabled = this.uipress.get_block_option(this.block, 'block', 'searchDisabled');
+      let disabled = this.get_block_option(this.block, 'block', 'searchDisabled');
       if (!disabled) return false;
       if (!this.isObject(disabled)) return disabled;
       if (disabled.value) return disabled.value;
@@ -148,7 +148,7 @@ export default {
       if (this.loading) return;
 
       this.loading = true;
-      this.postTypes = this.uipress.get_block_option(this.block, 'block', 'activePostTypes');
+      this.postTypes = this.get_block_option(this.block, 'block', 'activePostTypes');
 
       //Build form data for fetch request
       let formData = new FormData();

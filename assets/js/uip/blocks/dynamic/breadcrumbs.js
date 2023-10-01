@@ -27,7 +27,7 @@ export default {
      * @since 3.2.13
      */
     returnIcon() {
-      let icon = this.uipress.get_block_option(this.block, 'block', 'breadIcon');
+      let icon = this.get_block_option(this.block, 'block', 'breadIcon');
       if (!icon) return 'chevron_right';
       if (!this.isObject(icon)) return icon;
       if (icon.value) return icon.value;

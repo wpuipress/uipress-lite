@@ -35,7 +35,7 @@ export default {
      * @since 3.2.13
      */
     returnTabs() {
-      const tabs = this.uipress.get_block_option(this.block, 'block', 'tabs', true);
+      const tabs = this.get_block_option(this.block, 'block', 'tabs', true);
       if (!this.isObject(tabs)) return [];
       if (tabs.tabs) return tabs.tabs;
       return [];
@@ -177,7 +177,7 @@ export default {
       //Loop through tabs and ensure they have content areas
       for (const [index, tab] of tabs.entries()) {
         // Ensure the tab has an id
-        const tabID = tab.id ? tab.id : this.uipress.createUID();
+        const tabID = tab.id ? tab.id : this.createUID();
         tab.id = tabID;
 
         // Get tabs content

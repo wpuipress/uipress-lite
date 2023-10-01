@@ -16,7 +16,7 @@ export default {
      * @since 3.2.13
      */
     returnText() {
-      let item = this.uipress.get_block_option(this.block, 'block', 'headingText', true);
+      let item = this.get_block_option(this.block, 'block', 'headingText', true);
       if (!item) return '';
 
       if (!this.isObject(item)) return item;
