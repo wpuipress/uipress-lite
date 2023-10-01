@@ -39,7 +39,7 @@ export default {
       },
     };
   },
-  inject: ['uipData', 'uiTemplate', 'uipress'],
+  inject: [ 'uiTemplate', 'uipress'],
   watch: {
     content: {
       handler(newValue, oldValue) {
@@ -96,7 +96,7 @@ export default {
      */
     inject_block_presets(block) {
       const blockModule = block.moduleName;
-      const allBlocks = this.uipData.blocks;
+      const allBlocks = this.uipApp.data.blocks;
 
       // Find the originally registered block's enabled settings
       const masterblockIndex = allBlocks.findIndex((block) => block.moduleName === blockModule);

@@ -11,7 +11,7 @@ const EditPreset = {
   components: {
     Confirm: defineAsyncComponent(() => import('../v3.5/utility/confirm.min.js?ver=3.2.12')),
   },
-  inject: ['uipData', 'uipress'],
+  inject: ['uipress'],
   props: {
     preset: [String, Boolean],
     block: Object,
@@ -47,7 +47,7 @@ const EditPreset = {
      */
     setName() {
       const part = this.activePart == 'root' ? 'style' : this.activePart;
-      const presets = this.uipData.options.block_preset_styles;
+      const presets = this.uipApp.data.options.block_preset_styles;
 
       if (!this.presetID) return false;
       if (!this.isObject(presets)) return;
@@ -70,8 +70,8 @@ const EditPreset = {
       });
 
       if (confirm) {
-        if (!this.uipData.options.block_preset_styles) return;
-        delete this.uipData.options.block_preset_styles[this.presetID];
+        if (!this.uipApp.data.options.block_preset_styles) return;
+        delete this.uipApp.data.options.block_preset_styles[this.presetID];
         this.$emit('go-back');
       }
     },
@@ -82,8 +82,8 @@ const EditPreset = {
      * @since 3.2.13
      */
     updatePreset() {
-      if (!this.uipData.options.block_preset_styles) return;
-      this.uipData.options.block_preset_styles[this.presetID].name = this.presetName;
+      if (!this.uipApp.data.options.block_preset_styles) return;
+      this.uipApp.data.options.block_preset_styles[this.presetID].name = this.presetName;
       this.$emit('go-back');
     },
   },
@@ -122,7 +122,7 @@ const EditPreset = {
 const NewPreset = {
   emits: ['update', 'go-back'],
   components: {},
-  inject: ['uipData', 'uipress'],
+  inject: ['uipress'],
   props: {
     preset: [String, Boolean],
     block: Object,
@@ -150,7 +150,7 @@ const NewPreset = {
      * @since 3.2.13
      */
     newPreset() {
-      const maybePresets = this.uipData.options.block_preset_styles;
+      const maybePresets = this.uipApp.data.options.block_preset_styles;
       let presets = this.isObject(maybePresets) ? maybePresets : {};
 
       const part = this.activePart == 'root' ? 'style' : this.activePart;
@@ -163,7 +163,7 @@ const NewPreset = {
         name: this.newName,
       };
 
-      this.uipData.options.block_preset_styles = { ...presets };
+      this.uipApp.data.options.block_preset_styles = { ...presets };
       this.newName = '';
       this.$emit('go-back');
     },
@@ -195,7 +195,7 @@ const NewPreset = {
 const PresetList = {
   emits: ['update', 'request-screen'],
   components: {},
-  inject: ['uipData', 'uipress'],
+  inject: ['uipress'],
   props: {
     preset: [String, Boolean],
     block: Object,
@@ -221,7 +221,7 @@ const PresetList = {
      * @since 3.2.13
      */
     returnPresets() {
-      const maybePresets = this.uipData.options.block_preset_styles;
+      const maybePresets = this.uipApp.data.options.block_preset_styles;
       const search = this.search.toLowerCase();
 
       let presets = this.isObject(maybePresets) ? maybePresets : {};
@@ -334,7 +334,7 @@ const PresetList = {
  */
 const StylePresets = {
   emits: ['update'],
-  inject: ['uipData', 'uipress'],
+  inject: ['uipress'],
   components: {
     screenControl: defineAsyncComponent(() => import('../v3.5/utility/screen-control.min.js?ver=3.2.12')),
     PresetList: PresetList,
@@ -362,7 +362,7 @@ const StylePresets = {
      *
      * @since 3.2.13
      */
-    'uipData.options.block_preset_styles': {
+    'uipApp.data.options.block_preset_styles': {
       handler() {
         this.saveStylePresets();
       },
@@ -405,7 +405,7 @@ const StylePresets = {
     returnCurrentPresetName() {
       const part = this.activePart == 'root' ? 'style' : this.activePart;
       const presetID = this.hasNestedPath(this.block, 'settings', part, 'preset');
-      const presets = this.uipData.options.block_preset_styles;
+      const presets = this.uipApp.data.options.block_preset_styles;
 
       if (!presetID) return false;
       if (!this.isObject(presets)) return;
@@ -429,7 +429,7 @@ const StylePresets = {
      * @param {String} preset - the selected preset
      */
     async saveStylePresets() {
-      const options = this.prepareJSON(this.uipData.options.block_preset_styles);
+      const options = this.prepareJSON(this.uipApp.data.options.block_preset_styles);
 
       let formData = new FormData();
       formData.append('action', 'uip_save_site_option');
@@ -546,7 +546,7 @@ const StylePresets = {
 const BlockParts = {
   emits: ['update'],
   components: {},
-  inject: ['uipData'],
+
   props: {
     block: Object,
     activePart: String,
@@ -614,7 +614,7 @@ const BlockParts = {
      */
     returnBlockParts() {
       const blockName = this.block.moduleName;
-      const allBlocks = this.uipData.blocks;
+      const allBlocks = this.uipApp.data.blocks;
       const blockIndex = allBlocks.findIndex((block) => block.moduleName == blockName);
       const blockInfo = allBlocks[blockIndex];
       const blockSettings = [...blockInfo.optionsEnabled];
@@ -1095,7 +1095,7 @@ const BlockStyleHandler = {
 };
 
 export default {
-  inject: ['uipData', 'uipress', 'uiTemplate'],
+  inject: ['uipress', 'uiTemplate'],
   components: {
     QueryBuilder: defineAsyncComponent(() => import('../options/query-builder.min.js?ver=3.2.12')),
     responsiveControls: defineAsyncComponent(() => import('../options/responsive.min.js?ver=3.2.12')),
@@ -1180,7 +1180,7 @@ export default {
      */
     returnBlockOptions() {
       const blockModule = this.block.moduleName;
-      const allBlocks = this.uipData.blocks;
+      const allBlocks = this.uipApp.data.blocks;
 
       // Find the originally registered block's enabled settings
       const masterblockIndex = allBlocks.findIndex((block) => block.moduleName === blockModule);
@@ -1224,8 +1224,8 @@ export default {
       if (tab) this.section = tab;
 
       // Get block presets
-      if (this.uipData.options.block_preset_styles && this.isObject(this.uipData.options.block_preset_styles)) {
-        this.block_preset_styles = this.uipData.options.block_preset_styles;
+      if (this.uipApp.data.options.block_preset_styles && this.isObject(this.uipApp.data.options.block_preset_styles)) {
+        this.block_preset_styles = this.uipApp.data.options.block_preset_styles;
       }
 
       await nextTick();
@@ -1287,7 +1287,7 @@ export default {
     returnBlockStylePart(styleName) {
       const part = this.activePart == 'root' ? 'style' : this.activePart;
       const presetID = this.hasNestedPath(this.block, 'settings', part, 'preset');
-      const presets = this.uipData.options.block_preset_styles;
+      const presets = this.uipApp.data.options.block_preset_styles;
 
       // Return preset style if set and exists
       if (presetID && this.isObject(presets)) {
@@ -1326,7 +1326,7 @@ export default {
       if (!blockOptions) return;
 
       // Get the option key
-      const key = option.uniqueKey ? option.uniqueKey : option;
+      const key = option.uniqueKey ? option.uniqueKey : option.option;
 
       // Key doesn't exist
       if (!(key in blockOptions)) return;
@@ -1343,7 +1343,7 @@ export default {
      */
     handleBlockSettingUpdate(option, data) {
       // Get the option key
-      const key = option.uniqueKey ? option.uniqueKey : option;
+      const key = option.uniqueKey ? option.uniqueKey : option.option;
 
       this.ensureNestedObject(this.block, 'settings', 'block', 'options', key);
       this.block.settings.block.options[key].value = data;

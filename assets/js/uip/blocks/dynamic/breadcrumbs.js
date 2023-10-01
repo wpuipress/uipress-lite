@@ -8,12 +8,12 @@ export default {
   data: function () {
     return {
       breadCrumbs: [
-        { name: this.uipData.options.site_name, url: this.uipData.options.domain },
-        { name: __('Admin', 'uipress-lite'), url: this.uipData.options.adminURL },
+        { name: this.uipApp.data.options.site_name, url: this.uipApp.data.options.domain },
+        { name: __('Admin', 'uipress-lite'), url: this.uipApp.data.options.adminURL },
       ],
     };
   },
-  inject: ['uipress', 'uipData'],
+  inject: ['uipress'],
   mounted() {
     this.mountWatchers();
   },

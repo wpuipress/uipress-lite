@@ -4,7 +4,7 @@ export default {
   components: {
     colorPicker: defineAsyncComponent(() => import('./color-picker.min.js?ver=0.0.1')),
   },
-  inject: ['uipData'],
+  
   props: {
     value: Object,
     returnData: [Function, Boolean],
@@ -57,7 +57,7 @@ export default {
      *
      * @since 3.2.13
      */
-    'uipData.userPrefs.darkTheme': {
+    'uipApp.data.userPrefs.darkTheme': {
       handler() {
         this.updateDefaultColorState();
       },
@@ -98,8 +98,8 @@ export default {
      * @since 3.2.13
      */
     updateDefaultColorState() {
-      if (!this.uipData.userPrefs.darkTheme) this.mode = 'value';
-      if (this.uipData.userPrefs.darkTheme) this.mode = 'darkValue';
+      if (!this.uipApp.data.userPrefs.darkTheme) this.mode = 'value';
+      if (this.uipApp.data.userPrefs.darkTheme) this.mode = 'darkValue';
     },
     /**
      * Cleans variable name

@@ -14,7 +14,7 @@ export default {
       templateID: this.$route.params.templateID,
       mode: 'light',
       templateAppliestoCurrentUser: false,
-      menu: this.uipData.adminMenu.menu,
+      menu: this.uipApp.data.adminMenu.menu,
       ui: {
         sideBar: {
           activeTab: 'settings',
@@ -90,7 +90,7 @@ export default {
       },
     };
   },
-  inject: ['uipData', 'uipress', 'uiTemplate'],
+  inject: [ 'uipress', 'uiTemplate'],
   mounted: function () {
     this.loading = false;
   },
@@ -216,7 +216,7 @@ export default {
     },
     returnPageLink() {
       this.formatPageName();
-      return this.uipData.options.adminURL + 'admin.php?page=' + this.formatPageName() + '-uiptp-' + this.$route.params.templateID;
+      return this.uipApp.data.options.adminURL + 'admin.php?page=' + this.formatPageName() + '-uiptp-' + this.$route.params.templateID;
     },
     formatPageName() {
       let title = this.uiTemplate.globalSettings.name;
@@ -311,7 +311,7 @@ export default {
                 </select>
                 
                 <!--Subsites multisite only-->
-                <template v-if="uipData.options.multisite && uipData.options.networkActivated && uipData.options.primarySite">
+                <template v-if="uipApp.data.options.multisite && uipApp.data.options.networkActivated && uipApp.data.options.primarySite">
                   <div class="uip-text-muted uip-flex uip-flex-center uip-text-s uip-h-30 uip-gap-xs">
                     <span>{{ui.strings.applyToSubsites}}</span>
                   </div>
@@ -390,7 +390,7 @@ export default {
               <div class="uip-border-top"></div>
               
               <!-- Dynamic settings -->
-              <template v-for="group in uipData.templateGroupOptions">
+              <template v-for="group in uipApp.data.templateGroupOptions">
                 <accordion :openOnTick="false" :padding="true">
                   <template v-slot:title>
                     <div class="uip-flex-grow uip-flex uip-gap-xxs uip-flex-center uip-text-bold">

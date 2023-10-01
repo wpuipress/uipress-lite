@@ -6,7 +6,7 @@ export default {
   },
   data() {
     return {
-      toolbar: this.uipData.toolbar,
+      toolbar: this.uipApp.data.toolbar,
       selected: [],
       strings: {
         selectItems: __('Hidden toolbar items', 'uipress-lite'),
@@ -14,7 +14,7 @@ export default {
       },
     };
   },
-  inject: ['uipData', 'uipress'],
+  inject: [ 'uipress'],
   watch: {
     selected: {
       handler(newValue, oldValue) {

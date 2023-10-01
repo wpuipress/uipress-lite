@@ -10,7 +10,7 @@ export default {
       darkToggle: this.returnSetting,
     };
   },
-  inject: ['uipData', 'uipress'],
+  inject: [ 'uipress'],
   watch: {
     'block.settings.block.options.prefersColorScheme.value': {
       handler(newValue, oldValue) {
@@ -18,7 +18,7 @@ export default {
       },
       deep: true,
     },
-    'uipData.userPrefs.darkTheme': {
+    'uipApp.data.userPrefs.darkTheme': {
       handler(newValue, oldValue) {
         this.setTheme();
         this.uipress.saveUserPreference('darkTheme', newValue, false);
@@ -37,7 +37,7 @@ export default {
      * @since 3.2.13
      */
     returnSetting() {
-      const userPref = this.uipData.userPrefs.darkTheme;
+      const userPref = this.uipApp.data.userPrefs.darkTheme;
       if (userPref) return true;
       return false;
     },
@@ -62,7 +62,7 @@ export default {
      * @since 3.2.13
      */
     setTheme() {
-      const darkTheme = this.uipData.userPrefs.darkTheme;
+      const darkTheme = this.uipApp.data.userPrefs.darkTheme;
       const theme = darkTheme ? 'dark' : 'light';
 
       document.documentElement.setAttribute('data-theme', theme);
@@ -92,13 +92,13 @@ export default {
       if (!autoEnabled) return;
 
       const state = userPrefersDark ? true : false;
-      this.uipData.userPrefs.darkTheme = state;
+      this.uipApp.data.userPrefs.darkTheme = state;
     },
   },
   template: `
     
           <label class="uip-dark-switch uip-overflow-hidden">
-            <input type="checkbox" v-model='uipData.userPrefs.darkTheme' >
+            <input type="checkbox" v-model='uipApp.data.userPrefs.darkTheme' >
             <span class="uip-slider"></span>
           </label>
           

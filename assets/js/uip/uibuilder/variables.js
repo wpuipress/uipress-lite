@@ -7,7 +7,7 @@ export default {
     contextmenu: defineAsyncComponent(() => import('../v3.5/utility/contextmenu.min.js')),
   },
   props: {},
-  inject: ['uipData', 'uipress'],
+  inject: [ 'uipress'],
   data: function () {
     return {
       loading: true,
@@ -61,7 +61,7 @@ export default {
      *
      * @since 3.2.13
      */
-    'uipData.themeStyles': {
+    'uipApp.data.themeStyles': {
       handler() {
         this.saveStyles();
       },
@@ -78,8 +78,8 @@ export default {
      * @since 3.2.13
      */
     returnActiveMode() {
-      if (!this.uipData.userPrefs.darkTheme) return 'value';
-      if (this.uipData.userPrefs.darkTheme) return 'darkValue';
+      if (!this.uipApp.data.userPrefs.darkTheme) return 'value';
+      if (this.uipApp.data.userPrefs.darkTheme) return 'darkValue';
     },
     /**
      * Returns a list of filtered variables for type color
@@ -88,7 +88,7 @@ export default {
      * @since 3.2.13
      */
     returnColorVars() {
-      return Object.values(this.uipData.themeStyles).filter((item) => item.type === 'color');
+      return Object.values(this.uipApp.data.themeStyles).filter((item) => item.type === 'color');
     },
     /**
      * Returns a list of filtered variables for type units
@@ -97,7 +97,7 @@ export default {
      * @since 3.2.13
      */
     returnUnitsVars() {
-      return Object.values(this.uipData.themeStyles).filter((item) => item.type === 'units');
+      return Object.values(this.uipApp.data.themeStyles).filter((item) => item.type === 'units');
     },
     /**
      * Returns a list of filtered variables for type font
@@ -106,7 +106,7 @@ export default {
      * @since 3.2.13
      */
     returnFontsVars() {
-      return Object.values(this.uipData.themeStyles).filter((item) => item.type === 'font');
+      return Object.values(this.uipApp.data.themeStyles).filter((item) => item.type === 'font');
     },
   },
   methods: {
@@ -118,7 +118,7 @@ export default {
      */
     async saveStyles() {
       // Format styles
-      let stylesJson = JSON.stringify(this.uipData.themeStyles);
+      let stylesJson = JSON.stringify(this.uipApp.data.themeStyles);
 
       // Build form data for fetch request
       let formData = new FormData();
@@ -214,7 +214,7 @@ export default {
      * @since 3.2.13
      */
     deleteVar(item) {
-      delete this.uipData.themeStyles[item.name];
+      delete this.uipApp.data.themeStyles[item.name];
       this.uipress.notify(__('Variable deleted', 'uipress-lite'), '', 'success', true);
     },
     /**
@@ -309,7 +309,7 @@ export default {
     addNewColorVar(d) {
       let newCol = { name: '', type: 'color', value: '', darkValue: '', user: true };
       newCol = { ...newCol, ...d };
-      this.uipData.themeStyles[newCol.name] = newCol;
+      this.uipApp.data.themeStyles[newCol.name] = newCol;
       this.$refs.newcolourdrop.close();
     },
     /**
@@ -321,7 +321,7 @@ export default {
     addNewUnitVar() {
       let newCol = { name: '', type: 'units', value: '', darkValue: '', user: true };
       newCol = { ...newCol, ...this.newUnitItem };
-      this.uipData.themeStyles[newCol.name] = newCol;
+      this.uipApp.data.themeStyles[newCol.name] = newCol;
       this.$refs.newunitdrop.close();
       this.newUnitItem = {};
     },
@@ -334,7 +334,7 @@ export default {
     addNewTextVar() {
       let newCol = { name: '', type: 'font', value: '', darkValue: '', user: true };
       newCol = { ...newCol, ...this.newUnitItem };
-      this.uipData.themeStyles[newCol.name] = newCol;
+      this.uipApp.data.themeStyles[newCol.name] = newCol;
       this.$refs.newtextdrop.close();
       this.newUnitItem = {};
     },

@@ -25,7 +25,7 @@ export default {
       },
     };
   },
-  inject: ['uipData', 'uipress'],
+  inject: [ 'uipress'],
   mounted() {
     this.loading = false;
     this.getSettings();
@@ -99,7 +99,7 @@ export default {
       });
     },
     injectSavedStyles(styles) {
-      let themeStyles = this.uipData.themeStyles;
+      let themeStyles = this.uipApp.data.themeStyles;
       for (let key in themeStyles) {
         let item = themeStyles[key];
 
@@ -116,7 +116,7 @@ export default {
       for (let key in styles) {
         let item = styles[key];
         if (item.user) {
-          this.uipData.themeStyles[item.name] = item;
+          this.uipApp.data.themeStyles[item.name] = item;
         }
       }
     },
@@ -308,7 +308,7 @@ export default {
               
               <!--Searching Dynamic settings -->
               <div  v-if="search != ''" class="uip-padding-xs uip-flex uip-flex-column uip-row-gap-m">
-                <template v-for="group in uipData.globalGroupOptions">
+                <template v-for="group in uipApp.data.globalGroupOptions">
                     
                       <!--Loop through group settings -->
                       
@@ -343,7 +343,7 @@ export default {
               
               
               <!-- Dynamic settings -->
-              <template v-else v-for="(group, index) in uipData.globalGroupOptions">
+              <template v-else v-for="(group, index) in uipApp.data.globalGroupOptions">
                 <accordion :openOnTick="false" v-if="conditionalShowGroup(group)">
                   <template v-slot:title>
                     <div class="uip-flex-grow uip-flex uip-gap-xxs uip-flex-center uip-text-bold">

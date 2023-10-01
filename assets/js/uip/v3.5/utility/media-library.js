@@ -5,7 +5,7 @@ export default {
   components: {
     modal: Modal,
   },
-  inject: ['uipress', 'uipData'],
+  inject: ['uipress'],
   data() {
     return {
       resolvePromise: undefined,

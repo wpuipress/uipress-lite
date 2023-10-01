@@ -5,7 +5,7 @@ export default {
     value: Object,
     args: Object,
   },
-  inject: ['uipData', 'uipress'],
+  inject: [ 'uipress'],
   data() {
     return {
       open: false,
@@ -17,8 +17,8 @@ export default {
         dynamicType: '',
       },
       hideLinkType: false,
-      adminMenu: this.uipData.adminMenu.menu,
-      dynamics: this.uipData.dynamicOptions,
+      adminMenu: this.uipApp.data.adminMenu.menu,
+      dynamics: this.uipApp.data.dynamicOptions,
       posts: [],
       searchString: '',
       fetchSearchString: '',

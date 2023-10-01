@@ -111,3 +111,31 @@ export function isObject(obj) {
 export function isUnDefined(value) {
   return typeof value === 'undefined' || value === null || value === '';
 }
+
+/**
+ * Gets a block setting
+ *
+ * @param {Object} block - the block to get the setting for
+ * @param {String} group - the setting group
+ * @param {String} key - the setting key
+ * @since 3.0.0
+ */
+export function get_block_option(block, group, key) {
+  // Check required basics
+  if (isUnDefined(block.settings)) return false;
+  if (!(group in block.settings)) return false;
+  if (!isObject(block.settings[group])) return false;
+  if (!('options' in block.settings[group])) return false;
+
+  const optionGroup = block.settings[group].options;
+  if (!isObject(optionGroup[key])) return false;
+  if (!('value' in optionGroup[key])) return false;
+
+  // Set return value;
+  let value = optionGroup[key].value;
+
+  // Undefined value so return false
+  if (isUnDefined(value)) return false;
+
+  return value;
+}

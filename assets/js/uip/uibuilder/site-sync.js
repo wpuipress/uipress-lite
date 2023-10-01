@@ -67,7 +67,7 @@ export default {
       },
     };
   },
-  inject: ['uipress', 'uipData'],
+  inject: ['uipress'],
   watch: {
     currentStep: {
       handler(newValue, oldValue) {

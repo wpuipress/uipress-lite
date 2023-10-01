@@ -9,7 +9,7 @@ export default {
   components: {
     blockControl: BlockControl,
   },
-  inject: ['uipData', 'uipress', 'uiTemplate', 'layersPanel', 'unsavedChanges'],
+  inject: [ 'uipress', 'uiTemplate', 'layersPanel', 'unsavedChanges'],
   data: function () {
     return {
       loading: true,
@@ -90,7 +90,7 @@ export default {
      *
      * @since 3.2
      */
-    'uipData.templateDarkMode': {
+    'uipApp.data.templateDarkMode': {
       handler(newValue, oldValue) {
         let theme = 'light';
         if (newValue) {
@@ -108,11 +108,11 @@ export default {
      *
      * @since 3.2
      */
-    'uipData.userPrefs.darkTheme': {
+    'uipApp.data.userPrefs.darkTheme': {
       handler(newValue, oldValue) {
         //Only adjust preview dark mode if we are not in prod
         if (this.uiTemplate.display != 'prod') {
-          this.uipData.templateDarkMode = newValue;
+          this.uipApp.data.templateDarkMode = newValue;
         }
       },
       deep: true,
@@ -172,7 +172,7 @@ export default {
     self.uipress.saveTemplate = this.saveCleanTemplate;
 
     //Set zoom level from prefs
-    let zoom = parseFloat(this.uipData.userPrefs.builderPrefersZoom);
+    let zoom = parseFloat(this.uipApp.data.userPrefs.builderPrefersZoom);
     if (zoom && typeof zoom !== 'undefined') {
       this.ui.zoom = zoom;
     }
@@ -290,8 +290,8 @@ export default {
      * @since 3.2
      */
     returnColorMode() {
-      if (this.uipData.userPrefs.darkTheme) return 'dark';
-      if (this.uipData.templateDarkMode) return 'dark';
+      if (this.uipApp.data.userPrefs.darkTheme) return 'dark';
+      if (this.uipApp.data.templateDarkMode) return 'dark';
 
       return 'light';
     },
@@ -302,7 +302,7 @@ export default {
      * @since 3.2.0
      */
     returnThemeIcon() {
-      if (this.uipData.userPrefs.darkTheme) {
+      if (this.uipApp.data.userPrefs.darkTheme) {
         return 'light_mode';
       }
       return 'dark_mode';
@@ -339,7 +339,7 @@ export default {
       if (e.key === '0' && (e.metaKey || e.ctrlKey)) {
         e.preventDefault();
         this.fitCanvas();
-        this.uipData.userPrefs.builderPrefersZoom = 1;
+        this.uipApp.data.userPrefs.builderPrefersZoom = 1;
       }
     },
     /**
@@ -355,7 +355,7 @@ export default {
       }
       this.uipApp.scrolling = true;
       this.ui.zoom += increment;
-      this.uipData.userPrefs.builderPrefersZoom = this.ui.zoom;
+      this.uipApp.data.userPrefs.builderPrefersZoom = this.ui.zoom;
       await nextTick();
       this.uipApp.scrolling = false;
     },
@@ -578,7 +578,7 @@ export default {
       if (!options) {
         return;
       }
-      let styles = this.uipress.explodeSpecificBlockSettings(options, 'style', this.uipData.templateDarkMode, null, 'flexLayout');
+      let styles = this.uipress.explodeSpecificBlockSettings(options, 'style', this.uipApp.data.templateDarkMode, null, 'flexLayout');
 
       if (typeof styles == 'undefined') {
         return '';
@@ -596,9 +596,9 @@ export default {
      * @since 3.2.0
      */
     toggleDarkMode() {
-      this.uipData.userPrefs.darkTheme = !this.uipData.userPrefs.darkTheme;
+      this.uipApp.data.userPrefs.darkTheme = !this.uipApp.data.userPrefs.darkTheme;
       this.setTheme();
-      this.uipress.saveUserPreference('darkTheme', this.uipData.userPrefs.darkTheme, false);
+      this.uipress.saveUserPreference('darkTheme', this.uipApp.data.userPrefs.darkTheme, false);
     },
     /**
      * Sets theme
@@ -607,11 +607,11 @@ export default {
      */
     setTheme() {
       let theme = 'light';
-      if (this.uipData.userPrefs.darkTheme) {
+      if (this.uipApp.data.userPrefs.darkTheme) {
         theme = 'dark';
-        this.uipData.userPrefs.darkTheme = true;
+        this.uipApp.data.userPrefs.darkTheme = true;
       } else {
-        this.uipData.userPrefs.darkTheme = false;
+        this.uipApp.data.userPrefs.darkTheme = false;
       }
       document.getElementsByTagName('html')[0].setAttribute('data-theme', theme);
       let frames = document.getElementsByClassName('uip-page-content-frame');
@@ -668,7 +668,7 @@ export default {
      * @since 3.2.0
      */
     formatStyles() {
-      let styles = this.uipData.themeStyles;
+      let styles = this.uipApp.data.themeStyles;
       let formatted = {};
       for (let key in styles) {
         if (styles[key].value) {
@@ -699,12 +699,12 @@ export default {
     
       <component is="style" scoped >
         .user-style-area{
-          <template v-for="item in uipData.themeStyles">
+          <template v-for="item in uipApp.data.themeStyles">
              <template v-if="item.value">{{item.name}}:{{item.value}};</template>
           </template>
         }
         [data-theme="dark"] .user-style-area, .uip-dark-mode .user-style-area, .uip-dark-mode.user-style-area{
-          <template v-for="item in uipData.themeStyles">
+          <template v-for="item in uipApp.data.themeStyles">
              <template v-if="item.darkValue"> {{item.name}}:{{item.darkValue}};</template>
           </template>
         }

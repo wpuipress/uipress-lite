@@ -77,7 +77,7 @@ export default {
       },
     };
   },
-  inject: ['uipress', 'uipData'],
+  inject: ['uipress'],
   watch: {
     currentStep: {
       handler(newValue, oldValue) {
@@ -184,7 +184,7 @@ export default {
       });
     },
     formatStyles() {
-      let styles = this.uipData.themeStyles;
+      let styles = this.uipApp.data.themeStyles;
       let formatted = {};
       for (let key in styles) {
         if (styles[key].value) {
@@ -210,7 +210,7 @@ export default {
       return formatted;
     },
     refreshAdmin() {
-      window.location.assign(this.uipData.options.adminURL);
+      window.location.assign(this.uipApp.data.options.adminURL);
     },
     returnActiveIndex(theme) {
       if (!('activeIndex' in theme)) {

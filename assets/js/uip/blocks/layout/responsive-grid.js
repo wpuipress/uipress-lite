@@ -15,7 +15,7 @@ export default {
   data() {
     return {};
   },
-  inject: ['uipData', 'uipress'],
+  inject: [ 'uipress'],
   methods: {
     /**
      * Returns styled grid for the content area
@@ -23,7 +23,7 @@ export default {
      * @since 3.0.0
      */
     returnContentAreaStyles() {
-      let styles = this.uipress.explodeBlockSettings(this.block.settings.block.options, 'style', this.uipData.templateDarkMode);
+      let styles = this.uipress.explodeBlockSettings(this.block.settings.block.options, 'style', this.uipApp.data.templateDarkMode);
 
       let columnCount = this.block.settings.block.options.columnsNum.value;
 

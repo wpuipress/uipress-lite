@@ -18,7 +18,7 @@ export default {
       },
     };
   },
-  inject: ['uipData', 'uipress'],
+  inject: [ 'uipress'],
   watch: {
     /**
      * Watches changes to block options and updates pre-populate data

@@ -14,14 +14,14 @@ export default {
       loading: true,
       categories: [],
       search: '',
-      sortedBlocks: this.uipData.blocks.sort((a, b) => a.name.localeCompare(b.name)),
+      sortedBlocks: this.uipApp.data.blocks.sort((a, b) => a.name.localeCompare(b.name)),
       strings: {
         proBlock: __('This block requires uipress pro. Upgrade to unlock.', 'uipress-lite'),
         seachBlocks: __('Search blocks...', 'uipress-lite'),
       },
     };
   },
-  inject: ['uipData', 'uipress', 'uiTemplate'],
+  inject: [ 'uipress', 'uiTemplate'],
   mounted() {
     this.removeOldBlocks();
   },
@@ -35,7 +35,7 @@ export default {
       const excludedModules = ['responsive-grid', 'uip-admin-menu', 'uip-user-meta-block'];
 
       return Object.entries(this.returnGroups).map(([catKey, catValue]) => {
-        const sortedBlocks = this.uipData.blocks.filter((block) => block.group === catKey && !excludedModules.includes(block.moduleName)).sort((a, b) => a.name.localeCompare(b.name));
+        const sortedBlocks = this.uipApp.data.blocks.filter((block) => block.group === catKey && !excludedModules.includes(block.moduleName)).sort((a, b) => a.name.localeCompare(b.name));
 
         return {
           name: catValue.label,
@@ -50,7 +50,7 @@ export default {
      * @since 3.2.13
      */
     returnGroups() {
-      return this.uipData.blockGroups;
+      return this.uipApp.data.blockGroups;
     },
   },
   methods: {

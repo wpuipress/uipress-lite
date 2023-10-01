@@ -230,7 +230,7 @@ export default {
       ],
     };
   },
-  inject: ['uipData'],
+  
   mounted() {
     this.formatDynamicData();
     this.mountWatcher();
@@ -260,13 +260,13 @@ export default {
      * @since 3.2.13
      */
     formatDynamicData() {
-      const dynaAsArray = Object.values(this.uipData.dynamicOptions).sort((a, b) => {
+      const dynaAsArray = Object.values(this.uipApp.data.dynamicOptions).sort((a, b) => {
         if (a.type < b.type) return -1;
         if (a.type > b.type) return 1;
         return 0;
       });
 
-      if (this.uipData.options.multisite) {
+      if (this.uipApp.data.options.multisite) {
         this.dynamicOptions = [...this.dynamicOptions, ...this.multisiteOptions];
       }
 

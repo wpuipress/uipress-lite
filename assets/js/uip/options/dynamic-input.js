@@ -9,7 +9,7 @@ export default {
     return {
       open: false,
       input: this.returnDefaultOptions,
-      dynamics: this.uipData.dynamicOptions,
+      dynamics: this.uipApp.data.dynamicOptions,
       strings: {
         dynamicData: __('Dynamic data', 'uipress-lite'),
         currentValue: __('Current value', 'uipress-lite'),
@@ -30,7 +30,7 @@ export default {
       },
     };
   },
-  inject: ['uipData', 'uipress'],
+  inject: [ 'uipress'],
   watch: {
     /**
      * Watches changes to value prop and injects

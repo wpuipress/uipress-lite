@@ -148,20 +148,12 @@ const UIbuilderEffects = defineAsyncComponent(() => import(`./options/effects.mi
  */
 const appArgs = defineComponent({
   data() {
-    return {
-      uipGlobalData: uipress.uipAppData,
-    };
+    return {};
   },
   provide() {
     return {
-      uipData: this.returnGlobalData,
       uipress: uipress,
     };
-  },
-  computed: {
-    returnGlobalData() {
-      return this.uipGlobalData;
-    },
   },
   template: '<router-view></router-view>',
 });
@@ -322,7 +314,7 @@ app.component('uip-draggable', VueDraggableNext);
  * @since 3.2.13
  */
 
-import { ensureNestedObject, hasNestedPath, prepareJSON, deepClone, copyToClipboard, isObject, isUnDefined } from './v3.5/utility/functions.min.js?ver=3.2.12';
+import { ensureNestedObject, hasNestedPath, prepareJSON, deepClone, copyToClipboard, isObject, isUnDefined, get_block_option } from './v3.5/utility/functions.min.js?ver=3.2.12';
 app.config.globalProperties.ensureNestedObject = ensureNestedObject;
 app.config.globalProperties.hasNestedPath = hasNestedPath;
 app.config.globalProperties.prepareJSON = prepareJSON;
@@ -330,13 +322,7 @@ app.config.globalProperties.deepClone = deepClone;
 app.config.globalProperties.copyToClipboard = copyToClipboard;
 app.config.globalProperties.isObject = isObject;
 app.config.globalProperties.isUnDefined = isUnDefined;
-app.config.globalProperties.uipApp = reactive({
-  scrolling: false,
-});
-
-uipress.uipAppData.plugins = AllPlugins;
-uipress.uipAppData.blockGroups = AllBlockGroups;
-uipress.uipAppData.blocks = AllBlocks;
+app.config.globalProperties.get_block_option = get_block_option;
 
 app.config.globalProperties.uipApp = reactive({
   scrolling: false,
@@ -347,7 +333,7 @@ app.config.globalProperties.uipApp = reactive({
 
     // Import from global
     options: uip_ajax.uipAppData.options,
-    userPrefs: uip_ajax.uipAppData.options,
+    userPrefs: uip_ajax.uipAppData.userPrefs,
     adminMenu: isUnDefined(uipMasterMenu) ? { menu: [] } : uipMasterMenu,
     toolbar: isUnDefined(uipMasterToolbar) ? [] : uipMasterToolbar,
 
@@ -416,7 +402,7 @@ const mountApp = async () => {
   // Import blocks
   await injectAppBlocks(AllBlocks);
   // Import plugins
-  await injectAppPlugins(uipress.uipAppData.plugins);
+  await injectAppPlugins(AllPlugins);
   // Mount app
   app.mount('#uip-ui-builder');
 };

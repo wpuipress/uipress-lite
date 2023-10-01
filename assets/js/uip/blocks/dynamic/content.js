@@ -18,9 +18,9 @@ export default {
       scrollOver: true,
     };
   },
-  inject: ['uipData', 'uipress', 'uiTemplate'],
+  inject: [ 'uipress', 'uiTemplate'],
   watch: {
-    'uipData.themeStyles': {
+    'uipApp.data.themeStyles': {
       handler(newValue, oldValue) {
         this.injectStyles();
       },
@@ -533,7 +533,7 @@ export default {
       // Link is not relative so bail
       if (!absoluteUrlPattern.test(url)) return;
 
-      const domain = this.extractDomain(this.uipData.options.domain);
+      const domain = this.extractDomain(this.uipApp.data.options.domain);
 
       // URL contains domain so exit
       if (url.includes(domain)) return;
@@ -577,7 +577,7 @@ export default {
      * @since 3.2.13
      */
     updatePageUrls() {
-      const adminURL = this.uipData.options.adminURL;
+      const adminURL = this.uipApp.data.options.adminURL;
 
       this.updateFormActions(adminURL);
       this.updateFormHrefs(adminURL);
@@ -749,7 +749,7 @@ export default {
         return;
       }
 
-      const styles = this.uipData.themeStyles;
+      const styles = this.uipApp.data.themeStyles;
       const styleArea = frame.contentWindow.document.getElementById('uip-theme-styles');
 
       // If style area doesn't exist, abort the function

@@ -1,7 +1,7 @@
 import { nextTick, h, Teleport } from '../../libs/vue-esm-dev.js';
 import BlockStyles from './block-styles.min.js';
 export default {
-  inject: ['uipress', 'uiTemplate', 'uipData'],
+  inject: ['uipress', 'uiTemplate'],
   mixins: [BlockStyles],
   props: {
     block: Object,
@@ -92,7 +92,7 @@ export default {
      */
     returnBlockStyles() {
       const id = this.block.uid;
-      const darkmode = this.uipData.templateDarkMode;
+      const darkmode = this.uipApp.data.templateDarkMode;
       const screenWidth = window.innerWidth;
 
       let dynamic = this.formatDynamicMatches;
@@ -157,8 +157,8 @@ export default {
       for (let [index, match] of matchesArray.entries()) {
         const matchDynamic = match[0];
         const matchValue = match[1];
-        if (matchValue in this.uipData.dynamicOptions) {
-          blockString = blockString.replace(matchDynamic, this.uipData.dynamicOptions[matchValue].value);
+        if (matchValue in this.uipApp.data.dynamicOptions) {
+          blockString = blockString.replace(matchDynamic, this.uipApp.data.dynamicOptions[matchValue].value);
         }
       }
 
@@ -311,7 +311,7 @@ export default {
      */
     returnQueryBlockStyles(block, ID) {
       const id = this.block.uid;
-      const darkmode = this.uipData.templateDarkMode;
+      const darkmode = this.uipApp.data.templateDarkMode;
       const screenWidth = window.innerWidth;
 
       let style = this.returnBlockStylesAsCss(block);

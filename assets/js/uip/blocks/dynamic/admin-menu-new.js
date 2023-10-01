@@ -496,7 +496,7 @@ export default {
       activeMenu: false,
       workingMenu: [],
       activeLink: '',
-      breadCrumbs: [{ name: __('Home', 'uipress-lite'), url: this.uipData.dynamicOptions.viewadmin.value }],
+      breadCrumbs: [{ name: __('Home', 'uipress-lite'), url: this.uipApp.data.dynamicOptions.viewadmin.value }],
       searching: false,
       staticMenu: [],
       strings: {
@@ -507,7 +507,7 @@ export default {
       collapsed: false,
     };
   },
-  inject: ['uipData', 'uipress', 'uiTemplate'],
+  inject: [ 'uipress', 'uiTemplate'],
   watch: {
     /**
      * Watches for changes to the breadcrumbs and emits event
@@ -659,8 +659,8 @@ export default {
      * @since 3.2.13
      */
     setMenu() {
-      this.menu = JSON.parse(JSON.stringify(this.uipData.adminMenu.menu));
-      if (this.uipData.userPrefs.menuCollapsed && this.hasMenuCollapse) this.collapsed = true;
+      this.menu = JSON.parse(JSON.stringify(this.uipApp.data.adminMenu.menu));
+      if (this.uipApp.data.userPrefs.menuCollapsed && this.hasMenuCollapse) this.collapsed = true;
     },
 
     /**
@@ -695,7 +695,7 @@ export default {
       if (!currentLink) return (this.workingMenu = this.menu);
 
       // Default breadcrumbs
-      this.breadCrumbs = [{ name: __('Home', 'uipress-lite'), url: this.uipData.dynamicOptions.viewadmin.value }];
+      this.breadCrumbs = [{ name: __('Home', 'uipress-lite'), url: this.uipApp.data.dynamicOptions.viewadmin.value }];
 
       // Main function for handling sub items
       const processSubItem = (sub) => {

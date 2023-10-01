@@ -14,7 +14,7 @@ export default {
     TemplateLibrary: defineAsyncComponent(() => import('./template-library.min.js?ver=3.2.12')),
     DynamicData: defineAsyncComponent(() => import('./dynamic-data-watcher.min.js?ver=3.2.12')),
   },
-  inject: ['uipData', 'uipress'],
+  inject: [ 'uipress'],
   data: function () {
     return {
       loading: true,
@@ -42,7 +42,7 @@ export default {
           pos: {},
         },
         layers: {
-          display: this.uipData.userPrefs.builderLayers,
+          display: this.uipApp.data.userPrefs.builderLayers,
         },
         sideBar: {
           activeTab: 'blocks',
@@ -179,8 +179,8 @@ export default {
           if (response) {
             let framePos = document.getElementById(e.detail.uid).getBoundingClientRect();
 
-            e.detail.pos.y = this.uipData.userPrefs.builderPrefersZoom * e.detail.pos.y + framePos.y;
-            e.detail.pos.x = this.uipData.userPrefs.builderPrefersZoom * e.detail.pos.x + framePos.x;
+            e.detail.pos.y = this.uipApp.data.userPrefs.builderPrefersZoom * e.detail.pos.y + framePos.y;
+            e.detail.pos.x = this.uipApp.data.userPrefs.builderPrefersZoom * e.detail.pos.x + framePos.x;
 
             self.ui.contextualMenu.block = response;
             self.setRightClickPos(e.detail.pos);
@@ -236,7 +236,7 @@ export default {
       return this.unsavedChanges;
     },
     returnOptionsWidth() {
-      let width = parseFloat(this.uipData.userPrefs.builderOptionsWodth);
+      let width = parseFloat(this.uipApp.data.userPrefs.builderOptionsWodth);
       if ((width && typeof width !== 'undefined' && width != '') || !isNaN(width)) {
         return 'width:' + width + 'px;';
       }
@@ -286,10 +286,10 @@ export default {
         }
       }
 
-      this.uipData.dynamicOptions.notificationCount.value = this.template.notifications.length;
+      this.uipApp.data.dynamicOptions.notificationCount.value = this.template.notifications.length;
     },
     addCanvas() {
-      const containerBlock = this.uipData.blocks.filter((obj) => {
+      const containerBlock = this.uipApp.data.blocks.filter((obj) => {
         return obj.moduleName == 'uip-container';
       });
 
@@ -320,7 +320,7 @@ export default {
     },
 
     injectSavedStyles(styles) {
-      let themeStyles = this.uipData.themeStyles;
+      let themeStyles = this.uipApp.data.themeStyles;
       for (let key in themeStyles) {
         let item = themeStyles[key];
 
@@ -337,7 +337,7 @@ export default {
       for (let key in styles) {
         let item = styles[key];
         if (item.user) {
-          this.uipData.themeStyles[item.name] = item;
+          this.uipApp.data.themeStyles[item.name] = item;
         }
       }
     },
@@ -436,7 +436,7 @@ export default {
 
     formatBuilderGroupOptions() {
       let self = this;
-      let settings = self.uipData.templateGroupOptions;
+      let settings = self.uipApp.data.templateGroupOptions;
       let options = self.template.globalSettings.options;
 
       for (let [key, value] of Object.entries(settings)) {
@@ -469,7 +469,7 @@ export default {
     },
     suppressWelcome() {
       this.welcomeMessage = false;
-      this.uipData.userPrefs.supressBuilderWelcome = true;
+      this.uipApp.data.userPrefs.supressBuilderWelcome = true;
       this.uipress.saveUserPreference('supressBuilderWelcome', true, false);
     },
     closeLayersPanel() {
@@ -779,7 +779,7 @@ export default {
         </div>
     
         <!--Import plugins -->
-        <template v-for="plugin in uipData.plugins" v-if="layoutFetched">
+        <template v-for="plugin in uipApp.data.plugins" v-if="layoutFetched">
           <component v-if="componentExists(plugin.component) && plugin.loadInApp" :is="plugin.component"></component>
         </template>
         <!-- end plugin import -->

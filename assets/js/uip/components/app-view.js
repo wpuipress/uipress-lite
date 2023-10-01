@@ -1,7 +1,7 @@
 export function moduleData() {
   return {
     props: {},
-    inject: ['uipData', 'uipress'],
+    inject: [ 'uipress'],
     data: function () {
       return {
         template: {
@@ -147,7 +147,7 @@ export function moduleData() {
           }
         }
 
-        this.uipData.dynamicOptions.notificationCount.value = this.template.notifications.length;
+        this.uipApp.data.dynamicOptions.notificationCount.value = this.template.notifications.length;
       },
       checkForUpdates() {
         let self = this;
@@ -227,7 +227,7 @@ export function moduleData() {
       .v-enter-from, .v-leave-to {opacity: 0;}
     </component>
     
-    <!--<link rel="stylesheet" :href="uipData.options.pluginURL + 'assets/css/uip-icons.css'" id="uip-icons" @load="appReady">-->
+    <!--<link rel="stylesheet" :href="uipApp.data.options.pluginURL + 'assets/css/uip-icons.css'" id="uip-icons" @load="appReady">-->
     
     <TransitionGroup>
     
@@ -247,7 +247,7 @@ export function moduleData() {
     
     
     <!--Import plugins -->
-    <template v-for="plugin in uipData.plugins">
+    <template v-for="plugin in uipApp.data.plugins">
       <component v-if="componentExists(plugin.component) && plugin.loadInApp"
       :is="plugin.component">
       </component>

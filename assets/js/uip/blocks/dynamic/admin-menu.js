@@ -11,7 +11,7 @@ export default {
       activeMenu: false,
       workingMenu: [],
       activeLink: '',
-      breadCrumbs: [{ name: __('Home', 'uipress-lite'), url: this.uipData.dynamicOptions.viewadmin.value }],
+      breadCrumbs: [{ name: __('Home', 'uipress-lite'), url: this.uipApp.data.dynamicOptions.viewadmin.value }],
       menuDirection: this.block.settings.block.options.menuDirection.value.value,
       strings: {
         mainmenu: __('Main menu', 'uipress-lite'),
@@ -20,7 +20,7 @@ export default {
       collapsed: false,
     };
   },
-  inject: ['uipData', 'uipress', 'uiTemplate'],
+  inject: [ 'uipress', 'uiTemplate'],
   watch: {
     breadCrumbs: {
       handler(newValue, oldValue) {
@@ -45,7 +45,7 @@ export default {
   mounted() {
     this.buildMenu();
 
-    if (this.uipData.userPrefs.menuCollapsed && this.showCollapse) {
+    if (this.uipApp.data.userPrefs.menuCollapsed && this.showCollapse) {
       this.collapsed = true;
     }
 
@@ -125,7 +125,7 @@ export default {
 
       let newMenu = this.checkForadvancedMenu(this.menu);
 
-      self.breadCrumbs = [{ name: __('Home', 'uipress-lite'), url: self.uipData.dynamicOptions.viewadmin.value }];
+      self.breadCrumbs = [{ name: __('Home', 'uipress-lite'), url: self.uipApp.data.dynamicOptions.viewadmin.value }];
 
       for (const item of newMenu) {
         if (item.active) {
@@ -184,7 +184,7 @@ export default {
         if (parentActive) {
           item.active = true;
           self.activeMenu = item;
-          self.breadCrumbs = [{ name: __('Home', 'uipress-lite'), url: self.uipData.dynamicOptions.viewadmin.value }];
+          self.breadCrumbs = [{ name: __('Home', 'uipress-lite'), url: self.uipApp.data.dynamicOptions.viewadmin.value }];
           self.breadCrumbs.push({ name: item.name, url: item.url });
           self.breadCrumbs.push({ name: parentActive.name, url: parentActive.url });
         }
@@ -445,7 +445,7 @@ export default {
       let absoluteCheck = new RegExp('^(?:[a-z+]+:)?//', 'i');
       let absoluteURL = item.url;
       if (!absoluteCheck.test(absoluteURL)) {
-        absoluteURL = this.uipData.dynamicOptions.viewadmin.value + absoluteURL;
+        absoluteURL = this.uipApp.data.dynamicOptions.viewadmin.value + absoluteURL;
       }
 
       //Open without frame

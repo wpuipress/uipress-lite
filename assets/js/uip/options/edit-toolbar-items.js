@@ -6,14 +6,14 @@ export default {
   },
   data() {
     return {
-      toolbar: this.uipData.toolbar,
+      toolbar: this.uipApp.data.toolbar,
       selected: {},
       strings: {
         renameItem: __('Rename item', 'uipress-lite'),
       },
     };
   },
-  inject: ['uipData', 'uipress'],
+  inject: [ 'uipress'],
   watch: {
     /**
      * Watches selected items and returns data to caller

@@ -12,7 +12,7 @@ export default {
       rendered: false,
     };
   },
-  inject: ['uipData', 'uipress'],
+  inject: [ 'uipress'],
   async mounted() {
     this.dequeueAdminBarStyles();
     this.importToolBar();
@@ -77,7 +77,7 @@ export default {
      * @since 3.2.13
      */
     importToolBar() {
-      this.toolbar = JSON.parse(JSON.stringify(this.uipData.toolbar));
+      this.toolbar = JSON.parse(JSON.stringify(this.uipApp.data.toolbar));
       document.addEventListener('uip_page_change_loaded', this.handlePagechange);
     },
 
@@ -150,8 +150,8 @@ export default {
 
       const allItems = [...primaryItems, ...secondaryItems];
 
-      const adminURL = this.uipData.options.adminURL;
-      const homeURL = this.uipData.options.domain;
+      const adminURL = this.uipApp.data.options.adminURL;
+      const homeURL = this.uipApp.data.options.domain;
       const adminPath = adminURL.replace(homeURL, '');
 
       allItems.forEach((item) => {
@@ -390,7 +390,7 @@ export default {
      * @since 3.2.13
      */
     formatHREF(link) {
-      const { adminURL, domain: homeURL } = this.uipData.options;
+      const { adminURL, domain: homeURL } = this.uipApp.data.options;
       const adminPath = adminURL.replace(homeURL, '');
 
       if (link && link.startsWith(adminPath)) {

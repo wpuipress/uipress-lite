@@ -19,7 +19,7 @@ export default {
       searching: false,
     };
   },
-  inject: ['uipData', 'uipress'],
+  inject: [ 'uipress'],
   mounted() {
     this.getPosts();
   },

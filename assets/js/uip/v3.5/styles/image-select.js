@@ -21,9 +21,9 @@ export default {
         loading: false,
         sizing: {},
       },
-      dynamics: this.uipData.dynamicOptions,
-      maxUpload: this.uipData.options.maxUpload,
-      fileTypes: this.uipData.options.uploadTypes,
+      dynamics: this.uipApp.data.dynamicOptions,
+      maxUpload: this.uipApp.data.options.maxUpload,
+      fileTypes: this.uipApp.data.options.uploadTypes,
       fileType: '',
       manualURL: '',
       uploading: false,
@@ -45,7 +45,7 @@ export default {
       },
     };
   },
-  inject: ['uipData', 'uipress'],
+  inject: [ 'uipress'],
   watch: {
     img: {
       handler(newValue, oldValue) {

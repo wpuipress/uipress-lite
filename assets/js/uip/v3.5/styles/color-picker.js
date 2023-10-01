@@ -5,7 +5,7 @@ export default {
     colorSelect: defineAsyncComponent(() => import('../libs/colorpicker.js')),
     styleManager: defineAsyncComponent(() => import('./style-manager.min.js')),
   },
-  inject: ['uipress', 'uipData'],
+  inject: ['uipress'],
   props: {
     value: String,
     returnData: Function,
@@ -73,7 +73,7 @@ export default {
       // Don't return color if still focused / typing
       if (this.dontProcessVars) return this.color;
 
-      const allColours = this.uipData.themeStyles;
+      const allColours = this.uipApp.data.themeStyles;
       const varName = this.color.trim();
 
       // If var is built in
@@ -97,8 +97,8 @@ export default {
      * @since 3.2.13
      */
     returnActiveMode() {
-      if (!this.uipData.userPrefs.darkTheme) return 'value';
-      if (this.uipData.userPrefs.darkTheme) return 'darkValue';
+      if (!this.uipApp.data.userPrefs.darkTheme) return 'value';
+      if (this.uipApp.data.userPrefs.darkTheme) return 'darkValue';
     },
     /**
      * Checks if browser supports eyedropper

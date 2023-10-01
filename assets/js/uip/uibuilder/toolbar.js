@@ -8,7 +8,7 @@ export default {
   components: {
     templateHistory: defineAsyncComponent(() => import('./history.min.js?ver=3.2.12')),
   },
-  inject: ['uipData', 'uipress', 'uiTemplate', 'layersPanel', 'unsavedChanges'],
+  inject: [ 'uipress', 'uiTemplate', 'layersPanel', 'unsavedChanges'],
   data: function () {
     return {
       loading: true,
@@ -21,7 +21,7 @@ export default {
           {
             title: __('Dynamic data', 'uipress-lite'),
             content: __('Typing "{{" in any window now opens the new dynamic data flow. Continue typing to search or press enter to select. Dynamic data will render in preview mode.', 'uipress-lite'),
-            img: this.uipData.options.pluginURL + 'assets/img/dynamic_data_preview.gif',
+            img: this.uipApp.data.options.pluginURL + 'assets/img/dynamic_data_preview.gif',
           },
           {
             title: __('Query builder', 'uipress-lite'),
@@ -29,7 +29,7 @@ export default {
               'The new query builder can be enabled on any block and allows you to query posts, pages, users and sites (multsitie only). The query builder is designed to work perfectly with the new dynamic data selector.',
               'uipress-lite'
             ),
-            img: this.uipData.options.pluginURL + 'assets/img/query_builder.gif',
+            img: this.uipApp.data.options.pluginURL + 'assets/img/query_builder.gif',
           },
           {
             title: __('Style presets', 'uipress-lite'),
@@ -37,22 +37,22 @@ export default {
               'Style presets allow you to create custom presets that you can apply to any blocks. Presets are global and making changes to them in one place will update them across all of your templates',
               'uipress-lite'
             ),
-            img: this.uipData.options.pluginURL + 'assets/img/presets_preview.gif',
+            img: this.uipApp.data.options.pluginURL + 'assets/img/presets_preview.gif',
           },
           {
             title: __('Redesigned block styles', 'uipress-lite'),
             content: __('The new editor makes it easier to adjust block styles and create more advanced layouts. Use the new pseudo switcher to create detailed templates', 'uipress-lite'),
-            img: this.uipData.options.pluginURL + 'assets/img/styles_psuedo.gif',
+            img: this.uipApp.data.options.pluginURL + 'assets/img/styles_psuedo.gif',
           },
           {
             title: __('Effects and transitions', 'uipress-lite'),
             content: __('You can add and manage transitions within the uiBuilder. Adjust timings and animation styles to get the perfect result.', 'uipress-lite'),
-            img: this.uipData.options.pluginURL + 'assets/img/transitions_preview.gif',
+            img: this.uipApp.data.options.pluginURL + 'assets/img/transitions_preview.gif',
           },
           {
             title: __('Contextual options', 'uipress-lite'),
             content: __('Common actions are just a right click away. Duplicate blocks, copy styles or export your entire template', 'uipress-lite'),
-            img: this.uipData.options.pluginURL + 'assets/img/contextual_options.gif',
+            img: this.uipApp.data.options.pluginURL + 'assets/img/contextual_options.gif',
           },
         ],
         currentTip: 0,
@@ -167,7 +167,7 @@ export default {
       },
       deep: true,
     },
-    'uipData.templateDarkMode': {
+    'uipApp.data.templateDarkMode': {
       handler(newValue, oldValue) {
         let theme = 'light';
         if (newValue) {
@@ -180,11 +180,11 @@ export default {
       },
       deep: true,
     },
-    'uipData.userPrefs.darkTheme': {
+    'uipApp.data.userPrefs.darkTheme': {
       handler(newValue, oldValue) {
         //Only adjust preview dark mode if we are not in prod
         if (this.uiTemplate.display != 'prod') {
-          this.uipData.templateDarkMode = newValue;
+          this.uipApp.data.templateDarkMode = newValue;
         }
       },
       deep: true,
@@ -209,7 +209,7 @@ export default {
 
     self.uipress.saveTemplate = this.saveCleanTemplate;
     //Set zoom level from prefs
-    let zoom = parseFloat(this.uipData.userPrefs.builderPrefersZoom);
+    let zoom = parseFloat(this.uipApp.data.userPrefs.builderPrefersZoom);
     if (zoom && typeof zoom !== 'undefined') {
       this.ui.zoom = zoom;
     }
@@ -221,7 +221,7 @@ export default {
       document.body.classList.add('macos');
     }
 
-    if (this.uipData.userPrefs.supressTips) {
+    if (this.uipApp.data.userPrefs.supressTips) {
       this.tips.open = false;
     }
 
@@ -282,10 +282,10 @@ export default {
   },
   methods: {
     returnColorMode() {
-      if (this.uipData.userPrefs.darkTheme) {
+      if (this.uipApp.data.userPrefs.darkTheme) {
         return 'dark';
       }
-      if (this.uipData.templateDarkMode) {
+      if (this.uipApp.data.templateDarkMode) {
         return 'dark';
       }
       return 'light';
@@ -354,7 +354,7 @@ export default {
       });
     },
     formatStyles() {
-      let styles = this.uipData.themeStyles;
+      let styles = this.uipApp.data.themeStyles;
       let formatted = {};
       for (let key in styles) {
         if (styles[key].value) {

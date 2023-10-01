@@ -89,7 +89,7 @@ export default {
      */
     returnBlockParts(block) {
       const { moduleName, settings: blockSettings } = block;
-      const allBlocks = this.uipData.blocks;
+      const allBlocks = this.uipApp.data.blocks;
 
       // No settings in the block so no css
       if (!this.isObject(blockSettings)) return [];

@@ -134,7 +134,7 @@ const QueryBuilder = {
       orderByOptionsSites: OrderByOptionsSites,
     };
   },
-  inject: ['uipress', 'uipData'],
+  inject: ['uipress'],
   watch: {
     options: {
       handler(newValue, oldValue) {
@@ -196,7 +196,7 @@ const QueryBuilder = {
      * @since 3.2.13
      */
     maybePushSiteOption() {
-      if (!this.uipData.options.multisite) return;
+      if (!this.uipApp.data.options.multisite) return;
       this.queryType.site = {
         value: 'site',
         label: __('Sites', 'uipress-lite'),
@@ -364,7 +364,7 @@ const QueryBuilder = {
         attributes: {
           selected: this.options.status,
           placeHolder: this.strings.postStatus,
-          availableOptions: this.uipData.options.post_statuses,
+          availableOptions: this.uipApp.data.options.post_statuses,
           searchPlaceHolder: this.strings.seacrhStatus,
           updateSelected: (d) => {
             this.options.status = d;
@@ -451,7 +451,7 @@ const QueryBuilder = {
               
               <StatusTypeSelectPreview
               @click="requestPostStatusScreen()"
-              :availableOptions="uipData.options.post_statuses" :selected="options.status" :placeHolder="strings.postStatus"
+              :availableOptions="uipApp.data.options.post_statuses" :selected="options.status" :placeHolder="strings.postStatus"
               :searchPlaceHolder="strings.seacrhStatus" :updateSelected="function(d){options.status = d}" />
               
             </div>
@@ -783,7 +783,7 @@ const OrderBy = {
 };
 
 const TaxQuery = {
-  inject: ['uipData'],
+  
   props: {
     returnData: Function,
     value: Object,
@@ -835,7 +835,7 @@ const TaxQuery = {
      <div class="uip-flex uip-flex-center">
      
        <select class="uip-input-small uip-padding-top-xxxs uip-padding-bottom-xxxs uip-max-w-100p  uip-w-100p uip-border-rounder" style="padding-top:2px;padding-bottom:2px;border-radius:var(--uip-border-radius-large)" v-model="tax.taxonomy">
-         <template v-for="item in uipData.options.taxonomies">
+         <template v-for="item in uipApp.data.options.taxonomies">
            <option :value="item.name">
              {{item.label}} 
              ({{returnTaxPostTypes(item.object_type)}})

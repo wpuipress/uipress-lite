@@ -16,7 +16,7 @@ export default {
       drag: false,
     };
   },
-  inject: ['uipData', 'uiTemplate', 'uipress'],
+  inject: [ 'uiTemplate', 'uipress'],
   watch: {
     content: {
       handler(newValue, oldValue) {

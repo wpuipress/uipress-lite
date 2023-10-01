@@ -16,7 +16,7 @@ export default {
      * @since 3.2.13
      */
     returnText() {
-      const item = this.uipress.get_block_option(this.block, 'block', 'buttonText', true);
+      const item = this.get_block_option(this.block, 'block', 'buttonText', true);
       if (!item) return '';
 
       if (!this.isObject(item)) return item;
@@ -30,7 +30,7 @@ export default {
      * @since 3.2.13
      */
     getLink() {
-      const link = this.uipress.get_block_option(this.block, 'block', 'linkSelect', true);
+      const link = this.get_block_option(this.block, 'block', 'linkSelect', true);
       if (!link) return;
 
       if (!this.isObject(link)) return link;
@@ -43,7 +43,7 @@ export default {
      * @since 3.2.13
      */
     getOnClickCode() {
-      return this.uipress.get_block_option(this.block, 'block', 'onClickCode');
+      return this.get_block_option(this.block, 'block', 'onClickCode');
     },
 
     /**
@@ -52,7 +52,8 @@ export default {
      * @since 3.2.13
      */
     returnIcon() {
-      let icon = this.uipress.get_block_option(this.block, 'block', 'iconSelect');
+      let icon = this.get_block_option(this.block, 'block', 'iconSelect');
+      console.log(icon);
       if (!icon) return '';
       if (!this.isObject(icon)) return icon;
       if (icon.value) return icon.value;
@@ -75,7 +76,7 @@ export default {
      * @since 3.2.13
      */
     returnLinkType() {
-      let srcOBJ = this.uipress.get_block_option(this.block, 'block', 'linkSelect');
+      let srcOBJ = this.get_block_option(this.block, 'block', 'linkSelect');
       if (this.isObject(srcOBJ)) return srcOBJ.newTab;
     },
 
@@ -85,7 +86,7 @@ export default {
      * @since 3.2.13
      */
     returnClasses() {
-      const position = this.uipress.get_block_option(this.block, 'block', 'iconPosition');
+      const position = this.get_block_option(this.block, 'block', 'iconPosition');
       if (!position) return;
       if (!this.isObject(position) && position == 'right') return 'uip-flex-reverse';
       if (position.value && position.value == 'right') return 'uip-flex-reverse';

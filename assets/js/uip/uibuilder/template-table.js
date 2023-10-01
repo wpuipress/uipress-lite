@@ -76,12 +76,12 @@ export default {
       },
     };
   },
-  inject: ['uipData', 'uipress'],
+  inject: [ 'uipress'],
   mounted() {
     this.getTemplates();
     this.enqueueAdminBarStyles();
 
-    if (this.uipData.userPrefs.supressWelcome) {
+    if (this.uipApp.data.userPrefs.supressWelcome) {
       this.showWelcome = false;
     }
 

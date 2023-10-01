@@ -36,7 +36,7 @@ export function moduleData() {
         },
       };
     },
-    inject: ['uipData', 'uiTemplate', 'uipress'],
+    inject: [ 'uiTemplate', 'uipress'],
     watch: {
       content: {
         handler(newValue, oldValue) {
@@ -287,10 +287,10 @@ export function moduleData() {
         let met = true;
         let metAnds = [];
 
-        let userid = this.uipData.options.dynamicData.userid.value;
-        let username = this.uipData.options.dynamicData.username.value;
-        let userroles = this.uipData.options.dynamicData.userroles.value;
-        let useremail = this.uipData.options.dynamicData.useremail.value;
+        let userid = this.uipApp.data.options.dynamicData.userid.value;
+        let username = this.uipApp.data.options.dynamicData.username.value;
+        let userroles = this.uipApp.data.options.dynamicData.userroles.value;
+        let useremail = this.uipApp.data.options.dynamicData.useremail.value;
 
         //Loop through the conditions
         for (let condition of allConditions) {
@@ -413,7 +413,7 @@ export function moduleData() {
         }
         let style = '';
 
-        style += this.uipress.render_block_styles(this.formatDynamicMatches(block), block.uid, this.uipData.userPrefs.darkTheme, this.windowWidth);
+        style += this.uipress.render_block_styles(this.formatDynamicMatches(block), block.uid, this.uipApp.data.userPrefs.darkTheme, this.windowWidth);
 
         style = style.replace('#' + block.uid, '.' + this.randomClass + ' #' + block.uid);
 
@@ -425,7 +425,7 @@ export function moduleData() {
         }
         let style = '';
 
-        style += this.uipress.render_block_styles(block, block.uid, this.uipData.templateDarkMode, this.windowWidth);
+        style += this.uipress.render_block_styles(block, block.uid, this.uipApp.data.templateDarkMode, this.windowWidth);
         style = style.replace('#' + block.uid, '.uip-query-id-' + index + '#' + block.uid);
 
         return style;
@@ -624,8 +624,8 @@ export function moduleData() {
           const matchDynamic = match[0];
           const matchValue = match[1];
 
-          if (matchValue in this.uipData.dynamicOptions) {
-            blockString = blockString.replaceAll(matchDynamic, this.uipData.dynamicOptions[matchValue].value);
+          if (matchValue in this.uipApp.data.dynamicOptions) {
+            blockString = blockString.replaceAll(matchDynamic, this.uipApp.data.dynamicOptions[matchValue].value);
           }
         }
 

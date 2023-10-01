@@ -30,7 +30,7 @@ export default {
       searching: false,
     };
   },
-  inject: ['uipData', 'uipress'],
+  inject: [ 'uipress'],
   mounted() {
     this.getPosts();
     this.updateView();
@@ -133,7 +133,7 @@ export default {
      * @since 3.2.13
      */
     updateView() {
-      const grid = this.uipData.userPrefs.prefersGridView;
+      const grid = this.uipApp.data.userPrefs.prefersGridView;
       if (grid) return (this.ui.view = 'grid');
       this.ui.view = 'list';
     },

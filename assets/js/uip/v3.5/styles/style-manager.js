@@ -5,7 +5,7 @@ export default {
     colorSelect: defineAsyncComponent(() => import('../libs/colorpicker.js')),
     contextmenu: defineAsyncComponent(() => import('../utility/contextmenu.min.js?ver=3.2.12')),
   },
-  inject: ['uipData', 'uipress'],
+  inject: [ 'uipress'],
   props: {
     currentColor: String,
     returnData: Function,
@@ -35,7 +35,7 @@ export default {
      *
      * @since 3.2.13
      */
-    'uipData.themeStyles': {
+    'uipApp.data.themeStyles': {
       handler() {
         this.saveStyles();
       },
@@ -49,8 +49,8 @@ export default {
      * @since 3.2.13
      */
     returnActiveMode() {
-      if (!this.uipData.userPrefs.darkTheme) return 'value';
-      if (this.uipData.userPrefs.darkTheme) return 'darkValue';
+      if (!this.uipApp.data.userPrefs.darkTheme) return 'value';
+      if (this.uipApp.data.userPrefs.darkTheme) return 'darkValue';
     },
     /**
      * Checks whether a given style is active
@@ -69,10 +69,10 @@ export default {
      * @since 3.2.13
      */
     returnUserStyles() {
-      let styles = this.uipData.themeStyles;
-      if (!styles) this.uipData.themeStyles = {};
+      let styles = this.uipApp.data.themeStyles;
+      if (!styles) this.uipApp.data.themeStyles = {};
       let search = this.search.toLowerCase();
-      return Object.fromEntries(Object.entries(this.uipData.themeStyles).filter(([key, value]) => value.type == 'color' && value.name.toLowerCase().includes(search)));
+      return Object.fromEntries(Object.entries(this.uipApp.data.themeStyles).filter(([key, value]) => value.type == 'color' && value.name.toLowerCase().includes(search)));
     },
     /**
      * Checks if the given var can be deleted
@@ -82,8 +82,8 @@ export default {
      */
     canDeleteVar() {
       if (this.contextIndex === false) return true;
-      if (!this.uipData.themeStyles[this.contextIndex]) return false;
-      if (this.uipData.themeStyles[this.contextIndex].user) return false;
+      if (!this.uipApp.data.themeStyles[this.contextIndex]) return false;
+      if (this.uipApp.data.themeStyles[this.contextIndex].user) return false;
       return true;
     },
   },
@@ -96,7 +96,7 @@ export default {
      */
     async saveStyles() {
       // Format styles
-      let stylesJson = JSON.stringify(this.uipData.themeStyles);
+      let stylesJson = JSON.stringify(this.uipApp.data.themeStyles);
 
       // Build form data for fetch request
       let formData = new FormData();
@@ -132,7 +132,7 @@ export default {
         label: __('New color style', 'uipress-lite'),
         value: newColor,
         returnData: (d) => {
-          this.uipData.themeStyles[d.name] = d;
+          this.uipApp.data.themeStyles[d.name] = d;
           this.$emit('go-back');
         },
       };
@@ -146,7 +146,7 @@ export default {
      * @since 3.2.13
      */
     editColor() {
-      const color = this.uipData.themeStyles[this.contextIndex];
+      const color = this.uipApp.data.themeStyles[this.contextIndex];
 
       let screen = {
         component: 'colourStyleEditor',
@@ -164,7 +164,7 @@ export default {
      * @since 3.2.13
      */
     duplicateColor() {
-      const duplicate = this.uipData.themeStyles[this.contextIndex];
+      const duplicate = this.uipApp.data.themeStyles[this.contextIndex];
       let newColor = JSON.parse(JSON.stringify(duplicate));
       newColor.name += '-copy';
 
@@ -324,7 +324,7 @@ export default {
 			<div class="uip-border-top uip-margin-top-xs uip-margin-bottom-xs "></div>
 		  
 			<a class="uip-link-danger uip-flex uip-gap-m uip-flex-between uip-flex-center hover:uip-background-muted uip-border-round uip-padding-xxs"
-			@click.prevent="delete this.uipData.themeStyles[contextIndex];$refs.colorcontext.close()" :class="{'uip-link-disabled' : canDeleteVar}">
+			@click.prevent="delete this.uipApp.data.themeStyles[contextIndex];$refs.colorcontext.close()" :class="{'uip-link-disabled' : canDeleteVar}">
 			  <span class="">{{strings.delete}}</span>
 			  <span class="uip-icon">delete</span>
 			</a>

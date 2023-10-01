@@ -6,7 +6,7 @@ export default {
     args: Object,
     size: String,
   },
-  inject: ['uipData', 'uipress'],
+  inject: [ 'uipress'],
   data() {
     return {
       option: '',
@@ -159,7 +159,7 @@ export default {
       // Deduplicate and sort
       collectedClasses.sort();
 
-      const userClasses = this.uipData.options.customClasses;
+      const userClasses = this.uipApp.data.options.customClasses;
       if (Array.isArray(userClasses)) {
         userClasses.sort();
         collectedClasses.unshift(...userClasses);

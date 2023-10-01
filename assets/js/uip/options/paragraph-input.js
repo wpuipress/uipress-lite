@@ -11,7 +11,7 @@ export default {
       variableTrigger: false,
     };
   },
-  inject: ['uipress', 'uipData'],
+  inject: ['uipress'],
   mounted() {
     this.startEditor();
   },
@@ -22,7 +22,7 @@ export default {
      * @since 3.2.13
      */
     returnStylePath() {
-      return this.uipData.options.pluginURL + 'assets/css/modules/uip-quill.css';
+      return this.uipApp.data.options.pluginURL + 'assets/css/modules/uip-quill.css';
     },
 
     /**

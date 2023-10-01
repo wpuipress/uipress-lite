@@ -27,7 +27,7 @@ export default {
       searching: false,
     };
   },
-  inject: ['uipData', 'uipress'],
+  inject: [ 'uipress'],
   watch: {
     searchString: {
       handler(newValue, oldValue) {

@@ -11,7 +11,7 @@ export default {
       contentIndex: 0,
     };
   },
-  inject: ['uipData', 'uipress'],
+  inject: [ 'uipress'],
   watch: {
     /**
      * Watches changes to block tabs

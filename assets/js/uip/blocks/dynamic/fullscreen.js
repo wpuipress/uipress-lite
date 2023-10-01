@@ -8,7 +8,7 @@ export default {
   data() {
     return {};
   },
-  inject: ['uipData', 'uipress'],
+  inject: [ 'uipress'],
   computed: {
     /**
      * Returns text for button if exists
