@@ -161,7 +161,7 @@ export function moduleData() {
         formData.append('security', uip_ajax.security);
         formData.append('template_id', self.template.id);
 
-        self.uipress.callServer(uip_ajax.ajax_url, formData).then((response) => {
+        self.sendServerRequest(uip_ajax.ajax_url, formData).then((response) => {
           if (response.error) {
             //self.uipress.notify(response.message, 'uipress-lite', '', 'error', true);
             //self.saving = false;

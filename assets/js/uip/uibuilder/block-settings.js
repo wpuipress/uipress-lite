@@ -437,7 +437,7 @@ const StylePresets = {
       formData.append('option', options);
       formData.append('optionName', 'block_preset_styles');
 
-      const response = await this.uipress.callServer(uip_ajax.ajax_url, formData);
+      const response = await this.sendServerRequest(uip_ajax.ajax_url, formData);
 
       if (response.success) {
         //this.uipress.notify(__('Presets updated', 'uipress-lite'), '', 'success', true);

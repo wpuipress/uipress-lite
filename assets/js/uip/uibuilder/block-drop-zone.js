@@ -175,7 +175,7 @@ export default {
       let formData = new FormData();
       let notiID = self.uipress.notify(__('Importing template', 'uipress-lite'), '', 'default', false, true);
 
-      self.uipress.callServer(template.path, formData).then((response) => {
+      self.sendServerRequest(template.path, formData).then((response) => {
         if (response.error) {
           self.uipress.notify(response.message, '', 'error', true);
           self.uipress.destroy_notification(notiID);

@@ -102,7 +102,7 @@ export default {
       formData.append('perPage', this.returnPerPage);
       formData.append('limitToAuthor', this.limitToAuthor);
 
-      const response = await this.uipress.callServer(uip_ajax.ajax_url, formData);
+      const response = await this.sendServerRequest(uip_ajax.ajax_url, formData);
 
       // No response to exit early
       if (!response) {

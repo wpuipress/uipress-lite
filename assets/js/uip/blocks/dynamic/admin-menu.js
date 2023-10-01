@@ -469,7 +469,7 @@ export default {
         formData.append('security', uip_ajax.security);
         formData.append('uid', uid);
 
-        self.uipress.callServer(uip_ajax.ajax_url, formData).then((response) => {
+        self.sendServerRequest(uip_ajax.ajax_url, formData).then((response) => {
           if (item.newTab) {
             this.$refs.newTab.href = absoluteURL;
             this.$refs.newTab.click();

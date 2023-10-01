@@ -184,7 +184,7 @@ export default {
       formData.append('model', this.returnModel);
 
       // Send request to server
-      const response = await this.uipress.callServer(uip_ajax.ajax_url, formData);
+      const response = await this.sendServerRequest(uip_ajax.ajax_url, formData);
 
       // Handle error
       if (response.error) {

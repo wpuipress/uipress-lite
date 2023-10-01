@@ -223,7 +223,7 @@ export default {
         formData.append('page', 1);
         formData.append('search', '');
 
-        self.uipress.callServer(uip_ajax.ajax_url, formData).then((response) => {
+        self.sendServerRequest(uip_ajax.ajax_url, formData).then((response) => {
           this.allUiTemplates = response.templates;
           return this.allUiTemplates;
         });
@@ -647,7 +647,7 @@ export default {
       formData.append('template', template);
       formData.append('styles', stylesJson);
 
-      return await self.uipress.callServer(uip_ajax.ajax_url, formData).then((response) => {
+      return await self.sendServerRequest(uip_ajax.ajax_url, formData).then((response) => {
         if (response.error) {
           self.uipress.notify(response.message, 'uipress-lite', '', 'error', true);
           self.saving = false;

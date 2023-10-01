@@ -105,7 +105,7 @@ export default {
       formData.append('postTypes', postTypes);
       formData.append('filter', this.activeType);
 
-      const response = await this.uipress.callServer(uip_ajax.ajax_url, formData);
+      const response = await this.sendServerRequest(uip_ajax.ajax_url, formData);
 
       // Something went very wrong
       if (!response) {

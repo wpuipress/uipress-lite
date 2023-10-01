@@ -57,7 +57,7 @@ export default {
       formData.append('searchString', this.searchString);
       formData.append('type', type);
 
-      const response = await this.uipress.callServer(uip_ajax.ajax_url, formData);
+      const response = await this.sendServerRequest(uip_ajax.ajax_url, formData);
       this.loading = false;
 
       // Handle error

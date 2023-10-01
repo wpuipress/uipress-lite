@@ -111,7 +111,7 @@ export default {
       formData.append('uid', uid);
 
       // Await the server to mark the link as requiring no frame
-      await this.uipress.callServer(uip_ajax.ajax_url, formData);
+      await this.sendServerRequest(uip_ajax.ajax_url, formData);
 
       // Set new tab attributes and click
       if (openInNewTab) newTabOpen(url);

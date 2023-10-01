@@ -84,7 +84,7 @@ export default {
       formData.append('description', this.newPattern.description);
       formData.append('icon', this.newPattern.icon.value);
 
-      const response = await this.uipress.callServer(uip_ajax.ajax_url, formData);
+      const response = await this.sendServerRequest(uip_ajax.ajax_url, formData);
 
       // Handle error
       if (response.error) {

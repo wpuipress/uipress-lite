@@ -351,7 +351,7 @@ export default {
       formData.append('templateID', self.templateID);
       self.layoutFetched = false;
 
-      self.uipress.callServer(uip_ajax.ajax_url, formData).then((response) => {
+      self.sendServerRequest(uip_ajax.ajax_url, formData).then((response) => {
         if (response.error) {
           self.uipress.notify(response.message, '', 'error', true);
           return;

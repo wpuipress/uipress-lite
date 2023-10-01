@@ -187,7 +187,7 @@ export default {
       formData.append('search', this.search);
       formData.append('filter', this.activeTableTab);
 
-      const response = await this.uipress.callServer(uip_ajax.ajax_url, formData);
+      const response = await this.sendServerRequest(uip_ajax.ajax_url, formData);
 
       // Error
       if (!response) return;
@@ -212,7 +212,7 @@ export default {
       formData.append('security', uip_ajax.security);
       formData.append('id', id);
 
-      const response = await this.uipress.callServer(uip_ajax.ajax_url, formData);
+      const response = await this.sendServerRequest(uip_ajax.ajax_url, formData);
 
       // Catch error
       if (response.error) {
@@ -238,7 +238,7 @@ export default {
       formData.append('security', uip_ajax.security);
       formData.append('templateids', ids);
 
-      const response = await this.uipress.callServer(uip_ajax.ajax_url, formData);
+      const response = await this.sendServerRequest(uip_ajax.ajax_url, formData);
 
       // Handle error
       if (response.error) {
@@ -269,7 +269,7 @@ export default {
       formData.append('security', uip_ajax.security);
       formData.append('templateType', templateType);
 
-      const response = await this.uipress.callServer(uip_ajax.ajax_url, formData);
+      const response = await this.sendServerRequest(uip_ajax.ajax_url, formData);
 
       // Catch error
       if (!response) return;
@@ -329,7 +329,7 @@ export default {
       formData.append('status', template.status);
       formData.append('templatefor', JSON.stringify(template.for));
 
-      const response = await this.uipress.callServer(uip_ajax.ajax_url, formData);
+      const response = await this.sendServerRequest(uip_ajax.ajax_url, formData);
 
       // Handle error
       if (response.error) {

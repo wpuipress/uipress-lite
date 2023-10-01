@@ -126,7 +126,7 @@ export default {
       formData.append('security', uip_ajax.security);
       formData.append('styles', stylesJson);
 
-      const response = await this.uipress.callServer(uip_ajax.ajax_url, formData);
+      const response = await this.sendServerRequest(uip_ajax.ajax_url, formData);
 
       // Error saving styles
       if (response.error) {

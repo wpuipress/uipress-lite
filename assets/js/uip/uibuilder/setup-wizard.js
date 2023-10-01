@@ -106,7 +106,7 @@ export default {
       let formData = new FormData();
       let URL = 'https://api.uipress.co/templates/list/' + '?sort=newest&filter=ui-template&v321=true';
 
-      self.uipress.callServer(URL, formData).then((response) => {
+      self.sendServerRequest(URL, formData).then((response) => {
         if (response.error) {
           self.uipress.notify(response.message, 'uipress-lite', '', 'error', true);
           self.themeLoading = false;
@@ -149,7 +149,7 @@ export default {
       let URL = 'https://api.uipress.co/templates/get/?templateid=' + self.setupDetails.chosenTemplate;
       let notiID = self.uipress.notify(__('Importing template', 'uipress-lite'), '', 'default', false, true);
 
-      self.uipress.callServer(URL, formData).then((response) => {
+      self.sendServerRequest(URL, formData).then((response) => {
         if (response.error) {
           self.uipress.notify(response.message, '', 'error', true);
           self.uipress.destroy_notification(notiID);
@@ -176,7 +176,7 @@ export default {
       formData.append('settings', settings);
       formData.append('styles', stylesJson);
 
-      self.uipress.callServer(uip_ajax.ajax_url, formData).then((response) => {
+      self.sendServerRequest(uip_ajax.ajax_url, formData).then((response) => {
         self.uipress.destroy_notification(notiID);
         self.saving = false;
         self.uipress.notify('Setup complete', '', 'success', true);

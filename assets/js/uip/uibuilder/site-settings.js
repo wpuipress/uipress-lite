@@ -61,7 +61,7 @@ export default {
       formData.append('action', 'uip_get_global_settings');
       formData.append('security', uip_ajax.security);
 
-      self.uipress.callServer(uip_ajax.ajax_url, formData).then((response) => {
+      self.sendServerRequest(uip_ajax.ajax_url, formData).then((response) => {
         self.loading = false;
         if (response.error) {
           self.uipress.notify(response.message, '', 'error', true);
@@ -88,7 +88,7 @@ export default {
       formData.append('action', 'uip_get_ui_styles');
       formData.append('security', uip_ajax.security);
 
-      self.uipress.callServer(uip_ajax.ajax_url, formData).then((response) => {
+      self.sendServerRequest(uip_ajax.ajax_url, formData).then((response) => {
         if (response.error) {
           return;
         }
@@ -156,7 +156,7 @@ export default {
       formData.append('security', uip_ajax.security);
       formData.append('settings', sendData);
 
-      self.uipress.callServer(uip_ajax.ajax_url, formData).then((response) => {
+      self.sendServerRequest(uip_ajax.ajax_url, formData).then((response) => {
         if (response.error) {
           self.uipress.notify(response.message, '', 'error', true);
           return;

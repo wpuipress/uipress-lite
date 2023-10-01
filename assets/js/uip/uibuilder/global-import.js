@@ -135,7 +135,7 @@ export default {
       formData.append('security', uip_ajax.security);
       formData.append('content', JSON.stringify(temper));
 
-      const response = await this.uipress.callServer(uip_ajax.ajax_url, formData);
+      const response = await this.sendServerRequest(uip_ajax.ajax_url, formData);
 
       // Handle errpr
       if (response.error) {

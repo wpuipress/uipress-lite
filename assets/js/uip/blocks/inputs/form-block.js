@@ -133,7 +133,7 @@ export default {
       formData.append('userMetaObjectKey', formOptions.userMetaObjectKey);
       formData.append('siteOptionName', formOptions.siteOptionName);
 
-      const response = this.uipress.callServer(uip_ajax.ajax_url, formData);
+      const response = this.sendServerRequest(uip_ajax.ajax_url, formData);
       //Delay the the function so it doesn't overload the server
 
       const finishPopulate = () => {
@@ -261,7 +261,7 @@ export default {
       formData.append('objectOrSingle', formOptions.objectOrSingle);
       formData.append('userMetaObjectKey', formOptions.userMetaObjectKey);
 
-      const response = await this.uipress.callServer(uip_ajax.ajax_url, formData);
+      const response = await this.sendServerRequest(uip_ajax.ajax_url, formData);
       this.loading = false;
 
       // Handle error state
@@ -299,7 +299,7 @@ export default {
       formData.append('formData', formatted);
       formData.append('optionKey', formOptions.siteOptionName);
 
-      const response = await this.uipress.callServer(uip_ajax.ajax_url, formData);
+      const response = await this.sendServerRequest(uip_ajax.ajax_url, formData);
       this.loading = false;
 
       // Handle error
@@ -339,7 +339,7 @@ export default {
       formData.append('emailSubject', formOptions.emailSubject);
       formData.append('emailTemplate', formOptions.emailTemplate);
 
-      const response = await this.uipress.callServer(uip_ajax.ajax_url, formData);
+      const response = await this.sendServerRequest(uip_ajax.ajax_url, formData);
       this.loading = false;
 
       // Catch error
@@ -380,7 +380,7 @@ export default {
       formData.append('formData', formatted);
       formData.append('userFunction', userFunction);
 
-      const response = await this.uipress.callServer(uip_ajax.ajax_url, formData);
+      const response = await this.sendServerRequest(uip_ajax.ajax_url, formData);
       this.loading = false;
 
       // Handle error

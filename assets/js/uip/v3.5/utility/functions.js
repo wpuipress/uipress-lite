@@ -195,7 +195,7 @@ export async function sendServerRequest(url, data) {
   }
 
   const responseData = await response.text();
-  const parsedData = this.uipParsJson(responseData);
+  const parsedData = uipParsJson(responseData);
 
   if (!parsedData) {
     errorMessage(errorMessage);
@@ -203,4 +203,13 @@ export async function sendServerRequest(url, data) {
   }
 
   return parsedData;
+}
+
+/**
+ * Parses data and converts specific true false values to Boolean
+ *
+ * @since 3.0.0
+ */
+export function uipParsJson(data) {
+  return JSON.parse(data, (k, v) => (v === 'uiptrue' ? true : v === 'uipfalse' ? false : v === 'uipblank' ? '' : v));
 }

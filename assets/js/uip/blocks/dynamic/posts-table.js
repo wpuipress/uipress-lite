@@ -164,7 +164,7 @@ export default {
       formData.append('actions', JSON.stringify(this.getActions));
 
       // Fetch posts
-      const response = await this.uipress.callServer(uip_ajax.ajax_url, formData);
+      const response = await this.sendServerRequest(uip_ajax.ajax_url, formData);
 
       // Something went very wrong
       if (!response) {

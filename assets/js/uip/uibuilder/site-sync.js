@@ -107,7 +107,7 @@ export default {
       formData.append('action', 'uip_get_sync_options');
       formData.append('security', uip_ajax.security);
 
-      const response = await this.uipress.callServer(uip_ajax.ajax_url, formData);
+      const response = await this.sendServerRequest(uip_ajax.ajax_url, formData);
       this.fetchingSettings = false;
 
       // Handle error
@@ -157,7 +157,7 @@ export default {
       formData.append('action', 'uip_refresh_sync_key');
       formData.append('security', uip_ajax.security);
 
-      const response = await this.uipress.callServer(uip_ajax.ajax_url, formData);
+      const response = await this.sendServerRequest(uip_ajax.ajax_url, formData);
       this.fetchingSettings = false;
 
       // Handle error
@@ -188,7 +188,7 @@ export default {
       formData.append('options', this.uipress.uipEncodeJson(this.hostOptions));
       formData.append('syncOptions', this.uipress.uipEncodeJson(this.syncOptions));
 
-      const response = await this.uipress.callServer(uip_ajax.ajax_url, formData);
+      const response = await this.sendServerRequest(uip_ajax.ajax_url, formData);
       this.fetchingSettings = false;
 
       // Handle error
@@ -214,7 +214,7 @@ export default {
       formData.append('options', JSON.stringify(this.syncOptions));
       const notificationID = this.uipress.notify(__('Importing uiPress content', 'uipress-lite'), '', 'default', false, true);
 
-      const response = await this.uipress.callServer(uip_ajax.ajax_url, formData);
+      const response = await this.sendServerRequest(uip_ajax.ajax_url, formData);
       this.uipress.destroy_notification(notificationID);
 
       // Handle error

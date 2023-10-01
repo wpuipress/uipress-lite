@@ -173,7 +173,7 @@ export default {
       const formData = new FormData();
       const URL = `https://api.uipress.co/templates/list/?sort=${this.returnSortBy}&filter=${this.returnFilter}&v321=true`;
 
-      this.uipress.callServer(URL, formData).then((response) => {
+      this.sendServerRequest(URL, formData).then((response) => {
         this.loading = false;
         if (response.error) {
           this.uipress.notify(response.message, 'uipress-lite', '', 'error', true);
@@ -296,7 +296,7 @@ export default {
       formData.append('action', 'uip_get_ui_patterns_list');
       formData.append('security', uip_ajax.security);
 
-      this.uipress.callServer(uip_ajax.ajax_url, formData).then((response) => {
+      this.sendServerRequest(uip_ajax.ajax_url, formData).then((response) => {
         if (response.error) {
           this.uipress.notify(response.message, 'uipress-lite', '', 'error', true);
         }

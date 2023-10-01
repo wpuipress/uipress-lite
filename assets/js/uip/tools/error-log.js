@@ -76,7 +76,7 @@ export default {
       formData.append('order', this.order);
       formData.append('page', this.page);
 
-      const response = await this.uipress.callServer(uip_ajax.ajax_url, formData);
+      const response = await this.sendServerRequest(uip_ajax.ajax_url, formData);
       this.loading = false;
 
       // Handle error

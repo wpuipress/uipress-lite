@@ -159,7 +159,7 @@ export default {
       formData.append('security', uip_ajax.security);
       formData.append('searchStr', str);
 
-      const response = await this.uipress.callServer(uip_ajax.ajax_url, formData);
+      const response = await this.sendServerRequest(uip_ajax.ajax_url, formData);
 
       // Exit if error
       if (!response) return;

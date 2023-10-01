@@ -73,7 +73,7 @@ export default {
       formData.append('options', JSON.stringify(this.exportOptions));
       const notificationID = this.uipress.notify(__('Exporting uiPress content', 'uipress-lite'), '', 'default', false, true);
 
-      const response = await this.uipress.callServer(uip_ajax.ajax_url, formData);
+      const response = await this.sendServerRequest(uip_ajax.ajax_url, formData);
 
       // Handle error
       if (!response || response.error) {

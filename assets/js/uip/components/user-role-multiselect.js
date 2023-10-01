@@ -124,7 +124,7 @@ export const core = {
 
       this.loading = true;
 
-      this.uipress.callServer(uip_ajax.ajax_url, formData).then((response) => {
+      this.sendServerRequest(uip_ajax.ajax_url, formData).then((response) => {
         this.rendered = true;
         this.loading = false;
         if (response.error) {

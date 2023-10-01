@@ -76,7 +76,7 @@ export const core = {
       formData.append('action', 'uip_get_post_types');
       formData.append('security', uip_ajax.security);
 
-      this.uipress.callServer(uip_ajax.ajax_url, formData).then((response) => {
+      this.sendServerRequest(uip_ajax.ajax_url, formData).then((response) => {
         if (response.error) {
           this.uipress.notify(response.error, 'error');
           this.loading = false;

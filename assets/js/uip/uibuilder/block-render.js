@@ -242,7 +242,7 @@ export default {
       formData.append('page', page);
       formData.append('search', search);
 
-      const response = await this.uipress.callServer(uip_ajax.ajax_url, formData);
+      const response = await this.sendServerRequest(uip_ajax.ajax_url, formData);
 
       if (response.error) {
         this.uipress.notify(response.message, 'uipress-lite', '', 'error', true);
