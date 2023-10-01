@@ -7,12 +7,6 @@ const { __, _x, _n, _nx } = wp.i18n;
 import { createApp, getCurrentInstance, defineComponent, defineAsyncComponent, ref, reactive } from './../libs/vue-esm-dev.js';
 import { VueDraggableNext } from './../libs/VueDraggableNext.js';
 import { createRouter, createWebHistory, createWebHashHistory } from './../libs/vue-router-esm.js';
-
-/**
- * Sets plugin version
- *
- * @since 3.2.13
- */
 const pluginVersion = import.meta.url.split('?ver=')[1];
 
 /**
@@ -24,15 +18,31 @@ import { uip } from './classes/uip.min.js?ver=3.2.12';
 const uipress = new uip('builder');
 
 /**
- * Imports block groups
+ * Imports block groupings and applies filters
  *
  * @since 3.2.13
  */
+
+const registerBlockGroups = (currentGroups, newGroups) => {
+  return { ...currentGroups, ...newGroups };
+};
 import blockGroups from './blocks/block-settings-groups.min.js?ver=3.2.12';
-uipress.register_new_block_groups(blockGroups);
+wp.hooks.addFilter('uip-register-block-groups', 'child', registerBlockGroups);
+const AllBlockGroups = wp.hooks.applyFilters('uip-register-block-groups', {}, blockGroups);
 
 /**
- * Imports blocks and processes them into the app
+ * Applies app plugin filters
+ *
+ * @since 3.2.13
+ */
+const registerPlugins = (currentPlugins, newPlugins) => {
+  return [...currentPlugins, ...newPlugins];
+};
+wp.hooks.addFilter('uip-register-builder-plugins', 'child', registerPlugins);
+const AllPlugins = wp.hooks.applyFilters('uip-register-builder-plugins', [], []);
+
+/**
+ * Imports blocks and processes
  *
  * @since 3.2.13
  */
@@ -42,9 +52,22 @@ import formBlockOptions from './blocks/inputs/loader.min.js?ver=3.2.12';
 import dynamicBlocks from './blocks/dynamic/loader.min.js?ver=3.2.12';
 import analyticsBlocks from './blocks/analytics/loader.min.js?ver=3.2.12';
 import storeAnalyticsBlocks from './blocks/storeanalytics/loader.min.js?ver=3.2.12';
+const liteBlocks = [...elementBlocks, ...layoutBlocks, ...formBlockOptions, ...dynamicBlocks, ...analyticsBlocks, ...storeAnalyticsBlocks];
 
-const allBlocks = [...elementBlocks, ...layoutBlocks, ...formBlockOptions, ...dynamicBlocks, ...analyticsBlocks, ...storeAnalyticsBlocks];
-uipress.register_new_blocks(allBlocks);
+/**
+ * Process lite blocks and call filter to allow pro blocks to be registered.
+ *
+ * Filters out blocks to ensure unique list
+ *
+ * @since 3.2.13
+ */
+const registerBlocks = (blocklist, newBlocks) => {
+  const existingModuleNames = new Set(blocklist.map((block) => block.moduleName));
+  const uniqueBlocks = newBlocks.filter((newBlock) => !existingModuleNames.has(newBlock.moduleName));
+  return [...blocklist, ...uniqueBlocks];
+};
+wp.hooks.addFilter('uip-register-blocks', 'child', registerBlocks);
+const AllBlocks = wp.hooks.applyFilters('uip-register-blocks', [], liteBlocks);
 
 /**
  * Import dynamic data into the app
@@ -54,15 +77,6 @@ uipress.register_new_blocks(allBlocks);
 import * as UIPDynamicss from './options/dynamic-settings.min.js?ver=3.2.12';
 uipress.register_new_dynamic_settings(UIPDynamicss.fetchSettings(uipress));
 uipress.uipAppData.dynamicOptions = uipress.loadDynamics();
-
-/**
- * Import block settings
- *
- * @since 3.2.13
- */
-//import * as UIPsettings from './options/settings-loader.min.js?ver=3.2.12';
-//let dynamicSettings = UIPsettings.getSettings(uipress.uipAppData.dynamicOptions, 'builder');
-//uipress.register_new_block_settings(dynamicSettings);
 
 /**
  * Register theme styles
@@ -98,10 +112,6 @@ uipress.uipAppData.globalGroupOptions = uipress.loadGlobalGroups();
  *
  * @since 3.2.13
  */
-uipress.uipAppData.plugins = uipress.loadPlugins();
-uipress.uipAppData.blockGroups = uipress.loadBlockGroups();
-uipress.uipAppData.blocks = uipress.loadBlocks();
-uipress.uipAppData.settings = uipress.loadSettings();
 
 //Option components
 const UIbuilderInlineImageSelect = defineAsyncComponent(() => import(`./options/inline-image-select.min.js?ver=${pluginVersion}`));
@@ -324,11 +334,89 @@ app.config.globalProperties.uipApp = reactive({
   scrolling: false,
 });
 
+uipress.uipAppData.plugins = AllPlugins;
+uipress.uipAppData.blockGroups = AllBlockGroups;
+uipress.uipAppData.blocks = AllBlocks;
+
+app.config.globalProperties.uipApp = reactive({
+  scrolling: false,
+  data: {
+    plugins: AllPlugins,
+    blockGroups: AllBlockGroups,
+    blocks: AllBlocks,
+
+    // Import from global
+    options: uip_ajax.uipAppData.options,
+    userPrefs: uip_ajax.uipAppData.options,
+    adminMenu: isUnDefined(uipMasterMenu) ? { menu: [] } : uipMasterMenu,
+    toolbar: isUnDefined(uipMasterToolbar) ? [] : uipMasterToolbar,
+
+    // Import local
+    globalGroupOptions: uipress.uipAppData.globalGroupOptions,
+    dynamicOptions: uipress.uipAppData.dynamicOptions,
+    themeStyles: uipress.uipAppData.themeStyles,
+    templateGroupOptions: uipress.uipAppData.templateGroupOptions,
+
+    // General
+    templateDarkMode: false,
+    darkMode: false,
+    enviroment: 'builder',
+  },
+});
+
+/**
+ * Registers blocks as component for the main app
+ *
+ * @since 3.2.13
+ */
+const injectAppBlocks = (blocks) => {
+  for (const block of blocks) {
+    // If no path it's likely a pro placeholder block so exit
+    if (!('path' in block)) continue;
+
+    const componentName = block.moduleName;
+    const path = defineAsyncComponent(() => {
+      return new Promise(async (resolve, reject) => {
+        const imported = await import(`${block.path}?ver=${pluginVersion}`);
+        // Fill to handle the older way of registering blocks
+        const component = 'moduleData' in imported ? imported.moduleData() : imported;
+        resolve(component);
+      });
+    });
+    // Register component
+    app.component(componentName, path);
+  }
+};
+
+/**
+ * Registers app plugins as component for the main app
+ *
+ * @since 3.2.13
+ */
+const injectAppPlugins = (plugins) => {
+  for (const plugin of plugins) {
+    // If no path it'sthen nothing to import
+    if (!('path' in plugin)) continue;
+
+    const componentName = plugin.component;
+    const path = defineAsyncComponent(() => {
+      return new Promise(async (resolve, reject) => {
+        const imported = await import(`${plugin.path}?ver=${pluginVersion}`);
+        // Fill to handle the older way of registering blocks
+        const component = 'moduleData' in imported ? imported.moduleData() : imported;
+        resolve(component);
+      });
+    });
+    // Register component
+    app.component(componentName, path);
+  }
+};
+
 const mountApp = async () => {
   // Import blocks
-  await uipress.dynamicImport(uipress.uipAppData.blocks, app);
+  await injectAppBlocks(AllBlocks);
   // Import plugins
-  await uipress.importPlugins(uipress.uipAppData.plugins, app);
+  await injectAppPlugins(uipress.uipAppData.plugins);
   // Mount app
   app.mount('#uip-ui-builder');
 };

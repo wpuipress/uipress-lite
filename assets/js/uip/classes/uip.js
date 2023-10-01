@@ -1126,6 +1126,7 @@ export class uip {
    * @since 3.0.0
    */
   async importPlugins(plugins, app) {
+    console.log(plugins);
     return await Promise.all(
       plugins.map(async (amodule) => {
         if ('path' in amodule) {
