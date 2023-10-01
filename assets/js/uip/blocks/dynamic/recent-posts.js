@@ -1,150 +1,149 @@
 const { __, _x, _n, _nx } = wp.i18n;
-export function moduleData() {
-  return {
-    props: {
-      display: String,
-      name: String,
-      block: Object,
-    },
-    data() {
-      return {
-        searchString: '',
-        results: [],
-        page: 1,
-        totalPages: 0,
-        loading: false,
-        strings: {
-          nothingFound: __('Nothing posts found', 'uipress-lite'),
-          by: __('By', 'uipress-lite'),
-        },
-        searching: false,
-      };
-    },
-    inject: ['uipData', 'uipress'],
-    mounted() {
-      this.getPosts();
-    },
-    watch: {
-      page: {
-        handler(newValue, oldValue) {
-          if (newValue) this.getPosts();
-        },
+export default {
+  props: {
+    display: String,
+    name: String,
+    block: Object,
+  },
+  data() {
+    return {
+      searchString: '',
+      results: [],
+      page: 1,
+      totalPages: 0,
+      loading: false,
+      strings: {
+        nothingFound: __('Nothing posts found', 'uipress-lite'),
+        by: __('By', 'uipress-lite'),
       },
-      'block.settings.block.options': {
-        handler(newValue, oldValue) {
-          this.getPosts();
-        },
-        deep: true,
+      searching: false,
+    };
+  },
+  inject: ['uipData', 'uipress'],
+  mounted() {
+    this.getPosts();
+  },
+  watch: {
+    page: {
+      handler(newValue, oldValue) {
+        if (newValue) this.getPosts();
       },
     },
-    computed: {
-      /**
-       * Returns items per page
-       *
-       * @since 3.2.13
-       */
-      returnPerPage() {
-        return this.block.settings.block.options.postsPerPage.value;
+    'block.settings.block.options': {
+      handler(newValue, oldValue) {
+        this.getPosts();
       },
-
-      /**
-       * Returns post types active for block
-       *
-       * @since 3.2.13
-       */
-      postTypes() {
-        return this.uipress.get_block_option(this.block, 'block', 'activePostTypes');
-      },
-
-      /**
-       * Returns per page option for block
-       *
-       * @since 3.2.13
-       */
-      perPage() {
-        return this.uipress.get_block_option(this.block, 'block', 'postsPerPage');
-      },
-
-      /**
-       * Returns whether the posts should be limited to the current author's own
-       *
-       * @since 3.2.13
-       */
-      limitToAuthor() {
-        let limit = this.uipress.get_block_option(this.block, 'block', 'limitToAuthor');
-        if (!limit) return false;
-        if (!this.isObject(limit)) return limit;
-        if (limit.value) return limit.value;
-        return false;
-      },
+      deep: true,
     },
-    methods: {
-      /**
-       * Fetches posts
-       *
-       * @returns {Promise}
-       * @since 3.2.13
-       */
-      async getPosts() {
-        //Query already running
-        if (this.loading) return;
-
-        this.loading = true;
-
-        const postTypes = this.postTypes;
-
-        //Build form data for fetch request
-        let formData = new FormData();
-        formData.append('action', 'uip_get_recent_posts');
-        formData.append('security', uip_ajax.security);
-        formData.append('search', this.searchString);
-        formData.append('page', this.page);
-        formData.append('postTypes', JSON.stringify(postTypes));
-        formData.append('perPage', this.returnPerPage);
-        formData.append('limitToAuthor', this.limitToAuthor);
-
-        const response = await this.uipress.callServer(uip_ajax.ajax_url, formData);
-
-        // No response to exit early
-        if (!response) {
-          this.uipress.notify(__('Unable to fetch posts at this tiem', 'uipress-lite'), '', '', 'error', true);
-          this.searching = false;
-          return;
-        }
-
-        // Handle error
-        if (response.error) {
-          this.uipress.notify(response.message, '', '', 'error', true);
-          this.searching = false;
-        }
-
-        // Handle success
-        if (response.success) {
-          this.loading = false;
-          this.results = response.posts;
-          this.totalPages = response.totalPages;
-        }
-      },
-
-      /**
-       * Handles previous page requests
-       *
-       * @since 3.2.13
-       */
-      goBack() {
-        if (this.page > 1) this.page--;
-      },
-
-      /**
-       * Handles next page requests
-       *
-       * @since 3.2.13
-       */
-      goForward() {
-        if (this.page < this.totalPages) this.page++;
-      },
+  },
+  computed: {
+    /**
+     * Returns items per page
+     *
+     * @since 3.2.13
+     */
+    returnPerPage() {
+      return this.block.settings.block.options.postsPerPage.value;
     },
-    template: `
+
+    /**
+     * Returns post types active for block
+     *
+     * @since 3.2.13
+     */
+    postTypes() {
+      return this.uipress.get_block_option(this.block, 'block', 'activePostTypes');
+    },
+
+    /**
+     * Returns per page option for block
+     *
+     * @since 3.2.13
+     */
+    perPage() {
+      return this.uipress.get_block_option(this.block, 'block', 'postsPerPage');
+    },
+
+    /**
+     * Returns whether the posts should be limited to the current author's own
+     *
+     * @since 3.2.13
+     */
+    limitToAuthor() {
+      let limit = this.uipress.get_block_option(this.block, 'block', 'limitToAuthor');
+      if (!limit) return false;
+      if (!this.isObject(limit)) return limit;
+      if (limit.value) return limit.value;
+      return false;
+    },
+  },
+  methods: {
+    /**
+     * Fetches posts
+     *
+     * @returns {Promise}
+     * @since 3.2.13
+     */
+    async getPosts() {
+      //Query already running
+      if (this.loading) return;
+
+      this.loading = true;
+
+      const postTypes = this.postTypes;
+
+      //Build form data for fetch request
+      let formData = new FormData();
+      formData.append('action', 'uip_get_recent_posts');
+      formData.append('security', uip_ajax.security);
+      formData.append('search', this.searchString);
+      formData.append('page', this.page);
+      formData.append('postTypes', JSON.stringify(postTypes));
+      formData.append('perPage', this.returnPerPage);
+      formData.append('limitToAuthor', this.limitToAuthor);
+
+      const response = await this.uipress.callServer(uip_ajax.ajax_url, formData);
+
+      // No response to exit early
+      if (!response) {
+        this.uipress.notify(__('Unable to fetch posts at this tiem', 'uipress-lite'), '', '', 'error', true);
+        this.searching = false;
+        return;
+      }
+
+      // Handle error
+      if (response.error) {
+        this.uipress.notify(response.message, '', '', 'error', true);
+        this.searching = false;
+      }
+
+      // Handle success
+      if (response.success) {
+        this.loading = false;
+        this.results = response.posts;
+        this.totalPages = response.totalPages;
+      }
+    },
+
+    /**
+     * Handles previous page requests
+     *
+     * @since 3.2.13
+     */
+    goBack() {
+      if (this.page > 1) this.page--;
+    },
+
+    /**
+     * Handles next page requests
+     *
+     * @since 3.2.13
+     */
+    goForward() {
+      if (this.page < this.totalPages) this.page++;
+    },
+  },
+  template: `
     
             <div class="uip-flex uip-flex-column uip-row-gap-s">
               <div class="uip-flex uip-flex-column uip-row-gap-xs uip-list-area">
@@ -179,5 +178,4 @@ export function moduleData() {
             </div>
             
             `,
-  };
-}
+};

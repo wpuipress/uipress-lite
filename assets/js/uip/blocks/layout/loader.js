@@ -10,7 +10,7 @@ const Container = {
   moduleName: 'uip-container',
   description: __('Creates a container block with options for aligning content', 'uipress-lite'),
   group: 'layout',
-  path: '../blocks/layout/container.min.js',
+  path: './blocks/layout/container.min.js',
   icon: 'crop_free',
   content: [],
   optionsEnabled: [
@@ -40,7 +40,7 @@ const Dropdown = {
   moduleName: 'uip-dropdown',
   description: __('Creates a dropdown with a customisable trigger', 'uipress-lite'),
   group: 'layout',
-  path: '../blocks/layout/dropdown.min.js',
+  path: './blocks/layout/dropdown.min.js',
   icon: 'expand_circle_down',
   content: [],
   optionsEnabled: [
@@ -154,7 +154,7 @@ const ResponsiveGrid = {
   moduleName: 'responsive-grid',
   description: __('Outputs a responsive grid', 'uipress-lite'),
   group: 'layout',
-  path: '../blocks/layout/responsive-grid.min.js',
+  path: './blocks/layout/responsive-grid.min.js',
   icon: 'grid_view',
   content: [],
   optionsEnabled: [
@@ -195,7 +195,7 @@ const SlideOut = {
   moduleName: 'uip-slide-out',
   description: __('Creates a slide out panel with a customisable trigger', 'uipress-lite'),
   group: 'layout',
-  path: '../blocks/layout/slide-out-panel.min.js',
+  path: './blocks/layout/slide-out-panel.min.js',
   icon: 'space_dashboard',
   content: [],
   optionsEnabled: [

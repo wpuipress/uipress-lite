@@ -1,170 +1,169 @@
 const { __, _x, _n, _nx } = wp.i18n;
-export function moduleData() {
-  return {
-    props: {
-      display: String,
-      name: String,
-      block: Object,
-    },
-    data() {
-      return {
-        todoList: [],
-        loading: false,
-        queued: false,
-        strings: {
-          newToDo: __('Add todo', 'uipress-lite'),
-          whatwouldyoulike: __('What would you like to do?', 'uipress-lite'),
-          title: __('Title', 'uipress-lite'),
-          description: __('Add a description...'),
-        },
-        activeTab: 'all',
-        tabs: [
-          {
-            name: 'all',
-            label: __('All', 'uipress-lite'),
-          },
-          {
-            name: 'todo',
-            label: __('Todo', 'uipress-lite'),
-          },
-          {
-            name: 'completed',
-            label: __('Completed', 'uipress-lite'),
-          },
-        ],
-        newToDo: {
-          name: '',
-          description: '',
-          done: false,
-        },
-      };
-    },
-    inject: ['uipress'],
-    mounted() {
-      this.getToDoList();
-    },
-    watch: {
-      /**
-       * Watches changes to the todo list and saves. There is a large timeout as this fires on every change
-       *
-       * @since 3.2.13
-       */
-      todoList: {
-        handler(newValue, oldValue) {
-          let self = this;
-
-          if (this.queued) {
-            return;
-          }
-
-          this.queued = true;
-          setTimeout(function () {
-            this.queued = false;
-            this.uipress.saveUserPreference('uip-todo-list', newValue, false);
-          }, 8000);
-        },
-        deep: true,
+export default {
+  props: {
+    display: String,
+    name: String,
+    block: Object,
+  },
+  data() {
+    return {
+      todoList: [],
+      loading: false,
+      queued: false,
+      strings: {
+        newToDo: __('Add todo', 'uipress-lite'),
+        whatwouldyoulike: __('What would you like to do?', 'uipress-lite'),
+        title: __('Title', 'uipress-lite'),
+        description: __('Add a description...'),
       },
-    },
-    computed: {
-      /**
-       * Returns the list of to dos based on the current tab
-       *
-       * @since 3.2.13
-       */
-      returnToDos() {
-        switch (this.activeTab) {
-          case 'all':
-            return this.todoList;
-
-          case 'todo':
-            return this.todoList.filter((el) => el.done === false);
-
-          case 'completed':
-            return this.todoList.filter((el) => el.done === true);
-
-          default:
-            return []; // This will return an empty array if none of the above conditions match
-        }
+      activeTab: 'all',
+      tabs: [
+        {
+          name: 'all',
+          label: __('All', 'uipress-lite'),
+        },
+        {
+          name: 'todo',
+          label: __('Todo', 'uipress-lite'),
+        },
+        {
+          name: 'completed',
+          label: __('Completed', 'uipress-lite'),
+        },
+      ],
+      newToDo: {
+        name: '',
+        description: '',
+        done: false,
       },
-    },
-    methods: {
-      /**
-       * Adds a new todo item to the list
-       *
-       * @since 3.2.13
-       */
-      addNewToDo() {
-        let newItem = Object.assign({}, this.newToDo);
-        this.todoList.push(newItem);
+    };
+  },
+  inject: ['uipress'],
+  mounted() {
+    this.getToDoList();
+  },
+  watch: {
+    /**
+     * Watches changes to the todo list and saves. There is a large timeout as this fires on every change
+     *
+     * @since 3.2.13
+     */
+    todoList: {
+      handler(newValue, oldValue) {
+        let self = this;
 
-        // Reset new todo
-        this.newToDo = { name: '', description: '', done: false };
-      },
-
-      /**
-       * Gets the todo list
-       *
-       * @since 3.2.13
-       */
-      async getToDoList() {
-        this.loading = true;
-
-        // Get users list
-        const response = await this.uipress.getUserPreference('uip-todo-list');
-
-        this.loading = false;
-
-        // Handle error
-        if (response.error) {
-          this.uipress.notify(response.message, '', 'error', true);
+        if (this.queued) {
           return;
         }
 
-        // Handle success
-        if (response && Array.isArray(response)) {
-          this.todoList = response;
-        }
+        this.queued = true;
+        setTimeout(function () {
+          this.queued = false;
+          this.uipress.saveUserPreference('uip-todo-list', newValue, false);
+        }, 8000);
       },
-
-      /**
-       * Deletes a todo item
-       *
-       * @param {Number} index - The current index to delete
-       * @since 3.2.13
-       */
-      deleteItem(index) {
-        this.todoList.splice(index, 1);
-      },
-
-      /**
-       * Duplicates a todo item
-       *
-       * @param {Object} item - the todo item to duplicate
-       * @since 3.2.13
-       */
-      duplicateItem(item) {
-        let newItem = Object.assign({}, item);
-        this.todoList.push(newItem);
-      },
-
-      /**
-       * Resizes the textarea automatically to stop scrolling
-       *
-       * @param {Object} event - the keyup event
-       * @since 3.2.13
-       */
-      resizeTextarea(event) {
-        const newHeight = Math.min(event.target.scrollHeight, 500);
-
-        event.target.style.height = '';
-        event.target.style.height = newHeight + 'px';
-
-        const overflow = newHeight == 500 ? 'auto' : 'hidden';
-        event.target.style.overflow = overflow;
-      },
+      deep: true,
     },
-    template: `
+  },
+  computed: {
+    /**
+     * Returns the list of to dos based on the current tab
+     *
+     * @since 3.2.13
+     */
+    returnToDos() {
+      switch (this.activeTab) {
+        case 'all':
+          return this.todoList;
+
+        case 'todo':
+          return this.todoList.filter((el) => el.done === false);
+
+        case 'completed':
+          return this.todoList.filter((el) => el.done === true);
+
+        default:
+          return []; // This will return an empty array if none of the above conditions match
+      }
+    },
+  },
+  methods: {
+    /**
+     * Adds a new todo item to the list
+     *
+     * @since 3.2.13
+     */
+    addNewToDo() {
+      let newItem = Object.assign({}, this.newToDo);
+      this.todoList.push(newItem);
+
+      // Reset new todo
+      this.newToDo = { name: '', description: '', done: false };
+    },
+
+    /**
+     * Gets the todo list
+     *
+     * @since 3.2.13
+     */
+    async getToDoList() {
+      this.loading = true;
+
+      // Get users list
+      const response = await this.uipress.getUserPreference('uip-todo-list');
+
+      this.loading = false;
+
+      // Handle error
+      if (response.error) {
+        this.uipress.notify(response.message, '', 'error', true);
+        return;
+      }
+
+      // Handle success
+      if (response && Array.isArray(response)) {
+        this.todoList = response;
+      }
+    },
+
+    /**
+     * Deletes a todo item
+     *
+     * @param {Number} index - The current index to delete
+     * @since 3.2.13
+     */
+    deleteItem(index) {
+      this.todoList.splice(index, 1);
+    },
+
+    /**
+     * Duplicates a todo item
+     *
+     * @param {Object} item - the todo item to duplicate
+     * @since 3.2.13
+     */
+    duplicateItem(item) {
+      let newItem = Object.assign({}, item);
+      this.todoList.push(newItem);
+    },
+
+    /**
+     * Resizes the textarea automatically to stop scrolling
+     *
+     * @param {Object} event - the keyup event
+     * @since 3.2.13
+     */
+    resizeTextarea(event) {
+      const newHeight = Math.min(event.target.scrollHeight, 500);
+
+      event.target.style.height = '';
+      event.target.style.height = newHeight + 'px';
+
+      const overflow = newHeight == 500 ? 'auto' : 'hidden';
+      event.target.style.overflow = overflow;
+    },
+  },
+  template: `
           <div>
             <component is="style" scoped>
               .list-enter-active,
@@ -225,5 +224,4 @@ export function moduleData() {
             </div>
           </div>
           `,
-  };
-}
+};

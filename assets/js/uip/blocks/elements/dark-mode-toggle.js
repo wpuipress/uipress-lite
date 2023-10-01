@@ -1,102 +1,101 @@
 const { __, _x, _n, _nx } = wp.i18n;
-export function moduleData() {
-  return {
-    props: {
-      display: String,
-      name: String,
-      block: Object,
-    },
-    data() {
-      return {
-        darkToggle: this.returnSetting,
-      };
-    },
-    inject: ['uipData', 'uipress'],
-    watch: {
-      'block.settings.block.options.prefersColorScheme.value': {
-        handler(newValue, oldValue) {
-          this.checkAutoDark();
-        },
-        deep: true,
+export default {
+  props: {
+    display: String,
+    name: String,
+    block: Object,
+  },
+  data() {
+    return {
+      darkToggle: this.returnSetting,
+    };
+  },
+  inject: ['uipData', 'uipress'],
+  watch: {
+    'block.settings.block.options.prefersColorScheme.value': {
+      handler(newValue, oldValue) {
+        this.checkAutoDark();
       },
-      'uipData.userPrefs.darkTheme': {
-        handler(newValue, oldValue) {
-          this.setTheme();
-          this.uipress.saveUserPreference('darkTheme', newValue, false);
-        },
-        deep: true,
-      },
+      deep: true,
     },
-    mounted() {
-      this.checkAutoDark();
-      this.setTheme();
+    'uipData.userPrefs.darkTheme': {
+      handler(newValue, oldValue) {
+        this.setTheme();
+        this.uipress.saveUserPreference('darkTheme', newValue, false);
+      },
+      deep: true,
     },
-    computed: {
-      /**
-       * Returns whether the current pref is dark or light
-       *
-       * @since 3.2.13
-       */
-      returnSetting() {
-        const userPref = this.uipData.userPrefs.darkTheme;
-        if (userPref) return true;
-        return false;
-      },
-
-      /**
-       * Returns whether auto detect color mode is enabled
-       *
-       * @since 3.2.13
-       */
-      returnAutoDetect() {
-        const auto = this.uipress.get_block_option(this.block, 'block', 'prefersColorScheme', true);
-        if (!auto) return;
-
-        if (!this.isObject(auto)) return auto;
-        if (auto.value) return auto.value;
-      },
+  },
+  mounted() {
+    this.checkAutoDark();
+    this.setTheme();
+  },
+  computed: {
+    /**
+     * Returns whether the current pref is dark or light
+     *
+     * @since 3.2.13
+     */
+    returnSetting() {
+      const userPref = this.uipData.userPrefs.darkTheme;
+      if (userPref) return true;
+      return false;
     },
-    methods: {
-      /**
-       * Sets theme for iframes
-       *
-       * @since 3.2.13
-       */
-      setTheme() {
-        const darkTheme = this.uipData.userPrefs.darkTheme;
-        const theme = darkTheme ? 'dark' : 'light';
 
-        document.documentElement.setAttribute('data-theme', theme);
-        const frames = document.querySelectorAll('iframe');
+    /**
+     * Returns whether auto detect color mode is enabled
+     *
+     * @since 3.2.13
+     */
+    returnAutoDetect() {
+      const auto = this.uipress.get_block_option(this.block, 'block', 'prefersColorScheme', true);
+      if (!auto) return;
 
-        // No iframes to update so bail
-        if (!frames) return;
-
-        // Update all iframes with data theme tag
-        for (const iframe of frames) {
-          const head = iframe.contentWindow.document.documentElement;
-          if (!head) continue;
-          head.setAttribute('data-theme', theme);
-        }
-      },
-
-      /**
-       * Checks if auto detect 'prefers color scheme' is enabled and sets dark mode
-       *
-       * @since 3.2.13
-       */
-      checkAutoDark() {
-        const userPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-        const autoEnabled = this.returnAutoDetect;
-
-        // Feature is disabled so exit
-        if (!autoEnabled) return;
-
-        const state = userPrefersDark ? true : false;
-        this.uipData.userPrefs.darkTheme = state;
-      },
+      if (!this.isObject(auto)) return auto;
+      if (auto.value) return auto.value;
     },
-    template: `
+  },
+  methods: {
+    /**
+     * Sets theme for iframes
+     *
+     * @since 3.2.13
+     */
+    setTheme() {
+      const darkTheme = this.uipData.userPrefs.darkTheme;
+      const theme = darkTheme ? 'dark' : 'light';
+
+      document.documentElement.setAttribute('data-theme', theme);
+      const frames = document.querySelectorAll('iframe');
+
+      // No iframes to update so bail
+      if (!frames) return;
+
+      // Update all iframes with data theme tag
+      for (const iframe of frames) {
+        const head = iframe.contentWindow.document.documentElement;
+        if (!head) continue;
+        head.setAttribute('data-theme', theme);
+      }
+    },
+
+    /**
+     * Checks if auto detect 'prefers color scheme' is enabled and sets dark mode
+     *
+     * @since 3.2.13
+     */
+    checkAutoDark() {
+      const userPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const autoEnabled = this.returnAutoDetect;
+
+      // Feature is disabled so exit
+      if (!autoEnabled) return;
+
+      const state = userPrefersDark ? true : false;
+      this.uipData.userPrefs.darkTheme = state;
+    },
+  },
+  template: `
     
           <label class="uip-dark-switch uip-overflow-hidden">
             <input type="checkbox" v-model='uipData.userPrefs.darkTheme' >
@@ -104,5 +103,4 @@ export function moduleData() {
           </label>
           
           `,
-  };
-}
+};

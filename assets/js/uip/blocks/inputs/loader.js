@@ -10,7 +10,7 @@ const Form = {
   moduleName: 'form-block',
   description: __('Form elements can be dragged into this block to create custom forms', 'uipress-lite'),
   group: 'form',
-  path: '../blocks/inputs/form-block.min.js',
+  path: './blocks/inputs/form-block.min.js',
   icon: 'edit_note',
   content: [],
   optionsEnabled: [
@@ -100,7 +100,7 @@ const TextInput = {
   moduleName: 'text-input',
   description: __('A simple text input for use with the form block', 'uipress-lite'),
   group: 'form',
-  path: '../blocks/inputs/text-input.min.js',
+  path: './blocks/inputs/text-input.min.js',
   icon: 'input',
   optionsEnabled: [
     //Block options group
@@ -221,7 +221,7 @@ const TextArea = {
   moduleName: 'text-area',
   description: __('A simple textarea input for use with the form block', 'uipress-lite'),
   group: 'form',
-  path: '../blocks/inputs/text-area.min.js',
+  path: './blocks/inputs/text-area.min.js',
   icon: 'segment',
   optionsEnabled: [
     //Block options group
@@ -310,7 +310,7 @@ const Select = {
   moduleName: 'select-input',
   description: __('A simple textarea input for use with the form block', 'uipress-lite'),
   group: 'form',
-  path: '../blocks/inputs/select-input.min.js',
+  path: './blocks/inputs/select-input.min.js',
   icon: 'fact_check',
   optionsEnabled: [
     //Block options group

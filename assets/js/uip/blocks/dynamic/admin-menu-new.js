@@ -477,395 +477,394 @@ const DrillDown = {
   `,
 };
 
-export function moduleData() {
-  return {
-    props: {
-      display: String,
-      name: String,
-      block: Object,
-    },
-    components: {
-      TopLevelItem: TopLevelItem,
-      SubMenuItem: SubMenuItem,
-      DrillDownMenu: DrillDown,
-      MenuSearch: MenuSearch,
-      MenuCollapse: MenuCollapse,
-    },
-    data() {
-      return {
-        menu: [],
-        activeMenu: false,
-        workingMenu: [],
-        activeLink: '',
-        breadCrumbs: [{ name: __('Home', 'uipress-lite'), url: this.uipData.dynamicOptions.viewadmin.value }],
-        searching: false,
-        staticMenu: [],
-        strings: {
-          mainmenu: __('Main menu', 'uipress-lite'),
-          collapseMenu: __('Collapse menu', 'uipress-lite'),
-          search: __('Search menu', 'uipress-lite'),
-        },
-        collapsed: false,
-      };
-    },
-    inject: ['uipData', 'uipress', 'uiTemplate'],
-    watch: {
-      /**
-       * Watches for changes to the breadcrumbs and emits event
-       *
-       * @since 3.2.13
-       */
-      breadCrumbs: {
-        handler(newValue, oldValue) {
-          let self = this;
-          let breadChange = new CustomEvent('uip_breadcrumbs_change', { detail: { crumbs: self.breadCrumbs } });
-          document.dispatchEvent(breadChange);
-        },
-        deep: true,
+export default {
+  props: {
+    display: String,
+    name: String,
+    block: Object,
+  },
+  components: {
+    TopLevelItem: TopLevelItem,
+    SubMenuItem: SubMenuItem,
+    DrillDownMenu: DrillDown,
+    MenuSearch: MenuSearch,
+    MenuCollapse: MenuCollapse,
+  },
+  data() {
+    return {
+      menu: [],
+      activeMenu: false,
+      workingMenu: [],
+      activeLink: '',
+      breadCrumbs: [{ name: __('Home', 'uipress-lite'), url: this.uipData.dynamicOptions.viewadmin.value }],
+      searching: false,
+      staticMenu: [],
+      strings: {
+        mainmenu: __('Main menu', 'uipress-lite'),
+        collapseMenu: __('Collapse menu', 'uipress-lite'),
+        search: __('Search menu', 'uipress-lite'),
       },
-      /**
-       * Watches for changes to the collapsed value and saves status
-       *
-       * @since 3.2.13
-       */
-      collapsed: {
-        handler(newVal, oldVal) {
-          let status = newVal ? true : false;
-          document.documentElement.setAttribute('uip-menu-collapsed', String(status));
-          this.uiTemplate.menuCollapsed = status;
-          this.uipress.saveUserPreference('menuCollapsed', status, false);
-        },
-      },
-    },
-    created() {
-      this.setMenu();
-      this.buildMenu();
-    },
-    mounted() {
-      this.mountEventListeners();
-    },
-    computed: {
-      /**
-       * Gets menu style. Returns style or 'dynamic' if not set
-       *
-       * @since 3.2.13
-       */
-      subMenuStyle() {
-        if (this.collapsed) return 'hover';
-        let style = this.uipress.get_block_option(this.block, 'block', 'subMenuStyle');
-        if (!this.isObject(style)) return 'dynamic';
-        if (style.value) return style.value;
-        return 'dynamic';
-      },
-
-      /**
-       * Returns custom submenu icon. Returns false on failure
-       *
-       * @since 3.2.13
-       */
-      subMenuCustomIcon() {
-        let icon = this.uipress.get_block_option(this.block, 'block', 'subMenuIcon');
-        if (!this.isObject(icon)) return false;
-        if (icon.value) return icon.value;
-        return false;
-      },
-
-      /**
-       * Returns whether auto load is enabled / disabled
-       *
-       * @returns {boolean}
-       * @since 3.2.13
-       */
-      autoLoadIsDisabled() {
-        const disbaled = this.uipress.get_block_option(this.block, 'block', 'loadOnClick');
-        if (this.isObject(disbaled)) return disbaled.value;
-        return disbaled;
-      },
-
-      /**
-       * Returns whether the menu collapse option is available
-       *
-       * @returns {boolean}
-       * @since 3.2.13
-       */
-      hasMenuCollapse() {
-        const menuCollapse = this.uipress.get_block_option(this.block, 'block', 'menuCollapse');
-        if (this.isObject(menuCollapse)) return menuCollapse.value;
-        return menuCollapse;
-      },
-
-      /**
-       * Returns whether the mneu search is enabled
-       *
-       * @returns {boolean}  - whether the search is enabled
-       * @since 3.2.13
-       */
-      hasMenuSearch() {
-        const showSearch = this.uipress.get_block_option(this.block, 'block', 'showSearch');
-        if (this.isObject(showSearch)) return showSearch.value;
-        return showSearch;
-      },
-
-      /**
-       * Returns the drop position of the submenu drop. Returns 'right top' if not set
-       *
-       * @since 3.2.13
-       */
-      returnDropdownPosition() {
-        const pos = this.uipress.get_block_option(this.block, 'block', 'dropdownPosition');
-        if (!this.isObject(pos)) return 'right top';
-
-        if (pos.value) return pos.value;
-        return 'right top';
-      },
-
-      /**
-       * Returns collapsed class when necessary
-       *
-       * @since 3.2.13
-       */
-      returnClasses() {
-        if (this.collapsed) return 'uip-menu-collapsed';
-      },
-
-      /**
-       * Returns whether the menu has icons for current state
-       *
-       * @returns {boolean} - whether to hide icons
-       * @since 3.2.13
-       */
-      hideIcons() {
-        // Don't hide icons if we are collapsed
-        if (this.collapsed) return false;
-
-        const icons = this.uipress.checkNestedValue(this.block, ['settings', 'block', 'options', 'hideIcons', 'value']);
-        if (this.isObject(icons)) return icons.value;
-        return icons;
-      },
-    },
-
+      collapsed: false,
+    };
+  },
+  inject: ['uipData', 'uipress', 'uiTemplate'],
+  watch: {
     /**
-     * Removes event listeners before unmount
+     * Watches for changes to the breadcrumbs and emits event
      *
      * @since 3.2.13
      */
-    beforeUnmount() {
-      document.removeEventListener('uip_page_change', this.updateActiveLink, { once: false });
-      document.removeEventListener('uip_page_change_loaded', this.updateMenuFromFrame, { once: false });
+    breadCrumbs: {
+      handler(newValue, oldValue) {
+        let self = this;
+        let breadChange = new CustomEvent('uip_breadcrumbs_change', { detail: { crumbs: self.breadCrumbs } });
+        document.dispatchEvent(breadChange);
+      },
+      deep: true,
     },
-    methods: {
-      /**
-       * Sets menu from settings object
-       *
-       * @since 3.2.13
-       */
-      setMenu() {
-        this.menu = JSON.parse(JSON.stringify(this.uipData.adminMenu.menu));
-        if (this.uipData.userPrefs.menuCollapsed && this.hasMenuCollapse) this.collapsed = true;
-      },
-
-      /**
-       * Mounts event listeners for menu block
-       *
-       * @since 3.2.13
-       */
-      mountEventListeners() {
-        document.addEventListener('uip_page_change', this.updateActiveLink, { once: false });
-        document.addEventListener('uip_page_change_loaded', this.updateMenuFromFrame, { once: false });
-      },
-
-      /**
-       * Sets new active link from page change event
-       *
-       * @param {Object} e - page change event
-       * @since 3.2.13
-       */
-      updateActiveLink(e) {
-        this.activeLink = e.detail.url ? e.detail.url.replaceAll('%2F', '/') : e.detail.url;
-      },
-
-      /**
-       * Builds menu from basic array
-       *
-       * @since 3.2.13
-       */
-      buildMenu() {
-        const currentLink = this.activeLink;
-
-        // If no currentLink, no need to process items for active status
-        if (!currentLink) return (this.workingMenu = this.menu);
-
-        // Default breadcrumbs
-        this.breadCrumbs = [{ name: __('Home', 'uipress-lite'), url: this.uipData.dynamicOptions.viewadmin.value }];
-
-        // Main function for handling sub items
-        const processSubItem = (sub) => {
-          sub.active = false;
-          sub.url = sub.url ? this.decodeHtmlEntities(sub.url) : undefined;
-          sub.name = sub.name ? this.decodeHtmlEntities(sub.name) : undefined;
-
-          if (sub.url === currentLink) {
-            sub.active = true;
-            this.breadCrumbs.push({ name: sub.name, url: sub.url });
-          }
-        };
-
-        // Top level item handler
-        const processMenuItem = (item) => {
-          item.active = false;
-
-          item.url = item.url ? this.decodeHtmlEntities(item.url) : undefined;
-          item.name = item.name ? this.decodeHtmlEntities(item.name) : undefined;
-
-          const foundItem = this.workingMenu.find((obj) => obj.uid === item.uid);
-          const state = foundItem ? foundItem.open : false;
-          if (state) item.open = true;
-
-          if (item.url === currentLink) {
-            item.active = true;
-            this.breadCrumbs.push({ name: item.name, url: item.url });
-          }
-
-          if (item.submenu) {
-            item.submenu.forEach(processSubItem);
-          }
-        };
-
-        // Process the menu items
-        this.menu.forEach(processMenuItem);
-        this.workingMenu = this.menu;
-      },
-
-      /**
-       * Checks content frame for an updated menu on page load
-       *
-       * @since 3.2.13
-       */
-      updateMenuFromFrame() {
-        //Watch for menu changes in frame
-        const frame = document.querySelector('.uip-page-content-frame');
-
-        // Frame does not exist so bail
-        if (!frame) return;
-
-        const masterMenu = frame.contentWindow.uipMasterMenu;
-        if (!masterMenu || typeof masterMenu === 'undefined') return;
-        if (!('menu' in masterMenu)) return;
-
-        // Update menu
-        this.menu = JSON.parse(JSON.stringify(masterMenu.menu));
-        this.buildMenu();
-      },
-
-      /**
-       * Follows menu link. If modifier keys are pressed then follows browser default
-       *
-       * @param {Object} evt - click event
-       * @param {Object} item - The menu item clicked
-       * @param {Boolean} topLevel - Whether the item is top level or not
-       * @since 3.2.13
-       */
-      maybeFollowLink(evt, item, topLevel) {
-        // If modifier keys allow the event to happen naturally
-        if (evt.ctrlKey || evt.shiftKey || evt.metaKey || evt.button == 1) return;
-
-        // Prevent default link click
-        evt.preventDefault();
-
-        // If we have disabled autoload on top level items and there is a submenu just open the menu and return
-        if (topLevel && this.autoLoadIsDisabled && item.submenu && item.submenu.length > 0) {
-          item.open = !item.open;
-          this.activeMenu = item;
-          return;
-        }
-
-        // Set item as active
-        item.active = true;
-
-        // If there is a submenu then set the active menu for dynamic menu
-        if (item.submenu && item.submenu.length > 0) {
-          this.activeMenu = item;
-        }
-
-        // Update the active link
-        this.uipress.updatePage(item.url);
-      },
-
-      /**
-       * Returns the appropriate sub menu icon indicator for the given item
-       *
-       * @param {Object} item - top level menu item
-       * @since 3.2.13
-       */
-      returnSubIcon(item) {
-        // has custom icon so return that
-        if (this.subMenuCustomIcon) return this.subMenuCustomIcon;
-
-        // If dynamic menu always return chevron right
-        if (this.subMenuStyle == 'dynamic') return 'chevron_right';
-
-        // If item is open / active then return the open icon
-        if (item.open || item.active) return 'expand_more';
-
-        // No conditions met so return default
-        return 'chevron_left';
-      },
-
-      /**
-       * Utility function to catch uipblank in icon names
-       *
-       * @param {String} icon - the icon to check
-       */
-      returnTopIcon(icon) {
-        const status = icon ? icon.includes('uipblank') : false;
-        if (status) return icon.replace('uipblank', 'favorite');
-        return icon;
-      },
-
-      /**
-       * Decodes html entities from a given string
-       *
-       * @param {String} item - the item to be decoded
-       * @since 3.2.12
-       */
-      decodeHtmlEntities(item) {
-        // Return blank if item doesn't have a set value
-        if (!item) return '';
-
-        return item
-          .replace(/&amp;/g, '&')
-          .replace(/&lt;/g, '<')
-          .replace(/&gt;/g, '>')
-          .replace(/&quot;/g, '"')
-          .replace(/&apos;/g, "'")
-          .replace(/&#39;/g, "'")
-          .replace(/&nbsp;/g, ' ')
-          .replace(/%20/g, ' ');
-      },
-
-      /**
-       * Checks if a separator has a custom name. Returns name on success, false on failure
-       *
-       * @param {Object} item - the separator object
-       * @since 3.2.13
-       */
-      sepHasCustomName(item) {
-        return this.uipress.checkNestedValue(item, ['custom', 'name']);
-      },
-
-      /**
-       * Returns whether the given item has an open submenu
-       *
-       * @param {Object} item - the menu item
-       * @since 3.2.13
-       */
-      itemHasOpenSubMenu(item) {
-        if (!item.submenu) return false;
-        if (!item.submenu.length) return false;
-        if (item.active || item.open) return true;
+    /**
+     * Watches for changes to the collapsed value and saves status
+     *
+     * @since 3.2.13
+     */
+    collapsed: {
+      handler(newVal, oldVal) {
+        let status = newVal ? true : false;
+        document.documentElement.setAttribute('uip-menu-collapsed', String(status));
+        this.uiTemplate.menuCollapsed = status;
+        this.uipress.saveUserPreference('menuCollapsed', status, false);
       },
     },
-    template: `
+  },
+  created() {
+    this.setMenu();
+    this.buildMenu();
+  },
+  mounted() {
+    this.mountEventListeners();
+  },
+  computed: {
+    /**
+     * Gets menu style. Returns style or 'dynamic' if not set
+     *
+     * @since 3.2.13
+     */
+    subMenuStyle() {
+      if (this.collapsed) return 'hover';
+      let style = this.uipress.get_block_option(this.block, 'block', 'subMenuStyle');
+      if (!this.isObject(style)) return 'dynamic';
+      if (style.value) return style.value;
+      return 'dynamic';
+    },
+
+    /**
+     * Returns custom submenu icon. Returns false on failure
+     *
+     * @since 3.2.13
+     */
+    subMenuCustomIcon() {
+      let icon = this.uipress.get_block_option(this.block, 'block', 'subMenuIcon');
+      if (!this.isObject(icon)) return false;
+      if (icon.value) return icon.value;
+      return false;
+    },
+
+    /**
+     * Returns whether auto load is enabled / disabled
+     *
+     * @returns {boolean}
+     * @since 3.2.13
+     */
+    autoLoadIsDisabled() {
+      const disbaled = this.uipress.get_block_option(this.block, 'block', 'loadOnClick');
+      if (this.isObject(disbaled)) return disbaled.value;
+      return disbaled;
+    },
+
+    /**
+     * Returns whether the menu collapse option is available
+     *
+     * @returns {boolean}
+     * @since 3.2.13
+     */
+    hasMenuCollapse() {
+      const menuCollapse = this.uipress.get_block_option(this.block, 'block', 'menuCollapse');
+      if (this.isObject(menuCollapse)) return menuCollapse.value;
+      return menuCollapse;
+    },
+
+    /**
+     * Returns whether the mneu search is enabled
+     *
+     * @returns {boolean}  - whether the search is enabled
+     * @since 3.2.13
+     */
+    hasMenuSearch() {
+      const showSearch = this.uipress.get_block_option(this.block, 'block', 'showSearch');
+      if (this.isObject(showSearch)) return showSearch.value;
+      return showSearch;
+    },
+
+    /**
+     * Returns the drop position of the submenu drop. Returns 'right top' if not set
+     *
+     * @since 3.2.13
+     */
+    returnDropdownPosition() {
+      const pos = this.uipress.get_block_option(this.block, 'block', 'dropdownPosition');
+      if (!this.isObject(pos)) return 'right top';
+
+      if (pos.value) return pos.value;
+      return 'right top';
+    },
+
+    /**
+     * Returns collapsed class when necessary
+     *
+     * @since 3.2.13
+     */
+    returnClasses() {
+      if (this.collapsed) return 'uip-menu-collapsed';
+    },
+
+    /**
+     * Returns whether the menu has icons for current state
+     *
+     * @returns {boolean} - whether to hide icons
+     * @since 3.2.13
+     */
+    hideIcons() {
+      // Don't hide icons if we are collapsed
+      if (this.collapsed) return false;
+
+      const icons = this.uipress.checkNestedValue(this.block, ['settings', 'block', 'options', 'hideIcons', 'value']);
+      if (this.isObject(icons)) return icons.value;
+      return icons;
+    },
+  },
+
+  /**
+   * Removes event listeners before unmount
+   *
+   * @since 3.2.13
+   */
+  beforeUnmount() {
+    document.removeEventListener('uip_page_change', this.updateActiveLink, { once: false });
+    document.removeEventListener('uip_page_change_loaded', this.updateMenuFromFrame, { once: false });
+  },
+  methods: {
+    /**
+     * Sets menu from settings object
+     *
+     * @since 3.2.13
+     */
+    setMenu() {
+      this.menu = JSON.parse(JSON.stringify(this.uipData.adminMenu.menu));
+      if (this.uipData.userPrefs.menuCollapsed && this.hasMenuCollapse) this.collapsed = true;
+    },
+
+    /**
+     * Mounts event listeners for menu block
+     *
+     * @since 3.2.13
+     */
+    mountEventListeners() {
+      document.addEventListener('uip_page_change', this.updateActiveLink, { once: false });
+      document.addEventListener('uip_page_change_loaded', this.updateMenuFromFrame, { once: false });
+    },
+
+    /**
+     * Sets new active link from page change event
+     *
+     * @param {Object} e - page change event
+     * @since 3.2.13
+     */
+    updateActiveLink(e) {
+      this.activeLink = e.detail.url ? e.detail.url.replaceAll('%2F', '/') : e.detail.url;
+    },
+
+    /**
+     * Builds menu from basic array
+     *
+     * @since 3.2.13
+     */
+    buildMenu() {
+      const currentLink = this.activeLink;
+
+      // If no currentLink, no need to process items for active status
+      if (!currentLink) return (this.workingMenu = this.menu);
+
+      // Default breadcrumbs
+      this.breadCrumbs = [{ name: __('Home', 'uipress-lite'), url: this.uipData.dynamicOptions.viewadmin.value }];
+
+      // Main function for handling sub items
+      const processSubItem = (sub) => {
+        sub.active = false;
+        sub.url = sub.url ? this.decodeHtmlEntities(sub.url) : undefined;
+        sub.name = sub.name ? this.decodeHtmlEntities(sub.name) : undefined;
+
+        if (sub.url === currentLink) {
+          sub.active = true;
+          this.breadCrumbs.push({ name: sub.name, url: sub.url });
+        }
+      };
+
+      // Top level item handler
+      const processMenuItem = (item) => {
+        item.active = false;
+
+        item.url = item.url ? this.decodeHtmlEntities(item.url) : undefined;
+        item.name = item.name ? this.decodeHtmlEntities(item.name) : undefined;
+
+        const foundItem = this.workingMenu.find((obj) => obj.uid === item.uid);
+        const state = foundItem ? foundItem.open : false;
+        if (state) item.open = true;
+
+        if (item.url === currentLink) {
+          item.active = true;
+          this.breadCrumbs.push({ name: item.name, url: item.url });
+        }
+
+        if (item.submenu) {
+          item.submenu.forEach(processSubItem);
+        }
+      };
+
+      // Process the menu items
+      this.menu.forEach(processMenuItem);
+      this.workingMenu = this.menu;
+    },
+
+    /**
+     * Checks content frame for an updated menu on page load
+     *
+     * @since 3.2.13
+     */
+    updateMenuFromFrame() {
+      //Watch for menu changes in frame
+      const frame = document.querySelector('.uip-page-content-frame');
+
+      // Frame does not exist so bail
+      if (!frame) return;
+
+      const masterMenu = frame.contentWindow.uipMasterMenu;
+      if (!masterMenu || typeof masterMenu === 'undefined') return;
+      if (!('menu' in masterMenu)) return;
+
+      // Update menu
+      this.menu = JSON.parse(JSON.stringify(masterMenu.menu));
+      this.buildMenu();
+    },
+
+    /**
+     * Follows menu link. If modifier keys are pressed then follows browser default
+     *
+     * @param {Object} evt - click event
+     * @param {Object} item - The menu item clicked
+     * @param {Boolean} topLevel - Whether the item is top level or not
+     * @since 3.2.13
+     */
+    maybeFollowLink(evt, item, topLevel) {
+      // If modifier keys allow the event to happen naturally
+      if (evt.ctrlKey || evt.shiftKey || evt.metaKey || evt.button == 1) return;
+
+      // Prevent default link click
+      evt.preventDefault();
+
+      // If we have disabled autoload on top level items and there is a submenu just open the menu and return
+      if (topLevel && this.autoLoadIsDisabled && item.submenu && item.submenu.length > 0) {
+        item.open = !item.open;
+        this.activeMenu = item;
+        return;
+      }
+
+      // Set item as active
+      item.active = true;
+
+      // If there is a submenu then set the active menu for dynamic menu
+      if (item.submenu && item.submenu.length > 0) {
+        this.activeMenu = item;
+      }
+
+      // Update the active link
+      this.uipress.updatePage(item.url);
+    },
+
+    /**
+     * Returns the appropriate sub menu icon indicator for the given item
+     *
+     * @param {Object} item - top level menu item
+     * @since 3.2.13
+     */
+    returnSubIcon(item) {
+      // has custom icon so return that
+      if (this.subMenuCustomIcon) return this.subMenuCustomIcon;
+
+      // If dynamic menu always return chevron right
+      if (this.subMenuStyle == 'dynamic') return 'chevron_right';
+
+      // If item is open / active then return the open icon
+      if (item.open || item.active) return 'expand_more';
+
+      // No conditions met so return default
+      return 'chevron_left';
+    },
+
+    /**
+     * Utility function to catch uipblank in icon names
+     *
+     * @param {String} icon - the icon to check
+     */
+    returnTopIcon(icon) {
+      const status = icon ? icon.includes('uipblank') : false;
+      if (status) return icon.replace('uipblank', 'favorite');
+      return icon;
+    },
+
+    /**
+     * Decodes html entities from a given string
+     *
+     * @param {String} item - the item to be decoded
+     * @since 3.2.12
+     */
+    decodeHtmlEntities(item) {
+      // Return blank if item doesn't have a set value
+      if (!item) return '';
+
+      return item
+        .replace(/&amp;/g, '&')
+        .replace(/&lt;/g, '<')
+        .replace(/&gt;/g, '>')
+        .replace(/&quot;/g, '"')
+        .replace(/&apos;/g, "'")
+        .replace(/&#39;/g, "'")
+        .replace(/&nbsp;/g, ' ')
+        .replace(/%20/g, ' ');
+    },
+
+    /**
+     * Checks if a separator has a custom name. Returns name on success, false on failure
+     *
+     * @param {Object} item - the separator object
+     * @since 3.2.13
+     */
+    sepHasCustomName(item) {
+      return this.uipress.checkNestedValue(item, ['custom', 'name']);
+    },
+
+    /**
+     * Returns whether the given item has an open submenu
+     *
+     * @param {Object} item - the menu item
+     * @since 3.2.13
+     */
+    itemHasOpenSubMenu(item) {
+      if (!item.submenu) return false;
+      if (!item.submenu.length) return false;
+      if (item.active || item.open) return true;
+    },
+  },
+  template: `
     
           <DrillDownMenu v-if="subMenuStyle == 'dynamic'" :menuItems="workingMenu" 
           :maybeFollowLink="maybeFollowLink" :collapsed="collapsed" :block="block"
@@ -949,5 +948,4 @@ export function moduleData() {
             <MenuCollapse v-if="hasMenuCollapse" :collapsed="collapsed" :returnData="(d) => {collapsed = d}"/>
             
           </div>`,
-  };
-}
+};

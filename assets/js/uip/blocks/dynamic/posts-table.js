@@ -1,225 +1,224 @@
 const { __, _x, _n, _nx } = wp.i18n;
-export function moduleData() {
-  return {
-    props: {
-      display: String,
-      name: String,
-      block: Object,
-    },
-    data() {
-      return {
-        searchString: '',
-        results: [],
-        columns: [],
-        page: 1,
-        totalPages: 0,
-        totalFound: 0,
-        initialLoading: false,
-        postTypes: [],
-        loading: false,
-        strings: {
-          nothingFound: __('Nothing posts found', 'uipress-lite'),
-          by: __('By', 'uipress-lite'),
-          results: __('items', 'uipress-lite'),
-          searchPlaceHolder: __('Search items', 'uipress-lite'),
-          gridView: __('Grid view', 'uipress-lite'),
-          listView: __('List view', 'uipress-lite'),
-        },
-        ui: {
-          view: 'list',
-        },
-        searching: false,
-      };
-    },
-    inject: ['uipData', 'uipress'],
-    mounted() {
-      this.getPosts();
-      this.updateView();
-    },
-    watch: {
-      searchString: {
-        handler(newValue, oldValue) {
-          this.page = 1;
-          this.getPosts();
-        },
+export default {
+  props: {
+    display: String,
+    name: String,
+    block: Object,
+  },
+  data() {
+    return {
+      searchString: '',
+      results: [],
+      columns: [],
+      page: 1,
+      totalPages: 0,
+      totalFound: 0,
+      initialLoading: false,
+      postTypes: [],
+      loading: false,
+      strings: {
+        nothingFound: __('Nothing posts found', 'uipress-lite'),
+        by: __('By', 'uipress-lite'),
+        results: __('items', 'uipress-lite'),
+        searchPlaceHolder: __('Search items', 'uipress-lite'),
+        gridView: __('Grid view', 'uipress-lite'),
+        listView: __('List view', 'uipress-lite'),
       },
-      page: {
-        handler(newValue, oldValue) {
-          if (newValue) this.getPosts();
-        },
+      ui: {
+        view: 'list',
       },
-      postTypes: {
-        handler(newValue, oldValue) {
-          this.getPosts();
-        },
-        deep: true,
-      },
-      perPage: {
-        handler(newValue, oldValue) {
-          this.getPosts();
-        },
-      },
-      'block.settings.block.options': {
-        handler(newValue, oldValue) {
-          this.getPosts();
-        },
-        deep: true,
-      },
-      'ui.view': {
-        handler(newValue, oldVaklue) {
-          let view = false;
-          if (newValue == 'grid') view = true;
-          this.uipress.saveUserPreference('prefersGridView', view, false);
-        },
+      searching: false,
+    };
+  },
+  inject: ['uipData', 'uipress'],
+  mounted() {
+    this.getPosts();
+    this.updateView();
+  },
+  watch: {
+    searchString: {
+      handler(newValue, oldValue) {
+        this.page = 1;
+        this.getPosts();
       },
     },
-    computed: {
-      /**
-       * Returns items per page
-       *
-       * @since 3.2.13
-       */
-      returnPerPage() {
-        return this.block.settings.block.options.postsPerPage.value;
-      },
-
-      /**
-       * Returns amount of columns from settings
-       *
-       * @since 3.2.13
-       */
-      getColumns() {
-        return this.block.settings.block.options.activeColumns.value;
-      },
-
-      /**
-       * Returns enabled actions for table
-       *
-       * @since 3.2.13
-       */
-      getActions() {
-        return this.block.settings.block.options.actionsEnabled.value;
-      },
-
-      /**
-       * Returns whether the posts should be limited to the current author's own
-       *
-       * @since 3.2.13
-       */
-      limitToAuthor() {
-        let limit = this.uipress.get_block_option(this.block, 'block', 'limitToAuthor');
-        if (!limit) return false;
-        if (!this.isObject(limit)) return limit;
-        if (limit.value) return limit.value;
-        return false;
-      },
-
-      /**
-       * Returns whether the table's search is disabled
-       *
-       * @since 3.2.13
-       */
-      searchDisabled() {
-        let disabled = this.uipress.get_block_option(this.block, 'block', 'searchDisabled');
-        if (!disabled) return false;
-        if (!this.isObject(disabled)) return disabled;
-        if (disabled.value) return disabled.value;
-        return false;
+    page: {
+      handler(newValue, oldValue) {
+        if (newValue) this.getPosts();
       },
     },
-    methods: {
-      /**
-       * Updates the users prefered view for table
-       *
-       * @since 3.2.13
-       */
-      updateView() {
-        const grid = this.uipData.userPrefs.prefersGridView;
-        if (grid) return (this.ui.view = 'grid');
-        this.ui.view = 'list';
+    postTypes: {
+      handler(newValue, oldValue) {
+        this.getPosts();
       },
-
-      /**
-       * Main function for fetching posts
-       *
-       * @since 3.2.13
-       */
-      async getPosts() {
-        // Query already running so exit
-        if (this.loading) return;
-
-        this.loading = true;
-        this.postTypes = this.uipress.get_block_option(this.block, 'block', 'activePostTypes');
-
-        //Build form data for fetch request
-        let formData = new FormData();
-        formData.append('action', 'uip_get_posts_for_table');
-        formData.append('security', uip_ajax.security);
-        formData.append('search', this.searchString);
-        formData.append('page', this.page);
-        formData.append('postTypes', JSON.stringify(this.postTypes));
-        formData.append('perPage', this.returnPerPage);
-        formData.append('limitToAuthor', this.limitToAuthor);
-        formData.append('search', this.searchString);
-        formData.append('columns', JSON.stringify(this.getColumns));
-        formData.append('actions', JSON.stringify(this.getActions));
-
-        // Fetch posts
-        const response = await this.uipress.callServer(uip_ajax.ajax_url, formData);
-
-        // Something went very wrong
-        if (!response) {
-          this.uipress.notify(__('Unable to fetch posts at this tiem', 'uipress-lite'), '', '', 'error', true);
-          this.searching = false;
-          return;
-        }
-
-        // Error response
-        if (response.error) {
-          this.uipress.notify(response.message, '', '', 'error', true);
-          this.searching = false;
-        }
-
-        // Success response
-        if (response.success) {
-          this.loading = false;
-          this.results = response.posts;
-          this.columns = response.columns;
-          this.totalFound = response.total;
-          this.totalPages = response.totalPages;
-        }
-      },
-
-      /**
-       * Handles previous page requests
-       *
-       * @since 3.2.13
-       */
-      goBack() {
-        if (this.page > 1) this.page--;
-      },
-
-      /**
-       * Handles next page requests
-       *
-       * @since 3.2.13
-       */
-      goForward() {
-        if (this.page < this.totalPages) this.page++;
-      },
-
-      /**
-       * Deletes a given item and updates post list
-       *
-       * @param {Number} - the post id to delete
-       * @since 3.2.13
-       */
-      async deleteThisItem(postID) {
-        const response = await this.uipress.deletePost(postID);
-        if (response) this.getPosts();
+      deep: true,
+    },
+    perPage: {
+      handler(newValue, oldValue) {
+        this.getPosts();
       },
     },
-    template: `
+    'block.settings.block.options': {
+      handler(newValue, oldValue) {
+        this.getPosts();
+      },
+      deep: true,
+    },
+    'ui.view': {
+      handler(newValue, oldVaklue) {
+        let view = false;
+        if (newValue == 'grid') view = true;
+        this.uipress.saveUserPreference('prefersGridView', view, false);
+      },
+    },
+  },
+  computed: {
+    /**
+     * Returns items per page
+     *
+     * @since 3.2.13
+     */
+    returnPerPage() {
+      return this.block.settings.block.options.postsPerPage.value;
+    },
+
+    /**
+     * Returns amount of columns from settings
+     *
+     * @since 3.2.13
+     */
+    getColumns() {
+      return this.block.settings.block.options.activeColumns.value;
+    },
+
+    /**
+     * Returns enabled actions for table
+     *
+     * @since 3.2.13
+     */
+    getActions() {
+      return this.block.settings.block.options.actionsEnabled.value;
+    },
+
+    /**
+     * Returns whether the posts should be limited to the current author's own
+     *
+     * @since 3.2.13
+     */
+    limitToAuthor() {
+      let limit = this.uipress.get_block_option(this.block, 'block', 'limitToAuthor');
+      if (!limit) return false;
+      if (!this.isObject(limit)) return limit;
+      if (limit.value) return limit.value;
+      return false;
+    },
+
+    /**
+     * Returns whether the table's search is disabled
+     *
+     * @since 3.2.13
+     */
+    searchDisabled() {
+      let disabled = this.uipress.get_block_option(this.block, 'block', 'searchDisabled');
+      if (!disabled) return false;
+      if (!this.isObject(disabled)) return disabled;
+      if (disabled.value) return disabled.value;
+      return false;
+    },
+  },
+  methods: {
+    /**
+     * Updates the users prefered view for table
+     *
+     * @since 3.2.13
+     */
+    updateView() {
+      const grid = this.uipData.userPrefs.prefersGridView;
+      if (grid) return (this.ui.view = 'grid');
+      this.ui.view = 'list';
+    },
+
+    /**
+     * Main function for fetching posts
+     *
+     * @since 3.2.13
+     */
+    async getPosts() {
+      // Query already running so exit
+      if (this.loading) return;
+
+      this.loading = true;
+      this.postTypes = this.uipress.get_block_option(this.block, 'block', 'activePostTypes');
+
+      //Build form data for fetch request
+      let formData = new FormData();
+      formData.append('action', 'uip_get_posts_for_table');
+      formData.append('security', uip_ajax.security);
+      formData.append('search', this.searchString);
+      formData.append('page', this.page);
+      formData.append('postTypes', JSON.stringify(this.postTypes));
+      formData.append('perPage', this.returnPerPage);
+      formData.append('limitToAuthor', this.limitToAuthor);
+      formData.append('search', this.searchString);
+      formData.append('columns', JSON.stringify(this.getColumns));
+      formData.append('actions', JSON.stringify(this.getActions));
+
+      // Fetch posts
+      const response = await this.uipress.callServer(uip_ajax.ajax_url, formData);
+
+      // Something went very wrong
+      if (!response) {
+        this.uipress.notify(__('Unable to fetch posts at this tiem', 'uipress-lite'), '', '', 'error', true);
+        this.searching = false;
+        return;
+      }
+
+      // Error response
+      if (response.error) {
+        this.uipress.notify(response.message, '', '', 'error', true);
+        this.searching = false;
+      }
+
+      // Success response
+      if (response.success) {
+        this.loading = false;
+        this.results = response.posts;
+        this.columns = response.columns;
+        this.totalFound = response.total;
+        this.totalPages = response.totalPages;
+      }
+    },
+
+    /**
+     * Handles previous page requests
+     *
+     * @since 3.2.13
+     */
+    goBack() {
+      if (this.page > 1) this.page--;
+    },
+
+    /**
+     * Handles next page requests
+     *
+     * @since 3.2.13
+     */
+    goForward() {
+      if (this.page < this.totalPages) this.page++;
+    },
+
+    /**
+     * Deletes a given item and updates post list
+     *
+     * @param {Number} - the post id to delete
+     * @since 3.2.13
+     */
+    async deleteThisItem(postID) {
+      const response = await this.uipress.deletePost(postID);
+      if (response) this.getPosts();
+    },
+  },
+  template: `
           <div class="uip-flex uip-flex-column uip-self-flex-start uip-max-w-100p uip-table-wrap">
             <div class="uip-margin-bottom-xs uip-flex uip-flex-between">
             
@@ -409,5 +408,4 @@ export function moduleData() {
           
       </div>
       `,
-  };
-}
+};

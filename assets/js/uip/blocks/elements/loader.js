@@ -11,7 +11,7 @@ const Button = {
   moduleName: 'uip-block-button',
   description: __('Creates a button link', 'uipress-lite'),
   group: 'elements',
-  path: '../blocks/elements/button.min.js',
+  path: './blocks/elements/button.min.js',
   icon: 'smart_button',
   optionsEnabled: [
     //Block options group
@@ -82,7 +82,7 @@ const Heading = {
   moduleName: 'uip-heading',
   description: __('Creates a heading block', 'uipress-lite'),
   group: 'elements',
-  path: '../blocks/elements/heading.min.js',
+  path: './blocks/elements/heading.min.js',
   icon: 'text_fields',
   optionsEnabled: [
     //Block options group
@@ -183,7 +183,7 @@ const Paragraph = {
   moduleName: 'uip-paragraph',
   description: __('Creates a paragraph block', 'uipress-lite'),
   group: 'elements',
-  path: '../blocks/elements/paragraph.min.js',
+  path: './blocks/elements/paragraph.min.js',
   icon: 'segment',
   optionsEnabled: [
     //Block options group
@@ -213,7 +213,7 @@ const Image = {
   moduleName: 'uip-image',
   description: __('Creates a image block', 'uipress-lite'),
   group: 'elements',
-  path: '../blocks/elements/image.min.js',
+  path: './blocks/elements/image.min.js',
   icon: 'image',
   optionsEnabled: [
     //Block options group
@@ -243,7 +243,7 @@ const Accordion = {
   moduleName: 'uip-accordion',
   description: __('Creates a accordion block', 'uipress-lite'),
   group: 'elements',
-  path: '../blocks/elements/accordion.min.js',
+  path: './blocks/elements/accordion.min.js',
   icon: 'add',
   content: [],
   optionsEnabled: [
@@ -303,7 +303,7 @@ const Icon = {
   moduleName: 'uip-icon',
   description: __('Creates a icon block', 'uipress-lite'),
   group: 'elements',
-  path: '../blocks/elements/icon.min.js',
+  path: './blocks/elements/icon.min.js',
   icon: 'interests',
   optionsEnabled: [
     //Block options group
@@ -333,7 +333,7 @@ const DarkMode = {
   moduleName: 'uip-dark-toggle',
   description: __('Outputs a toggle for switiching between light and dark modes', 'uipress-lite'),
   group: 'elements',
-  path: '../blocks/elements/dark-mode-toggle.min.js',
+  path: './blocks/elements/dark-mode-toggle.min.js',
   icon: 'dark_mode',
   optionsEnabled: [
     //Block options group
@@ -385,7 +385,7 @@ const Tabs = {
   moduleName: 'tab-nav',
   description: __('Create a tabbed navigation with different styles', 'uipress-lite'),
   group: 'elements',
-  path: '../blocks/elements/tabs.min.js',
+  path: './blocks/elements/tabs.min.js',
   icon: 'tab',
   content: [],
   optionsEnabled: [
@@ -444,7 +444,7 @@ const ToDo = {
   moduleName: 'todo-list',
   description: __('Outputs a customisable to do list', 'uipress-lite'),
   group: 'elements',
-  path: '../blocks/elements/todo-list.min.js',
+  path: './blocks/elements/todo-list.min.js',
   icon: 'task_alt',
   optionsEnabled: [
     {
@@ -515,7 +515,7 @@ const Video = {
   moduleName: 'uip-video',
   description: __('Outputs a video block. Can be a direct URL, media library link or embed', 'uipress-lite'),
   group: 'elements',
-  path: '../blocks/elements/video.min.js',
+  path: './blocks/elements/video.min.js',
   icon: 'play_arrow',
   optionsEnabled: [
     //Block options group
@@ -555,7 +555,7 @@ const Quote = {
   moduleName: 'uip-qupote',
   description: __('Displays a quote in a decorative way', 'uipress-lite'),
   group: 'elements',
-  path: '../blocks/elements/quote.min.js',
+  path: './blocks/elements/quote.min.js',
   icon: 'format_quote',
   optionsEnabled: [
     //Block options group
@@ -618,7 +618,7 @@ const ExitDashboard = {
   moduleName: 'uip-exit-dash-button',
   description: __('This button is designed for admins with active ui templates. When clicked it will remove the current UI layer and display the default WordPress admin page', 'uipress-lite'),
   group: 'elements',
-  path: '../blocks/elements/exit-to-dashboard.min.js',
+  path: './blocks/elements/exit-to-dashboard.min.js',
   icon: 'exit_to_app',
   optionsEnabled: [
     //Block options group

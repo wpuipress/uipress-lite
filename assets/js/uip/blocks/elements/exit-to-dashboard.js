@@ -1,74 +1,73 @@
 const { __, _x, _n, _nx } = wp.i18n;
-export function moduleData() {
-  return {
-    props: {
-      display: String,
-      name: String,
-      block: Object,
-    },
-    data() {
-      return {};
-    },
-    inject: ['uipress'],
-    watch: {},
-    mounted: function () {},
-    computed: {
-      /**
-       * Returns text for button if exists
-       *
-       * @since 3.2.13
-       */
-      returnText() {
-        const item = this.uipress.get_block_option(this.block, 'block', 'buttonText', true);
-        if (!item) return '';
+export default {
+  props: {
+    display: String,
+    name: String,
+    block: Object,
+  },
+  data() {
+    return {};
+  },
+  inject: ['uipress'],
+  watch: {},
+  mounted: function () {},
+  computed: {
+    /**
+     * Returns text for button if exists
+     *
+     * @since 3.2.13
+     */
+    returnText() {
+      const item = this.uipress.get_block_option(this.block, 'block', 'buttonText', true);
+      if (!item) return '';
 
-        if (!this.isObject(item)) return item;
-        if (item.string) return item.string;
-        return '';
-      },
-      /**
-       * Returns icon for button
-       *
-       * @since 3.2.13
-       */
-      returnIcon() {
-        let icon = this.uipress.get_block_option(this.block, 'block', 'iconSelect');
-        if (!icon) return '';
-        if (!this.isObject(icon)) return icon;
-        if (icon.value) return icon.value;
-        return '';
-      },
-
-      /**
-       * Returns the reverse class if icon position is right
-       *
-       * @since 3.2.13
-       */
-      returnClasses() {
-        const position = this.uipress.get_block_option(this.block, 'block', 'iconPosition');
-        if (!position) return;
-        if (!this.isObject(position) && position == 'right') return 'uip-flex-reverse';
-        if (position.value && position.value == 'right') return 'uip-flex-reverse';
-      },
+      if (!this.isObject(item)) return item;
+      if (item.string) return item.string;
+      return '';
     },
-    methods: {
-      /**
-       * Confirms if user wats to destroy the ui and return to default wp
-       *
-       * @since 3.2.13
-       */
-      async destroyUI() {
-        const response = await this.uipress.confirm(__('Are you sure?', 'uipress-lite'), __('This will remove the current UI and revert to the default admin page', 'uipress-lite'));
-
-        // Response was go so destroy
-        if (response) {
-          document.documentElement.setAttribute('uip-core-app', 'false');
-          let frame = document.queerySelect('#uip-app-container');
-          if (frame) frame.remove();
-        }
-      },
+    /**
+     * Returns icon for button
+     *
+     * @since 3.2.13
+     */
+    returnIcon() {
+      let icon = this.uipress.get_block_option(this.block, 'block', 'iconSelect');
+      if (!icon) return '';
+      if (!this.isObject(icon)) return icon;
+      if (icon.value) return icon.value;
+      return '';
     },
-    template: `
+
+    /**
+     * Returns the reverse class if icon position is right
+     *
+     * @since 3.2.13
+     */
+    returnClasses() {
+      const position = this.uipress.get_block_option(this.block, 'block', 'iconPosition');
+      if (!position) return;
+      if (!this.isObject(position) && position == 'right') return 'uip-flex-reverse';
+      if (position.value && position.value == 'right') return 'uip-flex-reverse';
+    },
+  },
+  methods: {
+    /**
+     * Confirms if user wats to destroy the ui and return to default wp
+     *
+     * @since 3.2.13
+     */
+    async destroyUI() {
+      const response = await this.uipress.confirm(__('Are you sure?', 'uipress-lite'), __('This will remove the current UI and revert to the default admin page', 'uipress-lite'));
+
+      // Response was go so destroy
+      if (response) {
+        document.documentElement.setAttribute('uip-core-app', 'false');
+        let frame = document.queerySelect('#uip-app-container');
+        if (frame) frame.remove();
+      }
+    },
+  },
+  template: `
           <button class="uip-button-default uip-flex uip-gap-xxs uip-flex-center"
          @click="destroyUI()" :returnClasses="returnClasses">
          
@@ -78,5 +77,4 @@ export function moduleData() {
             
           </button>
           `,
-  };
-}
+};

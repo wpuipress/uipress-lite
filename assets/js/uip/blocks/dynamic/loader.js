@@ -12,7 +12,7 @@ const AdminMenu = {
   moduleName: 'uip-admin-menu',
   description: __('Outputs the admin menu', 'uipress-lite'),
   group: 'dynamic',
-  path: '../blocks/dynamic/admin-menu.min.js',
+  path: './blocks/dynamic/admin-menu.min.js',
   icon: 'sort',
   optionsEnabled: [
     //Block options group
@@ -228,7 +228,7 @@ const AdminMenuNew = {
   moduleName: 'uip-admin-menu-new',
   description: __('Outputs the admin menu', 'uipress-lite'),
   group: 'dynamic',
-  path: '../blocks/dynamic/admin-menu-new.min.js',
+  path: './blocks/dynamic/admin-menu-new.min.js',
   icon: 'sort',
   optionsEnabled: [
     //Block options group
@@ -493,7 +493,7 @@ const PostTable = {
   moduleName: 'posts-table',
   description: __('Create a list of recent posts', 'uipress-lite'),
   group: 'dynamic',
-  path: '../blocks/dynamic/posts-table.min.js',
+  path: './blocks/dynamic/posts-table.min.js',
   icon: 'table',
   optionsEnabled: [
     //Block options group
@@ -666,7 +666,7 @@ const PageContent = {
   moduleName: 'uip-content',
   description: __('Outputs the page content block', 'uipress-lite'),
   group: 'dynamic',
-  path: '../blocks/dynamic/content.min.js',
+  path: './blocks/dynamic/content.min.js',
   icon: 'list_alt',
   optionsEnabled: [
     //Block options group
@@ -733,7 +733,7 @@ const RecentPosts = {
   moduleName: 'recent-posts',
   description: __('Create a list of recent posts', 'uipress-lite'),
   group: 'dynamic',
-  path: '../blocks/dynamic/recent-posts.min.js',
+  path: './blocks/dynamic/recent-posts.min.js',
   icon: 'description',
   optionsEnabled: [
     //Block options group
@@ -821,7 +821,7 @@ const Search = {
   moduleName: 'search-content',
   description: __('Outputs a search block that queries your sites content', 'uipress-lite'),
   group: 'dynamic',
-  path: '../blocks/dynamic/search.min.js',
+  path: './blocks/dynamic/search.min.js',
   icon: 'search',
   optionsEnabled: [
     //Block options group
@@ -938,7 +938,7 @@ const ToolBar = {
   moduleName: 'uip-toolbar',
   description: __('Outputs default toolbar items', 'uipress-lite'),
   group: 'dynamic',
-  path: '../blocks/dynamic/toolbar.min.js',
+  path: './blocks/dynamic/toolbar.min.js',
   icon: 'build',
   optionsEnabled: [
     //Block options group
@@ -1110,7 +1110,7 @@ const BreadCrumbs = {
   moduleName: 'uip-breadcrumbs',
   description: __('Shows the current page path (breadcrumbs)', 'uipress-lite'),
   group: 'dynamic',
-  path: '../blocks/dynamic/breadcrumbs.min.js',
+  path: './blocks/dynamic/breadcrumbs.min.js',
   icon: 'label_important',
   optionsEnabled: [
     //Block options group
@@ -1154,7 +1154,7 @@ const FullScreenToggle = {
   moduleName: 'uip-fullscreen',
   description: __('A customisable button that can toggle the fullscreen mode of the content frame', 'uipress-lite'),
   group: 'dynamic',
-  path: '../blocks/dynamic/fullscreen.min.js',
+  path: './blocks/dynamic/fullscreen.min.js',
   icon: 'fullscreen',
   optionsEnabled: [
     //Block options group
@@ -1216,7 +1216,7 @@ const OpenWithoutFrame = {
   moduleName: 'uip-without-uipress',
   description: __('This will open the current page outside the current frame and optionally without UiPress all together', 'uipress-lite'),
   group: 'dynamic',
-  path: '../blocks/dynamic/open-without-frame.min.js',
+  path: './blocks/dynamic/open-without-frame.min.js',
   icon: 'whatshot',
   optionsEnabled: [
     //Block options group
@@ -1331,7 +1331,7 @@ const PageLoader = {
   moduleName: 'uip-page-loader',
   description: __('This block allows you to place a loading bar wherever you choose and has the option to replace the bar with a custom image.', 'uipress-lite'),
   group: 'dynamic',
-  path: '../blocks/dynamic/page-loader.min.js',
+  path: './blocks/dynamic/page-loader.min.js',
   icon: 'cached',
   optionsEnabled: [
     //Block options group
@@ -1361,7 +1361,7 @@ const AIChat = {
   moduleName: 'uip-ai-chat',
   description: __('This block allows you to add an ai chat to your templates. OpenAi (chatGPT) API key is required.', 'uipress-lite'),
   group: 'dynamic',
-  path: '../blocks/dynamic/ai-chat.min.js',
+  path: './blocks/dynamic/ai-chat.min.js',
   icon: 'magic_button',
   optionsEnabled: [
     //Block options group

@@ -1,31 +1,30 @@
 const { __, _x, _n, _nx } = wp.i18n;
-export function moduleData() {
-  return {
-    props: {
-      display: String,
-      name: String,
-      block: Object,
-    },
-    data() {
-      return {};
-    },
-    inject: ['uipress'],
-    computed: {
-      /**
-       * Returns text for button if exists
-       *
-       * @since 3.2.13
-       */
-      returnText() {
-        let item = this.uipress.get_block_option(this.block, 'block', 'headingText', true);
-        if (!item) return '';
+export default {
+  props: {
+    display: String,
+    name: String,
+    block: Object,
+  },
+  data() {
+    return {};
+  },
+  inject: ['uipress'],
+  computed: {
+    /**
+     * Returns text for button if exists
+     *
+     * @since 3.2.13
+     */
+    returnText() {
+      let item = this.uipress.get_block_option(this.block, 'block', 'headingText', true);
+      if (!item) return '';
 
-        if (!this.isObject(item)) return item;
-        if (item.string) return item.string;
-        return '';
-      },
+      if (!this.isObject(item)) return item;
+      if (item.string) return item.string;
+      return '';
     },
-    template: `
+  },
+  template: `
           <accordion :openOnTick="false">
           
             <template v-slot:title>
@@ -42,5 +41,4 @@ export function moduleData() {
             
           </accordion>
         `,
-  };
-}
+};
