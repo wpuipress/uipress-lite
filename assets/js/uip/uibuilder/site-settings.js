@@ -3,7 +3,7 @@
  * @since 3.0.0
  */
 const { __, _x, _n, _nx } = wp.i18n;
-import { defineAsyncComponent } from '../../libs/vue-esm-dev.js';
+import { defineAsyncComponent, nextTick } from '../../libs/vue-esm-dev.js';
 export default {
   components: {
     globalVariables: defineAsyncComponent(() => import('./variables.min.js?ver=3.2.12')),
@@ -25,7 +25,7 @@ export default {
       },
     };
   },
-  inject: [ 'uipress'],
+
   mounted() {
     this.loading = false;
     this.getSettings();
@@ -47,124 +47,135 @@ export default {
       deep: true,
     },
   },
-  computed: {
-    returnGlobalSettings() {
-      return this.globalSettings;
-    },
-  },
   methods: {
-    getSettings() {
-      let self = this;
-      self.loading = true;
+    /**
+     * Get's settings object
+     *
+     * @since 3.2.13
+     */
+    async getSettings() {
+      this.loading = true;
 
       let formData = new FormData();
       formData.append('action', 'uip_get_global_settings');
       formData.append('security', uip_ajax.security);
 
-      self.sendServerRequest(uip_ajax.ajax_url, formData).then((response) => {
-        self.loading = false;
-        if (response.error) {
-          self.uipress.notify(response.message, '', 'error', true);
-          return;
-        }
+      const response = await this.sendServerRequest(uip_ajax.ajax_url, formData);
 
-        //Get theme options
-        this.getUserStyles();
+      this.loading = false;
 
-        if (response.options) {
-          if (self.isObject(response.options)) {
-            if (Object.keys(response.options).length > 0) {
-              self.globalSettings = response.options;
-            }
-          }
+      // Handle error
+      if (response.error) {
+        this.uipApp.notifications.notify(response.message, '', 'error', true);
+        return;
+      }
+
+      //Get theme options
+      await this.getUserStyles();
+
+      if (!response.options) return;
+      if (this.isObject(response.options)) {
+        if (Object.keys(response.options).length > 0) {
+          this.globalSettings = response.options;
         }
-      });
+      }
     },
-    getUserStyles() {
-      let self = this;
 
+    /**
+     * Get's user styles
+     *
+     * @since 3.2.13
+     */
+    async getUserStyles() {
       //Build form data for fetch request
       let formData = new FormData();
       formData.append('action', 'uip_get_ui_styles');
       formData.append('security', uip_ajax.security);
 
-      self.sendServerRequest(uip_ajax.ajax_url, formData).then((response) => {
-        if (response.error) {
-          return;
-        }
+      const response = await this.sendServerRequest(uip_ajax.ajax_url, formData);
 
-        if (response.styles) {
-          self.injectSavedStyles(response.styles);
-        }
-      });
+      if (response.error) return;
+      if (response.styles) this.uipApp.data.themeStyles = { ...this.uipApp.data.themeStyles, ...response.styles };
     },
-    injectSavedStyles(styles) {
-      let themeStyles = this.uipApp.data.themeStyles;
-      for (let key in themeStyles) {
-        let item = themeStyles[key];
 
-        if (styles[item.name]) {
-          if ('value' in styles[item.name]) {
-            item.value = styles[item.name].value;
-          }
-          if ('darkValue' in styles[item.name]) {
-            item.darkValue = styles[item.name].darkValue;
-          }
-        }
-      }
-
-      for (let key in styles) {
-        let item = styles[key];
-        if (item.user) {
-          this.uipApp.data.themeStyles[item.name] = item;
-        }
-      }
-    },
+    /**
+     * Returns template option or it's required default value
+     *
+     * @param {String} group
+     * @param {Object} option
+     * @since 3.2.1.3
+     */
     returnTemplateOption(group, option) {
       let key = option.uniqueKey;
       let options = this.globalSettings;
       if (!(group in options)) {
         options[group] = {};
       }
-      if (!(key in options[group])) {
-        if (option.accepts === String) {
+      if (key in options[group]) return options[group][key];
+
+      // Set default values
+      switch (option.accepts) {
+        case String:
           options[group][key] = '';
-        }
-        if (option.accepts === Array) {
+          break;
+        case Array:
           options[group][key] = [];
-        }
-        if (option.accepts === Object) {
+          break;
+        case Object:
           options[group][key] = {};
-        }
-        if (option.accepts === Boolean) {
+          break;
+        case Boolean:
           options[group][key] = false;
-        }
+          break;
       }
+
       return options[group][key];
     },
+
+    /**
+     * Saves a template option
+     *
+     * @param {String} group
+     * @param {String} key
+     * @param {*} value
+     * @since 3.2.13
+     */
     saveTemplateOption(group, key, value) {
       let options = this.globalSettings;
       options[group][key] = value;
     },
-    saveSettings() {
-      let self = this;
 
-      let sendData = self.uipress.uipEncodeJson(self.globalSettings);
+    /**
+     * Saves template settings
+     *
+     * @returns {Promise}
+     * @since 3.2.13
+     */
+    async saveSettings() {
+      let sendData = this.prepareJSON(this.globalSettings);
 
       let formData = new FormData();
       formData.append('action', 'uip_save_global_settings');
       formData.append('security', uip_ajax.security);
       formData.append('settings', sendData);
 
-      self.sendServerRequest(uip_ajax.ajax_url, formData).then((response) => {
-        if (response.error) {
-          self.uipress.notify(response.message, '', 'error', true);
-          return;
-        }
+      const response = await this.sendServerRequest(uip_ajax.ajax_url, formData);
 
-        self.uipress.notify(self.ui.strings.settingsSaved, '', 'success', true);
-      });
+      // Handle error
+      if (response.error) {
+        this.uipApp.notifications.notify(response.message, '', 'error', true);
+        return;
+      }
+
+      this.uipApp.notifications.notify(this.ui.strings.settingsSaved, '', 'success', true);
     },
+
+    /**
+     * Returns options condition if it has one
+     *
+     * @param {Object} group
+     * @since 3.2.13
+     */
     conditionalShowGroup(group) {
       if (!('condition' in group)) {
         return true;
@@ -172,137 +183,127 @@ export default {
 
       return group.condition(this.globalSettings);
     },
-    inSearch(option) {
-      let sq = this.search.toLowerCase();
-      let lqN = option.label.toLowerCase();
-      let lqDes = option.help.toLowerCase();
 
-      if (lqN.includes(sq) || lqDes.includes(sq)) {
-        return true;
-      }
+    /**
+     * Returns whether an item is in a given search
+     *
+     * @param {Object} option
+     * @since 3.2.13
+     */
+    inSearch(option) {
+      const sq = this.search.toLowerCase();
+      const lqN = option.label.toLowerCase();
+      const lqDes = option.help.toLowerCase();
+
+      if (lqN.includes(sq) || lqDes.includes(sq)) return true;
+
       return false;
     },
+
+    /**
+     * Exports global settings into a JSON file.
+     *
+     * @since 3.2.13
+     */
     exportSettings() {
-      self = this;
-      let layout;
-      let namer = 'uip-site-settings-';
-      layout = JSON.stringify({ uipSettings: self.globalSettings });
+      // Prepare the settings data.
+      const layout = JSON.stringify({ uipSettings: this.globalSettings });
 
-      let today = new Date();
-      let dd = String(today.getDate()).padStart(2, '0');
-      let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-      let yyyy = today.getFullYear();
+      // Get today's date in the format: mm-dd-yyyy.
+      const today = new Date();
+      const formattedDate = `${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}-${today.getFullYear()}`;
 
-      let date_today = mm + '-' + dd + '-' + yyyy;
-      let filename = namer + '-' + date_today + '.json';
+      // Construct the filename for the exported settings.
+      const filename = `uip-site-settings-${formattedDate}.json`;
 
-      let dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(layout);
-      let dlAnchorElem = this.$refs.exporter;
+      // Create a data URI for the JSON content.
+      const dataStr = `data:text/json;charset=utf-8,${encodeURIComponent(layout)}`;
+
+      // Set the attributes for the download link and trigger the download.
+      const dlAnchorElem = this.$refs.exporter;
       dlAnchorElem.setAttribute('href', dataStr);
       dlAnchorElem.setAttribute('download', filename);
       dlAnchorElem.click();
 
-      let message = __('Settings exported', 'uipress-lite');
-      self.uipress.notify(message, '', 'success', true);
+      // Notify the user about the successful export.
+      const message = __('Settings exported', 'uipress-lite');
+      this.uipApp.notifications.notify(message, '', 'success', true);
     },
-    importSettings() {
-      let self = this;
-      let notiID = self.uipress.notify(__('Importing settings', 'uipress-lite'), '', 'default', false, true);
-      let fileInput = event.target;
-      let thefile = fileInput.files[0];
 
-      if (thefile.type != 'application/json') {
-        self.uipress.notify(__('Settings must be in valid JSON format', 'uipress-lite'), '', 'error', true, false);
-        self.uipress.destroy_notification(notiID);
-        return;
+    /**
+     * Imports settings from json file
+     *
+     * @param {Object} event - the file change event
+     * @since 3.2.13
+     */
+    importSettings(event) {
+      const notiID = this.uipApp.notifications.notify(__('Importing settings', 'uipress-lite'), '', 'default', false, true);
+      const fileInput = event.target;
+      const thefile = fileInput.files[0];
+
+      const handleError = (message) => {
+        this.uipApp.notifications.notify(message, '', 'error', true, false);
+        this.uipApp.notifications.remove(notiID);
+      };
+
+      if (thefile.type !== 'application/json') {
+        return handleError(__('Settings must be in valid JSON format', 'uipress-lite'));
       }
 
       if (thefile.size > 1000000) {
-        self.uipress.notify(__('Uploaded file is too big', 'uipress-lite'), '', 'error', true, false);
-        self.uipress.destroy_notification(notiID);
-        return;
+        return handleError(__('Uploaded file is too big', 'uipress-lite'));
       }
 
-      let reader = new FileReader();
+      const reader = new FileReader();
       reader.readAsText(thefile, 'UTF-8');
 
-      reader.onload = function (evt) {
-        let json_settings = evt.target.result;
-        let parsed;
-
-        //Check for valid JSON data
+      reader.onload = (evt) => {
         try {
-          parsed = JSON.parse(json_settings);
-        } catch (error) {
-          self.uipress.notify(error, '', 'error', true, false);
-          self.uipress.destroy_notification(notiID);
-          return;
-        }
+          const parsed = JSON.parse(evt.target.result);
 
-        if (parsed != null) {
-          if (!Array.isArray(parsed) && !self.isObject(parsed)) {
-            self.uipress.notify('Settings is not valid', '', 'error', true, false);
-            self.uipress.destroy_notification(notiID);
-            return;
+          if (!parsed || !parsed.uipSettings || !this.isObject(parsed.uipSettings)) {
+            return handleError(__('Settings mismatch', 'uipress-lite'));
           }
 
-          let temper;
+          this.globalSettings = parsed.uipSettings;
 
-          if ('uipSettings' in parsed) {
-            if (self.isObject(parsed.uipSettings)) {
-              temper = parsed.uipSettings;
-            } else {
-              self.uipress.notify(__('Settings mismatch', 'uipress-lite'), '', 'error', true, false);
-              self.uipress.destroy_notification(notiID);
-              return;
-            }
-          } else {
-            self.uipress.notify(__('Settings mismatch', 'uipress-lite'), '', 'error', true, false);
-            self.uipress.destroy_notification(notiID);
-            return;
-          }
+          this.uipApp.notifications.notify(__('Settings imported', 'uipress-lite'), '', 'success', true, false);
+          this.uipApp.notifications.remove(notiID);
 
-          self.globalSettings = temper;
-          self.uipress.notify(__('Settings imported', 'uipress-lite'), '', 'success', true, false);
-          self.uipress.destroy_notification(notiID);
-
-          self.render = false;
-          requestAnimationFrame(() => {
-            self.render = true;
+          this.render = false;
+          this.$nextTick(() => {
+            this.render = true;
           });
-          return;
-        } else {
-          self.uipress.notify(__('JSON parse failed', 'uipress-lite'), '', 'error', true, false);
-          self.uipress.destroy_notification(notiID);
+        } catch (error) {
+          handleError(__('JSON parse failed', 'uipress-lite'));
         }
       };
     },
   },
   template: `
     
-      <uip-floating-panel closeRoute="/" id="uip-global-settings">
+      <uip-floating-panel ref="panel" closeRoute="/" id="uip-global-settings">
       
       
         <!-- Site settings -->
         <div class="uip-flex uip-w-100p uip-h-100p">
         
-          <div class="uip-flex uip-flex-column uip-w-100p uip-max-h-100p uip-flex-no-wrap uip-row-gap-xs ">
+          <div class="uip-flex uip-flex-column uip-w-100p uip-max-h-100p uip-flex-no-wrap uip-row-gap-m uip-padding-m">
           
-            <div class="uip-text-l uip-text-emphasis uip-padding-m uip-padding-remove-bottom">{{ui.strings.siteSettings}}</div>
-            
-            <div class="uip-padding-m uip-padding-remove-bottom  uip-padding-remove-top">
-              <div class="uip-border-top uip-margin-top-xs uip-margin-bottom-xs"></div>
+            <div class="uip-flex uip-flex-between uip-flex-center">
+              <div class="uip-text-l uip-text-emphasis">{{ui.strings.siteSettings}}</div>
+              <a @click="$refs.panel.close()" class="uip-link-muted hover:uip-background-muted uip-border-rounder uip-icon uip-padding-xxs">close</a>
             </div>
+            
             
             <div v-if="loading" class="uip-w-100p uip-flex uip-flex-middle uip-flex-center uip-padding-s"><loading-chart></loading-chart></div>
             
-            <div v-if="!loading" class="uip-flex-grow uip-flex uip-flex-column uip-row-gap-s uip-overflow-auto uip-padding-m uip-padding-remove-bottom  uip-padding-remove-top">
+            <div v-if="!loading" class="uip-border-rounder uip-flex uip-flex-center uip-gap-xs uip-background-muted uip-padding-xs"> 
+              <div class="uip-icon uip-icon-l uip-text-muted">search</div>
+              <input class="uip-blank-input uip-flex-grow" type="text" v-model="search" :placeholder="ui.strings.searchSettings">
+            </div>
             
-            
-              <div class="uip-border-round uip-flex uip-flex-center uip-gap-xs uip-margin-bottom-xs uip-margin-top-xs"> 
-                <div class="uip-icon uip-icon-l uip-text-muted">search</div>
-                <input class="uip-blank-input uip-flex-grow" type="text" v-model="search" :placeholder="ui.strings.searchSettings">
-              </div>
+            <div v-if="!loading" class="uip-flex-grow uip-flex uip-flex-column uip-row-gap-s" style="overflow:auto">
               
               
               
@@ -329,11 +330,10 @@ export default {
                             </a>
                             
                             <component v-else :is="option.component" :value="returnTemplateOption(group.name, option)" :args="option.args"
-                            :returnData="function(data){saveTemplateOption(group.name, option.uniqueKey, data)}"></component>
+                            :returnData="function(data){saveTemplateOption(group.name, option.uniqueKey, data)}" class="uip-inline-flex"></component>
                           
                           </div>
                           
-                          <div class="uip-border-top"></div>
                         </template>
                         
                       </template>
@@ -403,7 +403,7 @@ export default {
               <!-- End dynamic settings -->
             </div>
             
-            <div v-if="!loading" class="uip-flex uip-flex-between uip-padding-m">
+            <div v-if="!loading" class="uip-flex uip-flex-between">
             
               <div class="uip-flex uip-gap-xs">
                 <button class="uip-button-default uip-icon" @click="exportSettings()">download</button>

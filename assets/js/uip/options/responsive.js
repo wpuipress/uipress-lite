@@ -1,6 +1,6 @@
 const { __, _x, _n, _nx } = wp.i18n;
 export default {
-  inject: ['uipress'],
+  
   props: {
     returnData: Function,
     value: Object,

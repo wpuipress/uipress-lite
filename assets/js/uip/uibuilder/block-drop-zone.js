@@ -39,7 +39,7 @@ export default {
       },
     };
   },
-  inject: [ 'uiTemplate', 'uipress'],
+  inject: [ 'uiTemplate'],
   watch: {
     content: {
       handler(newValue, oldValue) {
@@ -173,12 +173,12 @@ export default {
       let self = this;
 
       let formData = new FormData();
-      let notiID = self.uipress.notify(__('Importing template', 'uipress-lite'), '', 'default', false, true);
+      let notiID = self.uipApp.notifications.notify(__('Importing template', 'uipress-lite'), '', 'default', false, true);
 
       self.sendServerRequest(template.path, formData).then((response) => {
         if (response.error) {
-          self.uipress.notify(response.message, '', 'error', true);
-          self.uipress.destroy_notification(notiID);
+          self.uipApp.notifications.notify(response.message, '', 'error', true);
+          self.uipApp.notifications.remove(notiID);
         }
 
         let parsed = JSON.parse(response);
@@ -187,8 +187,8 @@ export default {
           parsed.uid = self.createUID();
 
           if (!self.isObject(parsed)) {
-            self.uipress.notify(__('Unable to import template right now', 'uipress-lite'), '', 'error', true);
-            self.uipress.destroy_notification(notiID);
+            self.uipApp.notifications.notify(__('Unable to import template right now', 'uipress-lite'), '', 'error', true);
+            self.uipApp.notifications.remove(notiID);
           }
 
           let freshLayout = [];
@@ -198,12 +198,12 @@ export default {
             }
             parsed.content = freshLayout;
           }
-          self.uipress.destroy_notification(notiID);
-          self.uipress.notify(__('Template imported', 'uipress-lite'), '', 'success', true);
+          self.uipApp.notifications.remove(notiID);
+          self.uipApp.notifications.notify(__('Template imported', 'uipress-lite'), '', 'success', true);
           self.items.splice(index, 0, parsed);
         } else {
-          self.uipress.notify(__('Unable to import template right now', 'uipress-lite'), '', 'error', true);
-          self.uipress.destroy_notification(notiID);
+          self.uipApp.notifications.notify(__('Unable to import template right now', 'uipress-lite'), '', 'error', true);
+          self.uipApp.notifications.remove(notiID);
         }
       });
     },
@@ -260,7 +260,7 @@ export default {
       if (!evt.added) return;
 
       // Bail if it's a remote template
-      if (this.uipress.checkNestedValue(evt, ['added', 'element', 'remote'])) return;
+      if (this.hasNestedPath(evt, ['added', 'element', 'remote'])) return;
 
       // ADD A UID TO ADDED OPTION
       let newElement = evt.added.element;

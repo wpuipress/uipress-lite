@@ -10,7 +10,7 @@ export default {
       loading: false,
     };
   },
-  inject: ['uipress', 'uiTemplate'],
+  inject: [ 'uiTemplate'],
   created() {
     this.mountEventListeners();
   },

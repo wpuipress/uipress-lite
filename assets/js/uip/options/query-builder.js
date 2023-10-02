@@ -134,7 +134,7 @@ const QueryBuilder = {
       orderByOptionsSites: OrderByOptionsSites,
     };
   },
-  inject: ['uipress'],
+  
   watch: {
     options: {
       handler(newValue, oldValue) {

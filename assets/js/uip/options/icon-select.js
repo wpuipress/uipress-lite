@@ -19,7 +19,7 @@ export default {
       },
     };
   },
-  inject: ['uipress'],
+  
   watch: {
     /**
      * Watch changes to the icon and return to caller

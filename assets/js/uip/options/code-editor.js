@@ -36,7 +36,7 @@ export default {
       },
     };
   },
-  inject: ['uipress'],
+  
   mounted() {
     this.option = this.value;
   },
@@ -120,7 +120,7 @@ export default {
     saveCode() {
       this.option = this.finalVal;
       this.$refs.codemodal.close();
-      this.uipress.notify(__('Code updated', 'uipress-lite'), '', 'success');
+      this.uipApp.notifications.notify(__('Code updated', 'uipress-lite'), '', 'success');
     },
 
     /**

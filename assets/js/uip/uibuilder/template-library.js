@@ -3,6 +3,8 @@
  * @since 3.0.0
  */
 const { __, _x, _n, _nx } = wp.i18n;
+import { deleteRemotePost } from '../v3.5/utility/functions.min.js';
+import { defineAsyncComponent, nextTick } from '../../libs/vue-esm-dev.js';
 
 const screenOverlay = {
   data() {
@@ -32,8 +34,11 @@ const screenOverlay = {
 };
 
 export default {
-  inject: [ 'uipress', 'uiTemplate'],
-  components: { screenOverlay: screenOverlay },
+  inject: [ 'uiTemplate'],
+  components: {
+    screenOverlay: screenOverlay,
+    Confirm: defineAsyncComponent(() => import('../v3.5/utility/confirm.min.js?ver=3.2.12')),
+  },
   data() {
     return {
       loading: true,
@@ -176,7 +181,7 @@ export default {
       this.sendServerRequest(URL, formData).then((response) => {
         this.loading = false;
         if (response.error) {
-          this.uipress.notify(response.message, 'uipress-lite', '', 'error', true);
+          this.uipApp.notifications.notify(response.message, 'uipress-lite', '', 'error', true);
         } else {
           this.themes = response;
         }
@@ -279,12 +284,18 @@ export default {
      * @param {number|string} postID - The ID of the post to be deleted.
      * @since 3.2.13
      */
-    deleteThisItem(postID) {
-      this.uipress.deletePost(postID).then((response) => {
-        if (response) {
-          this.getPatterns();
-        }
+    async deleteThisItem(postID) {
+      const confirm = await this.$refs.confirm.show({
+        title: __('Delete pattern', 'uipress-lite'),
+        message: __('Are you sure you want to delete this custom pattern?', 'uipress-lite'),
+        okButton: __('Delete pattern', 'uipress-lite'),
       });
+
+      if (!confirm) return;
+
+      await deleteRemotePost(postID);
+      this.uipApp.notifications.notify(__('Pattern deleted', 'uipress-lite'), '', 'success', true);
+      this.getPatterns();
     },
     /**
      * Fetches available UI patterns.
@@ -298,7 +309,7 @@ export default {
 
       this.sendServerRequest(uip_ajax.ajax_url, formData).then((response) => {
         if (response.error) {
-          this.uipress.notify(response.message, 'uipress-lite', '', 'error', true);
+          this.uipApp.notifications.notify(response.message, 'uipress-lite', '', 'error', true);
         }
         if (response.success) {
           this.uiTemplate.patterns = response.patterns;
@@ -720,5 +731,7 @@ export default {
             
           
         </div>
+        
+        <Confirm ref="confirm"/>
       </div>`,
 };

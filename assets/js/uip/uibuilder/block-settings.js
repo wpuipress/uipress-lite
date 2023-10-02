@@ -11,7 +11,7 @@ const EditPreset = {
   components: {
     Confirm: defineAsyncComponent(() => import('../v3.5/utility/confirm.min.js?ver=3.2.12')),
   },
-  inject: ['uipress'],
+  
   props: {
     preset: [String, Boolean],
     block: Object,
@@ -122,7 +122,7 @@ const EditPreset = {
 const NewPreset = {
   emits: ['update', 'go-back'],
   components: {},
-  inject: ['uipress'],
+  
   props: {
     preset: [String, Boolean],
     block: Object,
@@ -195,7 +195,7 @@ const NewPreset = {
 const PresetList = {
   emits: ['update', 'request-screen'],
   components: {},
-  inject: ['uipress'],
+  
   props: {
     preset: [String, Boolean],
     block: Object,
@@ -334,7 +334,7 @@ const PresetList = {
  */
 const StylePresets = {
   emits: ['update'],
-  inject: ['uipress'],
+  
   components: {
     screenControl: defineAsyncComponent(() => import('../v3.5/utility/screen-control.min.js?ver=3.2.12')),
     PresetList: PresetList,
@@ -440,7 +440,7 @@ const StylePresets = {
       const response = await this.sendServerRequest(uip_ajax.ajax_url, formData);
 
       if (response.success) {
-        //this.uipress.notify(__('Presets updated', 'uipress-lite'), '', 'success', true);
+        //this.uipApp.notifications.notify(__('Presets updated', 'uipress-lite'), '', 'success', true);
       }
     },
 
@@ -784,7 +784,7 @@ const ToggleSection = {
 
 const BlockStyleHandler = {
   emits: ['update'],
-  inject: ['uipress'],
+  
   components: {
     flexLayout: defineAsyncComponent(() => import('../options/flex-layout.min.js?ver=3.2.12')),
     contextmenu: defineAsyncComponent(() => import('../v3.5/utility/contextmenu.min.js?ver=3.2.12')),
@@ -1095,7 +1095,7 @@ const BlockStyleHandler = {
 };
 
 export default {
-  inject: ['uipress', 'uiTemplate'],
+  inject: [ 'uiTemplate'],
   components: {
     QueryBuilder: defineAsyncComponent(() => import('../options/query-builder.min.js?ver=3.2.12')),
     responsiveControls: defineAsyncComponent(() => import('../options/responsive.min.js?ver=3.2.12')),

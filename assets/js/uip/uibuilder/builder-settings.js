@@ -20,7 +20,7 @@ export default {
           activeTab: 'settings',
         },
         strings: {
-          themeStyles: __('Theme styles', 'uipress'),
+          themeStyles: __('Theme styles'),
           revertStyle: __('Revert style back to default', 'uipress-lite'),
           appliesTo: __('Applies to', 'uipress-lite'),
           excludes: __('Excludes', 'uipress-lite'),
@@ -33,12 +33,12 @@ export default {
           appliesToSelf: __('Take care not to revoke access to anything you may need in the admin.', 'uipress-lite'),
           appliesToSelfMeta: __("If you haven't already, we recommend setting up:", 'uipress-lite'),
           safeMode: __('safe mode', 'uipress-lite'),
-          theme: __('Theme', 'uipress'),
-          add: __('Add', 'uipress'),
-          variableLabel: __('Variable label', 'uipress'),
-          variableName: __('Variable name', 'uipress'),
-          deleteVariable: __('Delete variable', 'uipress'),
-          advanced: __('Advanced', 'uipress'),
+          theme: __('Theme'),
+          add: __('Add'),
+          variableLabel: __('Variable label'),
+          variableName: __('Variable name'),
+          deleteVariable: __('Delete variable'),
+          advanced: __('Advanced'),
           customCSS: __('CSS', 'uipress-lite'),
           customJS: __('Javascript', 'uipress-lite'),
           light: __('Light', 'uipress-lite'),
@@ -90,7 +90,7 @@ export default {
       },
     };
   },
-  inject: [ 'uipress', 'uiTemplate'],
+  inject: [  'uiTemplate'],
   mounted: function () {
     this.loading = false;
   },
@@ -194,7 +194,7 @@ export default {
 
       self.sendServerRequest(uip_ajax.ajax_url, formData).then((response) => {
         if (response.error) {
-          self.uipress.notify(response.message, 'uipress-lite', '', 'error', true);
+          self.uipApp.notifications.notify(response.message, 'uipress-lite', '', 'error', true);
           self.saving = false;
         }
         if (response.success) {

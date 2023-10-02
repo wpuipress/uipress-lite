@@ -16,7 +16,7 @@ export default {
       drag: false,
     };
   },
-  inject: [ 'uiTemplate', 'uipress'],
+  inject: [ 'uiTemplate'],
   watch: {
     content: {
       handler(newValue, oldValue) {
@@ -166,7 +166,7 @@ export default {
                       
                       <div class="uip-cursor-pointer uip-flex-grow uip-text-s uip-no-wrap uip-flex-center uip-flex-between uip-flex">
                         <span>{{element.name}}</span>
-                        <span :title="queryLoopEnabled" v-if="uipress.checkNestedValue(element, ['query', 'enabled'])" class="uip-cursor-pointer uip-icon uip-icon-small-emphasis uip-text-l">all_inclusive</span>
+                        <span :title="queryLoopEnabled" v-if="hasNestedPath(element, ['query', 'enabled'])" class="uip-cursor-pointer uip-icon uip-icon-small-emphasis uip-text-l">all_inclusive</span>
                       </div>
                       
                       <!--Chevs -->

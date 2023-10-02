@@ -5,7 +5,7 @@ export default {
   components: {
     modal: Modal,
   },
-  inject: ['uipress'],
+  
   data() {
     return {
       resolvePromise: undefined,
@@ -195,10 +195,10 @@ export default {
         data: postData,
       })
         .then((response) => {
-          this.uipress.notify(__('Image saved', 'uipress-lite'), '', 'success', true);
+          this.uipApp.notifications.notify(__('Image saved', 'uipress-lite'), '', 'success', true);
         })
         .catch((err) => {
-          this.uipress.notify(err.message, '', 'error', true);
+          this.uipApp.notifications.notify(err.message, '', 'error', true);
         });
     },
     /**
@@ -210,7 +210,7 @@ export default {
       this.validDrop = false;
       let path = this.restUrl + `wp/v2/media/`;
 
-      let notiID = this.uipress.notify(__('Uploading images', 'uipress-lite'), '', 'default', true, true);
+      let notiID = this.uipApp.notifications.notify(__('Uploading images', 'uipress-lite'), '', 'default', true, true);
 
       let files;
       if (dragged) files = Array.from(evt.dataTransfer.files);
@@ -232,12 +232,12 @@ export default {
             data: formData,
           });
         } catch (error) {
-          this.uipress.notify(__('Failed to upload', 'uipress-lite') + ' ' + file.name, '', 'error', true);
+          this.uipApp.notifications.notify(__('Failed to upload', 'uipress-lite') + ' ' + file.name, '', 'error', true);
         }
       }
 
-      this.uipress.destroy_notification(notiID);
-      this.uipress.notify(__('uploaded complete', 'uipress-lite'), '', 'success', true);
+      this.uipApp.notifications.remove(notiID);
+      this.uipApp.notifications.notify(__('uploaded complete', 'uipress-lite'), '', 'success', true);
 
       this.activeTab = 'library';
       this.getMedia();
@@ -252,7 +252,7 @@ export default {
       let path = this.restUrl + `wp/v2/media/`;
 
       //Set notification
-      let notiID = this.uipress.notify(__('Importing image to library', 'uipress-lite'), '', 'default', true, true);
+      let notiID = this.uipApp.notifications.notify(__('Importing image to library', 'uipress-lite'), '', 'default', true, true);
 
       // Fetch the image from the URL
       Axios.get(imageURL, { responseType: 'blob' })
@@ -278,10 +278,10 @@ export default {
         .then((uploadResponse) => {
           this.$refs.popup.close();
           this.resolvePromise(uploadResponse.data);
-          this.uipress.destroy_notification(notiID);
+          this.uipApp.notifications.remove(notiID);
         })
         .catch((error) => {
-          this.uipress.notify(__('Failed to import image', 'uipress-lite'), '', 'error', true);
+          this.uipApp.notifications.notify(__('Failed to import image', 'uipress-lite'), '', 'error', true);
         });
     },
     /**

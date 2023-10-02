@@ -4,7 +4,7 @@ export default {
   components: {
     colorPicker: defineAsyncComponent(() => import('./color-picker.min.js?ver=0.0.1')),
   },
-  
+
   props: {
     value: Object,
     returnData: [Function, Boolean],
@@ -147,7 +147,7 @@ export default {
   template: `
   
 	  <div class="uip-flex uip-flex-column uip-row-gap-s" ref="colorpicker">
-	
+    
 		<input :disabled="!color.user" class="uip-input uip-flex-grow" type="text" v-model="color.name" :placeholder="strings.styleName" autofocus>
 		
 		<toggle-switch :activeValue="mode" :options="colorModes" :returnValue="(d)=>{mode = d}"/>

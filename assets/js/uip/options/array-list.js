@@ -12,7 +12,7 @@ export default {
       },
     };
   },
-  inject: ['uipress'],
+  
   watch: {
     /**
      * Watches for changes to the items and returns the value

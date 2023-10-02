@@ -12,7 +12,7 @@ export default {
       open: false,
     };
   },
-  inject: ['uiTemplate', 'uipress'],
+  inject: ['uiTemplate'],
   mounted() {
     this.mountShortcut();
   },

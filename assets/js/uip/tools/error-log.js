@@ -37,7 +37,7 @@ export default {
       },
     };
   },
-  inject: ['uipress'],
+  
   watch: {
     order: {
       handler(newVal, oldVal) {

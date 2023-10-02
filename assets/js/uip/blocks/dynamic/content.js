@@ -1,4 +1,6 @@
-const { __, _x, _n, _nx } = wp.i18n;
+const { __ } = wp.i18n;
+import { maybeForceReload, stripUIPparams } from '../../v3.5/utility/functions.min.js';
+
 export default {
   props: {
     display: String,
@@ -18,7 +20,7 @@ export default {
       scrollOver: true,
     };
   },
-  inject: ['uipress', 'uiTemplate'],
+  inject: ['uiTemplate'],
   watch: {
     'uipApp.data.themeStyles': {
       handler(newValue, oldValue) {
@@ -176,7 +178,7 @@ export default {
      * @since 3.2.13
      */
     returnAdminPage() {
-      let url = this.uipress.checkNestedValue(this.uipApp.data, ['dynamicOptions', 'viewadmin', 'value']);
+      let url = this.hasNestedPath(this.uipApp.data, 'dynamicOptions', 'viewadmin', 'value');
       return url;
     },
   },
@@ -234,7 +236,7 @@ export default {
       const url = new URL(newURL);
 
       // Force iframe reload based on new URL
-      this.uipress.forceReload(url);
+      maybeForceReload(url);
 
       // Check if we should reload the entire page
       if (this.shouldReloadPage(url)) return window.location.assign(url);
@@ -285,7 +287,7 @@ export default {
         // Get active page from iframe
         if (activeItem[0]) path = activeItem[0].getAttribute('href');
 
-        this.uipress.updateActiveLink(path);
+        this.updateActiveLink(path);
         this.injectStyles();
         this.loading = false;
         return;
@@ -453,7 +455,7 @@ export default {
       let url = new URL(this.startPage);
       url = this.formatUserUrlOptions(url);
       this.$refs.contentframe.contentWindow.location.replace(url);
-      this.uipress.updateActiveLink(this.startPage);
+      this.updateActiveLink(this.startPage);
     },
 
     /**
@@ -556,10 +558,9 @@ export default {
       // Split the hostname into parts
       const parts = url.hostname.split('.');
       if (parts.length <= 2) {
-        return url.hostname; // Return as is for hostnames like "google.com"
+        return url.hostname; // Return as is for hostnames
       }
 
-      // Return last two parts for hostnames like "accounts.uipress.co"
       return parts.slice(-2).join('.');
     },
 
@@ -569,7 +570,7 @@ export default {
      * @param {String} url - url to update address too
      */
     updateBrowserAddress(url) {
-      const processed = this.uipress.stripUIPparams(url);
+      const processed = stripUIPparams(url);
       history.pushState({}, null, processed);
     },
 
@@ -752,12 +753,10 @@ export default {
       }
 
       const styles = this.uipApp.data.themeStyles;
-      const styleArea = frame.contentWindow.document.getElementById('uip-theme-styles');
+      const styleArea = frame.contentWindow.document.querySelector('#uip-theme-styles');
 
       // If style area doesn't exist, abort the function
-      if (!styleArea) {
-        return;
-      }
+      if (!styleArea) return;
 
       let lightStyle = 'html[data-theme="light"]{';
 

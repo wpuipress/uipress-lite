@@ -21,6 +21,10 @@ export function ensureNestedObject(obj, ...keys) {
  * @since 3.2.13
  */
 export function hasNestedPath(obj, ...keys) {
+  // Fill to handle old method of checking nested objects
+  if (Array.isArray(keys[0])) {
+    keys = keys[0];
+  }
   for (let key of keys) {
     if (obj.hasOwnProperty(key)) {
       obj = obj[key];
@@ -295,6 +299,41 @@ export function updateAppPage(newURL, reloadPage) {
 }
 
 /**
+ * Updates active link without changing page
+ *
+ * @param {String} url
+ *
+ * @since 3.0.0
+ */
+export function updateActiveLink(newURL) {
+  const adminURL = this.adminURL;
+  let absoluteCheck = new RegExp('^(?:[a-z+]+:)?//', 'i');
+
+  //Dispatch link change event
+  let shortURL = absoluteCheck.test(newURL) && newURL.includes(adminURL) ? newURL.replace(adminURL, '') : newURL;
+  let fullURL = !absoluteCheck.test(newURL) ? adminURL + newURL : newURL;
+
+  fullURL = fullURL.replace('about:blank', '');
+  shortURL = shortURL.replace('about:blank', '');
+
+  let url = new URL(fullURL);
+  url.searchParams.delete('uip-framed-page', 1);
+  url.searchParams.delete('uip-hide-screen-options', 1);
+  url.searchParams.delete('uip-hide-help-tab', 1);
+  url.searchParams.delete('uip-default-theme', 1);
+  url.searchParams.delete('uip-hide-notices', 1);
+  url.searchParams.delete('uipid', 1);
+
+  maybeForceReload(url);
+
+  //Only update window history if we are in production
+  if (!this.isBuilder) history.pushState({}, null, url);
+
+  const uipActiveLinkChange = new CustomEvent('uip_page_change', { detail: { url: stripUIPparams(shortURL, adminURL) } });
+  document.dispatchEvent(uipActiveLinkChange);
+}
+
+/**
  * Removes uiPress based params from a url
  *
  * @param {String} link - the url to strip
@@ -442,4 +481,96 @@ async function validateBlock(block, keepUID) {
 
   // Ensure every child block is valid
   return (await Promise.all(block.content.map((childBlock) => validateBlock(childBlock, keepUID)))).every((result) => result);
+}
+
+/**
+ * Formats a key chain into a visible shortcut
+ *
+ * @param {Array} keys - the array of shortcut keys
+ * @since 3.0.0
+ */
+export function renderKeyShortCut(keys) {
+  const shortcutKeys = [
+    'Enter', // Enter
+    ' ', // Space
+    'ArrowLeft', // Left Arrow
+    'ArrowUp', // Up Arrow
+    'ArrowRight', // Right Arrow
+    'ArrowDown', // Down Arrow
+  ];
+  const shortcutKeysIcons = [
+    { key: 'Enter', icon: 'keyboard_return' }, // Enter
+    { key: ' ', icon: 'space_bar' }, // Space
+    { key: 'ArrowLeft', icon: 'keyboard_arrow_left' }, // Left Arrow
+    { key: 'ArrowUp', icon: 'keyboard_arrow_up' }, // Up Arrow
+    { key: 'ArrowRight', icon: 'keyboard_arrow_right' }, // Right Arrow
+    { key: 'ArrowDown', icon: 'keyboard_arrow_down' }, // Down Arrow
+  ];
+
+  let format = '';
+
+  for (let key of keys) {
+    if (key == 'Meta') {
+      format += '<span class="uip-command-icon uip-text-muted"></span>';
+    } else if (key == 'Alt') {
+      format += '<span class="uip-alt-icon uip-text-muted"></span>';
+    } else if (key == 'Shift') {
+      format += '<span class="uip-shift-icon uip-text-muted"></span>';
+    } else if (key == 'Control') {
+      format += '<span class="uip-icon uip-text-muted">keyboard_control_key</span>';
+    } else if (key == 'Backspace') {
+      format += '<span class="uip-icon uip-text-muted">backspace</span>';
+    } else if (shortcutKeys.includes(key)) {
+      let keyicon = shortcutKeysIcons.find((x) => x.key == key);
+      format += `<span class="uip-icon uip-text-muted">${keyicon.icon}</span>`;
+    } else {
+      format += `<span class="uip-text-muted uip-text-uppercase" style="line-height: 16px;font-size: 11px;">${key}</span>`;
+    }
+  }
+
+  return format;
+}
+
+/**
+ * Deletes post / CPT / page by ID -Does relevant capability checks on the back end.
+ *
+ * Accepts single ID or array
+ * @param {Array | Number} postID - array of ids or single post id
+ * @since 3.0.0
+ */
+export async function deleteRemotePost(postID) {
+  if (!postID) return;
+
+  let files = Array.isArray(postID) ? JSON.stringify(postID) : JSON.stringify([postID]);
+
+  let self = this;
+
+  let formData = new FormData();
+  formData.append('action', 'uip_delete_post');
+  formData.append('security', uip_ajax.security);
+  formData.append('id', files);
+
+  const response = await sendServerRequest(uip_ajax.ajax_url, formData);
+
+  if (response.error) return false;
+
+  if (response.success) return true;
+}
+
+/**
+ * Get's user preference for given key
+ *
+ *
+ * @param {String} key - the key to fetch
+ * @since 3.0.0
+ */
+export async function getUserPreference(key) {
+  let formData = new FormData();
+  formData.append('action', 'uip_get_user_preference');
+  formData.append('security', uip_ajax.security);
+  formData.append('key', key);
+
+  const response = await sendServerRequest(uip_ajax.ajax_url, formData);
+  if (response.error) return false;
+  return response.value;
 }

@@ -16,7 +16,7 @@ export const core = {
       selectedOptions: [],
     };
   },
-  inject: ['uipress'],
+  
   watch: {
     selected: {
       handler(newValue, oldValue) {
@@ -78,7 +78,7 @@ export const core = {
 
       this.sendServerRequest(uip_ajax.ajax_url, formData).then((response) => {
         if (response.error) {
-          this.uipress.notify(response.error, 'error');
+          this.uipApp.notifications.notify(response.error, 'error');
           this.loading = false;
           return;
         }

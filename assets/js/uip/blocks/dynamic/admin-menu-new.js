@@ -1,7 +1,7 @@
 const { __, _x, _n, _nx } = wp.i18n;
 
 const MenuCollapse = {
-  inject: ['uipress'],
+  
   props: {
     collapsed: Boolean,
     returnData: Function,
@@ -38,7 +38,7 @@ const MenuCollapse = {
 };
 
 const MenuSearch = {
-  inject: ['uipress'],
+  
   emits: ['searching'],
   props: {
     workingMenu: Array,
@@ -135,7 +135,7 @@ const MenuSearch = {
 };
 
 const SubMenuItem = {
-  inject: ['uipress'],
+  
   props: {
     maybeFollowLink: Function,
     item: Object,
@@ -154,7 +154,7 @@ const SubMenuItem = {
      * @since 3.2.13
      */
     sepHasCustomName(item) {
-      return this.uipress.checkNestedValue(item, ['custom', 'name']);
+      return this.hasNestedPath(item, ['custom', 'name']);
     },
   },
   template: `
@@ -197,7 +197,7 @@ const SubMenuItem = {
 };
 
 const TopLevelItem = {
-  inject: ['uipress'],
+  
   props: {
     maybeFollowLink: Function,
     item: Object,
@@ -244,7 +244,7 @@ const TopLevelItem = {
       // Don't hide icons if we are collapsed
       if (this.collapsed) return false;
 
-      const icons = this.uipress.checkNestedValue(this.block, ['settings', 'block', 'options', 'hideIcons', 'value']);
+      const icons = this.hasNestedPath(this.block, ['settings', 'block', 'options', 'hideIcons', 'value']);
       if (this.isObject(icons)) return icons.value;
       return icons;
     },
@@ -301,7 +301,7 @@ const TopLevelItem = {
 };
 
 const DrillDown = {
-  inject: ['uipress'],
+  
   components: {
     TopLevelItem: TopLevelItem,
     SubMenuItem: SubMenuItem,
@@ -507,7 +507,7 @@ export default {
       collapsed: false,
     };
   },
-  inject: ['uipress', 'uiTemplate'],
+  inject: [ 'uiTemplate'],
   watch: {
     /**
      * Watches for changes to the breadcrumbs and emits event
@@ -637,7 +637,7 @@ export default {
       // Don't hide icons if we are collapsed
       if (this.collapsed) return false;
 
-      const icons = this.uipress.checkNestedValue(this.block, ['settings', 'block', 'options', 'hideIcons', 'value']);
+      const icons = this.hasNestedPath(this.block, ['settings', 'block', 'options', 'hideIcons', 'value']);
       if (this.isObject(icons)) return icons.value;
       return icons;
     },
@@ -849,7 +849,7 @@ export default {
      * @since 3.2.13
      */
     sepHasCustomName(item) {
-      return this.uipress.checkNestedValue(item, ['custom', 'name']);
+      return this.hasNestedPath(item, ['custom', 'name']);
     },
 
     /**

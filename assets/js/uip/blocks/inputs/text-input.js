@@ -13,7 +13,7 @@ export default {
       },
     };
   },
-  inject: ['uipress'],
+  
   computed: {
     /**
      * Returns placeholder for input

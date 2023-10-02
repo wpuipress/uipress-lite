@@ -184,7 +184,7 @@ export default {
       fonts: [...FontFamilies, ...[{ value: 'custom', label: __('Custom', 'uipress-lite') }]],
     };
   },
-  inject: ['uipress'],
+  
   watch: {
     /**
      * Watches changes to value prop and injects

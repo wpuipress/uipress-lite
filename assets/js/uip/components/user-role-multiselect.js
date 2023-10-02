@@ -41,7 +41,7 @@ export const core = {
       },
     };
   },
-  inject: ['uipress'],
+  
   watch: {
     selectedOptions: {
       handler(newValue, oldValue) {
@@ -128,7 +128,7 @@ export const core = {
         this.rendered = true;
         this.loading = false;
         if (response.error) {
-          this.uipress.notify(response.error, 'error');
+          this.uipApp.notifications.notify(response.error, 'error');
           return;
         }
 
@@ -337,7 +337,7 @@ export const preview = {
       },
     };
   },
-  inject: ['uipress'],
+  
   watch: {
     selectedOptions: {
       handler(newValue, oldValue) {

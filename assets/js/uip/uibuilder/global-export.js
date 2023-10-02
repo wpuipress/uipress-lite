@@ -36,7 +36,7 @@ export default {
       },
     };
   },
-  inject: ['uipress'],
+  
   watch: {
     currentStep: {
       handler(newValue, oldValue) {
@@ -71,13 +71,13 @@ export default {
       formData.append('action', 'uip_global_export');
       formData.append('security', uip_ajax.security);
       formData.append('options', JSON.stringify(this.exportOptions));
-      const notificationID = this.uipress.notify(__('Exporting uiPress content', 'uipress-lite'), '', 'default', false, true);
+      const notificationID = this.uipApp.notifications.notify(__('Exporting uiPress content', 'uipress-lite'), '', 'default', false, true);
 
       const response = await this.sendServerRequest(uip_ajax.ajax_url, formData);
 
       // Handle error
       if (!response || response.error) {
-        this.uipress.notify(response.message, '', 'error', true);
+        this.uipApp.notifications.notify(response.message, '', 'error', true);
         return;
       }
 
@@ -95,7 +95,7 @@ export default {
      */
     async downloadExport(exported, notificationID) {
       let namer = 'uip-global-export-';
-      let formateExport = this.uipress.uipEncodeJson({ uipGlobalExport: exported });
+      let formateExport = this.prepareJSON({ uipGlobalExport: exported });
 
       let today = new Date();
       let dd = String(today.getDate()).padStart(2, '0');
@@ -111,8 +111,8 @@ export default {
       dlAnchorElem.setAttribute('download', filename);
       dlAnchorElem.click();
 
-      this.uipress.notify(__('Export complete', 'uipress-lite'), '', 'success');
-      this.uipress.destroy_notification(notificationID);
+      this.uipApp.notifications.notify(__('Export complete', 'uipress-lite'), '', 'success');
+      this.uipApp.notifications.remove(notificationID);
     },
   },
   template: `

@@ -793,7 +793,7 @@ class uip_site_settings extends uip_app
       $newCoumns[$key] = $value;
 
       if ($key == 'cb') {
-        $newCoumns['uip_status'] = __('Status', 'uipress');
+        $newCoumns['uip_status'] = __('Status', 'uipress-lite');
       }
     }
 

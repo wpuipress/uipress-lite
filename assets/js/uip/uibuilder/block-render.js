@@ -1,7 +1,7 @@
 import { nextTick, h, Teleport } from '../../libs/vue-esm-dev.js';
 import BlockStyles from './block-styles.min.js';
 export default {
-  inject: ['uipress', 'uiTemplate'],
+  inject: [ 'uiTemplate'],
   mixins: [BlockStyles],
   props: {
     block: Object,
@@ -48,7 +48,7 @@ export default {
      * @since 3.2.13
      */
     hasBlockQuery() {
-      return this.uipress.checkNestedValue(this.block, ['query', 'enabled']);
+      return this.hasNestedPath(this.block, ['query', 'enabled']);
     },
     /**
      * Returns total count for query
@@ -66,7 +66,7 @@ export default {
      * @since 3.2.13
      */
     blockPaginationEnabled() {
-      return this.uipress.checkNestedValue(this.block, ['query', 'settings', 'showPagination']);
+      return this.hasNestedPath(this.block, ['query', 'settings', 'showPagination']);
     },
     /**
      * Return whether the block query has a search input
@@ -74,7 +74,7 @@ export default {
      * @since 3.2.13
      */
     blockSearchEnabled() {
-      return this.uipress.checkNestedValue(this.block, ['query', 'settings', 'search']);
+      return this.hasNestedPath(this.block, ['query', 'settings', 'search']);
     },
     /**
      * Returns block link if it exists. Returns false otherwise
@@ -82,7 +82,7 @@ export default {
      * @since 3.2.13
      */
     ifBlockHasLink() {
-      return this.uipress.checkNestedValue(this.block, ['linkTo', 'value']);
+      return this.hasNestedPath(this.block, ['linkTo', 'value']);
     },
 
     /**
@@ -107,7 +107,7 @@ export default {
      * @since 3.2.13
      */
     returnCustomCSS() {
-      let style = this.uipress.checkNestedValue(this.block, ['settings', 'advanced', 'options', 'css', 'value']);
+      let style = this.hasNestedPath(this.block, ['settings', 'advanced', 'options', 'css', 'value']);
       if (!style) style = '';
       return style;
     },
@@ -118,7 +118,7 @@ export default {
      * @since 3.2.13
      */
     returnCustomJS() {
-      let code = this.uipress.checkNestedValue(this.block, ['settings', 'advanced', 'options', 'js', 'value']);
+      let code = this.hasNestedPath(this.block, ['settings', 'advanced', 'options', 'js', 'value']);
       if (!code) code = '';
       return code;
     },
@@ -223,7 +223,7 @@ export default {
      * @since 3.2.13
      */
     async runBlockQuery() {
-      const blockQuery = this.uipress.checkNestedValue(this.block, ['query', 'settings']);
+      const blockQuery = this.hasNestedPath(this.block, ['query', 'settings']);
       let query = JSON.stringify(blockQuery);
       let blockString = JSON.stringify(this.block);
 
@@ -245,7 +245,7 @@ export default {
       const response = await this.sendServerRequest(uip_ajax.ajax_url, formData);
 
       if (response.error) {
-        this.uipress.notify(response.message, 'uipress-lite', '', 'error', true);
+        this.uipApp.notifications.notify(response.message, 'uipress-lite', '', 'error', true);
       }
 
       if (response.success) {
@@ -263,7 +263,7 @@ export default {
      * @since 3.2.13
      */
     returnToolTip(block) {
-      let hasTip = this.uipress.checkNestedValue(block, ['tooltip', 'message']);
+      let hasTip = this.hasNestedPath(block, ['tooltip', 'message']);
       if (hasTip) return hasTip;
     },
 
@@ -448,8 +448,8 @@ export default {
      */
     maybeFollowLink(evt, block) {
       // Retrieve link value and link type
-      const linkValue = this.uipress.checkNestedValue(block, ['linkTo', 'value']);
-      const linkType = this.uipress.checkNestedValue(block, ['linkTo', 'newTab']);
+      const linkValue = this.hasNestedPath(block, ['linkTo', 'value']);
+      const linkType = this.hasNestedPath(block, ['linkTo', 'newTab']);
 
       // Early exit if no link value is set
       if (!linkValue) return;

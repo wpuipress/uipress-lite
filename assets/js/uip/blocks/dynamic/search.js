@@ -109,14 +109,14 @@ export default {
 
       // Something went very wrong
       if (!response) {
-        this.uipress.notify(__('Unable to fetch posts at this tiem', 'uipress-lite'), '', '', 'error', true);
+        this.uipApp.notifications.notify(__('Unable to fetch posts at this tiem', 'uipress-lite'), '', '', 'error', true);
         this.searching = false;
         return;
       }
 
       // Handle error
       if (response.error) {
-        this.uipress.notify(response.message, '', '', 'error', true);
+        this.uipApp.notifications.notify(response.message, '', '', 'error', true);
         this.searching = false;
       }
 

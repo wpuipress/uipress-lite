@@ -5,7 +5,7 @@ export default {
     contextmenu: defineAsyncComponent(() => import('../v3.5/utility/contextmenu.min.js?ver=3.2.12')),
     SaveAsPattern: defineAsyncComponent(() => import('./save-as-pattern.min.js?ver=3.2.12')),
   },
-  inject: ['uiTemplate', 'uipress', 'openModal'],
+  inject: ['uiTemplate'],
   data() {
     return {
       block: {},
@@ -340,13 +340,13 @@ export default {
         try {
           parsed = JSON.parse(json_settings);
         } catch (error) {
-          this.uipress.notify(error, '', 'error', true, false);
+          this.uipApp.notifications.notify(error, '', 'error', true, false);
           return;
         }
 
         if (parsed) {
           if (!Array.isArray(parsed) && !this.isObject(parsed)) {
-            this.uipress.notify('Template is not valid', '', 'error', true, false);
+            this.uipApp.notifications.notify('Template is not valid', '', 'error', true, false);
             return;
           }
 
@@ -360,19 +360,19 @@ export default {
               } else if (parsed.uipLayout) {
                 temper = Array.isArray(parsed.uipLayout) ? parsed.uipLayout : [parsed.uipLayout];
               } else {
-                return this.uipress.notify(__('Template mismatch', 'uipress-lite'), '', 'error', true, false);
+                return this.uipApp.notifications.notify(__('Template mismatch', 'uipress-lite'), '', 'error', true, false);
               }
               break;
             case 'block':
               if (!parsed.uipLayout) {
-                return this.uipress.notify(__('Template mismatch', 'uipress-lite'), '', 'error', true, false);
+                return this.uipApp.notifications.notify(__('Template mismatch', 'uipress-lite'), '', 'error', true, false);
               }
               message = __('Block imported', 'uipress-lite');
               temper = [parsed.uipLayout];
               break;
             case 'blockcontent':
               if (!parsed.uipBlockContent) {
-                return this.uipress.notify(__('Template mismatch', 'uipress-lite'), '', 'error', true, false);
+                return this.uipApp.notifications.notify(__('Template mismatch', 'uipress-lite'), '', 'error', true, false);
               }
               message = __('Content imported', 'uipress-lite');
               temper = parsed.uipBlockContent;
@@ -394,13 +394,13 @@ export default {
                 this.block.content = temper;
               }
 
-              this.uipress.notify(message, '', 'success', true, false);
+              this.uipApp.notifications.notify(message, '', 'success', true, false);
             } else {
-              this.uipress.notify(__('File is not a valid JSON template', 'uipress-lite'), '', 'error', true, false);
+              this.uipApp.notifications.notify(__('File is not a valid JSON template', 'uipress-lite'), '', 'error', true, false);
             }
           });
         } else {
-          this.uipress.notify(__('JSON parse failed', 'uipress-lite'), '', 'error', true, false);
+          this.uipApp.notifications.notify(__('JSON parse failed', 'uipress-lite'), '', 'error', true, false);
         }
       };
     },
@@ -443,7 +443,7 @@ export default {
 
       let message = __('Exported', 'uipress-lite');
 
-      this.uipress.notify(message, '', 'success', true);
+      this.uipApp.notifications.notify(message, '', 'success', true);
     },
 
     /**

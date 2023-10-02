@@ -18,7 +18,7 @@ export default {
       },
     };
   },
-  inject: [ 'uipress'],
+  
   watch: {
     /**
      * Watches changes to block options and updates pre-populate data
@@ -27,12 +27,11 @@ export default {
      */
     'block.settings.block.options': {
       handler(newValue, oldValue) {
-        if (this.uipress.enviroment && this.uipress.enviroment == 'builder') {
-          this.getPrepopulate();
-        }
+        this.getPrepopulate();
       },
       deep: true,
     },
+
     /**
      * Watches changes to block content and updates pre-populate data
      *
@@ -40,9 +39,7 @@ export default {
      */
     'block.content': {
       handler(newValue, oldValue) {
-        if (this.uipress.enviroment && this.uipress.enviroment == 'builder') {
-          this.getPrepopulate();
-        }
+        this.getPrepopulate();
       },
       deep: true,
     },
@@ -143,7 +140,7 @@ export default {
 
       // Handle error
       if (response.error) {
-        this.uipress.notify(response.message, '', 'error', true);
+        this.uipApp.notifications.notify(response.message, '', 'error', true);
         return;
       }
       if (!response.success) {
@@ -176,7 +173,7 @@ export default {
       // Get form submit action
       const formOptions = this.get_block_option(this.block, 'block', 'submitAction');
       const errorMessage = () => {
-        this.uipress.notify(__('Configuration error', 'uipress-lite'), __('No php function supplied to send form data to', 'uipress-lite'), 'error');
+        this.uipApp.notifications.notify(__('Configuration error', 'uipress-lite'), __('No php function supplied to send form data to', 'uipress-lite'), 'error');
       };
 
       switch (formOptions.action) {
@@ -266,7 +263,7 @@ export default {
 
       // Handle error state
       if (response.error) {
-        this.uipress.notify(response.message, '', 'error', true);
+        this.uipApp.notifications.notify(response.message, '', 'error', true);
         return;
       }
       if (!response.success) {
@@ -304,7 +301,7 @@ export default {
 
       // Handle error
       if (response.error) {
-        this.uipress.notify(response.message, '', 'error', true);
+        this.uipApp.notifications.notify(response.message, '', 'error', true);
         return;
       }
       if (!response.success) {
@@ -344,7 +341,7 @@ export default {
 
       // Catch error
       if (response.error) {
-        this.uipress.notify(response.message, '', 'error', true);
+        this.uipApp.notifications.notify(response.message, '', 'error', true);
         return;
       }
 
@@ -385,7 +382,7 @@ export default {
 
       // Handle error
       if (response.error) {
-        this.uipress.notify(response.message, '', 'error', true);
+        this.uipApp.notifications.notify(response.message, '', 'error', true);
         return;
       }
 

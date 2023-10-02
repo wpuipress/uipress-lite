@@ -7,7 +7,7 @@ export default {
     colorPicker: defineAsyncComponent(() => import('../v3.5/styles/color-picker.min.js?ver=3.2.12')),
     colourStyleEditor: defineAsyncComponent(() => import('../v3.5/styles/color-style-editor.min.js?ver=3.2.12')),
   },
-  inject: ['uipress'],
+  
   props: {
     returnData: Function,
     value: Object,

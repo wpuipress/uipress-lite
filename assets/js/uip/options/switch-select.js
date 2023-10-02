@@ -4,7 +4,7 @@ export default {
     value: [Boolean, String],
     args: Object,
   },
-  inject: ['uipress'],
+  
   data() {
     return {
       option: this.value,

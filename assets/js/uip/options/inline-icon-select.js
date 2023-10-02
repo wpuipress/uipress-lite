@@ -19,7 +19,7 @@ export default {
       },
     };
   },
-  inject: ['uipress'],
+  
   watch: {
     icon: {
       handler(newValue, oldValue) {

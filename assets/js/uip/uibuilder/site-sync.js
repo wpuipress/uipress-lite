@@ -67,7 +67,7 @@ export default {
       },
     };
   },
-  inject: ['uipress'],
+  
   watch: {
     currentStep: {
       handler(newValue, oldValue) {
@@ -112,7 +112,7 @@ export default {
 
       // Handle error
       if (response.error) {
-        this.uipress.notify(response.message, '', 'error', true);
+        this.uipApp.notifications.notify(response.message, '', 'error', true);
         return;
       }
 
@@ -162,7 +162,7 @@ export default {
 
       // Handle error
       if (response.error) {
-        this.uipress.notify(response.message, '', 'error', true);
+        this.uipApp.notifications.notify(response.message, '', 'error', true);
         return;
       }
 
@@ -185,20 +185,20 @@ export default {
       let formData = new FormData();
       formData.append('action', 'uip_save_sync_options');
       formData.append('security', uip_ajax.security);
-      formData.append('options', this.uipress.uipEncodeJson(this.hostOptions));
-      formData.append('syncOptions', this.uipress.uipEncodeJson(this.syncOptions));
+      formData.append('options', this.prepareJSON(this.hostOptions));
+      formData.append('syncOptions', this.prepareJSON(this.syncOptions));
 
       const response = await this.sendServerRequest(uip_ajax.ajax_url, formData);
       this.fetchingSettings = false;
 
       // Handle error
       if (response.error) {
-        this.uipress.notify(response.message, '', 'error', true);
+        this.uipApp.notifications.notify(response.message, '', 'error', true);
         return;
       }
 
       // Settings saved
-      this.uipress.notify(__('Settings saved', 'uipress-lite'), '', 'success');
+      this.uipApp.notifications.notify(__('Settings saved', 'uipress-lite'), '', 'success');
     },
 
     /**
@@ -212,19 +212,19 @@ export default {
       formData.append('action', 'uip_start_site_sync');
       formData.append('security', uip_ajax.security);
       formData.append('options', JSON.stringify(this.syncOptions));
-      const notificationID = this.uipress.notify(__('Importing uiPress content', 'uipress-lite'), '', 'default', false, true);
+      const notificationID = this.uipApp.notifications.notify(__('Importing uiPress content', 'uipress-lite'), '', 'default', false, true);
 
       const response = await this.sendServerRequest(uip_ajax.ajax_url, formData);
-      this.uipress.destroy_notification(notificationID);
+      this.uipApp.notifications.remove(notificationID);
 
       // Handle error
       if (response.error) {
-        this.uipress.notify(response.message, '', 'error', true);
+        this.uipApp.notifications.notify(response.message, '', 'error', true);
         return;
       }
 
       // Success
-      this.uipress.notify(__('Import complete', 'uipress-lite'), '', 'success');
+      this.uipApp.notifications.notify(__('Import complete', 'uipress-lite'), '', 'success');
       this.$router.push('/');
 
       // Reload page after short timeout to refresh settings

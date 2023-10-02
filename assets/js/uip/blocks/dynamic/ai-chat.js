@@ -21,7 +21,7 @@ export default {
       thinking: false,
     };
   },
-  inject: ['uipress'],
+  
   watch: {
     'block.settings.block.options.welcomeMessage': {
       handler(newValue, oldvalue) {
@@ -194,7 +194,7 @@ export default {
         return;
       }
 
-      const error = this.uipress.checkNestedValue(response, ['message', 'error']);
+      const error = this.hasNestedPath(response, ['message', 'error']);
       if (error) {
         this.error = true;
         this.errorMessage = error.message + ' - error code: ' + error.code;
@@ -203,7 +203,7 @@ export default {
       }
 
       // Update messages from response
-      let choices = this.uipress.checkNestedValue(response, ['message', 'choices']);
+      let choices = this.hasNestedPath(response, ['message', 'choices']);
       if (Array.isArray(choices)) {
         let mess = choices[0].message;
         mess.content = marked.parse(mess.content);

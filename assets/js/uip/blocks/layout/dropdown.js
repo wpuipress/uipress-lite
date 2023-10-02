@@ -1,4 +1,5 @@
 const { __, _x, _n, _nx } = wp.i18n;
+import { renderKeyShortCut } from '../../v3.5/utility/functions.min.js';
 export default {
   props: {
     display: String,
@@ -8,7 +9,7 @@ export default {
   data: function () {
     return {};
   },
-  inject: ['uipress'],
+  
   computed: {
     /**
      * Returns custom text for button trigger
@@ -32,7 +33,7 @@ export default {
     getShortcut() {
       const shortcut = this.getShortcutValue;
       if (!shortcut) return;
-      return this.uipress.renderKeyShortCut(shortcut.selected);
+      return this.renderKeyShortCut(shortcut.selected);
     },
 
     /**

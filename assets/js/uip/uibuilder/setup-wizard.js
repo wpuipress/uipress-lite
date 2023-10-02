@@ -77,7 +77,7 @@ export default {
       },
     };
   },
-  inject: ['uipress'],
+  
   watch: {
     currentStep: {
       handler(newValue, oldValue) {
@@ -108,7 +108,7 @@ export default {
 
       self.sendServerRequest(URL, formData).then((response) => {
         if (response.error) {
-          self.uipress.notify(response.message, 'uipress-lite', '', 'error', true);
+          self.uipApp.notifications.notify(response.message, 'uipress-lite', '', 'error', true);
           self.themeLoading = false;
         }
         self.themeLoading = false;
@@ -147,15 +147,15 @@ export default {
       let self = this;
       let formData = new FormData();
       let URL = 'https://api.uipress.co/templates/get/?templateid=' + self.setupDetails.chosenTemplate;
-      let notiID = self.uipress.notify(__('Importing template', 'uipress-lite'), '', 'default', false, true);
+      let notiID = self.uipApp.notifications.notify(__('Importing template', 'uipress-lite'), '', 'default', false, true);
 
       self.sendServerRequest(URL, formData).then((response) => {
         if (response.error) {
-          self.uipress.notify(response.message, '', 'error', true);
-          self.uipress.destroy_notification(notiID);
+          self.uipApp.notifications.notify(response.message, '', 'error', true);
+          self.uipApp.notifications.remove(notiID);
           self.saveSettings();
         }
-        self.uipress.destroy_notification(notiID);
+        self.uipApp.notifications.remove(notiID);
         self.setupDetails.templateJSON = response;
         self.saveSettings();
       });
@@ -168,7 +168,7 @@ export default {
       let styles = this.formatStyles();
       let stylesJson = JSON.stringify(styles, (k, v) => (v === 'true' ? 'uiptrue' : v === true ? 'uiptrue' : v === 'false' ? 'uipfalse' : v === false ? 'uipfalse' : v === '' ? 'uipblank' : v));
 
-      let notiID = self.uipress.notify(__('Confirguring settings', 'uipress-lite'), '', 'default', false, true);
+      let notiID = self.uipApp.notifications.notify(__('Confirguring settings', 'uipress-lite'), '', 'default', false, true);
 
       let formData = new FormData();
       formData.append('action', 'uip_save_from_wizard');
@@ -177,9 +177,9 @@ export default {
       formData.append('styles', stylesJson);
 
       self.sendServerRequest(uip_ajax.ajax_url, formData).then((response) => {
-        self.uipress.destroy_notification(notiID);
+        self.uipApp.notifications.remove(notiID);
         self.saving = false;
-        self.uipress.notify('Setup complete', '', 'success', true);
+        self.uipApp.notifications.notify('Setup complete', '', 'success', true);
         self.finished = true;
       });
     },

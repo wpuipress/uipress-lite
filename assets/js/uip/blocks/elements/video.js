@@ -8,7 +8,7 @@ export default {
   data: function () {
     return {};
   },
-  inject: ['uipress'],
+  
   computed: {
     /**
      * Returns video URL

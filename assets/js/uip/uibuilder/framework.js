@@ -14,10 +14,9 @@ export default {
     TemplateLibrary: defineAsyncComponent(() => import('./template-library.min.js?ver=3.2.12')),
     DynamicData: defineAsyncComponent(() => import('./dynamic-data-watcher.min.js?ver=3.2.12')),
   },
-  inject: [ 'uipress'],
-  data: function () {
+
+  data() {
     return {
-      loading: true,
       templateID: this.$route.params.templateID,
       layoutFetched: false,
       unsavedChanges: false,
@@ -41,9 +40,6 @@ export default {
         settingsPanel: {
           pos: {},
         },
-        layers: {
-          display: this.uipApp.data.userPrefs.builderLayers,
-        },
         sideBar: {
           activeTab: 'blocks',
         },
@@ -54,7 +50,6 @@ export default {
             'Brand new for UiPress 3, the uiBuilder is a powerful drag and drop tool for building great looking, functional admin experiences for yourself or your clients',
             'uipress-lite'
           ),
-          browseTemplates: __('Browse premade templates or start from scratch', 'uipress-lite'),
           blankCanvas: __('Blank canvas', 'uipress-lite'),
           viewTemplates: __('View templates', 'uipress-lite'),
           dontShowAgain: __("Don't show this again", 'uipress-lite'),
@@ -62,7 +57,6 @@ export default {
           deletesAllBlocks: __('Deletes all blocks', 'uipress-lite'),
           hideLayers: __('Hide layers', 'uipress-lite'),
           shortCuts: __('Block shortcuts', 'uipress-lite'),
-          shortCutsExplanation: __('As you build your template, key blocks will automatically be added here for easy settings access'),
           deleteLayout: __('Clear layers', 'uipress-lite'),
           searchData: __('Search', 'uipress-lite'),
         },
@@ -85,7 +79,6 @@ export default {
           data: {},
         },
         display: 'preview',
-
         globalSettings: {
           name: __('Draft Layout', 'uipress-lite'),
           status: false,
@@ -140,114 +133,33 @@ export default {
   provide() {
     return {
       uiTemplate: this.returnTemplateData,
-      layersPanel: this.ui.layers,
-      openModal: this.openModal,
-      unsavedChanges: this.returnUnsaved,
     };
   },
-  mounted: function () {
-    let self = this;
-    self.loading = false;
-    self.getTemplate();
-
-    document.addEventListener(
-      'uip_page_change_loaded',
-      (e) => {
-        self.getNotifications();
-      },
-      { once: false }
-    );
-
-    for (const key in self.template.layout) {
-      let item = self.template.layout[key];
-      self.buildOptions(item.optionsEnabled, item.settings);
-    }
-
-    let query = self.$route.query;
-
-    if (query) {
-      if (query.tab) {
-        self.ui.sideBar.activeTab = query.tab;
-      }
-    }
-
-    //Watch for right clicks on frame content
-    document.addEventListener(
-      'right_click_frame',
-      (e) => {
-        self.uipress.searchForBlock(self.template.content, e.detail.uid).then((response) => {
-          if (response) {
-            let framePos = document.getElementById(e.detail.uid).getBoundingClientRect();
-
-            e.detail.pos.y = this.uipApp.data.userPrefs.builderPrefersZoom * e.detail.pos.y + framePos.y;
-            e.detail.pos.x = this.uipApp.data.userPrefs.builderPrefersZoom * e.detail.pos.x + framePos.x;
-
-            self.ui.contextualMenu.block = response;
-            self.setRightClickPos(e.detail.pos);
-            self.ui.contextualMenu.display = true;
-          } else {
-            return;
-          }
-        });
-      },
-      { once: false }
-    );
-    if (window.parent) {
-      window.parent.postMessage({ eventName: 'uip_request_fullscreen' }, '*');
-    }
+  async created() {
+    await this.getTemplate();
   },
-
+  mounted() {
+    this.mountWatchers();
+    this.setTab();
+  },
+  beforeUnmount() {
+    document.addEventListener('uip_page_change_loaded', this.getNotifications, { once: false });
+  },
   computed: {
-    returnSelectedBlocks() {
-      ///Maybe one day!
-      if (!this.$route.params.uid) {
-        this.selectedBlocks = [];
-      }
-
-      let self = this;
-      let uid = this.$route.params.uid;
-
-      self.uipress.searchForBlock(self.template.content, uid).then((response) => {
-        if (response) {
-          let block = response;
-          let markedBlocks = document.querySelectorAll('.uip-preview-selected-block');
-          if (!markedBlocks || !block) {
-            return [];
-          }
-
-          for (let domBlock of markedBlocks) {
-            self.selectedBlocks[domBlock];
-          }
-          console.log(self.selectedBlocks);
-          return self.selectedBlocks;
-        }
-      });
-    },
+    /**
+     * Returns the current template
+     *
+     * @since 3.2.13
+     */
     returnTemplateData() {
       return this.template;
     },
-    returnLayers() {
-      return this.ui.layers;
-    },
-    currentRouteName() {
-      return this.$route.name;
-    },
-    returnUnsaved() {
-      return this.unsavedChanges;
-    },
-    returnOptionsWidth() {
-      let width = parseFloat(this.uipApp.data.userPrefs.builderOptionsWodth);
-      if ((width && typeof width !== 'undefined' && width != '') || !isNaN(width)) {
-        return 'width:' + width + 'px;';
-      }
-      return false;
-    },
-    getBlockshortcuts() {
-      let self = this;
-      self.ui.keyBlocks = [];
-      self.uipress.findBYmodnameAndReturn(self.template.content, ['uip-admin-menu', 'uip-admin-menu-new', 'uip-content', 'uip-toolbar', 'uip-content-navigator'], self.ui.keyBlocks);
-      return self.ui.keyBlocks;
-    },
+
+    /**
+     * Returns left panel style depending on preview / builder mode
+     *
+     * @since 3.2.13
+     */
     returnLeftPanelStyle() {
       if (this.template.isPreview) {
         return 'transform:scale(0,1);max-width:0%;transition: all 0.2s ease-in-out;transform-origin: left;';
@@ -257,27 +169,48 @@ export default {
     },
   },
   methods: {
+    /**
+     * Sets active sidebar tab from router query
+     *
+     * @since 3.2.13
+     */
+    setTab() {
+      if (!this.$route.query) return;
+      if (!this.$route.query.tab) return;
+      this.ui.sideBar.activeTab = this.$route.query.tab;
+    },
+
+    /**
+     * Mounts app watchers and requests fullscreen if loading in iframe
+     *
+     * @since 3.2.13
+     */
+    mountWatchers() {
+      document.addEventListener('uip_page_change_loaded', this.getNotifications, { once: false });
+      if (!window.parent) return;
+      window.parent.postMessage({ eventName: 'uip_request_fullscreen' }, '*');
+    },
+
+    /**
+     * Gets notifications from frames
+     *
+     * @since 3.2.13
+     */
     getNotifications() {
-      let self = this;
-      //Get frame
-      let frames = document.getElementsByClassName('uip-page-content-frame');
+      const frame = document.querySelector('.uip-page-content-frame');
       //Frame does not exist so abort
       let notifications;
 
-      if (!frames[0]) {
-        notifications = document.querySelectorAll('.notice:not(#message):not(.inline):not(.update-message),.wp-analytify-notification');
-      } else {
-        let contentframe = frames[0];
-        notifications = contentframe.contentWindow.document.querySelectorAll('.notice:not(#message):not(.inline):not(.update-message),.wp-analytify-notification');
-      }
-
-      this.template.notifications = [];
+      // Get notifications from frame or current document
+      const searchDocument = frame ? frame.contentWindow.document : document;
+      notifications = searchDocument.querySelectorAll('.notice:not(#message):not(.inline):not(.update-message),.wp-analytify-notification');
       if (!notifications) return;
 
+      this.template.notifications = [];
+
       let notiActive = false;
-      if (JSON.stringify(self.template.content).includes('site-notifications')) {
-        notiActive = true;
-      }
+      const stringTemplate = JSON.stringify(this.template.content);
+      if (stringTemplate.includes('site-notifications')) notiActive = true;
 
       for (const noti of notifications) {
         this.template.notifications.push(noti.outerHTML.replace('uip-framed-page=1', ''));
@@ -288,6 +221,12 @@ export default {
 
       this.uipApp.data.dynamicOptions.notificationCount.value = this.template.notifications.length;
     },
+
+    /**
+     * Pushes a blank canvas block
+     *
+     * @since 3.2.13
+     */
     addCanvas() {
       const containerBlock = this.uipApp.data.blocks.filter((obj) => {
         return obj.moduleName == 'uip-container';
@@ -297,17 +236,14 @@ export default {
 
       delete copiedConatiner.path;
       delete copiedConatiner.args;
-
       delete copiedConatiner.category;
-
       delete copiedConatiner.description;
-
-      delete copiedConatiner.path;
+      delete copiedConatiner.optionsEnabled;
 
       copiedConatiner.uid = this.createUID();
       copiedConatiner.name = __('Canvas', 'uipress-lite');
 
-      this.uipress.createNestedObject(copiedConatiner, ['settings', 'style', 'options', 'flexLayout', 'value']);
+      this.ensureNestedObject(copiedConatiner, 'settings', 'style', 'options', 'flexLayout', 'value');
       copiedConatiner.settings.style.options.flexLayout.value = {
         direction: 'row',
         distribute: 'start',
@@ -318,311 +254,74 @@ export default {
 
       this.template.content.push(copiedConatiner);
     },
-
-    injectSavedStyles(styles) {
-      let themeStyles = this.uipApp.data.themeStyles;
-      for (let key in themeStyles) {
-        let item = themeStyles[key];
-
-        if (styles[item.name]) {
-          if ('value' in styles[item.name]) {
-            item.value = styles[item.name].value;
-          }
-          if ('darkValue' in styles[item.name]) {
-            item.darkValue = styles[item.name].darkValue;
-          }
-        }
-      }
-
-      for (let key in styles) {
-        let item = styles[key];
-        if (item.user) {
-          this.uipApp.data.themeStyles[item.name] = item;
-        }
-      }
-    },
-    getTemplate() {
-      let self = this;
-
+    /**
+     * Fetches the template
+     *
+     * @since 3.2.13
+     */
+    async getTemplate() {
       //Build form data for fetch request
       let formData = new FormData();
       formData.append('action', 'uip_get_ui_template');
       formData.append('security', uip_ajax.security);
-      formData.append('templateID', self.templateID);
-      self.layoutFetched = false;
+      formData.append('templateID', this.templateID);
+      this.layoutFetched = false;
 
-      self.sendServerRequest(uip_ajax.ajax_url, formData).then((response) => {
-        if (response.error) {
-          self.uipress.notify(response.message, '', 'error', true);
-          return;
-        }
+      const response = await this.sendServerRequest(uip_ajax.ajax_url, formData);
 
-        if (response.styles) {
-          self.injectSavedStyles(response.styles);
-        }
+      if (response.styles) this.uipApp.data.themeStyles = { ...this.uipApp.data.themeStyles, ...response.styles };
+      console.log(this.uipApp.data.themeStyles);
 
-        let settings = response.settings[0];
-        let content = response.content;
-
-        //Store user patterns
-        self.template.patterns = response.patterns;
-
-        if (!content) {
-          self.addCanvas();
-
-          self.layoutFetched = true;
-          return;
-        }
-
-        if (!settings) {
-          if ('type' in response) {
-            self.template.globalSettings.type = response.type;
-          }
-
-          if (content.length === 0) {
-            self.addCanvas();
-          }
-
-          self.layoutFetched = true;
-          return;
-        }
-        //Update global settings
-        if ('excludesRolesAndUsers' in settings) {
-          self.template.globalSettings.excludesRolesAndUsers = settings.excludesRolesAndUsers;
-        }
-        if ('rolesAndUsers' in settings) {
-          self.template.globalSettings.rolesAndUsers = settings.rolesAndUsers;
-        }
-        if ('name' in settings) {
-          self.template.globalSettings.name = settings.name;
-        }
-        if ('status' in settings) {
-          self.template.globalSettings.status = settings.status;
-        }
-        if ('type' in settings) {
-          self.template.globalSettings.type = settings.type;
-        }
-        if ('excludesRolesAndUsers' in settings) {
-          self.template.globalSettings.excludesRolesAndUsers = settings.excludesRolesAndUsers;
-        }
-
-        if ('applyToSubsites' in settings) {
-          self.template.globalSettings.applyToSubsites = settings.applyToSubsites;
-        }
-
-        if ('options' in settings) {
-          self.template.globalSettings.options = settings.options;
-        }
-        if ('menuParent' in settings) {
-          self.template.globalSettings.menuParent = settings.menuParent;
-        }
-        if ('menuIcon' in settings) {
-          self.template.globalSettings.menuIcon = settings.menuIcon;
-        }
-        self.formatBuilderGroupOptions();
-
-        self.unsavedChanges = false;
-
-        self.template.content = content;
-        self.template.globalSettings.updatedV312 = true;
-        self.getNotifications();
-        requestAnimationFrame(() => {
-          self.layoutFetched = true;
-        });
-
-        return;
-      });
-    },
-
-    formatBuilderGroupOptions() {
-      let self = this;
-      let settings = self.uipApp.data.templateGroupOptions;
-      let options = self.template.globalSettings.options;
-
-      for (let [key, value] of Object.entries(settings)) {
-        if (!(key in options)) {
-          options[key] = {};
-        }
-
-        for (let option of value.settings) {
-          if (!value.uniqueKey in options[key]) {
-            if (option.accepts === String) {
-              options[group][key] = '';
-            }
-            if (option.accepts === Array) {
-              options[group][key] = [];
-            }
-            if (option.accepts === Object) {
-              options[group][key] = {};
-            }
-          }
-        }
-      }
-    },
-    openThemeLibrary() {
-      //let ID = this.$route.params.templateID;
-      //this.$router.push('/uibuilder/' + ID);
-      this.$router.push({
-        query: { tab: 'library' },
-      });
-      this.ui.sideBar.activeTab = 'library';
-    },
-    suppressWelcome() {
-      this.welcomeMessage = false;
-      this.uipApp.data.userPrefs.supressBuilderWelcome = true;
-      this.saveUserPreference('supressBuilderWelcome', true, false);
-    },
-    closeLayersPanel() {
-      this.ui.layers.display = false;
-      this.saveUserPreference('builderLayers', false, false);
-    },
-    openModal(componentName, modalTitle, args) {
-      if (!componentName || componentName == '') {
+      // Handle error
+      if (response.error) {
+        this.uipApp.notifications.notify(response.message, '', 'error', true);
         return;
       }
-      this.ui.modal.activeModule = componentName;
-      this.ui.modal.title = modalTitle;
-      this.ui.modal.args = args;
-      this.ui.modal.open = true;
 
-      //this.setPosition();
-      // You can also use Vue.$nextTick or setTimeout
-      requestAnimationFrame(() => {
-        document.documentElement.addEventListener('click', this.onClickOutside, false);
-      });
-    },
-    onClickOutside(event) {
-      if (!this.$refs.uipmodal) {
+      let settings = response.settings[0];
+      let content = response.content;
+
+      // Store user patterns
+      this.template.patterns = response.patterns;
+
+      // Push empty canvas block if empty template
+      if (!content || !content.length) {
+        this.addCanvas();
+        this.layoutFetched = true;
         return;
       }
-      const path = event.path || (event.composedPath ? event.composedPath() : undefined);
-      // check if the MouseClick occurs inside the component
-      if (path && !path.includes(this.$refs.uipmodal) && !this.$refs.uipmodal.contains(event.target)) {
-        this.closeThisComponent(); // whatever method which close your component
-      }
-    },
-    closeThisComponent() {
-      this.ui.modal.open = false; // whatever codes which close your component
-      document.documentElement.removeEventListener('click', this.onClickOutside, false);
-    },
-    confirmEmptyTemplate() {
-      let self = this;
 
-      this.uipress.confirm(__('Are you sure?', 'uipress-lite'), __('This will delete all blocks from your template.', 'uipress-lite')).then((response) => {
-        if (response) {
-          self.template.content = [];
+      // Set template content
+      this.template.content = content;
+
+      // Nos settings so set up basics
+      if (!settings) {
+        if ('type' in response) {
+          this.template.globalSettings.type = response.type;
         }
-      });
+        this.layoutFetched = true;
+        return;
+      }
+      //Update global settings
+      if (this.isObject(settings)) {
+        const currentSettings = this.template.globalSettings;
+        this.template.globalSettings = { ...currentSettings, ...settings };
+      }
+
+      this.getNotifications();
+
+      await nextTick();
+      this.layoutFetched = true;
     },
+
+    /**
+     * Returns whether a component exists or not
+     *
+     * @param {String} name
+     * @since 3.2.13
+     */
     componentExists(name) {
-      if (this.$root._.appContext.components[name]) {
-        return true;
-      } else {
-        return false;
-      }
-    },
-    mouseMoveHandler(e) {
-      const optionsPanel = document.getElementById('uip-builder-settings-panel');
-      let change = e.clientX - this.ui.settingsPanel.pos.startX;
-      optionsPanel.style.width = this.ui.settingsPanel.pos.width - change + 'px';
-    },
-    mouseUpHandler() {
-      document.removeEventListener('mousemove', this.mouseMoveHandler, true);
-      document.removeEventListener('mouseup', this.mouseUpHandler, true);
-      const optionsPanel = document.getElementById('uip-builder-settings-panel');
-      this.saveUserPreference('builderOptionsWodth', optionsPanel.style.width, false);
-    },
-    mouseDownHandler(e) {
-      const optionsPanel = document.getElementById('uip-builder-settings-panel');
-
-      this.ui.settingsPanel.pos = {
-        // The current scroll
-        startX: e.clientX,
-        width: parseInt(optionsPanel.getBoundingClientRect().width, 10),
-      };
-      document.addEventListener('mousemove', this.mouseMoveHandler, true);
-      document.addEventListener('mouseup', this.mouseUpHandler, true);
-    },
-    openSettings(uid) {
-      let ID = this.$route.params.templateID;
-      this.$router.push('/uibuilder/' + ID + '/settings/blocks/' + uid);
-    },
-    showOptions(evt, item) {
-      let self = this;
-
-      let settingsPanel = document.querySelector('#uip-builder-settings-panel');
-      if (settingsPanel) {
-        if (settingsPanel.contains(evt.target)) {
-          return;
-        }
-      }
-
-      let target = false;
-      let attr = 'block-uid';
-      let foldersPanel = document.querySelector('.uip-template-layers');
-
-      target = evt.target.closest('[block-uid]');
-
-      if (!target) {
-        self.closeContextual();
-        return;
-      }
-      let targetUID = target.getAttribute('block-uid');
-      //No block to select
-      if (!targetUID) {
-        self.closeContextual();
-        return;
-      }
-
-      evt.preventDefault();
-
-      self.uipress.searchForBlock(self.template.content, targetUID).then((response) => {
-        if (response) {
-          self.ui.contextualMenu.block = response;
-          self.setRightClickPos(evt);
-          self.ui.contextualMenu.display = true;
-        } else {
-          return;
-        }
-      });
-    },
-    setRightClickPos(e) {
-      let self = this;
-      let x = e.pageX;
-      let y = e.pageY;
-
-      if (!('pageX' in e)) {
-        x = e.x;
-        y = e.y;
-      }
-
-      let contextHeight = 300;
-      window.innerHeight;
-
-      if (y + contextHeight > window.innerHeight) {
-        y = y - contextHeight;
-      }
-      self.ui.contextualMenu.top = `${y}px`;
-      self.ui.contextualMenu.left = `${x}px`;
-    },
-    returnContextMenuStyle() {
-      let self = this;
-      let style = 'top:' + self.ui.contextualMenu.top + '; left:' + self.ui.contextualMenu.left + ';';
-      return style;
-    },
-
-    hideContextual(evt) {
-      let self = this;
-
-      if (self.ui.contextualMenu.display) {
-        // check if the MouseClick occurs inside the component
-        if (!self.$refs.contextualMenu.contains(evt.target)) {
-          self.ui.contextualMenu.display = false;
-        }
-      }
-    },
-    closeContextual() {
-      this.ui.contextualMenu.display = false;
+      return this.$root._.appContext.components[name] ? true : false;
     },
   },
   template: `
@@ -708,28 +407,7 @@ export default {
                         <!--End block selector-->
                         
                         
-                        <div class="uip-padding-xs uip-margin-top-s uip-flex uip-flex-column uip-row-gap-xs">
                         
-                          <div class="uip-text-bold uip-text-m uip-flex uip-gap-xs uip-flex-center uip-flex-between">
-                            {{ui.strings.shortCuts}}
-                          </div>
-                          
-                          <div v-if="getBlockshortcuts.length < 1" class="uip-text-muted uip-text-s">
-                            {{ui.strings.shortCutsExplanation}}
-                          </div>
-                        
-                        </div>
-                          
-                        <div class="uip-flex uip-flex-column uip-row-gap-xxxs uip-padding-xxxs">
-                          
-                          <template v-for="element in getBlockshortcuts">
-                            <div class="uip-flex ui-flex-middle uip-flex-center uip-gap-xxs uip-flex uip-cursor-pointer uip-flex-middle uip-flex-center uip-border-round uip-padding-xxs hover:uip-background-muted" style="min-width:140px">
-                              <div class="uip-cursor-pointer uip-icon uip-padding-xxxs" @click="openSettings(element.uid)">{{element.icon}}</div>
-                              <div class="uip-cursor-pointer uip-flex-grow uip-text-s" @click="openSettings(element.uid)">{{element.name}}</div>
-                            </div>
-                          </template>
-                            
-                        </div>
                         
                       </div>
                       
@@ -764,20 +442,7 @@ export default {
           
 	      </div>
       
-        <div ref="modalOuter" v-if="ui.modal.activeModule != '' && ui.modal.open" class="uip-position-fixed uip-top-0 uip-left-0 uip-h-viewport uip-w-vw uip-background-black-wash uip-flex uip-flex-center uip-flex-middle uip-fade-in">
-          <div ref="uipmodal" class="uip-background-default uip-border-round uip-border uip-flex uip-flex-column uip-row-gap-s uip-scale-in uip-min-w-350 uip-w-600 uip-max-w-100p uip-text-normal">
-            <div class="uip-flex uip-flex-between  uip-padding-s">
-              <div class="uip-text-bold uip-text-l">{{ui.modal.title}}</div>
-              <div @click="closeThisComponent()" class="hover:uip-background-grey uip-padding-xxs uip-border-round uip-cursor-pointer">
-                <div class="uip-icon uip-text-l">close</div>
-              </div>
-            </div>
-            <div class="uip-max-h-500 uip-overflow-auto uip-scrollbar  uip-padding-s uip-padding-top-remove">
-              <component :is="ui.modal.activeModule" :args="ui.modal.args"></component>
-            </div>
-          </div>
-        </div>
-    
+        
         <!--Import plugins -->
         <template v-for="plugin in uipApp.data.plugins" v-if="layoutFetched">
           <component v-if="componentExists(plugin.component) && plugin.loadInApp" :is="plugin.component"></component>

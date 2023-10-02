@@ -9,13 +9,14 @@ import { VueDraggableNext } from './../libs/VueDraggableNext.js';
 import { createRouter, createWebHistory, createWebHashHistory } from './../libs/vue-router-esm.js';
 const pluginVersion = import.meta.url.split('?ver=')[1];
 
-/**
- * Imports uipress class and initiates
- *
- * @since 3.2.13
- */
-import { uip } from './classes/uip.min.js?ver=3.2.12';
-const uipress = new uip('builder');
+// Helper functions
+
+const registerObjects = (current, newSettings) => {
+  return { ...current, ...newSettings };
+};
+const registerArrays = (current, newSettings) => {
+  return [...current, ...newSettings];
+};
 
 /**
  * Imports block groupings and applies filters
@@ -23,11 +24,8 @@ const uipress = new uip('builder');
  * @since 3.2.13
  */
 
-const registerBlockGroups = (currentGroups, newGroups) => {
-  return { ...currentGroups, ...newGroups };
-};
 import blockGroups from './blocks/block-settings-groups.min.js?ver=3.2.12';
-wp.hooks.addFilter('uip-register-block-groups', 'child', registerBlockGroups);
+wp.hooks.addFilter('uip-register-block-groups', 'child', registerObjects);
 const AllBlockGroups = wp.hooks.applyFilters('uip-register-block-groups', {}, blockGroups);
 
 /**
@@ -35,10 +33,7 @@ const AllBlockGroups = wp.hooks.applyFilters('uip-register-block-groups', {}, bl
  *
  * @since 3.2.13
  */
-const registerPlugins = (currentPlugins, newPlugins) => {
-  return [...currentPlugins, ...newPlugins];
-};
-wp.hooks.addFilter('uip-register-builder-plugins', 'child', registerPlugins);
+wp.hooks.addFilter('uip-register-builder-plugins', 'child', registerArrays);
 const AllPlugins = wp.hooks.applyFilters('uip-register-builder-plugins', [], []);
 
 /**
@@ -74,38 +69,47 @@ const AllBlocks = wp.hooks.applyFilters('uip-register-blocks', [], liteBlocks);
  *
  * @since 3.2.13
  */
-import * as UIPDynamicss from './options/dynamic-settings.min.js?ver=3.2.12';
-uipress.register_new_dynamic_settings(UIPDynamicss.fetchSettings(uipress));
-uipress.uipAppData.dynamicOptions = uipress.loadDynamics();
+import { processSettings } from './options/dynamic-settings.min.js?ver=3.2.12';
+const dynamic_settings = processSettings(uip_ajax.uipAppData.options.dynamicData);
+wp.hooks.addFilter('uip-register-dynamic-inputs', 'child', registerObjects);
+const AllDynamics = wp.hooks.applyFilters('uip-register-dynamic-inputs', {}, dynamic_settings);
 
 /**
  * Register theme styles
  *
  * @since 3.2.13
  */
-import * as UIPthemeStyles from './options/theme-styles.min.js?ver=3.2.12';
-uipress.register_new_theme_styles(UIPthemeStyles.fetchSettings(uipress));
-uipress.uipAppData.themeStyles = uipress.loadThemeStyles();
+import themeStyles from './options/theme-styles.min.js?ver=3.2.12';
+wp.hooks.addFilter('uip-register-theme-styles', 'child', registerObjects);
+const AllThemeStyles = wp.hooks.applyFilters('uip-register-theme-styles', {}, themeStyles);
 
 /**
  * Import template group settings
  *
  * @since 3.2.13
  */
-import * as UIPtemplateSettings from './settings/template-settings-groups.min.js?ver=3.2.12';
-uipress.register_new_template_groups(UIPtemplateSettings.fetchGroups());
-uipress.register_new_template_groups_options(UIPtemplateSettings.fetchSettings());
-uipress.uipAppData.templateGroupOptions = uipress.loadTemplateGroups();
+import { templategroups, templateSettings } from './settings/template-settings-groups.min.js?ver=3.2.12';
+wp.hooks.addFilter('uip-register-template-settings-groups', 'child', registerObjects);
+wp.hooks.addFilter('uip-register-template-settings-groups-options', 'child', registerArrays);
+let TemplateGroupOptions = wp.hooks.applyFilters('uip-register-template-settings-groups', {}, templategroups);
+let options = wp.hooks.applyFilters('uip-register-template-settings-groups-options', [], templateSettings);
+for (let [key, value] of Object.entries(TemplateGroupOptions)) {
+  const groupSettings = options.filter((option) => option.group === key);
+  TemplateGroupOptions[key].settings = groupSettings;
+}
 
 /**
  * Import global group settings
  *
  * @since 3.2.13
  */
-import * as UIPGlobalSettingsGroups from './settings/global-settings-groups.min.js?ver=3.2.12';
-uipress.register_new_global_groups(UIPGlobalSettingsGroups.fetchGroups());
-uipress.register_new_global_groups_options(UIPGlobalSettingsGroups.fetchSettings());
-uipress.uipAppData.globalGroupOptions = uipress.loadGlobalGroups();
+
+import { globalSettingsGroups, globalSettings, processGlobalGroups } from './settings/global-settings-groups.min.js?ver=3.2.12';
+wp.hooks.addFilter('uip-register-global-settings-groups', 'child', registerObjects);
+wp.hooks.addFilter('uip-register-global-settings-groups-options', 'child', registerArrays);
+let GlobaleGroupOptions = wp.hooks.applyFilters('uip-register-global-settings-groups', {}, globalSettingsGroups);
+let globalOptions = wp.hooks.applyFilters('uip-register-global-settings-groups-options', [], globalSettings);
+GlobaleGroupOptions = processGlobalGroups(GlobaleGroupOptions, globalOptions);
 
 /**
  * Register plugins, blocks, settings and groups
@@ -152,11 +156,6 @@ const appArgs = defineComponent({
   },
   data() {
     return {};
-  },
-  provide() {
-    return {
-      uipress: uipress,
-    };
   },
   template: `
     <router-view></router-view>
@@ -332,6 +331,7 @@ import {
   sendServerRequest,
   updateAppPage,
   saveUserPreference,
+  updateActiveLink,
 } from './v3.5/utility/functions.min.js?ver=3.2.12';
 
 app.config.globalProperties.ensureNestedObject = ensureNestedObject;
@@ -345,6 +345,7 @@ app.config.globalProperties.get_block_option = get_block_option;
 app.config.globalProperties.createUID = createUID;
 app.config.globalProperties.sendServerRequest = sendServerRequest;
 app.config.globalProperties.updateAppPage = updateAppPage.bind({ adminURL: uip_ajax.uipAppData.options.adminURL, isBuilder: true });
+app.config.globalProperties.updateActiveLink = updateActiveLink.bind({ adminURL: uip_ajax.uipAppData.options.adminURL, isBuilder: true });
 app.config.globalProperties.saveUserPreference = saveUserPreference;
 
 app.config.globalProperties.uipApp = reactive({
@@ -361,10 +362,10 @@ app.config.globalProperties.uipApp = reactive({
     toolbar: isUnDefined(uipMasterToolbar) ? [] : uipMasterToolbar,
 
     // Import local
-    globalGroupOptions: uipress.uipAppData.globalGroupOptions,
-    dynamicOptions: uipress.uipAppData.dynamicOptions,
-    themeStyles: uipress.uipAppData.themeStyles,
-    templateGroupOptions: uipress.uipAppData.templateGroupOptions,
+    globalGroupOptions: GlobaleGroupOptions,
+    dynamicOptions: AllDynamics,
+    themeStyles: AllThemeStyles,
+    templateGroupOptions: TemplateGroupOptions,
 
     // General
     templateDarkMode: false,

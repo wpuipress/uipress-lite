@@ -1,5 +1,10 @@
 const { __, _x, _n, _nx } = wp.i18n;
+import { defineAsyncComponent, nextTick } from '../../../libs/vue-esm-dev.js';
+
 export default {
+  components: {
+    Confirm: defineAsyncComponent(() => import('../../v3.5/utility/confirm.min.js?ver=3.2.12')),
+  },
   props: {
     display: String,
     name: String,
@@ -8,7 +13,7 @@ export default {
   data() {
     return {};
   },
-  inject: ['uipress'],
+  
   watch: {},
   mounted: function () {},
   computed: {
@@ -57,14 +62,18 @@ export default {
      * @since 3.2.13
      */
     async destroyUI() {
-      const response = await this.uipress.confirm(__('Are you sure?', 'uipress-lite'), __('This will remove the current UI and revert to the default admin page', 'uipress-lite'));
+      const confirm = await this.$refs.confirm.show({
+        title: __('Are you sure', 'uipress-lite'),
+        message: __('This will remove the current UI and revert to the default admin page', 'uipress-lite'),
+        okButton: __('Confirm', 'uipress-lite'),
+      });
 
       // Response was go so destroy
-      if (response) {
-        document.documentElement.setAttribute('uip-core-app', 'false');
-        let frame = document.queerySelect('#uip-app-container');
-        if (frame) frame.remove();
-      }
+      if (!confirm) return;
+
+      document.documentElement.setAttribute('uip-core-app', 'false');
+      let frame = document.querySelector('#uip-app-container');
+      if (frame) frame.remove();
     },
   },
   template: `
@@ -74,6 +83,8 @@ export default {
             <span class="uip-icon" v-if="returnIcon">{{returnIcon}}</span>
             <span class="uip-flex-grow" v-if="returnText != ''">{{returnText}}</span>
             <a ref="newTab" href="" target="_BLANK" style="display:hidden"></a>
+            
+            <Confirm ref="confirm"/>
             
           </button>
           `,

@@ -15,7 +15,7 @@ export default {
   data() {
     return {};
   },
-  inject: [ 'uipress'],
+  
   methods: {
     /**
      * Returns styled grid for the content area
@@ -23,8 +23,6 @@ export default {
      * @since 3.0.0
      */
     returnContentAreaStyles() {
-      let styles = this.uipress.explodeBlockSettings(this.block.settings.block.options, 'style', this.uipApp.data.templateDarkMode);
-
       let columnCount = this.block.settings.block.options.columnsNum.value;
 
       if (columnCount == '') {
@@ -59,7 +57,7 @@ export default {
       gridStyles += 'grid-template-columns: repeat(auto-fill, minmax(max(var(--grid-item--min-width), var(--grid-item--max-width)), 1fr));';
       gridStyles += 'grid-gap: var(--grid-layout-gap);grid-auto-rows: min-content;';
 
-      return styles + gridStyles;
+      return gridStyles;
     },
   },
   template: `

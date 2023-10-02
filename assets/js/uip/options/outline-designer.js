@@ -68,7 +68,7 @@ export default {
       ],
     };
   },
-  inject: ['uipress'],
+  
   watch: {
     outlineOptions: {
       handler(newValue, oldValue) {

@@ -51,7 +51,7 @@ export default {
       borderTypes: BorderTypes,
     };
   },
-  inject: ['uipress'],
+  
   watch: {
     /**
      * Watches for changes to border options and sends the data back

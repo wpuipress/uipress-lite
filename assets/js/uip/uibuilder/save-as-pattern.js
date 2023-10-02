@@ -34,17 +34,17 @@ export default {
       ],
     };
   },
-  inject: ['uipress', 'uiTemplate'],
+  inject: [ 'uiTemplate'],
   methods: {
     /**
-     * Opens modal adn sets block
+     * Opens modal and sets block
      *
      * @param {Object} block - the block to save as a pattern
      * @since 3.2.13
      */
     show(block) {
       this.theBlock = {};
-      this.theBlock = { ...block };
+      this.theBlock = block;
       this.$refs.saveaspattern.open();
     },
 
@@ -57,11 +57,9 @@ export default {
       this.saving = true;
 
       if (!this.newPattern.name || this.newPattern.name == '') {
-        this.uipress.notify(__('Pattern not saved', 'uipress-lite'), __('Pattern title is required', 'uipress-lite'), 'warning', true);
+        this.uipApp.notifications.notify(__('Pattern not saved', 'uipress-lite'), __('Pattern title is required', 'uipress-lite'), 'warning', true);
         this.saving = false;
       }
-
-      const response = await this.uipress.blockHouseKeeping(this.theBlock);
       this.savePatternToDb(this.theBlock);
     },
 
@@ -88,21 +86,19 @@ export default {
 
       // Handle error
       if (response.error) {
-        this.uipress.notify(response.message, 'uipress-lite', '', 'error', true);
+        this.uipApp.notifications.notify(response.message, 'uipress-lite', '', 'error', true);
         this.saving = false;
         return;
       }
       if (!response.success) returnData();
 
-      this.uipress.notify(__('Pattern saved', 'uipress-lite'), '', 'success', true);
+      this.uipApp.notifications.notify(__('Pattern saved', 'uipress-lite'), '', 'success', true);
       this.saving = false;
       this.uiTemplate.patterns = response.patterns;
       const patternID = response.patternid;
 
       // Inject pattern id into block
-      const foundBlock = await this.uipress.searchForBlock(this.uiTemplate.content, uid);
-      if (!foundBlock) return;
-      foundBlock.patternID = patternID;
+      saveBlock.patternID = patternID;
     },
   },
   template: `

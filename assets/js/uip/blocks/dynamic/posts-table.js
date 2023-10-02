@@ -1,5 +1,11 @@
 const { __, _x, _n, _nx } = wp.i18n;
+import { deleteRemotePost } from '../../v3.5/utility/functions.min.js';
+import { defineAsyncComponent, nextTick } from '../../../libs/vue-esm-dev.js';
+
 export default {
+  components: {
+    Confirm: defineAsyncComponent(() => import('../../v3.5/utility/confirm.min.js?ver=3.2.12')),
+  },
   props: {
     display: String,
     name: String,
@@ -30,7 +36,7 @@ export default {
       searching: false,
     };
   },
-  inject: [ 'uipress'],
+  
   mounted() {
     this.getPosts();
     this.updateView();
@@ -79,7 +85,7 @@ export default {
      * @since 3.2.13
      */
     returnPerPage() {
-      return this.block.settings.block.options.postsPerPage.value;
+      return this.hasNestedPath(this.block, 'settings', 'block', 'options', 'postsPerPage', 'value');
     },
 
     /**
@@ -88,7 +94,7 @@ export default {
      * @since 3.2.13
      */
     getColumns() {
-      return this.block.settings.block.options.activeColumns.value;
+      return this.hasNestedPath(this.block, 'settings', 'block', 'options', 'activeColumns', 'value');
     },
 
     /**
@@ -97,7 +103,7 @@ export default {
      * @since 3.2.13
      */
     getActions() {
-      return this.block.settings.block.options.actionsEnabled.value;
+      return this.hasNestedPath(this.block, 'settings', 'block', 'options', 'actionsEnabled', 'value');
     },
 
     /**
@@ -168,14 +174,14 @@ export default {
 
       // Something went very wrong
       if (!response) {
-        this.uipress.notify(__('Unable to fetch posts at this tiem', 'uipress-lite'), '', '', 'error', true);
+        this.uipApp.notifications.notify(__('Unable to fetch posts at this tiem', 'uipress-lite'), '', '', 'error', true);
         this.searching = false;
         return;
       }
 
       // Error response
       if (response.error) {
-        this.uipress.notify(response.message, '', '', 'error', true);
+        this.uipApp.notifications.notify(response.message, '', '', 'error', true);
         this.searching = false;
       }
 
@@ -208,14 +214,23 @@ export default {
     },
 
     /**
-     * Deletes a given item and updates post list
+     * Deletes an item based on its post ID and refreshes the patterns.
      *
-     * @param {Number} - the post id to delete
+     * @param {number|string} postID - The ID of the post to be deleted.
      * @since 3.2.13
      */
     async deleteThisItem(postID) {
-      const response = await this.uipress.deletePost(postID);
-      if (response) this.getPosts();
+      const confirm = await this.$refs.confirm.show({
+        title: __('Delete post', 'uipress-lite'),
+        message: __('Are you sure you want to delete this post?', 'uipress-lite'),
+        okButton: __('Delete post', 'uipress-lite'),
+      });
+
+      if (!confirm) return;
+
+      await deleteRemotePost(postID);
+      this.uipApp.notifications.notify(__('Post deleted', 'uipress-lite'), '', 'success', true);
+      this.getPosts();
     },
   },
   template: `
@@ -406,6 +421,7 @@ export default {
               </div>
             </div>
           
+        <Confirm ref="confirm"/>  
       </div>
       `,
 };

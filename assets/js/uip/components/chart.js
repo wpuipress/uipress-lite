@@ -12,7 +12,7 @@ export default {
       rendered: true,
     };
   },
-  inject: ['uipress'],
+  
   watch: {
     chartData: {
       handler(newValue, oldValue) {

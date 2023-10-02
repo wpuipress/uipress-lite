@@ -5,7 +5,7 @@ export default {
     ColorPicker: defineAsyncComponent(() => import('../v3.5/styles/color-picker.min.js')),
     GradientPicker: defineAsyncComponent(() => import('../v3.5/styles/gradient-picker.min.js')),
   },
-  inject: ['uipress'],
+  
   props: {
     returnData: Function,
     value: Object,

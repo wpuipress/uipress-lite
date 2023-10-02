@@ -163,7 +163,7 @@ export function moduleData() {
 
         self.sendServerRequest(uip_ajax.ajax_url, formData).then((response) => {
           if (response.error) {
-            //self.uipress.notify(response.message, 'uipress-lite', '', 'error', true);
+            //self.uipApp.notifications.notify(response.message, 'uipress-lite', '', 'error', true);
             //self.saving = false;
           }
           if (response.success) {
@@ -184,7 +184,7 @@ export function moduleData() {
         <button class="uip-button-primary" type='button' onclick="location.reload()">${update}</button>
         `;
 
-        this.uipress.notify(__('Update available', 'uipress-lite'), message, '', true);
+        this.uipApp.notifications.notify(__('Update available', 'uipress-lite'), message, '', true);
       },
       formatTemplate(template) {
         return this.uipress.uipParsJson(JSON.stringify(template));

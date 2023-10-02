@@ -3,6 +3,7 @@ import { defineAsyncComponent, nextTick } from '../../libs/vue-esm-dev.js';
 export default {
   components: {
     contextmenu: defineAsyncComponent(() => import('../v3.5/utility/contextmenu.min.js?ver=3.2.12')),
+    Confirm: defineAsyncComponent(() => import('../v3.5/utility/confirm.min.js?ver=3.2.12')),
   },
   data() {
     return {
@@ -76,7 +77,7 @@ export default {
       },
     };
   },
-  inject: [ 'uipress'],
+  
   mounted() {
     this.getTemplates();
     this.enqueueAdminBarStyles();
@@ -216,12 +217,12 @@ export default {
 
       // Catch error
       if (response.error) {
-        this.uipress.notify(response.message, '', 'error', true);
+        this.uipApp.notifications.notify(response.message, '', 'error', true);
         return;
       }
 
       // Template duplicated
-      this.uipress.notify(this.strings.templateDuplicated, '', 'success', true);
+      this.uipApp.notifications.notify(this.strings.templateDuplicated, '', 'success', true);
       this.getTemplates();
     },
 
@@ -242,12 +243,12 @@ export default {
 
       // Handle error
       if (response.error) {
-        this.uipress.notify(response.message, '', 'error', true);
+        this.uipApp.notifications.notify(response.message, '', 'error', true);
         return;
       }
 
       // Success message
-      this.uipress.notify(response.message, '', 'success', true);
+      this.uipApp.notifications.notify(response.message, '', 'success', true);
 
       const index = this.templates.findIndex((item) => item.id === ids);
 
@@ -284,15 +285,13 @@ export default {
      * @since 3.0.0
      */
     async confirmDelete(id) {
-      const response = await this.uipress.confirm(
-        __('Are you sure you want to delete this template?', 'uipress-lite'),
-        __("Deleted templates can't be recovered", 'uipress-lite'),
-        __('Delete', 'uipress-lite')
-      );
-
-      if (response) {
-        this.deleteTemplate(id);
-      }
+      const confirm = await this.$refs.confirm.show({
+        title: __('Delete template', 'uipress-lite'),
+        message: __("Deleted templates can't be recovered", 'uipress-lite'),
+        okButton: __('Delete', 'uipress-lite'),
+      });
+      if (!confirm) return;
+      this.deleteTemplate(id);
     },
 
     /**
@@ -302,15 +301,14 @@ export default {
      * @since 3.0.0
      */
     async confirmDeleteMultiple(id) {
-      const response = await this.uipress.confirm(
-        __('Are you sure you want to delete multiple templates?', 'uipress-lite'),
-        __("Deleted templates can't be recovered", 'uipress-lite'),
-        __('Delete', 'uipress-lite')
-      );
+      const confirm = await this.$refs.confirm.show({
+        title: __('Delete multiple template', 'uipress-lite'),
+        message: __("Deleted templates can't be recovered", 'uipress-lite'),
+        okButton: __('Delete', 'uipress-lite'),
+      });
 
-      if (response) {
-        this.deleteTemplate(id);
-      }
+      if (!confirm) return;
+      this.deleteTemplate(id);
     },
 
     /**
@@ -333,12 +331,12 @@ export default {
 
       // Handle error
       if (response.error) {
-        this.uipress.notify(response.message, '', 'error', true);
+        this.uipApp.notifications.notify(response.message, '', 'error', true);
         return;
       }
 
       // Updated message
-      this.uipress.notify(response.message, '', 'success', true);
+      this.uipApp.notifications.notify(response.message, '', 'success', true);
     },
 
     /**
@@ -702,6 +700,8 @@ export default {
     
     <!-- Child routes -->
     <router-view :key="$route.path"/>
+    
+    <Confirm ref="confirm"/>
   
   </div>
   

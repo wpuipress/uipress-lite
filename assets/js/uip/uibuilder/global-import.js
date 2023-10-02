@@ -22,7 +22,7 @@ export default {
       },
     };
   },
-  inject: ['uipress'],
+  
   watch: {
     currentStep: {
       handler(newValue, oldValue) {
@@ -56,7 +56,7 @@ export default {
     importEverything(evt, dragged) {
       this.validDrop = false;
 
-      const notificationID = this.uipress.notify(__('Importing uiPress content', 'uipress-lite'), '', 'default', false, true);
+      const notificationID = this.uipApp.notifications.notify(__('Importing uiPress content', 'uipress-lite'), '', 'default', false, true);
       let thefile;
 
       if (dragged) {
@@ -67,8 +67,8 @@ export default {
       }
 
       if (thefile.type != 'application/json') {
-        this.uipress.notify(__('Global exports must be in valid JSON format', 'uipress-lite'), '', 'error', true, false);
-        this.uipress.destroy_notification(notificationID);
+        this.uipApp.notifications.notify(__('Global exports must be in valid JSON format', 'uipress-lite'), '', 'error', true, false);
+        this.uipApp.notifications.remove(notificationID);
         return;
       }
 
@@ -92,21 +92,21 @@ export default {
       try {
         parsed = JSON.parse(json_settings);
       } catch (error) {
-        this.uipress.notify(error, '', 'error', true, false);
-        this.uipress.destroy_notification(notificationID);
+        this.uipApp.notifications.notify(error, '', 'error', true, false);
+        this.uipApp.notifications.remove(notificationID);
         return;
       }
 
       //Empty file
       if (!parsed) {
-        this.uipress.notify(__('JSON parse failed', 'uipress-lite'), '', 'error', true, false);
-        this.uipress.destroy_notification(notificationID);
+        this.uipApp.notifications.notify(__('JSON parse failed', 'uipress-lite'), '', 'error', true, false);
+        this.uipApp.notifications.remove(notificationID);
         return;
       }
       //Invalid format
       if (!Array.isArray(parsed) && !this.isObject(parsed)) {
-        this.uipress.notify('Export is not valid', '', 'error', true, false);
-        this.uipress.destroy_notification(notificationID);
+        this.uipApp.notifications.notify('Export is not valid', '', 'error', true, false);
+        this.uipApp.notifications.remove(notificationID);
         return;
       }
 
@@ -114,8 +114,8 @@ export default {
       if ('uipGlobalExport' in parsed) {
         temper = parsed.uipGlobalExport;
       } else {
-        this.uipress.notify(__('Template mismatch', 'uipress-lite'), '', 'error', true, false);
-        this.uipress.destroy_notification(notificationID);
+        this.uipApp.notifications.notify(__('Template mismatch', 'uipress-lite'), '', 'error', true, false);
+        this.uipApp.notifications.remove(notificationID);
         return;
       }
 
@@ -139,12 +139,12 @@ export default {
 
       // Handle errpr
       if (response.error) {
-        this.uipress.notify(response.message, '', 'error', true);
+        this.uipApp.notifications.notify(response.message, '', 'error', true);
         return;
       }
 
-      this.uipress.notify(__('Content imported succesfully', 'uipress-lite'), '', 'success');
-      this.uipress.destroy_notification(notificationID);
+      this.uipApp.notifications.notify(__('Content imported succesfully', 'uipress-lite'), '', 'success');
+      this.uipApp.notifications.remove(notificationID);
 
       this.$router.push('/');
 

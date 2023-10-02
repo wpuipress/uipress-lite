@@ -21,7 +21,7 @@ export default {
       },
     };
   },
-  inject: [ 'uipress', 'uiTemplate'],
+  inject: [  'uiTemplate'],
   mounted() {
     this.removeOldBlocks();
   },

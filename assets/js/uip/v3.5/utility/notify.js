@@ -20,7 +20,7 @@ export default {
      * @param {Boolean} loader
      * @since 3.2.13
      */
-    convertNotification(title, message, type, dismissible, loader) {
+    notify(title, message, type, dismissible, loader) {
       return this.create({
         title: title,
         status: type,
@@ -56,15 +56,6 @@ export default {
     remove(uid) {
       const index = this.notifications.findIndex((item) => item.uid == uid);
       if (index > -1) this.notifications.splice(index, 1);
-    },
-
-    /**
-     * Creates a new uid
-     *
-     * @since 3.2.13
-     */
-    createUID() {
-      return this.createUID();
     },
 
     /**
@@ -120,7 +111,7 @@ export default {
 						<div class="uip-flex uip-gap-s uip-flex-center">
 						
 			  			<div class="uip-border-rounder uip-notification-status uip-flex uip-flex-middle uip-padding-xxxs uip-flex-center">
-							<uip-icon :icon="returnIcon(notification.status)" class="uip-text-inverse uip-text-center"/>
+							<span class="uip-text-inverse uip-text-center uip-icon"> {{ returnIcon(notification.status) }} </span>
 			  			</div>
 			  			
 			  			<div class="uip-flex-grow uip-column-gap-xs">
@@ -134,7 +125,7 @@ export default {
 			  			
 			  			<div v-if="notification.dismissable" class="uip-link-muted uip-background-default uip-padding-xxs uip-border-rounder" 
 			  			@click="remove(notification.uid)">
-							<uip-icon icon="close"/>
+							<span class="uip-icon">close</span>
 			  			</div>
 			  			
 						</div>

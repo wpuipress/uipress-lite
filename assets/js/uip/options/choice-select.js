@@ -25,7 +25,7 @@ export default {
       deep: true,
     },
   },
-  inject: ['uipress'],
+  
   mounted() {
     this.formatInput(this.value);
     this.formatArgs(this.value);

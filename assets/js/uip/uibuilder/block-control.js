@@ -1,7 +1,7 @@
 import { defineAsyncComponent, nextTick } from '../../libs/vue-esm-dev.js';
 const { __, _x, _n, _nx } = wp.i18n;
 export default {
-  inject: ['uipress'],
+  
   components: {
     BlockSettings: defineAsyncComponent(() => import('./block-settings.min.js?ver=3.2.12')),
   },

@@ -11,7 +11,7 @@ export default {
       currentImg: null,
     };
   },
-  inject: ['uipress'],
+  
   watch: {
     /**
      * Resets error state when image changes
@@ -20,10 +20,8 @@ export default {
      */
     'block.settings.block.options.userImage.url': {
       handler(newValue, oldValue) {
-        if (newValue != this.currentImg) {
-          this.error = false;
-          this.setImage();
-        }
+        this.error = false;
+        this.setImage();
       },
       deep: true,
     },
@@ -47,11 +45,13 @@ export default {
       if (!this.isObject(item)) return (this.error = true);
 
       // Image has url attribute so return it
-      if (item.url) return item.url;
+      if (!item.url) return (this.error = true);
+      const img = item.url;
 
-      // Nothing was found so set error state
+      // Stops server requests for dynamic image urls
+      const pattern = /\{\{.*?\}\}/; // This regex matches strings of format {{anythingHere}}
+      if (!pattern.test(img)) return img;
       this.error = true;
-      return;
     },
   },
   methods: {

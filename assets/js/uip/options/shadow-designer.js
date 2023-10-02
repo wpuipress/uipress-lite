@@ -47,7 +47,7 @@ export default {
       },
     };
   },
-  inject: ['uipress'],
+  
   watch: {
     /**
      * Watches shadow options and returns to caller

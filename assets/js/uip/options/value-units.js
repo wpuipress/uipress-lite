@@ -13,7 +13,7 @@ export default {
       rendered: false,
     };
   },
-  inject: ['uipress'],
+  
   watch: {
     /**
      * Watches changes to option and return back to caller

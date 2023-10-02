@@ -19,7 +19,7 @@ export default {
       },
     };
   },
-  inject: ['uipress'],
+  
   computed: {
     /**
      * Returns options array
@@ -62,7 +62,7 @@ export default {
 
       // Handle error
       if (response.error) {
-        this.uipress.notify(response.error, 'error');
+        this.uipApp.notifications.notify(response.error, 'error');
         return;
       }
 

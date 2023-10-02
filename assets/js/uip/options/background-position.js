@@ -8,7 +8,7 @@ export default {
     returnData: Function,
     value: Object,
   },
-  inject: ['uipress'],
+  
   data() {
     return {
       option: {

@@ -25,7 +25,7 @@ export default {
      *
      * @since 3.2.13
      */
-    closeOffcanvas() {
+    close() {
       this.$router.push(this.closeRoute);
     },
   },
@@ -44,7 +44,7 @@ export default {
 		<!-- MODAL GRID -->
 		<div class="uip-flex uip-w-100p uip-h-100p" :class="returnClass">
 		  
-		  <div class="uip-flex-grow" @click="closeOffcanvas()"></div>
+		  <div class="uip-flex-grow" @click="close()"></div>
 		  
 		  <div ref="offCanvasBody" class="uip-w-500 uip-border-box uip-offcanvas-panel uip-position-relative uip-padding-s uip-padding-right-remove uip-margin-right-s" style="max-height: 100%;min-height: 100%;height:100%">
 	  

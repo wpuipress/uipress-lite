@@ -5,11 +5,12 @@
 const { __, _x, _n, _nx } = wp.i18n;
 import { defineAsyncComponent, nextTick } from '../../libs/vue-esm-dev.js';
 import BlockControl from './block-control.min.js?ver=3.2.12';
+
 export default {
   components: {
     blockControl: BlockControl,
   },
-  inject: ['uipress', 'uiTemplate', 'layersPanel', 'unsavedChanges'],
+  inject: ['uiTemplate'],
   data: function () {
     return {
       loading: true,
@@ -65,11 +66,6 @@ export default {
           label: __('Preview', 'uipress-lite'),
         },
       ],
-    };
-  },
-  provide() {
-    return {
-      saveTemplate: this.saveCleanTemplate,
     };
   },
   watch: {
@@ -162,33 +158,10 @@ export default {
     this.$refs.previewCanvas.removeEventListener('wheel', this.scrollCanvas);
     window.addEventListener('keydown', this.watchShortCuts);
   },
-  async mounted() {
+  mounted() {
     // Mount watchers
+    this.initiateCanvas();
     this.mountWatchers();
-
-    this.uipress.saveTemplate = this.saveCleanTemplate;
-
-    //Set zoom level from prefs
-    let zoom = parseFloat(this.uipApp.data.userPrefs.builderPrefersZoom);
-    if (zoom && typeof zoom !== 'undefined') {
-      this.ui.zoom = zoom;
-    }
-
-    // Add class to body for shortcuts
-    if (this.detectOperatingSystem() == 'Mac') {
-      document.body.classList.add('macos');
-    }
-
-    //Mounted
-    await nextTick();
-
-    this.firstRender = true;
-    this.activeBlockID = this.$route.params.uid;
-
-    await nextTick();
-    await this.setCanvasPosition();
-
-    this.loading = false;
   },
   computed: {
     /**
@@ -265,10 +238,9 @@ export default {
      * @since 3.2
      */
     getBlockFrames() {
-      let self = this;
-      self.blockFrames = [];
-      self.uipress.findBYmodnameAndReturn(self.uiTemplate.content, ['uip-dropdown', 'uip-block-modal', 'uip-slide-out', 'uip-accordion'], self.blockFrames);
-      return self.blockFrames;
+      this.blockFrames = [];
+      this.findBlocksByComponentName(this.uiTemplate.content, ['uip-dropdown', 'uip-block-modal', 'uip-slide-out', 'uip-accordion'], this.blockFrames);
+      return this.blockFrames;
     },
 
     /**
@@ -308,6 +280,31 @@ export default {
   },
   methods: {
     /**
+     * Sets up properties for canvas
+     *
+     * @since 3.2.13
+     */
+    async initiateCanvas() {
+      // Add class to body for shortcuts
+      if (this.detectOperatingSystem() == 'Mac') {
+        document.body.classList.add('macos');
+      }
+
+      //Set zoom level from prefs
+      let zoom = parseFloat(this.uipApp.data.userPrefs.builderPrefersZoom);
+      if (typeof zoom !== 'undefined') this.ui.zoom = zoom;
+
+      await nextTick();
+
+      this.firstRender = true;
+      this.activeBlockID = this.$route.params.uid;
+
+      await nextTick();
+      await this.setCanvasPosition();
+
+      this.loading = false;
+    },
+    /**
      * Mounts container watchers
      *
      * @since 3.2.13
@@ -316,6 +313,7 @@ export default {
       this.$refs.previewCanvas.addEventListener('wheel', this.scrollCanvas);
       window.addEventListener('keydown', this.watchShortCuts);
     },
+
     /**
      * Watches for shortcuts for canvas
      *
@@ -340,6 +338,7 @@ export default {
         this.uipApp.data.userPrefs.builderPrefersZoom = 1;
       }
     },
+
     /**
      * Zooms in / out
      *
@@ -356,6 +355,29 @@ export default {
       this.uipApp.data.userPrefs.builderPrefersZoom = this.ui.zoom;
       await nextTick();
       this.uipApp.scrolling = false;
+    },
+
+    /**
+     * Recursively searches through a structure of arrays and objects to find items with a specific moduleName.
+     *
+     * @param {Object | Array} data - the data to search through
+     * @param {Array} needle - the array of moduleNames to look for
+     * @param {Array} holder - array of items to push into and return
+     * @since 3.0.0
+     */
+    findBlocksByComponentName(data, needle, holder) {
+      if (!data) return;
+
+      // If the data is an array, iterate over its items
+      if (Array.isArray(data)) {
+        for (const item of data) {
+          if (item && item.moduleName && needle.includes(item.moduleName)) {
+            holder.push(item);
+          } else if (item && item.content) {
+            this.findBlocksByComponentName(item.content, needle, holder);
+          }
+        }
+      }
     },
 
     /**
@@ -566,30 +588,7 @@ export default {
         this.uiTemplate.display = 'preview';
       }
     },
-    /**
-     * Returns current styles for given block
-     *
-     * @param {Object} block - the current block
-     * @since 3.2.0
-     */
-    returnContentDropStyles(block) {
-      let options = this.uipress.checkNestedValue(block, ['settings', 'contentStyle', 'options']);
 
-      if (!options) {
-        return;
-      }
-      let styles = this.uipress.explodeSpecificBlockSettings(options, 'style', this.uipApp.data.templateDarkMode, null, 'flexLayout');
-
-      if (typeof styles == 'undefined') {
-        return '';
-      }
-      if (styles.includes('display:grid;')) {
-        this.forceFlex = true;
-      } else {
-        this.forceFlex = false;
-      }
-      return styles;
-    },
     /**
      * Toggles color theme
      *
@@ -622,46 +621,6 @@ export default {
       }
     },
 
-    /**
-     * Saves template
-     *
-     * @param {Object} cleanTemplate - a sanitised template object
-     * @returns {Promise}  - Returns save status of template
-     * @since 3.2
-     */
-    async saveCleanTemplate(cleanTemplate) {
-      let self = this;
-      let savetemplate = {};
-      savetemplate.globalSettings = JSON.parse(JSON.stringify(self.uiTemplate.globalSettings));
-      savetemplate.content = cleanTemplate;
-
-      let template = JSON.stringify(savetemplate, (k, v) => (v === 'true' ? 'uiptrue' : v === true ? 'uiptrue' : v === 'false' ? 'uipfalse' : v === false ? 'uipfalse' : v === '' ? 'uipblank' : v));
-
-      let styles = this.formatStyles();
-      let stylesJson = JSON.stringify(styles, (k, v) => (v === 'true' ? 'uiptrue' : v === true ? 'uiptrue' : v === 'false' ? 'uipfalse' : v === false ? 'uipfalse' : v === '' ? 'uipblank' : v));
-      //Build form data for fetch request
-      let formData = new FormData();
-      formData.append('action', 'uip_save_ui_template');
-      formData.append('security', uip_ajax.security);
-      formData.append('templateID', self.templateID);
-      formData.append('template', template);
-      formData.append('styles', stylesJson);
-
-      return await self.sendServerRequest(uip_ajax.ajax_url, formData).then((response) => {
-        if (response.error) {
-          self.uipress.notify(response.message, 'uipress-lite', '', 'error', true);
-          self.saving = false;
-          return false;
-        }
-        if (response.success) {
-          self.uipress.notify(__('Template saved', 'uipress-lite'), '', 'success', true);
-          self.unsavedChanges = false;
-          self.saving = false;
-
-          return true;
-        }
-      });
-    },
     /**
      * Format user styles for save
      *
@@ -842,7 +801,7 @@ export default {
                         :class="returnActiveBlockUID == block.uid ? 'uip-preview-selected-block' : ''"
                         :block-uid="block.uid">
                           <!--BLOCK MAIN DROP AREA-->
-                          <uip-content-area :content="block.content" :returnData="function(data) {block.content = data}" :dropAreaStyle="returnContentDropStyles(block)" class="user-style-area"></uip-content-area>
+                          <uip-content-area :content="block.content" :returnData="function(data) {block.content = data}" class="user-style-area"></uip-content-area>
                           <!--END OF MAIN DROP AREA-->
                         </div>
                         

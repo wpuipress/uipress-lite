@@ -7,8 +7,7 @@ export default {
     contextmenu: defineAsyncComponent(() => import('../v3.5/utility/contextmenu.min.js')),
   },
   props: {},
-  inject: [ 'uipress'],
-  data: function () {
+  data() {
     return {
       loading: true,
       newUnitItem: {},
@@ -16,11 +15,11 @@ export default {
         mode: 'light',
         search: '',
         strings: {
-          theme: __('Theme', 'uipress'),
-          add: __('Add', 'uipress'),
-          variableLabel: __('Variable label', 'uipress'),
-          variableName: __('Variable name', 'uipress'),
-          deleteVariable: __('Delete variable', 'uipress'),
+          theme: __('Theme'),
+          add: __('Add'),
+          variableLabel: __('Variable label'),
+          variableName: __('Variable name'),
+          deleteVariable: __('Delete variable'),
           custom: __('custom', 'uipress-lite'),
           revertStyle: __('Revert style back to default', 'uipress-lite'),
           searchVariables: __('Search variables...', 'uipress-lite'),
@@ -130,7 +129,7 @@ export default {
 
       // Error saving styles
       if (response.error) {
-        this.uipress.notify(response.message, 'uipress-lite', '', 'error', true);
+        this.uipApp.notifications.notify(response.message, 'uipress-lite', '', 'error', true);
       }
 
       return true;
@@ -215,7 +214,7 @@ export default {
      */
     deleteVar(item) {
       delete this.uipApp.data.themeStyles[item.name];
-      this.uipress.notify(__('Variable deleted', 'uipress-lite'), '', 'success', true);
+      this.uipApp.notifications.notify(__('Variable deleted', 'uipress-lite'), '', 'success', true);
     },
     /**
      * Checks if the variable has a custom value
@@ -637,7 +636,7 @@ export default {
                 </div>
               </div>
               
-              <colourManager :value="{}" :returnData="(d)=>{addNewColorVar(d)}"/>
+              <colourManager :value="{user:true}" :returnData="(d)=>{addNewColorVar(d)}"/>
             
             </div>
           
@@ -704,8 +703,7 @@ export default {
               <div class="uip-grid-col-1-3 uip-padding-left-xs">
                 
                 <div class="uip-text-muted uip-flex uip-flex-center uip-text-s uip-no-wrap"><span>{{ ui.strings.styleName }}</span></div>
-                <input
-                @input="newUnitItem.name = cleanKeyName(newUnitItem.name)"
+                <input @input="newUnitItem.name = cleanKeyName(newUnitItem.name)"
                 class="uip-input uip-w-100p" type="text" v-model="newUnitItem.name" :placeholder="ui.strings.styleName" autofocus>
                 
                 <div class="uip-text-muted uip-flex uip-flex-center uip-text-s uip-no-wrap"><span>{{ ui.strings.value }}</span></div>

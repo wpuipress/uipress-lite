@@ -11,7 +11,7 @@ export default {
       variableTrigger: false,
     };
   },
-  inject: ['uipress'],
+  
   mounted() {
     this.startEditor();
   },

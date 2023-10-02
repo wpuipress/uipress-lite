@@ -117,7 +117,7 @@ uipApp.config.unwrapInjectedRef = true;
  * @since 3.0.0
  */
 uipApp.config.errorHandler = function (err, vm, info) {
-  uipress.notify(err, info, 'error');
+  uipApp.notifications.notify(err, info, 'error');
   console.log(err);
 };
 
@@ -160,7 +160,7 @@ uipress.dynamicImport(allUIPBlocks, uipApp).then((response) => {
 
         uipApp.mount('#uip-ui-app');
       } else {
-        uipress.notify(__('Unable to load all plugins', 'uipress-lite'), __('Some functions may not work as expected.', 'uipress-lite'), 'error', true);
+        uipApp.notifications.notify(__('Unable to load all plugins', 'uipress-lite'), __('Some functions may not work as expected.', 'uipress-lite'), 'error', true);
       }
     });
   } else {
@@ -172,6 +172,6 @@ uipress.dynamicImport(allUIPBlocks, uipApp).then((response) => {
       }
     }
     uipApp.mount('#uip-ui-app');
-    uipress.notify(__('Unable to load all components', 'uipress-lite'), __('Some functions may not work as expected.', 'uipress-lite'), 'error', true);
+    uipApp.notifications.notify(__('Unable to load all components', 'uipress-lite'), __('Some functions may not work as expected.', 'uipress-lite'), 'error', true);
   }
 });

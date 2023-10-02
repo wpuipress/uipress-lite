@@ -1,4 +1,5 @@
 const { __, _x, _n, _nx } = wp.i18n;
+import { getUserPreference } from '../../v3.5/utility/functions.min.js';
 export default {
   props: {
     display: String,
@@ -38,7 +39,7 @@ export default {
       },
     };
   },
-  inject: ['uipress'],
+  
   mounted() {
     this.getToDoList();
   },
@@ -110,13 +111,13 @@ export default {
       this.loading = true;
 
       // Get users list
-      const response = await this.uipress.getUserPreference('uip-todo-list');
+      const response = await getUserPreference('uip-todo-list');
 
       this.loading = false;
 
       // Handle error
       if (response.error) {
-        this.uipress.notify(response.message, '', 'error', true);
+        this.uipApp.notifications.notify(response.message, '', 'error', true);
         return;
       }
 
@@ -164,19 +165,21 @@ export default {
     },
   },
   template: `
-          <div>
-            <component is="style" scoped>
-              .list-enter-active,
-              .list-leave-active {
-                transition: all 0.5s ease;
-              }
-              .list-enter-from,
-              .list-leave-to {
-                opacity: 0;
-                transform: translateX(30px);
-              }
-            </component>
-            <div class="uip-flex uip-flex-column uip-row-gap-s uip-flex-no-wrap" :id="block.uid" :class="block.settings.advanced.options.classes.value">
+            
+            <div class="uip-flex uip-flex-column uip-row-gap-s uip-flex-no-wrap" >
+            
+              <component is="style" scoped>
+                .list-enter-active,
+                .list-leave-active {
+                  transition: all 0.5s ease;
+                }
+                .list-enter-from,
+                .list-leave-to {
+                  opacity: 0;
+                  transform: translateX(30px);
+                }
+              </component>
+            
               <!--NEW TODO -->
               <div class="uip-flex uip-flex-row uip-gap-xs">
                 <div class="uip-flex uip-padding-xxs uip-border uip-search-block uip-border-round uip-flex-center uip-flex-grow">
@@ -185,7 +188,10 @@ export default {
                 </div>
                 <button @click="addNewToDo()" class="uip-button-default uip-text-s uip-padding-xs uip-add-todo">{{strings.newToDo}}</button>
               </div>
+              
               <!--END TODO -->
+              
+              
               <!--VIEWS-->
               <div class="uip-flex uip-flex-row uip-gap-s uip-padding-xxs uip-tabs">
                 <template v-for="tab in tabs">
@@ -193,6 +199,8 @@ export default {
                 </template>
               </div>
               <!-- END OF VIEWS-->
+              
+              
               <!--TODO LIST-->
               <div v-if="loading" class="uip-padding-m uip-flex uip-flex-center uip-flex-middle"><loading-chart></loading-chart></div>
               <div v-if="!loading" class="uip-flex uip-flex-column uip-row-gap-xs uip-padding-xxs uip-list-area">
@@ -221,7 +229,7 @@ export default {
                       </div>
                 </TransitionGroup>
               </div>
+              
             </div>
-          </div>
           `,
 };

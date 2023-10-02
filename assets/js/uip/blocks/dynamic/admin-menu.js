@@ -20,7 +20,7 @@ export default {
       collapsed: false,
     };
   },
-  inject: ['uipress', 'uiTemplate'],
+  inject: [ 'uiTemplate'],
   watch: {
     breadCrumbs: {
       handler(newValue, oldValue) {
@@ -110,7 +110,7 @@ export default {
   },
   methods: {
     returnAdminMenu() {
-      let menu = this.uipress.checkNestedValue(this.uipApp.data, ['adminMenu', 'menu']);
+      let menu = this.hasNestedPath(this.uipApp.data, ['adminMenu', 'menu']);
       if (!menu) {
         return [];
       }

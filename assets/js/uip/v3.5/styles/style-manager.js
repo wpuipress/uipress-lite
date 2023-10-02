@@ -108,7 +108,7 @@ export default {
 
       // Error saving styles
       if (response.error) {
-        this.uipress.notify(response.message, 'uipress-lite', '', 'error', true);
+        this.uipApp.notifications.notify(response.message, 'uipress-lite', '', 'error', true);
       }
 
       return true;

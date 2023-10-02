@@ -36,7 +36,7 @@ export function moduleData() {
         },
       };
     },
-    inject: [ 'uiTemplate', 'uipress'],
+    inject: [ 'uiTemplate'],
     watch: {
       content: {
         handler(newValue, oldValue) {
@@ -121,7 +121,7 @@ export function moduleData() {
         return this.items;
       },
       returnActiveBlockUID() {
-        let uid = this.uipress.checkNestedValue(this.$route, ['params', 'uid']);
+        let uid = this.hasNestedPath(this.$route, ['params', 'uid']);
         return uid;
       },
     },
@@ -142,12 +142,12 @@ export function moduleData() {
         let self = this;
 
         let formData = new FormData();
-        let notiID = self.uipress.notify(__('Importing template', 'uipress-lite'), '', 'default', false, true);
+        let notiID = self.uipApp.notifications.notify(__('Importing template', 'uipress-lite'), '', 'default', false, true);
 
         self.sendServerRequest(template.path, formData).then((response) => {
           if (response.error) {
-            self.uipress.notify(response.message, '', 'error', true);
-            self.uipress.destroy_notification(notiID);
+            self.uipApp.notifications.notify(response.message, '', 'error', true);
+            self.uipApp.notifications.remove(notiID);
           }
 
           let parsed = JSON.parse(response);
@@ -156,8 +156,8 @@ export function moduleData() {
             parsed.uid = self.createUID();
 
             if (!self.isObject(parsed)) {
-              self.uipress.notify(__('Unable to import template right now', 'uipress-lite'), '', 'error', true);
-              self.uipress.destroy_notification(notiID);
+              self.uipApp.notifications.notify(__('Unable to import template right now', 'uipress-lite'), '', 'error', true);
+              self.uipApp.notifications.remove(notiID);
             }
 
             let freshLayout = [];
@@ -167,12 +167,12 @@ export function moduleData() {
               }
               parsed.content = freshLayout;
             }
-            self.uipress.destroy_notification(notiID);
-            self.uipress.notify(__('Template imported', 'uipress-lite'), '', 'success', true);
+            self.uipApp.notifications.remove(notiID);
+            self.uipApp.notifications.notify(__('Template imported', 'uipress-lite'), '', 'success', true);
             self.items.splice(index, 0, parsed);
           } else {
-            self.uipress.notify(__('Unable to import template right now', 'uipress-lite'), '', 'error', true);
-            self.uipress.destroy_notification(notiID);
+            self.uipApp.notifications.notify(__('Unable to import template right now', 'uipress-lite'), '', 'error', true);
+            self.uipApp.notifications.remove(notiID);
           }
         });
       },
@@ -209,7 +209,7 @@ export function moduleData() {
       itemAdded(evt) {
         let self = this;
         if (evt.added) {
-          if (this.uipress.checkNestedValue(evt, ['added', 'element', 'remote'])) {
+          if (this.hasNestedPath(evt, ['added', 'element', 'remote'])) {
             return;
           }
 
@@ -476,8 +476,8 @@ export function moduleData() {
         return true;
       },
       blockHasQuery(block) {
-        if (this.uipress.checkNestedValue(block, ['query', 'enabled'])) {
-          if (!this.uipress.checkNestedValue(this.queries, [block.uid, 'posts'])) {
+        if (this.hasNestedPath(block, ['query', 'enabled'])) {
+          if (!this.hasNestedPath(this.queries, [block.uid, 'posts'])) {
             this.queries[block.uid] = {
               currentPage: 1,
               posts: [],
@@ -498,13 +498,13 @@ export function moduleData() {
         return false;
       },
       blockPaginationEnabled(block) {
-        if (this.uipress.checkNestedValue(block, ['query', 'settings', 'showPagination'])) {
+        if (this.hasNestedPath(block, ['query', 'settings', 'showPagination'])) {
           return true;
         }
         return false;
       },
       returnQuerySearch(blockUID) {
-        let search = this.uipress.checkNestedValue(this.returnAllQueries, [blockUID, 'search']);
+        let search = this.hasNestedPath(this.returnAllQueries, [blockUID, 'search']);
         if (!search) {
           return '';
         }
@@ -533,7 +533,7 @@ export function moduleData() {
 
         self.sendServerRequest(uip_ajax.ajax_url, formData).then((response) => {
           if (response.error) {
-            self.uipress.notify(response.message, 'uipress-lite', '', 'error', true);
+            self.uipApp.notifications.notify(response.message, 'uipress-lite', '', 'error', true);
             self.saving = false;
             return false;
           }
@@ -547,35 +547,35 @@ export function moduleData() {
         });
       },
       returnPostQuery(blockUID) {
-        let posts = this.uipress.checkNestedValue(this.queries, [blockUID, 'posts']);
+        let posts = this.hasNestedPath(this.queries, [blockUID, 'posts']);
         if (!posts) {
           return [];
         }
         return posts;
       },
       returnPostQueryCount(blockUID) {
-        let totalFound = this.uipress.checkNestedValue(this.returnAllQueries, [blockUID, 'totalFound']);
+        let totalFound = this.hasNestedPath(this.returnAllQueries, [blockUID, 'totalFound']);
         if (!totalFound) {
           return 0;
         }
         return totalFound;
       },
       returnPostQueryPageCount(blockUID) {
-        let totalFound = this.uipress.checkNestedValue(this.returnAllQueries, [blockUID, 'totalPages']);
+        let totalFound = this.hasNestedPath(this.returnAllQueries, [blockUID, 'totalPages']);
         if (!totalFound) {
           return 0;
         }
         return totalFound;
       },
       returnPostQueryCurrentPage(blockUID) {
-        let totalFound = this.uipress.checkNestedValue(this.returnAllQueries, [blockUID, 'currentPage']);
+        let totalFound = this.hasNestedPath(this.returnAllQueries, [blockUID, 'currentPage']);
         if (!totalFound) {
           return 0;
         }
         return totalFound;
       },
       blockSearchEnabled(block) {
-        if (this.uipress.checkNestedValue(block, ['query', 'settings', 'search'])) {
+        if (this.hasNestedPath(block, ['query', 'settings', 'search'])) {
           return true;
         }
         return false;
@@ -681,8 +681,8 @@ export function moduleData() {
         return classes;
       },
       maybeFollowLink(evt, block) {
-        let hasLink = this.uipress.checkNestedValue(block, ['linkTo', 'value']);
-        let linkType = this.uipress.checkNestedValue(block, ['linkTo', 'newTab']);
+        let hasLink = this.hasNestedPath(block, ['linkTo', 'value']);
+        let linkType = this.hasNestedPath(block, ['linkTo', 'newTab']);
 
         ///No link set so return;
         if (!hasLink || hasLink == '') {
@@ -712,7 +712,7 @@ export function moduleData() {
         }
       },
       returnToolTip(block) {
-        let hasTip = this.uipress.checkNestedValue(block, ['tooltip', 'message']);
+        let hasTip = this.hasNestedPath(block, ['tooltip', 'message']);
         if (hasTip) {
           return hasTip;
         }

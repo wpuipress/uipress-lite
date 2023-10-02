@@ -13,7 +13,7 @@ export default {
       ],
     };
   },
-  inject: ['uipress'],
+  
   mounted() {
     this.mountWatchers();
   },

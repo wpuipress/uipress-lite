@@ -8,7 +8,7 @@ export default {
   data() {
     return {};
   },
-  inject: ['uipress'],
+  
   computed: {
     /**
      * Returns icon for button
