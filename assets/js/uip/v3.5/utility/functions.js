@@ -109,7 +109,8 @@ export function isObject(obj) {
  * @since 3.2.13
  */
 export function isUnDefined(value) {
-  return typeof value === 'undefined' || value === null || value === '';
+  if (typeof value === 'undefined') return true;
+  return value === null || value === '';
 }
 
 /**
@@ -181,7 +182,6 @@ export async function sendServerRequest(url, data) {
   const emitError = () => {
     this.notify(errorMessage, '', 'error');
   };
-
   const response = await fetch(url, {
     method: 'POST',
     headers: { 'Content-Length': '0' },
@@ -212,4 +212,234 @@ export async function sendServerRequest(url, data) {
  */
 export function uipParsJson(data) {
   return JSON.parse(data, (k, v) => (v === 'uiptrue' ? true : v === 'uipfalse' ? false : v === 'uipblank' ? '' : v));
+}
+
+/**
+ * Global method for updating iframe page
+ *
+ * @param {String} newURL - the url to update to
+ * @param {Boolean} reloadPage - whether to force reload the page
+ * @since 3.0.0
+ */
+export function updateAppPage(newURL, reloadPage) {
+  const absoluteCheck = new RegExp('^(?:[a-z+]+:)?//', 'i');
+  const adminURL = this.adminURL;
+
+  newURL = newURL.replace(/&amp;/g, '&');
+  //Dispatch link change event
+  let shortURL = newURL;
+  if (absoluteCheck.test(newURL)) {
+    if (newURL.includes(adminURL)) {
+      shortURL = newURL.replace(adminURL, '');
+    }
+  }
+
+  // Dispatch page change event
+  const strippedURL = stripUIPparams(shortURL, adminURL);
+  const linkeChangeEvent = new CustomEvent('uip_page_change', { detail: { url: strippedURL } });
+  document.dispatchEvent(linkeChangeEvent);
+
+  if (!absoluteCheck.test(newURL)) {
+    newURL = adminURL + newURL;
+  }
+
+  let url = new URL(newURL);
+
+  const isBuilder = this.isBuilder;
+
+  // Check if we are disabling uipress on given page
+  const handleDisabledPages = (pages) => {
+    if (!Array.isArray(pages) || isBuilder) return;
+    for (let page of pages) {
+      if (url.href != page && !url.href.includes(page)) continue;
+      window.location.assign(url);
+    }
+  };
+  if (typeof UIPdisableUserPages !== 'undefined') {
+    handleDisabledPages(UIPdisableUserPages);
+  }
+
+  // If dynamic loading is disabled reload the whole page
+  if (typeof UIPdisableDynamicLoading !== 'undefined') {
+    const disabledDynamicLoading = !isUnDefined(UIPdisableDynamicLoading) && !isBuilder ? true : false;
+    if (disabledDynamicLoading) return window.location.assign(url);
+  }
+
+  // Check for front end load without frame and reload
+  if (typeof UIPfrontEndReload !== 'undefined') {
+    const frontEndReload = !isUnDefined(UIPfrontEndReload) && !isBuilder ? true : false;
+    if (frontEndReload) {
+      if (!url.href.includes(adminURL)) {
+        return window.location.assign(url);
+      }
+    }
+  }
+
+  maybeForceReload(url);
+
+  // Force a page reload (used for navigation between subsites)
+  if (reloadPage && !isBuilder) {
+    url.searchParams.set('uip-framed-page', 0);
+    return window.location.assign(url);
+  }
+
+  // Dispatch page updating event
+  const uipUpdateFrame = new CustomEvent('uip_update_frame_url', { detail: { url: url } });
+  document.dispatchEvent(uipUpdateFrame);
+
+  const frame = document.querySelector('.uip-page-content-frame');
+  // There is no iframe to update so we are going to refresh the page manually
+  if (!frame && !isBuilder) {
+    window.location.assign(url);
+  }
+}
+
+/**
+ * Removes uiPress based params from a url
+ *
+ * @param {String} link - the url to strip
+ * @param {String} adminURL - the sites admin url
+ * @since 3.0.0
+ */
+export function stripUIPparams(link, adminURL) {
+  const absoluteCheck = new RegExp('^(?:[a-z+]+:)?//', 'i');
+
+  let url = absoluteCheck.test(link) ? new URL(link) : new URL(adminURL + link);
+
+  url.searchParams.delete('uip-framed-page', 1);
+  url.searchParams.delete('uip-hide-screen-options', 1);
+  url.searchParams.delete('uip-hide-help-tab', 1);
+  url.searchParams.delete('uip-default-theme', 1);
+  url.searchParams.delete('uip-hide-notices', 1);
+  url.searchParams.delete('uipid', 1);
+
+  return url.href.replace(adminURL, '');
+}
+
+/**
+ * Checks whether the current screen is incompatible with uipress frames and reloads the whole page
+ *
+ * @since 3.0.92
+ */
+export function maybeForceReload(url) {
+  // bricks
+  if (url.searchParams.get('bricks') == 'run') {
+    return window.location.assign(url);
+  }
+
+  // motion.page
+  if (url.searchParams.get('page') == 'motionpage') {
+    url.searchParams.set('uip-framed-page', 1);
+    return window.location.assign(url);
+  }
+
+  //Elementor
+  if (url.searchParams.get('action') == 'elementor') {
+    url.searchParams.set('uip-framed-page', 1);
+    return window.location.assign(url);
+  }
+
+  // Elementor
+  if (url.searchParams.get('page') == 'elementor-app') {
+    url.searchParams.set('uip-framed-page', 1);
+    return window.location.assign(url);
+  }
+
+  // Breakdance
+  if (url.searchParams.get('breakdance') == 'builder') {
+    url.searchParams.set('uip-framed-page', 1);
+    return window.location.assign(url);
+  }
+
+  // Oxygen
+  if (url.searchParams.get('ct_builder') == 'true') {
+    url.searchParams.set('uip-framed-page', 1);
+    return window.location.assign(url);
+  }
+
+  // Piotnet forms
+  if (url.searchParams.get('page') == 'piotnetforms' && url.searchParams.get('post')) {
+    url.searchParams.set('uip-framed-page', 1);
+    return window.location.assign(url);
+  }
+
+  // Zion builder
+  if (url.searchParams.get('action') == 'zion_builder_active') {
+    url.searchParams.set('uip-framed-page', 1);
+    return window.location.assign(url);
+  }
+
+  // Divi builder
+  if (url.searchParams.get('et_fb') == '1') {
+    url.searchParams.set('uip-framed-page', 1);
+    return window.location.assign(url);
+  }
+}
+
+/**
+ * Save user preference
+ *
+ * @param {String} key - the preference meta key
+ * @param {*} value - the new value for the preference
+ * @param {Boolean} notification = whether to show a success notification
+ * @since 3.0.0
+ */
+export async function saveUserPreference(key, value, notification) {
+  console.log(key);
+  let formData = new FormData();
+
+  // Format value
+  value = value == true ? 'uiptrue' : value;
+  value = value == false ? 'uipfalse' : value;
+  value = prepareJSON(value);
+
+  formData.append('action', 'uip_save_user_preference');
+  formData.append('security', uip_ajax.security);
+  formData.append('key', key);
+  formData.append('value', value);
+
+  const response = await sendServerRequest(uip_ajax.ajax_url, formData);
+
+  if (response.error) {
+    //this.notify(response.message, '', 'error', true);
+    return false;
+  }
+
+  if (notification) {
+    //this.notify(__('Preference updated', 'uipress-lite'), '', 'success', true);
+  }
+  //success
+  return true;
+}
+
+/**
+ * Recursively goes over template and checks for required fields.
+ * Used for validating imported templates & patterns
+ *
+ * @param {Array} content - The template array for checking
+ * @param {Boolean} keepUID - whether to keep block IDS
+ * @since 3.0.0
+ */
+export async function validDateTemplate(content, keepUID) {
+  return Promise.all(content.map((block) => validateBlock(block, keepUID)));
+}
+
+/**
+ * Validates a block from an imported template
+ *
+ * @param {Object} block - the block to check
+ * @param {Boolean} keepUID - whether to keep block IDS
+ * @since 3.0.0
+ */
+async function validateBlock(block, keepUID) {
+  if (!block.name || !block.moduleName) return false;
+
+  // Update UID to avoid duplicates
+  if (!keepUID) block.uid = createUID();
+
+  // No children, so return true
+  if (!block.content) return true;
+
+  // Ensure every child block is valid
+  return (await Promise.all(block.content.map((childBlock) => validateBlock(childBlock, keepUID)))).every((result) => result);
 }

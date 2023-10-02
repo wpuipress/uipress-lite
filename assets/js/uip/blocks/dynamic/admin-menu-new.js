@@ -507,7 +507,7 @@ export default {
       collapsed: false,
     };
   },
-  inject: [ 'uipress', 'uiTemplate'],
+  inject: ['uipress', 'uiTemplate'],
   watch: {
     /**
      * Watches for changes to the breadcrumbs and emits event
@@ -532,7 +532,7 @@ export default {
         let status = newVal ? true : false;
         document.documentElement.setAttribute('uip-menu-collapsed', String(status));
         this.uiTemplate.menuCollapsed = status;
-        this.uipress.saveUserPreference('menuCollapsed', status, false);
+        this.saveUserPreference('menuCollapsed', status, false);
       },
     },
   },
@@ -787,7 +787,7 @@ export default {
       }
 
       // Update the active link
-      this.uipress.updatePage(item.url);
+      this.updateAppPage(item.url);
     },
 
     /**

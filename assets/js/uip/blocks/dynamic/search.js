@@ -201,7 +201,7 @@ export default {
                         <div class="">
                           <div class="uip-flex uip-flex-row uip-gap-xxs uip-flex-center" >
                           
-                            <div class="uip-text-bold uip-search-result-title uip-link-default uip-cursor-pointer"  @click="uipress.updatePage(item.link)" v-html="item.name"></div>
+                            <div class="uip-text-bold uip-search-result-title uip-link-default uip-cursor-pointer"  @click="updateAppPage(item.link)" v-html="item.name"></div>
                             
                             <div class="uip-text-xs uip-background-primary-wash uip-border-round uip-padding-xxxs uip-hidden">{{item.type}}</div>
                             
@@ -231,7 +231,7 @@ export default {
                                   <div class="uip-no-wrap">{{strings.edit + ' ' + item.type}}</div>
                                 </a>
                                 
-                                <a :href="item.link" class="uip-link-muted hover:uip-background-muted uip-border-round uip-padding-xxxs uip-flex uip-flex-row uip-gap-xs uip-flex-center uip-no-underline" @click="uipress.updatePage(item.link)">
+                                <a :href="item.link" class="uip-link-muted hover:uip-background-muted uip-border-round uip-padding-xxxs uip-flex uip-flex-row uip-gap-xs uip-flex-center uip-no-underline" @click="updateAppPage(item.link)">
                                   <div class="uip-icon uip-text-l">visibility</div>
                                   <div class="uip-no-wrap">{{strings.view + ' ' + item.type}}</div>
                                 </a>

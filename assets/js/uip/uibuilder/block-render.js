@@ -456,7 +456,7 @@ export default {
 
       // Update dynamic link
       if (linkType === 'dynamic') {
-        this.uipress.updatePage(linkValue);
+        this.updateAppPage(linkValue);
         return;
       }
 

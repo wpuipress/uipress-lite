@@ -401,7 +401,7 @@ export default {
     
     <div class="uip-text-bold uip-margin-bottom-s uip-flex uip-flex-between">
       <div>{{strings.welcomeTov32}}</div>
-      <div @click="showWelcome = false;uipress.saveUserPreference('supressWelcome', true, false);"
+      <div @click="showWelcome = false;saveUserPreference('supressWelcome', true, false);"
       class="uip-padding-xxs uip-border-rounder hover:uip-background-grey uip-cursor-pointer"><span class="uip-icon">close</span></div>
     </div>
     

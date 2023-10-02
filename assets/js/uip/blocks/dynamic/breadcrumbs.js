@@ -59,7 +59,7 @@ export default {
         
             <template v-for="(item, index) in breadCrumbs">
             
-              <div @click="uipress.updatePage(item.url)" class="uip-link-default uip-crumb" v-html="item.name"></div>
+              <div @click="updateAppPage(item.url)" class="uip-link-default uip-crumb" v-html="item.name"></div>
               <div class="uip-icon uip-crumb-icon uip-text-muted" v-if="index < breadCrumbs.length - 1">{{returnIcon()}}</div>
               
             </template>

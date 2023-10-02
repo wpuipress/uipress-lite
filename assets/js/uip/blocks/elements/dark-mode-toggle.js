@@ -21,7 +21,7 @@ export default {
     'uipApp.data.userPrefs.darkTheme': {
       handler(newValue, oldValue) {
         this.setTheme();
-        this.uipress.saveUserPreference('darkTheme', newValue, false);
+        this.saveUserPreference('darkTheme', newValue, false);
       },
       deep: true,
     },

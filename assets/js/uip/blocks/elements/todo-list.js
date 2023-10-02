@@ -59,7 +59,7 @@ export default {
         this.queued = true;
         setTimeout(function () {
           this.queued = false;
-          this.uipress.saveUserPreference('uip-todo-list', newValue, false);
+          this.saveUserPreference('uip-todo-list', newValue, false);
         }, 8000);
       },
       deep: true,

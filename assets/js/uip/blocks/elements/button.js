@@ -110,7 +110,7 @@ export default {
       if (!url) return;
 
       // Dynamic link so update frame
-      if (type == 'dynamic') return this.uipress.updatePage(url);
+      if (type == 'dynamic') return this.updateAppPage(url);
       // Default link so update browser window
       if (type == 'default') return window.location.replace(url);
     },

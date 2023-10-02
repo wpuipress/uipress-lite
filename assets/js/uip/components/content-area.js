@@ -690,7 +690,7 @@ export function moduleData() {
         }
         ///Update dynamic link
         if (linkType == 'dynamic') {
-          this.uipress.updatePage(hasLink);
+          this.updateAppPage(hasLink);
         }
 
         //If modifier keys were pressed pass the event to the link element and force click

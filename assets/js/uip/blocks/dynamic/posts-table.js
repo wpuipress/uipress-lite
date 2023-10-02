@@ -68,7 +68,7 @@ export default {
       handler(newValue, oldVaklue) {
         let view = false;
         if (newValue == 'grid') view = true;
-        this.uipress.saveUserPreference('prefersGridView', view, false);
+        this.saveUserPreference('prefersGridView', view, false);
       },
     },
   },
@@ -254,7 +254,7 @@ export default {
                   </div>
                   <div class="uip-padding-xs uip-flex uip-flex-column uip-row-gap-xxs">
                     <div class="uip-flex uip-flex-row uip-flex-between">
-                      <div class="uip-text-bold uip-link-emphasis uip-grid-item-title" @click="uipress.updatePage(item.link)">{{item.name}}</div>
+                      <div class="uip-text-bold uip-link-emphasis uip-grid-item-title" @click="updateAppPage(item.link)">{{item.name}}</div>
                       <div>
                         <dropdown pos="left center">
                           <template v-slot:trigger>
@@ -267,7 +267,7 @@ export default {
                                   <div class="uip-icon uip-icon-small-emphasis">{{action.icon}}</div>
                                   <div>{{action.label}}</div>
                                 </div>
-                                <div v-else class="uip-flex uip-gap-xxs uip-flex-center uip-link-muted" @click="uipress.updatePage(action.link)">
+                                <div v-else class="uip-flex uip-gap-xxs uip-flex-center uip-link-muted" @click="updateAppPage(action.link)">
                                   <div class="uip-icon uip-icon-small-emphasis">{{action.icon}}</div>
                                   <div>{{action.label}}</div>
                                 </div>
@@ -279,7 +279,7 @@ export default {
                     </div>
                     <div class="uip-text-s">
                       <span class="uip-text-muted">{{strings.by}}</span>
-                      <span class="uip-link-default " @click="uipress.updatePage(item.authorLink)">{{item.author}}</span>
+                      <span class="uip-link-default " @click="updateAppPage(item.authorLink)">{{item.author}}</span>
                       <span class="uip-text-muted">{{item.modified}}</span>
                     </div>
                   </div>
@@ -332,15 +332,15 @@ export default {
                           <td v-if="column.name == 'name'" class="uip-padding-xxs uip-post-table-cell" :class="column.name">
                             <div>
                               <div class="uip-flex uip-flex-row uip-gap-xxs uip-flex-center" >
-                                <div class="uip-text-bold uip-post-title uip-link-default  uip-cursor-pointer"  @click="uipress.updatePage(item.editLink)">{{item.name}}</div>
+                                <div class="uip-text-bold uip-post-title uip-link-default  uip-cursor-pointer"  @click="updateAppPage(item.editLink)">{{item.name}}</div>
                                 <div class="uip-flex uip-gap-xxs uip-flex-center" v-if="item.hover">
-                                  <div @click="uipress.updatePage(item.editLink)" :href="item.editLink" class="uip-icon uip-cursor-pointer uip-link-default">edit_document</div>
+                                  <div @click="updateAppPage(item.editLink)" :href="item.editLink" class="uip-icon uip-cursor-pointer uip-link-default">edit_document</div>
                                   <a :href="item.link" target="_BLANK" class="uip-icon uip-cursor-pointer uip-link-default uip-no-underline">open_in_new</a>
                                 </div>
                               </div>
                               <div class="uip-text-s uip-post-meta uip-flex uip-flex-row uip-gap-xxxs">
                                 <span class="uip-text-muted">{{strings.by}}</span>
-                                <span class="uip-link-default " @click="uipress.updatePage(item.authorLink)">{{item.author}}</span>
+                                <span class="uip-link-default " @click="updateAppPage(item.authorLink)">{{item.author}}</span>
                                 <span class="uip-text-muted">{{item.modified}}</span>
                               </div>
                             </div>
@@ -358,7 +358,7 @@ export default {
                                         <div class="uip-icon uip-icon-small-emphasis">{{action.icon}}</div>
                                         <div class="">{{action.label}}</div>
                                       </div>
-                                      <div v-else class="uip-flex uip-gap-xxs uip-flex-center uip-link-muted" @click="uipress.updatePage(action.link)">
+                                      <div v-else class="uip-flex uip-gap-xxs uip-flex-center uip-link-muted" @click="updateAppPage(action.link)">
                                         <div class="uip-icon uip-icon-small-emphasis">{{action.icon}}</div>
                                         <div>{{action.label}}</div>
                                       </div>

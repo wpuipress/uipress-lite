@@ -9,7 +9,7 @@ export default {
   components: {
     blockControl: BlockControl,
   },
-  inject: [ 'uipress', 'uiTemplate', 'layersPanel', 'unsavedChanges'],
+  inject: ['uipress', 'uiTemplate', 'layersPanel', 'unsavedChanges'],
   data: function () {
     return {
       loading: true,
@@ -127,13 +127,12 @@ export default {
         let zoom = this.ui.zoom;
         this.$refs.framewrap.style.transform = `scale( ${zoom} )`;
         // Bail if we are currently zooming
-        if (this.uipApp.scrolling) return;
+        if (this.uipApp.scrolling || this.loading) return;
 
         // Save new zoom
-        let rounded = Math.round(newValue * 10) / 10;
-        this.uipress.saveUserPreference('builderPrefersZoom', String(rounded), false);
+        let rounded = Math.round(this.ui.zoom * 10) / 10;
+        this.saveUserPreference('builderPrefersZoom', String(rounded), false);
       },
-      deep: true,
     },
     /**
      * Watch changes to the current template id
@@ -164,12 +163,10 @@ export default {
     window.addEventListener('keydown', this.watchShortCuts);
   },
   async mounted() {
-    let self = this;
-
     // Mount watchers
     this.mountWatchers();
 
-    self.uipress.saveTemplate = this.saveCleanTemplate;
+    this.uipress.saveTemplate = this.saveCleanTemplate;
 
     //Set zoom level from prefs
     let zoom = parseFloat(this.uipApp.data.userPrefs.builderPrefersZoom);
@@ -185,12 +182,13 @@ export default {
     //Mounted
     await nextTick();
 
-    this.loading = false;
     this.firstRender = true;
     this.activeBlockID = this.$route.params.uid;
 
     await nextTick();
-    this.setCanvasPosition();
+    await this.setCanvasPosition();
+
+    this.loading = false;
   },
   computed: {
     /**
@@ -432,7 +430,7 @@ export default {
      *
      * @since 3.2.13
      */
-    setCanvasPosition() {
+    async setCanvasPosition() {
       // Get dimensions of the container
       const containerWidth = this.$refs.previewCanvas.offsetWidth;
       const containerHeight = this.$refs.previewCanvas.offsetHeight;
@@ -448,6 +446,8 @@ export default {
       // Apply styles to div
       this.$refs.framewrap.style.top = `${centeredY}px`;
       this.$refs.framewrap.style.left = `${centeredX}px`;
+
+      return true;
     },
     /**
      * Handles changes to the viewport
@@ -598,7 +598,7 @@ export default {
     toggleDarkMode() {
       this.uipApp.data.userPrefs.darkTheme = !this.uipApp.data.userPrefs.darkTheme;
       this.setTheme();
-      this.uipress.saveUserPreference('darkTheme', this.uipApp.data.userPrefs.darkTheme, false);
+      this.saveUserPreference('darkTheme', this.uipApp.data.userPrefs.darkTheme, false);
     },
     /**
      * Sets theme

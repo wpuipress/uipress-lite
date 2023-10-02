@@ -1,4 +1,5 @@
 import { defineAsyncComponent } from '../../libs/vue-esm-dev.js';
+import { validDateTemplate } from '../v3.5/utility/functions.min.js';
 export default {
   components: {
     contextmenu: defineAsyncComponent(() => import('../v3.5/utility/contextmenu.min.js?ver=3.2.12')),
@@ -381,7 +382,7 @@ export default {
               return;
           }
 
-          this.uipress.validDateTemplate(temper).then((response) => {
+          validDateTemplate(temper).then((response) => {
             if (!response.includes(false)) {
               if (type === 'template') {
                 this.uiTemplate.content = temper;

@@ -4,11 +4,12 @@
  */
 const { __, _x, _n, _nx } = wp.i18n;
 import { defineAsyncComponent, nextTick } from '../../libs/vue-esm-dev.js';
+import { validDateTemplate } from '../v3.5/utility/functions.min.js';
 export default {
   components: {
     templateHistory: defineAsyncComponent(() => import('./history.min.js?ver=3.2.12')),
   },
-  inject: [ 'uipress', 'uiTemplate', 'layersPanel', 'unsavedChanges'],
+  inject: ['uipress', 'uiTemplate', 'layersPanel', 'unsavedChanges'],
   data: function () {
     return {
       loading: true,
@@ -189,14 +190,6 @@ export default {
       },
       deep: true,
     },
-    'ui.zoom': {
-      handler(newValue, oldValue) {
-        let rounded = Math.round(newValue * 10) / 10;
-        //Only adjust preview dark mode if we are not in prod
-        this.uipress.saveUserPreference('builderPrefersZoom', String(rounded), false);
-      },
-      deep: true,
-    },
     '$route.params.templateID': {
       handler() {
         this.templateID = this.$route.params.templateID;
@@ -292,12 +285,9 @@ export default {
     },
 
     saveTemplate() {
-      let self = this;
-      self.saving = true;
-      let cleanTemplate = JSON.parse(JSON.stringify(self.uiTemplate.content));
-      this.uipress.cleanTemplate(cleanTemplate).then((response) => {
-        self.saveCleanTemplate(cleanTemplate);
-      });
+      this.saving = true;
+      const cleanTemplate = JSON.parse(JSON.stringify(this.uiTemplate.content));
+      this.saveCleanTemplate(cleanTemplate);
     },
 
     async saveCleanTemplate(cleanTemplate) {
@@ -336,7 +326,7 @@ export default {
     },
     saveStylePresets() {
       let self = this;
-      let options = JSON.stringify(this.uipress.uipAppData.options.block_preset_styles, (k, v) =>
+      let options = JSON.stringify(this.uipApp.data.options.block_preset_styles, (k, v) =>
         v === 'true' ? 'uiptrue' : v === true ? 'uiptrue' : v === 'false' ? 'uipfalse' : v === false ? 'uipfalse' : v === '' ? 'uipblank' : v
       );
 
@@ -398,7 +388,7 @@ export default {
     toggleLayers() {
       this.layersPanel.display = !this.layersPanel.display;
 
-      this.uipress.saveUserPreference('builderLayers', this.layersPanel.display, false);
+      this.saveUserPreference('builderLayers', this.layersPanel.display, false);
     },
     toggleDisplay() {
       if (this.uiTemplate.display == 'preview') {
@@ -498,7 +488,7 @@ export default {
             }
           }
 
-          self.uipress.validDateTemplate(temper, true).then((response) => {
+          validDateTemplate(temper, true).then((response) => {
             if (!response.includes(false)) {
               if (type == 'template') {
                 self.uiTemplate.content = temper;
@@ -597,30 +587,6 @@ export default {
           self.ui.contextualMenu.display = false;
         }
       }
-    },
-    showOptions(evt) {
-      let self = this;
-
-      let target = evt.target.closest('.uip-block-builder-container');
-
-      if (!target) {
-        return;
-      }
-      let targetUID = target.getAttribute('block-uid');
-      //No block to select
-      if (!targetUID) {
-        return;
-      }
-
-      self.uipress.searchForBlock(self.uiTemplate.content, targetUID).then((response) => {
-        if (response) {
-          self.ui.contextualMenu.block = response;
-          self.setRightClickPos(evt);
-          self.ui.contextualMenu.display = true;
-        } else {
-          return;
-        }
-      });
     },
     setRightClickPos(e) {
       let self = this;
@@ -842,7 +808,7 @@ export default {
             
             <div class="uip-flex uip-flex-between">
             
-              <button class="uip-button-default" @click="tips.open = false;uipress.saveUserPreference('supressTips', true, false);">{{ui.strings.close}}</button>
+              <button class="uip-button-default" @click="tips.open = false;saveUserPreference('supressTips', true, false);">{{ui.strings.close}}</button>
               
               <div class="uip-flex uip-gap-xs">
               

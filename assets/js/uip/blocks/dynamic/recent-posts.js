@@ -152,10 +152,10 @@ export default {
                   <div class="uip-flex uip-flex-row uip-flex-between uip-flex-center" @mouseover="item.hover = true" @mouseleave="item.hover = false">
                     <div class="">
                       <div class="uip-flex uip-flex-row uip-gap-xxs uip-flex-center" >
-                        <div class="uip-text-bold uip-post-title uip-link-default uip-cursor-pointer"  @click="uipress.updatePage(item.link)">{{item.name}}</div>
+                        <div class="uip-text-bold uip-post-title uip-link-default uip-cursor-pointer"  @click="updateAppPage(item.link)">{{item.name}}</div>
                         <div class="uip-text-xs uip-background-primary-wash uip-border-round uip-padding-xxxs uip-post-type-label">{{item.type}}</div>
                         <div class="uip-flex uip-gap-xxs uip-flex-center" v-if="item.hover">
-                          <div @click="uipress.updatePage(item.editLink)" :href="item.editLink" class="uip-icon uip-cursor-pointer uip-link-muted">edit_document</div>
+                          <div @click="updateAppPage(item.editLink)" :href="item.editLink" class="uip-icon uip-cursor-pointer uip-link-muted">edit_document</div>
                           <a :href="item.link" target="_BLANK" class="uip-icon uip-cursor-pointer uip-link-muted uip-no-underline">open_in_new</a>
                         </div>
                       </div>

@@ -227,7 +227,7 @@ export default {
 
       // Dybamic redirect / update frame
       if (redirectType == '' || redirectType == 'dynamic') {
-        this.uipress.updatePage(redirectURL);
+        this.updateAppPage(redirectURL);
         return;
       }
 

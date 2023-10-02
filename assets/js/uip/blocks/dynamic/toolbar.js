@@ -379,7 +379,7 @@ export default {
         return;
       }
 
-      this.uipress.updatePage(this.formatHREF(item.href), forceReload);
+      this.updateAppPage(this.formatHREF(item.href), forceReload);
     },
 
     /**

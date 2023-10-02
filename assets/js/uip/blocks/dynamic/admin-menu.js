@@ -38,7 +38,7 @@ export default {
           document.documentElement.setAttribute('uip-menu-collapsed', 'false');
         }
 
-        this.uipress.saveUserPreference('menuCollapsed', newVal, false);
+        this.saveUserPreference('menuCollapsed', newVal, false);
       },
     },
   },
@@ -476,7 +476,7 @@ export default {
             this.$refs.newTab.href = '';
             this.$refs.newTab.blur();
           } else {
-            this.uipress.updatePage(absoluteURL, true);
+            this.updateAppPage(absoluteURL, true);
           }
         });
         return;
@@ -491,7 +491,7 @@ export default {
         return;
       }
 
-      this.uipress.updatePage(item.url);
+      this.updateAppPage(item.url);
       //this.returnMenu;
     },
     hideIcons() {

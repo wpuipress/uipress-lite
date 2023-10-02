@@ -470,11 +470,11 @@ export default {
     suppressWelcome() {
       this.welcomeMessage = false;
       this.uipApp.data.userPrefs.supressBuilderWelcome = true;
-      this.uipress.saveUserPreference('supressBuilderWelcome', true, false);
+      this.saveUserPreference('supressBuilderWelcome', true, false);
     },
     closeLayersPanel() {
       this.ui.layers.display = false;
-      this.uipress.saveUserPreference('builderLayers', false, false);
+      this.saveUserPreference('builderLayers', false, false);
     },
     openModal(componentName, modalTitle, args) {
       if (!componentName || componentName == '') {
@@ -530,7 +530,7 @@ export default {
       document.removeEventListener('mousemove', this.mouseMoveHandler, true);
       document.removeEventListener('mouseup', this.mouseUpHandler, true);
       const optionsPanel = document.getElementById('uip-builder-settings-panel');
-      this.uipress.saveUserPreference('builderOptionsWodth', optionsPanel.style.width, false);
+      this.saveUserPreference('builderOptionsWodth', optionsPanel.style.width, false);
     },
     mouseDownHandler(e) {
       const optionsPanel = document.getElementById('uip-builder-settings-panel');

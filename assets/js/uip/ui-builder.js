@@ -147,6 +147,9 @@ const UIbuilderEffects = defineAsyncComponent(() => import(`./options/effects.mi
  * @since 3.0.0
  */
 const appArgs = defineComponent({
+  components: {
+    Notify: defineAsyncComponent(() => import(`./v3.5/utility/notify.min.js?ver=${pluginVersion}`)),
+  },
   data() {
     return {};
   },
@@ -155,7 +158,9 @@ const appArgs = defineComponent({
       uipress: uipress,
     };
   },
-  template: '<router-view></router-view>',
+  template: `
+    <router-view></router-view>
+    <Notify></Notify>`,
 });
 
 /**
@@ -325,6 +330,8 @@ import {
   get_block_option,
   createUID,
   sendServerRequest,
+  updateAppPage,
+  saveUserPreference,
 } from './v3.5/utility/functions.min.js?ver=3.2.12';
 
 app.config.globalProperties.ensureNestedObject = ensureNestedObject;
@@ -337,6 +344,8 @@ app.config.globalProperties.isUnDefined = isUnDefined;
 app.config.globalProperties.get_block_option = get_block_option;
 app.config.globalProperties.createUID = createUID;
 app.config.globalProperties.sendServerRequest = sendServerRequest;
+app.config.globalProperties.updateAppPage = updateAppPage.bind({ adminURL: uip_ajax.uipAppData.options.adminURL, isBuilder: true });
+app.config.globalProperties.saveUserPreference = saveUserPreference;
 
 app.config.globalProperties.uipApp = reactive({
   scrolling: false,
