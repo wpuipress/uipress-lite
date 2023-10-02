@@ -1,10 +1,10 @@
 import { defineAsyncComponent, nextTick } from '../../libs/vue-esm-dev.js';
 const { __, _x, _n, _nx } = wp.i18n;
 export default {
-  
   components: {
     BlockSettings: defineAsyncComponent(() => import('./block-settings.min.js?ver=3.2.12')),
   },
+  inject: ['uiTemplate'],
   data() {
     return {
       ai: false,
@@ -120,12 +120,26 @@ export default {
   },
   computed: {
     /**
-     * Returns template code for editor
-     * no args
+     * Returns whether we are in production or preview or builder
+     *
+     * @returns {boolean}  - returns true if we are in production | false if not
      * @since 3.2.13
      */
-    isScrolling() {
-      return this.uipApp.scrolling;
+    isProduction() {
+      if (this.uiTemplate.display == 'prod') return true;
+      if (this.uiTemplate.isPreview) return true;
+      return false;
+    },
+
+    /**
+     * Returns whether we should show the wraps
+     *
+     * @since 3.2.13
+     */
+    dontDisplayWraps() {
+      const isScrolling = this.uipApp.scrolling;
+      const isProduction = this.isProduction;
+      return isScrolling || isProduction;
     },
     /**
      * Returns wrap style
@@ -380,13 +394,13 @@ export default {
   template: `
   
   		<!-- Hover wrap -->
-		<div v-if="hoverWrapVisible && !isScrolling"
+		<div v-if="hoverWrapVisible && !dontDisplayWraps"
 		class="uip-border uip-position-fixed uip-fade-in uip-no-select"
 		:style="returnHoverWrapStyle"></div>
 		
 		
   	  	<!-- Selected wrap -->
-		<div v-if="wrapVisible && !isScrolling"
+		<div v-if="wrapVisible && !dontDisplayWraps"
 		class="uip-border uip-position-fixed uip-fade-in uip-no-select"
 		:style="returnWrapStyle">
 			

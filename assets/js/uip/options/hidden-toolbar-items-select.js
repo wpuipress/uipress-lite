@@ -14,7 +14,6 @@ export default {
       },
     };
   },
-  inject: [ 'uipress'],
   watch: {
     selected: {
       handler(newValue, oldValue) {

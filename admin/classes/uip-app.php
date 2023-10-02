@@ -767,7 +767,7 @@ class uip_app
 
     wp_print_script_tag([
       'id' => 'uip-app-js',
-      'src' => uip_plugin_url . 'assets/js/uip/uip-app.min.js?ver=' . uip_plugin_version,
+      'src' => uip_plugin_url . 'assets/js/uip/uipApp.min.js?ver=' . uip_plugin_version,
       'type' => 'module',
     ]);
 
@@ -1475,14 +1475,18 @@ class uip_app
       html[data-theme="light"]{
         <?php foreach ($styles as $key => $value) {
           if (isset($value->value)) {
-            echo esc_html($key . ':' . $value->value . ';');
+            if ($value->value) {
+              echo esc_html($key . ':' . $value->value . ';');
+            }
           }
         } ?>
     }
     html[data-theme="dark"]{
         <?php foreach ($styles as $key => $value) {
           if (isset($value->darkValue)) {
-            echo esc_html($key . ':' . $value->darkValue . ';');
+            if ($value->darkValue) {
+              echo esc_html($key . ':' . $value->darkValue . ';');
+            }
           }
         } ?>
     }

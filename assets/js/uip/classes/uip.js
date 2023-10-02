@@ -60,7 +60,7 @@ export class uip {
    * Parses data and converts specific true false values to Boolean
    * @since 3.0.0
    */
-  uipParsJson(data) {
+  uipParseJson(data) {
     return JSON.parse(data, (k, v) => (v === 'uiptrue' ? true : v === 'uipfalse' ? false : v === 'uipblank' ? '' : v));
   }
 
@@ -89,7 +89,7 @@ export class uip {
       .then((res) => res.text())
       .then((data) => {
         try {
-          let parsedData = self.uipParsJson(data);
+          let parsedData = self.uipParseJson(data);
           if (!parsedData) {
             return { error: true, message: __('Bad request', 'uipress-lite') };
           }

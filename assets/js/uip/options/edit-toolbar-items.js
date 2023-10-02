@@ -13,7 +13,6 @@ export default {
       },
     };
   },
-  inject: [ 'uipress'],
   watch: {
     /**
      * Watches selected items and returns data to caller

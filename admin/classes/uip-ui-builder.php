@@ -148,7 +148,7 @@ class uip_ui_builder extends uip_app
 
     wp_print_script_tag([
       'id' => 'uip-ui-builder-js',
-      'src' => uip_plugin_url . 'assets/js/uip/ui-builder.min.js?ver=' . uip_plugin_version,
+      'src' => uip_plugin_url . 'assets/js/uip/uiBuilder.min.js?ver=' . uip_plugin_version,
       'type' => 'module',
     ]);
 

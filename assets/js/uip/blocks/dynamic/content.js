@@ -18,6 +18,7 @@ export default {
       currentURL: false,
       rendered: false,
       scrollOver: true,
+      mounted: false,
     };
   },
   inject: ['uiTemplate'],
@@ -38,6 +39,7 @@ export default {
   mounted() {
     this.mountProductionFunctions();
     this.mountMainWatchers();
+    this.mounted = true;
   },
   beforeUnmount() {
     this.removeWatchers();
@@ -49,7 +51,7 @@ export default {
      * @since 3.2.13
      */
     returnStartPage() {
-      if (this.uiTemplate.display == 'prod') return;
+      if (this.uiTemplate.display == 'prod') return window.location.href;
 
       const defaultAdmin = this.returnAdminPage;
       return this.formatRequiredParams(defaultAdmin);
@@ -107,7 +109,7 @@ export default {
      * @returns {boolean} Returns true if loader should be hidden, otherwise false.
      * @since 3.2.13
      */
-    hideLoader() {
+    showLoader() {
       return this.getBlockOption('hideLoader', 'value', true);
     },
 
@@ -307,6 +309,7 @@ export default {
      */
     async handleIframeLoad(event) {
       const frame = this.$refs.contentframe;
+      if (!frame) return;
       const currentURL = frame.contentWindow.location.href;
 
       // If the page failed to load it may be due to CORS so force a window reload
@@ -852,7 +855,7 @@ export default {
     <div ref="frameContainer" class="uip-flex uip-flex-column uip-overflow-hidden uip-content-frame uip-overflow-hidden uip-position-relative" 
     :class="returnClasses" @mouseenter="scrollOver = true;">
     
-      <div class="uip-position-relative" v-if="!hideLoader">
+      <div class="uip-position-relative" v-if="showLoader">
         <div ref="loader" :class="block.uid" class="uip-ajax-loader" v-if="loading">
         <div :class="block.uid" class="uip-loader-bar"></div>
         </div>

@@ -5,7 +5,6 @@ export default {
     value: Object,
     args: Object,
   },
-  inject: [ 'uipress'],
   data() {
     return {
       open: false,

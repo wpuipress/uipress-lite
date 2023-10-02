@@ -199,7 +199,7 @@ export async function sendServerRequest(url, data) {
   }
 
   const responseData = await response.text();
-  const parsedData = uipParsJson(responseData);
+  const parsedData = uipParseJson(responseData);
 
   if (!parsedData) {
     errorMessage(errorMessage);
@@ -214,7 +214,7 @@ export async function sendServerRequest(url, data) {
  *
  * @since 3.0.0
  */
-export function uipParsJson(data) {
+export function uipParseJson(data) {
   return JSON.parse(data, (k, v) => (v === 'uiptrue' ? true : v === 'uipfalse' ? false : v === 'uipblank' ? '' : v));
 }
 

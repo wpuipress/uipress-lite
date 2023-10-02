@@ -27,7 +27,6 @@ export default {
       searching: false,
     };
   },
-  inject: [ 'uipress'],
   watch: {
     searchString: {
       handler(newValue, oldValue) {

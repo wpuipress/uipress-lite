@@ -5,7 +5,6 @@ export default {
     colorSelect: defineAsyncComponent(() => import('../libs/colorpicker.js')),
     contextmenu: defineAsyncComponent(() => import('../utility/contextmenu.min.js?ver=3.2.12')),
   },
-  inject: [ 'uipress'],
   props: {
     currentColor: String,
     returnData: Function,

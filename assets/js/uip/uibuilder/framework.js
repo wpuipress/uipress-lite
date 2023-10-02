@@ -270,7 +270,6 @@ export default {
       const response = await this.sendServerRequest(uip_ajax.ajax_url, formData);
 
       if (response.styles) this.uipApp.data.themeStyles = { ...this.uipApp.data.themeStyles, ...response.styles };
-      console.log(this.uipApp.data.themeStyles);
 
       // Handle error
       if (response.error) {
@@ -390,25 +389,7 @@ export default {
                       <div class="uip-flex uip-flex-column uip-row-gap-xs">
                       
                         <layersPanels :content="template.content" :returnData="function(data){template.content = data}" />
-                        
-                        <!--Block selector-->
-                        <div class="uip-flex uip-flex-center uip-flex-middle uip-flex-row">
-                          <dropdown width="260" pos="right center" triggerClass="uip-w-100p" class="uip-w-100p">
-                            <template v-slot:trigger>
-                              <div ref="footer" class="uip-text-muted uip-text-center uip-padding-xxs uip-text-center uip-icon uip-link-muted uip-border-rounder uip-border uip-cursor-pointer uip-w-100p uip-text-s" >add</div>
-                            </template>
-                            <template v-slot:content>
-                              <div class="uip-padding-s uip-max-w-300 uip-w-300 uip-max-h-300 uip-overflow-auto uip-scrollbar">
-                                <BlockList mode="click" :insertArea="template.content"/>
-                              </div>
-                            </template>
-                          </dropdown>
-                        </div>
-                        <!--End block selector-->
-                        
-                        
-                        
-                        
+                      
                       </div>
                       
                       

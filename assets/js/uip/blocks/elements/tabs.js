@@ -11,7 +11,6 @@ export default {
       contentIndex: 0,
     };
   },
-  inject: [ 'uipress'],
   watch: {
     /**
      * Watches changes to block tabs

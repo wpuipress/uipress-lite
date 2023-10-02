@@ -14,12 +14,7 @@ export default {
   data() {
     return {
       items: this.content,
-      footerhideen: false,
       rendered: true,
-      activeTab: 'blocks',
-      windowWidth: window.innerWidth,
-      drag: false,
-      queries: {},
       randomClass: this.createUID(),
       strings: {
         doesntExist: __("This component is missing or can't be loaded", 'uipress-lite'),
@@ -27,19 +22,9 @@ export default {
         search: __('Search', 'uipress-lite'),
         proOptionUnlock: __('This is a pro option. Upgrade to unlock', 'uipress-lite'),
       },
-      switchOptions: {
-        blocks: {
-          value: 'blocks',
-          label: __('Blocks', 'uipress-lite'),
-        },
-        patterns: {
-          value: 'patterns',
-          label: __('Patterns', 'uipress-lite'),
-        },
-      },
     };
   },
-  inject: [ 'uiTemplate'],
+  inject: ['uiTemplate'],
   watch: {
     content: {
       handler(newValue, oldValue) {
@@ -52,19 +37,30 @@ export default {
         if (!this.renderd) return;
         this.updateList();
       },
-      deep: true,
     },
   },
-  mounted() {},
   computed: {
     /**
-     * Returns list lenght
+     * Returns whether we are in production or preview or builder
+     *
+     * @returns {boolean}  - returns true if we are in production | false if not
+     * @since 3.2.13
+     */
+    isProduction() {
+      if (this.uiTemplate.display == 'prod') return true;
+      if (this.uiTemplate.isPreview) return true;
+      return false;
+    },
+
+    /**
+     * Returns list length
      *
      * @since 3.1.0
      */
     itemsLength() {
       return this.items.length;
     },
+
     /**
      * Returns items
      *
@@ -225,6 +221,7 @@ export default {
 
       return item;
     },
+
     /**
      * Clones children and creates new UIDs
      *
@@ -248,6 +245,7 @@ export default {
 
       return returnChildren;
     },
+
     /**
      * Handles item added avents
      *
@@ -285,7 +283,7 @@ export default {
       
       
                  
-      <uip-draggable v-if="rendered"
+      <uip-draggable v-if="rendered && !isProduction"
       :class="[{'uip-border-dashed' : uiTemplate.display == 'builder'}, randomClass]" 
       class="uip-flex uip-w-100p uip-builder-drop-area"
       :group="{ name: 'uip-blocks', pull: true, put: true }" 
@@ -306,6 +304,15 @@ export default {
               
               
       </uip-draggable>
+      
+      <!-- Production template-->
+      <div class="uip-flex uip-w-100p" v-else-if="rendered" :class="randomClass">
+        <template v-for="(element, index) in returnItems">
+          
+          <BlockRender :block="element" :list="items" :index="index" :contextualData="contextualData"/>
+          
+        </template>
+      </div>
       
 		`,
 };

@@ -45,7 +45,6 @@ export default {
       },
     };
   },
-  inject: [ 'uipress'],
   watch: {
     img: {
       handler(newValue, oldValue) {

@@ -12,7 +12,6 @@ export default {
       rendered: false,
     };
   },
-  inject: [ 'uipress'],
   async mounted() {
     this.dequeueAdminBarStyles();
     this.importToolBar();
@@ -162,7 +161,7 @@ export default {
         if (!itemId || this.toolbar[itemId] || ['site-name', 'menu-toggle', 'app-logo', 'my-account'].includes(itemId)) return;
 
         const newItem = this.createToolbarItem(item, adminPath, adminURL);
-        this.toolbar[itemId] = newItem;
+        if (newItem) this.toolbar[itemId] = newItem;
       });
     },
 
@@ -175,6 +174,7 @@ export default {
      */
     createToolbarItem(item, adminPath, adminURL) {
       const link = item.querySelector('a.ab-item');
+      if (!link) return false;
       let href = link.getAttribute('href') || '';
 
       if (href.startsWith(adminPath)) {
@@ -416,7 +416,7 @@ export default {
                   
                     <div class="" v-if="ifHidden(item.id)" :id="'wp-admin-bar-' + item.id" :class="item.meta.class">
                       <!--FIRST DROP -->
-                      <dropdown :hover="true" :pos="returnDropdownPosition">
+                      <dropdown :hover="true" :pos="returnDropdownPosition" :disableTeleport="true">
                         <template v-slot:trigger>
                         
                           <a :href="formatHREF(item.href)" @click="updatePage(item, $event)" class="uip-link-default uip-no-underline uip-toolbar-top-item uip-flex uip-gap-xs uip-flex-center">
@@ -440,7 +440,7 @@ export default {
                               <div class="uip-padding-xxs uip-flex uip-flex-column uip-row-gap-xxs uip-min-w-130">
                                 <template v-for="sub in subsection.submenu">
                                   <!--SECOND DROP -->
-                                <dropdown width="200" :hover="true">
+                                <dropdown :hover="true"  :disableTeleport="true">
                                     <template v-slot:trigger>
                                       <a :href="formatHREF(sub.href)" @click="updatePage(sub, $event, true)"  class="uip-link-default uip-no-underline uip-toolbar-sub-item uip-flex uip-flex-center uip-flex-between uip-gap-s uip-flex-grow uip-padding-xxs uip-border-rounder hover:uip-background-muted" >
                                         <span v-html="sub.title"></span>
@@ -465,7 +465,7 @@ export default {
                             
                             <template  v-else v-for="sub in item.submenu">
                               <!--SECOND DROP -->
-                              <dropdown width="200" :pos="returnSubDropdownPosition" triggerClass="uip-flex uip-flex-grow" :hover="true">
+                              <dropdown width="200" :pos="returnSubDropdownPosition" triggerClass="uip-flex uip-flex-grow" :hover="true"  :disableTeleport="true">
                                 <template v-slot:trigger>
                                   <a @click="updatePage(sub, $event)" :href="formatHREF(sub.href)" class="uip-link-default uip-no-underline uip-toolbar-sub-item uip-flex uip-flex-center uip-flex-between uip-gap-s uip-flex-grow uip-padding-xxs uip-border-rounder hover:uip-background-muted" >
                                     <span v-html="sub.title"></span>

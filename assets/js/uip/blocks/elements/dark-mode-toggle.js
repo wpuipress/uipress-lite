@@ -10,7 +10,6 @@ export default {
       darkToggle: this.returnSetting,
     };
   },
-  inject: [ 'uipress'],
   watch: {
     'block.settings.block.options.prefersColorScheme.value': {
       handler(newValue, oldValue) {

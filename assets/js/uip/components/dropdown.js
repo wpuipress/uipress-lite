@@ -132,6 +132,7 @@ export default {
      * @since 0.0.1
      */
     onClickOutside(event) {
+      if (!this.$refs.droptrigger) return this.close();
       if (this.$refs.droptrigger.contains(event.target) || this.$refs.uipdrop.contains(event.target)) {
         return;
       }
@@ -173,6 +174,8 @@ export default {
       this.position.opacity = 0;
       document.body.removeEventListener('click', this.onClickOutside, true);
       document.removeEventListener('scroll', this.handleScroll, true);
+      window.removeEventListener('keydown', this.handleKeyDown);
+      window.removeEventListener('keyup', this.handleKeyUp);
     },
     /**
      * Turns a domrect into a regular object

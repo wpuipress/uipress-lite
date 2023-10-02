@@ -1,7 +1,7 @@
 import { nextTick, h, Teleport } from '../../libs/vue-esm-dev.js';
 import BlockStyles from './block-styles.min.js';
 export default {
-  inject: [ 'uiTemplate'],
+  inject: ['uiTemplate'],
   mixins: [BlockStyles],
   props: {
     block: Object,
@@ -142,7 +142,7 @@ export default {
      */
     formatDynamicMatches() {
       // Bail if we are in preview
-      if (!this.uiTemplate.isPreview) return this.block;
+      if (!this.isProduction) return this.block;
 
       let blockString = JSON.stringify(this.block);
       const pattern = /{{(.*?)}}/g;
@@ -391,29 +391,20 @@ export default {
      */
     returnWatchers(block) {
       let watchers = {};
-      let production = this.isProduction;
-      let onBlockClick;
 
       // If production then mount the link handler
-      if (production) {
-        onBlockClick = (evt) => {
+      if (this.isProduction) {
+        watchers.onclick = (evt) => {
           this.maybeFollowLink(evt, block);
         };
-      }
-      // Not production so mount settings handler
-      else {
-        onBlockClick = (evt) => {
-          evt.stopPropagation();
-          evt.preventDefault();
-          this.uipApp.blockControl.setActive(this.block, this.list, evt);
-        };
+        return watchers;
       }
 
-      // On click
-      watchers.onclick = onBlockClick;
-
-      // Return just click event if prod
-      if (production) return watchers;
+      watchers.onclick = (evt) => {
+        evt.stopPropagation();
+        evt.preventDefault();
+        this.uipApp.blockControl.setActive(this.block, this.list, evt);
+      };
 
       // On mouse enter
       watchers.onmouseenter = (evt) => {

@@ -19,7 +19,6 @@ export default {
       searching: false,
     };
   },
-  inject: [ 'uipress'],
   mounted() {
     this.getPosts();
   },

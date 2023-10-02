@@ -14,18 +14,24 @@ export default {
       loading: true,
       categories: [],
       search: '',
-      sortedBlocks: this.uipApp.data.blocks.sort((a, b) => a.name.localeCompare(b.name)),
       strings: {
         proBlock: __('This block requires uipress pro. Upgrade to unlock.', 'uipress-lite'),
         seachBlocks: __('Search blocks...', 'uipress-lite'),
       },
     };
   },
-  inject: [  'uiTemplate'],
-  mounted() {
-    this.removeOldBlocks();
-  },
+  inject: ['uiTemplate'],
   computed: {
+    /**
+     * Returns list of blocks sorted alphabetically
+     *
+     * @since 3.2.13
+     */
+    sortedBlocks() {
+      let blocks = this.removeOldBlocks();
+      return blocks.sort((a, b) => a.name.localeCompare(b.name));
+    },
+
     /**
      * Returns filters categories with blocks as children
      *
@@ -61,7 +67,7 @@ export default {
      */
     removeOldBlocks() {
       const excludedModules = ['responsive-grid', 'uip-admin-menu', 'uip-user-meta-block'];
-      this.sortedBlocks = this.sortedBlocks.filter((block) => !excludedModules.includes(block.moduleName));
+      return this.uipApp.data.blocks.filter((block) => !excludedModules.includes(block.moduleName));
     },
     /**
      * Clones block upon succesful drag

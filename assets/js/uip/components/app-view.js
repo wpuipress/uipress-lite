@@ -1,208 +1,197 @@
-export function moduleData() {
-  return {
-    props: {},
-    inject: [ 'uipress'],
-    data: function () {
-      return {
-        template: {
-          display: 'prod',
-          notifications: [],
-          settings: this.formatTemplate(uipUserTemplate.settings),
-          content: this.formatTemplate(uipUserTemplate.content),
-          globalSettings: this.formatTemplate(uipUserTemplate.settings),
-          updated: this.formatTemplate(uipUserTemplate.updated),
-          id: uipUserTemplate.id,
-          styles: uipUserStyles,
-          iconFile: './',
-        },
-        loading: true,
-        updateAvailable: false,
-        blocksForUpdating: [],
-        windowWidth: window.innerWidth,
-        iconsLoading: true,
-      };
-    },
-    watch: {
-      'blocksForUpdating': {
-        handler(newValue, oldValue) {
-          let self = this;
-          if (!self.updating) {
-            self.updating = true;
-            self.uipress.updateBlocksV312(self.blocksForUpdating).then((response) => {
-              for (let holder of self.blocksForUpdating) {
-                let index = self.blocksForUpdating.findIndex((item) => item.uid === holder.uid);
-                if (index > -1) {
-                  self.blocksForUpdating.splice(index, 1);
-                }
-              }
-              self.blocksForUpdating = [];
-              requestAnimationFrame(() => {
-                self.updating = false;
-              });
-              //self.items = response;
-            });
-          }
-        },
+import { nextTick } from '../../libs/vue-esm-dev.js';
+export default {
+  props: {},
+  data: function () {
+    return {
+      template: {
+        display: 'prod',
+        notifications: [],
+        settings: null,
+        content: null,
+        globalSettings: null,
+        updated: null,
+        id: null,
       },
+      loading: true,
+      updateAvailable: false,
+      windowWidth: window.innerWidth,
+    };
+  },
+  provide() {
+    return {
+      uiTemplate: this.template,
+    };
+  },
+  created() {
+    this.initiateApp();
+  },
+  async mounted() {
+    await this.mountEventListeners();
+    await nextTick();
+    this.loading = false;
+  },
+  beforeUnmount() {
+    window.removeEventListener('resize', this.handleWindowResize);
+    document.removeEventListener('uip_page_change_loaded', this.getNotifications, { once: false });
+  },
+  computed: {
+    /**
+     * Returns template javascript if it exists
+     *
+     * @since 3.2.13
+     */
+    returnTemplateJS() {
+      if (typeof this.template.globalSettings.options === 'undefined') return;
+      return this.hasNestedPath(this.template, 'globalSettings', 'options', 'advanced', 'js');
     },
-    provide() {
-      return {
-        uiTemplate: this.template,
-      };
+
+    /**
+     * Returns template css if it exists
+     *
+     * @since 3.2.13
+     */
+    returnTemplateCSS() {
+      if (typeof this.template.globalSettings.options === 'undefined') return;
+      return this.hasNestedPath(this.template, 'globalSettings', 'options', 'advanced', 'css');
     },
-    mounted: function () {
-      let self = this;
 
-      self.blocksForUpdating = [];
-      self.uipress.findOutdatedBlocks(self.template.content, self.blocksForUpdating);
+    /**
+     * Returns the current responsive class for the app
+     *
+     * @since 3.2.13
+     */
+    returnResponsiveClass() {
+      if (this.windowWidth >= 990) return 'uip-desktop-view';
+      if (this.windowWidth >= 699) return 'uip-tablet-view';
+      if (this.windowWidth < 699) return 'uip-phone-view';
+    },
 
-      requestAnimationFrame(() => {
-        self.loading = false;
-      });
+    /**
+     * Returns the current loading state of the app
+     *
+     * @returns {boolean}
+     * @since 3.2.13
+     */
+    isLoading() {
+      return this.loading;
+    },
+  },
+  methods: {
+    /**
+     * Sets up and parses main app data
+     *
+     * @since 3.2.13
+     */
+    initiateApp() {
+      this.template.settings = this.uipParseJson(JSON.stringify(uipUserTemplate.settings));
+      this.template.content = this.uipParseJson(JSON.stringify(uipUserTemplate.content));
+      this.template.globalSettings = this.uipParseJson(JSON.stringify(uipUserTemplate.settings));
+      this.template.updated = this.uipParseJson(uipUserTemplate.updated);
+      this.template.id = uipUserTemplate.id;
+    },
+    /**
+     * mounts app events listeners
+     *
+     * @since 3.2.13
+     */
+    mountEventListeners() {
+      window.addEventListener('resize', this.handleWindowResize);
+      document.addEventListener('uip_page_change_loaded', this.getNotifications, { once: false });
 
-      if (this.template.globalSettings.type == 'ui-template') {
-        setInterval(function () {
-          self.checkForUpdates();
-        }, 60000);
+      // Check if it's a ui template and watch for updates
+      if (this.template.globalSettings.type != 'ui-template') return;
+      setInterval(this.checkForUpdates, 60000);
+    },
+
+    /**
+     * Handles window resize event
+     *
+     * @since 3.2.13
+     */
+    handleWindowResize() {
+      this.windowWidth = window.innerWidth;
+    },
+
+    /**
+     * Gets notifications from frames
+     *
+     * @since 3.2.13
+     */
+    getNotifications() {
+      const frame = document.querySelector('.uip-page-content-frame');
+      //Frame does not exist so abort
+      let notifications;
+
+      // Get notifications from frame or current document
+      const searchDocument = frame ? frame.contentWindow.document : document;
+      notifications = searchDocument.querySelectorAll('.notice:not(#message):not(.inline):not(.update-message),.wp-analytify-notification');
+      if (!notifications) return;
+
+      this.template.notifications = [];
+
+      let notiActive = false;
+      const stringTemplate = JSON.stringify(this.template.content);
+      if (stringTemplate.includes('site-notifications')) notiActive = true;
+
+      for (const noti of notifications) {
+        this.template.notifications.push(noti.outerHTML.replace('uip-framed-page=1', ''));
+        if (notiActive) {
+          noti.setAttribute('style', 'display:none !important; visibility: hidden !important; opacity: 0 !important;');
+        }
       }
 
-      window.addEventListener('resize', function () {
-        self.windowWidth = window.innerWidth;
-      });
-
-      document.addEventListener(
-        'uip_page_change_loaded',
-        (e) => {
-          self.getNotifications();
-        },
-        { once: false }
-      );
+      this.uipApp.data.dynamicOptions.notificationCount.value = this.template.notifications.length;
     },
-    computed: {
-      returnTemplateJS() {
-        if (typeof this.template.globalSettings.options === 'undefined') {
-          return;
-        }
-        if ('advanced' in this.template.globalSettings.options) {
-          if ('js' in this.template.globalSettings.options.advanced) {
-            return this.template.globalSettings.options.advanced.js;
-          }
-        }
-      },
-      returnTemplateCSS() {
-        if (typeof this.template.globalSettings.options === 'undefined') {
-          return;
-        }
-        if ('advanced' in this.template.globalSettings.options) {
-          if ('css' in this.template.globalSettings.options.advanced) {
-            return this.template.globalSettings.options.advanced.css;
-          }
-        }
-      },
-      returnResponsiveClass() {
-        if (this.windowWidth >= 990) {
-          return 'uip-desktop-view';
-        }
-        if (this.windowWidth >= 699) {
-          return 'uip-tablet-view';
-        }
-        if (this.windowWidth < 699) {
-          return 'uip-phone-view';
-        }
-      },
-      isLoading() {
-        if (!this.loading) {
-          return false;
-        }
+
+    /**
+     * Checks for updates
+     *
+     * @since 3.2.13
+     */
+    async checkForUpdates() {
+      // Exit if there is already an update
+      if (this.updateAvailable) return;
+
+      let formData = new FormData();
+      formData.append('action', 'uip_check_for_template_updates');
+      formData.append('security', uip_ajax.security);
+      formData.append('template_id', this.template.id);
+
+      const response = await this.sendServerRequest(uip_ajax.ajax_url, formData);
+
+      if (!response.success) return;
+      if (response.updated > this.template.updated) {
+        this.updateAvailable = true;
+        this.updateNotification();
+      }
+    },
+
+    /**
+     * Pushes a new update notification
+     *
+     * @since 3.2.13
+     */
+    updateNotification() {
+      let string = __('Changes have been made to your current app. Refresh the page to update', 'uipress-lite');
+      this.uipApp.notifications.notify(__('Update available', 'uipress-lite'), string, '', true);
+    },
+
+    /**
+     * Checks if a component exists
+     *
+     * @param {String} name - the name of the component to check
+     * @since 3.2.13
+     */
+    componentExists(name) {
+      if (this.$root._.appContext.components[name]) {
         return true;
-      },
+      } else {
+        return false;
+      }
     },
-    methods: {
-      getNotifications() {
-        let self = this;
-        //Get frame
-        let frames = document.getElementsByClassName('uip-page-content-frame');
-        //Frame does not exist so abort
-        let notifications;
+  },
 
-        if (!frames[0]) {
-          notifications = document.querySelectorAll('.notice:not(#message):not(.inline):not(.update-message),.wp-analytify-notification');
-        } else {
-          let contentframe = frames[0];
-          notifications = contentframe.contentWindow.document.querySelectorAll('.notice:not(#message):not(.inline):not(.update-message),.wp-analytify-notification');
-        }
-
-        this.template.notifications = [];
-        if (!notifications) return;
-
-        let notiActive = false;
-        if (JSON.stringify(self.template.content).includes('site-notifications')) {
-          notiActive = true;
-        }
-
-        for (const noti of notifications) {
-          this.template.notifications.push(noti.outerHTML.replace('uip-framed-page=1', ''));
-          if (notiActive) {
-            noti.setAttribute('style', 'display:none !important; visibility: hidden !important; opacity: 0 !important;');
-          }
-        }
-
-        this.uipApp.data.dynamicOptions.notificationCount.value = this.template.notifications.length;
-      },
-      checkForUpdates() {
-        let self = this;
-
-        if (this.updateAvailable) {
-          return;
-        }
-
-        let formData = new FormData();
-        formData.append('action', 'uip_check_for_template_updates');
-        formData.append('security', uip_ajax.security);
-        formData.append('template_id', self.template.id);
-
-        self.sendServerRequest(uip_ajax.ajax_url, formData).then((response) => {
-          if (response.error) {
-            //self.uipApp.notifications.notify(response.message, 'uipress-lite', '', 'error', true);
-            //self.saving = false;
-          }
-          if (response.success) {
-            if (response.updated > self.template.updated) {
-              this.updateAvailable = true;
-              self.updateNotification();
-              return;
-            }
-          }
-        });
-      },
-      updateNotification() {
-        let string = __('Changes have been made to your current app. Refresh the page to update', 'uipress-lite');
-        let update = __('Update', 'uipress-lite');
-
-        let message = `
-        <div class="uip-margin-bottom-s uip-margin-top-xs uip-max-w-260">${string}</div>
-        <button class="uip-button-primary" type='button' onclick="location.reload()">${update}</button>
-        `;
-
-        this.uipApp.notifications.notify(__('Update available', 'uipress-lite'), message, '', true);
-      },
-      formatTemplate(template) {
-        return this.uipress.uipParsJson(JSON.stringify(template));
-      },
-      componentExists(name) {
-        if (this.$root._.appContext.components[name]) {
-          return true;
-        } else {
-          return false;
-        }
-      },
-      appReady() {
-        let self = this;
-        self.iconsLoading = false;
-      },
-    },
-
-    template: `
+  template: `
     
     <component is="style" scoped >
       .uip-user-frame:not(.uip-app-frame){
@@ -227,7 +216,6 @@ export function moduleData() {
       .v-enter-from, .v-leave-to {opacity: 0;}
     </component>
     
-    <!--<link rel="stylesheet" :href="uipApp.data.options.pluginURL + 'assets/css/uip-icons.css'" id="uip-icons" @load="appReady">-->
     
     <TransitionGroup>
     
@@ -253,5 +241,4 @@ export function moduleData() {
       </component>
     </template>
     <!-- end plugin import -->`,
-  };
-}
+};

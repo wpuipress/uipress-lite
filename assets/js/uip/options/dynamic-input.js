@@ -30,7 +30,6 @@ export default {
       },
     };
   },
-  inject: [ 'uipress'],
   watch: {
     /**
      * Watches changes to value prop and injects

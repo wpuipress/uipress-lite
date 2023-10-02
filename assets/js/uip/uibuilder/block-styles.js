@@ -563,7 +563,7 @@ export default {
 
       /** Max height */
       if (this.isObject(dimensions.maxHeight)) {
-        style += !this.isUnDefined(dimensions.maxHeight.value) && dimensions.maxHeight.units ? `min-height:${dimensions.maxHeight.value}${dimensions.maxHeight.units};` : '';
+        style += !this.isUnDefined(dimensions.maxHeight.value) && dimensions.maxHeight.units ? `max-height:${dimensions.maxHeight.value}${dimensions.maxHeight.units};` : '';
       }
 
       style += dimensions.grow === 'grow' ? `flex-grow:1;` : '';
