@@ -21,6 +21,7 @@ define('uip_plugin_shortname', 'uip');
 define('uip_plugin_url', plugin_dir_url(__FILE__));
 define('uip_plugin_path', plugin_dir_path(__FILE__));
 
+require uip_plugin_path . 'admin/vendor/autoload.php';
 require uip_plugin_path . 'admin/uipress-compiler.php';
 
 $uipress = new uipress_compiler();

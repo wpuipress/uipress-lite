@@ -1,0 +1,9 @@
+{
+  "name": "uipress/uipress-lite",
+  "description": "uipress-lite",
+  "autoload": {
+    "psr-4": {
+      "UipressLite\\Classes\\": "classes/"
+    }
+  }
+}

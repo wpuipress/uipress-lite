@@ -12,12 +12,12 @@ class uipress_compiler
 
   public function run()
   {
-    require_once uip_plugin_path . 'admin/classes/uip-app.php';
-    require_once uip_plugin_path . 'admin/classes/uip-ajax.php';
-    require_once uip_plugin_path . 'admin/classes/uip-ui-builder.php';
-    require_once uip_plugin_path . 'admin/classes/uip-ui-pages.php';
-    require_once uip_plugin_path . 'admin/classes/uip-utilities.php';
-    require_once uip_plugin_path . 'admin/classes/uip-site-settings.php';
+    require_once uip_plugin_path . 'admin/core/uip-app.php';
+    require_once uip_plugin_path . 'admin/core/uip-ajax.php';
+    require_once uip_plugin_path . 'admin/core/uip-ui-builder.php';
+    require_once uip_plugin_path . 'admin/core/uip-ui-pages.php';
+    require_once uip_plugin_path . 'admin/core/uip-utilities.php';
+    require_once uip_plugin_path . 'admin/core/uip-site-settings.php';
 
     //LOAD UIPRESS APP
     $uip_app = new uip_app();

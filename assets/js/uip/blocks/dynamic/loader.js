@@ -246,7 +246,7 @@ const AdminMenuNew = {
             options: {
               inline: { value: 'inline', label: __('Inline', 'uipress-lite') },
               hover: { value: 'hover', label: __('Hover', 'uipress-lite') },
-              dynamic: { value: 'dynamic', label: __('Dynamic', 'uipress-lite') },
+              dynamic: { value: 'dynamic', label: __('Drilldown', 'uipress-lite') },
             },
           },
           label: __('Behaviour', 'uipress-lite'),
@@ -329,7 +329,18 @@ const AdminMenuNew = {
           option: 'choiceSelect',
           componentName: 'choice-select',
           uniqueKey: 'loadOnClick',
-          args: { type: 'enabledDisabled' },
+          args: {
+            options: {
+              true: {
+                value: true,
+                label: __('Enabled', 'uipress-lite'),
+              },
+              false: {
+                value: false,
+                label: __('Disabled', 'uipress-lite'),
+              },
+            },
+          },
           label: __('Auto load', 'uipress-lite'),
           value: true,
           help: __('Auto load will load top level menu items whe you click on them. If disabled clicking top level items will simply open the items submenu.', 'uipress-lite'),
