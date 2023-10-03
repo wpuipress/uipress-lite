@@ -269,8 +269,6 @@ export default {
 
       const response = await this.sendServerRequest(uip_ajax.ajax_url, formData);
 
-      if (response.styles) this.uipApp.data.themeStyles = { ...this.uipApp.data.themeStyles, ...response.styles };
-
       // Handle error
       if (response.error) {
         this.uipApp.notifications.notify(response.message, '', 'error', true);

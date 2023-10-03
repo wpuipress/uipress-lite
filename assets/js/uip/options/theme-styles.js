@@ -1,6 +1,6 @@
 ///IMPORT TRANSLATIONS
 const { __, _x, _n, _nx } = wp.i18n;
-export default {
+const list = {
   '--uip-color-primary': {
     label: __('Primary color', 'uipress-lite'),
     type: 'color',
@@ -134,3 +134,9 @@ export default {
     darkValue: '',
   },
 };
+
+Object.keys(list).forEach((key) => {
+  list[key].name = key;
+});
+
+export default list;

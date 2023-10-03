@@ -90,23 +90,9 @@ export default {
       },
     };
   },
-  inject: [  'uiTemplate'],
-  mounted: function () {
+  inject: ['uiTemplate'],
+  mounted() {
     this.loading = false;
-  },
-  watch: {
-    'uiTemplate.globalSettings.rolesAndUsers': {
-      handler(newValue, oldValue) {
-        this.checkTemplateApplies();
-      },
-      deep: true,
-    },
-    'uiTemplate.globalSettings.excludesRolesAndUsers': {
-      handler(newValue, oldValue) {
-        this.checkTemplateApplies();
-      },
-      deep: true,
-    },
   },
   computed: {
     returnFormatedMenu() {
@@ -171,40 +157,6 @@ export default {
       } else {
         return false;
       }
-    },
-    checkTemplateApplies() {
-      let formData = new FormData();
-      let self = this;
-
-      let forUsers = this.uiTemplate.globalSettings.rolesAndUsers;
-      let excludeUsers = this.uiTemplate.globalSettings.excludesRolesAndUsers;
-
-      if (forUsers.length < 1) {
-        self.templateAppliestoCurrentUser = false;
-        return;
-      }
-
-      forUsers = JSON.stringify(forUsers);
-      excludeUsers = JSON.stringify(excludeUsers);
-
-      formData.append('action', 'uip_check_template_applies');
-      formData.append('security', uip_ajax.security);
-      formData.append('usersFor', forUsers);
-      formData.append('usersExcluded', excludeUsers);
-
-      self.sendServerRequest(uip_ajax.ajax_url, formData).then((response) => {
-        if (response.error) {
-          self.uipApp.notifications.notify(response.message, 'uipress-lite', '', 'error', true);
-          self.saving = false;
-        }
-        if (response.success) {
-          if (response.areWeIn == true) {
-            self.templateAppliestoCurrentUser = true;
-          } else {
-            self.templateAppliestoCurrentUser = false;
-          }
-        }
-      });
     },
 
     fetchReturnData(data, item) {
@@ -325,7 +277,7 @@ export default {
                 <user-role-select :selected="uiTemplate.globalSettings.rolesAndUsers" 
                 :placeHolder="ui.strings.selectUsersAndRoles" 
                 :searchPlaceHolder="ui.strings.searchUsersAndRoles" :single="false" 
-                :updateSelected="function(data){fetchReturnData(data, uiTemplate.globalSettings.rolesAndUsers)}"></user-role-select>
+                :updateSelected="(d)=>uiTemplate.globalSettings.rolesAndUsers = d"></user-role-select>
                 
                 <!--Excludes to-->
                 <div class="uip-text-muted uip-flex uip-flex-center uip-text-s uip-h-30 uip-gap-xs">
@@ -334,7 +286,7 @@ export default {
                 <user-role-select :selected="uiTemplate.globalSettings.excludesRolesAndUsers" 
                  :placeHolder="ui.strings.selectUsersAndRoles" 
                  :searchPlaceHolder="ui.strings.searchUsersAndRoles" :single="false" 
-                :updateSelected="function(data){fetchReturnData(data, uiTemplate.globalSettings.excludesRolesAndUsers)}"></user-role-select>
+                :updateSelected="(d)=>uiTemplate.globalSettings.excludesRolesAndUsers = d"></user-role-select>
                 
                 
               </div>

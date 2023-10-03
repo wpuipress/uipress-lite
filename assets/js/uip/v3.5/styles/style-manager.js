@@ -68,10 +68,16 @@ export default {
      * @since 3.2.13
      */
     returnUserStyles() {
+      console.log(this.uipApp.data.themeStyles);
       let styles = this.uipApp.data.themeStyles;
       if (!styles) this.uipApp.data.themeStyles = {};
       let search = this.search.toLowerCase();
-      return Object.fromEntries(Object.entries(this.uipApp.data.themeStyles).filter(([key, value]) => value.type == 'color' && value.name.toLowerCase().includes(search)));
+      return Object.fromEntries(
+        Object.entries(this.uipApp.data.themeStyles).filter(([key, value]) => {
+          let lcName = value.name ? value.name.toLowerCase() : value.label.toLowerCase();
+          return value.type == 'color' && lcName.includes(search);
+        })
+      );
     },
     /**
      * Checks if the given var can be deleted
