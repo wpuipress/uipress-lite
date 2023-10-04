@@ -4,7 +4,6 @@ use UipressLite\Classes\Utils\URL;
 use UipressLite\Classes\Utils\Sanitize;
 use UipressLite\Classes\Utils\UserPreferences;
 use UipressLite\Classes\Scripts\ToolBar;
-use UipressLite\Classes\Scripts\AdminMenu;
 use UipressLite\Classes\PostTypes\UiTemplates;
 
 !defined('ABSPATH') ? exit() : '';
@@ -30,16 +29,9 @@ class FrontEnd
    */
   public static function actions()
   {
-    // Bail if this is an ajax request
-    if (wp_doing_ajax() || (defined('REST_REQUEST') && REST_REQUEST)) {
-      return;
-    }
-
     $currentURL = URL::current();
-    error_log($currentURL);
     if (!is_admin() && !is_login() && stripos($currentURL, wp_login_url()) === false && stripos($currentURL, admin_url()) === false) {
       self::load_toolbar();
-      error_log('I am running for some reason');
     }
   }
 

@@ -3089,22 +3089,6 @@ inline-drop {
   }
 }
 
-.uip-scrollbar {
-  scroll-behavior: smooth;
-  scrollbar-color: var(--uip-color-base-1) var(--uip-color-base-2);
-  &::-webkit-scrollbar {
-    width: 1em;
-  }
-  &::-webkit-scrollbar-track {
-    background-color: var(--uip-color-base-1);
-    border-radius: var(--uip-border-radius);
-  }
-  &::-webkit-scrollbar-thumb {
-    background-color: var(--uip-color-base-2);
-    border: 2px solid var(--uip-color-base-1);
-    border-radius: var(--uip-border-radius);
-  }
-}
 .uip-hide-scrollbar {
   scroll-behavior: instant;
   scrollbar-width: none !important; /* Firefox */
@@ -3129,35 +3113,6 @@ inline-drop {
   &::-webkit-scrollbar-thumb {
     background-color: var(--uip-color-base-2);
     border: 2px solid var(--uip-color-base-0);
-    border-radius: var(--uip-border-radius);
-  }
-}
-.uip-overflow-auto {
-  &::-webkit-scrollbar {
-    width: 1em;
-  }
-  &::-webkit-scrollbar-track {
-    background-color: var(--uip-color-base-1);
-    border-radius: var(--uip-border-radius);
-  }
-  &::-webkit-scrollbar-thumb {
-    background-color: var(--uip-color-base-2);
-    border: 2px solid var(--uip-color-base-1);
-    border-radius: var(--uip-border-radius);
-  }
-}
-#uip-template-body *,
-#uip-ui-app * {
-  &::-webkit-scrollbar {
-    width: 1em;
-  }
-  &::-webkit-scrollbar-track {
-    background-color: var(--uip-color-base-1);
-    border-radius: var(--uip-border-radius);
-  }
-  &::-webkit-scrollbar-thumb {
-    background-color: var(--uip-color-base-2);
-    border: 2px solid var(--uip-color-base-1);
     border-radius: var(--uip-border-radius);
   }
 }

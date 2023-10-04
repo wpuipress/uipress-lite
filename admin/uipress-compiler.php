@@ -1,7 +1,7 @@
 <?php
-if (!defined('ABSPATH')) {
-  exit();
-}
+//use UipressLite\Classes\Pages\AdminPage;
+
+!defined('ABSPATH') ?? exit();
 
 class uipress_compiler
 {
@@ -15,7 +15,6 @@ class uipress_compiler
     require_once uip_plugin_path . 'admin/core/uip-app.php';
     require_once uip_plugin_path . 'admin/core/uip-ajax.php';
     require_once uip_plugin_path . 'admin/core/uiBuilder.php';
-    require_once uip_plugin_path . 'admin/core/uip-ui-pages.php';
     require_once uip_plugin_path . 'admin/core/uip-utilities.php';
     require_once uip_plugin_path . 'admin/core/uip-site-settings.php';
 
@@ -25,13 +24,10 @@ class uipress_compiler
     //LOAD UIPRESS AJAX FUNCTIONS
     $uip_ajax = new uip_ajax();
     $uip_ajax->load_ajax();
-    //LOAD UIPRESS UI BUILDER
+    // LOAD UIPRESS UI BUILDER
     $uip_ui_builder = new uip_ui_builder();
     $uip_ui_builder->run();
-    //LOAD UIPRESS UI PAGES
-    $uip_ui_pages = new uip_ui_pages();
-    $uip_ui_pages->run();
-    //Global site settings
+    // Global site settings
     $uip_global_site = new uip_site_settings();
     $uip_global_site->run();
 

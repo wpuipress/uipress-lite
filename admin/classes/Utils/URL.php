@@ -34,4 +34,37 @@ class URL
 
     return $url;
   }
+
+  /**
+   * Converts string to url safe slug
+   *
+   * @since 3.0.0
+   * Credit: from https://stackoverflow.com/questions/2955251/php-function-to-make-slug-url-string
+   */
+  public static function urlSafe($text, $divider = '-')
+  {
+    // replace non letter or digits by divider
+    $text = preg_replace('~[^\pL\d]+~u', $divider, $text);
+
+    // transliterate
+    $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
+
+    // remove unwanted characters
+    $text = preg_replace('~[^-\w]+~', '', $text);
+
+    // trim
+    $text = trim($text, $divider);
+
+    // remove duplicate divider
+    $text = preg_replace('~-+~', $divider, $text);
+
+    // lowercase
+    $text = strtolower($text);
+
+    if (empty($text)) {
+      return 'n-a';
+    }
+
+    return $text;
+  }
 }

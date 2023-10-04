@@ -1,5 +1,6 @@
 import { nextTick, h, Teleport } from '../../libs/vue-esm-dev.js';
 import BlockStyles from './block-styles.min.js';
+const { __ } = wp.i18n;
 export default {
   inject: ['uiTemplate'],
   mixins: [BlockStyles],

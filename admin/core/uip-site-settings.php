@@ -1,7 +1,8 @@
 <?php
-if (!defined('ABSPATH')) {
-  exit();
-}
+
+use UipressLite\Classes\Utils\URL;
+
+!defined('ABSPATH') ?? exit();
 
 add_action('uip_auto_site_sync', 'uip_start_auto_site_sync');
 /**
@@ -122,7 +123,7 @@ class uip_site_settings extends uip_app
       return;
     }
 
-    $url = $this->get_current_url();
+    $url = URL::current();
 
     if (!$url) {
       return;
@@ -163,7 +164,7 @@ class uip_site_settings extends uip_app
       return;
     }
 
-    $url = $this->get_current_url();
+    $url = URL::current();
 
     if (!$url) {
       return;

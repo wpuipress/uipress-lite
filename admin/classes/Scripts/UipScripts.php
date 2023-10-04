@@ -182,8 +182,8 @@ class UipScripts
       $settings = UiTemplates::get_settings($templateID);
 
       // Ensure object exists before checking
-      Objects::ensureNested($settings, ['options', 'advanced', 'css']);
-      $userCSS = $settings->options->advanced->css ? html_entity_decode($settings->options->advanced->css) : '';
+      Objects::ensureNested($settings, ['options', 'advanced']);
+      $userCSS = isset($settings->options->advanced->css) ? html_entity_decode($settings->options->advanced->css) : '';
     }
 
     $userCSS = $userCSS ?? '';
@@ -209,15 +209,16 @@ class UipScripts
       $darkStyles .= "{$key}:{$value->darkValue};";
     }
 
-    $styleHTML = "
-		<style id='uip-theme-styles'>
-			html[data-theme='light']{{$lightStyles}}
-			html[data-theme='dark']{{$darkStyles}}
-			{$userCSS}
-		</style>
+    $allStyles = "
+	html[data-theme='light']{{$lightStyles}}
+	html[data-theme='dark']{{$darkStyles}}
+	{$userCSS}
 	";
 
+    $cleaned = htmlspecialchars_decode(esc_html($styleHTML));
+    $allStyles = " <style id='uip-theme-styles'>{$cleaned}</style>";
+
     // Output code
-    echo wp_kses_post(htmlspecialchars_decode($styleHTML));
+    echo $allStyles;
   }
 }

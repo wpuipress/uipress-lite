@@ -22,7 +22,7 @@ class Objects
     $currentLevel = &$settings;
     foreach ($keys as $key) {
       if (!isset($currentLevel->$key)) {
-        $currentLevel->$key = new stdClass();
+        $currentLevel->$key = new \stdClass();
       }
       $currentLevel = &$currentLevel->$key;
     }

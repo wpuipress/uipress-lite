@@ -4,10 +4,13 @@ use UipressLite\Classes\Utils\Ajax;
 use UipressLite\Classes\Utils\UipOptions;
 use UipressLite\Classes\Utils\Posts;
 use UipressLite\Classes\Utils\Objects;
+use UipressLite\Classes\Utils\UserPreferences;
 use UipressLite\Classes\PostTypes\UiTemplates;
 use UipressLite\Classes\PostTypes\UiPatterns;
 use UipressLite\Classes\Scripts\AdminMenu;
 use UipressLite\Classes\Scripts\ToolBar;
+use UipressLite\Classes\Scripts\UipScripts;
+use UipressLite\Classes\Pages\App;
 
 // Exit if accessed directly
 !defined('ABSPATH') ?? exit();
@@ -141,14 +144,9 @@ class uip_ui_builder extends uip_app
 
   public function add_scripts_and_styles()
   {
-    // Only adds styles if the app isn't already running
-    if (uip_app_running) {
-      return;
-    }
-
-    $this->add_required_styles();
-    wp_enqueue_script('uip-translations', uip_plugin_url . 'assets/js/uip/uip-translations.min.js', ['wp-i18n'], uip_plugin_version);
-    wp_set_script_translations('uip-translations', 'uipress-lite', dirname(dirname(plugin_dir_path(__FILE__))) . '/languages/');
+    UipScripts::add_translations();
+    UipScripts::add_icons();
+    UipScripts::add_uipress_styles();
   }
 
   /**
@@ -164,14 +162,8 @@ class uip_ui_builder extends uip_app
       'type' => 'module',
     ];
 
-    // Check if the main app is running, if it is then we don't need to re-add ajax and required script data
-    if (uip_app_running) {
-      wp_print_script_tag($builderScript);
-      return;
-    }
-
-    $appOptions = $this->build_app_options();
-    $userPrefs = $this->get_user_prefs();
+    $appOptions = App::get_options();
+    $userPrefs = UserPreferences::get();
 
     $variableFormatter = "
       var ajaxHolder = document.getElementById('uip-app-data');
@@ -183,7 +175,6 @@ class uip_ui_builder extends uip_app
       'uip_ajax' => json_encode([
         'ajax_url' => admin_url('admin-ajax.php'),
         'security' => wp_create_nonce('uip-security-nonce'),
-        'rest_url' => get_rest_url(),
         'rest_url' => get_rest_url(),
         'rest_headers' => [
           'Content-Type' => 'application/json',

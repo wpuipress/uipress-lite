@@ -13,23 +13,28 @@ class UserPreferences
    */
   public static function get($key = null)
   {
-    $currentValue = false;
     $userid = get_current_user_id();
-    $current = get_user_meta($userid, 'uip-prefs', true);
+    $userPreferences = get_user_meta($userid, 'uip-prefs', true);
 
     // If key was not defined, return all prefs
     if (!isset($key)) {
-      return $current;
+      return $userPreferences;
     }
 
-    $currentValue = isset($current[$key]) ? $current[$key] : false;
+    // key doesn't exist in prefs
+    if (!isset($userPreferences[$key])) {
+      return false;
+    }
 
-    if ($currentValue == 'uiptrue') {
+    $currentValue = $userPreferences[$key] ? $userPreferences[$key] : false;
+
+    if ($currentValue === 'uiptrue') {
       $currentValue = true;
     }
-    if ($currentValue == 'uipfalse') {
+    if ($currentValue === 'uipfalse') {
       $currentValue = false;
     }
+
     return $currentValue;
   }
 }
