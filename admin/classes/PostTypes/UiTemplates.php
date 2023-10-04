@@ -400,7 +400,21 @@ class UiTemplates
   {
     // Get settings
     $settings = get_post_meta($templateID, 'uip-template-settings', true);
-    return is_object($settings) ? $settings : new stdClass();
+    return is_object($settings) ? $settings : new \stdClass();
+  }
+
+  /**
+   * Get's a templates content
+   *
+   * @param array $templateIDs - template id
+   * @return settings object
+   * @since 3.2.13
+   */
+  public static function get_content($templateID)
+  {
+    // Get template
+    $template = get_post_meta($templateID, 'uip-ui-template', true);
+    return is_array($template) ? $template : [];
   }
 
   /**
@@ -411,10 +425,12 @@ class UiTemplates
    * @return void
    * @since 3.2.13
    */
-  public static function update_settings($templateID, $newSettings, $type = null, $subsites = null, $content = null)
+  public static function update_settings($templateID, $newSettings = null, $type = null, $subsites = null, $content = null)
   {
     // Update settings
-    update_post_meta($templateID, 'uip-template-settings', $newSettings);
+    if (isset($newSettings)) {
+      update_post_meta($templateID, 'uip-template-settings', $newSettings);
+    }
 
     if (isset($type)) {
       update_post_meta($templateID, 'uip-template-type', $type);
@@ -425,5 +441,120 @@ class UiTemplates
     if (isset($content)) {
       update_post_meta($templateID, 'uip-ui-template', $content);
     }
+  }
+
+  /**
+   * Fetches an active template for current user
+   *
+   * @param string $type - the template type to check
+   * @param number $amount - the amount of templates to return
+   */
+  public static function get_template_for_user($type, $amount)
+  {
+    // Current user
+    $current_user = wp_get_current_user();
+    $username = $current_user->user_login;
+
+    // Push super admin role
+    $roles = $current_user->ID == 1 ? ['Super Admin'] : [];
+
+    //Get current roles
+    $user = new \WP_User($current_user->ID);
+    if (!empty($user->roles) && is_array($user->roles)) {
+      foreach ($user->roles as $role) {
+        $roles[] = $role;
+      }
+    }
+
+    $idAsString = strval($current_user->ID);
+
+    // Loop through roles and build query
+    $roleQuery = [];
+    $roleQuery['relation'] = 'AND';
+    //First level
+    $roleQuery[] = [
+      'key' => 'uip-template-type',
+      'value' => $type,
+      'compare' => '=',
+    ];
+    //Check user id is not excluded
+    $roleQuery[] = [
+      'key' => 'uip-template-excludes-users',
+      'value' => serialize($idAsString),
+      'compare' => 'NOT LIKE',
+    ];
+    //Check rolename is not excluded
+    foreach ($roles as $role) {
+      $roleQuery[] = [
+        'key' => 'uip-template-excludes-roles',
+        'value' => serialize($role),
+        'compare' => 'NOT LIKE',
+      ];
+    }
+
+    // Check at least one option (roles or users) has a value
+    $secondLevel = [];
+    $secondLevel['relation'] = 'OR';
+    $secondLevel[] = [
+      'key' => 'uip-template-for-users',
+      'value' => serialize([]),
+      'compare' => '!=',
+    ];
+    $secondLevel[] = [
+      'key' => 'uip-template-for-roles',
+      'value' => serialize([]),
+      'compare' => '!=',
+    ];
+
+    //Check user if user id is in selected
+    $thirdLevel = [];
+    $thirdLevel['relation'] = 'OR';
+    $thirdLevel[] = [
+      'key' => 'uip-template-for-users',
+      'value' => serialize($idAsString),
+      'compare' => 'LIKE',
+    ];
+
+    foreach ($roles as $role) {
+      $thirdLevel[] = [
+        'key' => 'uip-template-for-roles',
+        'value' => serialize($role),
+        'compare' => 'LIKE',
+      ];
+    }
+
+    //Push to meta query
+    $roleQuery[] = $secondLevel;
+    $roleQuery[] = $thirdLevel;
+
+    // Fetch templates from primary multsite installation Multisite
+    $multiSiteActive = false;
+    if (is_multisite() && is_plugin_active_for_network(uip_plugin_path_name . '/uipress-lite.php') && !is_main_site()) {
+      $mainSiteId = get_main_site_id();
+      switch_to_blog($mainSiteId);
+      $multiSiteActive = true;
+
+      $roleQuery[] = [
+        'key' => 'uip-template-subsites',
+        'value' => 'uiptrue',
+        'compare' => '==',
+      ];
+    }
+
+    // Build query
+    $args = [
+      'post_type' => 'uip-ui-template',
+      'posts_per_page' => $amount,
+      'post_status' => 'publish',
+      'meta_query' => $roleQuery,
+    ];
+
+    $query = new \WP_Query($args);
+
+    if ($multiSiteActive) {
+      restore_current_blog();
+    }
+
+    return $query->get_posts();
   }
 }

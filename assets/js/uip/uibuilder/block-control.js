@@ -3,6 +3,7 @@ const { __, _x, _n, _nx } = wp.i18n;
 export default {
   components: {
     BlockSettings: defineAsyncComponent(() => import('./block-settings.min.js?ver=3.2.12')),
+    Confirm: defineAsyncComponent(() => import('../v3.5/utility/confirm.min.js?ver=3.2.12')),
   },
   inject: ['uiTemplate'],
   data() {
@@ -227,6 +228,78 @@ export default {
 
       return block;
     },
+
+    /**
+     * Syncs patterns across all templates
+     *
+     * @since 3.2.13
+     */
+    async syncBlockPattern() {
+      // Confirm user decision
+      const confirm = await this.$refs.confirm.show({
+        title: __('Sync patern', 'uipress-lite'),
+        message: __("This will update the pattern template and will sync this pattern's changes accross all templates using the same pattern?", 'uipress-lite'),
+        okButton: __('Sync patern', 'uipress-lite'),
+      });
+
+      // Bail if they bailed
+      if (!confirm) return;
+
+      // Start notification
+      const notificationID = this.uipApp.notifications.create({
+        title: __('Syncing patterns', 'uipress-lite'),
+        status: 'success',
+        message: '',
+        dismissable: false,
+        loader: true,
+      });
+      // Get current index
+      const pattern = this.prepareJSON(this.block);
+      const templateID = this.$route.params.templateID;
+
+      let formData = new FormData();
+      formData.append('action', 'uip_sync_ui_pattern');
+      formData.append('security', uip_ajax.security);
+      formData.append('pattern', pattern);
+      formData.append('patternID', this.block.patternID);
+      formData.append('templateID', templateID);
+
+      const response = await this.sendServerRequest(uip_ajax.ajax_url, formData);
+
+      // Handle error
+      if (response.error) {
+        this.uipApp.notifications.notify(response.message, 'uipress-lite', '', 'error', true);
+        return;
+      }
+
+      if (response.success) {
+        // Update pattern ID
+        if (response.newPattern) {
+          this.block.patternID = response.newPattern;
+        }
+
+        // Update template
+        if (response.newTemplate) {
+          this.uiTemplate.content = response.newTemplate;
+        }
+
+        // Update patterns
+        this.uiTemplate.patterns = response.patterns;
+      }
+
+      // Remove loading notification
+      this.uipApp.notifications.remove(notificationID);
+
+      // Update new notification
+      this.uipApp.notifications.create({
+        title: __('Patterns synced succesfully', 'uipress-lite'),
+        status: 'success',
+        message: '',
+        dismissable: true,
+        loader: false,
+      });
+    },
+
     /**
      * Duplicates block
      * e (event)
@@ -410,6 +483,8 @@ export default {
         <KeepAlive>
 		    <BlockSettings/>
         </KeepAlive>
+        
+        <Confirm ref="confirm"/>
 	
 		`,
 };

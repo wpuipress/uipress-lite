@@ -11,7 +11,7 @@ class UipOptions
    * @return Mixed
    * @since 3.2.13
    */
-  public static function get($key, $multisite = false)
+  public static function get($key = null, $multisite = false)
   {
     $multiSiteActive = false;
     $isMultisite = is_multisite();
@@ -31,7 +31,14 @@ class UipOptions
       restore_current_blog();
     }
 
-    $result = isset($options[$key]) ? $options[$key] : false;
+    // If key is specified return
+    if (isset($key)) {
+      $result = isset($options[$key]) ? $options[$key] : false;
+    }
+    // No key so return entire object
+    else {
+      $result = $options ?? [];
+    }
 
     return $result;
   }
@@ -45,11 +52,17 @@ class UipOptions
    * @return void
    * @since 3.2.13
    */
-  public static function update($key, $newValue)
+  public static function update($key = null, $newValue = false)
   {
     $options = get_option('uip-global-settings');
     $options = $options ? $options : [];
-    $options[$key] = $newValue;
+
+    if (isset($key)) {
+      $options[$key] = $newValue;
+    } else {
+      $options = $newValue;
+    }
+
     update_option('uip-global-settings', $options);
   }
 }

@@ -31,9 +31,9 @@ class uip_ui_pages extends uip_app
    */
   public function add_ui_pages_actions()
   {
-    if (uip_stop_plugin) {
-      return;
-    }
+    //if (uip_stop_plugin) {
+    //return;
+    //}
 
     add_action('admin_init', [$this, 'check_for_main_app_pages']);
     add_action('admin_menu', [$this, 'get_ui_pages']);

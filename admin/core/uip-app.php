@@ -1,10 +1,15 @@
 <?php
-if (!defined('ABSPATH')) {
-  exit();
-}
+
+use UipressLite\Classes\Scripts\UipScripts;
+use UipressLite\Classes\Pages\FramedPages;
+use UipressLite\Classes\Pages\FrontEnd;
+
+// Exit if accessed directly
+!defined('ABSPATH') ?? exit();
 
 /**
  * Main uipress class. Loads scripts and styles and builds the main admin framework
+ *
  * @since 3.0.0
  */
 
@@ -17,160 +22,58 @@ class uip_app
   public $uipMasterToolbar = [];
   public $footerScriptsBuilt = false;
 
-  public function __construct()
-  {
-    $this->uipMasterMenu = [];
-    $this->uipMasterToolbar = [];
-    $this->footerScriptsBuilt = false;
-  }
-
   /**
    * Starts uipress functions
+   *
    * @since 3.0.0
    */
   public function run()
   {
+    $this->add_hooks();
+  }
+
+  /**
+   * Adds required hooks for uiPress
+   *
+   * @return void
+   * @since 3.2.13
+   */
+  private function add_hooks()
+  {
+    add_filter('plugin_action_links_uipress-lite/uipress-lite.php', ['UipressLite\Classes\Tables\PluginsTable', 'add_builder_link']);
     add_action('plugins_loaded', [$this, 'start_uipress_app'], 1);
-    add_filter('plugin_action_links_uipress-lite/uipress-lite.php', [$this, 'add_builder_link_to_plugin_settings']);
-    $this->add_helper_filters();
   }
 
-  /**
-   * Adds various required filters
-   * @since 3.0.8
-   */
-  public function add_helper_filters()
-  {
-    add_filter('kses_allowed_protocols', function ($protocols) {
-      $protocols[] = 'data';
-      return $protocols;
-    });
-  }
-
-  /**
-   * Adds a link to the uiBuilder from the plugins tables
-   * @since 3.0.0
-   */
-  public function add_builder_link_to_plugin_settings($links)
-  {
-    // Build and escape the URL.
-    $url = esc_url(add_query_arg('page', 'uip-ui-builder', get_admin_url() . 'options-general.php'));
-    // Create the link.
-    $settings_link = "<a href='$url'>" . __('uiBuilder', 'uipress-lite') . '</a>';
-    // Adds the link to the end of the array.
-    array_push($links, $settings_link);
-    return $links;
-  }
   /**
    * Adds required actions and filters depending if we are on admin page, login page or uipress framed page
+   *
    * @since 3.0.0
    */
   public function start_uipress_app()
   {
-    //Checks for older versions of uipress and stops this plugin if there are
-    $status = $this->check_for_old_uipress();
-    if ($status) {
-      return;
-    }
-
+    // Exit if we are doing cron functions
     if (wp_doing_cron()) {
       return;
     }
-    //Get current request
-    $currentURL = $this->get_current_url();
 
-    //Check to see if we should run uipress or not
-    add_filter('uip_disable_on_page', [$this, 'are_we_disabled'], 1, 2);
-    $filter = apply_filters('uip_disable_on_page', false, $currentURL);
-    if ($filter) {
-      define('uip_app_running', false);
-      $this->userHasTemplate = false;
-      return true;
-    }
-    //Fires after uipress has started loading
+    // Fires after uipress has started loading
     apply_filters('uip_started', true, true);
-    //Fire this seperately as we may need it even when app isn't running for wp default menu icons
-    add_action('admin_enqueue_scripts', [$this, 'add_icons']);
-    $this->whitelist_plugins();
+    $this->define_constants();
 
-    ///Check if we are on a iframe page
-    if (isset($_GET['uip-framed-page'])) {
-      if ($_GET['uip-framed-page'] == '1') {
-        //App not running
-        define('uip_app_running', false);
+    // White list uiPress scripts / styles with other plugins
+    UipScripts::whitelist_plugins();
 
-        //
-        add_action('admin_head', function () {
-          if (defined('uip_admin_page')) {
-            if (uip_admin_page) {
-              return;
-            }
-          } ?>
-          <script>
-            
-            
-            //Small function to prevent same origin errors when browsing in the iframe
-            const uipWindowOpenMethod = window.open;
-            window.open = function(url, target, windowFeatures){
-              
-              if(target){
-                let tempTarget = target.toLowerCase();
-                if(tempTarget == '_blank' || tempTarget == '_top' || tempTarget == '_parent'){
-                  uipWindowOpenMethod(url, '_blank', windowFeatures);
-                  return;
-                }
-              }
-              
-              let origin = window.location.origin;
-              let newURL = new URL(url);
-              if(newURL.origin != origin){
-                uipWindowOpenMethod(url, '_parent', windowFeatures);
-              } else{
-                uipWindowOpenMethod(url, target, windowFeatures);
-              }
-            }
-          </script>
-          <?php
-        });
-        //Only load required actions for framed pages
-        $this->capture_wordpress_objects();
-        add_action('admin_enqueue_scripts', [$this, 'add_required_styles']);
-        add_action('admin_xml_ns', [$this, 'html_attributes']);
-        add_action('admin_bar_init', [$this, 'remove_admin_bar_style']);
-        add_action('wp_footer', [$this, 'print_toolbar'], 0);
-        add_action('wp_footer', [$this, 'print_styles_area'], 0);
-        add_action('admin_footer', [$this, 'print_styles_area'], 0);
-        add_filter('admin_body_class', [$this, 'push_body_class']);
-        add_action('admin_enqueue_scripts', [$this, 'add_frame_helper']);
-        add_action('wp_enqueue_scripts', [$this, 'add_frame_helper']);
-        add_action('admin_head-profile.php', function () {
-          remove_action('admin_color_scheme_picker', 'admin_color_scheme_picker');
-        });
-
-        //Request fullscreen on site editor
-        add_action('admin_head', function () {
-          if (!function_exists('get_current_screen')) {
-            return;
-          }
-          $currentScreen = get_current_screen();
-          if ($currentScreen && property_exists($currentScreen, 'id')) {
-            if ($currentScreen->id == 'site-editor') {
-              echo "<script>if (window.parent) {window.parent.postMessage({ eventName: 'uip_request_fullscreen' }, '*');}</script>";
-            } else {
-              echo "<script>if (window.parent) {window.parent.postMessage({ eventName: 'uip_exit_fullscreen' }, '*');}</script>";
-            }
-          }
-        });
-
-        return;
-      }
+    /**
+     * Checks if we are on a iframe page and if so start framed page actions and exit
+     */
+    $framedPage = isset($_GET['uip-framed-page']) ? $_GET['uip-framed-page'] : false;
+    if ($framedPage == '1') {
+      FramedPages::start();
+      return;
     }
 
-    //Add front end toolbar actions
-    add_action('init', [$this, 'front_actions'], 10);
-
-    //Add login actions
-    //add_action('login_init', [$this, 'login_actions']);
+    // Hooks into front end app
+    FrontEnd::start();
 
     //Fetch active ui template
     add_action('admin_init', [$this, 'get_ui_template'], 0);
@@ -178,9 +81,21 @@ class uip_app
     //Check if we have a template
     add_action('admin_init', [$this, 'add_conditional_app_actions'], 1);
   }
+  /**
+   * Defines plugin constants
+   *
+   * @since 3.2.13
+   */
+  private function define_constants()
+  {
+    define('uip_plugin_url', plugins_url('uipress-lite/'));
+    define('uip_stop_plugin', false);
+    define('uip_app_running', false);
+  }
 
   /**
    * Loads up login actions
+   *
    * @since 3.0.96
    */
   public function front_actions()
@@ -207,36 +122,6 @@ class uip_app
 
   /**
    * Removes style set for admin bar on front end
-   * @since 3.0.6
-   */
-  public function whitelist_plugins()
-  {
-    //Mailpoet
-    add_filter('mailpoet_conflict_resolver_whitelist_style', function ($whitelistedStyles) {
-      $whitelistedStyles[] = 'uipress-lite';
-      return $whitelistedStyles;
-    });
-    add_filter('mailpoet_conflict_resolver_whitelist_script', function ($scripts) {
-      $scripts[] = 'uipress-lite'; // plugin name to whitelist
-      return $scripts;
-    });
-
-    add_filter('fluentform_skip_no_conflict', function () {
-      return false;
-    });
-    add_filter('fluentcrm_skip_no_conflict', function () {
-      return false;
-    });
-    add_filter('fluent_crm/skip_no_conflict', function () {
-      return true;
-    });
-    add_filter('fluent_form/skip_no_conflict', function () {
-      return true;
-    });
-  }
-
-  /**
-   * Removes style set for admin bar on front end
    * @since 3.0.2
    */
   public function remove_admin_bar_style()
@@ -245,29 +130,6 @@ class uip_app
     add_filter('body_class', function ($classes) {
       return array_merge($classes, ['uip-no-admin-bar']);
     });
-  }
-
-  /**
-   * Checks if older versions of uipress (pre version 3) are active. If so we will stop this plugin
-   * @since 3.0.0
-   */
-  public function check_for_old_uipress()
-  {
-    if (!function_exists('get_plugins')) {
-      require_once ABSPATH . 'wp-admin/includes/plugin.php';
-    }
-    $all_plugins = get_plugins();
-
-    if (isset($all_plugins['uipress/uipress.php'])) {
-      if (is_plugin_active('uipress/uipress.php')) {
-        define('uip_stop_plugin', true);
-        add_action('admin_head', [$this, 'flag_uipress_version_error']);
-        return true;
-      }
-    }
-
-    define('uip_stop_plugin', false);
-    return false;
   }
 
   /**

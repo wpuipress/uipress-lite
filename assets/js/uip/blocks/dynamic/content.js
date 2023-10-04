@@ -330,6 +330,39 @@ export default {
 
       document.dispatchEvent(new CustomEvent('uip_page_change_loaded'));
       this.updatePageUrls();
+      this.injectWindowOpenMethod();
+    },
+
+    /**
+     * Injects a handler to ensure window.open methods open in new tab and not inside frame
+     *
+     * helps avoid CORS issues
+     * @since 3.2.13
+     */
+    injectWindowOpenMethod() {
+      const frame = this.$refs.contentframe;
+      const uipWindowOpenMethod = frame.contentWindow.open;
+
+      // Build custom handler for window.open
+      const handleOpen = (url, target, windowFeatures) => {
+        if (target) {
+          let tempTarget = target.toLowerCase();
+          if (tempTarget == '_blank' || tempTarget == '_top' || tempTarget == '_parent') {
+            uipWindowOpenMethod(url, '_blank', windowFeatures);
+            return;
+          }
+        }
+
+        let origin = window.location.origin;
+        let newURL = new URL(url);
+        if (newURL.origin != origin) {
+          uipWindowOpenMethod(url, '_parent', windowFeatures);
+        } else {
+          uipWindowOpenMethod(url, target, windowFeatures);
+        }
+      };
+      // Mount custom method
+      frame.contentWindow.open = handleOpen;
     },
     /**
      * Attemps to get page title to see if the page loaded or was blocked by CORS

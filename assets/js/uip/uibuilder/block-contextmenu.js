@@ -160,6 +160,19 @@ export default {
             this.$refs.blockcontextmenu.close();
           },
         },
+        {
+          name: 'syncPattern',
+          label: __('Sync pattern', 'uipress-lite'),
+          icon: 'sync',
+          condition: () => {
+            if (this.block.patternID) return true;
+            return false;
+          },
+          action: () => {
+            this.uipApp.blockControl.syncBlockPattern();
+            this.$refs.blockcontextmenu.close();
+          },
+        },
         { name: 'divider' },
         {
           name: 'import',

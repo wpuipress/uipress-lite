@@ -158,4 +158,69 @@ class UiPatterns
 
     return $newPatternID;
   }
+
+  /**
+   * Updates a patterns template
+   *
+   * @param string $patternID - id of the pattern to update
+   * @param object $template - pattern template
+   * @since 3.2.13
+   */
+  public static function update_template($patternID, $template)
+  {
+    // No pattern so return
+    if (!get_post_status($patternID)) {
+      return;
+    }
+
+    update_post_meta($patternID, 'uip-pattern-template', $template);
+  }
+
+  /**
+   * Recursively runs through a template and Updates a patterns template and id
+   *
+   * @param array $blocks - The list of blocks to loop through
+   * @param array | object $pattern - the new pattern template
+   * @param string $originalID - the original pattern id
+   * @param string | boolean $newPatternID the new pattern id or false if not a new pattern
+   *
+   * @return void  description
+   */
+  public static function sync_template_patterns($blocks, $pattern, $originalID, $newPatternID)
+  {
+    $updatedTemplate = [];
+
+    foreach ($blocks as $item) {
+      // Check whether the current block has a pattern
+      $currentBlockPatternID = property_exists($item, 'patternID') ? $item->patternID : false;
+
+      // Found pattern and update
+      if ($currentBlockPatternID && $item->patternID == $originalID) {
+        $item->name = $pattern->name;
+        $item->settings = $pattern->settings;
+        $item->tooltip = $pattern->tooltip;
+
+        // Update to new ID if it exists
+        if ($newPatternID) {
+          $item->patternID = $newPatternID;
+        }
+
+        // Update pattern children if it exists
+        if (property_exists($pattern, 'content')) {
+          $item->content = $pattern->content;
+        }
+      }
+
+      // Check for children in all blocks and continue the search
+      if (property_exists($item, 'content')) {
+        if (is_array($item->content) && !empty($item->content)) {
+          $item->content = self::sync_template_patterns($item->content, $pattern, $originalID, $newPatternID);
+        }
+      }
+      //Push to new template
+      $updatedTemplate[] = $item;
+    }
+
+    return $updatedTemplate;
+  }
 }

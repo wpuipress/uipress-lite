@@ -18,7 +18,6 @@ define('uip_plugin_version', '3.2.12');
 define('uip_plugin_name', 'UiPress Lite');
 define('uip_plugin_path_name', 'uipress-lite');
 define('uip_plugin_shortname', 'uip');
-define('uip_plugin_url', plugin_dir_url(__FILE__));
 define('uip_plugin_path', plugin_dir_path(__FILE__));
 
 require uip_plugin_path . 'admin/vendor/autoload.php';

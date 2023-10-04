@@ -18,4 +18,18 @@ class Ajax
     $result = $doingAjax && $referer ? true : false;
     return $result;
   }
+
+  /**
+   * Returns a new error to the application and kills the process
+   *
+   * @param string $message - the message to display
+   * @return void
+   * @since 3.2.13
+   */
+  public static function error(string $message)
+  {
+    $returndata['error'] = true;
+    $returndata['message'] = $message;
+    wp_send_json($returndata);
+  }
 }
