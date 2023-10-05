@@ -1,6 +1,6 @@
 <?php
 namespace UipressLite\Classes\App;
-use UipressLite\Classes\Utils\UipOptions;
+use UipressLite\Classes\App\UipOptions;
 
 !defined('ABSPATH') ? exit() : '';
 

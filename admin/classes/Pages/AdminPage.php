@@ -2,7 +2,7 @@
 namespace UipressLite\Classes\Pages;
 use UipressLite\Classes\Utils\URL;
 use UipressLite\Classes\Utils\Sanitize;
-use UipressLite\Classes\Utils\UserPreferences;
+use UipressLite\Classes\App\UserPreferences;
 use UipressLite\Classes\Scripts\ToolBar;
 use UipressLite\Classes\Scripts\AdminMenu;
 use UipressLite\Classes\PostTypes\UiTemplates;

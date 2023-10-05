@@ -1,7 +1,7 @@
 <?php
 namespace UipressLite\Classes\ImportExport;
 use UipressLite\Classes\PostTypes\UiTemplates;
-use UipressLite\Classes\Utils\UipOptions;
+use UipressLite\Classes\App\UipOptions;
 use UipressLite\Classes\Utils\Sanitize;
 
 !defined('ABSPATH') ? exit() : '';

@@ -1,12 +1,12 @@
 <?php
 use UipressLite\Classes\Utils\Ajax;
 use UipressLite\Classes\Utils\Sanitize;
-use UipressLite\Classes\Utils\UipOptions;
+use UipressLite\Classes\App\UipOptions;
 use UipressLite\Classes\Utils\ErrorLog;
 use UipressLite\Classes\ImportExport\Import;
 use UipressLite\Classes\App\BlockQuery;
 use UipressLite\Classes\Utils\Posts;
-use UipressLite\Classes\Utils\UserPreferences;
+use UipressLite\Classes\App\UserPreferences;
 use UipressLite\Classes\Utils\Users;
 
 !defined('ABSPATH') ?? exit();

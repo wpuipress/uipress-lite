@@ -2,7 +2,7 @@
 
 use UipressLite\Classes\Utils\URL;
 use UipressLite\Classes\Utils\Objects;
-use UipressLite\Classes\Utils\UipOptions;
+use UipressLite\Classes\App\UipOptions;
 use UipressLite\Classes\ImportExport\Import;
 use UipressLite\Classes\ImportExport\Export;
 use UipressLite\Classes\Scripts\UipScripts;

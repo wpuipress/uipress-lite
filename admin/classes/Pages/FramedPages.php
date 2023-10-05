@@ -2,7 +2,7 @@
 namespace UipressLite\Classes\Pages;
 use UipressLite\Classes\Scripts\AdminMenu;
 use UipressLite\Classes\Scripts\ToolBar;
-use UipressLite\Classes\Utils\UserPreferences;
+use UipressLite\Classes\App\UserPreferences;
 
 !defined('ABSPATH') ? exit() : '';
 

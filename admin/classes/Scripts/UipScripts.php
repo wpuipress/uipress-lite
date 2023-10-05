@@ -1,9 +1,9 @@
 <?php
 namespace UipressLite\Classes\Scripts;
-use UipressLite\Classes\Utils\UipOptions;
+use UipressLite\Classes\App\UipOptions;
 use UipressLite\Classes\Utils\Objects;
 use UipressLite\Classes\Utils\Sanitize;
-use UipressLite\Classes\Utils\UserPreferences;
+use UipressLite\Classes\App\UserPreferences;
 use UipressLite\Classes\PostTypes\UiTemplates;
 use UipressLite\Classes\App\AppOptions;
 
