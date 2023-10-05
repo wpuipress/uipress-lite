@@ -89,28 +89,52 @@ const Dropdown = {
           args: {
             options: [
               {
-                value: 'bottom-left',
+                value: 'bottom center',
+                label: __('Bottom center', 'uipress-lite'),
+              },
+              {
+                value: 'bottom left',
                 label: __('Bottom left', 'uipress-lite'),
               },
               {
-                value: 'bottom-right',
+                value: 'bottom right',
                 label: __('Bottom right', 'uipress-lite'),
               },
               {
-                value: 'top-left',
+                value: 'top center',
+                label: __('Top center', 'uipress-lite'),
+              },
+              {
+                value: 'top left',
                 label: __('Top left', 'uipress-lite'),
               },
               {
-                value: 'top-right',
+                value: 'top right',
                 label: __('Top right', 'uipress-lite'),
               },
               {
-                value: 'left',
-                label: __('Left', 'uipress-lite'),
+                value: 'left center',
+                label: __('Left center', 'uipress-lite'),
               },
               {
-                value: 'right',
-                label: __('Right', 'uipress-lite'),
+                value: 'left top',
+                label: __('Left top', 'uipress-lite'),
+              },
+              {
+                value: 'left bottom',
+                label: __('Left bottom', 'uipress-lite'),
+              },
+              {
+                value: 'right center',
+                label: __('Right center', 'uipress-lite'),
+              },
+              {
+                value: 'right top',
+                label: __('Right top', 'uipress-lite'),
+              },
+              {
+                value: 'right bottom',
+                label: __('Right bottom', 'uipress-lite'),
               },
             ],
           },

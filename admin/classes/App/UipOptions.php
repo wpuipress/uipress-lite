@@ -1,5 +1,5 @@
 <?php
-namespace UipressLite\Classes\Utils;
+namespace UipressLite\Classes\App;
 
 !defined('ABSPATH') ? exit() : '';
 

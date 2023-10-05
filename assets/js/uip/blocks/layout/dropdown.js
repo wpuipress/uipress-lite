@@ -9,7 +9,7 @@ export default {
   data: function () {
     return {};
   },
-  
+
   computed: {
     /**
      * Returns custom text for button trigger
