@@ -9,13 +9,13 @@ export const core = {
     updateSelected: Function,
     type: String,
   },
-  data: function () {
+  data() {
     return {
       loading: false,
       thisSearchInput: '',
       options: [],
-      all_roles: [],
-      paged_users: [],
+      roles: [],
+      users: [],
       page: 1,
       totalUsers: 0,
       selectedOptions: [],
@@ -41,7 +41,7 @@ export const core = {
       },
     };
   },
-  
+
   watch: {
     selectedOptions: {
       handler(newValue, oldValue) {
@@ -67,20 +67,12 @@ export const core = {
   },
   computed: {
     /**
-     * Returns all options
-     *
-     * @since 3.1.0
-     */
-    formattedOptions() {
-      return this.options;
-    },
-    /**
      * Returns all users
      *
      * @since 3.1.0
      */
     formattedUsers() {
-      return this.paged_users;
+      return this.users;
     },
     /**
      * Returns all roles
@@ -88,7 +80,7 @@ export const core = {
      * @since 3.1.0
      */
     formattedRoles() {
-      return this.all_roles;
+      return this.roles;
     },
   },
 
@@ -109,14 +101,14 @@ export const core = {
      *
      * @since 3.1.0
      */
-    queryUsersRoles() {
+    async queryUsersRoles() {
       let type = this.type;
       if (!type || typeof type === 'undefined') {
         type = 'all';
       }
 
       let formData = new FormData();
-      formData.append('action', 'uip_get_user_roles');
+      formData.append('action', 'uip_get_users_and_roles');
       formData.append('security', uip_ajax.security);
       formData.append('searchString', this.thisSearchInput);
       formData.append('type', type);
@@ -124,28 +116,27 @@ export const core = {
 
       this.loading = true;
 
-      this.sendServerRequest(uip_ajax.ajax_url, formData).then((response) => {
-        this.rendered = true;
-        this.loading = false;
-        if (response.error) {
-          this.uipApp.notifications.notify(response.error, 'error');
-          return;
-        }
+      const response = await this.sendServerRequest(uip_ajax.ajax_url, formData);
+      this.rendered = true;
+      this.loading = false;
 
-        if (Array.isArray(response.roles)) {
-          this.options = response.roles;
-        }
+      // Handle error
+      if (response.error) {
+        this.uipApp.notifications.notify(response.error, 'error');
+        return;
+      }
 
-        if (Array.isArray(response.all_roles)) {
-          this.all_roles = response.all_roles;
-        }
+      // Update roles
+      if (Array.isArray(response.roles)) {
+        this.roles = response.roles;
+      }
 
-        if (Array.isArray(response.paged_users)) {
-          this.paged_users = response.paged_users;
-        }
+      // Update users
+      if (Array.isArray(response.users)) {
+        this.users = response.users;
+      }
 
-        this.totalUsers = response.users_total;
-      });
+      this.totalUsers = response.total_users;
     },
 
     /**
@@ -263,7 +254,7 @@ export const core = {
             <loading-chart></loading-chart>
           </div>
           
-          <div class="uip-max-h-200 uip-gap-xxxs uip-flex uip-flex-column" style="overflow:auto" v-if="formattedOptions.length > 0">
+          <div class="uip-max-h-200 uip-gap-xxxs uip-flex uip-flex-column" style="overflow:auto">
             
             <!--Roles-->
             <template v-if="!loading && activeTab == 'roles'" v-for="option in formattedRoles">
@@ -337,7 +328,7 @@ export const preview = {
       },
     };
   },
-  
+
   watch: {
     selectedOptions: {
       handler(newValue, oldValue) {

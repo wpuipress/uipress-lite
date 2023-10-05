@@ -10,7 +10,7 @@ use UipressLite\Classes\PostTypes\UiPatterns;
 use UipressLite\Classes\Scripts\AdminMenu;
 use UipressLite\Classes\Scripts\ToolBar;
 use UipressLite\Classes\Scripts\UipScripts;
-use UipressLite\Classes\Pages\App;
+use UipressLite\Classes\App\AppOptions;
 
 // Exit if accessed directly
 !defined('ABSPATH') ?? exit();
@@ -162,7 +162,7 @@ class uip_ui_builder extends uip_app
       'type' => 'module',
     ];
 
-    $appOptions = App::get_options();
+    $appOptions = AppOptions::get_options();
     $userPrefs = UserPreferences::get();
 
     $variableFormatter = "

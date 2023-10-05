@@ -313,9 +313,8 @@ export default {
     returnQueryBlockStyles(block, ID) {
       const id = this.block.uid;
       const darkmode = this.uipApp.data.templateDarkMode;
-      const screenWidth = window.innerWidth;
-
       let style = this.returnBlockStylesAsCss(block);
+      style = style ? style : '';
       return style.replace('#' + block.uid, '.uip-query-id-' + ID + '#' + block.uid);
     },
 

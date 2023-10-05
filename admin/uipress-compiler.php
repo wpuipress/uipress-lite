@@ -1,5 +1,4 @@
 <?php
-//use UipressLite\Classes\Pages\AdminPage;
 
 !defined('ABSPATH') ?? exit();
 
@@ -7,27 +6,30 @@ class uipress_compiler
 {
   /**
    * Loads UiPress Classes and plugins
+   *
    * @since 3.0.0
    */
-
   public function run()
   {
-    require_once uip_plugin_path . 'admin/core/uip-app.php';
-    require_once uip_plugin_path . 'admin/core/uip-ajax.php';
+    require_once uip_plugin_path . 'admin/core/app.php';
+    require_once uip_plugin_path . 'admin/core/ajax-functions.php';
     require_once uip_plugin_path . 'admin/core/uiBuilder.php';
     require_once uip_plugin_path . 'admin/core/uip-utilities.php';
     require_once uip_plugin_path . 'admin/core/uip-site-settings.php';
 
-    //LOAD UIPRESS APP
+    // Load main app
     $uip_app = new uip_app();
     $uip_app->run();
-    //LOAD UIPRESS AJAX FUNCTIONS
+
+    // Load ajax functions
     $uip_ajax = new uip_ajax();
     $uip_ajax->load_ajax();
-    // LOAD UIPRESS UI BUILDER
+
+    // Load uiBuilder
     $uip_ui_builder = new uip_ui_builder();
     $uip_ui_builder->run();
-    // Global site settings
+
+    // Load global settings
     $uip_global_site = new uip_site_settings();
     $uip_global_site->run();
 
@@ -37,6 +39,7 @@ class uipress_compiler
 
   /**
    * Checks if safe mode key has been set and if it has ben added to current page
+   *
    * @since 3.0.0
    */
   public function checkForSafeMode()
@@ -50,6 +53,7 @@ class uipress_compiler
 
   /**
    * Adds hooks for activation and deativation of uipress
+   *
    * @since 3.0.0
    */
   public function activations_hooks()
@@ -60,6 +64,7 @@ class uipress_compiler
 
   /**
    * Adds required caps for uipress
+   *
    * @since 3.0.0
    */
   public function add_required_caps()
@@ -79,6 +84,7 @@ class uipress_compiler
 
   /**
    * Removes caps when plugin gets deactivated
+   *
    * @since 3.0.0
    */
   public function remove_required_caps()
@@ -97,6 +103,7 @@ class uipress_compiler
 
   /**
    * translation files action
+   *
    * @since 1.4
    */
   public function load_plugin_textdomain()
@@ -106,6 +113,7 @@ class uipress_compiler
 
   /**
    * Loads translation files
+   *
    * @since 1.4
    */
   public function uipress_languages_loader()

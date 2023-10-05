@@ -5,7 +5,7 @@ use UipressLite\Classes\Utils\Objects;
 use UipressLite\Classes\Utils\Sanitize;
 use UipressLite\Classes\Utils\UserPreferences;
 use UipressLite\Classes\PostTypes\UiTemplates;
-use UipressLite\Classes\Pages\App;
+use UipressLite\Classes\App\AppOptions;
 
 !defined('ABSPATH') ? exit() : '';
 
@@ -129,7 +129,7 @@ class UipScripts
     $ajaxURL = admin_url('admin-ajax.php');
 
     $options = [
-      'options' => Sanitize::clean_input_with_code(App::get_options()),
+      'options' => Sanitize::clean_input_with_code(AppOptions::get_options()),
       'userPrefs' => Sanitize::clean_input_with_code(UserPreferences::get()),
     ];
 

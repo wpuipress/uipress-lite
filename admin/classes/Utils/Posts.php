@@ -13,17 +13,23 @@ class Posts
    * @return Object wp_query
    * @since 3.2.13
    */
-  public static function search(array $options)
+  public static function search(array $options, $limitToAuthor = false)
   {
-    $defaults = ['perPage' => 10, 'search' => '', 'post_type' => 'any'];
-    $defaults = [...$options, ...$defaults];
+    $defaults = ['perPage' => 10, 'search' => '', 'post_type' => 'any', 'page' => 1];
+    $defaults = [...$defaults, ...$options];
 
     //Get template
     $args = [
       'post_type' => $options['post_type'],
       's' => $options['search'],
+      'paged' => $options['page'],
       'posts_per_page' => $options['per_page'],
     ];
+
+    // Limit results to current user
+    if ($limitToAuthor == 'true') {
+      $args['author'] = get_current_user_id();
+    }
 
     $query = new \WP_Query($args);
     return $query;
@@ -93,5 +99,55 @@ class Posts
 
     // Get the newly copied post.
     return get_post($new_post_id);
+  }
+
+  /**
+   * Central function for retrieving global meta keys for post type
+   *
+   * @param string $post_type - name of post type
+   * @since 3.0.0
+   */
+  public static function get_meta_keys_for_post_type($post_type)
+  {
+    $args = [];
+
+    $output = 'objects';
+    $operator = 'and';
+
+    $post_types = get_post_types($args, $output, $operator);
+
+    $formatted = [];
+    $meta_keys = [];
+
+    // Loop through post types and get meta keys
+    foreach ($post_types as $type) {
+      $posts = get_posts(['post_type' => $type->name, 'limit' => 1]);
+
+      foreach ($posts as $post) {
+        $post_meta_keys = get_post_custom_keys($post->ID);
+        if ($post_meta_keys) {
+          $meta_keys = array_merge($meta_keys, $post_meta_keys);
+        }
+      }
+    }
+    $foundColumns = array_values(array_unique($meta_keys));
+    $defaultColumns = $this->get_default_columns();
+    $formatted = [];
+
+    foreach ($foundColumns as $col) {
+      //Keep uipress meta keys out of list
+      if (strpos($col, 'uip-') === false) {
+        $temp = [];
+        $temp['name'] = $col;
+        $temp['label'] = $col;
+        $temp['active'] = true;
+        $temp['type'] = 'meta';
+        $formatted[$col] = $temp;
+      }
+    }
+
+    $allColumns = array_merge($defaultColumns, $formatted);
+
+    return $allColumns;
   }
 }

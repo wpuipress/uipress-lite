@@ -183,10 +183,10 @@ class UiTemplates
   }
 
   /**
-   * Creates new uiTemplate
+   * Returna a template object
    *
    * @param number $templateID - template options
-   * @return template id on success, false on failure
+   * @return template object on success, false on failure
    * @since 3.2.13
    */
   public static function get($templateID)
@@ -216,7 +216,46 @@ class UiTemplates
   }
 
   /**
-   * Creates new uiTemplate
+   * Returna a template object by uid
+   *
+   * @param number $uid - template uid
+   * @return template id on success, false on failure
+   * @since 3.2.13
+   */
+  public static function get_by_uid(string $uid)
+  {
+    // Exit early if no uid
+    if (!$uid) {
+      return false;
+    }
+
+    // Build query
+    $args = [
+      'post_type' => 'uip-ui-template',
+      'posts_per_page' => 1,
+      'post_status' => ['publish', 'draft'],
+      'meta_query' => [
+        [
+          'key' => 'uip-uid',
+          'value' => $uid,
+          'compare' => '=',
+        ],
+      ],
+    ];
+
+    $query = new WP_Query($args);
+    $foundTemplates = $query->get_posts();
+
+    // No templates found so abort
+    if (empty($foundTemplates)) {
+      return false;
+    }
+
+    return $foundTemplates[0]->ID;
+  }
+
+  /**
+   * Deletes uiTemplate
    *
    * @param array $templateIDs - array of template ids to delete
    * @return template true on success, false on failure
@@ -556,5 +595,46 @@ class UiTemplates
     }
 
     return $query->get_posts();
+  }
+
+  /**
+   * Formats a given template for export
+   *
+   * returns object
+   * @since 3.2.13
+   */
+  public static function format_for_export($template)
+  {
+    $template = get_post_meta($template->ID, 'uip-ui-template', true);
+    $settings = get_post_meta($template->ID, 'uip-template-settings', true);
+    $type = get_post_meta($template->ID, 'uip-template-type', true);
+    $forRoles = get_post_meta($template->ID, 'uip-template-for-roles', true);
+    $forUsers = get_post_meta($template->ID, 'uip-template-for-users', true);
+    $excludesRoles = get_post_meta($template->ID, 'uip-template-excludes-roles', true);
+    $excludesUsers = get_post_meta($template->ID, 'uip-template-excludes-users', true);
+    $subsites = get_post_meta($template->ID, 'uip-template-subsites', true);
+
+    // Ensures a unique ID
+    $uid = get_post_meta($template->ID, 'uip-uid', true);
+    if (!$uid) {
+      $uid = uniqid('uip-', true);
+      update_post_meta($template->ID, 'uip-uid', $uid);
+    }
+
+    //Return data to app
+    $returndata = [];
+    $returndata['name'] = get_the_title($template->ID);
+    $returndata['content'] = $template;
+    $returndata['settings'] = $settings;
+    $returndata['type'] = $type;
+    $returndata['forRoles'] = $forRoles;
+    $returndata['forUsers'] = $forUsers;
+    $returndata['excludesRoles'] = $excludesRoles;
+    $returndata['excludesUsers'] = $excludesUsers;
+    $returndata['subsites'] = $subsites;
+    $returndata['uid'] = $uid;
+    $returndata['status'] = get_post_status($template->ID);
+
+    return $returndata;
   }
 }

@@ -19,7 +19,7 @@ export default {
       },
     };
   },
-  
+
   computed: {
     /**
      * Returns options array
@@ -49,13 +49,11 @@ export default {
       if (!this.searchString) return;
 
       this.loading = true;
-      const type = this.returnType == 'userrole' ? 'roles' : 'users';
 
       let formData = new FormData();
-      formData.append('action', 'uip_search_user_roles');
+      formData.append('action', 'uip_get_users_and_roles');
       formData.append('security', uip_ajax.security);
       formData.append('searchString', this.searchString);
-      formData.append('type', type);
 
       const response = await this.sendServerRequest(uip_ajax.ajax_url, formData);
       this.loading = false;
@@ -67,7 +65,8 @@ export default {
       }
 
       // Update options
-      this.options = response.roles;
+
+      this.options = this.returnType == 'userrole' ? response.roles : response.users;
     },
 
     /**
