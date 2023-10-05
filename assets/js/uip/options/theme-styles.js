@@ -133,6 +133,12 @@ const list = {
     value: '',
     darkValue: '',
   },
+  '--uip-border-color': {
+    label: __('Border color', 'uipress-lite'),
+    type: 'color',
+    value: '',
+    darkValue: '',
+  },
 };
 
 Object.keys(list).forEach((key) => {
