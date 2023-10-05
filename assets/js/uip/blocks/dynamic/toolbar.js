@@ -295,11 +295,13 @@ export default {
      * @since 3.2.13
      */
     updateToolBarFromFrame() {
-      const frameElement = document.querySelector('.uip-page-content-frame');
+      const frame = document.querySelector('.uip-page-content-frame');
 
       // Ensure the frame exists and it has the required toolbar data.
-      if (frameElement && frameElement.contentWindow.uipMasterToolbar) {
-        const toolbar = frameElement.contentWindow.uipMasterToolbar;
+      if (frame) {
+        const toolbarScript = frame.contentWindow.document.querySelector('#uip-admin-toolbar');
+        const toolbar = toolbarScript ? this.uipParseJson(toolbarScript.getAttribute('data-toolbar')) : false;
+        if (!toolbar) return;
 
         // If the toolbar is not an array, clone it to the current component.
         if (!Array.isArray(toolbar)) {

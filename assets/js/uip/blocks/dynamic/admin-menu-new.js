@@ -1,7 +1,6 @@
 const { __, _x, _n, _nx } = wp.i18n;
 
 const MenuCollapse = {
-  
   props: {
     collapsed: Boolean,
     returnData: Function,
@@ -38,7 +37,6 @@ const MenuCollapse = {
 };
 
 const MenuSearch = {
-  
   emits: ['searching'],
   props: {
     workingMenu: Array,
@@ -135,7 +133,6 @@ const MenuSearch = {
 };
 
 const SubMenuItem = {
-  
   props: {
     maybeFollowLink: Function,
     item: Object,
@@ -197,7 +194,6 @@ const SubMenuItem = {
 };
 
 const TopLevelItem = {
-  
   props: {
     maybeFollowLink: Function,
     item: Object,
@@ -301,7 +297,6 @@ const TopLevelItem = {
 };
 
 const DrillDown = {
-  
   components: {
     TopLevelItem: TopLevelItem,
     SubMenuItem: SubMenuItem,
@@ -317,13 +312,6 @@ const DrillDown = {
     returnCollapsed: Function,
   },
   watch: {
-    menuItems: {
-      handler() {
-        this.initializeMenu();
-      },
-      immediate: true,
-      deep: true,
-    },
     isCollapsed: {
       handler() {
         this.returnCollapsed(this.isCollapsed);
@@ -338,6 +326,9 @@ const DrillDown = {
       searching: false,
       isCollapsed: this.collapsed,
     };
+  },
+  mounted() {
+    this.initializeMenu();
   },
   computed: {
     /**
@@ -420,6 +411,7 @@ const DrillDown = {
         return;
       }
       this.maybeFollowLink(evt, item);
+      evt.preventDefault();
     },
 
     /**
@@ -450,7 +442,7 @@ const DrillDown = {
               <Transition name="translate" mode="out-in">
                 <div :key="currentLevel" class="uip-admin-menu uip-text-normal" :class="{'uip-menu-collapsed' : collapsed}">
                 
-                  <MenuSearch v-if="hasMenuSearch" 
+                  <MenuSearch v-if="hasMenuSearch && !levels.length" 
                   key="menusearch"
                   @searching="(d)=>{searching = d}"
                   :maybeFollowLink="maybeFollowLink" :workingMenu="menuItems"/>
@@ -507,7 +499,7 @@ export default {
       collapsed: false,
     };
   },
-  inject: [ 'uiTemplate'],
+  inject: ['uiTemplate'],
   watch: {
     /**
      * Watches for changes to the breadcrumbs and emits event
@@ -741,18 +733,22 @@ export default {
      * @since 3.2.13
      */
     updateMenuFromFrame() {
+      return;
       //Watch for menu changes in frame
       const frame = document.querySelector('.uip-page-content-frame');
 
       // Frame does not exist so bail
       if (!frame) return;
 
-      const masterMenu = frame.contentWindow.uipMasterMenu;
+      const menuScript = frame.contentWindow.document.querySelector('#uip-admin-menu');
+      const masterMenu = menuScript ? this.uipParseJson(menuScript.getAttribute('data-menu')) : false;
+      if (!masterMenu) return;
+
       if (!masterMenu || typeof masterMenu === 'undefined') return;
       if (!('menu' in masterMenu)) return;
 
       // Update menu
-      this.menu = JSON.parse(JSON.stringify(masterMenu.menu));
+      this.menu = masterMenu.menu;
       this.buildMenu();
     },
 
