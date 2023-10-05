@@ -8,6 +8,25 @@ use UipressLite\Classes\Utils\UipOptions;
 class Import
 {
   /**
+   * handles cron auto import function
+   *
+   * @return void
+   * @since 3.2.13
+   */
+  public function cron_auto_import()
+  {
+    $options = UipOptions::get('remote-sync');
+    $syncOptions = $options['syncOptions'];
+
+    $response = self::get_remote($syncOptions);
+
+    if (isset($response['error'])) {
+      error_log('Unable to automatically sync uipress settings: ' . $response['message']);
+    } else {
+      error_log('uiPress settings automatically synced successfully');
+    }
+  }
+  /**
    * Handles uipress imports from a remote URL
    *
    * @param object $options

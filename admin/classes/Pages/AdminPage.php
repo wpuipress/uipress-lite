@@ -185,6 +185,11 @@ class AdminPage
    */
   private static function add_hooks()
   {
+    // If the app is running then the this page will be loaded in a frame
+    if (defined('uip_app_running') && uip_app_running) {
+      return;
+    }
+
     ToolBar::capture();
     AdminMenu::capture();
 
@@ -200,6 +205,11 @@ class AdminPage
    */
   private static function output_template($template, $multisite = false)
   {
+    // If the app is running then the this page will be loaded in a frame
+    if (defined('uip_app_running') && uip_app_running) {
+      return;
+    }
+
     // Switch to main blog before queries are made
     if ($multisite) {
       switch_to_blog(get_main_site_id());

@@ -18,8 +18,7 @@ class BackEnd
    */
   public static function start()
   {
-    // Add front end toolbar actions
-    add_action('admin_init', ['UipressLite\Classes\Pages\BackEnd', 'actions'], 10);
+    add_action('admin_init', ['UipressLite\Classes\Pages\BackEnd', 'actions'], 0);
   }
 
   /**
@@ -35,6 +34,7 @@ class BackEnd
 
     // No templates so exit
     if (!count($templates)) {
+      define('uip_app_running', false);
       return;
     }
 
@@ -43,6 +43,9 @@ class BackEnd
       self::output_missing_template_warning();
       return;
     }
+
+    // Define app running constant
+    define('uip_app_running', true);
 
     self::output_template($templates[0]);
     self::add_hooks();

@@ -14,8 +14,7 @@ class uipress_compiler
     require_once uip_plugin_path . 'admin/core/app.php';
     require_once uip_plugin_path . 'admin/core/ajax-functions.php';
     require_once uip_plugin_path . 'admin/core/uiBuilder.php';
-    require_once uip_plugin_path . 'admin/core/uip-utilities.php';
-    require_once uip_plugin_path . 'admin/core/uip-site-settings.php';
+    require_once uip_plugin_path . 'admin/core/site-settings.php';
 
     // Load main app
     $uip_app = new uip_app();

@@ -451,7 +451,6 @@ class uip_ui_builder extends uip_app
     // Check security nonce and 'DOING_AJAX' global
     Ajax::check_referer() ?? die();
 
-    $utils = new uip_util();
     $templateID = sanitize_text_field($_POST['templateID']);
 
     $template = UiTemplates::get($templateID);

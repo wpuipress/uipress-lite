@@ -2,6 +2,7 @@
 namespace UipressLite\Classes\ImportExport;
 use UipressLite\Classes\PostTypes\UiTemplates;
 use UipressLite\Classes\Utils\UipOptions;
+use UipressLite\Classes\Utils\Sanitize;
 
 !defined('ABSPATH') ? exit() : '';
 
@@ -55,6 +56,74 @@ class Export
     $returndata['menus'] = $menus;
 
     return $returndata;
+  }
+
+  /**
+   * Adds a rest API endpoint for sites with site sync enabled
+   *
+   * @return void
+   * @since 3.2.13
+   */
+  public static function push_to_rest()
+  {
+    register_rest_route('uipress/v1', '/export', [
+      'methods' => 'GET',
+      'callback' => ['UipressLite\Classes\ImportExport\Export', 'rest_export_response'],
+      'args' => [
+        'key' => [
+          'validate_callback' => function ($param, $request, $key) {
+            return is_string($param);
+          },
+        ],
+        'sync_options' => [
+          'validate_callback' => function ($param, $request, $key) {
+            return is_object(json_decode($param));
+          },
+        ],
+      ],
+    ]);
+  }
+
+  /**
+   * Handles rest response for site export
+   *
+   * @param object $request - the rest request
+   *
+   * @return
+   * @since 3.2.13
+   */
+  public static function rest_export_response($request)
+  {
+    $options = stripslashes($request->get_param('sync_options'));
+    $options = Sanitize::clean_input_with_code($options);
+
+    $key = sanitize_text_field($request->get_param('key'));
+
+    $siteOptions = $utils->get_uip_option('remote-sync');
+
+    if (!$key || !$options || !isset($siteOptions['key'])) {
+      $returndata = [];
+      $returndata['error'] = true;
+      $returndata['message'] = __('Incorrect key', 'uipress-lite');
+      return new WP_REST_Response($returndata, 200);
+    }
+
+    if ($siteOptions['key'] != $key) {
+      $returndata = [];
+      $returndata['error'] = true;
+      $returndata['message'] = __('Incorrect key', 'uipress-lite');
+      return new WP_REST_Response($returndata, 200);
+    }
+
+    $export = self::get($options);
+
+    $returndata = [];
+    $returndata['success'] = true;
+    $returndata['message'] = 'Success';
+    $returndata['export'] = $export;
+
+    // Return the response.
+    return new WP_REST_Response($export, 200);
   }
 
   /**

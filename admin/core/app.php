@@ -45,15 +45,11 @@ class uip_app
    */
   public function start_uipress_app()
   {
-    // Exit if we are doing cron, ajax etc functions
-    if (wp_doing_cron() || wp_doing_ajax() || (defined('REST_REQUEST') && REST_REQUEST)) {
+    if ($this->should_we_exit()) {
       return;
     }
 
-    // Fires after uipress has started loading
-    apply_filters('uip_started', true, true);
     $this->define_constants();
-
     // White list uiPress scripts / styles with other plugins
     UipScripts::whitelist_plugins();
 
@@ -61,18 +57,26 @@ class uip_app
     $framedPage = isset($_GET['uip-framed-page']) ? $_GET['uip-framed-page'] : false;
     if ($framedPage == '1') {
       FramedPages::start();
+      AdminPage::start();
       return;
     }
 
-    // Hooks into front end app
+    $this->start_apps();
+  }
+
+  /**
+   * Starts up uipress apps
+   *
+   * @return void
+   * @since 3.2.13
+   */
+  private function start_apps()
+  {
     FrontEnd::start();
-
-    // Hooks into back end app
     BackEnd::start();
-
-    // Hooks into back end app
     AdminPage::start();
   }
+
   /**
    * Defines plugin constants
    *
@@ -81,7 +85,18 @@ class uip_app
   private function define_constants()
   {
     define('uip_plugin_url', plugins_url('uipress-lite/'));
-    define('uip_app_running', false);
-    define('uip_stop_plugin', false);
+  }
+
+  /**
+   * Returns whether the plugin should be running.
+   *
+   * True if it shouldn't be, false otherwise
+   *
+   * @return boolean
+   * @since 3.2.13
+   */
+  private function should_we_exit()
+  {
+    return wp_doing_cron() || wp_doing_ajax() || (defined('REST_REQUEST') && REST_REQUEST);
   }
 }
