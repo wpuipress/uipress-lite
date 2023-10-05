@@ -115,7 +115,7 @@ class FrontEnd
     $outputter = function () use ($templateString) {
       // Output template
       $variableFormatter = "var uipUserTemplate = {$templateString}; var uipMasterMenu = {menu:[]}";
-      wp_print_inline_script_tag($variableFormatter, ['id' => 'uip-admin-menu']);
+      wp_print_inline_script_tag($variableFormatter, ['id' => 'uip-admin-frontend']);
 
       $app = "<style>#wpadminbar{display:none !important;}</style>
       <div id='uip-ui-app' class='uip-flex uip-w-100p uip-text-normal' style='font-size:13px'>

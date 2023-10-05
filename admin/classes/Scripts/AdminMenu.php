@@ -59,13 +59,13 @@ class AdminMenu
   {
     // Create anonymous function so we can use the captured menu at runtime
     $outputter = function () use ($menu) {
-      $menu = Sanitize::clean_input_with_code($menu);
+      //$menu = Sanitize::clean_input_with_code($menu);
+
       $menuString = json_encode($menu);
       $menuString = $menuString ?? json_encode([['menu' => []]]);
 
       // Output menu
-      $variableFormatter = "var uipMasterMenu = {$menuString};";
-      wp_print_inline_script_tag($variableFormatter, ['id' => 'uip-admin-menu']);
+      wp_print_inline_script_tag('', ['id' => 'uip-admin-menu', 'data-menu' => $menuString]);
     };
     add_action('admin_footer', $outputter, 0);
     add_action('wp_footer', $outputter, 0);

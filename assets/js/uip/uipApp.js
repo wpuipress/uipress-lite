@@ -119,6 +119,7 @@ app.component('dropdown', DropDown);
 app.component('uip-chart', ChartComp);
 app.component('uip-floating-panel', FloatingPanel);
 app.component('uip-draggable', VueDraggableNext);
+
 /**
  * Sets up global properties and functions
  *
@@ -156,6 +157,14 @@ app.config.globalProperties.updateActiveLink = updateActiveLink.bind({ adminURL:
 app.config.globalProperties.saveUserPreference = saveUserPreference;
 app.config.globalProperties.uipParseJson = uipParseJson;
 
+// Get menu
+const menuScript = document.querySelector('#uip-admin-menu');
+const uipMasterMenu = menuScript ? uipParseJson(menuScript.getAttribute('data-menu')) : { menu: [] };
+
+// Get Toolbar
+const toolbarScript = document.querySelector('#uip-admin-toolbar');
+const uipMasterToolbar = toolbarScript ? uipParseJson(toolbarScript.getAttribute('data-toolbar')) : [];
+
 app.config.globalProperties.uipApp = reactive({
   scrolling: false,
   data: {
@@ -165,8 +174,8 @@ app.config.globalProperties.uipApp = reactive({
     // Import from global
     options: uip_ajax.uipAppData.options,
     userPrefs: uip_ajax.uipAppData.userPrefs,
-    adminMenu: isUnDefined(uipMasterMenu) ? { menu: [] } : uipMasterMenu,
-    toolbar: isUnDefined(uipMasterToolbar) ? [] : uipMasterToolbar,
+    adminMenu: uipMasterMenu,
+    toolbar: toolbarScript,
 
     dynamicOptions: AllDynamics,
     themeStyles: AllThemeStyles,

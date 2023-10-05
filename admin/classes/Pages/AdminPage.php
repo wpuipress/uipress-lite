@@ -237,7 +237,7 @@ class AdminPage
     $outputter = function () use ($templateString) {
       // Output template
       $variableFormatter = "var uipUserTemplate = {$templateString}; var uipMasterMenu = {menu:[]}";
-      wp_print_inline_script_tag($variableFormatter, ['id' => 'uip-admin-menu']);
+      wp_print_inline_script_tag($variableFormatter, ['id' => 'uip-admin-page']);
 
       $app = "
       <style>#wpcontent{padding-left: 0;}#wpbody-content{padding-bottom:0px;}@media screen and (max-width: 782px) {.auto-fold #wpcontent { padding: 0 !important;}}</style>

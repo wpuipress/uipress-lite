@@ -79,9 +79,7 @@ class ToolBar
       $toolbarString = json_encode($toolbar);
       $toolbarString = $toolbarString ?? json_encode([]);
 
-      // Output menu
-      $variableFormatter = "var uipMasterToolbar = {$toolbarString};";
-      wp_print_inline_script_tag($variableFormatter, ['id' => 'uip-toolbar']);
+      wp_print_inline_script_tag('', ['id' => 'uip-admin-toolbar', 'data-toolbar' => $toolbarString]);
     };
     add_action('admin_footer', $outputter, 0);
     add_action('wp_footer', $outputter, 0);

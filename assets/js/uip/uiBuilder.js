@@ -327,6 +327,7 @@ import {
   updateAppPage,
   saveUserPreference,
   updateActiveLink,
+  uipParseJson,
 } from './v3.5/utility/functions.min.js?ver=3.2.12';
 
 app.config.globalProperties.ensureNestedObject = ensureNestedObject;
@@ -338,10 +339,19 @@ app.config.globalProperties.isObject = isObject;
 app.config.globalProperties.isUnDefined = isUnDefined;
 app.config.globalProperties.get_block_option = get_block_option;
 app.config.globalProperties.createUID = createUID;
+app.config.globalProperties.uipParseJson = uipParseJson;
 app.config.globalProperties.sendServerRequest = sendServerRequest;
 app.config.globalProperties.updateAppPage = updateAppPage.bind({ adminURL: uip_ajax.uipAppData.options.adminURL, isBuilder: true });
 app.config.globalProperties.updateActiveLink = updateActiveLink.bind({ adminURL: uip_ajax.uipAppData.options.adminURL, isBuilder: true });
 app.config.globalProperties.saveUserPreference = saveUserPreference;
+
+// Get menu
+const menuScript = document.querySelector('#uip-admin-menu');
+const uipMasterMenu = menuScript ? uipParseJson(menuScript.getAttribute('data-menu')) : { menu: [] };
+
+// Get Toolbar
+const toolbarScript = document.querySelector('#uip-admin-toolbar');
+const uipMasterToolbar = toolbarScript ? uipParseJson(toolbarScript.getAttribute('data-toolbar')) : [];
 
 app.config.globalProperties.uipApp = reactive({
   scrolling: false,
@@ -353,8 +363,8 @@ app.config.globalProperties.uipApp = reactive({
     // Import from global
     options: uip_ajax.uipAppData.options,
     userPrefs: uip_ajax.uipAppData.userPrefs,
-    adminMenu: isUnDefined(uipMasterMenu) ? { menu: [] } : uipMasterMenu,
-    toolbar: isUnDefined(uipMasterToolbar) ? [] : uipMasterToolbar,
+    adminMenu: uipMasterMenu,
+    toolbar: uipMasterToolbar,
 
     // Import local
     globalGroupOptions: GlobaleGroupOptions,

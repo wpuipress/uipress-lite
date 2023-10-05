@@ -148,7 +148,7 @@ class BackEnd
     $outputter = function () use ($templateString) {
       // Output template
       $variableFormatter = "var uipUserTemplate = {$templateString}; var uipMasterMenu = {menu:[]}";
-      wp_print_inline_script_tag($variableFormatter, ['id' => 'uip-admin-menu']);
+      wp_print_inline_script_tag($variableFormatter, ['id' => 'uip-ui-template']);
 
       $app = '
       <div class="uip-position-absolute uip-w-100vw uip-h-100p uip-background-default uip-top-0 uip-user-frame" id="uip-app-container" style="display:block !important">
