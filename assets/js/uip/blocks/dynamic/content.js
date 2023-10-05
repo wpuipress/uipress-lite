@@ -525,7 +525,10 @@ export default {
       // Mount link watcher
 
       const iframeClicker = (event) => {
-        if (event.target.tagName != 'A') return;
+        if (event.target.tagName != 'A') {
+          this.forceClickEvent();
+          return;
+        }
         this.handleInsideFrameLink(event.target.href);
       };
       frame.contentWindow.document.addEventListener('click', iframeClicker);
@@ -882,11 +885,19 @@ export default {
       // Attach the unload event handler when the function is first called
       attachUnload();
     },
+    /**
+     * Handles clicks inside iframes and bubbles up the event so dropdowns etc can response
+     *
+     * @since 3.2.13
+     */
+    forceClickEvent() {
+      this.$refs.frameContainer.click();
+    },
   },
   template: `
     
     <div ref="frameContainer" class="uip-flex uip-flex-column uip-overflow-hidden uip-content-frame uip-overflow-hidden uip-position-relative" 
-    :class="returnClasses" @mouseenter="scrollOver = true;">
+    :class="returnClasses" @mouseenter="scrollOver = true;" >
     
       <div class="uip-position-relative" v-if="showLoader">
         <div ref="loader" :class="block.uid" class="uip-ajax-loader" v-if="loading">
