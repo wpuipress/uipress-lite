@@ -77,7 +77,7 @@ export default {
       },
     };
   },
-  
+
   mounted() {
     this.getTemplates();
     this.enqueueAdminBarStyles();
@@ -418,7 +418,7 @@ export default {
     </div>
   </div>
   
-  <div class="uip-flex uip-flex-column uip-h-100p uip-w-100p uip-background-muted">
+  <div class="uip-flex uip-flex-column uip-h-100p uip-w-100p uip-background-muted" style="min-height:100dvh">
   
     <!-- Toolbar -->
     <div class="uip-padding-s uip-background-default uip-border-bottom uip-border-bottom uip-flex uip-flex-between">
