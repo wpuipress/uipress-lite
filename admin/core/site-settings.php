@@ -1,6 +1,7 @@
 <?php
 
 use UipressLite\Classes\Utils\URL;
+use UipressLite\Classes\Utils\Sanitize;
 use UipressLite\Classes\Utils\Objects;
 use UipressLite\Classes\App\UipOptions;
 use UipressLite\Classes\ImportExport\Import;
@@ -517,7 +518,7 @@ class uip_site_settings
     }
 
     $customHTML = html_entity_decode($customHTML);
-    $customHTML = Santize::clean_input_with_code($customHTML);
+    $customHTML = Sanitize::clean_input_with_code($customHTML);
 
     if ($customHTML == 'uipblank') {
       $customHTML = '';
@@ -533,7 +534,7 @@ class uip_site_settings
       $customCSS = $this->uip_site_settings_object->login->loginCSS;
 
       $customCSS = html_entity_decode($customCSS);
-      $customCSS = Santize::clean_input_with_code($customCSS);
+      $customCSS = Sanitize::clean_input_with_code($customCSS);
 
       if ($customCSS != '' && $customCSS != 'uipblank') {
         echo wp_kses_post("<style type='text/css'>{$customCSS}</style>");
