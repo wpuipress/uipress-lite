@@ -535,12 +535,12 @@ export default {
           
           <div class="uip-flex uip-gap-xs">
             
-            <div @click="uiTemplate.isPreview = !uiTemplate.isPreview" :title="ui.strings.preview" class="uip-border-rounder uip-flex uip-gap-xxs uip-flex-center uip-padding-xxs"
+            <div @click="uiTemplate.isPreview = !uiTemplate.isPreview;uipApp.blockSettings.close()" :title="ui.strings.preview" class="uip-border-rounder uip-flex uip-gap-xxs uip-flex-center uip-padding-xxs"
             :class="uiTemplate.isPreview ? 'uip-button-primary uip-text-inverse' : 'uip-button-default'">
               <div class="uip-icon uip-text-xl">play_arrow</div>
             </div>
             
-            <router-link :to="returnSettingsLink" class="uip-button-default uip-no-underline uip-flex uip-gap-xxs uip-flex-center">
+            <router-link :to="returnSettingsLink" class="uip-button-default uip-no-underline uip-flex uip-gap-xxs uip-flex-center uip-text-s">
               <div class="uip-icon uip-text-l">settings</div>
               <div class="">{{ui.strings.settings}}</div>
             </router-link>
