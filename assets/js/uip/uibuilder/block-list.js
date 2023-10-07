@@ -4,7 +4,78 @@
  */
 const { __, _x, _n, _nx } = wp.i18n;
 import { defineAsyncComponent, nextTick } from '../../libs/vue-esm-dev.js';
+
+/**
+ * Toggle section
+ *
+ * @since 3.2.13
+ */
+const ToggleSection = {
+  props: {
+    title: String,
+    startOpen: Boolean,
+  },
+  data() {
+    return {
+      open: false,
+    };
+  },
+  created() {
+    if (this.startOpen) this.open = true;
+  },
+  computed: {
+    /**
+     * Returns the icon depending on open status
+     *
+     * @since 3.2.13
+     */
+    returnVisibilityIcon() {
+      if (this.open) return 'expand_more';
+      if (!this.open) return 'chevron_left';
+    },
+  },
+  methods: {
+    /**
+     * Toggles section visibility
+     *
+     * @since 3.2.13
+     */
+    toggleVisibility() {
+      this.open = !this.open;
+    },
+  },
+  template: `
+  
+    <div class="uip-flex uip-flex-column uip-row-gap-s">
+    
+      <!-- Title -->
+      <div class="uip-flex uip-gap-s uip-flex-center uip-flex-between">
+        
+       
+        <div class="uip-flex uip-gap-xxs uip-flex-center uip-cursor-pointer uip-flex-between uip-flex-grow"
+        @click="toggleVisibility()">
+          
+          
+          <span class="uip-text-bold uip-text-emphasis">{{ title }}</span> 
+          
+          <a class="uip-link-muted uip-icon">{{ returnVisibilityIcon }}</a>
+          
+          
+        </div>
+      
+      </div>
+      
+      <slot v-if="open"></slot>
+      
+    </div>
+  
+  `,
+};
+
 export default {
+  components: {
+    ToggleSection: ToggleSection,
+  },
   props: {
     mode: String,
     insertArea: Array,
@@ -17,6 +88,7 @@ export default {
       strings: {
         proBlock: __('This block requires uipress pro. Upgrade to unlock.', 'uipress-lite'),
         seachBlocks: __('Search blocks...', 'uipress-lite'),
+        upgrade: __('Upgrade', 'uipress-lite'),
       },
     };
   },
@@ -61,6 +133,14 @@ export default {
   },
   methods: {
     /**
+     * Returns group nice name for given block
+     *
+     * @since 3.2.13
+     */
+    returnGroupLabel(name) {
+      return this.uipApp.data.blockGroups[name].label;
+    },
+    /**
      * Removes old blocks from list
      *
      * @since 3.2.13
@@ -70,7 +150,7 @@ export default {
       return this.uipApp.data.blocks.filter((block) => !excludedModules.includes(block.moduleName));
     },
     /**
-     * Clones block upon succesful drag
+     * Clones block upon successful drag
      *
      * @param {Object} block
      * @since 3.2.13
@@ -82,14 +162,11 @@ export default {
 
       delete item.path;
       delete item.args;
-
       delete item.category;
-
       delete item.description;
-
       delete item.optionsEnabled;
-
       delete item.path;
+      delete item.hover;
 
       return item;
     },
@@ -126,6 +203,7 @@ export default {
       await nextTick();
       const addedBlock = this.insertArea[this.insertArea.length - 1];
       this.uipApp.blockControl.setActive(addedBlock, this.insertArea);
+      this.$emit('item-added');
     },
 
     /**
@@ -151,9 +229,9 @@ export default {
   },
   template: `
     
-    <div class="">
+    <div class="uip-flex uip-flex-column uip-row-gap-s">
     
-        <div class="uip-flex uip-padding-xxs uip-search-block uip-border-round uip-margin-bottom-s">
+        <div class="uip-flex uip-padding-xxs uip-search-block uip-border-rounder uip-padding-xxs uip-background-muted">
           <span class="uip-icon uip-text-muted uip-margin-right-xs uip-text-l uip-icon uip-icon-medium">search</span>
           <input class="uip-blank-input uip-flex-grow uip-text-s" type="search" :placeholder="strings.seachBlocks" autofocus="" v-model="search">
         </div>
@@ -161,7 +239,7 @@ export default {
         <!--Searching-->
         <uip-draggable v-if="search != ''"
           :list="sortedBlocks" 
-          class="uip-grid-col-3 uip-grid-gap-xs uip-flex-center"
+          class="uip-flex uip-flex-column uip-row-gap-xs uip-padding-left-xs"
           handle=".uip-block-drag"
           :group="{ name: 'uip-blocks', pull: 'clone', put: false, revertClone: true }"
           animation="300"
@@ -172,12 +250,14 @@ export default {
             <template v-for="(element, index) in sortedBlocks" :key="element.name" :index="index">
           
                 <div v-show="componentExists(element) && inSearch(element)" class="uip-block-item" :block-name="element.name">
-                    <div @click="insertAtPos(element)" class="uip-border-rounder uip-padding-xs uip-link-default uip-background-muted hover:uip-background-grey uip-cursor-pointer uip-block-drag uip-no-text-select">
-                      <div class="uip-flex uip-flex-column uip-flex-center">
-                        <div class="uip-icon uip-icon-medium uip-text-xl">
-                          {{element.icon}}
+                    <div @click="insertAtPos(element)" class="uip-border-rounder uip-link-default hover:uip-background-muted uip-cursor-pointer uip-block-drag uip-no-text-select">
+                      <div class="uip-flex uip-gap-xxs uip-flex-center">
+                        <div class="uip-icon uip-icon-medium uip-text-l uip-padding-xxs uip-background-muted uip-border-rounder uip-dark-mode uip-text-emphasis uip-margin-right-xs">
+                          <span>{{element.icon}}</span>
                         </div> 
-                        <div class="uip-text-center uip-text-s">{{element.name}}</div>
+                        <div class="uip-text-center uip-text-s uip-text-muted">{{returnGroupLabel(element.group)}}</div>
+                        <div class="uip-icon uip-text-muted">chevron_right</div>
+                        <div class="uip-text-s">{{element.name}}</div>
                       </div>
                     </div>
                 </div>
@@ -188,13 +268,12 @@ export default {
         
         <template v-if="search == ''" v-for="cat in returnCats">
           
-            <div class="uip-flex uip-margin-bottom-s uip-border-rounder uip-border-round uip-text-bold uip-text-emphasis">{{cat.name}}</div>
-            <div class=" uip-margin-bottom-s uip-flex-wrap uip-flex-row">
-          
-            
-              <uip-draggable 
+            <ToggleSection :title="cat.name" :startOpen="true">
+              
+                <uip-draggable 
+                v-if="cat.blocks.length"
                 :list="cat.blocks" 
-                class="uip-grid-col-3 uip-grid-gap-xs uip-flex-center"
+                class="uip-flex uip-flex-column uip-row-gap-xs uip-padding-left-xs"
                 handle=".uip-block-drag"
                 :group="{ name: 'uip-blocks', pull: 'clone', put: false, revertClone: true }"
                 animation="300"
@@ -204,37 +283,39 @@ export default {
                 itemKey="name">
                   <template v-for="(element, index) in cat.blocks" :key="element.name" :index="index">
                 
-                      <div v-if="componentExists(element) && inSearch(element)" class="uip-block-item" :block-name="element.name">
-                        <uip-tooltip :message="element.description" :delay="500">
-                          <div @click="insertAtPos(element)" class="uip-border-rounder uip-padding-xs uip-link-default uip-background-muted hover:uip-background-grey uip-cursor-pointer uip-block-drag uip-no-text-select">
-                            <div class="uip-flex uip-flex-column uip-flex-center">
-                              <div class="uip-icon uip-icon-medium uip-text-xl">
-                                {{element.icon}}
-                              </div> 
-                              <div class="uip-text-center uip-text-s">{{element.name}}</div>
-                            </div>
-                          </div>
-                        </uip-tooltip>
+                       <div v-if="componentExists(element)" @click="insertAtPos(element)" class="uip-border-rounder uip-link-default hover:uip-background-muted uip-cursor-pointer uip-block-drag uip-no-text-select">
+                         <div class="uip-flex uip-gap-xxs uip-flex-center">
+                           <div class="uip-icon uip-icon-medium uip-text-l uip-padding-xxs uip-background-muted uip-dark-mode uip-border-rounder uip-text-emphasis uip-margin-right-xs">
+                             <span>{{element.icon}}</span>
+                           </div> 
+                           <div class="uip-text-s">{{element.name}}</div>
+                         </div>
+                       </div>
+                       
+                      <div v-else @mouseenter="element.hover=true" @mouseleave="element.hover = false"
+                      class="uip-border-rounder uip-link-default hover:uip-background-muted uip-cursor-pointer uip-block-drag uip-no-text-select">
+                        <div class="uip-flex uip-gap-xxs uip-flex-center">
+                          <div class="uip-icon uip-icon-medium uip-text-l uip-padding-xxs uip-background-green-wash uip-border-rounder uip-margin-right-xs ">
+                            <span>redeem</span>
+                          </div> 
+                          <div class="uip-text-s uip-flex-grow">{{element.name}}</div>
+                          
+                          <a v-show="element.hover"
+                          href="https://uipress.co?utm_source=uipressupgrade&utm_medium=referral" 
+                          target="_BLANK" 
+                          class="uip-link-muted uip-flex uip-gap-xxxs uip-no-underline uip-flex-center uip-padding-right-xxs uip-fade-in">
+                            <span class="uip-text-s">{{strings.upgrade}}</span>
+                            <span class="uip-icon">chevron_right</span>
+                          </a>
+                        </div>
                       </div>
                       
-                      <div v-else-if="inSearch(element)" class="uip-block-item" :block-name="element.name">
-                        <uip-tooltip :message="strings.proBlock" :delay="200">
-                          <div class="uip-border-rounder uip-padding-xs uip-background-green-wash uip-cursor-pointer">
-                            <div class="uip-flex uip-flex-column uip-flex-center">
-                              <div class="uip-icon uip-icon-medium uip-text-xl">
-                                redeem
-                              </div> 
-                              <div class="uip-text-center uip-text-xs uip-text-s">{{element.name}}</div>
-                            </div>
-                          </div>
-                        </uip-tooltip>
-                      </div>
                   
                   </template>
-              </uip-draggable>
-              
+                </uip-draggable>
             
-            </div>
+            </ToggleSection>  
+            
           
         </template>
       </div>`,
