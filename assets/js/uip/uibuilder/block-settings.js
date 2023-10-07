@@ -32,12 +32,8 @@ const EditPreset = {
       },
     };
   },
-  watch: {},
   mounted() {
     this.setName();
-  },
-  computed: {
-    returnPreset() {},
   },
   methods: {
     /**
@@ -213,7 +209,6 @@ const PresetList = {
       search: '',
     };
   },
-  watch: {},
   computed: {
     /**
      * Returns all presets
