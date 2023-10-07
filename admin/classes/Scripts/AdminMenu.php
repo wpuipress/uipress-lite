@@ -72,6 +72,38 @@ class AdminMenu
   }
 
   /**
+   * Extracts a number from a given html string
+   *
+   * @param string $html
+   *
+   * @return void number on success, null on failure
+   * @since 3.2.13
+   */
+  private static function extractNumberFromHtml($html)
+  {
+    if (is_null($html) || !$html || !class_exists('DOMDocument')) {
+      return null;
+    }
+
+    $dom = new \DOMDocument();
+
+    libxml_use_internal_errors(true);
+    $dom->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'), LIBXML_NOWARNING | LIBXML_NOERROR);
+    libxml_clear_errors();
+
+    $nodes = $dom->getElementsByTagName('*'); // get all elements
+
+    foreach ($nodes as $node) {
+      $nodeValue = trim($node->nodeValue);
+      if (is_numeric($nodeValue)) {
+        return (int) $nodeValue;
+      }
+    }
+
+    return null;
+  }
+
+  /**
    * Processes menu for frontend output
    *
    * This function was mostly pulled from the wordpress admin menu output.
@@ -152,8 +184,8 @@ class AdminMenu
       } else {
         $strippedName = $item[0];
       }
-      $notifications = preg_replace('/[^0-9]/', '', strip_tags($title));
-      if (is_numeric($notifications)) {
+      $notifications = self::extractNumberFromHtml($title);
+      if (!is_null($notifications)) {
         $item['notifications'] = $notifications;
       }
 
