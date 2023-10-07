@@ -356,11 +356,11 @@ export default {
         styleString += preset == 'XL' ? `font-size: var(--uip-text-xl);` : '';
       }
 
-      if (preset == 'custom' && !this.isUnDefined(fontSize)) {
+      if (preset == 'custom' && fontSize) {
         styleString += text.size.units ? `font-size:${fontSize}${text.size.units};` : '';
       }
 
-      if (!this.isUnDefined(lineHeight)) {
+      if (lineHeight) {
         styleString += text.lineHeight.units ? `line-height:${lineHeight}${text.lineHeight.units};` : '';
       }
 
