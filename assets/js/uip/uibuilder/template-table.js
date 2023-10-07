@@ -25,7 +25,7 @@ export default {
         draft: __('Draft', 'uipress-lite'),
         results: __('results', 'uipress-lite'),
         searchUsersRoles: __('Search users and roles', 'uipress-lite'),
-        searchTemplates: __('Search templates and settings', 'uipress-lite'),
+        searchTemplates: __('Search templates', 'uipress-lite'),
         templateDuplicated: __('Template duplicated', 'uipress-lite'),
         deleteSelected: __('Delete selected', 'uipress-lite'),
         uiBuilder: __('uiBuilder', 'uipress-lite'),
