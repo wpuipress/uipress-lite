@@ -227,7 +227,7 @@ export default {
      *
      * @since 3.2.13
      */
-    addCanvas() {
+    async addCanvas() {
       const containerBlock = this.uipApp.data.blocks.filter((obj) => {
         return obj.moduleName == 'uip-container';
       });
@@ -242,16 +242,10 @@ export default {
 
       copiedConatiner.uid = this.createUID();
       copiedConatiner.name = __('Canvas', 'uipress-lite');
+      copiedConatiner.settings = {};
+      copiedConatiner.tooltip = {};
 
-      this.ensureNestedObject(copiedConatiner, 'settings', 'style', 'options', 'flexLayout', 'value');
-      copiedConatiner.settings.style.options.flexLayout.value = {
-        direction: 'row',
-        distribute: 'start',
-        align: 'flex-start',
-        wrap: 'wrap',
-        type: 'stack',
-      };
-
+      await nextTick();
       this.template.content.push(copiedConatiner);
     },
     /**
