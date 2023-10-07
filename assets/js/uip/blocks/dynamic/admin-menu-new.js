@@ -1,5 +1,5 @@
 const { __, _x, _n, _nx } = wp.i18n;
-
+//import { reactive } from '../../../libs/vue-esm-dev.js';
 const MenuCollapse = {
   props: {
     collapsed: Boolean,
@@ -310,12 +310,16 @@ const DrillDown = {
     block: Object,
     menuItems: Array,
     returnCollapsed: Function,
+    activeLink: String,
   },
   watch: {
     isCollapsed: {
       handler() {
         this.returnCollapsed(this.isCollapsed);
       },
+    },
+    activeLink() {
+      this.handleLinkUpdate();
     },
   },
   data() {
@@ -325,6 +329,9 @@ const DrillDown = {
       currentItem: null,
       searching: false,
       isCollapsed: this.collapsed,
+      strings: {
+        goBackPrevious: __('Go back to previous menu', 'uipress-lite'),
+      },
     };
   },
   mounted() {
@@ -364,6 +371,15 @@ const DrillDown = {
       const menuCollapse = this.get_block_option(this.block, 'block', 'menuCollapse');
       if (this.isObject(menuCollapse)) return menuCollapse.value;
       return menuCollapse;
+    },
+
+    /**
+     * Returns the current depth of the menu
+     *
+     * @since 3.2.13
+     */
+    returnLevelsLength() {
+      return this.levels.length;
     },
   },
   methods: {
@@ -415,6 +431,40 @@ const DrillDown = {
     },
 
     /**
+     * Handles active link change
+     *
+     * @param {Array} submenu - optional submenu array
+     * @returns {Promise}
+     * @since 3.2.13
+     */
+    async handleLinkUpdate(submenu) {
+      // Set the menu level to work with
+      const menu = submenu ? submenu : this.currentLevel;
+      let foundActiveItem = false;
+
+      // Loop over menu items and update active state
+      for (let item of menu) {
+        item.active = false;
+
+        // If the item matches the URL then update
+        if (item.url == this.activeLink) {
+          item.active = true;
+          foundActiveItem = true;
+        }
+
+        if (item.submenu && Array.isArray(item.submenu)) {
+          foundActiveItem = await this.handleLinkUpdate(item.submenu);
+
+          if (foundActiveItem) {
+            this.currentLevel = item.submenu;
+            this.levels.push(menu);
+          }
+        }
+      }
+      return foundActiveItem;
+    },
+
+    /**
      * Decodes html entities from a given string
      *
      * @param {String} item - the item to be decoded
@@ -446,9 +496,11 @@ const DrillDown = {
                   key="menusearch"
                   @searching="(d)=>{searching = d}"
                   :maybeFollowLink="maybeFollowLink" :workingMenu="menuItems"/>
-                
+                  
                   <!-- Display Back button if there are levels to go back to -->
                   <a v-if="levels.length" 
+                  role="button" 
+                  :aria-label="strings.goBackPrevious" 
                   class="uip-flex uip-gap-xxs uip-flex-center uip-flex-row uip-flex-center uip-text-bold uip-text-l uip-sub-menu-header uip-link-default uip-margin-bottom-s uip-gap-xxs" 
                   @click="goBack">
                     <div class="uip-icon">chevron_left</div>
@@ -733,7 +785,6 @@ export default {
      * @since 3.2.13
      */
     updateMenuFromFrame() {
-      return;
       //Watch for menu changes in frame
       const frame = document.querySelector('.uip-page-content-frame');
 
@@ -864,6 +915,7 @@ export default {
     
           <DrillDownMenu v-if="subMenuStyle == 'dynamic'" :menuItems="workingMenu" 
           :maybeFollowLink="maybeFollowLink" :collapsed="collapsed" :block="block"
+          :activeLink="activeLink"
           :returnCollapsed="(d)=>{collapsed=d}"/>
     
           <div v-else class="uip-admin-menu uip-text-normal" :class="returnClasses">

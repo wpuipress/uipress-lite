@@ -309,6 +309,8 @@ export default {
      */
     async handleIframeLoad(event) {
       const frame = this.$refs.contentframe;
+
+      // No iframe so exit
       if (!frame) return;
       const currentURL = frame.contentWindow.location.href;
 
@@ -531,7 +533,14 @@ export default {
         }
         this.handleInsideFrameLink(event.target.href);
       };
+
+      const hashWatcher = (event) => {
+        const location = this.$refs.contentframe.contentWindow.location;
+        this.updateBrowserAddress(location);
+      };
+
       frame.contentWindow.document.addEventListener('click', iframeClicker);
+      frame.contentWindow.addEventListener('uip-frame-hash-change', hashWatcher);
 
       // Return early if not in 'prod' mode
       if (this.uiTemplate.display !== 'prod') return;
