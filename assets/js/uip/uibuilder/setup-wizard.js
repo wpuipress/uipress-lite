@@ -77,7 +77,7 @@ export default {
       },
     };
   },
-  
+
   watch: {
     currentStep: {
       handler(newValue, oldValue) {
@@ -87,136 +87,141 @@ export default {
       },
     },
   },
-  mounted: function () {},
   computed: {
+    /**
+     * Returns filtered theme list of layouts
+     *
+     * @since 3.2.13
+     */
     returnThemes() {
-      console.log(this.themes);
       return this.themes.filter(function (theme) {
         return theme.type == 'Layout';
       });
     },
   },
   methods: {
+    /**
+     * Returns whether the tips are finished
+     *
+     * @since 3.2.13
+     */
     returnFinished() {
       return this.finished;
     },
-    fetchThemes() {
-      let self = this;
-      self.themeLoading = true;
+
+    /**
+     * Fetches themes from uipress servers
+     *
+     * @since 3.2.13
+     */
+    async fetchThemes() {
+      this.themeLoading = true;
       let formData = new FormData();
       let URL = 'https://api.uipress.co/templates/list/' + '?sort=newest&filter=ui-template&v321=true';
 
-      self.sendServerRequest(URL, formData).then((response) => {
-        if (response.error) {
-          self.uipApp.notifications.notify(response.message, 'uipress-lite', '', 'error', true);
-          self.themeLoading = false;
-        }
-        self.themeLoading = false;
-        self.themes = response;
-      });
-    },
-    onClickOutside(event) {
-      if (!this.$refs.uipmodal) {
-        return;
+      const response = await this.sendServerRequest(URL, formData);
+
+      // Handle error
+      if (response.error) {
+        this.uipApp.notifications.notify(response.message, 'uipress-lite', '', 'error', true);
+        this.themeLoading = false;
       }
-      const path = event.path || (event.composedPath ? event.composedPath() : undefined);
-      // check if the MouseClick occurs inside the component
-      if (path && !path.includes(this.$refs.uipmodal) && !this.$refs.uipmodal.contains(event.target)) {
-        this.closeThisComponent(); // whatever method which close your component
-      }
+
+      this.themeLoading = false;
+      this.themes = response;
     },
+
+    /**
+     * Close setup wizard
+     *
+     * @since 3.2.13
+     */
     closeThisComponent() {
-      document.documentElement.removeEventListener('click', this.onClickOutside, false);
       this.$router.push('/');
     },
+
+    /**
+     * Finsihes setup process
+     *
+     * @since 3.2.13
+     */
     finishSetup() {
-      let self = this;
-      if (self.saving == true) {
-        return;
-      }
-      self.saving = true;
+      // Exit if we are currently saving
+      if (this.saving == true) return;
 
-      if (self.setupDetails.chosenTemplate) {
-        self.getTemplate();
+      this.saving = true;
+
+      if (this.setupDetails.chosenTemplate) {
+        this.getTemplate();
       } else {
-        self.saveSettings();
+        this.saveSettings();
       }
     },
 
-    getTemplate() {
-      let self = this;
+    /**
+     * Gets chosen template ready for import
+     *
+     * @since 3.2.13
+     */
+    async getTemplate() {
       let formData = new FormData();
-      let URL = 'https://api.uipress.co/templates/get/?templateid=' + self.setupDetails.chosenTemplate;
-      let notiID = self.uipApp.notifications.notify(__('Importing template', 'uipress-lite'), '', 'default', false, true);
+      let URL = 'https://api.uipress.co/templates/get/?templateid=' + this.setupDetails.chosenTemplate;
+      let notiID = this.uipApp.notifications.notify(__('Importing template', 'uipress-lite'), '', 'default', false, true);
 
-      self.sendServerRequest(URL, formData).then((response) => {
-        if (response.error) {
-          self.uipApp.notifications.notify(response.message, '', 'error', true);
-          self.uipApp.notifications.remove(notiID);
-          self.saveSettings();
-        }
-        self.uipApp.notifications.remove(notiID);
-        self.setupDetails.templateJSON = response;
-        self.saveSettings();
-      });
+      const response = await this.sendServerRequest(URL, formData);
+
+      // Handle error
+      if (response.error) {
+        this.uipApp.notifications.notify(response.message, '', 'error', true);
+        this.uipApp.notifications.remove(notiID);
+        this.saveSettings();
+      }
+
+      this.uipApp.notifications.remove(notiID);
+      this.setupDetails.templateJSON = response;
+      this.saveSettings();
     },
-    saveSettings() {
-      let self = this;
-      let settings = JSON.stringify(self.setupDetails, (k, v) =>
-        v === 'true' ? 'uiptrue' : v === true ? 'uiptrue' : v === 'false' ? 'uipfalse' : v === false ? 'uipfalse' : v === '' ? 'uipblank' : v
-      );
-      let styles = this.formatStyles();
-      let stylesJson = JSON.stringify(styles, (k, v) => (v === 'true' ? 'uiptrue' : v === true ? 'uiptrue' : v === 'false' ? 'uipfalse' : v === false ? 'uipfalse' : v === '' ? 'uipblank' : v));
 
-      let notiID = self.uipApp.notifications.notify(__('Confirguring settings', 'uipress-lite'), '', 'default', false, true);
+    /**
+     * Saves settings from wizard and sends to server
+     *
+     * @since 3.2.13
+     */
+    async saveSettings() {
+      const settings = this.prepareJSON(this.setupDetails);
+      const stylesJson = this.prepareJSON(styles);
+
+      const notiID = this.uipApp.notifications.notify(__('Confirguring settings', 'uipress-lite'), '', 'default', false, true);
 
       let formData = new FormData();
       formData.append('action', 'uip_save_from_wizard');
       formData.append('security', uip_ajax.security);
       formData.append('settings', settings);
-      formData.append('styles', stylesJson);
 
-      self.sendServerRequest(uip_ajax.ajax_url, formData).then((response) => {
-        self.uipApp.notifications.remove(notiID);
-        self.saving = false;
-        self.uipApp.notifications.notify('Setup complete', '', 'success', true);
-        self.finished = true;
-      });
+      const response = await this.sendServerRequest(uip_ajax.ajax_url, formData);
+      this.uipApp.notifications.remove(notiID);
+      this.saving = false;
+      this.uipApp.notifications.notify('Setup complete', '', 'success', true);
+      this.finished = true;
     },
-    formatStyles() {
-      let styles = this.uipApp.data.themeStyles;
-      let formatted = {};
-      for (let key in styles) {
-        if (styles[key].value) {
-          if (!formatted[styles[key].name]) {
-            formatted[styles[key].name] = {};
-          }
-          formatted[styles[key].name].value = styles[key].value;
-        }
-        if (styles[key].darkValue) {
-          if (!formatted[styles[key].name]) {
-            formatted[styles[key].name] = {};
-          }
-          formatted[styles[key].name].darkValue = styles[key].darkValue;
-        }
-        if (styles[key].user) {
-          formatted[styles[key].name].user = styles[key].user;
-          formatted[styles[key].name].label = styles[key].label;
-          formatted[styles[key].name].name = styles[key].name;
-          formatted[styles[key].name].type = styles[key].type;
-        }
-      }
 
-      return formatted;
-    },
+    /**
+     * Refreshes the page to the home admin
+     *
+     * @since 3.2.13
+     */
     refreshAdmin() {
       window.location.assign(this.uipApp.data.options.adminURL);
     },
-    returnActiveIndex(theme) {
-      if (!('activeIndex' in theme)) {
-        theme.activeIndex = 0;
-      }
 
+    /**
+     * Returns active step index for theme images
+     *
+     * @param {object} theme - theme object
+     * @since 3.2.13
+     */
+    returnActiveIndex(theme) {
+      if (!('activeIndex' in theme)) theme.activeIndex = 0;
       return theme.activeIndex;
     },
   },
