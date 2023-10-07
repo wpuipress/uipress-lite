@@ -15,6 +15,9 @@ const Layer = {
     return {
       open: false,
       queryLoopEnabled: __('Block is using query loop', 'uipress-lite'),
+      strings: {
+        blocks: __('Blocks', 'uipress-lite'),
+      },
     };
   },
   computed: {
@@ -122,7 +125,7 @@ const Layer = {
           </uip-draggable>
           
           <!--Block selector-->
-          <dropdown width="260" pos="right center"
+          <dropdown width="260" pos="right center" ref="blockSelector"
           class="uip-w-100p uip-flex uip-flex-center uip-flex-middle uip-flex-row uip-padding-right-xs">
             <template v-slot:trigger>
               <button class="uip-button-default uip-icon uip-w-100p uip-text-s uip-padding-xxs" >
@@ -130,8 +133,17 @@ const Layer = {
               </button>
             </template>
             <template v-slot:content>
-              <div class="uip-padding-s uip-max-w-300 uip-w-300 uip-max-h-300 uip-overflow-auto uip-scrollbar">
-                <BlockList mode="click" :insertArea="block.content"/>
+              <div class="uip-padding-s uip-max-w-300 uip-w-300 uip-max-h-500 uip-flex uip-flex-column uip-gap-s" style="overflow:auto">
+                
+                <div class="uip-flex uip-flex-between uip-flex-center">
+                  <div class="uip-text-emphasis uip-text-bold uip-text-s">{{ strings.blocks }}</div>
+                  <div @click="$refs.blockSelector.close()"
+                  class="uip-flex uip-flex-center uip-flex-middle uip-padding-xxs uip-link-muted hover:uip-background-muted uip-border-rounder">
+                    <span class="uip-icon">close</span>
+                  </div>
+                </div>
+              
+                <BlockList mode="click" :insertArea="block.content" @item-added="$refs.blockSelector.close()"/>
               </div>
             </template>
           </dropdown>
@@ -159,6 +171,9 @@ export default {
       items: this.content,
       queryLoopEnabled: __('Block is using query loop', 'uipress-lite'),
       drag: false,
+      strings: {
+        blocks: __('Blocks', 'uipress-lite'),
+      },
     };
   },
   inject: ['uiTemplate'],
@@ -291,7 +306,7 @@ export default {
     
     
     <!--Block selector-->
-    <dropdown width="260" pos="right center" triggerClass="uip-w-100p" 
+    <dropdown  pos="right center" ref="blockSelector"
     class="uip-w-100p uip-flex uip-flex-center uip-flex-middle uip-flex-row">
       <template v-slot:trigger>
         <button class="uip-button-default uip-icon uip-w-100p uip-text-s uip-padding-xxs" >
@@ -299,8 +314,17 @@ export default {
         </button>
       </template>
       <template v-slot:content>
-        <div class="uip-padding-s uip-max-w-300 uip-w-300 uip-max-h-300 uip-overflow-auto uip-scrollbar">
-          <BlockList mode="click" :insertArea="items"/>
+        <div class="uip-padding-s uip-max-w-300 uip-w-300 uip-max-h-500 uip-flex uip-flex-column uip-gap-s" style="overflow:auto">
+          
+          <div class="uip-flex uip-flex-between uip-flex-center">
+            <div class="uip-text-emphasis uip-text-bold uip-text-s">{{ strings.blocks }}</div>
+            <div @click="$refs.blockSelector.close()"
+            class="uip-flex uip-flex-center uip-flex-middle uip-padding-xxs uip-link-muted hover:uip-background-muted uip-border-rounder">
+              <span class="uip-icon">close</span>
+            </div>
+          </div>
+        
+          <BlockList mode="click" :insertArea="items" @item-added="$refs.blockSelector.close()"/>
         </div>
       </template>
     </dropdown>
