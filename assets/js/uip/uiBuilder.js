@@ -123,6 +123,20 @@ const appArgs = defineComponent({
   data() {
     return {};
   },
+  watch: {
+    /**
+     * Watch changes to route and emit a hash change event event
+     *
+     * This allows the top level uiTemplate / app to apply hashchanges to the url
+     *
+     * @since 3.2.13
+     */
+    $route(to, from) {
+      // Create and dispatch the event.
+      const event = new Event('uip-frame-hash-change');
+      window.dispatchEvent(event);
+    },
+  },
   template: `
     <router-view/>
     <Notify/>`,
@@ -196,7 +210,7 @@ const routes = [
         },
       },
       {
-        name: __('Template Settings', 'uipress-lite'),
+        name: 'templateSettings',
         path: 'settings/template',
         component: BuilderSettings,
       },
