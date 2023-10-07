@@ -327,7 +327,7 @@ export function updateActiveLink(newURL) {
   maybeForceReload(url);
 
   //Only update window history if we are in production
-  if (!this.isBuilder) history.pushState({}, null, url);
+  //if (!this.isBuilder) history.pushState({}, null, url);
 
   const uipActiveLinkChange = new CustomEvent('uip_page_change', { detail: { url: stripUIPparams(shortURL, adminURL) } });
   document.dispatchEvent(uipActiveLinkChange);
@@ -350,7 +350,7 @@ export function stripUIPparams(link, adminURL) {
   url.searchParams.delete('uip-hide-help-tab', 1);
   url.searchParams.delete('uip-default-theme', 1);
   url.searchParams.delete('uip-hide-notices', 1);
-  url.searchParams.delete('uipid', 1);
+  url.searchParams.delete('uipid');
 
   return url.href.replace(adminURL, '');
 }
