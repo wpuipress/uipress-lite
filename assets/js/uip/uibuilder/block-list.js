@@ -165,7 +165,6 @@ export default {
       delete item.category;
       delete item.description;
       delete item.optionsEnabled;
-      delete item.path;
       delete item.hover;
 
       return item;
@@ -252,7 +251,7 @@ export default {
                 <div v-show="componentExists(element) && inSearch(element)" class="uip-block-item" :block-name="element.name">
                     <div @click="insertAtPos(element)" class="uip-border-rounder uip-link-default hover:uip-background-muted uip-cursor-pointer uip-block-drag uip-no-text-select">
                       <div class="uip-flex uip-gap-xxs uip-flex-center">
-                        <div class="uip-icon uip-icon-medium uip-text-l uip-padding-xxs uip-background-muted uip-border-rounder uip-dark-mode uip-text-emphasis uip-margin-right-xs">
+                        <div class="uip-icon uip-text-l uip-padding-xxs uip-background-muted uip-border-rounder uip-text-emphasis uip-margin-right-xs">
                           <span>{{element.icon}}</span>
                         </div> 
                         <div class="uip-text-center uip-text-s uip-text-muted">{{returnGroupLabel(element.group)}}</div>
@@ -285,7 +284,7 @@ export default {
                 
                        <div v-if="componentExists(element)" @click="insertAtPos(element)" class="uip-border-rounder uip-link-default hover:uip-background-muted uip-cursor-pointer uip-block-drag uip-no-text-select">
                          <div class="uip-flex uip-gap-xxs uip-flex-center">
-                           <div class="uip-icon uip-icon-medium uip-text-l uip-padding-xxs uip-background-muted uip-dark-mode uip-border-rounder uip-text-emphasis uip-margin-right-xs">
+                           <div class="uip-icon uip-text-l uip-padding-xxs uip-background-muted uip-border-rounder uip-text-emphasis uip-margin-right-xs">
                              <span>{{element.icon}}</span>
                            </div> 
                            <div class="uip-text-s">{{element.name}}</div>
@@ -295,7 +294,7 @@ export default {
                       <div v-else @mouseenter="element.hover=true" @mouseleave="element.hover = false"
                       class="uip-border-rounder uip-link-default hover:uip-background-muted uip-cursor-pointer uip-block-drag uip-no-text-select">
                         <div class="uip-flex uip-gap-xxs uip-flex-center">
-                          <div class="uip-icon uip-icon-medium uip-text-l uip-padding-xxs uip-background-green-wash uip-border-rounder uip-margin-right-xs ">
+                          <div class="uip-icon uip-icon-medium uip-text-l uip-padding-xxs uip-background-green-wash uip-border-rounder uip-margin-right-xs">
                             <span>redeem</span>
                           </div> 
                           <div class="uip-text-s uip-flex-grow">{{element.name}}</div>
