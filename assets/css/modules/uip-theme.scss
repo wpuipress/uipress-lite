@@ -38,6 +38,11 @@ strong {
 .wrap {
   margin-top: 30px;
 }
+.wrap:has(#welcome-panel) {
+  h1 {
+    margin-bottom: var(--uip-margin-m);
+  }
+}
 
 .search-box {
   position: relative;
@@ -192,6 +197,16 @@ body.import-php,
     }
   }
 }
+.subsubsub:not(:has(a.current)) {
+  li:first-child a {
+    color: var(--uip-text-color-emphasis);
+    background: transparent;
+    border-color: var(--uip-color-accent);
+    span {
+      color: var(--uip-text-color-muted);
+    }
+  }
+}
 
 .subtitle {
   color: var(--uip-text-color-muted);
@@ -341,6 +356,9 @@ body.import-php,
 }
 
 .tablenav-pages {
+  &.one-page {
+    display: none !important;
+  }
   margin: 0;
   display: flex;
   align-items: center;
@@ -433,6 +451,23 @@ table.widefat {
   tbody th {
     padding: var(--uip-padding-xs) var(--uip-padding-xxs);
     color: var(--uip-text-color-muted);
+    transition: all 0.2s ease-in-out;
+    box-shadow: none !important;
+  }
+  tbody th,
+  tbody td {
+    p,
+    ul {
+      color: var(--uip-text-color-muted);
+    }
+  }
+
+  // Plugin table
+  tbody tr:not(.plugin-update-tr):hover {
+    td,
+    th {
+      background: var(--uip-color-base-1);
+    }
   }
 
   // Alternate rows
@@ -465,6 +500,36 @@ table.widefat {
   }
   tbody td a.row-title {
     color: var(--uip-text-color-emphasis);
+  }
+
+  // Active plugin title
+  tbody tr.active {
+    td,
+    th {
+      background: transparent;
+      border-left: none;
+    }
+    td.plugin-title strong {
+      color: var(--uip-text-color-emphasis);
+      font-weight: bold;
+      &::after {
+        content: 'active';
+        @extend .uip-table-pill;
+        font-weight: normal;
+        background: var(--uip-color-green-lighter);
+        margin-left: 8px;
+      }
+    }
+  }
+  // Inactive plugin title
+  tbody tr.inactive td.plugin-title strong {
+    &::after {
+      content: 'inactive';
+      @extend .uip-table-pill;
+      font-weight: normal;
+      background: var(--uip-color-orange-lighter);
+      margin-left: 8px;
+    }
   }
   tbody td .post-state {
     @extend .uip-table-pill;
@@ -742,8 +807,16 @@ body {
     color: var(--uip-text-color-base);
   }
 }
-.welcome-panel .welcome-panel-column-container {
-  background: var(--uip-color-base-0);
+.welcome-panel {
+  .welcome-panel-header,
+  .welcome-panel-header h2,
+  .welcome-panel-header p,
+  .welcome-panel-header a {
+    color: var(--uip-text-color-inverse);
+  }
+  .welcome-panel-column-container {
+    background: var(--uip-color-base-0);
+  }
 }
 #dashboard-widgets .postbox-container .empty-container {
   outline: 3px dashed var(--uip-border-color);
@@ -798,7 +871,7 @@ body {
 div.updated {
   border: none;
   background-color: var(--uip-color-base-1);
-  border-radius: var(--uip-border-radius);
+  border-radius: var(--uip-border-radius-large);
   color: var(--uip-text-color-base);
   .notice-dismiss:before {
     content: 'cancel';
