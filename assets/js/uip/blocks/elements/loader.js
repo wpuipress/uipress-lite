@@ -389,14 +389,6 @@ const Tabs = {
   icon: 'tab',
   content: [],
   optionsEnabled: [
-    //Block options group
-    {
-      name: 'block',
-      label: __('Block options', 'uipress-lite'),
-      icon: 'check_box_outline_blank',
-      options: [{ option: 'tabCreator', componentName: 'tab-builder', uniqueKey: 'tabs', label: __('Tabs', 'uipress-lite') }],
-    },
-
     {
       name: 'style',
       label: __('Style', 'uipress-lite'),
