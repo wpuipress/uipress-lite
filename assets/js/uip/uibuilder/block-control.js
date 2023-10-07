@@ -370,6 +370,23 @@ export default {
       if (!supressSettings) this.uipApp.blockSettings.show(this.block);
 
       this.setWrapPosition();
+      this.maybeCloseSiteSettings();
+    },
+
+    /**
+     * Checks if we are on site settings and if so exit
+     *
+     * @since 3.2.13
+     */
+    maybeCloseSiteSettings() {
+      const ID = this.$route.params.templateID;
+
+      if (this.$route.name != 'templateSettings') return;
+
+      this.$router.push({
+        path: `/uibuilder/${ID}/`,
+        query: { ...this.$route.query },
+      });
     },
 
     /**
