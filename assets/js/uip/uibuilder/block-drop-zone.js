@@ -29,13 +29,13 @@ export default {
   watch: {
     content: {
       handler(newValue, oldValue) {
-        this.items = newValue;
+        this.items = this.content;
       },
       deep: true,
     },
     itemsLength: {
       handler(newValue, oldValue) {
-        if (!this.renderd) return;
+        if (!this.rendered) return;
         this.updateList();
       },
     },
@@ -255,7 +255,6 @@ export default {
      * @since 3.2.13
      */
     async itemAdded(evt) {
-      let self = this;
       if (!evt.added) return;
 
       // Bail if it's a remote template
