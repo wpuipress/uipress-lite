@@ -65,6 +65,7 @@ export default {
       
           
           <uip-draggable
+          v-if="tabs.length"
           class="uip-flex uip-flex-column uip-row-gap-xs uip-w-100p"
           :group="{ name: 'tabs', pull: false, put: false }" 
           :list="tabs"
