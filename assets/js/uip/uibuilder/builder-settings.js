@@ -4,16 +4,86 @@
  */
 import { defineAsyncComponent } from '../../libs/vue-esm-dev.js';
 const { __, _x, _n, _nx } = wp.i18n;
+
+/**
+ * Toggle section
+ *
+ * @since 3.2.13
+ */
+const ToggleSection = {
+  props: {
+    title: String,
+    startOpen: Boolean,
+  },
+  data() {
+    return {
+      open: false,
+    };
+  },
+  mounted() {
+    if (this.startOpen) this.open = true;
+  },
+  computed: {
+    /**
+     * Returns the icon depending on open status
+     *
+     * @since 3.2.13
+     */
+    returnVisibilityIcon() {
+      if (this.open) return 'expand_more';
+      if (!this.open) return 'chevron_left';
+    },
+  },
+  methods: {
+    /**
+     * Toggles section visibility
+     *
+     * @since 3.2.13
+     */
+    toggleVisibility() {
+      this.open = !this.open;
+    },
+  },
+  template: `
+  
+    <div class="uip-flex uip-flex-column uip-row-gap-s">
+    
+      <!-- Title -->
+      <div class="uip-flex uip-gap-s uip-flex-center uip-flex-between">
+        
+       
+        <div class="uip-flex uip-gap-xxs uip-flex-center uip-cursor-pointer uip-flex-between uip-flex-grow"
+        @click="toggleVisibility()">
+          
+          
+          <span class="uip-text-bold uip-text-emphasis">{{ title }}</span> 
+          
+          <a class="uip-link-muted uip-icon">{{ returnVisibilityIcon }}</a>
+          
+          
+        </div>
+      
+      </div>
+      
+      <div v-if="open" class="uip-padding-left-s">
+        <slot></slot>
+      </div>
+      
+    </div>
+  
+  `,
+};
+
 export default {
   components: {
     globalVariables: defineAsyncComponent(() => import('./variables.min.js?ver=3.2.12')),
+    ToggleSection: ToggleSection,
   },
   data() {
     return {
       loading: true,
       templateID: this.$route.params.templateID,
       mode: 'light',
-      templateAppliestoCurrentUser: false,
       menu: this.uipApp.data.adminMenu.menu,
       ui: {
         sideBar: {
@@ -33,12 +103,6 @@ export default {
           appliesToSelf: __('Take care not to revoke access to anything you may need in the admin.', 'uipress-lite'),
           appliesToSelfMeta: __("If you haven't already, we recommend setting up:", 'uipress-lite'),
           safeMode: __('safe mode', 'uipress-lite'),
-          theme: __('Theme'),
-          add: __('Add'),
-          variableLabel: __('Variable label'),
-          variableName: __('Variable name'),
-          deleteVariable: __('Delete variable'),
-          advanced: __('Advanced'),
           customCSS: __('CSS', 'uipress-lite'),
           customJS: __('Javascript', 'uipress-lite'),
           light: __('Light', 'uipress-lite'),
@@ -57,11 +121,12 @@ export default {
             'This template does not contain a content block. The content block is key to navigating the admin. Setting this live as a uiTemplate can cause a lock out.',
             'uipress-lite'
           ),
-          pageLink: __('Page link', 'uipress-lite'),
+          pageLink: __('Link', 'uipress-lite'),
           name: __('Name', 'uipress-lite'),
           type: __('Type', 'uipress-lite'),
           templateSettings: __('Template settings', 'uipress-lite'),
           status: __('Status', 'uipress-lite'),
+          general: __('General', 'uipress-lite'),
         },
       },
       enabledDisabled: {
@@ -95,87 +160,122 @@ export default {
     this.loading = false;
   },
   computed: {
+    /**
+     * Returns list of menu items for admin page sub selector
+     *
+     * @since 3.2.13
+     */
     returnFormatedMenu() {
-      self = this;
-      let returndata = [];
-
-      for (const item of self.menu) {
-        let temp = {};
-        temp.name = item.uid;
-
-        if (item.type == 'sep') {
-          continue;
-        }
-
-        temp.label = item.name.replace(/<[^>]*>?/gm, '');
-        temp.url = item.url;
-        returndata.push(temp);
-      }
-      return returndata;
+      return this.menu
+        .filter((item) => item.type !== 'sep')
+        .map(({ uid, url, name }) => {
+          return {
+            name: uid,
+            url: url,
+            label: name.replace(/<[^>]*>?/gm, ''),
+          };
+        });
     },
+    /**
+     * Returns whether the template has a page content block or not
+     *
+     * @returns {boolean}
+     * @since 3.2.13
+     */
     isTemplateWithoutFrame() {
       let templateType = this.uiTemplate.globalSettings.type;
-      if (templateType == 'ui-template') {
-        if (this.uiTemplate.content.length > 0) {
-          let templateString = JSON.stringify(this.uiTemplate.content);
-          if (!templateString.includes('uip-content')) {
-            return true;
-          }
-        }
+
+      // Exit early
+      if (templateType != 'ui-template') return false;
+      if (this.uiTemplate.content.length > 0) {
+        let templateString = JSON.stringify(this.uiTemplate.content);
+
+        // Template doesn't include a uip-content block
+        if (!templateString.includes('uip-content')) return true;
       }
+
       return false;
     },
-  },
-  methods: {
-    returnTemplateOption(group, option) {
-      let key = option.uniqueKey;
-      let options = this.uiTemplate.globalSettings.options;
-      if (!(group in options)) {
-        options[group] = {};
-      }
-      if (!(key in options[group])) {
-        if (option.accepts === String) {
-          options[group][key] = '';
-        }
-        if (option.accepts === Array) {
-          options[group][key] = [];
-        }
-        if (option.accepts === Object) {
-          options[group][key] = {};
-        }
-      }
-      return options[group][key];
-    },
-    saveTemplateOption(group, key, value) {
-      let options = this.uiTemplate.globalSettings.options;
-      options[group][key] = value;
-    },
-    isTemplateForUs() {
-      let templateType = this.uiTemplate.globalSettings.type;
-      if (templateType == 'ui-template') {
-        return this.templateAppliestoCurrentUser;
-      } else {
-        return false;
-      }
-    },
 
-    fetchReturnData(data, item) {
-      item = data;
-    },
-    openSettings(panel) {
-      let ID = this.$route.params.templateID;
-      this.$router.push('/uibuilder/' + ID + '/settings/' + panel);
-    },
+    /**
+     * Returns link to current admin page
+     *
+     * @since 3.2.13
+     */
     returnPageLink() {
       this.formatPageName();
       return this.uipApp.data.options.adminURL + 'admin.php?page=' + this.formatPageName() + '-uiptp-' + this.$route.params.templateID;
     },
+  },
+  methods: {
+    /**
+     * Retrieves the template option based on the provided group and option.
+     * Ensures the options data structure is adhered to and initializes
+     * option values based on their expected type if they do not exist.
+     *
+     * @param {String} group - The option group.
+     * @param {Object} option - The option configuration object.
+     * @returns {String|Array|Object} - The option value.
+     *
+     * @since 3.2.13
+     */
+    returnTemplateOption(group, { uniqueKey: key, accepts }) {
+      const options = this.uiTemplate.globalSettings.options;
+
+      // Ensure the group exists.
+      if (!options.hasOwnProperty(group)) {
+        options[group] = {};
+      }
+
+      // Exit early if the key exists
+      if (options[group].hasOwnProperty(key)) {
+        return options[group][key];
+      }
+
+      // Ensure the key exists within the group, initializing based on accepted type.
+      let initialValue;
+
+      switch (accepts) {
+        case String:
+          initialValue = '';
+          break;
+        case Array:
+          initialValue = [];
+          break;
+        case Object:
+          initialValue = {};
+          break;
+        default:
+          initialValue = '';
+      }
+
+      options[group][key] = initialValue;
+
+      return options[group][key];
+    },
+
+    /**
+     * Updates a dynamic options value
+     *
+     * @param {string} group - the group the option belongs to
+     * @param {string} key - the key name of the option
+     * @param {Mixed} value - the new option value
+     * @since 3.2.13
+     */
+    saveTemplateOption(group, key, value) {
+      let options = this.uiTemplate.globalSettings.options;
+      options[group][key] = value;
+    },
+
+    /**
+     * Formats Page title for url
+     *
+     * @since 3.2.13
+     */
     formatPageName() {
       let title = this.uiTemplate.globalSettings.name;
 
-      if (!title) {
-        return '';
-      }
+      if (!title) return '';
 
       title = title.toLowerCase();
       title = title.replace('~[^pLd]+~u', '-');
@@ -185,10 +285,16 @@ export default {
       title = title.replace(' ', '-');
       return title;
     },
+
+    /**
+     * Exits template settings
+     *
+     * @since 3.2.13
+     */
     goBack() {
-      let ID = this.$route.params.templateID;
+      const ID = this.$route.params.templateID;
       this.$router.push({
-        path: '/uibuilder/' + ID + '/',
+        path: `/uibuilder/${ID}/`,
         query: { ...this.$route.query },
       });
     },
@@ -218,139 +324,127 @@ export default {
           
           
         
-          <div class="uip-flex uip-flex-column uip-gap-xs uip-padding-s uip-flex-grow uip-overflow-auto">
+          <div class="uip-flex uip-flex-column uip-gap-s uip-padding-s uip-flex-grow uip-overflow-auto">
             
-            <div class="uip-text-bold uip-margin-top-xs">General</div>
+            <div class=""></div>
             
-            <div class="uip-padding-s uip-padding-right-remove uip-padding-top-xs uip-flex uip-flex-column uip-row-gap-s">
-              
-              <div v-if="isTemplateWithoutFrame" class=" uip-background-red-wash uip-border-rounder uip-text-s uip-padding-xs uip-scale-in-top uip-flex uip-flex-column uip-row-gap-xs">
-                <div class="uip-text-bold uip-text-l uip-text-emphasis">{{ui.strings.watchOut}}</div>
-                <div>{{ui.strings.watchOutDescription}}</div>
-              </div>
-              
-              <div v-if="isTemplateForUs()" class=" uip-background-orange-wash uip-border-rounder uip-text-s uip-padding-xs uip-scale-in-top uip-flex uip-flex-column uip-row-gap-xs">
-                <div class="uip-text-bold uip-text-l uip-text-emphasis">{{ui.strings.appliesToSelfTitle}}</div>
-                <div>{{ui.strings.appliesToSelf}}</div>
-                <div class="">
-                  <span>{{ui.strings.appliesToSelfMeta}}</span>
-                  <a href="https://uipress.notion.site/Filters-Hooks-f20b64d7365641c09c61ed0252b90727?p=c6df814584e64af6aaee3f333dfc29d4&pm=s" target="_BLANK" class="uip-link-default">{{ui.strings.safeMode}}</a>
-                </div>
-              </div>
-              
-              <div class="uip-grid-col-1-3 uip-border-bottom uip-padding-bottom-s">
-              
-                <!--Status-->
-                <div class="uip-text-muted uip-flex uip-flex-center uip-text-s uip-h-30 uip-gap-xs">
-                  <span>{{ui.strings.status}}</span>
-                </div>
-                <toggle-switch :options="enabledDisabled" :activeValue="uiTemplate.globalSettings.status" :dontAccentActive="true" :returnValue="function(data){ uiTemplate.globalSettings.status = data;}"></toggle-switch>
+            <ToggleSection :title="ui.strings.general" :startOpen="true">
+            
+              <div class="uip-flex uip-flex-column uip-row-gap-s">
                 
-                <!--Name-->
-                <div class="uip-text-muted uip-flex uip-flex-center uip-text-s uip-h-30 uip-gap-xs">
-                  <span>{{ui.strings.name}}</span>
+                <div v-if="isTemplateWithoutFrame" class=" uip-background-red-wash uip-border-rounder uip-text-s uip-padding-xs uip-scale-in-top uip-flex uip-flex-column uip-row-gap-xs">
+                  <div class="uip-text-bold uip-text-l uip-text-emphasis">{{ui.strings.watchOut}}</div>
+                  <div>{{ui.strings.watchOutDescription}}</div>
                 </div>
-                <input class="uip-input uip-input-small uip-w-100p" type="text" v-model="uiTemplate.globalSettings.name" :placeholder="ui.strings.templateName">
                 
-                <!--Type-->
-                <div class="uip-text-muted uip-flex uip-flex-center uip-text-s uip-h-30 uip-gap-xs">
-                  <span>{{ui.strings.type}}</span>
-                </div>
-                <select class="uip-input uip-input-small uip-w-100p" v-model="uiTemplate.globalSettings.type">
-                  <option value="ui-template">{{ui.strings.uiTemplate}}</option>
-                  <option value="ui-admin-page">{{ui.strings.adminPage}}</option>
-                  <option value="ui-front-template">{{ui.strings.toolBar}}</option>
-                </select>
                 
-                <!--Subsites multisite only-->
-                <template v-if="uipApp.data.options.multisite && uipApp.data.options.networkActivated && uipApp.data.options.primarySite">
+                <div class="uip-grid-col-1-3">
+                
+                  <!--Status-->
                   <div class="uip-text-muted uip-flex uip-flex-center uip-text-s uip-h-30 uip-gap-xs">
-                    <span>{{ui.strings.applyToSubsites}}</span>
+                    <span>{{ui.strings.status}}</span>
                   </div>
-                  <toggle-switch :options="enabledDisabled" :activeValue="uiTemplate.globalSettings.applyToSubsites" :dontAccentActive="true" :returnValue="function(data){ uiTemplate.globalSettings.applyToSubsites = data;}"></toggle-switch>
-                </template>
-                
-                <!--Applies to-->
-                <div class="uip-text-muted uip-flex uip-flex-center uip-text-s uip-h-30 uip-gap-xs">
-                  {{ui.strings.appliesTo}}
+                  <toggle-switch :options="enabledDisabled" :activeValue="uiTemplate.globalSettings.status" :dontAccentActive="true" :returnValue="function(data){ uiTemplate.globalSettings.status = data;}"></toggle-switch>
+                  
+                  <!--Name-->
+                  <div class="uip-text-muted uip-flex uip-flex-center uip-text-s uip-h-30 uip-gap-xs">
+                    <span>{{ui.strings.name}}</span>
+                  </div>
+                  <input class="uip-input uip-input-small uip-w-100p" type="text" v-model="uiTemplate.globalSettings.name" :placeholder="ui.strings.templateName">
+                  
+                  <!--Type-->
+                  <div class="uip-text-muted uip-flex uip-flex-center uip-text-s uip-h-30 uip-gap-xs">
+                    <span>{{ui.strings.type}}</span>
+                  </div>
+                  <select class="uip-input uip-input-small uip-w-100p" v-model="uiTemplate.globalSettings.type">
+                    <option value="ui-template">{{ui.strings.uiTemplate}}</option>
+                    <option value="ui-admin-page">{{ui.strings.adminPage}}</option>
+                    <option value="ui-front-template">{{ui.strings.toolBar}}</option>
+                  </select>
+                  
+                  <!--Subsites multisite only-->
+                  <template v-if="uipApp.data.options.multisite && uipApp.data.options.networkActivated && uipApp.data.options.primarySite">
+                    <div class="uip-text-muted uip-flex uip-flex-center uip-text-s uip-h-30 uip-gap-xs">
+                      <span>{{ui.strings.applyToSubsites}}</span>
+                    </div>
+                    <toggle-switch :options="enabledDisabled" :activeValue="uiTemplate.globalSettings.applyToSubsites" :dontAccentActive="true" :returnValue="function(data){ uiTemplate.globalSettings.applyToSubsites = data;}"></toggle-switch>
+                  </template>
+                  
+                  <!--Applies to-->
+                  <div class="uip-text-muted uip-flex uip-flex-center uip-text-s uip-h-30 uip-gap-xs">
+                    {{ui.strings.appliesTo}}
+                  </div>
+                  <user-role-select :selected="uiTemplate.globalSettings.rolesAndUsers" 
+                  :placeHolder="ui.strings.selectUsersAndRoles" 
+                  :searchPlaceHolder="ui.strings.searchUsersAndRoles" :single="false" 
+                  :updateSelected="(d)=>uiTemplate.globalSettings.rolesAndUsers = d"></user-role-select>
+                  
+                  <!--Excludes to-->
+                  <div class="uip-text-muted uip-flex uip-flex-center uip-text-s uip-h-30 uip-gap-xs">
+                    {{ui.strings.excludes}}
+                  </div>
+                  <user-role-select :selected="uiTemplate.globalSettings.excludesRolesAndUsers" 
+                   :placeHolder="ui.strings.selectUsersAndRoles" 
+                   :searchPlaceHolder="ui.strings.searchUsersAndRoles" :single="false" 
+                  :updateSelected="(d)=>uiTemplate.globalSettings.excludesRolesAndUsers = d"></user-role-select>
+                  
+                  
+                  <!-- Admin page specific options-->
+                  <template v-if="uiTemplate.globalSettings.type == 'ui-admin-page'">
+                  
+                    <!--Menu Icon-->
+                    <div class="uip-text-muted uip-flex uip-flex-center uip-text-s uip-h-30 uip-gap-xs">
+                      <span>{{ui.strings.menuIcon}}</span>
+                    </div>
+                    <icon-select class="uip-w-100p" :value="uiTemplate.globalSettings.menuIcon" :returnData="function(e){uiTemplate.globalSettings.menuIcon = e}"></icon-select>
+                    
+                    <!--Submenu-->
+                    <div class="uip-text-muted uip-flex uip-flex-center uip-text-s uip-h-30 uip-gap-xs">
+                      <span>{{ui.strings.addToSubmenu}}</span>
+                    </div>
+                    <select class="uip-input" v-model="uiTemplate.globalSettings.menuParent">
+                        <option value="">{{ui.strings.noneTopLevel}}</option>
+                        <template v-for="item in returnFormatedMenu">
+                          <option :value="item.url">{{item.label}}</option>
+                        </template>
+                    </select>
+                    
+                    <!--Page link-->
+                    <div class="uip-text-muted uip-flex uip-flex-center uip-text-s uip-flex-start uip-padding-top-xxs">
+                      <span>{{ui.strings.pageLink}}</span>
+                    </div>
+                    <a :href="returnPageLink" target="_BLANK" class="uip-link-muted">
+                      {{returnPageLink}}
+                    </a>
+                  
+                  </template>
+                  
+                  
                 </div>
-                <user-role-select :selected="uiTemplate.globalSettings.rolesAndUsers" 
-                :placeHolder="ui.strings.selectUsersAndRoles" 
-                :searchPlaceHolder="ui.strings.searchUsersAndRoles" :single="false" 
-                :updateSelected="(d)=>uiTemplate.globalSettings.rolesAndUsers = d"></user-role-select>
-                
-                <!--Excludes to-->
-                <div class="uip-text-muted uip-flex uip-flex-center uip-text-s uip-h-30 uip-gap-xs">
-                  {{ui.strings.excludes}}
-                </div>
-                <user-role-select :selected="uiTemplate.globalSettings.excludesRolesAndUsers" 
-                 :placeHolder="ui.strings.selectUsersAndRoles" 
-                 :searchPlaceHolder="ui.strings.searchUsersAndRoles" :single="false" 
-                :updateSelected="(d)=>uiTemplate.globalSettings.excludesRolesAndUsers = d"></user-role-select>
+                  
                 
                 
-              </div>
-                
-              <!-- Admin page specific options-->
-              <div class="uip-grid-col-1-3" v-if="uiTemplate.globalSettings.type == 'ui-admin-page'">
-              
-                <!--Menu Icon-->
-                <div class="uip-text-muted uip-flex uip-flex-center uip-text-s uip-h-30 uip-gap-xs">
-                  <span>{{ui.strings.menuIcon}}</span>
-                </div>
-                <icon-select class="uip-w-100p" :value="uiTemplate.globalSettings.menuIcon" :returnData="function(e){uiTemplate.globalSettings.menuIcon = e}"></icon-select>
-                
-                <!--Submenu-->
-                <div class="uip-text-muted uip-flex uip-flex-center uip-text-s uip-h-30 uip-gap-xs">
-                  <span>{{ui.strings.addToSubmenu}}</span>
-                </div>
-                <select class="uip-input" v-model="uiTemplate.globalSettings.menuParent">
-                    <option value="">{{ui.strings.noneTopLevel}}</option>
-                    <template v-for="item in returnFormatedMenu">
-                      <option :value="item.url">{{item.label}}</option>
-                    </template>
-                </select>
-                
-                <!--Page link-->
-                <div class="uip-text-muted uip-margin-bottom-xs">
-                  {{ui.strings.pageLink}}
-                </div>
-                <a :href="returnPageLink()" target="_BLANK" class="uip-link-muted">
-                  {{returnPageLink()}}
-                </a>
-              
-              </div>
-              
-              
-            </div>
+              </div>  
+            </ToggleSection>
             
             
-            
+            <div class="uip-border-top"></div>
             
               <!-- Theme styles -->
-              <accordion :openOnTick="false" :padding="true">
-                <template v-slot:title>
-                  <div class="uip-flex-grow uip-flex uip-gap-xxs uip-flex-center uip-text-bold">
-                    <div class="">{{ui.strings.themeStyles}}</div>
-                  </div>
-                </template>
-                <template v-slot:content>
-                  <globalVariables/>
-                </template>
-              </accordion>
+              <ToggleSection :title="ui.strings.themeStyles" :startOpen="true">
+                <globalVariables/>
+              </ToggleSection>  
+              
               
               <div class="uip-border-top"></div>
               
               <!-- Dynamic settings -->
               <template v-for="group in uipApp.data.templateGroupOptions">
-                <accordion :openOnTick="false" :padding="true">
-                  <template v-slot:title>
-                    <div class="uip-flex-grow uip-flex uip-gap-xxs uip-flex-center uip-text-bold">
-                      <div class="">{{group.label}}</div>
-                    </div>
-                  </template>
-                  <template v-slot:content>
+              
+                <ToggleSection :title="group.label" :startOpen="false">
+                
                     <div class="uip-grid-col-1-3">
+                    
                       <!--Loop through group settings -->
                       <template v-for="option in group.settings">
                       
@@ -363,14 +457,16 @@ export default {
                         
                         <div class="uip-flex uip-flex-center">
                           <component :is="option.component" :value="returnTemplateOption(group.name, option)" :args="option.args"
-                          :returnData="function(data){saveTemplateOption(group.name, option.uniqueKey, data)}"></component>
+                          :returnData="(data)=>{saveTemplateOption(group.name, option.uniqueKey, data)}"></component>
                         </div>
                         
                       </template>
+                      
                       <!--End loop through group settings -->
+                      
                     </div>
-                  </template>
-                </accordion>
+                    
+                </ToggleSection>
                 
                 <div class="uip-border-top"></div>
                 
