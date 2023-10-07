@@ -16,48 +16,6 @@ export default {
       saving: false,
       helpLoaded: false,
       allUiTemplates: [],
-      tips: {
-        allTips: [
-          {
-            title: __('Dynamic data', 'uipress-lite'),
-            content: __('Typing "{{" in any window now opens the new dynamic data flow. Continue typing to search or press enter to select. Dynamic data will render in preview mode.', 'uipress-lite'),
-            img: this.uipApp.data.options.pluginURL + 'assets/img/dynamic_data_preview.gif',
-          },
-          {
-            title: __('Query builder', 'uipress-lite'),
-            content: __(
-              'The new query builder can be enabled on any block and allows you to query posts, pages, users and sites (multsitie only). The query builder is designed to work perfectly with the new dynamic data selector.',
-              'uipress-lite'
-            ),
-            img: this.uipApp.data.options.pluginURL + 'assets/img/query_builder.gif',
-          },
-          {
-            title: __('Style presets', 'uipress-lite'),
-            content: __(
-              'Style presets allow you to create custom presets that you can apply to any blocks. Presets are global and making changes to them in one place will update them across all of your templates',
-              'uipress-lite'
-            ),
-            img: this.uipApp.data.options.pluginURL + 'assets/img/presets_preview.gif',
-          },
-          {
-            title: __('Redesigned block styles', 'uipress-lite'),
-            content: __('The new editor makes it easier to adjust block styles and create more advanced layouts. Use the new pseudo switcher to create detailed templates', 'uipress-lite'),
-            img: this.uipApp.data.options.pluginURL + 'assets/img/styles_psuedo.gif',
-          },
-          {
-            title: __('Effects and transitions', 'uipress-lite'),
-            content: __('You can add and manage transitions within the uiBuilder. Adjust timings and animation styles to get the perfect result.', 'uipress-lite'),
-            img: this.uipApp.data.options.pluginURL + 'assets/img/transitions_preview.gif',
-          },
-          {
-            title: __('Contextual options', 'uipress-lite'),
-            content: __('Common actions are just a right click away. Duplicate blocks, copy styles or export your entire template', 'uipress-lite'),
-            img: this.uipApp.data.options.pluginURL + 'assets/img/contextual_options.gif',
-          },
-        ],
-        currentTip: 0,
-        open: true,
-      },
       ui: {
         strings: {
           backToList: __('Back to template list', 'uipress-lite'),
@@ -139,9 +97,6 @@ export default {
     window.removeEventListener('keydown', this.handleCommandS);
   },
   mounted() {
-    if (this.uipApp.data.userPrefs.supressTips) {
-      this.tips.open = false;
-    }
     this.mountShortCuts();
   },
   computed: {
@@ -407,7 +362,7 @@ export default {
             
               
               
-              <dropdown pos="bottom left" triggerClass="uip-dark-mode">
+              <dropdown pos="bottom left" ref="logomenu">
                 <template v-slot:trigger>
                   <div class="uip-flex uip-gap-xs uip-flex-center uip-link-default uip-border-rounder uip-background-muted uip-padding-xs uip-padding-top-xxs uip-padding-bottom-xxs">
                     <div class="uip-logo uip-w-18 uip-ratio-1-1"></div>
@@ -426,7 +381,8 @@ export default {
                         <div class="uip-icon uip-text-l uip-text-muted">chevron_left</div>
                       </router-link>
                       
-                      <router-link to="/site-settings" class="uip-link-default uip-no-underline uip-flex uip-flex-center uip-gap-m uip-padding-xxs uip-border-round hover:uip-background-muted">
+                      <router-link @click="$refs.logomenu.close()"
+                      to="/site-settings" class="uip-link-default uip-no-underline uip-flex uip-flex-center uip-gap-m uip-padding-xxs uip-border-round hover:uip-background-muted">
                         
                         <div class="uip-flex-grow">{{ui.strings.siteSettings}}</div>
                         <div class="uip-icon uip-text-l uip-text-muted">tune</div>
@@ -437,14 +393,15 @@ export default {
                       <div class="uip-border-top uip-margin-top-xxs uip-margin-bottom-xxs"></div>
                     
                     
-                      <a @click="createNewUI()" class="uip-link-default uip-no-underline uip-flex uip-flex-center uip-gap-m uip-padding-xxs uip-border-round hover:uip-background-muted">
+                      <a @click="createNewUI();$refs.logomenu.close()" class="uip-link-default uip-no-underline uip-flex uip-flex-center uip-gap-m uip-padding-xxs uip-border-round hover:uip-background-muted">
                         
                         <div class="uip-flex-grow">{{ui.strings.newTemplate}}</div>
                         <div class="uip-icon uip-text-l uip-text-muted">add</div>
                         
                       </a>
                       
-                      <router-link :to="returnSettingsLink" class="uip-link-default uip-no-underline uip-flex uip-flex-center uip-gap-m uip-padding-xxs uip-border-round hover:uip-background-muted">
+                      <router-link @click="$refs.logomenu.close()"
+                      :to="returnSettingsLink" class="uip-link-default uip-no-underline uip-flex uip-flex-center uip-gap-m uip-padding-xxs uip-border-round hover:uip-background-muted">
                         
                         <div class="uip-flex-grow">{{ui.strings.templateSettings}}</div>
                         <div class="uip-icon uip-text-l uip-text-muted">settings</div>
@@ -459,7 +416,7 @@ export default {
                         
                       </label>
                       
-                      <a @click="exportTemplate('template')" class="uip-link-default uip-no-underline uip-flex uip-flex-center uip-gap-m uip-padding-xxs uip-border-round hover:uip-background-muted">
+                      <a @click="exportTemplate('template');$refs.logomenu.close()" class="uip-link-default uip-no-underline uip-flex uip-flex-center uip-gap-m uip-padding-xxs uip-border-round hover:uip-background-muted">
                         
                         <div class="uip-flex-grow">{{ui.strings.export}}</div>
                         <div class="uip-icon uip-text-l uip-text-muted">file_download</div>
@@ -472,14 +429,15 @@ export default {
                     
                       <div class="uip-border-top uip-margin-top-xxs uip-margin-bottom-xxs"></div>
                   
-                      <a class="uip-link-default uip-no-underline uip-flex uip-flex-center uip-gap-m uip-padding-xxs uip-border-round hover:uip-background-muted" href="https://uipress.co/docs/#/" target="_BLANK">
+                      <a @click="$refs.logomenu.close()" class="uip-link-default uip-no-underline uip-flex uip-flex-center uip-gap-m uip-padding-xxs uip-border-round hover:uip-background-muted" href="https://uipress.co/docs/#/" target="_BLANK">
                         
                         <div class="uip-flex-grow">{{ui.strings.docs}}</div>
                         <div class="uip-icon uip-text-l uip-text-muted">open_in_new</div>
                       </a>
                       
                       
-                      <div @click="tips.open = true" class="uip-link-default uip-no-underline uip-flex uip-flex-center uip-gap-m uip-padding-xxs uip-border-round hover:uip-background-muted" >
+                      <div @click="uipApp.tipsAndTricks.show();$refs.logomenu.close()" 
+                      class="uip-link-default uip-no-underline uip-flex uip-flex-center uip-gap-m uip-padding-xxs uip-border-round hover:uip-background-muted" >
                         
                         <div class="uip-flex-grow">{{ui.strings.tips}}</div>
                         <div class="uip-icon uip-text-l uip-text-muted">tips_and_updates</div>
@@ -565,37 +523,6 @@ export default {
       
       
       
-      <div v-if="tips.open" class="uip-position-fixed uip-top-0 uip-left-0 uip-h-viewport uip-w-vw uip-background-black-wash uip-flex uip-flex-center uip-flex-middle uip-fade-in" style="z-index:10">
       
-        <div class="uip-background-default uip-border-rounder uip-overflow-hidden uip-flex uip-flex-column uip-row-gap-s uip-scale-in uip-min-w-350 uip-w-400 uip-padding-m"
-        style="border-radius: calc(var(--uip-border-radius-large) + var(--uip-padding-xs));">
-          
-          
-            <div class="uip-flex uip-flex-column uip-row-gap-s">
-              
-              <img :src="tips.allTips[tips.currentTip].img" :alt="tips.allTips[tips.currentTip].title" class="uip-w-100p uip-border-rounder uip-fade-in">
-              <div class="uip-text-emphasis uip-text-l uip-fade-in">{{tips.allTips[tips.currentTip].title}}</div>
-              <div class="uip-text-muted uip-fade-in" style="line-height:1.6">{{tips.allTips[tips.currentTip].content}}</div>
-              
-            </div>
-            
-            <div class="uip-flex uip-flex-between">
-            
-              <button class="uip-button-default" @click="tips.open = false;saveUserPreference('supressTips', true, false);">{{ui.strings.close}}</button>
-              
-              <div class="uip-flex uip-gap-xs">
-              
-                <button v-if="tips.currentTip > 0" class="uip-button-default" @click="tips.currentTip -= 1">{{ui.strings.previous}}</button>
-                <button v-if="tips.currentTip < tips.allTips.length - 1" class="uip-button-default" @click="tips.currentTip += 1">{{ui.strings.next}}</button>
-                
-                <button v-if="tips.currentTip == tips.allTips.length - 1" class="uip-button-primary" @click="tips.open = false">{{ui.strings.done}}</button>
-                
-              </div>
-            </div>
-          
-          
-        </div>
-        
-      </div> 
         `,
 };

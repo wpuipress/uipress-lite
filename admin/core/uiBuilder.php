@@ -241,9 +241,6 @@ class uip_ui_builder extends uip_app
     $options = json_decode(stripslashes($_POST['settings']));
     $options = Sanitize::clean_input_with_code($options);
 
-    $styles = json_decode(stripslashes($_POST['styles']));
-    $styles = Sanitize::clean_input_with_code($styles);
-
     $template = false;
 
     //error_log(json_encode($options));
@@ -323,10 +320,6 @@ class uip_ui_builder extends uip_app
     }
 
     $globalSettings['site-settings'] = $siteSettings;
-
-    if ($styles && is_object($styles)) {
-      UipOptions::update('theme-styles', $styles);
-    }
 
     UipOptions::update(null, $globalSettings);
 

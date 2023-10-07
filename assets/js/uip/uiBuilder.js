@@ -119,6 +119,7 @@ GlobaleGroupOptions = processGlobalGroups(GlobaleGroupOptions, globalOptions);
 const appArgs = defineComponent({
   components: {
     Notify: defineAsyncComponent(() => import(`./v3.5/utility/notify.min.js?ver=${pluginVersion}`)),
+    Tips: defineAsyncComponent(() => import(`./uibuilder/tips.min.js?ver=${pluginVersion}`)),
   },
   data() {
     return {};
@@ -139,7 +140,8 @@ const appArgs = defineComponent({
   },
   template: `
     <router-view/>
-    <Notify/>`,
+    <Notify/>
+    <Tips/>`,
 });
 
 /**

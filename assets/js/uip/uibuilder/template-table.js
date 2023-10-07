@@ -45,6 +45,7 @@ export default {
         delete: __('Delete', 'uuipress-lite'),
         documentation: __('Documentation', 'uipress-lite'),
         siteSettings: __('Site settings', 'uipress-lite'),
+        tipsTricks: __('Tips and updates', 'uipress-lite'),
       },
       activeFilter: 'all',
       tabletabs: [
@@ -458,6 +459,13 @@ export default {
             class="uip-link-default uip-flex uip-flex-center uip-flex-between uip-gap-m uip-padding-xxs hover:uip-background-muted uip-border-rounder uip-no-underline">
               <span class="">{{strings.documentation}}</span>
               <span class="uip-icon">import_contacts</span>
+            </a>
+            
+            <a role="button"
+            @click="$refs.logodrop.close();this.uipApp.tipsAndTricks.show()"
+            class="uip-link-default uip-flex uip-flex-center uip-flex-between uip-gap-m uip-padding-xxs hover:uip-background-muted uip-border-rounder uip-no-underline">
+              <span class="">{{strings.tipsTricks}}</span>
+              <span class="uip-icon">lightbulb</span>
             </a>
             
             <div class="uip-border-top uip-margin-top-xs uip-margin-bottom-xs"></div>
