@@ -353,7 +353,7 @@ export default {
   template: `
       
       <!--PREVIEW TOOLBAR -->
-      <div id="uip-ui-preview-toolbar" class="uip-flex uip-padding-s uip-gap-xs uip-flex-center uip-flex-between uip-background-default uip-border-bottom uip-flex-wrap" style="z-index:2">
+      <div id="uip-ui-preview-toolbar" class="uip-flex uip-padding-s uip-gap-xs uip-flex-center uip-flex-between uip-background-default uip-border-bottom uip-flex-wrap uip-position-relative" style="z-index:2">
           <div class="uip-flex  uip-flex-center uip-app-frame">
         
             

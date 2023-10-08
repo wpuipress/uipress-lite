@@ -422,7 +422,7 @@ export default {
   <div class="uip-flex uip-flex-column uip-h-100p uip-w-100p uip-background-muted" style="min-height:100dvh">
   
     <!-- Toolbar -->
-    <div class="uip-padding-s uip-background-default uip-border-bottom uip-border-bottom uip-flex uip-flex-between">
+    <div class="uip-padding-s uip-background-default uip-border-bottom uip-border-bottom uip-flex uip-flex-between uip-position-relative">
     
       <!-- Logo -->
       <dropdown pos="bottom left" ref="logodrop">
@@ -512,9 +512,11 @@ export default {
       </dropdown>  
       
       <!-- Global search -->
-      <div class="uip-flex uip-background-muted uip-border-rounder uip-padding-xxs uip-flex-center uip-w-240">
-        <span class="uip-icon uip-text-muted uip-margin-right-xs">search</span>
-        <input class="uip-blank-input uip-flex-grow uip-text-s" type="search" v-model="search" :placeholder="strings.searchTemplates" autofocus="">
+      <div class="uip-position-absolute uip-left-0 uip-right-0 uip-flex uip-flex-center uip-flex-middle">
+        <div class="uip-flex uip-background-muted uip-border-rounder uip-padding-xxs uip-flex-center uip-w-240 ">
+          <span class="uip-icon uip-text-muted uip-margin-right-xs">search</span>
+          <input class="uip-blank-input uip-flex-grow uip-text-s" type="search" v-model="search" :placeholder="strings.searchTemplates" autofocus="">
+        </div>
       </div>
       
       <!-- Right actions -->
