@@ -17,47 +17,40 @@ const pluginVersion = import.meta.url.split('?ver=')[1];
  * @since 3.2.13
  */
 
-// Helper functions
-const registerObjects = (current, newSettings) => {
-  return { ...current, ...newSettings };
-};
-const registerArrays = (current, newSettings) => {
-  return [...current, ...newSettings];
-};
+import './blocks/layout/loader.min.js?ver=3.2.12';
+import './blocks/elements/loader.min.js?ver=3.2.12';
+import './blocks/inputs/loader.min.js?ver=3.2.12';
+import './blocks/dynamic/loader.min.js?ver=3.2.12';
+import './blocks/analytics/loader.min.js?ver=3.2.12';
+import './blocks/storeanalytics/loader.min.js?ver=3.2.12';
 
-import elementBlocks from './blocks/elements/loader.min.js?ver=3.2.12';
-import layoutBlocks from './blocks/layout/loader.min.js?ver=3.2.12';
-import formBlockOptions from './blocks/inputs/loader.min.js?ver=3.2.12';
-import dynamicBlocks from './blocks/dynamic/loader.min.js?ver=3.2.12';
-import analyticsBlocks from './blocks/analytics/loader.min.js?ver=3.2.12';
-import storeAnalyticsBlocks from './blocks/storeanalytics/loader.min.js?ver=3.2.12';
-const liteBlocks = [...elementBlocks, ...layoutBlocks, ...formBlockOptions, ...dynamicBlocks, ...analyticsBlocks, ...storeAnalyticsBlocks];
+// Apply blocks filter
+let AllBlocks = wp.hooks.applyFilters('uipress.blocks.register', []);
 
-const registerBlocks = (blocklist, newBlocks) => {
-  const existingModuleNames = new Set(blocklist.map((block) => block.moduleName));
-  const uniqueBlocks = newBlocks.filter((newBlock) => !existingModuleNames.has(newBlock.moduleName));
-  return [...blocklist, ...uniqueBlocks];
-};
-wp.hooks.addFilter('uip-register-blocks', 'child', registerBlocks);
-const AllBlocks = wp.hooks.applyFilters('uip-register-blocks', [], liteBlocks);
+// Filter out duplicate blocks
+const uniqueModuleNames = new Set();
+AllBlocks = AllBlocks.filter((item) => {
+  if (uniqueModuleNames.has(item.moduleName)) return false;
+  uniqueModuleNames.add(item.moduleName);
+  return true;
+});
 
 /**
  * Imports block groupings and applies filters
  *
  * @since 3.2.13
  */
-
 import blockGroups from './blocks/block-settings-groups.min.js?ver=3.2.12';
-wp.hooks.addFilter('uip-register-block-groups', 'child', registerObjects);
-const AllBlockGroups = wp.hooks.applyFilters('uip-register-block-groups', {}, blockGroups);
+wp.hooks.addFilter('uipress.blocks.groups.register', 'uipress', (current) => ({ ...current, ...blockGroups }));
+const AllBlockGroups = wp.hooks.applyFilters('uipress.blocks.groups.register', {});
 
 /**
  * Applies app plugin filters
  *
  * @since 3.2.13
  */
-wp.hooks.addFilter('uip-register-builder-plugins', 'child', registerArrays);
-const AllPlugins = wp.hooks.applyFilters('uip-register-builder-plugins', [], []);
+wp.hooks.addFilter('uipress.app.plugins.register', 'uipress', (current) => [...current, []]);
+const AllPlugins = wp.hooks.applyFilters('uipress.app.plugins.register', []);
 
 /**
  * Import dynamic data into the app
@@ -66,8 +59,8 @@ const AllPlugins = wp.hooks.applyFilters('uip-register-builder-plugins', [], [])
  */
 import { processSettings } from './options/dynamic-settings.min.js?ver=3.2.12';
 const dynamic_settings = processSettings(uip_ajax.uipAppData.options.dynamicData);
-wp.hooks.addFilter('uip-register-dynamic-inputs', 'child', registerObjects);
-const AllDynamics = wp.hooks.applyFilters('uip-register-dynamic-inputs', {}, dynamic_settings);
+wp.hooks.addFilter('uipress.uibuilder.dynamicdata.register', 'uipress', (current) => ({ ...current, ...dynamic_settings }));
+const AllDynamics = wp.hooks.applyFilters('uipress.uibuilder.dynamicdata.register', {});
 
 /**
  * Register theme styles
@@ -75,8 +68,8 @@ const AllDynamics = wp.hooks.applyFilters('uip-register-dynamic-inputs', {}, dyn
  * @since 3.2.13
  */
 import themeStyles from './options/theme-styles.min.js?ver=3.2.12';
-wp.hooks.addFilter('uip-register-theme-styles', 'child', registerObjects);
-const AllThemeStyles = wp.hooks.applyFilters('uip-register-theme-styles', {}, themeStyles);
+wp.hooks.addFilter('uipress.app.variables.register', 'uipress', (current) => ({ ...current, ...themeStyles }));
+const AllThemeStyles = wp.hooks.applyFilters('uipress.app.variables.register');
 
 /**
  * Import template group settings
@@ -84,10 +77,12 @@ const AllThemeStyles = wp.hooks.applyFilters('uip-register-theme-styles', {}, th
  * @since 3.2.13
  */
 import { templategroups, templateSettings } from './settings/template-settings-groups.min.js?ver=3.2.12';
-wp.hooks.addFilter('uip-register-template-settings-groups', 'child', registerObjects);
-wp.hooks.addFilter('uip-register-template-settings-groups-options', 'child', registerArrays);
-let TemplateGroupOptions = wp.hooks.applyFilters('uip-register-template-settings-groups', {}, templategroups);
-let options = wp.hooks.applyFilters('uip-register-template-settings-groups-options', [], templateSettings);
+
+wp.hooks.addFilter('uipress.uibuilder.templatesettings.groups.register', 'uipress', (current) => ({ ...current, ...templategroups }));
+wp.hooks.addFilter('uipress.uibuilder.templatesettings.options.register', 'uipress', (current) => [...current, ...templateSettings]);
+
+let TemplateGroupOptions = wp.hooks.applyFilters('uipress.uibuilder.templatesettings.groups.register', {});
+let options = wp.hooks.applyFilters('uipress.uibuilder.templatesettings.options.register', []);
 for (let [key, value] of Object.entries(TemplateGroupOptions)) {
   const groupSettings = options.filter((option) => option.group === key);
   TemplateGroupOptions[key].settings = groupSettings;
@@ -100,11 +95,13 @@ for (let [key, value] of Object.entries(TemplateGroupOptions)) {
  */
 
 import { globalSettingsGroups, globalSettings, processGlobalGroups } from './settings/global-settings-groups.min.js?ver=3.2.12';
-wp.hooks.addFilter('uip-register-global-settings-groups', 'child', registerObjects);
-wp.hooks.addFilter('uip-register-global-settings-groups-options', 'child', registerArrays);
-let GlobaleGroupOptions = wp.hooks.applyFilters('uip-register-global-settings-groups', {}, globalSettingsGroups);
-let globalOptions = wp.hooks.applyFilters('uip-register-global-settings-groups-options', [], globalSettings);
-GlobaleGroupOptions = processGlobalGroups(GlobaleGroupOptions, globalOptions);
+
+wp.hooks.addFilter('uipress.app.sitesettings.groups.register', 'uipress', (current) => ({ ...current, ...globalSettingsGroups }));
+wp.hooks.addFilter('uipress.app.sitesettings.options.register', 'uipress', (current) => [...current, ...globalSettings]);
+
+let SiteSettingsGroups = wp.hooks.applyFilters('uipress.app.sitesettings.groups.register', {});
+let SiteSettingsOptions = wp.hooks.applyFilters('uipress.app.sitesettings.options.register', []);
+SiteSettingsGroups = processGlobalGroups(SiteSettingsGroups, SiteSettingsOptions);
 
 /**
  * Register plugins, blocks, settings and groups
@@ -383,7 +380,7 @@ app.config.globalProperties.uipApp = reactive({
     toolbar: uipMasterToolbar,
 
     // Import local
-    globalGroupOptions: GlobaleGroupOptions,
+    globalGroupOptions: SiteSettingsGroups,
     dynamicOptions: AllDynamics,
     themeStyles: AllThemeStyles,
     templateGroupOptions: TemplateGroupOptions,

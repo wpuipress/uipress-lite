@@ -240,7 +240,7 @@ export function updateAppPage(newURL, reloadPage) {
 
   // Dispatch page change event
   const strippedURL = stripUIPparams(shortURL, adminURL);
-  const linkeChangeEvent = new CustomEvent('uip_page_change', { detail: { url: strippedURL } });
+  const linkeChangeEvent = new CustomEvent('uipress/app/page/change', { detail: { url: strippedURL } });
   document.dispatchEvent(linkeChangeEvent);
 
   if (!absoluteCheck.test(newURL)) {
@@ -329,7 +329,7 @@ export function updateActiveLink(newURL) {
   //Only update window history if we are in production
   //if (!this.isBuilder) history.pushState({}, null, url);
 
-  const uipActiveLinkChange = new CustomEvent('uip_page_change', { detail: { url: stripUIPparams(shortURL, adminURL) } });
+  const uipActiveLinkChange = new CustomEvent('uipress/app/page/change', { detail: { url: stripUIPparams(shortURL, adminURL) } });
   document.dispatchEvent(uipActiveLinkChange);
 }
 

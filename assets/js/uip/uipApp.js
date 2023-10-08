@@ -15,38 +15,31 @@ const pluginVersion = import.meta.url.split('?ver=')[1];
  *
  * @since 3.2.13
  */
+import './blocks/layout/loader.min.js?ver=3.2.12';
+import './blocks/elements/loader.min.js?ver=3.2.12';
+import './blocks/inputs/loader.min.js?ver=3.2.12';
+import './blocks/dynamic/loader.min.js?ver=3.2.12';
+import './blocks/analytics/loader.min.js?ver=3.2.12';
+import './blocks/storeanalytics/loader.min.js?ver=3.2.12';
 
-// Helper functions
-const registerObjects = (current, newSettings) => {
-  return { ...current, ...newSettings };
-};
-const registerArrays = (current, newSettings) => {
-  return [...current, ...newSettings];
-};
+// Apply blocks filter
+let AllBlocks = wp.hooks.applyFilters('uipress.blocks.register', []);
 
-import elementBlocks from './blocks/elements/loader.min.js?ver=3.2.12';
-import layoutBlocks from './blocks/layout/loader.min.js?ver=3.2.12';
-import formBlockOptions from './blocks/inputs/loader.min.js?ver=3.2.12';
-import dynamicBlocks from './blocks/dynamic/loader.min.js?ver=3.2.12';
-import analyticsBlocks from './blocks/analytics/loader.min.js?ver=3.2.12';
-import storeAnalyticsBlocks from './blocks/storeanalytics/loader.min.js?ver=3.2.12';
-const liteBlocks = [...elementBlocks, ...layoutBlocks, ...formBlockOptions, ...dynamicBlocks, ...analyticsBlocks, ...storeAnalyticsBlocks];
-
-const registerBlocks = (blocklist, newBlocks) => {
-  const existingModuleNames = new Set(blocklist.map((block) => block.moduleName));
-  const uniqueBlocks = newBlocks.filter((newBlock) => !existingModuleNames.has(newBlock.moduleName));
-  return [...blocklist, ...uniqueBlocks];
-};
-wp.hooks.addFilter('uip-register-blocks', 'child', registerBlocks);
-const AllBlocks = wp.hooks.applyFilters('uip-register-blocks', [], liteBlocks);
+// Filter out duplicate blocks
+const uniqueModuleNames = new Set();
+AllBlocks = AllBlocks.filter((item) => {
+  if (uniqueModuleNames.has(item.moduleName)) return false;
+  uniqueModuleNames.add(item.moduleName);
+  return true;
+});
 
 /**
  * Applies app plugin filters
  *
  * @since 3.2.13
  */
-wp.hooks.addFilter('uip-register-builder-plugins', 'child', registerArrays);
-const AllPlugins = wp.hooks.applyFilters('uip-register-builder-plugins', [], []);
+wp.hooks.addFilter('uipress.app.plugins.register', 'uipress', (current) => [...current, []]);
+const AllPlugins = wp.hooks.applyFilters('uipress.app.plugins.register', []);
 
 /**
  * Import dynamic data into the app
@@ -55,8 +48,8 @@ const AllPlugins = wp.hooks.applyFilters('uip-register-builder-plugins', [], [])
  */
 import { processSettings } from './options/dynamic-settings.min.js?ver=3.2.12';
 const dynamic_settings = processSettings(uip_ajax.uipAppData.options.dynamicData);
-wp.hooks.addFilter('uip-register-dynamic-inputs', 'child', registerObjects);
-const AllDynamics = wp.hooks.applyFilters('uip-register-dynamic-inputs', {}, dynamic_settings);
+wp.hooks.addFilter('uipress.uibuilder.dynamicdata.register', 'uipress', (current) => ({ ...current, ...dynamic_settings }));
+const AllDynamics = wp.hooks.applyFilters('uipress.uibuilder.dynamicdata.register', {});
 
 /**
  * Register theme styles
@@ -64,8 +57,8 @@ const AllDynamics = wp.hooks.applyFilters('uip-register-dynamic-inputs', {}, dyn
  * @since 3.2.13
  */
 import themeStyles from './options/theme-styles.min.js?ver=3.2.12';
-wp.hooks.addFilter('uip-register-theme-styles', 'child', registerObjects);
-const AllThemeStyles = wp.hooks.applyFilters('uip-register-theme-styles', {}, themeStyles);
+wp.hooks.addFilter('uipress.app.variables.register', 'uipress', (current) => ({ ...current, ...themeStyles }));
+const AllThemeStyles = wp.hooks.applyFilters('uipress.app.variables.register');
 
 /**
  * Builds main args for uip app
