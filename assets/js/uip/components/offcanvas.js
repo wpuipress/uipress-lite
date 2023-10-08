@@ -17,7 +17,7 @@ export default {
     this.mountShortcut();
   },
   beforeUnmount() {
-    document.removeEventListener('uip_page_change_loaded', this.handlePageChange, { once: false });
+    document.removeEventListener('uipress/app/page/load/finish', this.handlePageChange, { once: false });
     window.removeEventListener('keydown', this.handleKeyDown);
     window.removeEventListener('keyup', this.handleKeyUp);
   },
@@ -31,7 +31,7 @@ export default {
      * @since 3.2.13
      */
     mountShortcut() {
-      document.addEventListener('uip_page_change_loaded', this.handlePageChange, { once: false });
+      document.addEventListener('uipress/app/page/load/finish', this.handlePageChange, { once: false });
 
       // Return early if shortcut is not defined
       if (!this.shortCut) return;

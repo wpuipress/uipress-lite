@@ -143,7 +143,7 @@ export default {
     this.setTab();
   },
   beforeUnmount() {
-    document.addEventListener('uip_page_change_loaded', this.getNotifications, { once: false });
+    document.addEventListener('uipress/app/page/load/finish', this.getNotifications, { once: false });
   },
   computed: {
     /**
@@ -186,7 +186,7 @@ export default {
      * @since 3.2.13
      */
     mountWatchers() {
-      document.addEventListener('uip_page_change_loaded', this.getNotifications, { once: false });
+      document.addEventListener('uipress/app/page/load/finish', this.getNotifications, { once: false });
       if (!window.parent) return;
       window.parent.postMessage({ eventName: 'uip_request_fullscreen' }, '*');
     },

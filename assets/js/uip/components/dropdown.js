@@ -36,10 +36,7 @@ export default {
    * @since 0.0.1
    */
   beforeUnmount() {
-    document.removeEventListener('scroll', this.handleScroll, true);
-    document.body.removeEventListener('click', this.onClickOutside, true);
-    window.removeEventListener('keydown', this.handleKeyDown);
-    window.removeEventListener('keyup', this.handleKeyUp);
+    this.removeShortCuts();
   },
 
   mounted() {
@@ -47,6 +44,17 @@ export default {
   },
 
   methods: {
+    /**
+     * Removes components shortcuts
+     *
+     * @since 3.2.13
+     */
+    removeShortCuts() {
+      document.removeEventListener('scroll', this.handleScroll, true);
+      document.body.removeEventListener('click', this.onClickOutside);
+      window.removeEventListener('keydown', this.handleKeyDown);
+      window.removeEventListener('keyup', this.handleKeyUp);
+    },
     /**
      * Binds a keyboard shortcut to open a component.
      *
@@ -154,7 +162,7 @@ export default {
       document.addEventListener('scroll', this.handleScroll, true);
 
       // Listen for a click outside the dropdown to close it.
-      document.body.addEventListener('click', this.onClickOutside, true);
+      document.body.addEventListener('click', this.onClickOutside);
 
       // If an onOpen function was provided, call it.
       if (this.onOpen) this.onOpen();
@@ -172,10 +180,7 @@ export default {
     close() {
       this.modelOpen = false;
       this.position.opacity = 0;
-      document.body.removeEventListener('click', this.onClickOutside, true);
-      document.removeEventListener('scroll', this.handleScroll, true);
-      window.removeEventListener('keydown', this.handleKeyDown);
-      window.removeEventListener('keyup', this.handleKeyUp);
+      this.removeShortCuts();
     },
     /**
      * Turns a domrect into a regular object

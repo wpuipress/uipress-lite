@@ -32,7 +32,7 @@ export default {
   },
   beforeUnmount() {
     window.removeEventListener('resize', this.handleWindowResize);
-    document.removeEventListener('uip_page_change_loaded', this.getNotifications, { once: false });
+    document.removeEventListener('uipress/app/page/load/finish', this.getNotifications, { once: false });
   },
   computed: {
     /**
@@ -96,7 +96,7 @@ export default {
      */
     mountEventListeners() {
       window.addEventListener('resize', this.handleWindowResize);
-      document.addEventListener('uip_page_change_loaded', this.getNotifications, { once: false });
+      document.addEventListener('uipress/app/page/load/finish', this.getNotifications, { once: false });
 
       // Check if it's a ui template and watch for updates
       if (this.template.globalSettings.type != 'ui-template') return;

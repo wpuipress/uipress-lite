@@ -29,7 +29,6 @@ export default {
   mounted() {
     this.loading = false;
     this.getSettings();
-    console.log('cheese');
   },
   watch: {
     'uiTemplate.globalSettings': {

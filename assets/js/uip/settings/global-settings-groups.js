@@ -18,7 +18,6 @@ export function processGlobalGroups(groups, options) {
   for (let [key] of Object.entries(processedGroups)) {
     const groupSettings = options.filter((option) => option.group === key);
     const seenKeys = new Set(); // a set to ensure uniqueness
-
     processedGroups[key].settings = processedGroups[key].settings || [];
 
     for (let opt of groupSettings) {

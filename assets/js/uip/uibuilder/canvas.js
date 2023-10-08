@@ -505,7 +505,7 @@ export default {
           frame.classList.remove('uip-desktop-view');
         }
       }
-      let previewwidthChange = new CustomEvent('uip_builder_preview_change', { detail: { windowWidth: this.uiTemplate.windowWidth } });
+      let previewwidthChange = new CustomEvent('uipress/builder/preview/change', { detail: { windowWidth: this.uiTemplate.windowWidth } });
       document.dispatchEvent(previewwidthChange);
       requestAnimationFrame(() => {
         this.setCanvasPosition();

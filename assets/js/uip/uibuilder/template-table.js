@@ -563,7 +563,7 @@ export default {
           .list-move, /* apply transition to moving elements */
           .list-enter-active,
           .list-leave-active {
-            transition: all 0.5s ease;
+            transition: all 0.2s ease;
           }
           
           .list-enter-from,
@@ -682,7 +682,7 @@ export default {
               </router-link>
             
               <a class="uip-link-muted uip-flex uip-flex-center uip-flex-between uip-gap-m uip-padding-xxs hover:uip-background-muted uip-border-rounder"
-              @click.prevent="duplicateTemplate(template.id)">
+              @click.prevent="duplicateTemplate(template.id);$refs['templatemenu-'+index][0].close()">
                 <span class="">{{strings.duplicate}}</span>
                 <span class="uip-icon">content_copy</span>
               </a>
@@ -690,7 +690,7 @@ export default {
               <div class="uip-border-top uip-margin-top-xs uip-margin-bottom-xs"></div>
               
               <a class="uip-link-danger uip-flex uip-flex-center uip-flex-between uip-gap-m uip-padding-xxs hover:uip-background-muted uip-border-rounder"
-              @click.prevent="confirmDelete(template.id)">
+              @click.prevent="confirmDelete(template.id);$refs['templatemenu-'+index][0].close()">
                 <span class="">{{strings.delete}}</span>
                 <span class="uip-icon">delete</span>
               </a>
