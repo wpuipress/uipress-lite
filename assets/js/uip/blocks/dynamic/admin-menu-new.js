@@ -561,7 +561,7 @@ export default {
     breadCrumbs: {
       handler(newValue, oldValue) {
         let self = this;
-        let breadChange = new CustomEvent('uip_breadcrumbs_change', { detail: { crumbs: self.breadCrumbs } });
+        let breadChange = new CustomEvent('uipress/app/breadcrumbs/update', { detail: { crumbs: self.breadCrumbs } });
         document.dispatchEvent(breadChange);
       },
       deep: true,
@@ -693,8 +693,8 @@ export default {
    * @since 3.2.13
    */
   beforeUnmount() {
-    document.removeEventListener('uip_page_change', this.updateActiveLink, { once: false });
-    document.removeEventListener('uip_page_change_loaded', this.updateMenuFromFrame, { once: false });
+    document.removeEventListener('uipress/app/page/change', this.updateActiveLink, { once: false });
+    document.removeEventListener('uipress/app/page/load/finish', this.updateMenuFromFrame, { once: false });
   },
   methods: {
     /**
@@ -713,8 +713,8 @@ export default {
      * @since 3.2.13
      */
     mountEventListeners() {
-      document.addEventListener('uip_page_change', this.updateActiveLink, { once: false });
-      document.addEventListener('uip_page_change_loaded', this.updateMenuFromFrame, { once: false });
+      document.addEventListener('uipress/app/page/change', this.updateActiveLink, { once: false });
+      document.addEventListener('uipress/app/page/load/finish', this.updateMenuFromFrame, { once: false });
     },
 
     /**

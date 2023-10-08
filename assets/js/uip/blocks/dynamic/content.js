@@ -194,7 +194,7 @@ export default {
       window.removeEventListener('message', this.handleFrameMessages, false);
       window.removeEventListener('popstate', this.handleHashChanges, false);
       window.removeEventListener('hashchange', this.handleHashChanges, false);
-      document.removeEventListener('uip_breadcrumbs_change', this.handleBreadCrumbChange, { once: false });
+      document.removeEventListener('uipress/app/breadcrumbs/update', this.handleBreadCrumbChange, { once: false });
       document.removeEventListener('uip_update_frame_url', this.handleURLchangeRequest, { once: false });
     },
     /**
@@ -203,7 +203,7 @@ export default {
      * @since 3.2.13
      */
     mountMainWatchers() {
-      document.addEventListener('uip_breadcrumbs_change', this.handleBreadCrumbChange, { once: false });
+      document.addEventListener('uipress/app/breadcrumbs/update', this.handleBreadCrumbChange, { once: false });
       document.addEventListener('uip_update_frame_url', this.handleURLchangeRequest, { once: false });
       this.iframeURLChange(this.$refs.contentframe, this.handleFrameURLChange);
     },
@@ -252,7 +252,7 @@ export default {
      * @since 3.2.13
      */
     initiateLoading() {
-      document.dispatchEvent(new CustomEvent('uip_page_change_started'));
+      document.dispatchEvent(new CustomEvent('uipress/app/page/load/start'));
       this.loading = true;
 
       const stopLoader = () => (this.loading = false);
@@ -304,7 +304,7 @@ export default {
     /**
      * Handles iframe load event
      *
-     * @param {Object} - event - uip_breadcrumbs_change event
+     * @param {Object} - event - uipress/app/breadcrumbs/update event
      * @since 3.2.13
      */
     async handleIframeLoad(event) {
@@ -330,7 +330,7 @@ export default {
       //Update browser address if we are not in builder
       if (this.uiTemplate.display == 'prod') this.updateBrowserAddress(frame.contentWindow.location.href);
 
-      document.dispatchEvent(new CustomEvent('uip_page_change_loaded'));
+      document.dispatchEvent(new CustomEvent('uipress/app/page/load/finish'));
       this.updatePageUrls();
       this.injectWindowOpenMethod();
     },
@@ -400,9 +400,9 @@ export default {
     },
 
     /**
-     * Handles breadcrumb changes from custom event 'uip_breadcrumbs_change'
+     * Handles breadcrumb changes from custom event 'uipress/app/breadcrumbs/update'
      *
-     * @param {Object} - event - uip_breadcrumbs_change event
+     * @param {Object} - event - uipress/app/breadcrumbs/update event
      * @since 3.2.13
      */
     handleBreadCrumbChange(event) {

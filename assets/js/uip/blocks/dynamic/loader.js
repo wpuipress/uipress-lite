@@ -1555,25 +1555,28 @@ const SiteNotifications = {
   icon: 'notifications',
 };
 
-export default [
-  AdminMenu,
-  AdminMenuNew,
-  PageContent,
-  PostTable,
-  RecentPosts,
-  Search,
-  ToolBar,
-  BreadCrumbs,
-  FullScreenToggle,
-  OpenWithoutFrame,
-  PageLoader,
-  AIChat,
-  MediaLibrary,
-  PluginUpdates,
-  PluginSearch,
-  GroupedDateRange,
-  UserMeta,
-  ContentNavigator,
-  OrdersKanban,
-  SiteNotifications,
-];
+(function () {
+  const blocks = [
+    AdminMenu,
+    AdminMenuNew,
+    PageContent,
+    PostTable,
+    RecentPosts,
+    Search,
+    ToolBar,
+    BreadCrumbs,
+    FullScreenToggle,
+    OpenWithoutFrame,
+    PageLoader,
+    AIChat,
+    MediaLibrary,
+    PluginUpdates,
+    PluginSearch,
+    GroupedDateRange,
+    UserMeta,
+    ContentNavigator,
+    OrdersKanban,
+    SiteNotifications,
+  ];
+  wp.hooks.addFilter('uipress.blocks.register', 'uipress', (currentBlocks) => [...currentBlocks, ...blocks]);
+})();

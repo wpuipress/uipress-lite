@@ -712,4 +712,7 @@ const ShortCode = {
   icon: 'code_blocks',
 };
 
-export default [Button, Heading, Paragraph, Image, Accordion, Icon, DarkMode, Tabs, ToDo, Video, Quote, ExitDashboard, IFrame, HTMLblock, IconList, ShortCode];
+(function () {
+  const blocks = [Button, Heading, Paragraph, Image, Accordion, Icon, DarkMode, Tabs, ToDo, Video, Quote, ExitDashboard, IFrame, HTMLblock, IconList, ShortCode];
+  wp.hooks.addFilter('uipress.blocks.register', 'uipress', (currentBlocks) => [...currentBlocks, ...blocks]);
+})();

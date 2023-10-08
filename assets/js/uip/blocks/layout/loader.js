@@ -358,4 +358,7 @@ const Modal = {
   icon: 'open_in_new',
 };
 
-export default [Container, Dropdown, ResponsiveGrid, SlideOut, Modal];
+(function () {
+  const blocks = [Container, Dropdown, ResponsiveGrid, SlideOut, Modal];
+  wp.hooks.addFilter('uipress.blocks.register', 'uipress', (currentBlocks) => [...currentBlocks, ...blocks]);
+})();

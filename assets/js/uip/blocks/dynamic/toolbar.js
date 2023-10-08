@@ -20,7 +20,7 @@ export default {
     this.updateFromDom();
   },
   beforeUnmount() {
-    document.removeEventListener('uip_page_change_loaded', this.handlePagechange);
+    document.removeEventListener('uipress/app/page/load/finish', this.handlePagechange);
   },
   computed: {
     /**
@@ -77,7 +77,7 @@ export default {
      */
     importToolBar() {
       this.toolbar = JSON.parse(JSON.stringify(this.uipApp.data.toolbar));
-      document.addEventListener('uip_page_change_loaded', this.handlePagechange);
+      document.addEventListener('uipress/app/page/load/finish', this.handlePagechange);
     },
 
     /**

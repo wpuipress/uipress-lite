@@ -18,7 +18,7 @@ export default {
     this.mountWatchers();
   },
   beforeUnmount() {
-    document.removeEventListener('uip_breadcrumbs_change', this.handleCrumbs, { once: false });
+    document.removeEventListener('uipress/app/breadcrumbs/update', this.handleCrumbs, { once: false });
   },
   computed: {
     /**
@@ -41,7 +41,7 @@ export default {
      * @since 3.2.13
      */
     mountWatchers() {
-      document.addEventListener('uip_breadcrumbs_change', this.handleCrumbs, { once: false });
+      document.addEventListener('uipress/app/breadcrumbs/update', this.handleCrumbs, { once: false });
     },
     /**
      * Handles breadcrumb change events

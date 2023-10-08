@@ -15,8 +15,8 @@ export default {
     this.mountEventListeners();
   },
   onUnmounted() {
-    document.removeEventListener('uip_page_change_started', this.handlePageLoadStart, { once: false });
-    document.removeEventListener('uip_page_change_loaded', this.handlePageLoadEnd, { once: false });
+    document.removeEventListener('uipress/app/page/load/start', this.handlePageLoadStart, { once: false });
+    document.removeEventListener('uipress/app/page/load/finish', this.handlePageLoadEnd, { once: false });
   },
   computed: {
     /**
@@ -50,8 +50,8 @@ export default {
      * @since 3.2.13
      */
     mountEventListeners() {
-      document.addEventListener('uip_page_change_started', this.handlePageLoadStart, { once: false });
-      document.addEventListener('uip_page_change_loaded', this.handlePageLoadEnd, { once: false });
+      document.addEventListener('uipress/app/page/load/start', this.handlePageLoadStart, { once: false });
+      document.addEventListener('uipress/app/page/load/finish', this.handlePageLoadEnd, { once: false });
     },
 
     /**

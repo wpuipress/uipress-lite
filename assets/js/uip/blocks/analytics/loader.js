@@ -1,5 +1,5 @@
 const { __, _x, _n, _nx } = wp.i18n;
-export default [
+export const blocks = [
   /**
    * Text input block
    * @since 3.0.0
@@ -46,3 +46,7 @@ export default [
     icon: 'map',
   },
 ];
+
+(function () {
+  wp.hooks.addFilter('uipress.blocks.register', 'uipress', (currentBlocks) => [...currentBlocks, ...blocks]);
+})();

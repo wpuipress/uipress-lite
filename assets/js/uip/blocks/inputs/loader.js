@@ -435,4 +435,7 @@ const ColorSelect = {
   icon: 'palette',
 };
 
-export default [Form, TextInput, TextArea, Select, Radio, CheckBox, ImageSelect, DateRange, ColorSelect];
+(function () {
+  const blocks = [Form, TextInput, TextArea, Select, Radio, CheckBox, ImageSelect, DateRange, ColorSelect];
+  wp.hooks.addFilter('uipress.blocks.register', 'uipress', (currentBlocks) => [...currentBlocks, ...blocks]);
+})();
