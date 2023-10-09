@@ -344,6 +344,7 @@ export default {
       let preset = this.hasNestedPath(text, 'size', 'preset');
       const fontSize = this.hasNestedPath(text, 'size', 'value');
       const lineHeight = this.hasNestedPath(text, 'lineHeight', 'value');
+      const spacing = this.hasNestedPath(text, 'spacing', 'value');
 
       let styleString = '';
 
@@ -362,6 +363,10 @@ export default {
 
       if (lineHeight) {
         styleString += text.lineHeight.units ? `line-height:${lineHeight}${text.lineHeight.units};` : '';
+      }
+
+      if (spacing) {
+        styleString += text.spacing.units ? `letter-spacing:${spacing}${text.spacing.units};` : '';
       }
 
       styleString += text.align ? `text-align: ${text.align};` : '';

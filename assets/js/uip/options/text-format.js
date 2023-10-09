@@ -28,6 +28,7 @@ export default {
         decoration: __('Decoration', 'uipress-lite'),
         fontURL: __('Font url', 'uipress-lite'),
         customFontName: __('Font family', 'uipress-lite'),
+        spacing: __('Spacing', 'uipress-lite'),
       },
       alignOptions: {
         left: {
@@ -184,7 +185,7 @@ export default {
       fonts: [...FontFamilies, ...[{ value: 'custom', label: __('Custom', 'uipress-lite') }]],
     };
   },
-  
+
   watch: {
     /**
      * Watches changes to value prop and injects
@@ -230,6 +231,9 @@ export default {
         font: 'inherit',
         size: {
           preset: 'M',
+          units: 'px',
+        },
+        spacing: {
           units: 'px',
         },
         lineHeight: {
@@ -411,12 +415,12 @@ export default {
         <!--Line height -->
       
         <div class="uip-text-muted uip-flex uip-flex-center uip-text-s"><span>{{strings.lineHeight}}</span></div>
+        <value-units :value="option.lineHeight" :returnData="function(data){option.lineHeight = data}"/>
         
-        <div class="uip-flex uip-row-gap-xs">
+        <!--Spacing -->
         
-          <value-units :value="option.lineHeight" :returnData="function(data){option.lineHeight = data}"></value-units>
-      
-        </div>
+        <div class="uip-text-muted uip-flex uip-flex-center uip-text-s"><span>{{strings.spacing}}</span></div>
+        <value-units :value="option.spacing" :returnData="(data)=>{option.spacing = data}"/>
         
       
       
