@@ -49,11 +49,11 @@ export default {
      * @since 3.2.12
      */
     returnDropdownPosition() {
-      let update = this.get_block_option(this.block, 'block', 'dropdownPosition');
-      if (this.isObject(update)) return update.value;
-
-      if (!update) return 'bottom left';
-      return update;
+      let position = this.get_block_option(this.block, 'block', 'dropdownPosition');
+      position = this.isObject(position) ? position.value : false;
+      position = position ? position : 'bottom left';
+      position = position.includes(' ') ? position : 'bottom left';
+      return position;
     },
 
     /**
@@ -62,11 +62,11 @@ export default {
      * @since 3.2.13
      */
     returnSubDropdownPosition() {
-      let update = this.get_block_option(this.block, 'block', 'subDropdownPosition');
-      if (this.isObject(update)) return update.value;
-
-      if (!update) return 'right top';
-      return update;
+      let position = this.get_block_option(this.block, 'block', 'subDropdownPosition');
+      position = this.isObject(position) ? position.value : false;
+      position = position ? position : 'right top';
+      position = position.includes(' ') ? position : 'right top';
+      return position;
     },
   },
   methods: {
@@ -401,6 +401,17 @@ export default {
 
       return link;
     },
+
+    /**
+     * Checks if a given submenu exists and has items
+     *
+     * @param {mixed} submenu - the submenu to check
+     * @since 3.2.13
+     */
+    itemHasSubmenu(submenu) {
+      if (!this.isObject(submenu)) return false;
+      if (Object.keys(submenu).length > 0) return true;
+    },
   },
   template: `
             <div class="uip-text-normal" v-if="rendered">
@@ -432,9 +443,9 @@ export default {
                             <div class="uip-line-height-1 uip-flex uip-gap-xxs uip-flex-center" v-if="!customTitle(item.id)" v-html="item.title"></div>
                           </a>
                         </template>
-                        <template v-slot:content v-if="item.submenu && Object.keys(item.submenu).length > 0">
+                        <template v-slot:content v-if="itemHasSubmenu(item.submenu)">
                         
-                          <div class="uip-toolbar-submenu uip-min-w-200 uip-border-rounder uip-padding-xs">
+                          <div class="uip-toolbar-submenu uip-min-w-200 uip-border-rounder uip-padding-xs uip-max-h-500" style="overflow:auto">
                           
                           
                             <!-- NETWORK ADMIN TOOLBAR -->
@@ -442,7 +453,7 @@ export default {
                               <div class="uip-padding-xxs uip-flex uip-flex-column uip-row-gap-xxs uip-min-w-130">
                                 <template v-for="sub in subsection.submenu">
                                   <!--SECOND DROP -->
-                                <dropdown :hover="true"  :disableTeleport="true">
+                                <dropdown :hover="true" :pos="returnSubDropdownPosition" :disableTeleport="true">
                                     <template v-slot:trigger>
                                       <a :href="formatHREF(sub.href)" @click="updatePage(sub, $event, true)"  class="uip-link-default uip-no-underline uip-toolbar-sub-item uip-flex uip-flex-center uip-flex-between uip-gap-s uip-flex-grow uip-padding-xxs uip-border-rounder hover:uip-background-muted" >
                                         <span v-html="sub.title"></span>
@@ -471,10 +482,10 @@ export default {
                                 <template v-slot:trigger>
                                   <a @click="updatePage(sub, $event)" :href="formatHREF(sub.href)" class="uip-link-default uip-no-underline uip-toolbar-sub-item uip-flex uip-flex-center uip-flex-between uip-gap-s uip-flex-grow uip-padding-xxs uip-border-rounder hover:uip-background-muted" >
                                     <span v-html="sub.title"></span>
-                                    <span v-if="Object.keys(sub.submenu).length > 0" class="uip-icon">chevron_right</span>
+                                    <span v-if="itemHasSubmenu(sub.submenu)" class="uip-icon">chevron_right</span>
                                   </a>
                                 </template>
-                                <template v-slot:content v-if="Object.keys(sub.submenu).length > 0">
+                                <template v-slot:content v-if="itemHasSubmenu(sub.submenu)">
                                   <div class="uip-toolbar-submenu uip-min-w-200 uip-padding-xs">
                                     <template v-for="subsub in sub.submenu">
                                       <a @click="updatePage(subsub, $event)" :href="formatHREF(subsub.href)" class="uip-link-default uip-no-underline uip-toolbar-sub-item uip-flex uip-flex-center uip-flex-between uip-gap-s uip-flex-grow uip-padding-xxs uip-border-rounder hover:uip-background-muted" v-html="subsub.title"></a>
