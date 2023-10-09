@@ -246,6 +246,22 @@ export default {
       // Handle changes related to the iframe's content
       this.handleIframeContentChanges(frame, url, newURL);
     },
+
+    /**
+     * Checks if dynamic loading is disabled and reloads the page if so
+     *
+     * @param {string} url
+     * @since 3.2.13
+     */
+    dynamicLoadingDisabled(url) {
+      const isProd = this.uiTemplate.display == 'prod' ? true : false;
+      if (typeof UIPdisableDynamicLoading !== 'undefined') {
+        const disabledDynamicLoading = UIPdisableDynamicLoading && isProd ? true : false;
+        const newURL = stripUIPparams(url);
+        if (disabledDynamicLoading) window.location.assign(newURL);
+      }
+    },
+
     /**
      * Starts loading bar
      *
@@ -319,6 +335,7 @@ export default {
       if (!isLoaded) return window.location.assign(this.currentURL);
 
       this.mountFrameWatchers();
+      this.getAdminPageTitle();
       this.checkForUserFullSreen(currentURL);
 
       this.loading = false;
@@ -333,6 +350,20 @@ export default {
       document.dispatchEvent(new CustomEvent('uipress/app/page/load/finish'));
       this.updatePageUrls();
       this.injectWindowOpenMethod();
+    },
+
+    /**
+     * Gets admin page title from frame and updates dynamic data
+     *
+     * @since 3.2.13
+     */
+    getAdminPageTitle() {
+      const frame = this.$refs.contentframe;
+      if (!frame) return;
+      const script = frame.contentWindow.document.querySelector('#uip-admin-page-title');
+      if (!script) return;
+      const title = script.getAttribute('data-title');
+      this.uipApp.data.dynamicOptions.adminPageTitle.value = title;
     },
 
     /**
@@ -579,6 +610,9 @@ export default {
     handleInsideFrameLink(url) {
       // No url so bail
       if (!url) return;
+
+      // Check if dynamic loading is disabled
+      this.dynamicLoadingDisabled(url);
 
       const absoluteUrlPattern = /^(?:[a-z+]+:)?\/\//i;
 
