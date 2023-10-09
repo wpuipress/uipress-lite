@@ -154,7 +154,7 @@ export default {
      * @since 0.0.1
      */
     show() {
-      if (this.modelOpen) return this.close();
+      if (this.modelOpen && !this.hover) return this.close();
 
       this.modelOpen = true;
 
