@@ -1160,6 +1160,18 @@ export default {
   },
   computed: {
     /**
+     * Returns the current blocks component name
+     *
+     * @since 3.2.13
+     */
+    returnBlockRealName() {
+      const modName = this.block.moduleName;
+      const allBlocks = this.uipApp.data.blocks;
+      const masterBlock = allBlocks.find((block) => block.moduleName === modName);
+      if (!masterBlock) return this.block.name;
+      return masterBlock.name;
+    },
+    /**
      * Returns block query settings
      *
      * @since 3.2.13
@@ -1411,7 +1423,7 @@ export default {
           <div class="uip-flex uip-flex-between uip-flex-center">
           
             <div class="uip-flex uip-flex-column">
-              <input class="uip-text-bold uip-blank-input uip-text-l uip-text-emphasis" v-model="block.name">
+              <div class="uip-text-bold uip-blank-input uip-text-l uip-text-emphasis">{{ returnBlockRealName }}</div>
             </div>
             
             <a class="uip-link-muted hover:uip-background-muted uip-border-rounder uip-icon uip-padding-xxs" @click="close()">close</a>
