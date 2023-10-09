@@ -111,6 +111,9 @@ class uip_ui_builder extends uip_app
       return;
     }
 
+    // Triggers pro actions for builder
+    do_action('uipress/uibuilder/start');
+
     // Capture toolbar and menu
     AdminMenu::capture();
     ToolBar::capture();
