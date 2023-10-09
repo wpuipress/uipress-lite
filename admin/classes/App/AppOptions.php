@@ -184,6 +184,12 @@ class AppOptions
       'type' => 'text',
     ];
 
+    $options['adminPageTitle'] = [
+      'label' => __('Admin page title', 'uipress-lite'),
+      'value' => '',
+      'type' => 'text',
+    ];
+
     $options['logout'] = [
       'label' => __('Logout link', 'uipress-lite'),
       'value' => wp_logout_url(),

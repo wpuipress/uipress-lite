@@ -39,6 +39,20 @@ class FramedPages
     add_action('admin_footer', ['UipressLite\Classes\Scripts\UipScripts', 'output_user_styles'], 0);
     add_filter('admin_body_class', ['UipressLite\Classes\Pages\FramedPages', 'push_body_class']);
     add_action('admin_head-profile.php', ['UipressLite\Classes\Pages\FramedPages', 'remove_admin_color_scheme']);
+
+    // Push admin page title
+    add_action('admin_head', ['UipressLite\Classes\Pages\FramedPages', 'push_admin_page_title']);
+  }
+
+  /**
+   * Pushes the current admin page title to script attribute
+   *
+   * @return void  description
+   */
+  public static function push_admin_page_title()
+  {
+    $title = get_admin_page_title();
+    wp_print_inline_script_tag('', ['id' => 'uip-admin-page-title', 'data-title' => $title]);
   }
 
   /**

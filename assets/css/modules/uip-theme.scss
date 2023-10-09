@@ -511,7 +511,6 @@ table.widefat {
     }
     td.plugin-title strong {
       color: var(--uip-text-color-emphasis);
-      font-weight: bold;
       &::after {
         content: 'active';
         @extend .uip-table-pill;
