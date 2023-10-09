@@ -1,6 +1,59 @@
 const { __, _x, _n, _nx } = wp.i18n;
 import { nextTick } from '../../../libs/vue-esm-dev.js';
+
+const submenu = {
+  name: 'SubMenu',
+  props: {
+    submenu: Object,
+    updatePage: Function,
+    formatHREF: Function,
+    itemHasSubmenu: Function,
+    dropPos: String,
+  },
+  data() {
+    return {};
+  },
+
+  template: `
+    
+    <div class="uip-toolbar-submenu uip-min-w-200 uip-border-rounder uip-padding-xs uip-max-h-500" style="overflow:auto">
+    
+      <template  v-for="sub in submenu">
+        
+        <dropdown width="200" :pos="dropPos" v-if="sub.title" :hover="true"  :disableTeleport="true">
+        
+          <template v-slot:trigger>
+            <a @click="updatePage(sub, $event)" :href="formatHREF(sub.href)" class="uip-link-default uip-no-underline uip-toolbar-sub-item uip-flex uip-flex-center uip-flex-between uip-gap-s uip-flex-grow uip-padding-xxs uip-border-rounder hover:uip-background-muted" >
+              <span v-html="sub.title"></span>
+              <span v-if="itemHasSubmenu(sub.submenu)" class="uip-icon">chevron_right</span>
+            </a>
+          </template>
+          
+          
+          <template v-slot:content v-if="itemHasSubmenu(sub.submenu)">
+          
+            <SubMenu
+            :updatePage="updatePage"
+            :formatHREF="formatHREF"
+            :itemHasSubmenu="itemHasSubmenu"
+            :submenu="sub.submenu"/>
+          
+          </template>
+          
+        </dropdown>
+        
+      </template>
+      
+    </div>
+    <!--END SECOND DROP -->
+  
+  `,
+};
+
 export default {
+  components: {
+    SubMenu: submenu,
+  },
   props: {
     display: String,
     name: String,
@@ -414,22 +467,23 @@ export default {
     },
   },
   template: `
-            <div class="uip-text-normal" v-if="rendered">
             
-            
-              <component is="style">
-                .uip-admin-toolbar #wpadminbar {all:unset}
-                .uip-admin-toolbar #wpadminbar .ab-icon {font-size:18px; filter: contrast(0.6);}
-              </component>
               
-              <div id="wpadminbar" style="display: block !important;">
+              <div id="wpadminbar" style="display: block !important;" class="uip-text-normal" v-if="rendered">
+              
+                <component is="style">
+                  .uip-admin-toolbar #wpadminbar {all:unset}
+                  .uip-admin-toolbar #wpadminbar .ab-icon {font-size:18px; filter: contrast(0.6);}
+                </component>
               
                 <div class="uip-admin-toolbar uip-flex">
+                
                   <template v-for="item in returnToolbar">
                   
-                    <div class="" v-if="ifHidden(item.id)" :id="'wp-admin-bar-' + item.id" :class="item.meta.class">
+                    
                       <!--FIRST DROP -->
-                      <dropdown :hover="true" :pos="returnDropdownPosition" :disableTeleport="true">
+                      <dropdown :hover="true" :pos="returnDropdownPosition" :disableTeleport="true"
+                      v-if="ifHidden(item.id)" :id="'wp-admin-bar-' + item.id" :class="item.meta.class">
                         <template v-slot:trigger>
                         
                           <a :href="formatHREF(item.href)" @click="updatePage(item, $event)" class="uip-link-default uip-no-underline uip-toolbar-top-item uip-flex uip-gap-xs uip-flex-center">
@@ -443,68 +497,59 @@ export default {
                             <div class="uip-line-height-1 uip-flex uip-gap-xxs uip-flex-center" v-if="!customTitle(item.id)" v-html="item.title"></div>
                           </a>
                         </template>
+                        
                         <template v-slot:content v-if="itemHasSubmenu(item.submenu)">
                         
-                          <div class="uip-toolbar-submenu uip-min-w-200 uip-border-rounder uip-padding-xs uip-max-h-500" style="overflow:auto">
+                          
                           
                           
                             <!-- NETWORK ADMIN TOOLBAR -->
-                            <template v-if="item.id == 'my-sites'" v-for="subsection in item.submenu">
-                              <div class="uip-padding-xxs uip-flex uip-flex-column uip-row-gap-xxs uip-min-w-130">
-                                <template v-for="sub in subsection.submenu">
-                                  <!--SECOND DROP -->
-                                <dropdown :hover="true" :pos="returnSubDropdownPosition" :disableTeleport="true">
-                                    <template v-slot:trigger>
-                                      <a :href="formatHREF(sub.href)" @click="updatePage(sub, $event, true)"  class="uip-link-default uip-no-underline uip-toolbar-sub-item uip-flex uip-flex-center uip-flex-between uip-gap-s uip-flex-grow uip-padding-xxs uip-border-rounder hover:uip-background-muted" >
-                                        <span v-html="sub.title"></span>
-                                        <span v-if="sub.submenu" class="uip-icon">chevron_right</span>
-                                      </a>
-                                    </template>
-                                    <template v-slot:content v-if="sub.submenu">
-                                      <div class="uip-toolbar-submenu uip-min-w-200 uip-padding-xs">
-                                        <template v-for="subsub in sub.submenu">
-                                          <a :href="formatHREF(subsub.href)" @click="updatePage(subsub, $event, true)"  class="uip-link-default uip-no-underline uip-toolbar-sub-item uip-flex uip-flex-center uip-flex-between uip-gap-s uip-flex-grow uip-padding-xxs uip-border-rounder hover:uip-background-muted" v-html="subsub.title"></a>
+                            <div v-if="item.id == 'my-sites'" class="uip-toolbar-submenu uip-min-w-200 uip-padding-xs uip-max-h-500" style="overflow:auto">
+                              <template  v-for="subsection in item.submenu">
+                                <div class="uip-padding-xxs uip-flex uip-flex-column uip-row-gap-xxs uip-min-w-130">
+                                  <template v-for="sub in subsection.submenu">
+                                  
+                                    <!--SECOND DROP -->
+                                    <dropdown :hover="true" :pos="returnSubDropdownPosition" :disableTeleport="true">
+                                        <template v-slot:trigger>
+                                          <a :href="formatHREF(sub.href)" @click="updatePage(sub, $event, true)"  class="uip-link-default uip-no-underline uip-toolbar-sub-item uip-flex uip-flex-center uip-flex-between uip-gap-s uip-flex-grow uip-padding-xxs uip-border-rounder hover:uip-background-muted" >
+                                            <span v-html="sub.title"></span>
+                                            <span v-if="sub.submenu" class="uip-icon">chevron_right</span>
+                                          </a>
                                         </template>
-                                      </div>
-                                    </template>
-                                  </dropdown>
-                                  <!--END SECOND DROP -->
-                                </template>
-                              </div>
-                              <div v-if="subsection.id == 'my-sites-super-admin'" class="uip-border-bottom"></div>\
-                            </template>
+                                        <template v-slot:content v-if="sub.submenu">
+                                          <div class="uip-toolbar-submenu uip-min-w-200 uip-padding-xs">
+                                            <template v-for="subsub in sub.submenu">
+                                              <a :href="formatHREF(subsub.href)" @click="updatePage(subsub, $event, true)"  class="uip-link-default uip-no-underline uip-toolbar-sub-item uip-flex uip-flex-center uip-flex-between uip-gap-s uip-flex-grow uip-padding-xxs uip-border-rounder hover:uip-background-muted" v-html="subsub.title"></a>
+                                            </template>
+                                          </div>
+                                        </template>
+                                      </dropdown>
+                                      <!--END SECOND DROP -->
+                                      
+                                  </template>
+                                </div>
+                                <div v-if="subsection.id == 'my-sites-super-admin'" class="uip-border-bottom"></div>\
+                              </template>
+                            </div>
                             <!-- END NETWORK ADMIN TOOLBAR -->
                             
                             
-                            <template  v-else v-for="sub in item.submenu">
-                              <!--SECOND DROP -->
-                              <dropdown width="200" :pos="returnSubDropdownPosition" triggerClass="uip-flex uip-flex-grow" :hover="true"  :disableTeleport="true">
-                                <template v-slot:trigger>
-                                  <a @click="updatePage(sub, $event)" :href="formatHREF(sub.href)" class="uip-link-default uip-no-underline uip-toolbar-sub-item uip-flex uip-flex-center uip-flex-between uip-gap-s uip-flex-grow uip-padding-xxs uip-border-rounder hover:uip-background-muted" >
-                                    <span v-html="sub.title"></span>
-                                    <span v-if="itemHasSubmenu(sub.submenu)" class="uip-icon">chevron_right</span>
-                                  </a>
-                                </template>
-                                <template v-slot:content v-if="itemHasSubmenu(sub.submenu)">
-                                  <div class="uip-toolbar-submenu uip-min-w-200 uip-padding-xs">
-                                    <template v-for="subsub in sub.submenu">
-                                      <a @click="updatePage(subsub, $event)" :href="formatHREF(subsub.href)" class="uip-link-default uip-no-underline uip-toolbar-sub-item uip-flex uip-flex-center uip-flex-between uip-gap-s uip-flex-grow uip-padding-xxs uip-border-rounder hover:uip-background-muted" v-html="subsub.title"></a>
-                                    </template>
-                                  </div>
-                                </template>
-                              </dropdown>
-                              <!--END SECOND DROP -->
-                            </template>
-                          </div>
+                           <SubMenu v-else
+                           :updatePage="updatePage"
+                           :formatHREF="formatHREF"
+                           :itemHasSubmenu="itemHasSubmenu"
+                           :submenu="item.submenu"
+                           :dropPos="returnSubDropdownPosition"/>
+                            
+                        
                         </template>
                       </dropdown>
                       <!--END FIRST DROP -->
                       
-                    </div>
                   </template>
                 </div>
               
               </div>
-              
-            </div>`,
+              `,
 };
