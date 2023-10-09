@@ -512,7 +512,7 @@ export default {
       </dropdown>  
       
       <!-- Global search -->
-      <div class="uip-position-absolute uip-left-0 uip-right-0 uip-flex uip-flex-center uip-flex-middle">
+      <div class="uip-position-absolute uip-left-50p uip-translateX--50p uip-flex uip-flex-center uip-flex-middle">
         <div class="uip-flex uip-background-muted uip-border-rounder uip-padding-xxs uip-flex-center uip-w-240 ">
           <span class="uip-icon uip-text-muted uip-margin-right-xs">search</span>
           <input class="uip-blank-input uip-flex-grow uip-text-s" type="search" v-model="search" :placeholder="strings.searchTemplates" autofocus="">
