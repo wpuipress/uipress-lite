@@ -6,10 +6,9 @@ export default {
     name: String,
     block: Object,
   },
-  data: function () {
+  data() {
     return {};
   },
-
   computed: {
     /**
      * Returns custom text for button trigger
@@ -69,6 +68,19 @@ export default {
     },
 
     /**
+     * Returns whether to open on hover
+     *
+     * @since 3.2.13
+     */
+    returnOpenHover() {
+      const mode = this.get_block_option(this.block, 'block', 'openMode');
+      if (!mode) return false;
+      if (!this.isObject(mode) && mode == 'hover') return true;
+      if (mode.value && mode.value == 'hover') return true;
+      return false;
+    },
+
+    /**
      * Returns the reverse class if icon position is right
      *
      * @since 3.2.13
@@ -94,7 +106,7 @@ export default {
     },
   },
   template: `
-        <dropdown :pos="returnDropPosition" :shortCut="getShortcutValue" :disableTeleport="true">
+        <dropdown :pos="returnDropPosition" :shortCut="getShortcutValue" :disableTeleport="true" :hover="returnOpenHover">
         
           <template #trigger>
           

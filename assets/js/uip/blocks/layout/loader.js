@@ -82,6 +82,25 @@ const Dropdown = {
           value: { value: 'left' },
         },
         {
+          option: 'choice-select',
+          componentName: 'choice-select',
+          uniqueKey: 'openMode',
+          args: {
+            options: {
+              click: {
+                value: 'click',
+                label: __('Click', 'uipress-lite'),
+              },
+              hover: {
+                value: 'hover',
+                label: __('Hover', 'uipress-lite'),
+              },
+            },
+          },
+          label: __('Mode', 'uipress-lite'),
+          value: { value: 'click' },
+        },
+        {
           option: 'defaultSelect',
           componentName: 'default-select',
           uniqueKey: 'dropDirection',
