@@ -6,6 +6,27 @@ namespace UipressLite\Classes\Utils;
 class Sanitize
 {
   /**
+   * Sanitises and strips tags of input from user without losing code
+   *
+   * @param mixed $values - input value to clean
+   * @return mixed - returns cleaned input value
+   * @since 3.2.13
+   */
+  public static function clean_input_with_code($values)
+  {
+    $allowedposttags = self::get_allowed_tags();
+
+    if (is_object($values)) {
+      $values = self::clean_object($values, $allowedposttags);
+    } elseif (is_array($values)) {
+      $values = self::clean_array($values, $allowedposttags);
+    } else {
+      $values = self::clean_value($values, $allowedposttags);
+    }
+
+    return $values;
+  }
+  /**
    * Returns list of allowed attributes for wp_kses
    *
    * @return Array
@@ -97,28 +118,6 @@ class Sanitize
     $allowedposttags['link'] = $allowed_atts;
     $allowedposttags['source'] = $allowed_atts;
     return $allowedposttags;
-  }
-
-  /**
-   * Sanitises and strips tags of input from user without losing code
-   *
-   * @param mixed $values - input value to clean
-   * @return mixed - returns cleaned input value
-   * @since 3.2.13
-   */
-  public static function clean_input_with_code($values)
-  {
-    $allowedposttags = self::get_allowed_tags();
-
-    if (is_object($values)) {
-      $values = self::clean_object($values, $allowedposttags);
-    } elseif (is_array($values)) {
-      $values = self::clean_array($values, $allowedposttags);
-    } else {
-      $values = self::clean_value($values, $allowedposttags);
-    }
-
-    return $values;
   }
 
   /**
