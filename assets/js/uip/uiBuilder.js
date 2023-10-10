@@ -357,9 +357,13 @@ app.config.globalProperties.sendServerRequest = sendServerRequest;
 app.config.globalProperties.updateAppPage = updateAppPage.bind({ adminURL: uip_ajax.uipAppData.options.adminURL, isBuilder: true });
 app.config.globalProperties.updateActiveLink = updateActiveLink.bind({ adminURL: uip_ajax.uipAppData.options.adminURL, isBuilder: true });
 app.config.globalProperties.saveUserPreference = saveUserPreference;
-window.uipress = {
+
+const plugindata = {
   defineAsyncComponent: defineAsyncComponent,
+  liteVersion: pluginVersion,
+  reactive: reactive,
 };
+window.uipress = isObject(window.uipress) ? { ...window.uipress, ...plugindata } : plugindata;
 
 // Get menu
 const menuScript = document.querySelector('#uip-admin-menu');
