@@ -12,7 +12,7 @@ export default {
       rendered: true,
     };
   },
-  
+
   watch: {
     chartData: {
       handler(newValue, oldValue) {
@@ -222,7 +222,7 @@ export default {
 
             enabled: false,
 
-            external: function (context) {
+            external: (context) => {
               this.getTooltip(context);
             },
           },
