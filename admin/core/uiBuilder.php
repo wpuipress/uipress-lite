@@ -167,8 +167,10 @@ class uip_ui_builder extends uip_app
 
     $appOptions = AppOptions::get_options();
     $userPrefs = UserPreferences::get();
+    $path = plugins_url('uipress-lite/');
 
     $variableFormatter = "
+      const uipressLitePath = '{$path}';
       var ajaxHolder = document.querySelector('#uip-app-data');
       var ajaxData = ajaxHolder.getAttribute('uip_ajax');
       var uip_ajax = JSON.parse(ajaxData, (k, v) => (v === 'uiptrue' ? true : v === 'uipfalse' ? false : v === 'uipblank' ? '' : v));";
