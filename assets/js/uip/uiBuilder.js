@@ -357,6 +357,9 @@ app.config.globalProperties.sendServerRequest = sendServerRequest;
 app.config.globalProperties.updateAppPage = updateAppPage.bind({ adminURL: uip_ajax.uipAppData.options.adminURL, isBuilder: true });
 app.config.globalProperties.updateActiveLink = updateActiveLink.bind({ adminURL: uip_ajax.uipAppData.options.adminURL, isBuilder: true });
 app.config.globalProperties.saveUserPreference = saveUserPreference;
+window.uipress = {
+  defineAsyncComponent: defineAsyncComponent,
+};
 
 // Get menu
 const menuScript = document.querySelector('#uip-admin-menu');
