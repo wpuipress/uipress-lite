@@ -97,6 +97,7 @@ const Offcanvas = defineAsyncComponent(() => import(`./components/offcanvas.min.
 const SaveButton = defineAsyncComponent(() => import(`./components/save-button.min.js?ver=${pluginVersion}`));
 const ChartComp = defineAsyncComponent(() => import(`./components/chart.min.js?ver=${pluginVersion}`));
 const FloatingPanel = defineAsyncComponent(() => import(`./components/floating-panel.min.js?ver=${pluginVersion}`));
+import { MediaLibrary } from './v3.5/utility/media-library.min.js?ver=3.2.0';
 
 app.component('multi-select', MultiSelect);
 app.component('user-role-select', UserMultiSelect);
@@ -112,6 +113,7 @@ app.component('dropdown', DropDown);
 app.component('uip-chart', ChartComp);
 app.component('uip-floating-panel', FloatingPanel);
 app.component('uip-draggable', VueDraggableNext);
+app.component('uipMediaLibrary', MediaLibrary);
 
 /**
  * Sets up global properties and functions
@@ -149,6 +151,13 @@ app.config.globalProperties.updateAppPage = updateAppPage.bind({ adminURL: uip_a
 app.config.globalProperties.updateActiveLink = updateActiveLink.bind({ adminURL: uip_ajax.uipAppData.options.adminURL, isBuilder: false });
 app.config.globalProperties.saveUserPreference = saveUserPreference;
 app.config.globalProperties.uipParseJson = uipParseJson;
+
+const plugindata = {
+  defineAsyncComponent: defineAsyncComponent,
+  liteVersion: pluginVersion,
+  reactive: reactive,
+};
+window.uipress = isObject(window.uipress) ? { ...window.uipress, ...plugindata } : plugindata;
 
 // Get menu
 const menuScript = document.querySelector('#uip-admin-menu');

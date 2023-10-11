@@ -1,15 +1,12 @@
 import Modal from './modal.min.js?ver=3.2.12';
 import Axios from '../libs/axios.min.js';
 
-export default {
-  components: {
-    modal: Modal,
-  },
-  
+import { defineAsyncComponent } from '../../../libs/vue-esm-dev.js';
+
+export const MediaLibrary = {
+  emits: ['image-selected', 'cancel-select'],
   data() {
     return {
-      resolvePromise: undefined,
-      rejectPromise: undefined,
       loading: true,
       strings: {
         mediaLibrary: __('Media library', 'uipress-lite'),
@@ -80,6 +77,9 @@ export default {
       },
       deep: true,
     },
+  },
+  mounted() {
+    this.maybeGetMedia();
   },
   computed: {
     /**
@@ -276,8 +276,7 @@ export default {
           });
         })
         .then((uploadResponse) => {
-          this.$refs.popup.close();
-          this.resolvePromise(uploadResponse.data);
+          this.$emit('image-selected', uploadResponse.data);
           this.uipApp.notifications.remove(notiID);
         })
         .catch((error) => {
@@ -292,27 +291,7 @@ export default {
     returnColumnItems(list, offset = 0) {
       return list.filter((_, index) => (index - offset) % 3 === 0);
     },
-    /**
-     * Shows confirm dialog and sets options
-     * opts (Object)
-     * @since 3.2.13
-     */
-    show(opts = {}) {
-      this.maybeGetMedia();
-      this.selected = false;
-      this.$refs.popup.open();
-      this.resolvePromise = undefined;
-      this.rejectPromise = undefined;
 
-      requestAnimationFrame(() => {
-        this.$refs.confirmBody.focus();
-      });
-      // Return promise so the caller can get results
-      return new Promise((resolve, reject) => {
-        this.resolvePromise = resolve;
-        this.rejectPromise = reject;
-      });
-    },
     /**
      * Confirms and closes modal
      * post (Object) rest base (string)
@@ -322,8 +301,7 @@ export default {
       if (this.selected.color) {
         this.importFromUnsplash();
       } else {
-        this.$refs.popup.close();
-        this.resolvePromise(this.returnImage());
+        this.$emit('image-selected', this.returnImage());
       }
     },
 
@@ -337,15 +315,7 @@ export default {
         source_url: this.selected.media_details.sizes[this.returnSize].source_url,
       };
     },
-    /**
-     * Cancels and closes modal
-     * post (Object) rest base (string)
-     * @since 3.2.13
-     */
-    cancel() {
-      this.$refs.popup.close();
-      this.resolvePromise(false);
-    },
+
     /**
      * Watches for scroll to bottom and loads more media
      * post (Object) rest base (string)
@@ -392,45 +362,15 @@ export default {
     },
   },
   template: `
-  
-	<component is="style">
-	  .imageload-enter-active,
-	  .imageload-leave-active {
-		transition: all 0.5s ease;
-	  }
-	  .imageload-enter-from,
-	  .imageload-leave-to {
-		opacity: 0;
-	  }
-	</component>
-  
-	  <modal ref="popup" :disableTeleport="true">
+    
+    <div class="uip-flex uip-flex-column uip-row-gap-s">
 	
-		<div ref="confirmBody" @keydown.escape="cancel()" 
-		class="uip-w-500 uip-flex uip-flex-column uip-row-gap-s uip-padding-m" tabindex="1" 
-		style="height:70vh;max-height:80vh" autofocus>
-		
-		  <div class="uip-flex uip-gap-xs uip-flex-start uip-flex-no-wrap uip-max-h-100p">
-			
-			<h2 class="uip-margin-remove uip-flex-grow">{{ strings.mediaLibrary }}</h2>
-			<div @click="cancel()" class="uip-padding-xxs uip-border-rounder hover:uip-background-muted uip-cursor-pointer">
-			  <span class="uip-icon uip-link-muted">close</span>
-			</div>
-		  
-		  </div>
 		  
 		  <toggle-switch :activeValue="activeTab" :options="tabs" :returnValue="(d) => {activeTab = d}"/>
 		  
 		  <div v-if="loading" class="uip-padding-s uip-flex uip-flex-middle uip-flex-center uip-flex-grow">
 			<loading-chart/>
 		  </div>
-		  
-		  
-		  
-		  
-		  
-		  
-		  
 		  
 		  
 		  
@@ -717,7 +657,7 @@ export default {
 		  
 		  <div class="uip-flex uip-gap-s uip-flex-between">
 		  
-			  <button class="uip-button-default uip-flex uip-gap-xs uip-flex-center" @click="cancel">
+			  <button class="uip-button-default uip-flex uip-gap-xs uip-flex-center" @click="$emit('cancel-select')">
 				<span>{{ strings.cancel }}</span>
 				<div class="uip-background-grey uip-padding-left-xxs uip-padding-right-xxs uip-border-rounder uip-flex uip-flex-middle">
 				  <span class="uip-text-muted uip-text-s">esc</span>
@@ -728,8 +668,92 @@ export default {
 				<span>{{ strings.select }}</span>
 			  </button>
 		  </div>
-		
-		</div>
-	</modal>
+      
+    </div>  
 		`,
+};
+
+export default {
+  components: {
+    Modal: defineAsyncComponent(() => import('./modal.js')),
+    MediaLibrary: MediaLibrary,
+  },
+
+  data() {
+    return {
+      resolvePromise: undefined,
+      rejectPromise: undefined,
+      strings: {
+        mediaLibrary: __('Media library', 'uipress-lite'),
+      },
+    };
+  },
+  methods: {
+    /**
+     * Cancels and closes modal
+     * post (Object) rest base (string)
+     * @since 3.2.13
+     */
+    cancel() {
+      this.$emit('cancel-select');
+    },
+
+    /**
+     * Shows confirm dialog and sets options
+     * opts (Object)
+     * @since 3.2.13
+     */
+    show(opts = {}) {
+      this.selected = false;
+      this.$refs.popup.open();
+      this.resolvePromise = undefined;
+      this.rejectPromise = undefined;
+
+      requestAnimationFrame(() => {
+        this.$refs.confirmBody.focus();
+      });
+      // Return promise so the caller can get results
+      return new Promise((resolve, reject) => {
+        this.resolvePromise = resolve;
+        this.rejectPromise = reject;
+      });
+    },
+  },
+  template: `
+  
+    <component is="style">
+      .imageload-enter-active,
+      .imageload-leave-active {
+      transition: all 0.5s ease;
+      }
+      .imageload-enter-from,
+      .imageload-leave-to {
+      opacity: 0;
+      }
+    </component>
+  
+    <Modal ref="popup">
+  
+      <div ref="confirmBody" @keydown.escape="cancel()" @click.stop.prevent
+      class="uip-w-500 uip-flex uip-flex-column uip-row-gap-s uip-padding-m" tabindex="1" 
+      style="height:70vh;max-height:80vh" autofocus>
+      
+        <div class="uip-flex uip-gap-xs uip-flex-start uip-flex-no-wrap uip-max-h-100p">
+        
+          <h2 class="uip-margin-remove uip-flex-grow">{{ strings.mediaLibrary }}</h2>
+          <div @click="cancel()" class="uip-padding-xxs uip-border-rounder hover:uip-background-muted uip-cursor-pointer">
+            <span class="uip-icon uip-link-muted">close</span>
+          </div>
+        
+        </div>
+        
+        <MediaLibrary @image-selected="(d) => {resolvePromise(d);$refs.popup.close();}" 
+        @cancel-select="$refs.popup.close();resolvePromise(false);"/>
+        
+      </div>
+    
+    </Modal>  
+  
+  
+  `,
 };

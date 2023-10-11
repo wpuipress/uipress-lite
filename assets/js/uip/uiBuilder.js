@@ -244,6 +244,8 @@ const Offcanvas = defineAsyncComponent(() => import(`./components/offcanvas.min.
 const SaveButton = defineAsyncComponent(() => import(`./components/save-button.min.js?ver=${pluginVersion}`));
 const ChartComp = defineAsyncComponent(() => import(`./components/chart.min.js?ver=${pluginVersion}`));
 const FloatingPanel = defineAsyncComponent(() => import(`./components/floating-panel.min.js?ver=${pluginVersion}`));
+const Modal = defineAsyncComponent(() => import(`./v3.5/utility/modal.min.js?ver=${pluginVersion}`));
+import { MediaLibrary } from './v3.5/utility/media-library.min.js?ver=3.2.0';
 
 app.component('multi-select', MultiSelect);
 app.component('user-role-select', UserMultiSelect);
@@ -258,6 +260,8 @@ app.component('uip-save-button', SaveButton);
 app.component('dropdown', DropDown);
 app.component('uip-chart', ChartComp);
 app.component('uip-floating-panel', FloatingPanel);
+app.component('uipMediaLibrary', MediaLibrary);
+app.component('uipModal', Modal);
 
 //Option components
 const UIbuilderInlineImageSelect = defineAsyncComponent(() => import(`./options/inline-image-select.min.js?ver=${pluginVersion}`));

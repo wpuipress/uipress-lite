@@ -635,7 +635,7 @@ class uip_ui_builder extends uip_app
     $styles = Sanitize::clean_input_with_code($styles);
 
     if ($styles && is_object($styles)) {
-      UipOptions::uupdate('theme-styles', $styles);
+      UipOptions::update('theme-styles', $styles);
     }
 
     //Return data to app

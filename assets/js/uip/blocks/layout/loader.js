@@ -159,7 +159,7 @@ const Dropdown = {
           },
           value: 'bottom-left',
         },
-        { option: 'keyboardShortcut', label: __('Keyboard shortcut', 'uipress-lite') },
+        { option: 'keyboardShortcut', componentName: 'keyboard-shortcut', label: __('Keyboard shortcut', 'uipress-lite') },
       ],
     },
 
@@ -339,7 +339,7 @@ const SlideOut = {
           },
           label: __('Close on page change', 'uipress-lite'),
         },
-        { option: 'keyboardShortcut', label: __('Keyboard shortcut', 'uipress-lite') },
+        { option: 'keyboardShortcut', componentName: 'keyboard-shortcut', label: __('Keyboard shortcut', 'uipress-lite') },
       ],
     },
     {

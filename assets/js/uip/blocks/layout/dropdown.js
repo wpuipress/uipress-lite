@@ -32,7 +32,7 @@ export default {
     getShortcut() {
       const shortcut = this.getShortcutValue;
       if (!shortcut) return;
-      return this.renderKeyShortCut(shortcut.selected);
+      return renderKeyShortCut(shortcut);
     },
 
     /**
@@ -105,6 +105,8 @@ export default {
       return '';
     },
   },
+
+  methods: {},
   template: `
         <dropdown :pos="returnDropPosition" :shortCut="getShortcutValue" :disableTeleport="true" :hover="returnOpenHover">
         

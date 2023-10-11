@@ -56,7 +56,7 @@ export default {
   },
   template: `
     
-    <div class="uip-flex uip-flex-column uip-row-gap-xs uip-w-100p" v-if="renderd">
+    <div class="uip-flex uip-flex-column uip-row-gap-xs uip-w-100p">
     
     
         <uip-draggable 

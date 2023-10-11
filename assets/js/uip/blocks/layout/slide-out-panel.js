@@ -9,7 +9,7 @@ export default {
   data() {
     return {};
   },
-  
+
   computed: {
     /**
      * Returns custom text for button trigger
@@ -80,7 +80,7 @@ export default {
     getShortcut() {
       const shortcut = this.getShortcutValue;
       if (!shortcut) return;
-      return this.renderKeyShortCut(shortcut.selected);
+      return renderKeyShortCut(shortcut);
     },
 
     /**
@@ -114,6 +114,7 @@ export default {
       if (position.value && position.value == 'right') return 'uip-flex-reverse';
     },
   },
+  methods: {},
   template: `
         <uip-offcanvas :position="getPanelPos" :shortCut="getShortcutValue" :overlayStyle="getPanelStyle" :closeOnLoad="closeOnPageChange">
         
