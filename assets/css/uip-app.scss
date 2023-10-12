@@ -2015,6 +2015,9 @@ input[type='range'] {
 .uip-text-capitalize {
   text-transform: capitalize;
 }
+.uip-text-underline {
+  text-decoration: underline;
+}
 .uip-text-italic {
   font-style: italic;
 }
@@ -2547,6 +2550,12 @@ input[type='range'] {
 }
 .uip-left-16 {
   left: 16px;
+}
+.uip-left--16 {
+  left: -16px;
+}
+.uip-left--32 {
+  left: -32px;
 }
 .uip-right-16 {
   right: 16px;
