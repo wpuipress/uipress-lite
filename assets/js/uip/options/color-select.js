@@ -7,7 +7,7 @@ export default {
     colorPicker: defineAsyncComponent(() => import('../v3.5/styles/color-picker.min.js?ver=3.2.12')),
     colourStyleEditor: defineAsyncComponent(() => import('../v3.5/styles/color-style-editor.min.js?ver=3.2.12')),
   },
-  
+
   props: {
     returnData: Function,
     value: Object,
@@ -25,6 +25,12 @@ export default {
     };
   },
   watch: {
+    colour: {
+      handler() {
+        this.returnData(this.colour);
+      },
+      deep: true,
+    },
     value: {
       handler(newValue, oldValue) {
         this.formatValue();
@@ -60,6 +66,7 @@ export default {
         component: 'colorPicker',
         value: this.colour.value,
         label: this.strings.colorPicker,
+        args: this.args,
         returnData: (d) => {
           this.colour.value = d;
         },
