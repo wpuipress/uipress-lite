@@ -784,6 +784,9 @@ html[uip-core-app='true'] {
   height: 200px;
   min-height: 200px;
 }
+.uip-min-h-18 {
+  min-height: 18px;
+}
 .uip-min-h-20 {
   min-height: 20px;
 }
@@ -2553,6 +2556,9 @@ input[type='range'] {
 }
 .uip-left--16 {
   left: -16px;
+}
+.uip-left--20 {
+  left: -20px;
 }
 .uip-left--32 {
   left: -32px;
