@@ -27,4 +27,23 @@ class Objects
       $currentLevel = &$currentLevel->$key;
     }
   }
+
+  /**
+   * Safely retrieve nested property from an object.
+   *
+   * @param object $object The base object.
+   * @param array  $keys   An array of keys in the order to access nested property.
+   *
+   * @return mixed The value of the nested property or null if not found.
+   */
+  public static function get_nested_property($object, array $keys)
+  {
+    foreach ($keys as $key) {
+      if (!is_object($object) || !property_exists($object, $key)) {
+        return false;
+      }
+      $object = $object->$key;
+    }
+    return $object;
+  }
 }
