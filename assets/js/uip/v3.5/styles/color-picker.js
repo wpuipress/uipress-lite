@@ -5,7 +5,7 @@ export default {
     colorSelect: defineAsyncComponent(() => import('../libs/colorpicker.js')),
     styleManager: defineAsyncComponent(() => import('./style-manager.min.js')),
   },
-  
+
   props: {
     value: String,
     returnData: Function,

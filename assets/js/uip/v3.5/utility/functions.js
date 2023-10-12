@@ -1,3 +1,4 @@
+const { __, _x, _n, _nx } = wp.i18n;
 /**
  * Checks if a nested object exists. if not, it creates each step
  *
