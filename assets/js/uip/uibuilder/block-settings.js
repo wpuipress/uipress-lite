@@ -1497,12 +1497,19 @@ export default {
                     
                       <div :class="optionFullWidth(option) ? 'uip-flex uip-flex-column uip-row-gap-xxs' : 'uip-grid-col-1-3'">
                       
-                        <div class="uip-text-muted uip-flex uip-flex-center uip-text-s uip-h-30 uip-gap-xs">
-                          <span>{{option.label}}</span>
+                        <div class="uip-text-muted uip-flex uip-flex-center uip-text-s uip-h-30 uip-gap-xs uip-position-relative">
                           
-                          <uip-tooltip v-if="option.help" :message="option.help">
-                            <span class="uip-icon uip-border-circle uip-background-grey uip-cursor-pointer" style="font-size:12px">question_mark</span>
-                          </uip-tooltip>
+                          
+                          
+                          <dropdown pos="left center" :openOnHover="true" 
+                          :snapX="['#uip-block-settings']" :hover="true">
+                            <template class="uip-flex-no-shrink" v-slot:trigger>
+                              <span :class="option.help ? 'uip-text-underline' : ''">{{option.label}}</span>
+                            </template>
+                            <template v-if="option.help" v-slot:content>
+                              <div class="uip-text-s uip-padding-xs uip-max-w-200">{{option.help}}</div>
+                            </template>
+                          </dropdown>
                           
                         </div>
                           

@@ -350,7 +350,7 @@ export default {
                     </div>
                   </template>
                   <template v-slot:content>
-                    <div class="uip-padding-xs uip-padding-left-s uip-flex uip-flex-column uip-row-gap-s">
+                    <div class="uip-padding-xs uip-padding-left-m uip-flex uip-flex-column uip-row-gap-s">
                       <!--Loop through group settings -->
                       
                       <template v-for="option in group.settings" v-if="render">
@@ -358,11 +358,11 @@ export default {
                           
                           <div class="uip-flex uip-flex-center uip-gap-xs uip-h-30">
                           
-                              <div class="uip-text-muted uip-flex uip-flex-center uip-flex uip-gap-xs">
+                              <div class="uip-text-muted uip-flex uip-flex-center uip-flex uip-gap-xs uip-position-relative">
                               
                                 
                                 
-                                <dropdown v-if="option.help" pos="left center" :openOnHover="true" class="uip-flex-no-shrink" triggerClass="uip-flex-no-shrink" :hover="true">
+                                <dropdown v-if="option.help" pos="left center" :openOnHover="true" class="uip-flex-no-shrink uip-position-absolute uip-left--32" :hover="true">
                                   <template class="uip-flex-no-shrink" v-slot:trigger>
                                     <div class="uip-link-muted hover:uip-background-grey uip-text-center uip-border-round uip-background-muted uip-text-bold uip-text-xs uip-w-16 uip-ratio-1-1 uip-text-s uip-flex-no-shrink">i</div>
                                   </template>
