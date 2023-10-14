@@ -4,6 +4,7 @@ export default {
     homeScreen: String,
     showNavigation: Boolean,
     closer: Function,
+    largeNavigation: Boolean,
   },
   watch: {
     startScreen: {
@@ -58,9 +59,11 @@ export default {
 		 
 			
 			<Transition name="translate" mode="out-in">  
-			  <div class="uip-flex uip-flex-between uip-flex-center" v-if="currentScreen.component != homeScreen || showNavigation">
+			  <div 
+              class="uip-flex uip-flex-between uip-flex-center" v-if="currentScreen.component != homeScreen || showNavigation"
+              :class="largeNavigation ? 'uip-text-l' : ''">
 				
-				<div @click="toggleBack()" v-if="currentScreen.component != homeScreen"
+				<div @click.prevent.stop="toggleBack()" v-if="currentScreen.component != homeScreen"
 				class="uip-flex uip-flex-center uip-flex-middle uip-padding-xxs uip-link-muted hover:uip-background-muted uip-border-rounder">
                   <span class="uip-icon">chevron_left</span>
 				</div>
