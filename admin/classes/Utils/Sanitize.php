@@ -185,6 +185,6 @@ class Sanitize
    */
   private static function clean_value($value, $allowedposttags)
   {
-    return $value ? wp_kses($value, $allowedposttags) : $value;
+    return $value && !is_null($value) ? wp_kses($value, $allowedposttags) : $value;
   }
 }
