@@ -1,10 +1,11 @@
+const { __, _x, _n, _nx } = wp.i18n;
 export default {
   props: {
     returnData: Function,
     value: [Boolean, String],
     args: Object,
   },
-  
+
   data() {
     return {
       option: this.value,

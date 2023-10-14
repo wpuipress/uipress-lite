@@ -1,3 +1,5 @@
+const { __, _x, _n, _nx } = wp.i18n;
+
 export default {
   props: {
     returnData: Function,
@@ -15,7 +17,7 @@ export default {
       search: '',
       allRules: [],
       strings: {
-        manualPlaceHolder: __('Enter classes seperated by a space', 'uipress-lite'),
+        manualPlaceHolder: __('Classes', 'uipress-lite'),
         searchClasses: __('Search classes', 'uipress-lite'),
         search: __('Search', 'uipress-lite'),
       },
@@ -66,6 +68,10 @@ export default {
   created() {
     this.parseInput();
     this.getClassNames();
+  },
+  async mounted() {
+    await this.$nextTick();
+    this.rendered = true;
   },
   computed: {
     allClasses() {
@@ -158,7 +164,7 @@ export default {
       // Deduplicate and sort
       collectedClasses.sort();
 
-      const userClasses = this.uipApp.data.options.customClasses;
+      const userClasses = this.uipApp.data ? this.uipApp.data.options.customClasses : [];
       if (Array.isArray(userClasses)) {
         userClasses.sort();
         collectedClasses.unshift(...userClasses);
@@ -208,7 +214,8 @@ export default {
   },
   template: `
     <div class="uip-flex uip-flex-column uip-gap-xs uip-w-100p">
-      <div class="uip-flex uip-gap-xxs uip-w-100p uip-flex-wrap">
+    
+      <div class="uip-flex uip-gap-xxs uip-w-100p uip-flex-wrap uip-flex-center">
       
         <dropdown pos="left center"  :snapX="['#uip-block-settings', '#uip-template-settings', '#uip-global-settings']"
         ref="classDrop">
@@ -259,8 +266,8 @@ export default {
         
       <div class="uip-flex uip-gap-xxs uip-w-100p uip-flex-wrap" v-if="selected.length">  
         <template v-for="(item, index) in selected">
-          <div class="uip-padding-left-xxs uip-padding-right-xxs uip-background-muted uip-border-rounder hover:uip-background-grey uip-flex uip-gap-xxs uip-flex-center">
-            <span class="uip-text-s">{{item}}</span>
+          <div class="uip-padding-left-xs uip-padding-right-xs uip-background-muted uip-border-rounder hover:uip-background-grey uip-flex uip-gap-xxs uip-flex-center uip-text-s">
+            <span class="">{{item}}</span>
             <a class="uip-link-muted uip-no-underline uip-icon" @click="removeSelected(index)">close</a>
           </div>
         </template>

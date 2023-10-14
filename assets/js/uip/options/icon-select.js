@@ -10,6 +10,7 @@ export default {
   },
   data() {
     return {
+      updating: false,
       icon: {
         value: '',
       },
@@ -19,8 +20,21 @@ export default {
       },
     };
   },
-  
+
   watch: {
+    /**
+     * Watch changes to value and re-inject
+     *
+     * @since 3.2.13
+     */
+    value: {
+      handler() {
+        if (this.updating) return;
+        this.injectProp();
+      },
+      deep: true,
+      immediate: true,
+    },
     /**
      * Watch changes to the icon and return to caller
      *
@@ -28,13 +42,11 @@ export default {
      */
     icon: {
       handler(newValue, oldValue) {
+        if (this.updating) return;
         this.returnData(newValue);
       },
       deep: true,
     },
-  },
-  mounted() {
-    this.formatIcon(this.value);
   },
   computed: {
     /**
@@ -54,10 +66,11 @@ export default {
      * @param {mixed} value - Usualy object of the icon value
      * @since 3.2.13
      */
-    formatIcon(value) {
-      if (this.isObject(value)) {
-        this.icon = { ...this.icon, ...value };
-      }
+    async injectProp(value) {
+      this.updating = true;
+      this.icon = this.isObject(this.value) ? { ...this.value } : { value: '' };
+      await this.$nextTick();
+      this.updating = false;
     },
   },
   template: `
