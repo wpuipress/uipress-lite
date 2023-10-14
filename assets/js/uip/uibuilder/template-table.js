@@ -396,29 +396,6 @@ export default {
   
   
   
-  <div v-if="1==2 && showWelcome" class="uip-margin-bottom-m uip-padding-s uip-border-rounder uip-background-orange-wash">
-    
-    <div class="uip-text-bold uip-margin-bottom-s uip-flex uip-flex-between">
-      <div>{{strings.welcomeTov32}}</div>
-      <div @click="showWelcome = false;saveUserPreference('supressWelcome', true, false);"
-      class="uip-padding-xxs uip-border-rounder hover:uip-background-grey uip-cursor-pointer"><span class="uip-icon">close</span></div>
-    </div>
-    
-    <div class="uip-text-muted uip-margin-bottom-s">
-      <p>This update brings a refinded builder experience with plenty of new features, performance improvements and an improved user interface. </p>
-      
-      <p>If you have just updated from an earlier version we suggest clearing browser cache before entering the builder. If you are new to uiPress then you can check out our brand new, in depth documentation below.</p>
-    </div>
-    
-    <div class="uip-flex">
-      <a href="https://uipress.co/docs/#/"
-      target="_BLANK" class="uip-link-default uip-no-underline uip-flex uip-flex-row uip-gap-xxs uip-flex-center">
-        <span class="uip-text-bold">{{strings.viewDocs}}</span>
-        <span class="uip-icon">arrow_forward</span>
-      </a>
-    </div>
-  </div>
-  
   <div class="uip-flex uip-flex-column uip-h-100p uip-w-100p uip-background-muted" style="min-height:100dvh">
   
     <!-- Toolbar -->
