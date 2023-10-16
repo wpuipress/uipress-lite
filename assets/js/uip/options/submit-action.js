@@ -6,7 +6,7 @@ export default {
   },
   data() {
     return {
-      option: null,
+      option: {},
       submitOptions: [
         {
           label: __('Email', 'uipress-lite'),
@@ -78,10 +78,7 @@ export default {
      * @since 3.2.13
      */
     parseInput() {
-      // No value so exit
-      if (!this.value) return;
-
-      this.option = this.value;
+      this.option = this.isObject(this.value) ? { ...{}, ...this.value } : {};
     },
   },
   template: `
