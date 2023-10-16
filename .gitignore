@@ -1,2 +1,5 @@
 # Ignore editor prefs
 .nova
+
+# Ignore directory prefs
+.DS_STORE
