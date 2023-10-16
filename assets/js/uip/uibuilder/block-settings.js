@@ -1494,12 +1494,10 @@ export default {
                   <div class="uip-flex uip-flex-column uip-row-gap-xs">
                   
                     <template v-for="option in returnBlockOptions">
-                    
+                      
                       <div :class="optionFullWidth(option) ? 'uip-flex uip-flex-column uip-row-gap-xxs' : 'uip-grid-col-1-3'">
                       
-                        <div class="uip-text-muted uip-flex uip-flex-center uip-text-s uip-h-30 uip-gap-xs uip-position-relative">
-                          
-                          
+                        <div v-if="!optionFullWidth(option)" class="uip-text-muted uip-flex uip-flex-center uip-text-s uip-h-30 uip-gap-xs uip-position-relative">
                           
                           <dropdown pos="left center" :openOnHover="true" 
                           :snapX="['#uip-block-settings']" :hover="true">
