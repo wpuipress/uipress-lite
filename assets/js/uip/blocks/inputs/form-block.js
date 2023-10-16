@@ -18,7 +18,7 @@ export default {
       },
     };
   },
-  
+
   watch: {
     /**
      * Watches changes to block options and updates pre-populate data
@@ -93,6 +93,8 @@ export default {
      */
     async getPrepopulate() {
       let formOptions = this.get_block_option(this.block, 'block', 'submitAction');
+
+      if (!formOptions) return;
 
       //Nothing to pre-populate
       if (formOptions.action == 'email' || formOptions.action == 'phpFunction') {
