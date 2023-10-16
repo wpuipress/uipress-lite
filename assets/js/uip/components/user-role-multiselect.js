@@ -312,10 +312,11 @@ export const preview = {
     updateSelected: Function,
     type: String,
   },
-  data: function () {
+  data() {
     return {
       hoverTimeout: null,
       selectedOptions: [],
+      updating: false,
       strings: {
         users: __('Users', 'uipress-lite'),
         roles: __('Roles', 'uipress-lite'),
@@ -332,6 +333,7 @@ export const preview = {
   watch: {
     selectedOptions: {
       handler(newValue, oldValue) {
+        if (this.updating) return;
         this.updateSelected(this.selectedOptions);
         // Closes multi select contextmenu
         if (this.selectedOptions.length < 1) {
@@ -343,6 +345,7 @@ export const preview = {
     },
     selected: {
       handler(newValue, oldValue) {
+        if (this.updating) return;
         this.injectValue();
       },
       deep: true,
@@ -376,10 +379,11 @@ export const preview = {
      *
      * @since 3.2.13
      */
-    injectValue() {
-      if (Array.isArray(this.selected)) {
-        this.selectedOptions = this.selected;
-      }
+    async injectValue() {
+      this.updating = true;
+      this.selectedOptions = Array.isArray(this.selected) ? this.selected : [];
+      await this.$nextTick();
+      this.updating = false;
     },
 
     /**
@@ -503,7 +507,7 @@ export default {
     updateSelected: Function,
     type: String,
   },
-  data: function () {
+  data() {
     return {
       strings: {
         roleSelect: __('Role select', 'uipress-lite'),
