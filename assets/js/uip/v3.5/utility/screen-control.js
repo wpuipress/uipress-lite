@@ -60,15 +60,14 @@ export default {
 			
 			<Transition name="translate" mode="out-in">  
 			  <div 
-              class="uip-flex uip-flex-between uip-flex-center" v-if="currentScreen.component != homeScreen || showNavigation"
-              :class="largeNavigation ? 'uip-text-l' : ''">
+              class="uip-flex uip-flex-between uip-flex-center" v-if="currentScreen.component != homeScreen || showNavigation">
 				
 				<div @click.prevent.stop="toggleBack()" v-if="currentScreen.component != homeScreen"
 				class="uip-flex uip-flex-center uip-flex-middle uip-padding-xxs uip-link-muted hover:uip-background-muted uip-border-rounder">
                   <span class="uip-icon">chevron_left</span>
 				</div>
 			  
-				<div class="uip-text-emphasis uip-text-bold uip-text-s">{{ currentScreen.label }}</div>
+				<div class="uip-text-emphasis uip-text-bold" :class="largeNavigation ? 'uip-text-l' : 'uip-text-s' ">{{ currentScreen.label }}</div>
 				
 				<!--Spacer-->
 				<div v-if="!closer"></div>
