@@ -46,4 +46,43 @@ class Objects
     }
     return $object;
   }
+
+  /**
+   * Converts an array of objects into an array of associate arrays
+   *
+   * @param array $objects
+   *
+   * @returns array of converted objects
+   * @since 3.2.0
+   */
+  public static function convertObjectsToArrays(array $objects)
+  {
+    $arrays = [];
+
+    foreach ($objects as $object) {
+      // Cast each object to an array
+      $arrays[] = (array) $object;
+    }
+
+    return $arrays;
+  }
+
+  /**
+   * Converts an object's properties into associative arrays (only first level)
+   *
+   * @param object $objects
+   *
+   * @return object with properties converted to arrays
+   * @since 3.2.0
+   */
+  public static function convertObjectKeysToArray(object $objects)
+  {
+    $formatted = new \stdClass();
+
+    foreach ($objects as $key => $value) {
+      $formatted->$key = (array) $value;
+    }
+
+    return $formatted;
+  }
 }
