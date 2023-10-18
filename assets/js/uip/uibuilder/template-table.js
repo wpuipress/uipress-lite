@@ -539,23 +539,7 @@ export default {
         </div>
         
         <component is="style">
-          .list-move, /* apply transition to moving elements */
-          .list-enter-active,
-          .list-leave-active {
-            transition: all 0.2s ease;
-          }
           
-          .list-enter-from,
-          .list-leave-to {
-            opacity: 0;
-            transform: translateX(30px);
-          }
-          
-          /* ensure leaving items are taken out of layout flow so that moving
-             animations can be calculated correctly. */
-          .list-leave-active {
-            position: absolute;
-          }
           
           tr:hover {
            box-shadow: var(--uip-box-shadow);
