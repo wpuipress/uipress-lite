@@ -69,7 +69,7 @@ export default {
   template: `
   
 	  <modal ref="popup" :disableTeleport="disableTeleport">
-		<div ref="confirmBody" @keydown.escape="cancel()" @keydown.enter="confirm()" class="uip-max-w-320 uip-flex uip-flex-column uip-row-gap-s uip-padding-m" tabindex="1" autofocus>
+		<div ref="confirmBody" @keydown.escape="cancel()" @keydown.enter="confirm()" class="uip-w-320 uip-max-w-320 uip-flex uip-flex-column uip-row-gap-s uip-padding-m" tabindex="1" autofocus>
 		
 		  <div class="uip-flex uip-gap-xs uip-flex-start uip-flex-no-wrap">
 			
