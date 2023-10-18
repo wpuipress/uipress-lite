@@ -35,6 +35,7 @@ export const core = {
         users: __('Users', 'uipress-lite'),
         roles: __('Roles', 'uipress-lite'),
         roleSelect: __('Role select', 'uipress-lite'),
+        search: __('Search', 'uipress-lite'),
       },
       ui: {
         dropOpen: false,
@@ -246,7 +247,7 @@ export const core = {
           <div class="uip-flex uip-background-muted uip-border-rounder uip-padding-xxs uip-flex-center">
             <span class="uip-icon uip-text-muted uip-margin-right-xs">search</span>
             <input class="uip-blank-input uip-flex-grow uip-text-s" type="search"  
-            :placeholder="searchPlaceHolder" v-model="thisSearchInput" autofocus>
+            :placeholder="strings.search" v-model="thisSearchInput" autofocus>
           </div>
           
           
