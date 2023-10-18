@@ -19,6 +19,7 @@
 * Theme styles changes preview immediately within the frame 
 * Added new admin page title dynamic value
 * Fixed continuous reload issue on some pages
+* Added slug option for admin pages
 
 = 3.2.12 =
 *Release Date 28 August 2023*
