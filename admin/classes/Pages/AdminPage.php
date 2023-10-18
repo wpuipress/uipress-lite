@@ -42,25 +42,6 @@ class AdminPage
     };
     add_action('admin_menu', $handler, 1);
     add_action('admin_footer', ['UipressLite\Classes\Pages\AdminPage', 'add_wp_menu_icons']);
-
-    self::maybe_add_hooks();
-  }
-
-  /**
-   * Checks whether we are currently on a admin page and adds hooks if so
-   *
-   * @return void
-   * @since 3.2.13
-   */
-  private static function maybe_add_hooks()
-  {
-    if (!isset($_GET['page']) || $_GET['page'] == '') {
-      return;
-    }
-
-    if (strpos($_GET['page'], '-uiptp-') !== false) {
-      self::add_hooks();
-    }
   }
 
   /**
@@ -86,10 +67,14 @@ class AdminPage
 
       // Check if we are adding as submenu or top level
       if ($uiPage['parent'] != '' && $uiPage['parent'] != 'uipblank') {
-        add_submenu_page($uiPage['parent'], $uiPage['pageName'], $uiPage['pageName'], 'read', $uiPage['url'], $handler);
+        $hook_suffix = add_submenu_page($uiPage['parent'], $uiPage['pageName'], $uiPage['pageName'], 'read', $uiPage['url'], $handler);
       } else {
-        add_menu_page($uiPage['pageName'], $uiPage['pageName'], 'read', $uiPage['url'], $handler, $uiPage['icon'], 1);
+        $hook_suffix = add_menu_page($uiPage['pageName'], $uiPage['pageName'], 'read', $uiPage['url'], $handler, $uiPage['icon'], 1);
       }
+
+      add_action("admin_print_scripts-{$hook_suffix}", ['UipressLite\Classes\Pages\AdminPage', 'add_hooks']);
+      add_action("admin_print_scripts-{$hook_suffix}", ['UipressLite\Classes\Scripts\UipScripts', 'add_translations']);
+      add_action("admin_print_scripts-{$hook_suffix}", ['UipressLite\Classes\Scripts\UipScripts', 'add_uipress_styles']);
     }
   }
 
@@ -149,10 +134,13 @@ class AdminPage
         $optionIcon = 'dashicons-uip-icon-' . $settings->menuIcon->value;
       }
 
+      // Get slug
+      $slug = isset($settings->slug) && $settings->slug != '' ? $settings->slug : false;
+
       $passData = new \stdClass();
       $passData->ID = $uiPage->ID;
       $passData->fromMainSite = $multiSiteActive;
-      $adminPageURL = URL::urlSafe($pageName, '-') . '-uiptp-' . $uiPage->ID;
+      $adminPageURL = $slug ?? URL::urlSafe($pageName, '-') . '-uiptp-' . $uiPage->ID;
 
       $temp['url'] = $adminPageURL;
       $temp['pageName'] = $pageName;
@@ -183,7 +171,7 @@ class AdminPage
    * @return void
    * @since 3.2.13
    */
-  private static function add_hooks()
+  public static function add_hooks()
   {
     // If the app is running then the this page will be loaded in a frame
     if (defined('uip_app_running') && uip_app_running) {
@@ -192,9 +180,6 @@ class AdminPage
 
     ToolBar::capture();
     AdminMenu::capture();
-
-    add_action('admin_enqueue_scripts', ['UipressLite\Classes\Scripts\UipScripts', 'add_translations']);
-    add_action('admin_enqueue_scripts', ['UipressLite\Classes\Scripts\UipScripts', 'add_uipress_styles']);
   }
 
   /**
