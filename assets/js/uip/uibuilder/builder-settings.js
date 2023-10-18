@@ -127,6 +127,7 @@ export default {
           templateSettings: __('Template settings', 'uipress-lite'),
           status: __('Status', 'uipress-lite'),
           general: __('General', 'uipress-lite'),
+          slug: __('Slug', 'uipress-lite'),
         },
       },
       enabledDisabled: {
@@ -156,6 +157,13 @@ export default {
     };
   },
   inject: ['uiTemplate'],
+  watch: {
+    'uiTemplate.globalSettings.slug': {
+      handler() {
+        this.handleSlugChange();
+      },
+    },
+  },
   mounted() {
     this.loading = false;
   },
@@ -203,8 +211,8 @@ export default {
      * @since 3.2.13
      */
     returnPageLink() {
-      this.formatPageName();
-      return this.uipApp.data.options.adminURL + 'admin.php?page=' + this.formatPageName() + '-uiptp-' + this.$route.params.templateID;
+      const title = this.uiTemplate.globalSettings.slug ? this.uiTemplate.globalSettings.slug : this.uiTemplate.globalSettings.name + '-uiptp-' + this.$route.params.templateID;
+      return this.uipApp.data.options.adminURL + 'admin.php?page=' + this.formatPageName(title);
     },
   },
   methods: {
@@ -272,9 +280,7 @@ export default {
      *
      * @since 3.2.13
      */
-    formatPageName() {
-      let title = this.uiTemplate.globalSettings.name;
-
+    formatPageName(title) {
       if (!title) return '';
 
       title = title.toLowerCase();
@@ -284,6 +290,16 @@ export default {
       title = title.replace('~-+~', '-');
       title = title.replace(' ', '-');
       return title;
+    },
+
+    /**
+     * Ensure slug is url safe
+     *
+     * @since 3.2.0
+     */
+    handleSlugChange() {
+      const name = this.uiTemplate.globalSettings.slug;
+      this.uiTemplate.globalSettings.slug = this.formatPageName(name);
     },
 
     /**
@@ -391,6 +407,12 @@ export default {
                   
                   <!-- Admin page specific options-->
                   <template v-if="uiTemplate.globalSettings.type == 'ui-admin-page'">
+                  
+                    <!--Slug-->
+                    <div class="uip-text-muted uip-flex uip-flex-center uip-text-s uip-h-30 uip-gap-xs">
+                      <span>{{ui.strings.slug}}</span>
+                    </div>
+                    <input class="uip-input uip-input-small uip-w-100p" type="text" v-model="uiTemplate.globalSettings.slug" :placeholder="ui.strings.slug">
                   
                     <!--Menu Icon-->
                     <div class="uip-text-muted uip-flex uip-flex-center uip-text-s uip-h-30 uip-gap-xs">
