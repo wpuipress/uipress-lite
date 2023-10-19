@@ -8,6 +8,7 @@ export const core = {
     single: Boolean,
     updateSelected: Function,
     type: String,
+    roleOnly: Boolean,
   },
   data() {
     return {
@@ -242,7 +243,7 @@ export const core = {
       
         <div class="uip-flex uip-flex-column uip-row-gap-s">
           
-          <toggle-switch :options="switchOptions" :activeValue="activeTab" :dontAccentActive="true" :returnValue="function(data){ activeTab = data}"></toggle-switch>
+          <toggle-switch v-if="!roleOnly" :options="switchOptions" :activeValue="activeTab" :dontAccentActive="true" :returnValue="function(data){ activeTab = data}"></toggle-switch>
           
           <div class="uip-flex uip-background-muted uip-border-rounder uip-padding-xxs uip-flex-center">
             <span class="uip-icon uip-text-muted uip-margin-right-xs">search</span>
@@ -507,6 +508,7 @@ export default {
     single: Boolean,
     updateSelected: Function,
     type: String,
+    roleOnly: Boolean,
   },
   data() {
     return {
@@ -540,7 +542,7 @@ export default {
             </div>
           </div>
           
-          <UserRoleSelect :selected="selected" :placeHolder="placeHolder" :searchPlaceHolder="searchPlaceHolder" :single="single" :updateSelected="updateSelected" :type="type"/>
+          <UserRoleSelect :roleOnly="roleOnly" :selected="selected" :placeHolder="placeHolder" :searchPlaceHolder="searchPlaceHolder" :single="single" :updateSelected="updateSelected" :type="type"/>
         
         </div>
       
