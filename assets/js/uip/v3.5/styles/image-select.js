@@ -21,9 +21,8 @@ export default {
         loading: false,
         sizing: {},
       },
-      dynamics: this.uipApp.data.dynamicOptions,
-      maxUpload: this.uipApp.data.options.maxUpload,
-      fileTypes: this.uipApp.data.options.uploadTypes,
+      //maxUpload: this.uipApp.data.options.maxUpload,
+      //fileTypes: this.uipApp.data.options.uploadTypes,
       fileType: '',
       manualURL: '',
       uploading: false,
@@ -62,7 +61,6 @@ export default {
     },
   },
   mounted() {
-    console.log('mounted');
     this.formatInput(this.value);
 
     if (this.args) {
