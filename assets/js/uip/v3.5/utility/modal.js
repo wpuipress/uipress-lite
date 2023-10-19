@@ -42,7 +42,7 @@ export default {
 	  </component>
 	
 	  <transition name="fade">
-		  <div ref="modalwrapper" @click="maybe_close($event)" class="uip-position-fixed uip-top-0 uip-left-0 uip-h-viewport uip-w-vw uip-background-black-wash uip-flex uip-flex-center uip-flex-middle uip-fade-in uip-z-index-9999 uip-body-font">
+		  <div ref="modalwrapper" @click.prevent.stop="maybe_close($event)" class="uip-position-fixed uip-top-0 uip-left-0 uip-h-viewport uip-w-vw uip-background-black-wash uip-flex uip-flex-center uip-flex-middle uip-fade-in uip-z-index-9999 uip-body-font">
 			  <div ref="modalinner" style="border-radius:calc(var(--uip-border-radius-large) + var(--uip-padding-xs));"
 			  class="uip-background-default uip-border uip-flex uip-flex-column uip-max-w-100p uip-text-normal uip-position-relative uip-modal-body">
 				  <slot></slot>
