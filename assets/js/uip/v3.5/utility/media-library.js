@@ -1,5 +1,5 @@
-import Modal from './modal.min.js?ver=3.2.12';
 import Axios from '../libs/axios.min.js';
+const { __, _x, _n, _nx } = wp.i18n;
 
 import { defineAsyncComponent } from '../../../libs/vue-esm-dev.js';
 
@@ -363,7 +363,7 @@ export const MediaLibrary = {
   },
   template: `
     
-    <div class="uip-flex uip-flex-column uip-row-gap-s">
+    <div class="uip-flex uip-flex-column uip-row-gap-s uip-flex-grow" style="overflow:hidden">
 	
 		  
 		  <toggle-switch :activeValue="activeTab" :options="tabs" :returnValue="(d) => {activeTab = d}"/>
