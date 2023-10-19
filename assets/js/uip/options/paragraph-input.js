@@ -22,7 +22,7 @@ export default {
      * @since 3.2.13
      */
     returnStylePath() {
-      return this.uipApp.data.options.pluginURL + 'assets/css/modules/uip-quill.css';
+      return this.uipApp.litePath + 'assets/css/modules/uip-quill.css';
     },
 
     /**
