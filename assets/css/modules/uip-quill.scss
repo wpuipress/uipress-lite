@@ -410,8 +410,8 @@
   display: inline-block;
   float: left;
   padding: 3px 5px;
-  width: 22px;
-  height: 22px;
+  width: 20px;
+  height: 20px;
 }
 .ql-snow.ql-toolbar button svg,
 .ql-snow .ql-toolbar button svg {
@@ -743,7 +743,7 @@
   content: attr(data-label);
 }
 .ql-snow .ql-picker.ql-header {
-  width: 98px;
+  width: 84px;
 }
 .ql-snow .ql-picker.ql-header .ql-picker-label::before,
 .ql-snow .ql-picker.ql-header .ql-picker-item::before {
