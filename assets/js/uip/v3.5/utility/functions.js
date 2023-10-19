@@ -342,15 +342,17 @@ export function updateActiveLink(newURL) {
  * @since 3.0.0
  */
 export function stripUIPparams(link, adminURL) {
+  if (!link) return link;
+
   const absoluteCheck = new RegExp('^(?:[a-z+]+:)?//', 'i');
 
   let url = absoluteCheck.test(link) ? new URL(link) : new URL(adminURL + link);
 
-  url.searchParams.delete('uip-framed-page', 1);
-  url.searchParams.delete('uip-hide-screen-options', 1);
-  url.searchParams.delete('uip-hide-help-tab', 1);
-  url.searchParams.delete('uip-default-theme', 1);
-  url.searchParams.delete('uip-hide-notices', 1);
+  url.searchParams.delete('uip-framed-page');
+  url.searchParams.delete('uip-hide-screen-options');
+  url.searchParams.delete('uip-hide-help-tab');
+  url.searchParams.delete('uip-default-theme');
+  url.searchParams.delete('uip-hide-notices');
   url.searchParams.delete('uipid');
 
   return url.href.replace(adminURL, '');
