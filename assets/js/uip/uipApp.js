@@ -169,6 +169,7 @@ const uipMasterToolbar = toolbarScript ? uipParseJson(toolbarScript.getAttribute
 
 app.config.globalProperties.uipApp = reactive({
   scrolling: false,
+  litePath: uip_ajax.uipAppData.options.pluginURL,
   data: {
     plugins: AllPlugins,
     blocks: AllBlocks,
