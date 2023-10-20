@@ -48,7 +48,7 @@ export default {
 		@click="toggleVisibility()">
 		  
 		  
-		  <span class="uip-text-bold uip-text-emphasis">{{ title }}</span> 
+		  <span class="uip-text-bold uip-text-emphasis" v-html="title"></span> 
 		  
 		  <a class="uip-link-default uip-icon">{{ returnVisibilityIcon }}</a>
 		  
