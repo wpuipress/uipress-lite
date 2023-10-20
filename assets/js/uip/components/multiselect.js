@@ -1,4 +1,6 @@
 import { defineAsyncComponent } from '../../libs/vue-esm-dev.js';
+const { __, _x, _n, _nx } = wp.i18n;
+
 export const core = {
   props: {
     selected: Array,
