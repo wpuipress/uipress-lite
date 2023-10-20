@@ -391,6 +391,17 @@ export default {
       if (!data) return [];
       return [...data];
     },
+
+    /**
+     * Returns active style for tab
+     *
+     * @param {object} item
+     * @since 3.2.0
+     */
+    returnTabStyle(item) {
+      if (item.name != this.activeFilter) return;
+      return { 'border-bottom': '2px solid var(--uip-color-accent)' };
+    },
   },
   template: `
   
@@ -524,18 +535,14 @@ export default {
         <div class="uip-text-bold uip-text-xl uip-text-emphasis">{{ strings.templates }}</div>
         
         <!-- Filters -->
-        <div class="uip-flex uip-flex-wrap uip-gap-xs">
-        
-          <template v-for="(type, index) in tabletabs">
-          
-            <div class="uip-padding-s uip-padding-top-xs uip-padding-bottom-xs uip-border-rounder uip-transition-all"
-            @click="activeFilter = type.name"
-            :class="activeFilter === type.name ? 'uip-text-inverse uip-background-primary' : 'uip-border uip-background-default hover:uip-background-grey uip-link-muted'">
-              {{type.label}}
-            </div>
-          
+        <div class="uip-flex uip-gap-s">
+          <template v-for="item in tabletabs">
+            <a class="uip-padding-bottom-s" @click="activeFilter = item.name" 
+            :class="item.name == this.activeFilter ? 'uip-text-bold uip-link-emphasis' : 'uip-link-muted'"
+            :style="returnTabStyle(item)">
+              {{item.label}}
+            </a>
           </template>
-        
         </div>
         
         <component is="style">
