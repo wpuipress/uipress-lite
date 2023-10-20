@@ -231,6 +231,9 @@ html[uip-core-app='true'] {
 .uip-no-wrap {
   white-space: nowrap;
 }
+.uip-break-word {
+  word-wrap: break-word;
+}
 .uip-cursor-pointer {
   cursor: pointer;
 }
