@@ -21,6 +21,7 @@ export default {
      * @since 3.2.13
      */
     notify(title, message, type, dismissible, loader) {
+      dismissible = typeof dismissible === 'undefined' ? true : dismissible;
       return this.create({
         title: title,
         status: type,
