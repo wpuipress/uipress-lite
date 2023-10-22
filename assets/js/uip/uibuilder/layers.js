@@ -20,6 +20,15 @@ const Layer = {
       },
     };
   },
+  watch: {
+    '$route.query.block': {
+      handler(newValue, oldValue) {
+        this.maybeOpenLayer();
+      },
+      deep: true,
+      immediate: true,
+    },
+  },
   computed: {
     /**
      * Returns if the block is currently selected
@@ -61,6 +70,16 @@ const Layer = {
     },
   },
   methods: {
+    /**
+     * Checks if the current block the current layer or included in the children
+     *
+     * @since 3.2.0
+     */
+    maybeOpenLayer() {
+      const asString = JSON.stringify(this.block);
+      const currentBlock = this.$route.query.block;
+      this.open = asString.includes(currentBlock) ? true : this.open;
+    },
     /**
      * Opens block settings
      *
@@ -109,10 +128,9 @@ const Layer = {
         
           <uip-draggable 
           class="uip-flex uip-flex-column uip-row-gap-xxs uip-w-100p uip-template-layers"
-          :group="{ name: 'uip-blocks', pull: true, put: true }"
+          :group="{ name: 'uip-layer-blocks', pull: true, put: true }"
           :list="block.content"
           ghost-class="uip-block-ghost"
-          handle=".uip-block-drag"
           animation="300"
           :sort="true">
           
@@ -184,12 +202,6 @@ export default {
       },
       deep: true,
     },
-    '$route.query.block': {
-      handler(newValue, oldValue) {
-        this.setOpenItems();
-      },
-      deep: true,
-    },
   },
   methods: {
     /**
@@ -243,55 +255,14 @@ export default {
 
       return classes;
     },
-
-    /**
-     * Traverse through blocks to open block content when active block changes
-     *
-     * @since 3.2.13
-     */
-    setOpenItems() {
-      // A recursive function to handle the nested structure
-      const traverse = (arr) => {
-        for (let item of arr) {
-          // Check if should be open
-          item.tabOpen = this.isContentOpen(item);
-
-          // If the item has children, recursively traverse them
-          if (item.content && item.content.length > 0) {
-            traverse(item.content);
-          }
-        }
-      };
-
-      traverse(this.items);
-    },
-    /**
-     * Checks if content is open
-     *
-     * @param {Object} item - block item
-     * @returns {boolean}  - whether or nor to show block children
-     */
-    isContentOpen(item) {
-      if (item.tabOpen) return true;
-      if (!item.content) return item.tabOpen;
-
-      const asString = JSON.stringify(item.content);
-      const currentBlock = this.$route.query.block;
-
-      // Check if children doesn't include the current block
-      if (!asString.includes(currentBlock)) return false;
-
-      return true;
-    },
   },
   template: `
            
 	  <uip-draggable 
 	  class="uip-flex uip-flex-column uip-row-gap-xxs uip-w-100p uip-template-layers"
-	  :group="{ name: 'uip-blocks', pull: true, put: true }"
+	  :group="{ name: 'uip-layer-blocks', pull: true, put: true }"
       :list="items"
 	  ghost-class="uip-block-ghost"
-      handle=".uip-block-drag"
       animation="300"
 	  :sort="true">
     
