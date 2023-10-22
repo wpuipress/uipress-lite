@@ -1,8 +1,8 @@
-import { nextTick, h, Teleport } from '../../libs/vue-esm-dev.js';
-import BlockStyles from './block-styles.min.js';
+import { nextTick, h, Teleport } from "../../libs/vue-esm-dev.js";
+import BlockStyles from "./block-styles.min.js";
 const { __ } = wp.i18n;
 export default {
-  inject: ['uiTemplate'],
+  inject: ["uiTemplate"],
   mixins: [BlockStyles],
   props: {
     block: Object,
@@ -14,9 +14,9 @@ export default {
     return {
       query: {},
       strings: {
-        proOptionUnlock: __('This is a pro option. Upgrade to unlock', 'uipress-lite'),
-        search: __('Search', 'uipress-lite'),
-        totalItems: __('total items', 'uipress-lite'),
+        proOptionUnlock: __("This is a pro option. Upgrade to unlock", "uipress-lite"),
+        search: __("Search", "uipress-lite"),
+        totalItems: __("total items", "uipress-lite"),
       },
     };
   },
@@ -24,19 +24,19 @@ export default {
     this.returnBlockParts;
   },
   watch: {
-    'block.query': {
+    "block.query": {
       handler() {
         if (this.hasBlockQuery) this.runBlockQuery();
       },
       immediate: true,
       deep: true,
     },
-    'query.currentPage': {
+    "query.currentPage": {
       handler() {
         if (this.hasBlockQuery) this.runBlockQuery();
       },
     },
-    'query.search': {
+    "query.search": {
       handler() {
         if (this.hasBlockQuery) this.runBlockQuery();
       },
@@ -49,7 +49,7 @@ export default {
      * @since 3.2.13
      */
     hasBlockQuery() {
-      return this.hasNestedPath(this.block, ['query', 'enabled']);
+      return this.hasNestedPath(this.block, ["query", "enabled"]);
     },
     /**
      * Returns total count for query
@@ -67,7 +67,7 @@ export default {
      * @since 3.2.13
      */
     blockPaginationEnabled() {
-      return this.hasNestedPath(this.block, ['query', 'settings', 'showPagination']);
+      return this.hasNestedPath(this.block, ["query", "settings", "showPagination"]);
     },
     /**
      * Return whether the block query has a search input
@@ -75,7 +75,7 @@ export default {
      * @since 3.2.13
      */
     blockSearchEnabled() {
-      return this.hasNestedPath(this.block, ['query', 'settings', 'search']);
+      return this.hasNestedPath(this.block, ["query", "settings", "search"]);
     },
     /**
      * Returns block link if it exists. Returns false otherwise
@@ -83,7 +83,7 @@ export default {
      * @since 3.2.13
      */
     ifBlockHasLink() {
-      return this.hasNestedPath(this.block, ['linkTo', 'value']);
+      return this.hasNestedPath(this.block, ["linkTo", "value"]);
     },
 
     /**
@@ -108,8 +108,8 @@ export default {
      * @since 3.2.13
      */
     returnCustomCSS() {
-      let style = this.hasNestedPath(this.block, ['settings', 'advanced', 'options', 'css', 'value']);
-      if (!style) style = '';
+      let style = this.hasNestedPath(this.block, ["settings", "advanced", "options", "css", "value"]);
+      if (!style) style = "";
       return style;
     },
 
@@ -119,8 +119,8 @@ export default {
      * @since 3.2.13
      */
     returnCustomJS() {
-      let code = this.hasNestedPath(this.block, ['settings', 'advanced', 'options', 'js', 'value']);
-      if (!code) code = '';
+      let code = this.hasNestedPath(this.block, ["settings", "advanced", "options", "js", "value"]);
+      if (!code) code = "";
       return code;
     },
 
@@ -131,7 +131,7 @@ export default {
      * @since 3.2.13
      */
     isProduction() {
-      if (this.uiTemplate.display == 'prod') return true;
+      if (this.uiTemplate.display == "prod") return true;
       if (this.uiTemplate.isPreview) return true;
       return false;
     },
@@ -173,7 +173,7 @@ export default {
      */
     returnParams() {
       return {
-        'block-uid': this.block.uid,
+        "block-uid": this.block.uid,
         block: this.formatDynamicMatches,
         class: this.returnBlockClasses(this.block),
         id: this.block.uid,
@@ -193,7 +193,7 @@ export default {
       if (templateWidth) screenWidth = templateWidth;
 
       // No responsive settings so bail
-      if (typeof responsive === 'undefined') return false;
+      if (typeof responsive === "undefined") return false;
       if (!responsive) return false;
 
       //Hidden on mobile
@@ -224,29 +224,29 @@ export default {
      * @since 3.2.13
      */
     async runBlockQuery() {
-      const blockQuery = this.hasNestedPath(this.block, ['query', 'settings']);
+      const blockQuery = this.hasNestedPath(this.block, ["query", "settings"]);
       let query = JSON.stringify(blockQuery);
       let blockString = JSON.stringify(this.block);
 
       let page = this.query.currentPage;
-      if (typeof page === 'undefined') page = 1;
+      if (typeof page === "undefined") page = 1;
 
       let search = this.query.search;
-      if (typeof search === 'undefined') search = '';
+      if (typeof search === "undefined") search = "";
 
       //Build form data for fetch request
       let formData = new FormData();
-      formData.append('action', 'uip_process_block_query');
-      formData.append('security', uip_ajax.security);
-      formData.append('query', query);
-      formData.append('blockString', blockString);
-      formData.append('page', page);
-      formData.append('search', search);
+      formData.append("action", "uip_process_block_query");
+      formData.append("security", uip_ajax.security);
+      formData.append("query", query);
+      formData.append("blockString", blockString);
+      formData.append("page", page);
+      formData.append("search", search);
 
       const response = await this.sendServerRequest(uip_ajax.ajax_url, formData);
 
       if (response.error) {
-        this.uipApp.notifications.notify(response.message, 'uipress-lite', '', 'error', true);
+        this.uipApp.notifications.notify(response.message, "uipress-lite", "", "error", true);
       }
 
       if (response.success) {
@@ -264,7 +264,7 @@ export default {
      * @since 3.2.13
      */
     returnToolTip(block) {
-      let hasTip = this.hasNestedPath(block, ['tooltip', 'message']);
+      let hasTip = this.hasNestedPath(block, ["tooltip", "message"]);
       if (hasTip) return hasTip;
     },
 
@@ -274,8 +274,8 @@ export default {
      * @since 3.2.13
      */
     returnBlockClasses(block, postID) {
-      let classes = '';
-      const advanced = this.get_block_option(block, 'advanced', 'classes');
+      let classes = "";
+      const advanced = this.get_block_option(block, "advanced", "classes");
       if (postID) classes += ` uip-query-id-${postID}`;
       return (classes += advanced);
     },
@@ -296,7 +296,7 @@ export default {
       for (let item of postQuery) {
         const queriedBlock = this.formatQueryDynamicMatches(item.ID);
         const queryBlockStyle = this.returnQueryBlockStyles(queriedBlock, item.ID);
-        const queryStyleNode = h(Teleport, { to: 'body' }, h('style', { scoped: '' }, queryBlockStyle));
+        const queryStyleNode = h(Teleport, { to: "body" }, h("style", { scoped: "" }, queryBlockStyle));
         const args = { ...this.returnQueryParams(queriedBlock, item.ID), ...this.returnWatchers(queriedBlock) };
         const blocknode = h(blockTemplate, args);
         nodes.push(queryStyleNode, blocknode);
@@ -314,8 +314,8 @@ export default {
       const id = this.block.uid;
       const darkmode = this.uipApp.data.templateDarkMode;
       let style = this.returnBlockStylesAsCss(block);
-      style = style ? style : '';
-      return style.replace('#' + block.uid, '.uip-query-id-' + ID + '#' + block.uid);
+      style = style ? style : "";
+      return style.replace("#" + block.uid, ".uip-query-id-" + ID + "#" + block.uid);
     },
 
     /**
@@ -325,7 +325,7 @@ export default {
      */
     returnQueryParams(queriedBlock, loopID) {
       return {
-        'block-uid': this.block.uid,
+        "block-uid": this.block.uid,
         block: queriedBlock,
         class: this.returnBlockClasses(queriedBlock, loopID),
         id: this.block.uid,
@@ -358,8 +358,8 @@ export default {
         let replacementValue = match.replace;
 
         // Special case for '{{post_content}}'
-        if (match.match === '{{post_content}}') {
-          const replacerParts = JSON.stringify({ html: `uip_remove_this${match.replace}uip_remove_this` }).split('uip_remove_this');
+        if (match.match === "{{post_content}}") {
+          const replacerParts = JSON.stringify({ html: `uip_remove_this${match.replace}uip_remove_this` }).split("uip_remove_this");
           replacementValue = replacerParts[1];
         }
 
@@ -370,7 +370,7 @@ export default {
           JSON.parse(potentialNewString); // Check if it's a valid JSON
           matchesString = potentialNewString; // Update the string if valid
         } catch (error) {
-          console.error('Replacement resulted in invalid JSON:', error);
+          console.error("Replacement resulted in invalid JSON:", error);
         }
       }
 
@@ -378,7 +378,7 @@ export default {
       try {
         return JSON.parse(matchesString);
       } catch (error) {
-        console.error('Error parsing final string:', error);
+        console.error("Error parsing final string:", error);
         return this.dynamicMatches; // If parsing fails, return the original block
       }
     },
@@ -439,14 +439,14 @@ export default {
      */
     maybeFollowLink(evt, block) {
       // Retrieve link value and link type
-      const linkValue = this.hasNestedPath(block, ['linkTo', 'value']);
-      const linkType = this.hasNestedPath(block, ['linkTo', 'newTab']);
+      const linkValue = this.hasNestedPath(block, ["linkTo", "value"]);
+      const linkType = this.hasNestedPath(block, ["linkTo", "newTab"]);
 
       // Early exit if no link value is set
       if (!linkValue) return;
 
       // Update dynamic link
-      if (linkType === 'dynamic') {
+      if (linkType === "dynamic") {
         this.updateAppPage(linkValue);
         return;
       }
@@ -456,12 +456,12 @@ export default {
       linkEl.href = linkValue;
 
       // Determine if modifier keys were pressed or if link should open in a new tab
-      const forceNewTab = evt.ctrlKey || evt.shiftKey || evt.metaKey || (evt.button && evt.button === 1) || linkType === 'newTab';
+      const forceNewTab = evt.ctrlKey || evt.shiftKey || evt.metaKey || (evt.button && evt.button === 1) || linkType === "newTab";
 
       if (forceNewTab) {
-        linkEl.target = '_BLANK';
+        linkEl.target = "_BLANK";
       } else {
-        linkEl.target = '';
+        linkEl.target = "";
       }
 
       // Trigger the link
@@ -478,10 +478,10 @@ export default {
       // Exit if query doesn't have search
       if (!searchEnabled) return [];
 
-      const icon = h('span', { class: 'uip-icon uip-text-muted' }, 'search');
+      const icon = h("span", { class: "uip-icon uip-text-muted" }, "search");
       const watcher = { oninput: (evt) => (this.query.search = evt.target.value) };
-      const searchInput = h('input', { class: 'uip-blank-input uip-flex-grow uip-text-s', type: 'search', placeholder: this.strings.search, ...watcher });
-      return [h('div', { class: 'uip-flex uip-search-block uip-border-round uip-query-search uip-w-100p uip-gap-xxs uip-flex-center' }, icon, searchInput)];
+      const searchInput = h("input", { class: "uip-blank-input uip-flex-grow uip-text-s", type: "search", placeholder: this.strings.search, ...watcher });
+      return [h("div", { class: "uip-flex uip-search-block uip-border-round uip-query-search uip-w-100p uip-gap-xxs uip-flex-center" }, icon, searchInput)];
     },
     /**
      * Renders the pagination input for the query
@@ -493,28 +493,28 @@ export default {
 
       // Exit if query doesn't have search
       if (!paginationEnabled) return [];
-      const totalFound = this.returnPostQueryCount + ' ' + this.strings.totalItems;
-      const totalFoundNode = h('div', { class: 'uip-text-muted uip-pagination-count' }, totalFound);
+      const totalFound = this.returnPostQueryCount + " " + this.strings.totalItems;
+      const totalFoundNode = h("div", { class: "uip-text-muted uip-pagination-count" }, totalFound);
 
       // Only render pagination buttons if pages more than 1
       let paginationWrapper;
       if (this.query.totalPages > 1) {
         // Build back button
-        let backClass = 'uip-button-default uip-icon uip-pagination-button uip-border-rounder';
-        if (this.query.currentPage < 2) backClass += ' uip-link-disabled';
+        let backClass = "uip-button-default uip-icon uip-pagination-button uip-border-rounder";
+        if (this.query.currentPage < 2) backClass += " uip-link-disabled";
         const backWatcher = { onclick: () => this.query.currentPage-- };
-        const backButton = h('button', { class: backClass, ...backWatcher, type: 'button' }, 'chevron_left');
+        const backButton = h("button", { class: backClass, ...backWatcher, type: "button" }, "chevron_left");
 
         // Forward back button
-        let forwardClass = 'uip-button-default uip-icon uip-pagination-button uip-border-rounder';
-        if (this.query.currentPage >= this.query.totalPages) forwardClass += ' uip-link-disabled';
+        let forwardClass = "uip-button-default uip-icon uip-pagination-button uip-border-rounder";
+        if (this.query.currentPage >= this.query.totalPages) forwardClass += " uip-link-disabled";
         const forwardWatcher = { onclick: () => this.query.currentPage++ };
-        const forwardButton = h('button', { class: forwardClass, ...forwardWatcher, type: 'button' }, 'chevron_right');
+        const forwardButton = h("button", { class: forwardClass, ...forwardWatcher, type: "button" }, "chevron_right");
 
-        paginationWrapper = h('div', { class: 'uip-flex uip-gap-xs uip-pagination-button-group' }, backButton, forwardButton);
+        paginationWrapper = h("div", { class: "uip-flex uip-gap-xs uip-pagination-button-group" }, backButton, forwardButton);
       }
 
-      return [h('div', { class: 'uip-flex uip-w-100p uip-flex-between uip-flex-center uip-pagination-controls' }, totalFoundNode, paginationWrapper)];
+      return [h("div", { class: "uip-flex uip-w-100p uip-flex-between uip-flex-center uip-pagination-controls" }, totalFoundNode, paginationWrapper)];
     },
   },
   /**
@@ -539,16 +539,16 @@ export default {
     if (isHidden) return nodes;
 
     // Push the style tag if block has styles
-    if (styles) nodes.push(h(Teleport, { to: 'body' }, h('style', { scoped: '' }, styles)));
-    if (scripts) nodes.push(h(Teleport, { to: 'body' }, h('script', {}, scripts)));
-    if (blockLink) nodes.push(h(Teleport, { to: 'body' }, h('a', { ref: 'blocklink', class: 'uip-hidden' })));
+    if (styles) nodes.push(h(Teleport, { to: "body" }, h("style", { scoped: "" }, styles)));
+    if (scripts) nodes.push(h(Teleport, { to: "body" }, h("script", {}, scripts)));
+    if (blockLink) nodes.push(h(Teleport, { to: "body" }, h("a", { ref: "blocklink", class: "uip-hidden" })));
 
     // Build the main block args
     const blockTemplate = this.$root._.appContext.components[this.block.moduleName];
 
     // Doesn't exist so it's like a pro component
     if (!blockTemplate) {
-      const noblocknode = h(div, { innerHTML: this.strings.proOptionUnlock, class: 'uip-padding-xxs uip-border-rounder uip-background-green-wash uip-text-s' });
+      const noblocknode = h("div", { innerHTML: this.strings.proOptionUnlock, class: "uip-padding-xxs uip-border-rounder uip-background-green-wash uip-text-s uip-text-normal" });
       nodes.push(noblocknode);
       return nodes;
     }

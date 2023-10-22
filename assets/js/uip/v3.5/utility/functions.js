@@ -44,9 +44,9 @@ export function hasNestedPath(obj, ...keys) {
  */
 export function prepareJSON(data) {
   const handler = (k, v) => {
-    if (v === 'true' || v === true) return 'uiptrue';
-    if (v === 'false' || v === false) return 'uipfalse';
-    if (v === '') return 'uipblank';
+    if (v === "true" || v === true) return "uiptrue";
+    if (v === "false" || v === false) return "uipfalse";
+    if (v === "") return "uipblank";
     return v;
   };
   return JSON.stringify(data, handler);
@@ -75,18 +75,18 @@ export async function copyToClipboard(textToCopy) {
     await navigator.clipboard.writeText(textToCopy);
   } else {
     // Use the 'out of viewport hidden text area' trick
-    const textArea = document.createElement('textarea');
+    const textArea = document.createElement("textarea");
     textArea.value = textToCopy;
 
     // Move textarea out of the viewport so it's not visible
-    textArea.style.position = 'absolute';
-    textArea.style.left = '-999999px';
+    textArea.style.position = "absolute";
+    textArea.style.left = "-999999px";
 
     document.body.prepend(textArea);
     textArea.select();
 
     try {
-      document.execCommand('copy');
+      document.execCommand("copy");
     } catch (error) {
       console.error(error);
     } finally {
@@ -103,7 +103,7 @@ export async function copyToClipboard(textToCopy) {
  * @since 3.0.0
  */
 export function isObject(obj) {
-  return obj !== null && typeof obj === 'object' && obj.constructor === Object;
+  return obj !== null && typeof obj === "object" && obj.constructor === Object;
 }
 
 /**
@@ -114,8 +114,8 @@ export function isObject(obj) {
  * @since 3.2.13
  */
 export function isUnDefined(value) {
-  if (typeof value === 'undefined') return true;
-  return value === null || value === '';
+  if (typeof value === "undefined") return true;
+  return value === null || value === "";
 }
 
 /**
@@ -131,11 +131,11 @@ export function get_block_option(block, group, key) {
   if (isUnDefined(block.settings)) return false;
   if (!(group in block.settings)) return false;
   if (!isObject(block.settings[group])) return false;
-  if (!('options' in block.settings[group])) return false;
+  if (!("options" in block.settings[group])) return false;
 
   const optionGroup = block.settings[group].options;
   if (!isObject(optionGroup[key])) return false;
-  if (!('value' in optionGroup[key])) return false;
+  if (!("value" in optionGroup[key])) return false;
 
   // Set return value;
   let value = optionGroup[key].value;
@@ -164,8 +164,8 @@ export function createUID() {
  * @since 3.2.13
  */
 export function generateRandomString(length = 4) {
-  const characters = 'abcdefghijklmnopqrstuvwxyz';
-  let result = '';
+  const characters = "abcdefghijklmnopqrstuvwxyz";
+  let result = "";
 
   for (let i = 0; i < length; i++) {
     const randomIndex = Math.floor(Math.random() * characters.length);
@@ -183,13 +183,13 @@ export function generateRandomString(length = 4) {
  * @since 3.0.0
  */
 export async function sendServerRequest(url, data) {
-  const errorMessage = __('Bad request', 'uipress-lite');
+  const errorMessage = __("Bad request", "uipress-lite");
   const emitError = () => {
-    this.notify(errorMessage, '', 'error');
+    this.notify(errorMessage, "", "error");
   };
   const response = await fetch(url, {
-    method: 'POST',
-    headers: { 'Content-Length': '0' },
+    method: "POST",
+    headers: { "Content-Length": "0" },
     body: data,
   });
 
@@ -216,7 +216,7 @@ export async function sendServerRequest(url, data) {
  * @since 3.0.0
  */
 export function uipParseJson(data) {
-  return JSON.parse(data, (k, v) => (v === 'uiptrue' ? true : v === 'uipfalse' ? false : v === 'uipblank' ? '' : v));
+  return JSON.parse(data, (k, v) => (v === "uiptrue" ? true : v === "uipfalse" ? false : v === "uipblank" ? "" : v));
 }
 
 /**
@@ -227,21 +227,23 @@ export function uipParseJson(data) {
  * @since 3.0.0
  */
 export function updateAppPage(newURL, reloadPage) {
-  const absoluteCheck = new RegExp('^(?:[a-z+]+:)?//', 'i');
+  const absoluteCheck = new RegExp("^(?:[a-z+]+:)?//", "i");
   const adminURL = this.adminURL;
 
-  newURL = newURL.replace(/&amp;/g, '&');
+  if (!newURL) return;
+
+  newURL = newURL.replace(/&amp;/g, "&");
   //Dispatch link change event
   let shortURL = newURL;
   if (absoluteCheck.test(newURL)) {
     if (newURL.includes(adminURL)) {
-      shortURL = newURL.replace(adminURL, '');
+      shortURL = newURL.replace(adminURL, "");
     }
   }
 
   // Dispatch page change event
   const strippedURL = stripUIPparams(shortURL, adminURL);
-  const linkeChangeEvent = new CustomEvent('uipress/app/page/change', { detail: { url: strippedURL } });
+  const linkeChangeEvent = new CustomEvent("uipress/app/page/change", { detail: { url: strippedURL } });
   document.dispatchEvent(linkeChangeEvent);
 
   if (!absoluteCheck.test(newURL)) {
@@ -260,18 +262,18 @@ export function updateAppPage(newURL, reloadPage) {
       window.location.assign(url);
     }
   };
-  if (typeof UIPdisableUserPages !== 'undefined') {
+  if (typeof UIPdisableUserPages !== "undefined") {
     handleDisabledPages(UIPdisableUserPages);
   }
 
   // If dynamic loading is disabled reload the whole page
-  if (typeof UIPdisableDynamicLoading !== 'undefined') {
+  if (typeof UIPdisableDynamicLoading !== "undefined") {
     const disabledDynamicLoading = !isUnDefined(UIPdisableDynamicLoading) && !isBuilder ? true : false;
     if (disabledDynamicLoading) return window.location.assign(url);
   }
 
   // Check for front end load without frame and reload
-  if (typeof UIPfrontEndReload !== 'undefined') {
+  if (typeof UIPfrontEndReload !== "undefined") {
     const frontEndReload = !isUnDefined(UIPfrontEndReload) && !isBuilder ? true : false;
     if (frontEndReload) {
       if (!url.href.includes(adminURL)) {
@@ -284,15 +286,15 @@ export function updateAppPage(newURL, reloadPage) {
 
   // Force a page reload (used for navigation between subsites)
   if (reloadPage && !isBuilder) {
-    url.searchParams.set('uip-framed-page', 0);
+    url.searchParams.set("uip-framed-page", 0);
     return window.location.assign(url);
   }
 
   // Dispatch page updating event
-  const uipUpdateFrame = new CustomEvent('uip_update_frame_url', { detail: { url: url } });
+  const uipUpdateFrame = new CustomEvent("uip_update_frame_url", { detail: { url: url } });
   document.dispatchEvent(uipUpdateFrame);
 
-  const frame = document.querySelector('.uip-page-content-frame');
+  const frame = document.querySelector(".uip-page-content-frame");
   // There is no iframe to update so we are going to refresh the page manually
   if (!frame && !isBuilder) {
     window.location.assign(url);
@@ -308,29 +310,29 @@ export function updateAppPage(newURL, reloadPage) {
  */
 export function updateActiveLink(newURL) {
   const adminURL = this.adminURL;
-  let absoluteCheck = new RegExp('^(?:[a-z+]+:)?//', 'i');
+  let absoluteCheck = new RegExp("^(?:[a-z+]+:)?//", "i");
 
   //Dispatch link change event
-  let shortURL = absoluteCheck.test(newURL) && newURL.includes(adminURL) ? newURL.replace(adminURL, '') : newURL;
+  let shortURL = absoluteCheck.test(newURL) && newURL.includes(adminURL) ? newURL.replace(adminURL, "") : newURL;
   let fullURL = !absoluteCheck.test(newURL) ? adminURL + newURL : newURL;
 
-  fullURL = fullURL.replace('about:blank', '');
-  shortURL = shortURL.replace('about:blank', '');
+  fullURL = fullURL.replace("about:blank", "");
+  shortURL = shortURL.replace("about:blank", "");
 
   let url = new URL(fullURL);
-  url.searchParams.delete('uip-framed-page', 1);
-  url.searchParams.delete('uip-hide-screen-options', 1);
-  url.searchParams.delete('uip-hide-help-tab', 1);
-  url.searchParams.delete('uip-default-theme', 1);
-  url.searchParams.delete('uip-hide-notices', 1);
-  url.searchParams.delete('uipid', 1);
+  url.searchParams.delete("uip-framed-page", 1);
+  url.searchParams.delete("uip-hide-screen-options", 1);
+  url.searchParams.delete("uip-hide-help-tab", 1);
+  url.searchParams.delete("uip-default-theme", 1);
+  url.searchParams.delete("uip-hide-notices", 1);
+  url.searchParams.delete("uipid", 1);
 
   maybeForceReload(url);
 
   //Only update window history if we are in production
   //if (!this.isBuilder) history.pushState({}, null, url);
 
-  const uipActiveLinkChange = new CustomEvent('uipress/app/page/change', { detail: { url: stripUIPparams(shortURL, adminURL) } });
+  const uipActiveLinkChange = new CustomEvent("uipress/app/page/change", { detail: { url: stripUIPparams(shortURL, adminURL) } });
   document.dispatchEvent(uipActiveLinkChange);
 }
 
@@ -344,18 +346,18 @@ export function updateActiveLink(newURL) {
 export function stripUIPparams(link, adminURL) {
   if (!link) return link;
 
-  const absoluteCheck = new RegExp('^(?:[a-z+]+:)?//', 'i');
+  const absoluteCheck = new RegExp("^(?:[a-z+]+:)?//", "i");
 
   let url = absoluteCheck.test(link) ? new URL(link) : new URL(adminURL + link);
 
-  url.searchParams.delete('uip-framed-page');
-  url.searchParams.delete('uip-hide-screen-options');
-  url.searchParams.delete('uip-hide-help-tab');
-  url.searchParams.delete('uip-default-theme');
-  url.searchParams.delete('uip-hide-notices');
-  url.searchParams.delete('uipid');
+  url.searchParams.delete("uip-framed-page");
+  url.searchParams.delete("uip-hide-screen-options");
+  url.searchParams.delete("uip-hide-help-tab");
+  url.searchParams.delete("uip-default-theme");
+  url.searchParams.delete("uip-hide-notices");
+  url.searchParams.delete("uipid");
 
-  return url.href.replace(adminURL, '');
+  return url.href.replace(adminURL, "");
 }
 
 /**
@@ -365,55 +367,55 @@ export function stripUIPparams(link, adminURL) {
  */
 export function maybeForceReload(url) {
   // bricks
-  if (url.searchParams.get('bricks') == 'run') {
+  if (url.searchParams.get("bricks") == "run") {
     return window.location.assign(url);
   }
 
   // motion.page
-  if (url.searchParams.get('page') == 'motionpage') {
-    url.searchParams.set('uip-framed-page', 1);
+  if (url.searchParams.get("page") == "motionpage") {
+    url.searchParams.set("uip-framed-page", 1);
     return window.location.assign(url);
   }
 
   //Elementor
-  if (url.searchParams.get('action') == 'elementor') {
-    url.searchParams.set('uip-framed-page', 1);
+  if (url.searchParams.get("action") == "elementor") {
+    url.searchParams.set("uip-framed-page", 1);
     return window.location.assign(url);
   }
 
   // Elementor
-  if (url.searchParams.get('page') == 'elementor-app') {
-    url.searchParams.set('uip-framed-page', 1);
+  if (url.searchParams.get("page") == "elementor-app") {
+    url.searchParams.set("uip-framed-page", 1);
     return window.location.assign(url);
   }
 
   // Breakdance
-  if (url.searchParams.get('breakdance') == 'builder') {
-    url.searchParams.set('uip-framed-page', 1);
+  if (url.searchParams.get("breakdance") == "builder") {
+    url.searchParams.set("uip-framed-page", 1);
     return window.location.assign(url);
   }
 
   // Oxygen
-  if (url.searchParams.get('ct_builder') == 'true') {
-    url.searchParams.set('uip-framed-page', 1);
+  if (url.searchParams.get("ct_builder") == "true") {
+    url.searchParams.set("uip-framed-page", 1);
     return window.location.assign(url);
   }
 
   // Piotnet forms
-  if (url.searchParams.get('page') == 'piotnetforms' && url.searchParams.get('post')) {
-    url.searchParams.set('uip-framed-page', 1);
+  if (url.searchParams.get("page") == "piotnetforms" && url.searchParams.get("post")) {
+    url.searchParams.set("uip-framed-page", 1);
     return window.location.assign(url);
   }
 
   // Zion builder
-  if (url.searchParams.get('action') == 'zion_builder_active') {
-    url.searchParams.set('uip-framed-page', 1);
+  if (url.searchParams.get("action") == "zion_builder_active") {
+    url.searchParams.set("uip-framed-page", 1);
     return window.location.assign(url);
   }
 
   // Divi builder
-  if (url.searchParams.get('et_fb') == '1') {
-    url.searchParams.set('uip-framed-page', 1);
+  if (url.searchParams.get("et_fb") == "1") {
+    url.searchParams.set("uip-framed-page", 1);
     return window.location.assign(url);
   }
 }
@@ -431,14 +433,14 @@ export async function saveUserPreference(key, value, notification) {
   let formData = new FormData();
 
   // Format value
-  value = value == true ? 'uiptrue' : value;
-  value = value == false ? 'uipfalse' : value;
+  value = value == true ? "uiptrue" : value;
+  value = value == false ? "uipfalse" : value;
   value = prepareJSON(value);
 
-  formData.append('action', 'uip_save_user_preference');
-  formData.append('security', uip_ajax.security);
-  formData.append('key', key);
-  formData.append('value', value);
+  formData.append("action", "uip_save_user_preference");
+  formData.append("security", uip_ajax.security);
+  formData.append("key", key);
+  formData.append("value", value);
 
   const response = await sendServerRequest(uip_ajax.ajax_url, formData);
 
@@ -494,34 +496,34 @@ async function validateBlock(block, keepUID) {
  */
 export function renderKeyShortCut(keys) {
   const shortcutKeys = [
-    'Enter', // Enter
-    ' ', // Space
-    'ArrowLeft', // Left Arrow
-    'ArrowUp', // Up Arrow
-    'ArrowRight', // Right Arrow
-    'ArrowDown', // Down Arrow
+    "Enter", // Enter
+    " ", // Space
+    "ArrowLeft", // Left Arrow
+    "ArrowUp", // Up Arrow
+    "ArrowRight", // Right Arrow
+    "ArrowDown", // Down Arrow
   ];
   const shortcutKeysIcons = [
-    { key: 'Enter', icon: 'keyboard_return' }, // Enter
-    { key: ' ', icon: 'space_bar' }, // Space
-    { key: 'ArrowLeft', icon: 'keyboard_arrow_left' }, // Left Arrow
-    { key: 'ArrowUp', icon: 'keyboard_arrow_up' }, // Up Arrow
-    { key: 'ArrowRight', icon: 'keyboard_arrow_right' }, // Right Arrow
-    { key: 'ArrowDown', icon: 'keyboard_arrow_down' }, // Down Arrow
+    { key: "Enter", icon: "keyboard_return" }, // Enter
+    { key: " ", icon: "space_bar" }, // Space
+    { key: "ArrowLeft", icon: "keyboard_arrow_left" }, // Left Arrow
+    { key: "ArrowUp", icon: "keyboard_arrow_up" }, // Up Arrow
+    { key: "ArrowRight", icon: "keyboard_arrow_right" }, // Right Arrow
+    { key: "ArrowDown", icon: "keyboard_arrow_down" }, // Down Arrow
   ];
 
-  let format = '';
+  let format = "";
 
   for (let key of keys) {
-    if (key == 'Meta') {
+    if (key == "Meta") {
       format += '<span class="uip-command-icon uip-text-muted"></span>';
-    } else if (key == 'Alt') {
+    } else if (key == "Alt") {
       format += '<span class="uip-alt-icon uip-text-muted"></span>';
-    } else if (key == 'Shift') {
+    } else if (key == "Shift") {
       format += '<span class="uip-shift-icon uip-text-muted"></span>';
-    } else if (key == 'Control') {
+    } else if (key == "Control") {
       format += '<span class="uip-icon uip-text-muted">keyboard_control_key</span>';
-    } else if (key == 'Backspace') {
+    } else if (key == "Backspace") {
       format += '<span class="uip-icon uip-text-muted">backspace</span>';
     } else if (shortcutKeys.includes(key)) {
       let keyicon = shortcutKeysIcons.find((x) => x.key == key);
@@ -549,9 +551,9 @@ export async function deleteRemotePost(postID) {
   let self = this;
 
   let formData = new FormData();
-  formData.append('action', 'uip_delete_post');
-  formData.append('security', uip_ajax.security);
-  formData.append('id', files);
+  formData.append("action", "uip_delete_post");
+  formData.append("security", uip_ajax.security);
+  formData.append("id", files);
 
   const response = await sendServerRequest(uip_ajax.ajax_url, formData);
 
@@ -569,9 +571,9 @@ export async function deleteRemotePost(postID) {
  */
 export async function getUserPreference(key) {
   let formData = new FormData();
-  formData.append('action', 'uip_get_user_preference');
-  formData.append('security', uip_ajax.security);
-  formData.append('key', key);
+  formData.append("action", "uip_get_user_preference");
+  formData.append("security", uip_ajax.security);
+  formData.append("key", key);
 
   const response = await sendServerRequest(uip_ajax.ajax_url, formData);
   if (response.error) return false;

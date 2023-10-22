@@ -46,6 +46,8 @@ class AdminMenu
     $mastermenu["custom"] = false;
     $mastermenu["mergedMenu"] = $mergedMenu;
 
+    set_transient("uip-master-menu", $mastermenu, 12 * HOUR_IN_SECONDS);
+
     // Format default menu
     $menuOptions = self::format_admin_menu($mastermenu);
     $formattedMenu = $menuOptions["menu"];
@@ -219,11 +221,6 @@ class AdminMenu
     // Add hook to allow custom menu builder to replace menu
     $mastermenu = apply_filters("uipress/admin/menus/update", $mastermenu);
 
-    $self = $mastermenu["self"];
-    $parent_file = $mastermenu["parent_file"];
-    $submenu_file = $mastermenu["submenu_file"];
-    $plugin_page = $mastermenu["plugin_page"];
-    $typenow = $mastermenu["typenow"];
     $menu = $mastermenu["menu"];
     $submenu = $mastermenu["submenu"];
 
@@ -384,9 +381,6 @@ class AdminMenu
       $pos = strpos($menu_file, "?");
 
       $menu_file = $pos !== false ? substr($menu_file, 0, $pos) : $menu_file;
-
-      // Handle current for post_type=post|page|foo pages, which won't match $self.
-      $self_type = !empty($typenow) ? $self . "?post_type=" . $typenow : "nothing";
 
       $menu_hook = get_plugin_page_hook($sub_item[2], $parentItem[2]);
       $sub_file = $sub_item[2];

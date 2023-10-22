@@ -133,16 +133,31 @@ const MenuSearch = {
 };
 
 const SubMenuItem = {
+  name: "SubmenuHandler",
   props: {
     maybeFollowLink: Function,
     item: Object,
     collapsed: Boolean,
     block: Object,
+    subMenuStyle: String,
   },
   data() {
     return {};
   },
-  computed: {},
+  computed: {
+    /**
+     * Returns the drop position of the submenu drop. Returns 'right top' if not set
+     *
+     * @since 3.2.13
+     */
+    returnDropdownPosition() {
+      const pos = this.get_block_option(this.block, "block", "dropdownPosition");
+      if (!this.isObject(pos)) return "right top";
+
+      if (pos.value) return pos.value;
+      return "right top";
+    },
+  },
   methods: {
     /**
      * Checks if a separator has a custom name. Returns name on success, false on failure
@@ -153,27 +168,106 @@ const SubMenuItem = {
     sepHasCustomName(item) {
       return this.hasNestedPath(item, ["custom", "name"]);
     },
+
+    /**
+     * Returns whether the given item has an open submenu
+     *
+     * @param {Object} item - the menu item
+     * @since 3.2.13
+     */
+    itemHasOpenSubMenu(item) {
+      if (!item.submenu) return false;
+      if (!item.submenu.length) return false;
+      if (item.active || item.open) return true;
+    },
+
+    /**
+     * Returns whether the item has a submenu
+     *
+     * @param {object} item
+     * @since 3.3.0
+     */
+    itemHasSubmenu(item) {
+      if (!item.submenu) return false;
+      if (!item.submenu.length) return false;
+      return true;
+    },
+
+    /**
+     * Returns submenu icon for subsub
+     *
+     * @param {object} item
+     * @since 3.3.0
+     */
+    returnSubIcon(item) {
+      if (this.subMenuStyle == "hover") return "chevron_right";
+      return this.itemHasSubmenu(item) ? "expand_more" : "chevron_left";
+    },
   },
   template: `
     
           <div class="uip-admin-submenu">
           
               <template v-for="sub in item.submenu">
+                
+                  <!--Hover menu-->
+                  <dropdown v-if="sub.type != 'sep' && subMenuStyle == 'hover'" 
+                  :pos="returnDropdownPosition" class="uip-flex uip-flex-column uip-row-gap-xs" 
+                  :hover="true" :disableTeleport="true">
+                    
+                    <template #trigger>
+                    
+                      <!-- Main link -->
+                      <a :href="sub.url" @click="maybeFollowLink($event, sub)" :class="sub.customClasses" 
+                      class="uip-no-underline uip-link-muted uip-sub-level-item uip-flex-grow uip-flex uip-gap-xs uip-flex-center" :active="sub.active ? true : false">
+                      
+                        <span>{{sub.name}}</span>
+                        
+                        <!-- Notifications count -->
+                        <div v-if="sub.notifications && sub.notifications > 0" 
+                        class="uip-border-circle uip-w-14 uip-h-14 uip-ratio-1-1 uip-background-secondary uip-text-inverse uip-text-xxs uip-flex uip-flex-center uip-flex-middle uip-menu-notification">
+                          <span>{{sub.notifications}}</span>
+                        </div>
+                        
+                        <div v-if="itemHasSubmenu(sub)" class="uip-flex uip-flex-grow uip-flex-center uip-flex-center uip-flex-right">
+                          <div class="uip-icon">{{returnSubIcon(sub)}}</div>
+                        </div>
+                        
+                      </a>
+                      
+                    </template>
+                    
+                    <template v-if="itemHasSubmenu(sub)"  #content>
+                      
+                          <SubmenuHandler :item="sub" :maybeFollowLink="maybeFollowLink" :collapsed="collapsed" :block="block"/>
+                          
+                    </template>
+                  </dropdown>
               
                   <!-- Normal subitem -->
-                  <div v-if="sub.type != 'sep'" class="uip-flex-grow uip-flex uip-gap-xs uip-flex-center">
+                  <div v-else-if="sub.type != 'sep'" class="uip-flex-grow uip-flex-column uip-flex uip-row-gap-xs">
                     
                     <!-- Main link -->
-                    <a :href="sub.url" @click="maybeFollowLink($event, sub)" :class="sub.customClasses" 
-                    class="uip-no-underline uip-link-muted uip-sub-level-item" :active="sub.active ? true : false">
-                      {{sub.name}}
+                    <a :href="sub.url" @click="maybeFollowLink($event, sub, itemHasSubmenu(sub))" :class="sub.customClasses" 
+                    class="uip-no-underline uip-link-muted uip-sub-level-item uip-flex-grow uip-flex uip-gap-xs uip-flex-center" :active="sub.active ? true : false">
+                      <span>{{sub.name}}</span>
+                      
+                      <!-- Notifications count -->
+                      <div v-if="sub.notifications && sub.notifications > 0" 
+                      class="uip-border-circle uip-w-14 uip-h-14 uip-ratio-1-1 uip-background-secondary uip-text-inverse uip-text-xxs uip-flex uip-flex-center uip-flex-middle uip-menu-notification">
+                        <span>{{sub.notifications}}</span>
+                      </div>
+                      
+                      <div v-if="itemHasSubmenu(sub)" class="uip-flex uip-flex-grow uip-flex-center uip-flex-center uip-flex-right">
+                        <div class="uip-icon">{{returnSubIcon(sub)}}</div>
+                      </div>
+                      
                     </a>
                     
-                    <!-- Notifications count -->
-                    <div v-if="sub.notifications && sub.notifications > 0" 
-                    class="uip-border-circle uip-w-14 uip-h-14 uip-ratio-1-1 uip-background-secondary uip-text-inverse uip-text-xxs uip-flex uip-flex-center uip-flex-middle uip-menu-notification">
-                      <span>{{sub.notifications}}</span>
-                    </div>
+                    <!--Sub menu-->
+                    <SubmenuHandler v-if="itemHasSubmenu(sub) && itemHasOpenSubMenu(sub)" :item="sub" :maybeFollowLink="maybeFollowLink" :collapsed="collapsed" :block="block"/>
+                    
+                    
                     
                   </div>
                   
@@ -299,7 +393,6 @@ const TopLevelItem = {
 const DrillDown = {
   components: {
     TopLevelItem: TopLevelItem,
-    SubMenuItem: SubMenuItem,
     MenuSearch: MenuSearch,
     MenuCollapse: MenuCollapse,
   },
@@ -538,6 +631,7 @@ export default {
     return {
       menu: [],
       activeMenu: false,
+      rendered: true,
       workingMenu: [],
       activeLink: "",
       breadCrumbs: [{ name: __("Home", "uipress-lite"), url: this.uipApp.data.dynamicOptions.viewadmin.value }],
@@ -768,7 +862,9 @@ export default {
      */
     async getStaticMenu() {
       await this.$nextTick();
-      console.log("menu fetching");
+
+      this.rendered = false;
+
       if (!this.returnStaticMenuID) return;
       let formData = new FormData();
       formData.append("action", "uip_get_custom_static_menu");
@@ -780,21 +876,22 @@ export default {
       const fallBack = () => {
         this.menu = JSON.parse(JSON.stringify(this.uipApp.data.adminMenu.menu));
         this.buildMenu();
+        this.rendered = true;
       };
 
       // Handle error
       if (response.error) {
         this.uipApp.notifications.notify(response.message, "", "error", true, false);
-        this.fallBack();
-        return;
+        return fallBack();
       }
 
-      if (!("data" in response)) return this.fallBack();
-      if (!Array.isArray(response.data.menu)) return this.fallBack();
+      if (!("data" in response)) return fallBack();
+      if (!Array.isArray(response.data.menu)) return fallBack();
 
       this.menu = response.data.menu;
       this.buildMenu();
       this.staticMenuEnabled = true;
+      this.rendered = true;
     },
 
     /**
@@ -1006,12 +1103,12 @@ export default {
   },
   template: `
     
-          <DrillDownMenu v-if="subMenuStyle == 'dynamic'" :menuItems="workingMenu" 
+          <DrillDownMenu v-if="subMenuStyle == 'dynamic' && rendered" :menuItems="workingMenu" 
           :maybeFollowLink="maybeFollowLink" :collapsed="collapsed" :block="block"
           :activeLink="activeLink"
           :returnCollapsed="(d)=>{collapsed=d}"/>
     
-          <div v-else class="uip-admin-menu uip-text-normal" :class="returnClasses">
+          <div v-else-if="rendered" class="uip-admin-menu uip-text-normal" :class="returnClasses">
           
             <MenuSearch v-if="hasMenuSearch && !collapsed" 
             @searching="(d)=>{searching = d}"
@@ -1027,7 +1124,7 @@ export default {
                     <TopLevelItem :item="item" :maybeFollowLink="maybeFollowLink" :collapsed="collapsed" :block="block"/>
                     
                     <Transition name="slide-down">
-                      <SubMenuItem v-if="itemHasOpenSubMenu(item)" :item="item" :maybeFollowLink="maybeFollowLink" :collapsed="collapsed" :block="block"/>
+                      <SubMenuItem :subMenuStyle="subMenuStyle" v-if="itemHasOpenSubMenu(item)" :item="item" :maybeFollowLink="maybeFollowLink" :collapsed="collapsed" :block="block"/>
                     </Transition>
                     
                   </div>
@@ -1062,7 +1159,7 @@ export default {
                     
                     <template v-if="item.submenu && item.submenu.length > 0" v-slot:content>
                       
-                          <SubMenuItem :item="item" :maybeFollowLink="maybeFollowLink" :collapsed="collapsed" :block="block"/>
+                          <SubMenuItem :subMenuStyle="subMenuStyle" :item="item" :maybeFollowLink="maybeFollowLink" :collapsed="collapsed" :block="block"/>
                           
                     </template>
                   </dropdown>
