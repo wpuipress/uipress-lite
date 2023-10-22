@@ -6,7 +6,10 @@ export default {
     BlockRender: blockRender,
   },
   props: {
-    content: Array,
+    content: {
+      default: [],
+      type: Array,
+    },
     returnData: Function,
     layout: String,
     dropAreaStyle: String,
@@ -14,15 +17,9 @@ export default {
   },
   data() {
     return {
-      items: this.content,
+      items: [],
       rendered: true,
       randomClass: this.createUID(),
-      strings: {
-        doesntExist: __("This component is missing or can't be loaded", 'uipress-lite'),
-        totalItems: __('Total items', 'uipress-lite'),
-        search: __('Search', 'uipress-lite'),
-        proOptionUnlock: __('This is a pro option. Upgrade to unlock', 'uipress-lite'),
-      },
     };
   },
   inject: ['uiTemplate'],
@@ -30,17 +27,27 @@ export default {
     content: {
       handler(newValue, oldValue) {
         this.items = this.content;
+        if (!this.$refs.dropzone) return;
+        this.$refs.dropzone.computeIndexes();
       },
+      immediate: true,
       deep: true,
-    },
-    itemsLength: {
-      handler(newValue, oldValue) {
-        if (!this.rendered) return;
-        this.updateList();
-      },
     },
   },
   computed: {
+    /**
+     * Returns translation strings
+     *
+     * @since 3.3.0
+     */
+    strings() {
+      return {
+        doesntExist: __("This component is missing or can't be loaded", 'uipress-lite'),
+        totalItems: __('Total items', 'uipress-lite'),
+        search: __('Search', 'uipress-lite'),
+        proOptionUnlock: __('This is a pro option. Upgrade to unlock', 'uipress-lite'),
+      };
+    },
     /**
      * Returns whether we are in production or preview or builder
      *
@@ -67,8 +74,17 @@ export default {
      *
      * @since 3.1.0
      */
-    returnItems() {
+    async returnItems() {
       return this.items;
+    },
+
+    /**
+     * Returns options object for sortable
+     *
+     * @since 3.2.0
+     */
+    returnDragGroupOptions() {
+      return { name: 'uip-blocks', pull: true, put: true, revertClone: false };
     },
   },
   methods: {
@@ -79,7 +95,7 @@ export default {
      * @since 3.2.13
      */
     async forceReload() {
-      // Remove MyComponent from the DOM
+      // Remove from the DOM
       this.rendered = false;
       await nextTick();
       this.rendered = true;
@@ -133,77 +149,50 @@ export default {
     },
 
     /**
-     * Updates current list of items
-     *
-     * @since 3.2.13
-     */
-    updateList() {
-      this.renderd = false;
-      const processItems = (item, index) => {
-        if (!item) return;
-
-        if (item.remote) {
-          this.importBlock(item, index);
-          this.items[index] = null; // Mark item for deletion without affecting loop
-          return;
-        }
-
-        if (Object.keys(item.settings).length === 0) {
-          this.inject_block_presets(item, item.settings);
-        }
-      };
-      this.items.forEach(processItems);
-
-      // Filter out null entries after processing
-      this.items = this.items.filter((item) => item !== null);
-      this.renderd = true;
-    },
-
-    /**
      * Imports a block template
      *
      * @param {JSON} template - the json template
      * @param {Number} index - The index to insert it at
      * @since 3.2.1
      */
-    importBlock(template, index) {
-      let self = this;
-
+    async importBlock(template, index) {
       let formData = new FormData();
-      let notiID = self.uipApp.notifications.notify(__('Importing template', 'uipress-lite'), '', 'default', false, true);
+      let notiID = this.uipApp.notifications.notify(__('Importing template', 'uipress-lite'), '', 'default', false, true);
 
-      self.sendServerRequest(template.path, formData).then((response) => {
-        if (response.error) {
-          self.uipApp.notifications.notify(response.message, '', 'error', true);
-          self.uipApp.notifications.remove(notiID);
+      const response = await this.sendServerRequest(template.path, formData);
+
+      // Handle error
+      if (response.error) {
+        this.uipApp.notifications.notify(response.message, '', 'error', true);
+        this.uipApp.notifications.remove(notiID);
+      }
+
+      let parsed = JSON.parse(response);
+      if (Array.isArray(parsed)) {
+        parsed = parsed[0];
+        parsed.uid = this.createUID();
+
+        if (!this.isObject(parsed)) {
+          this.uipApp.notifications.notify(__('Unable to import template right now', 'uipress-lite'), '', 'error', true);
+          this.uipApp.notifications.remove(notiID);
         }
 
-        let parsed = JSON.parse(response);
-        if (Array.isArray(parsed)) {
-          parsed = parsed[0];
-          parsed.uid = self.createUID();
-
-          if (!self.isObject(parsed)) {
-            self.uipApp.notifications.notify(__('Unable to import template right now', 'uipress-lite'), '', 'error', true);
-            self.uipApp.notifications.remove(notiID);
+        let freshLayout = [];
+        if ('content' in parsed) {
+          for (const block of parsed.content) {
+            freshLayout.push(this.cleanBlock(block));
           }
-
-          let freshLayout = [];
-          if ('content' in parsed) {
-            for (const block of parsed.content) {
-              freshLayout.push(self.cleanBlock(block));
-            }
-            parsed.content = freshLayout;
-          }
-          self.uipApp.notifications.remove(notiID);
-          self.uipApp.notifications.notify(__('Template imported', 'uipress-lite'), '', 'success', true);
-          self.items.splice(index, 0, parsed);
-        } else {
-          self.uipApp.notifications.notify(__('Unable to import template right now', 'uipress-lite'), '', 'error', true);
-          self.uipApp.notifications.remove(notiID);
+          parsed.content = freshLayout;
         }
-      });
+        this.uipApp.notifications.remove(notiID);
+        this.uipApp.notifications.notify(__('Template imported', 'uipress-lite'), '', 'success', true);
+        this.items.splice(index, 0, parsed);
+      } else {
+        this.uipApp.notifications.notify(__('Unable to import template right now', 'uipress-lite'), '', 'error', true);
+        this.uipApp.notifications.remove(notiID);
+      }
     },
+
     /**
      * Cleans a block of unnecessary params
      *
@@ -248,33 +237,45 @@ export default {
     },
 
     /**
-     * Handles item added avents
+     * Handles item added events
      *
      * @param {Object} evt - the new item event
      * @returns {Promise}
      * @since 3.2.13
      */
     async itemAdded(evt) {
+      // Handle remove event
+      if (evt.removed) {
+        await this.forceReload();
+        this.returnData(this.items);
+        return;
+      }
+
       if (!evt.added) return;
 
-      // Bail if it's a remote template
-      if (this.hasNestedPath(evt, ['added', 'element', 'remote'])) return;
+      // Set new element
+      let newBlock = evt.added.element;
 
-      // ADD A UID TO ADDED OPTION
-      let newElement = evt.added.element;
+      // Handle remote templates dragged in from library
+      if (newBlock.remote) {
+        this.items.splice(evt.added.newIndex, 1);
+        this.importBlock(newBlock, evt.added.newIndex);
+        return;
+      }
+
       // New block, add uid
-      if (!('uid' in newElement)) {
-        newElement.uid = this.createUID();
+      if (!('uid' in newBlock)) {
+        newBlock.uid = this.createUID();
       }
 
       // New block so let's add settings
-      if (Object.keys(newElement.settings).length === 0) {
-        this.inject_block_presets(newElement, newElement.settings);
+      if (Object.keys(newBlock.settings).length === 0) {
+        this.inject_block_presets(newBlock, newBlock.settings);
       }
 
-      //Open block
+      // Open block
       await this.forceReload();
-      this.uipApp.blockControl.setActive(newElement, this.items);
+      this.uipApp.blockControl.setActive(newBlock, this.items);
       this.returnData(this.items);
     },
   },
@@ -284,19 +285,20 @@ export default {
       
                  
       <uip-draggable v-if="rendered && !isProduction"
+      ref="dropzone"
       :class="[{'uip-border-dashed' : uiTemplate.display == 'builder'}, randomClass]" 
-      class="uip-flex uip-w-100p uip-builder-drop-area"
-      :group="{ name: 'uip-blocks', pull: true, put: true }" 
-      :list="items"
+      class="uip-flex uip-w-100p"
+      :group="returnDragGroupOptions" 
+      :list="content"
       @start="uipApp.scrolling=true"
       @end="uipApp.scrolling=false"
-      @change="itemAdded"
       ghostClass="uip-canvas-ghost"
+      @change="itemAdded"
       animation="300"
       :sort="true">
               
-              <template v-for="(element, index) in returnItems" 
-              :key="element.uid" :index="index">
+              <template v-for="(element, index) in items" 
+              :key="index" :index="index">
                 
                 <BlockRender :block="element" :list="items" :index="index" :contextualData="contextualData"/>
               
@@ -307,7 +309,7 @@ export default {
       
       <!-- Production template-->
       <div class="uip-flex uip-w-100p" v-else-if="rendered" :class="randomClass">
-        <template v-for="(element, index) in returnItems">
+        <template v-for="(element, index) in items">
           
           <BlockRender :block="element" :list="items" :index="index" :contextualData="contextualData"/>
           

@@ -525,6 +525,9 @@ export default {
   render() {
     let nodes = [];
 
+    // If block is a remote template abort
+    if (this.block.remote) return nodes;
+
     const styles = this.returnBlockStyles;
     const scripts = this.returnCustomJS;
     const hasBlockQuery = this.hasBlockQuery;
