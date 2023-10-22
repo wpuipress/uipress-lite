@@ -1,4 +1,3 @@
-import { nextTick } from "../../libs/vue-esm-dev.js";
 export default {
   props: {
     title: String,
@@ -85,20 +84,6 @@ export default {
     },
 
     /**
-     * Handles clicks outside the inner
-     *
-     * @param {Object} event - click event
-     * @since 3.2.13
-     */
-    onClickOutside(event) {
-      if (!this.$refs.uipmodal) return;
-
-      // Click was on inner so exit
-      if (this.$refs.uipmodal.contains(event.target)) return;
-      this.close(); // whatever method which close your component
-    },
-
-    /**
      * Closes component
      *
      * @since 3.2.13
@@ -117,10 +102,10 @@ export default {
 		  
 		  <div ref="modalOuter" 
           v-if="open" 
-          @click="onClickOutside"
+          @click="close"
           class="uip-position-fixed uip-top-0 uip-left-0 uip-h-viewport uip-w-vw uip-background-black-wash uip-flex uip-flex-center uip-flex-middle uip-fade-in uip-z-index-9999">
           
-			  <div ref="uipmodal" 
+			  <div ref="uipmodal" @click.prevent.stop
               class="uip-background-default uip-border-rounder uip-border uip-flex uip-flex-column uip-scale-in uip-min-w-350 uip-min-w-200 uip-max-w-100p uip-text-normal uip-position-relative uip-modal-body"
               :class="{'uip-padding-s' : !removePadding}">
               
