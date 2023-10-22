@@ -1,4 +1,4 @@
-import { nextTick } from '../../libs/vue-esm-dev.js';
+import { nextTick } from "../../libs/vue-esm-dev.js";
 export default {
   props: {
     title: String,
@@ -16,8 +16,8 @@ export default {
     this.mountShortcut();
   },
   beforeUnmount() {
-    window.removeEventListener('keydown', this.handleKeyDown);
-    window.removeEventListener('keyup', this.handleKeyUp);
+    window.removeEventListener("keydown", this.handleKeyDown);
+    window.removeEventListener("keyup", this.handleKeyUp);
   },
   methods: {
     /**
@@ -39,8 +39,8 @@ export default {
       this.shortcut = [...this.shortCut];
 
       // Add event listeners
-      window.addEventListener('keydown', this.handleKeyDown);
-      window.addEventListener('keyup', this.handleKeyUp);
+      window.addEventListener("keydown", this.handleKeyDown);
+      window.addEventListener("keyup", this.handleKeyUp);
     },
 
     /**
@@ -80,10 +80,8 @@ export default {
      * @returns {Promise}
      * @since 3.2.13
      */
-    async openModal() {
+    async show() {
       this.open = true;
-
-      await nextTick();
     },
 
     /**
@@ -97,7 +95,7 @@ export default {
 
       // Click was on inner so exit
       if (this.$refs.uipmodal.contains(event.target)) return;
-      this.closeThisComponent(); // whatever method which close your component
+      this.close(); // whatever method which close your component
     },
 
     /**
@@ -105,7 +103,7 @@ export default {
      *
      * @since 3.2.13
      */
-    closeThisComponent() {
+    close() {
       this.open = false; // whatever codes which close your component
     },
   },
@@ -113,7 +111,7 @@ export default {
 	
 	  <div class="uip-position-relative">
     
-		  <div @click="openModal()">
+		  <div @click="show()">
 			  <slot name="trigger"></slot>
 		  </div>
 		  
@@ -128,20 +126,20 @@ export default {
               
 				  <div v-if="title" class="uip-flex uip-flex-between uip-modal-title uip-margin-bottom-s">
 					  <div class="uip-text-bold uip-text-l">{{title}}</div>
-					  <div @click="closeThisComponent()" class="hover:uip-background-grey uip-padding-xxs uip-border-round uip-cursor-pointer">
+					  <div @click="close()" class="hover:uip-background-grey uip-padding-xxs uip-border-round uip-cursor-pointer">
 						  <div class="uip-icon uip-text-l">close</div>
 					  </div>
 				  </div>
           
                   <div v-else class="uip-flex uip-flex-between uip-modal-title uip-position-relative">
                     <div class="uip-position-absolute uip-right-0 uip-top-0 uip-padding-xs">
-                      <div @click="closeThisComponent()" class="hover:uip-background-grey uip-padding-xxs uip-border-round uip-cursor-pointer">
+                      <div @click="close()" class="hover:uip-background-grey uip-padding-xxs uip-border-round uip-cursor-pointer">
                         <div class="uip-icon uip-text-l">close</div>
                       </div>
                     </div>
                   </div>
                   
-				  <div class="uip-overflow-auto uip-scrollbar" :class="{'uip-max-h-600' : !removeMaxHeight}">
+				  <div :class="{'uip-max-h-600' : !removeMaxHeight}">
 					  <slot name="content"></slot>
 				  </div>
           

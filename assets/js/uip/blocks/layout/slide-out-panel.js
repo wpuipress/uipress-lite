@@ -1,5 +1,5 @@
 const { __, _x, _n, _nx } = wp.i18n;
-import { renderKeyShortCut } from '../../v3.5/utility/functions.min.js';
+import { renderKeyShortCut } from "../../v3.5/utility/functions.min.js";
 export default {
   props: {
     display: String,
@@ -17,12 +17,12 @@ export default {
      * @since 3.2.13
      */
     returnText() {
-      const item = this.get_block_option(this.block, 'block', 'buttonText', true);
-      if (!item) return '';
+      const item = this.get_block_option(this.block, "block", "buttonText", true);
+      if (!item) return "";
 
       if (!this.isObject(item)) return item;
       if (item.string) return item.string;
-      return '';
+      return "";
     },
 
     /**
@@ -31,11 +31,10 @@ export default {
      * @since 3.2.13
      */
     closeOnPageChange() {
-      let status = this.get_block_option(this.block, 'block', 'closeOnPageChange');
+      let status = this.get_block_option(this.block, "block", "closeOnPageChange");
       if (!status) return false;
       if (!this.isObject(status)) return status;
-      if (status.value) return status.value;
-      return false;
+      return status.value ? true : false;
     },
     /**
      * Returns panel position. Default is 'right'
@@ -43,8 +42,8 @@ export default {
      * @since 3.2.13
      */
     getPanelPos() {
-      const position = this.get_block_option(this.block, 'block', 'panelSide');
-      if (!position) return 'right';
+      const position = this.get_block_option(this.block, "block", "panelSide");
+      if (!position) return "right";
       return position.value;
     },
 
@@ -54,8 +53,8 @@ export default {
      * @since 3.2.13
      */
     getPanelStyle() {
-      const style = this.get_block_option(this.block, 'block', 'panelSide');
-      if (!style) return 'slide';
+      const style = this.get_block_option(this.block, "block", "panelSide");
+      if (!style) return "slide";
       return style.value;
     },
 
@@ -65,11 +64,11 @@ export default {
      * @since 3.2.13
      */
     returnIcon() {
-      let icon = this.get_block_option(this.block, 'block', 'iconSelect');
-      if (!icon) return '';
+      let icon = this.get_block_option(this.block, "block", "iconSelect");
+      if (!icon) return "";
       if (!this.isObject(icon)) return icon;
       if (icon.value) return icon.value;
-      return '';
+      return "";
     },
 
     /**
@@ -89,7 +88,7 @@ export default {
      * @since 3.2.13
      */
     getShortcutValue() {
-      const shortcut = this.get_block_option(this.block, 'block', 'keyboardShortcut');
+      const shortcut = this.get_block_option(this.block, "block", "keyboardShortcut");
       if (!this.isObject(shortcut)) return;
 
       // Shortcut is not enabled so bail
@@ -108,10 +107,10 @@ export default {
      * @since 3.2.13
      */
     returnClasses() {
-      const position = this.get_block_option(this.block, 'block', 'iconPosition');
+      const position = this.get_block_option(this.block, "block", "iconPosition");
       if (!position) return;
-      if (!this.isObject(position) && position == 'right') return 'uip-flex-reverse';
-      if (position.value && position.value == 'right') return 'uip-flex-reverse';
+      if (!this.isObject(position) && position == "right") return "uip-flex-reverse";
+      if (position.value && position.value == "right") return "uip-flex-reverse";
     },
   },
   methods: {},

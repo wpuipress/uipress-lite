@@ -13,12 +13,29 @@ export default {
     if (this.startOpen) this.open();
   },
   methods: {
+    /**
+     * Opens modal
+     *
+     * @since 3.3.0
+     */
     open() {
       this.isVisible = true;
     },
+
+    /**
+     * Closes modal
+     *
+     * @since 3.3.0
+     */
     close() {
       this.isVisible = false;
     },
+
+    /**
+     * Checks if click was outside modal, if so close
+     *
+     * @since 3.3.0
+     */
     maybe_close(evt) {
       if (!this.isVisible) return;
       if (this.$refs.modalinner.contains(evt.target)) return;
