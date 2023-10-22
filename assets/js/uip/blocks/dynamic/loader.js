@@ -346,7 +346,13 @@ const AdminMenuNew = {
         { option: "choiceSelect", componentName: "choice-select", args: { type: "hideShow" }, uniqueKey: "hideIcons", label: __("Icons", "uipress-lite") },
 
         { option: "iconSelect", componentName: "icon-select", uniqueKey: "subMenuIcon", label: __("Submenu Icon", "uipress-lite") },
-        { option: "staticMenu", componentName: "static-menu", uniqueKey: "staticMenu", label: __("Static menu", "uipress-lite") },
+        {
+          option: "staticMenu",
+          componentName: "static-menu",
+          uniqueKey: "staticMenu",
+          label: __("Static menu", "uipress-lite"),
+          help: __("If enabled, this menu block will load a custom menu from the menu builder. The menu will become static and will not react to plugin changes.", "uipress-lite"),
+        },
       ],
     },
 
