@@ -8,7 +8,7 @@ const MenuCollapse = {
   data() {
     return {
       strings: {
-        collapseMenu: __('Collapse menu', 'uipress-lite'),
+        collapseMenu: __("Collapse menu", "uipress-lite"),
       },
       isCollapsed: this.collapsed,
     };
@@ -37,7 +37,7 @@ const MenuCollapse = {
 };
 
 const MenuSearch = {
-  emits: ['searching'],
+  emits: ["searching"],
   props: {
     workingMenu: Array,
     maybeFollowLink: Function,
@@ -45,9 +45,9 @@ const MenuSearch = {
   data() {
     return {
       strings: {
-        search: __('Search menu', 'uipress-lite'),
+        search: __("Search menu", "uipress-lite"),
       },
-      menuSearch: '',
+      menuSearch: "",
       menuSearchIndex: 0,
     };
   },
@@ -55,8 +55,8 @@ const MenuSearch = {
     menuSearch: {
       handler() {
         this.menuSearchIndex = 0;
-        if (this.menuSearch == '') return this.$emit('searching', false);
-        this.$emit('searching', true);
+        if (this.menuSearch == "") return this.$emit("searching", false);
+        this.$emit("searching", true);
       },
     },
   },
@@ -70,7 +70,7 @@ const MenuSearch = {
     searchItems() {
       const term = this.menuSearch.toLowerCase();
 
-      const itemMatchesTerm = ({ name, type }) => type !== 'sep' && name.toLowerCase().includes(term);
+      const itemMatchesTerm = ({ name, type }) => type !== "sep" && name.toLowerCase().includes(term);
 
       const results = this.workingMenu
         .filter(itemMatchesTerm)
@@ -88,16 +88,16 @@ const MenuSearch = {
      */
     watchForArrows(event) {
       switch (event.key) {
-        case 'Enter':
+        case "Enter":
           const ele = document.querySelector(`#uip-menu-search-results [data-id="${this.menuSearchIndex}"]`);
           if (ele) ele.click();
           break;
 
-        case 'ArrowDown':
+        case "ArrowDown":
           this.menuSearchIndex = this.menuSearchIndex >= this.searchItems.length - 1 ? 0 : this.menuSearchIndex++;
           break;
 
-        case 'ArrowUp':
+        case "ArrowUp":
           this.menuSearchIndex = this.menuSearchIndex <= 0 ? this.searchItems.length - 1 : this.menuSearchIndex--;
           break;
       }
@@ -151,7 +151,7 @@ const SubMenuItem = {
      * @since 3.2.13
      */
     sepHasCustomName(item) {
-      return this.hasNestedPath(item, ['custom', 'name']);
+      return this.hasNestedPath(item, ["custom", "name"]);
     },
   },
   template: `
@@ -210,12 +210,12 @@ const TopLevelItem = {
      * @since 3.2.13
      */
     subMenuStyle() {
-      if (this.collapsed) return 'hover';
+      if (this.collapsed) return "hover";
 
-      let style = this.get_block_option(this.block, 'block', 'subMenuStyle');
-      if (!this.isObject(style)) return 'dynamic';
+      let style = this.get_block_option(this.block, "block", "subMenuStyle");
+      if (!this.isObject(style)) return "dynamic";
       if (style.value) return style.value;
-      return 'dynamic';
+      return "dynamic";
     },
 
     /**
@@ -224,7 +224,7 @@ const TopLevelItem = {
      * @since 3.2.13
      */
     subMenuCustomIcon() {
-      let icon = this.get_block_option(this.block, 'block', 'subMenuIcon');
+      let icon = this.get_block_option(this.block, "block", "subMenuIcon");
       if (!this.isObject(icon)) return false;
       if (icon.value) return icon.value;
       return false;
@@ -240,7 +240,7 @@ const TopLevelItem = {
       // Don't hide icons if we are collapsed
       if (this.collapsed) return false;
 
-      const icons = this.hasNestedPath(this.block, ['settings', 'block', 'options', 'hideIcons', 'value']);
+      const icons = this.hasNestedPath(this.block, ["settings", "block", "options", "hideIcons", "value"]);
       if (this.isObject(icons)) return icons.value;
       return icons;
     },
@@ -252,8 +252,8 @@ const TopLevelItem = {
      * @param {String} icon - the icon to check
      */
     returnTopIcon(icon) {
-      const status = icon ? icon.includes('uipblank') : false;
-      if (status) return icon.replace('uipblank', 'favorite');
+      const status = icon ? icon.includes("uipblank") : false;
+      if (status) return icon.replace("uipblank", "favorite");
       return icon;
     },
 
@@ -268,14 +268,14 @@ const TopLevelItem = {
       if (this.subMenuCustomIcon) return this.subMenuCustomIcon;
 
       // If dynamic menu always return chevron right
-      if (this.subMenuStyle == 'dynamic') return 'chevron_right';
+      if (this.subMenuStyle == "dynamic") return "chevron_right";
 
       // If hover menu always return chevron right
-      if (this.subMenuStyle == 'hover') return 'chevron_right';
+      if (this.subMenuStyle == "hover") return "chevron_right";
 
       // If item is open / active then return the open icon
-      if (item.open || item.active) return 'expand_more';
-      return 'chevron_left';
+      if (item.open || item.active) return "expand_more";
+      return "chevron_left";
     },
   },
   template: `
@@ -330,7 +330,7 @@ const DrillDown = {
       searching: false,
       isCollapsed: this.collapsed,
       strings: {
-        goBackPrevious: __('Go back to previous menu', 'uipress-lite'),
+        goBackPrevious: __("Go back to previous menu", "uipress-lite"),
       },
     };
   },
@@ -345,7 +345,7 @@ const DrillDown = {
      */
     parentItemName() {
       // If currentItem is not null and it has a parent, return the parent's name.
-      if (!this.currentItem) return __('Go back', 'uipress-lite');
+      if (!this.currentItem) return __("Go back", "uipress-lite");
       return this.decodeHtmlEntities(this.currentItem.name);
     },
 
@@ -356,7 +356,7 @@ const DrillDown = {
      * @since 3.2.13
      */
     hasMenuSearch() {
-      const showSearch = this.get_block_option(this.block, 'block', 'showSearch');
+      const showSearch = this.get_block_option(this.block, "block", "showSearch");
       if (this.isObject(showSearch)) return showSearch.value;
       return showSearch;
     },
@@ -368,7 +368,7 @@ const DrillDown = {
      * @since 3.2.13
      */
     hasMenuCollapse() {
-      const menuCollapse = this.get_block_option(this.block, 'block', 'menuCollapse');
+      const menuCollapse = this.get_block_option(this.block, "block", "menuCollapse");
       if (this.isObject(menuCollapse)) return menuCollapse.value;
       return menuCollapse;
     },
@@ -472,17 +472,17 @@ const DrillDown = {
      */
     decodeHtmlEntities(item) {
       // Return blank if item doesn't have a set value
-      if (!item) return '';
+      if (!item) return "";
 
       return item
-        .replace(/&amp;/g, '&')
-        .replace(/&lt;/g, '<')
-        .replace(/&gt;/g, '>')
+        .replace(/&amp;/g, "&")
+        .replace(/&lt;/g, "<")
+        .replace(/&gt;/g, ">")
         .replace(/&quot;/g, '"')
         .replace(/&apos;/g, "'")
         .replace(/&#39;/g, "'")
-        .replace(/&nbsp;/g, ' ')
-        .replace(/%20/g, ' ');
+        .replace(/&nbsp;/g, " ")
+        .replace(/%20/g, " ");
     },
   },
   template: `
@@ -539,19 +539,19 @@ export default {
       menu: [],
       activeMenu: false,
       workingMenu: [],
-      activeLink: '',
-      breadCrumbs: [{ name: __('Home', 'uipress-lite'), url: this.uipApp.data.dynamicOptions.viewadmin.value }],
+      activeLink: "",
+      breadCrumbs: [{ name: __("Home", "uipress-lite"), url: this.uipApp.data.dynamicOptions.viewadmin.value }],
       searching: false,
-      staticMenu: [],
+      staticMenuEnabled: false,
       strings: {
-        mainmenu: __('Main menu', 'uipress-lite'),
-        collapseMenu: __('Collapse menu', 'uipress-lite'),
-        search: __('Search menu', 'uipress-lite'),
+        mainmenu: __("Main menu", "uipress-lite"),
+        collapseMenu: __("Collapse menu", "uipress-lite"),
+        search: __("Search menu", "uipress-lite"),
       },
       collapsed: false,
     };
   },
-  inject: ['uiTemplate'],
+  inject: ["uiTemplate"],
   watch: {
     /**
      * Watches for changes to the breadcrumbs and emits event
@@ -561,7 +561,7 @@ export default {
     breadCrumbs: {
       handler(newValue, oldValue) {
         let self = this;
-        let breadChange = new CustomEvent('uipress/app/breadcrumbs/update', { detail: { crumbs: self.breadCrumbs } });
+        let breadChange = new CustomEvent("uipress/app/breadcrumbs/update", { detail: { crumbs: self.breadCrumbs } });
         document.dispatchEvent(breadChange);
       },
       deep: true,
@@ -574,10 +574,41 @@ export default {
     collapsed: {
       handler(newVal, oldVal) {
         let status = newVal ? true : false;
-        document.documentElement.setAttribute('uip-menu-collapsed', String(status));
+        document.documentElement.setAttribute("uip-menu-collapsed", String(status));
         this.uiTemplate.menuCollapsed = status;
-        this.saveUserPreference('menuCollapsed', status, false);
+        this.saveUserPreference("menuCollapsed", status, false);
       },
+    },
+
+    /**
+     * Watches for changes to static menu status
+     *
+     * @since 3.3.0
+     */
+    hasStaticMenuEnabled: {
+      handler() {
+        if (!this.hasStaticMenuEnabled) {
+          this.staticMenuEnabled = false;
+          this.setMenu();
+          this.buildMenu();
+        } else if (this.returnStaticMenuID) {
+          this.getStaticMenu();
+        }
+      },
+      deep: true,
+    },
+
+    /**
+     * Watches for changes to static menu id
+     *
+     * @since 3.3.0
+     */
+    returnStaticMenuID: {
+      handler() {
+        if (!this.returnStaticMenuID || !this.hasStaticMenuEnabled) return;
+        this.getStaticMenu();
+      },
+      immediate: true,
     },
   },
   created() {
@@ -589,16 +620,36 @@ export default {
   },
   computed: {
     /**
+     * Returns whether the block has has static menu enabled
+     *
+     * @since 3.2.13
+     */
+    hasStaticMenuEnabled() {
+      const staticmenu = this.get_block_option(this.block, "block", "staticMenu");
+      return this.isObject(staticmenu) ? staticmenu.enabled : false;
+    },
+
+    /**
+     * Returns the static menu id
+     *
+     * @since 3.2.13
+     */
+    returnStaticMenuID() {
+      const staticmenu = this.get_block_option(this.block, "block", "staticMenu");
+      return this.isObject(staticmenu) ? staticmenu.menuid : false;
+    },
+
+    /**
      * Gets menu style. Returns style or 'dynamic' if not set
      *
      * @since 3.2.13
      */
     subMenuStyle() {
-      if (this.collapsed) return 'hover';
-      let style = this.get_block_option(this.block, 'block', 'subMenuStyle');
-      if (!this.isObject(style)) return 'dynamic';
+      if (this.collapsed) return "hover";
+      let style = this.get_block_option(this.block, "block", "subMenuStyle");
+      if (!this.isObject(style)) return "dynamic";
       if (style.value) return style.value;
-      return 'dynamic';
+      return "dynamic";
     },
 
     /**
@@ -607,7 +658,7 @@ export default {
      * @since 3.2.13
      */
     subMenuCustomIcon() {
-      let icon = this.get_block_option(this.block, 'block', 'subMenuIcon');
+      let icon = this.get_block_option(this.block, "block", "subMenuIcon");
       if (!this.isObject(icon)) return false;
       if (icon.value) return icon.value;
       return false;
@@ -620,7 +671,7 @@ export default {
      * @since 3.2.13
      */
     autoLoadIsDisabled() {
-      const disbaled = this.get_block_option(this.block, 'block', 'loadOnClick');
+      const disbaled = this.get_block_option(this.block, "block", "loadOnClick");
       if (this.isObject(disbaled)) return disbaled.value;
       return disbaled;
     },
@@ -632,7 +683,7 @@ export default {
      * @since 3.2.13
      */
     hasMenuCollapse() {
-      const menuCollapse = this.get_block_option(this.block, 'block', 'menuCollapse');
+      const menuCollapse = this.get_block_option(this.block, "block", "menuCollapse");
       if (this.isObject(menuCollapse)) return menuCollapse.value;
       return menuCollapse;
     },
@@ -644,7 +695,7 @@ export default {
      * @since 3.2.13
      */
     hasMenuSearch() {
-      const showSearch = this.get_block_option(this.block, 'block', 'showSearch');
+      const showSearch = this.get_block_option(this.block, "block", "showSearch");
       if (this.isObject(showSearch)) return showSearch.value;
       return showSearch;
     },
@@ -655,11 +706,11 @@ export default {
      * @since 3.2.13
      */
     returnDropdownPosition() {
-      const pos = this.get_block_option(this.block, 'block', 'dropdownPosition');
-      if (!this.isObject(pos)) return 'right top';
+      const pos = this.get_block_option(this.block, "block", "dropdownPosition");
+      if (!this.isObject(pos)) return "right top";
 
       if (pos.value) return pos.value;
-      return 'right top';
+      return "right top";
     },
 
     /**
@@ -668,7 +719,7 @@ export default {
      * @since 3.2.13
      */
     returnClasses() {
-      if (this.collapsed) return 'uip-menu-collapsed';
+      if (this.collapsed) return "uip-menu-collapsed";
     },
 
     /**
@@ -681,7 +732,7 @@ export default {
       // Don't hide icons if we are collapsed
       if (this.collapsed) return false;
 
-      const icons = this.hasNestedPath(this.block, ['settings', 'block', 'options', 'hideIcons', 'value']);
+      const icons = this.hasNestedPath(this.block, ["settings", "block", "options", "hideIcons", "value"]);
       if (this.isObject(icons)) return icons.value;
       return icons;
     },
@@ -693,8 +744,8 @@ export default {
    * @since 3.2.13
    */
   beforeUnmount() {
-    document.removeEventListener('uipress/app/page/change', this.updateActiveLink, { once: false });
-    document.removeEventListener('uipress/app/page/load/finish', this.updateMenuFromFrame, { once: false });
+    document.removeEventListener("uipress/app/page/change", this.updateActiveLink, { once: false });
+    document.removeEventListener("uipress/app/page/load/finish", this.updateMenuFromFrame, { once: false });
   },
   methods: {
     /**
@@ -703,8 +754,47 @@ export default {
      * @since 3.2.13
      */
     setMenu() {
-      this.menu = JSON.parse(JSON.stringify(this.uipApp.data.adminMenu.menu));
       if (this.uipApp.data.userPrefs.menuCollapsed && this.hasMenuCollapse) this.collapsed = true;
+
+      // Only set the menu if we are not using a static menu
+      if (this.returnStaticMenuID && this.hasStaticMenuEnabled) return;
+      this.menu = JSON.parse(JSON.stringify(this.uipApp.data.adminMenu.menu));
+    },
+
+    /**
+     * Fetches a custom static menu
+     *
+     * @returns {Promise}
+     */
+    async getStaticMenu() {
+      await this.$nextTick();
+      console.log("menu fetching");
+      if (!this.returnStaticMenuID) return;
+      let formData = new FormData();
+      formData.append("action", "uip_get_custom_static_menu");
+      formData.append("security", uip_ajax.security);
+      formData.append("menuid", this.returnStaticMenuID);
+
+      const response = await this.sendServerRequest(uip_ajax.ajax_url, formData);
+
+      const fallBack = () => {
+        this.menu = JSON.parse(JSON.stringify(this.uipApp.data.adminMenu.menu));
+        this.buildMenu();
+      };
+
+      // Handle error
+      if (response.error) {
+        this.uipApp.notifications.notify(response.message, "", "error", true, false);
+        this.fallBack();
+        return;
+      }
+
+      if (!("data" in response)) return this.fallBack();
+      if (!Array.isArray(response.data.menu)) return this.fallBack();
+
+      this.menu = response.data.menu;
+      this.buildMenu();
+      this.staticMenuEnabled = true;
     },
 
     /**
@@ -713,8 +803,8 @@ export default {
      * @since 3.2.13
      */
     mountEventListeners() {
-      document.addEventListener('uipress/app/page/change', this.updateActiveLink, { once: false });
-      document.addEventListener('uipress/app/page/load/finish', this.updateMenuFromFrame, { once: false });
+      document.addEventListener("uipress/app/page/change", this.updateActiveLink, { once: false });
+      document.addEventListener("uipress/app/page/load/finish", this.updateMenuFromFrame, { once: false });
     },
 
     /**
@@ -724,7 +814,7 @@ export default {
      * @since 3.2.13
      */
     updateActiveLink(e) {
-      this.activeLink = e.detail.url ? e.detail.url.replaceAll('%2F', '/') : e.detail.url;
+      this.activeLink = e.detail.url ? e.detail.url.replaceAll("%2F", "/") : e.detail.url;
     },
 
     /**
@@ -739,7 +829,7 @@ export default {
       if (!currentLink) return (this.workingMenu = this.menu);
 
       // Default breadcrumbs
-      this.breadCrumbs = [{ name: __('Home', 'uipress-lite'), url: this.uipApp.data.dynamicOptions.viewadmin.value }];
+      this.breadCrumbs = [{ name: __("Home", "uipress-lite"), url: this.uipApp.data.dynamicOptions.viewadmin.value }];
 
       // Main function for handling sub items
       const processSubItem = (sub) => {
@@ -785,18 +875,21 @@ export default {
      * @since 3.2.13
      */
     updateMenuFromFrame() {
+      // Don't update because we have a static menu set
+      if (this.staticMenuEnabled) return;
+
       //Watch for menu changes in frame
-      const frame = document.querySelector('.uip-page-content-frame');
+      const frame = document.querySelector(".uip-page-content-frame");
 
       // Frame does not exist so bail
       if (!frame) return;
 
-      const menuScript = frame.contentWindow.document.querySelector('#uip-admin-menu');
-      const masterMenu = menuScript ? this.uipParseJson(menuScript.getAttribute('data-menu')) : false;
+      const menuScript = frame.contentWindow.document.querySelector("#uip-admin-menu");
+      const masterMenu = menuScript ? this.uipParseJson(menuScript.getAttribute("data-menu")) : false;
       if (!masterMenu) return;
 
-      if (!masterMenu || typeof masterMenu === 'undefined') return;
-      if (!('menu' in masterMenu)) return;
+      if (!masterMenu || typeof masterMenu === "undefined") return;
+      if (!("menu" in masterMenu)) return;
 
       // Update menu
       this.menu = masterMenu.menu;
@@ -848,13 +941,13 @@ export default {
       if (this.subMenuCustomIcon) return this.subMenuCustomIcon;
 
       // If dynamic menu always return chevron right
-      if (this.subMenuStyle == 'dynamic') return 'chevron_right';
+      if (this.subMenuStyle == "dynamic") return "chevron_right";
 
       // If item is open / active then return the open icon
-      if (item.open || item.active) return 'expand_more';
+      if (item.open || item.active) return "expand_more";
 
       // No conditions met so return default
-      return 'chevron_left';
+      return "chevron_left";
     },
 
     /**
@@ -863,8 +956,8 @@ export default {
      * @param {String} icon - the icon to check
      */
     returnTopIcon(icon) {
-      const status = icon ? icon.includes('uipblank') : false;
-      if (status) return icon.replace('uipblank', 'favorite');
+      const status = icon ? icon.includes("uipblank") : false;
+      if (status) return icon.replace("uipblank", "favorite");
       return icon;
     },
 
@@ -876,17 +969,17 @@ export default {
      */
     decodeHtmlEntities(item) {
       // Return blank if item doesn't have a set value
-      if (!item) return '';
+      if (!item) return "";
 
       return item
-        .replace(/&amp;/g, '&')
-        .replace(/&lt;/g, '<')
-        .replace(/&gt;/g, '>')
+        .replace(/&amp;/g, "&")
+        .replace(/&lt;/g, "<")
+        .replace(/&gt;/g, ">")
         .replace(/&quot;/g, '"')
         .replace(/&apos;/g, "'")
         .replace(/&#39;/g, "'")
-        .replace(/&nbsp;/g, ' ')
-        .replace(/%20/g, ' ');
+        .replace(/&nbsp;/g, " ")
+        .replace(/%20/g, " ");
     },
 
     /**
@@ -896,7 +989,7 @@ export default {
      * @since 3.2.13
      */
     sepHasCustomName(item) {
-      return this.hasNestedPath(item, ['custom', 'name']);
+      return this.hasNestedPath(item, ["custom", "name"]);
     },
 
     /**
