@@ -47,7 +47,7 @@ export default {
     },
   },
   template: `
-        <select class="uip-input-small uip-padding-top-xxxs uip-padding-bottom-xxxs uip-max-w-100p uip-w-100p" 
+        <select class="uip-input uip-input-small uip-padding-top-xxxs uip-padding-bottom-xxxs uip-max-w-100p uip-w-100p" 
         style="padding-top:2px;padding-bottom:2px;border-radius:var(--uip-border-radius-large);" v-model="option">
         
           <template v-for="item in returnOptions">
