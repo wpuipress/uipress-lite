@@ -164,8 +164,12 @@ export default {
       },
     },
   },
-  mounted() {
+  async mounted() {
     this.loading = false;
+    setTimeout(this.mountHandlers, 100);
+  },
+  beforeUnmount() {
+    document.removeEventListener("click", this.handleClickEvents);
   },
   computed: {
     /**
@@ -216,6 +220,26 @@ export default {
     },
   },
   methods: {
+    /**
+     * Mounts click watcher to detect outside clicks
+     *
+     * @since 3.3.0
+     */
+    mountHandlers() {
+      document.addEventListener("click", this.handleClickEvents);
+    },
+
+    /**
+     * Handles click events and checks if the click is outside the panel
+     *
+     * @param {object} evt
+     * @since 3.3.0
+     */
+    handleClickEvents(evt) {
+      if (!this.$refs.uipTemplateSettings) return;
+      if (this.$refs.uipTemplateSettings.contains(evt.target)) return;
+      this.goBack();
+    },
     /**
      * Retrieves the template option based on the provided group and option.
      * Ensures the options data structure is adhered to and initializes
@@ -309,6 +333,7 @@ export default {
      */
     goBack() {
       const ID = this.$route.params.templateID;
+      document.removeEventListener("click", this.handleClickEvents);
       this.$router.push({
         path: `/uibuilder/${ID}/`,
         query: { ...this.$route.query },
@@ -317,6 +342,7 @@ export default {
   },
   template: `
       <div class="uip-position-fixed uip-top-80 uip-right-16 uip-bottom-16 uip-background-default uip-w-320 uip-flex uip-flex-column uip-row-gap-s uip-overflow-auto uip-fade-in uip-shadow" style="border-radius: calc(var(--uip-border-radius-large) + var(--uip-padding-xs)); z-index: 2;"
+      ref="uipTemplateSettings"
       id="uip-template-settings">
       
         <div class="uip-h-100p uip-w-100p uip-max-h-100p uip-max-w-100p uip-overflow-hidden uip-flex-grow uip-flex uip-flex-column uip-border-rounder uip-shadow uip-background-default">
