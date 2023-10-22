@@ -62,9 +62,13 @@ class AdminMenu
    * @return
    * @since 3.2.13
    */
-  private static function push_unique_ids($menu)
+  public static function push_unique_ids($menu)
   {
     $returner = [];
+
+    if (!is_array($menu)) {
+      return $returner;
+    }
 
     foreach ($menu as $key => $item) {
       $type = strpos($item[4] ?? "", "wp-menu-separator") !== false ? "sep" : "item";
@@ -83,9 +87,13 @@ class AdminMenu
    * @return
    * @since 3.2.13
    */
-  private static function push_submenu_unique_ids($menu)
+  public static function push_submenu_unique_ids($menu)
   {
     $returner = [];
+
+    if (!is_array($menu)) {
+      return $returner;
+    }
 
     foreach ($menu as $key => $item) {
       $temp = [];
@@ -174,7 +182,7 @@ class AdminMenu
   private static function maybe_replace_item_with_original($item, $mastermenu)
   {
     // If it's not a custom menu we don't need to do this
-    if (!$mastermenu["custom"] || !is_array($mastermenu["mergedMenu"])) {
+    if (!isset($mastermenu["mergedMenu"]) || !$mastermenu["custom"] || !is_array($mastermenu["mergedMenu"])) {
       return $item;
     }
 

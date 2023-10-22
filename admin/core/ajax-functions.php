@@ -97,6 +97,22 @@ class uip_ajax
     $mastermenu["submenu"] = $menuSettings->menu->submenu;
     $mastermenu["custom"] = true;
 
+    global $menu, $submenu, $self, $parent_file, $submenu_file, $plugin_page, $typenow;
+
+    // Push unique IDs to the menus
+    $menu = AdminMenu::push_unique_ids($menu);
+    $submenu = AdminMenu::push_submenu_unique_ids($submenu);
+
+    $mergedMenu = array_merge($menu, (array) $submenu);
+
+    // Create menu object
+    $mastermenu["self"] = $self;
+    $mastermenu["parent_file"] = $parent_file;
+    $mastermenu["submenu_file"] = $submenu_file;
+    $mastermenu["plugin_page"] = $plugin_page;
+    $mastermenu["typenow"] = $typenow;
+    $mastermenu["mergedMenu"] = $mergedMenu;
+
     $menu = AdminMenu::format_admin_menu($mastermenu);
 
     $returnData["data"] = $menu;
