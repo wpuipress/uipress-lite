@@ -90,8 +90,9 @@ export default {
                   <div v-else class="uip-no-wrap uip-text-ellipsis uip-overflow-hidden uip-w-80 uip-flex-grow">{{ icon.value }}</div>
                   
                   <a @click.stop.prevent="icon.value = ''"
+                  v-if="icon.value"
                   class="uip-no-underline uip-border-rounder uip-padding-xxxs uip-link-muted uip-text-s">
-                  <span class="uip-icon">close</span>
+                    <span class="uip-icon">close</span>
                   </a>
                   
                 </div>

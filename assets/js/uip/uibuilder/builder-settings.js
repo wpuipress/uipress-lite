@@ -2,7 +2,7 @@
  * Builds the main ui builder shell
  * @since 3.0.0
  */
-import { defineAsyncComponent } from '../../libs/vue-esm-dev.js';
+import { defineAsyncComponent } from "../../libs/vue-esm-dev.js";
 const { __, _x, _n, _nx } = wp.i18n;
 
 /**
@@ -30,8 +30,8 @@ const ToggleSection = {
      * @since 3.2.13
      */
     returnVisibilityIcon() {
-      if (this.open) return 'expand_more';
-      if (!this.open) return 'chevron_left';
+      if (this.open) return "expand_more";
+      if (!this.open) return "chevron_left";
     },
   },
   methods: {
@@ -76,89 +76,89 @@ const ToggleSection = {
 
 export default {
   components: {
-    globalVariables: defineAsyncComponent(() => import('./variables.min.js?ver=3.2.12')),
+    globalVariables: defineAsyncComponent(() => import("./variables.min.js?ver=3.2.12")),
     ToggleSection: ToggleSection,
   },
   data() {
     return {
       loading: true,
       templateID: this.$route.params.templateID,
-      mode: 'light',
+      mode: "light",
       menu: this.uipApp.data.adminMenu.menu,
       ui: {
         sideBar: {
-          activeTab: 'settings',
+          activeTab: "settings",
         },
         strings: {
-          themeStyles: __('Theme styles'),
-          revertStyle: __('Revert style back to default', 'uipress-lite'),
-          appliesTo: __('Applies to', 'uipress-lite'),
-          excludes: __('Excludes', 'uipress-lite'),
-          templateType: __('Template type', 'uipress-lite'),
-          uiTemplate: __('UI template', 'uipress-lite'),
-          adminPage: __('Admin Page', 'uipress-lite'),
-          toolBar: __('Frontend toolbar', 'uipress-lite'),
-          loginPage: __('Login page', 'uipress-lite'),
-          appliesToSelfTitle: __('Template will now load for you!', 'uipress-lite'),
-          appliesToSelf: __('Take care not to revoke access to anything you may need in the admin.', 'uipress-lite'),
-          appliesToSelfMeta: __("If you haven't already, we recommend setting up:", 'uipress-lite'),
-          safeMode: __('safe mode', 'uipress-lite'),
-          customCSS: __('CSS', 'uipress-lite'),
-          customJS: __('Javascript', 'uipress-lite'),
-          light: __('Light', 'uipress-lite'),
-          dark: __('Dark', 'uipress-lite'),
-          templateName: __('Template name', 'uipress-lite'),
-          active: __('Active', 'uipress-lite'),
-          selectUsersAndRoles: __('Users and roles', 'uipress-lite'),
-          searchUsersAndRoles: __('Search users and roles', 'uipress-lite'),
-          custom: __('custom', 'uipress-lite'),
-          menuIcon: __('Menu icon', 'uipress-lite'),
-          addToSubmenu: __('Add to submenu', 'uipress-lite'),
-          noneTopLevel: __('None (top level)', 'uipress-lite'),
-          applyToSubsites: __('Apply to subsites', 'uipress-lite'),
-          watchOut: __('Is this an admin page?', 'uipress-lite'),
+          themeStyles: __("Theme styles"),
+          revertStyle: __("Revert style back to default", "uipress-lite"),
+          appliesTo: __("Applies to", "uipress-lite"),
+          excludes: __("Excludes", "uipress-lite"),
+          templateType: __("Template type", "uipress-lite"),
+          uiTemplate: __("UI template", "uipress-lite"),
+          adminPage: __("Admin Page", "uipress-lite"),
+          toolBar: __("Frontend toolbar", "uipress-lite"),
+          loginPage: __("Login page", "uipress-lite"),
+          appliesToSelfTitle: __("Template will now load for you!", "uipress-lite"),
+          appliesToSelf: __("Take care not to revoke access to anything you may need in the admin.", "uipress-lite"),
+          appliesToSelfMeta: __("If you haven't already, we recommend setting up:", "uipress-lite"),
+          safeMode: __("safe mode", "uipress-lite"),
+          customCSS: __("CSS", "uipress-lite"),
+          customJS: __("Javascript", "uipress-lite"),
+          light: __("Light", "uipress-lite"),
+          dark: __("Dark", "uipress-lite"),
+          templateName: __("Template name", "uipress-lite"),
+          active: __("Active", "uipress-lite"),
+          selectUsersAndRoles: __("Users and roles", "uipress-lite"),
+          searchUsersAndRoles: __("Search users and roles", "uipress-lite"),
+          custom: __("custom", "uipress-lite"),
+          menuIcon: __("Menu icon", "uipress-lite"),
+          addToSubmenu: __("Add to submenu", "uipress-lite"),
+          noneTopLevel: __("None (top level)", "uipress-lite"),
+          applyToSubsites: __("Apply to subsites", "uipress-lite"),
+          watchOut: __("Is this an admin page?", "uipress-lite"),
           watchOutDescription: __(
-            'This template does not contain a content block. The content block is key to navigating the admin. Setting this live as a uiTemplate can cause a lock out.',
-            'uipress-lite'
+            "This template does not contain a content block. The content block is key to navigating the admin. Setting this live as a uiTemplate can cause a lock out.",
+            "uipress-lite"
           ),
-          pageLink: __('Link', 'uipress-lite'),
-          name: __('Name', 'uipress-lite'),
-          type: __('Type', 'uipress-lite'),
-          templateSettings: __('Template settings', 'uipress-lite'),
-          status: __('Status', 'uipress-lite'),
-          general: __('General', 'uipress-lite'),
-          slug: __('Slug', 'uipress-lite'),
+          pageLink: __("Link", "uipress-lite"),
+          name: __("Name", "uipress-lite"),
+          type: __("Type", "uipress-lite"),
+          templateSettings: __("Template settings", "uipress-lite"),
+          status: __("Status", "uipress-lite"),
+          general: __("General", "uipress-lite"),
+          slug: __("Slug", "uipress-lite"),
         },
       },
       enabledDisabled: {
         false: {
           value: false,
-          label: __('Disabled', 'uipress-lite'),
+          label: __("Disabled", "uipress-lite"),
         },
         true: {
           value: true,
-          label: __('Enabled', 'uipress-lite'),
+          label: __("Enabled", "uipress-lite"),
         },
       },
       switchOptions: {
         light: {
-          value: 'light',
-          label: __('Light', 'uipress-lite'),
+          value: "light",
+          label: __("Light", "uipress-lite"),
         },
         dark: {
-          value: 'dark',
-          label: __('Dark', 'uipress-lite'),
+          value: "dark",
+          label: __("Dark", "uipress-lite"),
         },
       },
       newVariable: {
-        label: '',
-        var: '',
+        label: "",
+        var: "",
       },
     };
   },
-  inject: ['uiTemplate'],
+  inject: ["uiTemplate"],
   watch: {
-    'uiTemplate.globalSettings.slug': {
+    "uiTemplate.globalSettings.slug": {
       handler() {
         this.handleSlugChange();
       },
@@ -175,12 +175,12 @@ export default {
      */
     returnFormatedMenu() {
       return this.menu
-        .filter((item) => item.type !== 'sep')
+        .filter((item) => item.type !== "sep")
         .map(({ uid, url, name }) => {
           return {
             name: uid,
             url: url,
-            label: name.replace(/<[^>]*>?/gm, ''),
+            label: name.replace(/<[^>]*>?/gm, ""),
           };
         });
     },
@@ -194,12 +194,12 @@ export default {
       let templateType = this.uiTemplate.globalSettings.type;
 
       // Exit early
-      if (templateType != 'ui-template') return false;
+      if (templateType != "ui-template") return false;
       if (this.uiTemplate.content.length > 0) {
         let templateString = JSON.stringify(this.uiTemplate.content);
 
         // Template doesn't include a uip-content block
-        if (!templateString.includes('uip-content')) return true;
+        if (!templateString.includes("uip-content")) return true;
       }
 
       return false;
@@ -211,8 +211,8 @@ export default {
      * @since 3.2.13
      */
     returnPageLink() {
-      const title = this.uiTemplate.globalSettings.slug ? this.uiTemplate.globalSettings.slug : this.uiTemplate.globalSettings.name + '-uiptp-' + this.$route.params.templateID;
-      return this.uipApp.data.options.adminURL + 'admin.php?page=' + this.formatPageName(title);
+      const title = this.uiTemplate.globalSettings.slug ? this.uiTemplate.globalSettings.slug : this.uiTemplate.globalSettings.name + "-uiptp-" + this.$route.params.templateID;
+      return this.uipApp.data.options.adminURL + "admin.php?page=" + this.formatPageName(title);
     },
   },
   methods: {
@@ -245,7 +245,7 @@ export default {
 
       switch (accepts) {
         case String:
-          initialValue = '';
+          initialValue = "";
           break;
         case Array:
           initialValue = [];
@@ -254,7 +254,7 @@ export default {
           initialValue = {};
           break;
         default:
-          initialValue = '';
+          initialValue = "";
       }
 
       options[group][key] = initialValue;
@@ -281,14 +281,14 @@ export default {
      * @since 3.2.13
      */
     formatPageName(title) {
-      if (!title) return '';
+      if (!title) return "";
 
       title = title.toLowerCase();
-      title = title.replace('~[^pLd]+~u', '-');
-      title = title.replace('~[^-w]+~', '');
+      title = title.replace("~[^pLd]+~u", "-");
+      title = title.replace("~[^-w]+~", "");
       title = title.trim();
-      title = title.replace('~-+~', '-');
-      title = title.replace(' ', '-');
+      title = title.replace("~-+~", "-");
+      title = title.replace(" ", "-");
       return title;
     },
 
@@ -360,7 +360,7 @@ export default {
                   <div class="uip-text-muted uip-flex uip-flex-center uip-text-s uip-h-30 uip-gap-xs">
                     <span>{{ui.strings.status}}</span>
                   </div>
-                  <toggle-switch :options="enabledDisabled" :activeValue="uiTemplate.globalSettings.status" :dontAccentActive="true" :returnValue="function(data){ uiTemplate.globalSettings.status = data;}"></toggle-switch>
+                  <toggle-switch :options="enabledDisabled" :activeValue="uiTemplate.globalSettings.status" :dontAccentActive="true" :returnValue="function(data){ uiTemplate.globalSettings.status = data;}"/>
                   
                   <!--Name-->
                   <div class="uip-text-muted uip-flex uip-flex-center uip-text-s uip-h-30 uip-gap-xs">
