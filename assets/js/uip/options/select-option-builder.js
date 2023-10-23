@@ -7,23 +7,30 @@ export default {
   data() {
     return {
       options: [],
+      updating: false,
       strings: {
-        addNew: __('New option', 'uipress-lite'),
-        label: __('Label', 'uipress-lite'),
-        value: __('Value', 'uipress-lite'),
+        addNew: __("New option", "uipress-lite"),
+        label: __("Label", "uipress-lite"),
+        value: __("Value", "uipress-lite"),
       },
     };
   },
   watch: {
+    value: {
+      handler(newValue, oldValue) {
+        if (this.updating) return;
+        this.injectPropValue();
+      },
+      deep: true,
+      immediate: true,
+    },
     options: {
       handler(newValue, oldValue) {
+        if (this.updating) return;
         this.returnData({ options: this.options });
       },
       deep: true,
     },
-  },
-  mounted() {
-    this.formatInput();
   },
   methods: {
     /**
@@ -31,10 +38,16 @@ export default {
      *
      * @since 3.2.13
      */
-    formatInput() {
+    async injectPropValue() {
+      this.updating = true;
+      this.options = [];
       if (!this.isObject(this.value)) return;
       if (!Array.isArray(this.value.options)) return;
+
       this.options = this.value.options;
+
+      await this.$nextTick();
+      this.updating = false;
     },
     /**
      * Deletes options
@@ -51,7 +64,7 @@ export default {
      * @since 3.2.13
      */
     newOption() {
-      this.options.push({ label: __('Option', 'uipress-lite'), name: '' });
+      this.options.push({ label: __("Option", "uipress-lite"), name: "" });
     },
   },
   template: `
