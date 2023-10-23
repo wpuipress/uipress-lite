@@ -1,5 +1,5 @@
 const { __, _x, _n, _nx } = wp.i18n;
-import { getUserPreference } from '../../v3.5/utility/functions.min.js';
+import { getUserPreference } from "../../v3.5/utility/functions.min.js";
 export default {
   props: {
     display: String,
@@ -12,34 +12,34 @@ export default {
       loading: false,
       queued: false,
       strings: {
-        newToDo: __('Add todo', 'uipress-lite'),
-        whatwouldyoulike: __('What would you like to do?', 'uipress-lite'),
-        title: __('Title', 'uipress-lite'),
-        description: __('Add a description...'),
+        newToDo: __("Add todo", "uipress-lite"),
+        whatwouldyoulike: __("What would you like to do?", "uipress-lite"),
+        title: __("Title", "uipress-lite"),
+        description: __("Add a description..."),
       },
-      activeTab: 'all',
+      activeTab: "all",
       tabs: [
         {
-          name: 'all',
-          label: __('All', 'uipress-lite'),
+          name: "all",
+          label: __("All", "uipress-lite"),
         },
         {
-          name: 'todo',
-          label: __('Todo', 'uipress-lite'),
+          name: "todo",
+          label: __("Todo", "uipress-lite"),
         },
         {
-          name: 'completed',
-          label: __('Completed', 'uipress-lite'),
+          name: "completed",
+          label: __("Completed", "uipress-lite"),
         },
       ],
       newToDo: {
-        name: '',
-        description: '',
+        name: "",
+        description: "",
         done: false,
       },
     };
   },
-  
+
   mounted() {
     this.getToDoList();
   },
@@ -58,9 +58,9 @@ export default {
         }
 
         this.queued = true;
-        setTimeout(function () {
+        setTimeout(() => {
           this.queued = false;
-          this.saveUserPreference('uip-todo-list', newValue, false);
+          this.saveUserPreference("uip-todo-list", newValue, false);
         }, 8000);
       },
       deep: true,
@@ -74,13 +74,13 @@ export default {
      */
     returnToDos() {
       switch (this.activeTab) {
-        case 'all':
+        case "all":
           return this.todoList;
 
-        case 'todo':
+        case "todo":
           return this.todoList.filter((el) => el.done === false);
 
-        case 'completed':
+        case "completed":
           return this.todoList.filter((el) => el.done === true);
 
         default:
@@ -99,7 +99,7 @@ export default {
       this.todoList.push(newItem);
 
       // Reset new todo
-      this.newToDo = { name: '', description: '', done: false };
+      this.newToDo = { name: "", description: "", done: false };
     },
 
     /**
@@ -111,13 +111,13 @@ export default {
       this.loading = true;
 
       // Get users list
-      const response = await getUserPreference('uip-todo-list');
+      const response = await getUserPreference("uip-todo-list");
 
       this.loading = false;
 
       // Handle error
       if (response.error) {
-        this.uipApp.notifications.notify(response.message, '', 'error', true);
+        this.uipApp.notifications.notify(response.message, "", "error", true);
         return;
       }
 
@@ -157,10 +157,10 @@ export default {
     resizeTextarea(event) {
       const newHeight = Math.min(event.target.scrollHeight, 500);
 
-      event.target.style.height = '';
-      event.target.style.height = newHeight + 'px';
+      event.target.style.height = "";
+      event.target.style.height = newHeight + "px";
 
-      const overflow = newHeight == 500 ? 'auto' : 'hidden';
+      const overflow = newHeight == 500 ? "auto" : "hidden";
       event.target.style.overflow = overflow;
     },
   },

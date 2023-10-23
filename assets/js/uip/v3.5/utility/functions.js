@@ -22,6 +22,7 @@ export function ensureNestedObject(obj, ...keys) {
  * @since 3.2.13
  */
 export function hasNestedPath(obj, ...keys) {
+  if (!isObject(obj)) return false;
   // Fill to handle old method of checking nested objects
   if (Array.isArray(keys[0])) {
     keys = keys[0];
@@ -429,7 +430,6 @@ export function maybeForceReload(url) {
  * @since 3.0.0
  */
 export async function saveUserPreference(key, value, notification) {
-  console.log(key);
   let formData = new FormData();
 
   // Format value

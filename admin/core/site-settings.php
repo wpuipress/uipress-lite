@@ -8,14 +8,14 @@ use UipressLite\Classes\ImportExport\Import;
 use UipressLite\Classes\ImportExport\Export;
 use UipressLite\Classes\Scripts\UipScripts;
 
-!defined('ABSPATH') ?? exit();
+!defined("ABSPATH") ?? exit();
 
 /**
  * Adds filter to watch for auto import for site sync
  *
  * @since 3.2.13
  */
-add_action('uip_auto_site_sync', ['UipressLite\Classes\App\Import', 'cron_auto_import']);
+add_action("uip_auto_site_sync", ["UipressLite\Classes\App\Import", "cron_auto_import"]);
 
 class uip_site_settings
 {
@@ -29,7 +29,7 @@ class uip_site_settings
    */
   public function run()
   {
-    add_action('plugins_loaded', [$this, 'set_site_settings'], 1);
+    add_action("plugins_loaded", [$this, "set_site_settings"], 1);
   }
 
   /**
@@ -50,13 +50,13 @@ class uip_site_settings
     $this->handle_site_sync_options($options);
 
     // If site settings don't exist then exit now
-    if (!isset($options['site-settings'])) {
+    if (!isset($options["site-settings"])) {
       return;
     }
 
     // Define settings object globally
-    $this->uip_site_settings_object = $options['site-settings'];
-    define('uip_site_settings', json_encode($options['site-settings']));
+    $this->uip_site_settings_object = $options["site-settings"];
+    define("uip_site_settings", json_encode($options["site-settings"]));
 
     //Post and page table actions
     $this->post_table_actions();
@@ -65,9 +65,9 @@ class uip_site_settings
     $this->dynamic_loading();
 
     // jQuery Migrate
-    add_action('wp_default_scripts', [$this, 'dequeue_jquery_migrate']);
-    add_action('admin_bar_menu', [$this, 'uip_logo_actions']);
-    add_action('login_init', [$this, 'login_actions']);
+    add_action("wp_default_scripts", [$this, "dequeue_jquery_migrate"]);
+    add_action("admin_bar_menu", [$this, "uip_logo_actions"]);
+    add_action("login_init", [$this, "login_actions"]);
 
     //Check for user page disables: uipDisabledFor
     $this->uip_disabled_on_page();
@@ -86,18 +86,18 @@ class uip_site_settings
   private function handle_site_sync_options($options)
   {
     // Handle remote sync options
-    if (isset($options['remote-sync'])) {
+    if (isset($options["remote-sync"])) {
       // Push remote sync to rest
-      if (isset($options['remote-sync']['hostEnabled']) && $options['remote-sync']['hostEnabled'] == 'uiptrue') {
-        add_action('rest_api_init', ['UipressLite\Classes\ImportExport\Export', 'push_to_rest']);
+      if (isset($options["remote-sync"]["hostEnabled"]) && $options["remote-sync"]["hostEnabled"] == "uiptrue") {
+        add_action("rest_api_init", ["UipressLite\Classes\ImportExport\Export", "push_to_rest"]);
       }
 
       // Handle auto site sync
-      if (is_main_site() && isset($options['remote-sync']['syncOptions']) && property_exists($options['remote-sync']['syncOptions'], 'keepUpToDate')) {
-        if ($options['remote-sync']['syncOptions']->keepUpToDate == 'uiptrue') {
+      if (is_main_site() && isset($options["remote-sync"]["syncOptions"]) && property_exists($options["remote-sync"]["syncOptions"], "keepUpToDate")) {
+        if ($options["remote-sync"]["syncOptions"]->keepUpToDate == "uiptrue") {
           // Schedule site sync
-          if (!wp_next_scheduled('uip_auto_site_sync')) {
-            wp_schedule_event(time(), 'twicedaily', 'uip_auto_site_sync');
+          if (!wp_next_scheduled("uip_auto_site_sync")) {
+            wp_schedule_event(time(), "twicedaily", "uip_auto_site_sync");
           }
         }
       }
@@ -120,7 +120,7 @@ class uip_site_settings
       return;
     }
 
-    $parts = explode(',', $uipFullscreenFor);
+    $parts = explode(",", $uipFullscreenFor);
 
     // No pages for fullscreen on
     if (!is_array($parts)) {
@@ -134,9 +134,9 @@ class uip_site_settings
     }
 
     $fullscreenJSON = json_encode($formatted);
-    add_action('admin_head', function () use ($fullscreenJSON) {
+    add_action("admin_head", function () use ($fullscreenJSON) {
       $variableFormatter = "const UIPFullscreenUserPages = {$fullscreenJSON};";
-      wp_print_inline_script_tag($variableFormatter, ['id' => 'uip-dynamic']);
+      wp_print_inline_script_tag($variableFormatter, ["id" => "uip-dynamic"]);
     });
   }
 
@@ -156,7 +156,7 @@ class uip_site_settings
       return;
     }
 
-    $parts = explode(',', $disabledList);
+    $parts = explode(",", $disabledList);
 
     //No pages for disabling on
     if (!is_array($parts)) {
@@ -181,13 +181,13 @@ class uip_site_settings
     }
 
     $disbaledJSON = json_encode($formatted);
-    add_action('admin_head', function () use ($disbaledJSON) {
+    add_action("admin_head", function () use ($disbaledJSON) {
       $variableFormatter = "const UIPdisableUserPages = {$disbaledJSON};";
-      wp_print_inline_script_tag($variableFormatter, ['id' => 'uip-dynamic']);
+      wp_print_inline_script_tag($variableFormatter, ["id" => "uip-dynamic"]);
     });
 
     if ($disabled) {
-      define('uip_app_running', false);
+      define("uip_app_running", false);
     }
   }
 
@@ -208,31 +208,31 @@ class uip_site_settings
       $frontEndReload = $this->uip_site_settings_object->advanced->exitFrameFront;
     }
 
-    if ($dynamicDis == 'uiptrue') {
-      add_action('admin_head', function () {
+    if ($dynamicDis == "uiptrue") {
+      add_action("admin_head", function () {
         $variableFormatter = "
       const UIPdisableDynamicLoading = true;";
-        wp_print_inline_script_tag($variableFormatter, ['id' => 'uip-dynamic']);
+        wp_print_inline_script_tag($variableFormatter, ["id" => "uip-dynamic"]);
       });
 
-      add_action('wp_head', function () {
+      add_action("wp_head", function () {
         $variableFormatter = "
       const UIPdisableDynamicLoading = true;";
-        wp_print_inline_script_tag($variableFormatter, ['id' => 'uip-dynamic']);
+        wp_print_inline_script_tag($variableFormatter, ["id" => "uip-dynamic"]);
       });
     }
 
-    if ($frontEndReload == 'uiptrue') {
-      add_action('admin_head', function () {
+    if ($frontEndReload == "uiptrue") {
+      add_action("admin_head", function () {
         $variableFormatter = "
       const UIPfrontEndReload = true;";
-        wp_print_inline_script_tag($variableFormatter, ['id' => 'uip-dynamic']);
+        wp_print_inline_script_tag($variableFormatter, ["id" => "uip-dynamic"]);
       });
 
-      add_action('wp_head', function () {
+      add_action("wp_head", function () {
         $variableFormatter = "
       const UIPfrontEndReload = true;";
-        wp_print_inline_script_tag($variableFormatter, ['id' => 'uip-dynamic']);
+        wp_print_inline_script_tag($variableFormatter, ["id" => "uip-dynamic"]);
       });
     }
   }
@@ -249,34 +249,34 @@ class uip_site_settings
       $adminTheme = $this->uip_site_settings_object->theme->themeEnabled;
     }
 
-    if ($adminTheme != 'uiptrue') {
+    if ($adminTheme != "uiptrue") {
       return;
     }
 
     // Don't load theme if using a uiTemplate
-    if (isset($_GET['uip-framed-page'])) {
-      if ($_GET['uip-framed-page'] == '1') {
+    if (isset($_GET["uip-framed-page"])) {
+      if ($_GET["uip-framed-page"] == "1") {
         return;
       }
     }
 
     //Load up theme styles
-    add_action('admin_enqueue_scripts', function () {
-      if (defined('uip_app_running')) {
+    add_action("admin_enqueue_scripts", function () {
+      if (defined("uip_app_running")) {
         if (uip_app_running) {
           return;
         }
       }
 
-      wp_register_style('uip-app', uip_plugin_url . 'assets/css/uip-app.css', [], uip_plugin_version);
-      wp_enqueue_style('uip-app');
-      wp_register_style('uip-theme-basic', uip_plugin_url . 'assets/css/modules/uip-theme-basic.css', [], uip_plugin_version);
-      wp_enqueue_style('uip-theme-basic');
+      wp_register_style("uip-app", uip_plugin_url . "assets/css/uip-app.css", [], uip_plugin_version);
+      wp_enqueue_style("uip-app");
+      wp_register_style("uip-theme-basic", uip_plugin_url . "assets/css/modules/uip-theme-basic.css", [], uip_plugin_version);
+      wp_enqueue_style("uip-theme-basic");
     });
 
     //Add user logo to the admin menu
-    add_action('admin_head', function () {
-      if (defined('uip_app_running')) {
+    add_action("admin_head", function () {
+      if (defined("uip_app_running")) {
         if (uip_app_running) {
           return;
         }
@@ -290,15 +290,15 @@ class uip_site_settings
       if (!is_object($logo)) {
         return;
       }
-      if (!isset($logo->url) || $logo->url == '' || $logo->url == 'uipblank') {
+      if (!isset($logo->url) || $logo->url == "" || $logo->url == "uipblank") {
         return;
       }
 
       global $allowedposttags;
       $allowed_atts = [
-        'type' => [],
+        "type" => [],
       ];
-      $allowedposttags['style'] = $allowed_atts;
+      $allowedposttags["style"] = $allowed_atts;
       $tag = "<style type='text/css'>
           #adminmenu::before {
               background-image: url({$logo->url}) !important;
@@ -307,8 +307,8 @@ class uip_site_settings
       echo wp_kses($tag, $allowedposttags);
     });
 
-    add_action('admin_xml_ns', [$this, 'html_attributes_admin_theme']);
-    add_action('admin_footer', [$this, 'print_theme_variables']);
+    add_action("admin_xml_ns", [$this, "html_attributes_admin_theme"]);
+    add_action("admin_footer", [$this, "print_theme_variables"]);
   }
 
   /**
@@ -318,15 +318,15 @@ class uip_site_settings
    */
   public function print_theme_variables()
   {
-    if (defined('uip_app_running') && uip_app_running) {
+    if (defined("uip_app_running") && uip_app_running) {
       return;
     }
 
-    if (isset($_GET['page']) && $_GET['page'] == 'uip-ui-builder') {
+    if (isset($_GET["page"]) && $_GET["page"] == "uip-ui-builder") {
       return;
     }
 
-    $styles = UipOptions::get('theme-styles');
+    $styles = UipOptions::get("theme-styles");
 
     if (!$styles || !is_object($styles)) {
       $styles = [];
@@ -337,7 +337,7 @@ class uip_site_settings
       html[uip-admin-theme="true"]{
         <?php foreach ($styles as $key => $value) {
           if (isset($value->value)) {
-            echo esc_html($key . ':' . $value->value . ';');
+            echo esc_html($key . ":" . $value->value . ";");
           }
         } ?>
     }
@@ -353,7 +353,7 @@ class uip_site_settings
    */
   public function html_attributes_admin_theme()
   {
-    if (defined('uip_app_running') && uip_app_running) {
+    if (defined("uip_app_running") && uip_app_running) {
       return;
     }
 
@@ -385,15 +385,15 @@ class uip_site_settings
     }
 
     if ($logo) {
-      add_action('login_enqueue_scripts', [$this, 'outputLoginLogo']);
-      add_filter('login_headerurl', [$this, 'login_logo_url']);
+      add_action("login_enqueue_scripts", [$this, "outputLoginLogo"]);
+      add_filter("login_headerurl", [$this, "login_logo_url"]);
     }
 
-    if ($theme == 'uiptrue') {
-      add_action('login_enqueue_scripts', [$this, 'add_login_scripts_and_styles']);
-      add_action('login_header', [$this, 'uip_start_login_wrapper']);
-      add_action('login_footer', [$this, 'uip_end_login_wrapper']);
-      add_filter('login_body_class', [$this, 'add_login_body_classes']);
+    if ($theme == "uiptrue") {
+      add_action("login_enqueue_scripts", [$this, "add_login_scripts_and_styles"]);
+      add_action("login_header", [$this, "uip_start_login_wrapper"]);
+      add_action("login_footer", [$this, "uip_end_login_wrapper"]);
+      add_filter("login_body_class", [$this, "add_login_body_classes"]);
     }
 
     $langSelec = false;
@@ -401,8 +401,8 @@ class uip_site_settings
       $langSelec = $this->uip_site_settings_object->login->hideLanguage;
     }
 
-    if ($langSelec == 'uiptrue') {
-      add_filter('login_display_language_dropdown', '__return_false');
+    if ($langSelec == "uiptrue") {
+      add_filter("login_display_language_dropdown", "__return_false");
     }
   }
 
@@ -420,7 +420,7 @@ class uip_site_settings
       $darkMode = $this->uip_site_settings_object->login->darkMode;
     }
 
-    if ($darkMode != 'uiptrue') {
+    if ($darkMode != "uiptrue") {
       $wrapper = '
       <div id="uip-login-wrap" data-theme="light">
       <div id="uip-login-form-wrap">
@@ -443,29 +443,29 @@ class uip_site_settings
    */
   public function print_login_styles_area()
   {
-    if (isset($_GET['page']) && $_GET['page'] == 'uip-ui-builder') {
+    if (isset($_GET["page"]) && $_GET["page"] == "uip-ui-builder") {
       return;
     }
 
-    $styles = UipOptions::get('theme-styles');
+    $styles = UipOptions::get("theme-styles");
 
     if (!$styles || !is_object($styles)) {
       $styles = [];
     }
 
-    $css = '';
-    if (isset($_GET['uipid']) && $_GET['uipid'] != '' && is_numeric(sanitize_text_field($_GET['uipid']))) {
-      $templateID = sanitize_text_field($_GET['uipid']);
+    $css = "";
+    if (isset($_GET["uipid"]) && $_GET["uipid"] != "" && is_numeric(sanitize_text_field($_GET["uipid"]))) {
+      $templateID = sanitize_text_field($_GET["uipid"]);
 
       //If this is a multisite template we need to get the css from the primary site network template
       $multiSiteActive = false;
-      if (is_multisite() && is_plugin_active_for_network(uip_plugin_path_name . '/uipress-lite.php') && !is_main_site()) {
+      if (is_multisite() && is_plugin_active_for_network(uip_plugin_path_name . "/uipress-lite.php") && !is_main_site()) {
         $mainSiteId = get_main_site_id();
         switch_to_blog($mainSiteId);
         $multiSiteActive = true;
       }
 
-      $settings = get_post_meta($templateID, 'uip-template-settings', true);
+      $settings = get_post_meta($templateID, "uip-template-settings", true);
 
       if ($multiSiteActive) {
         restore_current_blog();
@@ -473,8 +473,8 @@ class uip_site_settings
 
       // Get custom css
       if ($settings && is_object($settings)) {
-        Objects::ensureNested($settings, ['options', 'advanced']);
-        $css = isset($settings->options->advanced->css) ? html_entity_decode($settings->options->advanced->css) : '';
+        Objects::ensureNested($settings, ["options", "advanced"]);
+        $css = isset($settings->options->advanced->css) ? html_entity_decode($settings->options->advanced->css) : "";
       }
     }
 
@@ -484,14 +484,14 @@ class uip_site_settings
       [data-theme="light"]{
         <?php foreach ($styles as $key => $value) {
           if (isset($value->value)) {
-            echo esc_html($key . ':' . $value->value . ';');
+            echo esc_html($key . ":" . $value->value . ";");
           }
         } ?>
     }
     [data-theme="dark"]{
         <?php foreach ($styles as $key => $value) {
           if (isset($value->darkValue)) {
-            echo esc_html($key . ':' . $value->darkValue . ';');
+            echo esc_html($key . ":" . $value->darkValue . ";");
           }
         } ?>
     }
@@ -512,7 +512,7 @@ class uip_site_settings
       $hideBranding = $this->uip_site_settings_object->login->removeBranding;
     }
 
-    $customHTML = '';
+    $customHTML = "";
     if (isset($this->uip_site_settings_object->login->panelHTML)) {
       $customHTML = $this->uip_site_settings_object->login->panelHTML;
     }
@@ -520,23 +520,23 @@ class uip_site_settings
     $customHTML = html_entity_decode($customHTML);
     $customHTML = Sanitize::clean_input_with_code($customHTML);
 
-    if ($customHTML == 'uipblank') {
-      $customHTML = '';
+    if ($customHTML == "uipblank") {
+      $customHTML = "";
     }
 
-    if ($hideBranding != 'uiptrue') {
+    if ($hideBranding != "uiptrue") {
       echo wp_kses_post('<a class="uip-link-muted uip-no-underline" href="https://uipress.co?utm_source=uipresslogin&utm_medium=referral" target="_BLANK">Powered by uipress</a>');
     }
     echo wp_kses_post("</div></div><div id='uip-login-panel'>{$customHTML}</div></div><!-- END OF UIP WRAP -->");
 
-    $customCSS = '';
+    $customCSS = "";
     if (isset($this->uip_site_settings_object->login->loginCSS)) {
       $customCSS = $this->uip_site_settings_object->login->loginCSS;
 
       $customCSS = html_entity_decode($customCSS);
       $customCSS = Sanitize::clean_input_with_code($customCSS);
 
-      if ($customCSS != '' && $customCSS != 'uipblank') {
+      if ($customCSS != "" && $customCSS != "uipblank") {
         echo wp_kses_post("<style type='text/css'>{$customCSS}</style>");
       }
     }
@@ -549,20 +549,20 @@ class uip_site_settings
    */
   public function add_login_body_classes($classes)
   {
-    $align = 'left';
-    Objects::ensureNested($this->uip_site_settings_object, ['login', 'login_form_alignment']);
+    $align = "left";
+    Objects::ensureNested($this->uip_site_settings_object, ["login", "login_form_alignment"]);
     if (isset($this->uip_site_settings_object->login->login_form_alignment->value)) {
       $align = $this->uip_site_settings_object->login->login_form_alignment->value;
     }
 
-    if ($align == 'left') {
-      $classes[] = 'uip-login-left';
+    if ($align == "left") {
+      $classes[] = "uip-login-left";
     }
-    if ($align == 'right') {
-      $classes[] = 'uip-login-right';
+    if ($align == "right") {
+      $classes[] = "uip-login-right";
     }
-    if ($align == 'center') {
-      $classes[] = 'uip-login-center';
+    if ($align == "center") {
+      $classes[] = "uip-login-center";
     }
     return $classes;
   }
@@ -576,8 +576,8 @@ class uip_site_settings
   {
     UipScripts::add_uipress_styles();
 
-    wp_register_style('uip-login-default', uip_plugin_url . 'assets/css/modules/uip-login-default.css', [], uip_plugin_version);
-    wp_enqueue_style('uip-login-default');
+    wp_register_style("uip-login-default", uip_plugin_url . "assets/css/modules/uip-login-default.css", [], uip_plugin_version);
+    wp_enqueue_style("uip-login-default");
   }
 
   /**
@@ -589,7 +589,7 @@ class uip_site_settings
   {
     $logo = $this->uip_site_settings_object->login->logo;
     $background = $this->uip_site_settings_object->login->background_image;
-    $align = 'left';
+    $align = "left";
     if (isset($this->uip_site_settings_object->login->logo_alignment)) {
       if (isset($this->uip_site_settings_object->login->logo_alignment->value)) {
         $align = $this->uip_site_settings_object->login->logo_alignment->value;
@@ -599,7 +599,7 @@ class uip_site_settings
     if (!is_object($logo)) {
       return;
     }
-    if (!isset($logo->url) || $logo->url == '' || $logo->url == 'uipblank') {
+    if (!isset($logo->url) || $logo->url == "" || $logo->url == "uipblank") {
       return;
     }
     ?>
@@ -617,7 +617,7 @@ class uip_site_settings
     if (!is_object($background)) {
       return;
     }
-    if (!isset($background->url) || $background->url == '' || $background->url == 'uipblank') {
+    if (!isset($background->url) || $background->url == "" || $background->url == "uipblank") {
       return;
     }
     ?>
@@ -649,27 +649,27 @@ class uip_site_settings
   {
     if (isset($this->uip_site_settings_object->whiteLabel->hideWelcomeMessage)) {
       $message = $this->uip_site_settings_object->whiteLabel->hideWelcomeMessage;
-      if ($message == 'uiptrue') {
-        $my_account = $admin_bar->get_node('my-account');
-        $parts = explode(',', $my_account->title);
-        $current = $parts[0] . ',';
-        $greeting = str_replace($current, '', $my_account->title);
+      if ($message == "uiptrue") {
+        $my_account = $admin_bar->get_node("my-account");
+        $parts = explode(",", $my_account->title);
+        $current = $parts[0] . ",";
+        $greeting = str_replace($current, "", $my_account->title);
         $admin_bar->add_node([
-          'id' => 'my-account',
-          'title' => $greeting,
+          "id" => "my-account",
+          "title" => $greeting,
         ]);
       }
     }
     if (isset($this->uip_site_settings_object->whiteLabel->welcomeMessage)) {
       $message = $this->uip_site_settings_object->whiteLabel->welcomeMessage;
-      if ($message != '' && $message != 'uipblank') {
-        $my_account = $admin_bar->get_node('my-account');
-        $parts = explode(',', $my_account->title);
-        $current = $parts[0] . ',';
+      if ($message != "" && $message != "uipblank") {
+        $my_account = $admin_bar->get_node("my-account");
+        $parts = explode(",", $my_account->title);
+        $current = $parts[0] . ",";
         $greeting = str_replace($current, $message, $my_account->title);
         $admin_bar->add_node([
-          'id' => 'my-account',
-          'title' => $greeting,
+          "id" => "my-account",
+          "title" => $greeting,
         ]);
       }
     }
@@ -683,19 +683,19 @@ class uip_site_settings
     if (!is_object($logo)) {
       return;
     }
-    if (!isset($logo->url) || $logo->url == '' || $logo->url == 'uipblank') {
+    if (!isset($logo->url) || $logo->url == "" || $logo->url == "uipblank") {
       return;
     }
 
-    add_action('wp_before_admin_bar_render', [$this, 'remove_toolbar_logo']);
+    add_action("wp_before_admin_bar_render", [$this, "remove_toolbar_logo"]);
 
     $image = esc_url($logo->url);
     $data = "<img style='height:20px;max-height:20px;margin-top:6px;vertical-align:baseline;' src='{$image}' >";
 
     $args = [
-      'id' => 'app-logo',
-      'title' => $data,
-      'href' => esc_url(admin_url()),
+      "id" => "app-logo",
+      "title" => $data,
+      "href" => esc_url(admin_url()),
     ];
     $admin_bar->add_node($args);
 
@@ -711,7 +711,7 @@ class uip_site_settings
   public function remove_toolbar_logo()
   {
     global $wp_admin_bar;
-    $wp_admin_bar->remove_menu('wp-logo');
+    $wp_admin_bar->remove_menu("wp-logo");
   }
 
   /**
@@ -742,14 +742,14 @@ class uip_site_settings
       $back = $this->uip_site_settings_object->general->jqueryMigrateBack;
     }
 
-    if ($front == 'uiptrue') {
-      if (!is_admin() && !empty($scripts->registered['jquery'])) {
-        $scripts->registered['jquery']->deps = array_diff($scripts->registered['jquery']->deps, ['jquery-migrate']);
+    if ($front == "uiptrue") {
+      if (!is_admin() && !empty($scripts->registered["jquery"])) {
+        $scripts->registered["jquery"]->deps = array_diff($scripts->registered["jquery"]->deps, ["jquery-migrate"]);
       }
     }
-    if ($back == 'uiptrue') {
-      if (is_admin() && !empty($scripts->registered['jquery'])) {
-        $scripts->registered['jquery']->deps = array_diff($scripts->registered['jquery']->deps, ['jquery-migrate']);
+    if ($back == "uiptrue") {
+      if (is_admin() && !empty($scripts->registered["jquery"])) {
+        $scripts->registered["jquery"]->deps = array_diff($scripts->registered["jquery"]->deps, ["jquery-migrate"]);
       }
     }
   }
@@ -764,10 +764,10 @@ class uip_site_settings
     if (isset($this->uip_site_settings_object->plugins) && isset($this->uip_site_settings_object->plugins->displayPluginStatus)) {
       $showStatus = $this->uip_site_settings_object->plugins->displayPluginStatus;
 
-      if ($showStatus == 'uiptrue') {
-        add_filter('manage_plugins_columns', [$this, 'add_plugin_status_column']);
-        add_filter('manage_plugins-network_columns', [$this, 'add_plugin_status_column']);
-        add_action('manage_plugins_custom_column', [$this, 'add_plugin_status'], 10, 3);
+      if ($showStatus == "uiptrue") {
+        add_filter("manage_plugins_columns", [$this, "add_plugin_status_column"]);
+        add_filter("manage_plugins-network_columns", [$this, "add_plugin_status_column"]);
+        add_action("manage_plugins_custom_column", [$this, "add_plugin_status"], 10, 3);
       }
     }
   }
@@ -784,8 +784,8 @@ class uip_site_settings
     foreach ($columns as $key => $value) {
       $newCoumns[$key] = $value;
 
-      if ($key == 'cb') {
-        $newCoumns['uip_status'] = __('Status', 'uipress-lite');
+      if ($key == "cb") {
+        $newCoumns["uip_status"] = __("Status", "uipress-lite");
       }
     }
 
@@ -799,20 +799,20 @@ class uip_site_settings
    */
   public function add_plugin_status($column_name, $plugin_file, $plugin_data)
   {
-    if ('uip_status' == $column_name) {
+    if ("uip_status" == $column_name) {
       return;
     }
     if (is_plugin_active($plugin_file)) {
       echo wp_kses_post(
         '<span class="uip-padding-left-xxs uip-padding-right-xxs uip-background-green-wash uip-border-round uip-margin-top-xs uip-display-table-cell uip-text-bold uip-text-green">' .
-          __('active', 'uipress-lite') .
-          '</span>'
+          __("active", "uipress-lite") .
+          "</span>"
       );
     } else {
       echo wp_kses_post(
         '<span class="uip-padding-left-xxs uip-padding-right-xxs uip-background-orange-wash uip-border-round uip-margin-top-xs uip-display-table-cell uip-text-bold uip-text-orange">' .
-          __('inactive', 'uipress-lite') .
-          '</span>'
+          __("inactive", "uipress-lite") .
+          "</span>"
       );
     }
   }
@@ -834,48 +834,48 @@ class uip_site_settings
 
     $showIDS = $this->uip_site_settings_object->postsPages->postIDs;
 
-    if ($showIDS == 'uiptrue' || $showModified == 'uiptrue') {
+    if ($showIDS == "uiptrue" || $showModified == "uiptrue") {
       //Get post types
       $args = [
-        'show_ui' => true,
+        "show_ui" => true,
       ];
-      $post_types = get_post_types($args, 'names');
+      $post_types = get_post_types($args, "names");
     }
 
     //Add post modified date
-    if ($showModified == 'uiptrue') {
+    if ($showModified == "uiptrue") {
       //Posts
-      add_filter('manage_posts_columns', [$this, 'posts_columns_modified'], 5);
-      add_action('manage_posts_custom_column', [$this, 'posts_custom_modified_columns'], 5, 2);
+      add_filter("manage_posts_columns", [$this, "posts_columns_modified"], 5);
+      add_action("manage_posts_custom_column", [$this, "posts_custom_modified_columns"], 5, 2);
       //Pages
-      add_filter('manage_pages_columns', [$this, 'posts_columns_modified'], 5);
-      add_action('manage_pages_custom_column', [$this, 'posts_custom_modified_columns'], 5, 2);
+      add_filter("manage_pages_columns", [$this, "posts_columns_modified"], 5);
+      add_action("manage_pages_custom_column", [$this, "posts_custom_modified_columns"], 5, 2);
       //Media
-      add_filter('manage_media_columns', [$this, 'posts_columns_modified'], 5);
-      add_action('manage_media_custom_column', [$this, 'posts_custom_modified_columns'], 5, 2);
+      add_filter("manage_media_columns", [$this, "posts_columns_modified"], 5);
+      add_action("manage_media_custom_column", [$this, "posts_custom_modified_columns"], 5, 2);
 
       //Loop through
       foreach ($post_types as $post_type) {
-        add_action('manage_edit-' . $post_type . '_columns', [$this, 'posts_columns_modified']);
-        add_filter('manage_' . $post_type . '_custom_column', [$this, 'posts_custom_modified_columns'], 10, 3);
+        add_action("manage_edit-" . $post_type . "_columns", [$this, "posts_columns_modified"]);
+        add_filter("manage_" . $post_type . "_custom_column", [$this, "posts_custom_modified_columns"], 10, 3);
       }
     }
 
-    if ($showIDS == 'uiptrue') {
+    if ($showIDS == "uiptrue") {
       //Posts
-      add_filter('manage_posts_columns', [$this, 'posts_columns_id'], 5);
-      add_action('manage_posts_custom_column', [$this, 'posts_custom_id_columns'], 5, 2);
+      add_filter("manage_posts_columns", [$this, "posts_columns_id"], 5);
+      add_action("manage_posts_custom_column", [$this, "posts_custom_id_columns"], 5, 2);
       //Pages
-      add_filter('manage_pages_columns', [$this, 'posts_columns_id'], 5);
-      add_action('manage_pages_custom_column', [$this, 'posts_custom_id_columns'], 5, 2);
+      add_filter("manage_pages_columns", [$this, "posts_columns_id"], 5);
+      add_action("manage_pages_custom_column", [$this, "posts_custom_id_columns"], 5, 2);
       //Media
-      add_filter('manage_media_columns', [$this, 'posts_columns_id'], 5);
-      add_action('manage_media_custom_column', [$this, 'posts_custom_id_columns'], 5, 2);
+      add_filter("manage_media_columns", [$this, "posts_columns_id"], 5);
+      add_action("manage_media_custom_column", [$this, "posts_custom_id_columns"], 5, 2);
 
       //Loop through
       foreach ($post_types as $post_type) {
-        add_action('manage_edit-' . $post_type . '_columns', [$this, 'posts_columns_id']);
-        add_filter('manage_' . $post_type . '_custom_column', [$this, 'posts_custom_id_columns'], 10, 3);
+        add_action("manage_edit-" . $post_type . "_columns", [$this, "posts_columns_id"]);
+        add_filter("manage_" . $post_type . "_custom_column", [$this, "posts_custom_id_columns"], 10, 3);
       }
     }
   }
@@ -887,7 +887,7 @@ class uip_site_settings
    */
   public function posts_columns_modified($defaults)
   {
-    $defaults['uip_post_modified'] = __('Last modified', 'uipress-lite');
+    $defaults["uip_post_modified"] = __("Last modified", "uipress-lite");
     return $defaults;
   }
 
@@ -898,9 +898,9 @@ class uip_site_settings
    */
   public function posts_custom_modified_columns($column_name, $id)
   {
-    if ($column_name === 'uip_post_modified') {
-      $modified = get_post_modified_time('U', false, $id);
-      $humandate = human_time_diff($modified, strtotime(current_datetime()->format('Y-m-d H:i:s'))) . ' ' . __('ago', 'uipress-lite');
+    if ($column_name === "uip_post_modified") {
+      $modified = get_post_modified_time("U", false, $id);
+      $humandate = human_time_diff($modified, strtotime(current_datetime()->format("Y-m-d H:i:s"))) . " " . __("ago", "uipress-lite");
       echo esc_html($humandate);
     }
   }
@@ -912,7 +912,7 @@ class uip_site_settings
    */
   public function posts_columns_id($defaults)
   {
-    $defaults['uip_post_id'] = __('ID', 'uipress-lite');
+    $defaults["uip_post_id"] = __("ID", "uipress-lite");
     return $defaults;
   }
 
@@ -923,7 +923,7 @@ class uip_site_settings
    */
   public function posts_custom_id_columns($column_name, $id)
   {
-    if ($column_name === 'uip_post_id') {
+    if ($column_name === "uip_post_id") {
       echo esc_html($id);
     }
   }

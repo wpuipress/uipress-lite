@@ -4,17 +4,21 @@ export default {
     display: String,
     name: String,
     block: Object,
-    contextualData: Object,
   },
   data() {
     return {
-      populated: this.returnPopulated,
+      formData: {},
       strings: {
-        placeholder: __('Input placeholder...', 'uipress-lite'),
+        placeholder: __("Input placeholder...", "uipress-lite"),
       },
     };
   },
-  
+  mounted() {
+    document.addEventListener("uipress/app/forms/change", this.handleFormChange);
+  },
+  beforeUnmount() {
+    document.removeEventListener("uipress/app/forms/change", this.handleFormChange);
+  },
   computed: {
     /**
      * Returns placeholder for input
@@ -22,12 +26,12 @@ export default {
      * @since 3.2.13
      */
     returnPlaceHolder() {
-      const item = this.get_block_option(this.block, 'block', 'inputPlaceHolder', true);
-      if (!item) return '';
+      const item = this.get_block_option(this.block, "block", "inputPlaceHolder", true);
+      if (!item) return "";
 
       if (!this.isObject(item)) return item;
       if (item.string) return item.string;
-      return '';
+      return "";
     },
 
     /**
@@ -36,15 +40,9 @@ export default {
      * @since 3.2.13
      */
     returnPopulated() {
-      if (!this.isObject(this.contextualData)) return;
-      if (!('formData' in this.contextualData)) return;
-
-      const formData = this.contextualData.formData;
-      if (!formData) return;
-
       // If input name exists in pre populate then return it
-      if (this.returnName in formData) {
-        return formData[this.returnName];
+      if (this.returnName in this.formData) {
+        return this.formData[this.returnName];
       }
     },
 
@@ -54,12 +52,12 @@ export default {
      * @since 3.2.13
      */
     returnLabel() {
-      const item = this.get_block_option(this.block, 'block', 'inputLabel', true);
-      if (!item) return '';
+      const item = this.get_block_option(this.block, "block", "inputLabel", true);
+      if (!item) return "";
 
       if (!this.isObject(item)) return item;
       if (item.string) return item.string;
-      return '';
+      return "";
     },
 
     /**
@@ -68,7 +66,7 @@ export default {
      * @since 3.2.13
      */
     returnRequired() {
-      let required = this.get_block_option(this.block, 'block', 'inputRequired');
+      let required = this.get_block_option(this.block, "block", "inputRequired");
       if (!this.isObject(required)) return false;
       if (required.value) return required.value;
       return required;
@@ -79,7 +77,7 @@ export default {
      * @since 3.2.13
      */
     returnName() {
-      return this.get_block_option(this.block, 'block', 'inputName');
+      return this.get_block_option(this.block, "block", "inputName");
     },
     /**
      * Returns select options
@@ -87,7 +85,7 @@ export default {
      * @since 3.2.13
      */
     returnOptions() {
-      const options = this.get_block_option(this.block, 'block', 'selectOptions');
+      const options = this.get_block_option(this.block, "block", "selectOptions");
       if (Array.isArray(options.options)) return options.options;
       return [];
     },
@@ -102,6 +100,20 @@ export default {
     checkSelected(option) {
       if (this.returnPopulated == option) return true;
       return false;
+    },
+
+    /**
+     * Handles date change events
+     *
+     * @param {object} evt - date change event
+     * @since 3.2.0
+     */
+    handleFormChange(evt) {
+      if (!evt.detail.IDS) return;
+      if (!Array.isArray(evt.detail.IDS)) return;
+      if (!evt.detail.IDS.includes(this.block.uid)) return;
+
+      this.formData = evt.detail.formData;
     },
   },
   template: `

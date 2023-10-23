@@ -7,7 +7,7 @@ use UipressLite\Classes\Pages\BackEnd;
 use UipressLite\Classes\Pages\AdminPage;
 
 // Exit if accessed directly
-!defined('ABSPATH') ?? exit();
+!defined("ABSPATH") ?? exit();
 
 /**
  * Main uipress class. Loads scripts and styles and builds the main admin framework
@@ -34,8 +34,8 @@ class uip_app
    */
   private function add_hooks()
   {
-    add_filter('plugin_action_links_uipress-lite/uipress-lite.php', ['UipressLite\Classes\Tables\PluginsTable', 'add_builder_link']);
-    add_action('plugins_loaded', [$this, 'start_uipress_app'], 1);
+    add_filter("plugin_action_links_uipress-lite/uipress-lite.php", ["UipressLite\Classes\Tables\PluginsTable", "add_builder_link"]);
+    add_action("plugins_loaded", [$this, "start_uipress_app"], 1);
   }
 
   /**
@@ -54,8 +54,8 @@ class uip_app
     UipScripts::whitelist_plugins();
 
     // Checks if we are on a iframe page and if so start framed page actions and exit
-    $framedPage = isset($_GET['uip-framed-page']) ? $_GET['uip-framed-page'] : false;
-    if ($framedPage == '1') {
+    $framedPage = isset($_GET["uip-framed-page"]) ? $_GET["uip-framed-page"] : false;
+    if ($framedPage == "1") {
       FramedPages::start();
       AdminPage::start();
       return;
@@ -72,6 +72,9 @@ class uip_app
    */
   private function start_apps()
   {
+    // Triggers pro actions for builder
+    do_action("uipress/uibuilder/start");
+
     FrontEnd::start();
     BackEnd::start();
     AdminPage::start();
@@ -84,7 +87,7 @@ class uip_app
    */
   private function define_constants()
   {
-    define('uip_plugin_url', plugins_url('uipress-lite/'));
+    define("uip_plugin_url", plugins_url("uipress-lite/"));
   }
 
   /**
@@ -97,6 +100,6 @@ class uip_app
    */
   private function should_we_exit()
   {
-    return wp_doing_cron() || wp_doing_ajax() || (defined('REST_REQUEST') && REST_REQUEST);
+    return wp_doing_cron() || wp_doing_ajax() || (defined("REST_REQUEST") && REST_REQUEST);
   }
 }

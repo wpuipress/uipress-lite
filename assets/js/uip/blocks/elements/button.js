@@ -8,7 +8,7 @@ export default {
   data() {
     return {};
   },
-  
+
   computed: {
     /**
      * Returns text for button if exists
@@ -16,12 +16,12 @@ export default {
      * @since 3.2.13
      */
     returnText() {
-      const item = this.get_block_option(this.block, 'block', 'buttonText', true);
-      if (!item) return '';
+      const item = this.get_block_option(this.block, "block", "buttonText", true);
+      if (!item) return "";
 
       if (!this.isObject(item)) return item;
       if (item.string) return item.string;
-      return '';
+      return "";
     },
 
     /**
@@ -30,7 +30,7 @@ export default {
      * @since 3.2.13
      */
     getLink() {
-      const link = this.get_block_option(this.block, 'block', 'linkSelect', true);
+      const link = this.get_block_option(this.block, "block", "linkSelect", true);
       if (!link) return;
 
       if (!this.isObject(link)) return link;
@@ -43,7 +43,7 @@ export default {
      * @since 3.2.13
      */
     getOnClickCode() {
-      return this.get_block_option(this.block, 'block', 'onClickCode');
+      return this.get_block_option(this.block, "block", "onClickCode");
     },
 
     /**
@@ -52,11 +52,11 @@ export default {
      * @since 3.2.13
      */
     returnIcon() {
-      let icon = this.get_block_option(this.block, 'block', 'iconSelect');
-      if (!icon) return '';
+      let icon = this.get_block_option(this.block, "block", "iconSelect");
+      if (!icon) return "";
       if (!this.isObject(icon)) return icon;
       if (icon.value) return icon.value;
-      return '';
+      return "";
     },
 
     /**
@@ -65,8 +65,8 @@ export default {
      * @since 3.2.13
      */
     returnTarget() {
-      if (this.returnLinkType == 'newTab') return '_BLANK';
-      return '';
+      if (this.returnLinkType == "newTab") return "_BLANK";
+      return "";
     },
 
     /**
@@ -75,7 +75,7 @@ export default {
      * @since 3.2.13
      */
     returnLinkType() {
-      let srcOBJ = this.get_block_option(this.block, 'block', 'linkSelect');
+      let srcOBJ = this.get_block_option(this.block, "block", "linkSelect");
       if (this.isObject(srcOBJ)) return srcOBJ.newTab;
     },
 
@@ -85,10 +85,10 @@ export default {
      * @since 3.2.13
      */
     returnClasses() {
-      const position = this.get_block_option(this.block, 'block', 'iconPosition');
+      const position = this.get_block_option(this.block, "block", "iconPosition");
       if (!position) return;
-      if (!this.isObject(position) && position == 'right') return 'uip-flex-reverse';
-      if (position.value && position.value == 'right') return 'uip-flex-reverse';
+      if (!this.isObject(position) && position == "right") return "uip-flex-reverse";
+      if (position.value && position.value == "right") return "uip-flex-reverse";
     },
   },
   methods: {
@@ -99,8 +99,9 @@ export default {
      * @since 3.2.13
      */
     followLink(evt) {
+      this.handleUserOnClick();
       // If modifier clicks or linktype is new tab let the browser handler it
-      if (evt.ctrlKey || evt.shiftKey || evt.metaKey || (evt.button && evt.button == 1) || this.returnLinkType == 'newTab') return;
+      if (evt.ctrlKey || evt.shiftKey || evt.metaKey || (evt.button && evt.button == 1) || this.returnLinkType == "newTab") return;
 
       evt.preventDefault();
 
@@ -110,9 +111,9 @@ export default {
       if (!url) return;
 
       // Dynamic link so update frame
-      if (type == 'dynamic') return this.updateAppPage(url);
+      if (type == "dynamic") return this.updateAppPage(url);
       // Default link so update browser window
-      if (type == 'default') return window.location.replace(url);
+      if (type == "default") return window.location.replace(url);
     },
 
     /**
@@ -120,12 +121,11 @@ export default {
      *
      * @since 3.2.13
      */
-    buildOnClick() {
-      return `
-          document.getElementById(" ${this.block.uid} ").addEventListener("click", (event)=>{
-            ${this.getOnClickCode}
-          });
-        `;
+    handleUserOnClick() {
+      if (!this.getOnClickCode) return;
+      const code = this.getOnClickCode;
+      const codeHandler = new Function(code);
+      codeHandler();
     },
   },
   template: `
@@ -135,13 +135,6 @@ export default {
           
             <span class="uip-icon" v-if="returnIcon">{{returnIcon}}</span>
             <span class="uip-flex-grow" v-if="returnText != ''">{{returnText}}</span>
-            
-            <component v-if="getOnClickCode" is="script" scoped>
-            
-              {{buildOnClick()}}
-            
-            </component>
-            
             
           </a>
           

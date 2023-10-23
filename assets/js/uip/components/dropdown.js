@@ -1,9 +1,9 @@
-import { nextTick } from '../../libs/vue-esm-dev.js';
+import { nextTick } from "../../libs/vue-esm-dev.js";
 export default {
   props: {
     pos: {
       type: String,
-      default: 'bottom left',
+      default: "bottom left",
     },
     onOpen: Function,
     offsetX: { type: Number, default: 8 },
@@ -21,10 +21,10 @@ export default {
       hoverTimeout: false,
       pressedKeys: null,
       position: {
-        left: 'auto',
-        right: 'auto',
-        top: 'auto',
-        bottom: 'auto',
+        left: "auto",
+        right: "auto",
+        top: "auto",
+        bottom: "auto",
         opacity: 0,
       },
     };
@@ -50,10 +50,10 @@ export default {
      * @since 3.2.13
      */
     removeShortCuts() {
-      document.removeEventListener('scroll', this.handleScroll, true);
-      document.body.removeEventListener('click', this.onClickOutside);
-      window.removeEventListener('keydown', this.handleKeyDown);
-      window.removeEventListener('keyup', this.handleKeyUp);
+      document.removeEventListener("scroll", this.handleScroll, true);
+      document.body.removeEventListener("click", this.onClickOutside);
+      window.removeEventListener("keydown", this.handleKeyDown);
+      window.removeEventListener("keyup", this.handleKeyUp);
     },
     /**
      * Binds a keyboard shortcut to open a component.
@@ -74,8 +74,8 @@ export default {
       this.shortcut = [...this.shortCut];
 
       // Add event listeners
-      window.addEventListener('keydown', this.handleKeyDown);
-      window.addEventListener('keyup', this.handleKeyUp);
+      window.addEventListener("keydown", this.handleKeyDown);
+      window.addEventListener("keyup", this.handleKeyUp);
     },
 
     /**
@@ -116,10 +116,10 @@ export default {
      */
     resetPosition() {
       this.position = {
-        left: 'auto',
-        right: 'auto',
-        top: 'auto',
-        bottom: 'auto',
+        left: "auto",
+        right: "auto",
+        top: "auto",
+        bottom: "auto",
         opacity: 0,
       };
     },
@@ -140,7 +140,7 @@ export default {
      * @since 0.0.1
      */
     onClickOutside(event) {
-      if (!this.$refs.droptrigger) return this.close();
+      if (!this.$refs.uipdrop) return this.close();
       if (this.$refs.droptrigger.contains(event.target) || this.$refs.uipdrop.contains(event.target)) {
         return;
       }
@@ -159,10 +159,10 @@ export default {
       this.modelOpen = true;
 
       // Listen to scroll event to adjust the dropdown's position.
-      document.addEventListener('scroll', this.handleScroll, true);
+      document.addEventListener("scroll", this.handleScroll, true);
 
       // Listen for a click outside the dropdown to close it.
-      document.body.addEventListener('click', this.onClickOutside);
+      document.body.addEventListener("click", this.onClickOutside);
 
       // If an onOpen function was provided, call it.
       if (this.onOpen) this.onOpen();
@@ -231,32 +231,32 @@ export default {
         }
       }
 
-      let posParts = this.pos.split(' ');
+      let posParts = this.pos.split(" ");
       let anchor = posParts[0];
       let align = posParts[1];
 
       // Set anchor positions
-      if (anchor == 'bottom') this.position.top = `${triggerRect.bottom + this.offsetY}px`;
-      if (anchor == 'top') this.position.bottom = `${windowHeight - triggerRect.top + this.offsetY}px`;
-      if (anchor == 'left') this.position.right = `${windowWidth - triggerRect.left + this.offsetX}px`;
-      if (anchor == 'right') this.position.left = `${triggerRect.right + this.offsetX}px`;
+      if (anchor == "bottom") this.position.top = `${triggerRect.bottom + this.offsetY}px`;
+      if (anchor == "top") this.position.bottom = `${windowHeight - triggerRect.top + this.offsetY}px`;
+      if (anchor == "left") this.position.right = `${windowWidth - triggerRect.left + this.offsetX}px`;
+      if (anchor == "right") this.position.left = `${triggerRect.right + this.offsetX}px`;
 
       // Set align options
-      if (align == 'left') this.position.left = `${triggerRect.left}px`;
-      if (align == 'right') this.position.right = `${windowWidth - triggerRect.right}px`;
-      if (align == 'top') this.position.top = `${triggerRect.top}px`;
-      if (align == 'bottom') this.position.bottom = `${windowHeight - triggerRect.bottom}px`;
+      if (align == "left") this.position.left = `${triggerRect.left}px`;
+      if (align == "right") this.position.right = `${windowWidth - triggerRect.right}px`;
+      if (align == "top") this.position.top = `${triggerRect.top}px`;
+      if (align == "bottom") this.position.bottom = `${windowHeight - triggerRect.bottom}px`;
 
       // Set centering is different depending on anchor);
-      if (align == 'center' && (anchor == 'left' || anchor == 'right')) this.position.top = `${triggerRect.top - drop.offsetHeight / 2}px`;
-      if (align == 'center' && (anchor == 'top' || anchor == 'bottom')) this.position.left = `${triggerRect.left - (drop.offsetWidth - trigger.offsetWidth) / 2}px`;
+      if (align == "center" && (anchor == "left" || anchor == "right")) this.position.top = `${triggerRect.top - drop.offsetHeight / 2}px`;
+      if (align == "center" && (anchor == "top" || anchor == "bottom")) this.position.left = `${triggerRect.left - (drop.offsetWidth - trigger.offsetWidth) / 2}px`;
 
       // Adjust for offscreen dropdown
       nextTick(() => {
         let dropRect = drop.getBoundingClientRect();
         if (dropRect.top < 0) this.position.top = `${triggerRect.top}px`;
         if (dropRect.bottom > windowHeight) this.position.top = `${dropRect.top - (dropRect.bottom - windowHeight) - 16}px`;
-        if (dropRect.left < 0) this.position.left = '0px';
+        if (dropRect.left < 0) this.position.left = "0px";
         if (dropRect.right > windowWidth) this.position.left = `${windowWidth - drop.offsetWidth}px`;
         this.position.opacity = 1;
       });

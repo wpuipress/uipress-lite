@@ -1,5 +1,5 @@
-import { nextTick } from '../../libs/vue-esm-dev.js';
-import blockRender from './block-render.min.js?ver=3.2.12';
+import { nextTick } from "../../libs/vue-esm-dev.js";
+import blockRender from "./block-render.min.js?ver=3.2.12";
 const { __ } = wp.i18n;
 export default {
   components: {
@@ -13,7 +13,6 @@ export default {
     returnData: Function,
     layout: String,
     dropAreaStyle: String,
-    contextualData: Object,
   },
   data() {
     return {
@@ -22,7 +21,7 @@ export default {
       randomClass: this.createUID(),
     };
   },
-  inject: ['uiTemplate'],
+  inject: ["uiTemplate"],
   watch: {
     content: {
       handler(newValue, oldValue) {
@@ -42,10 +41,10 @@ export default {
      */
     strings() {
       return {
-        doesntExist: __("This component is missing or can't be loaded", 'uipress-lite'),
-        totalItems: __('Total items', 'uipress-lite'),
-        search: __('Search', 'uipress-lite'),
-        proOptionUnlock: __('This is a pro option. Upgrade to unlock', 'uipress-lite'),
+        doesntExist: __("This component is missing or can't be loaded", "uipress-lite"),
+        totalItems: __("Total items", "uipress-lite"),
+        search: __("Search", "uipress-lite"),
+        proOptionUnlock: __("This is a pro option. Upgrade to unlock", "uipress-lite"),
       };
     },
     /**
@@ -55,7 +54,7 @@ export default {
      * @since 3.2.13
      */
     isProduction() {
-      if (this.uiTemplate.display == 'prod') return true;
+      if (this.uiTemplate.display == "prod") return true;
       if (this.uiTemplate.isPreview) return true;
       return false;
     },
@@ -84,7 +83,7 @@ export default {
      * @since 3.2.0
      */
     returnDragGroupOptions() {
-      return { name: 'uip-blocks', pull: true, put: true, revertClone: false };
+      return { name: "uip-blocks", pull: true, put: true, revertClone: false };
     },
   },
   methods: {
@@ -118,19 +117,19 @@ export default {
       const masterBlock = allBlocks[masterblockIndex];
 
       const allBlockSettings = masterBlock.optionsEnabled;
-      const blockOptionsIndex = allBlockSettings.findIndex((option) => option.name === 'block');
+      const blockOptionsIndex = allBlockSettings.findIndex((option) => option.name === "block");
 
       // Inject preset styles
-      const ignoreParts = ['block', 'advanced'];
+      const ignoreParts = ["block", "advanced"];
       for (let part of allBlockSettings) {
         if (ignoreParts.includes(part.name)) continue;
-        if (!'presets' in part) continue;
+        if (!"presets" in part) continue;
 
         const stylePresets = part.presets;
         if (!this.isObject(stylePresets)) continue;
 
         for (let stylePresetKey in stylePresets) {
-          this.ensureNestedObject(block, 'settings', part.name, 'options', stylePresetKey, 'value');
+          this.ensureNestedObject(block, "settings", part.name, "options", stylePresetKey, "value");
           block.settings[part.name].options[stylePresetKey].value = { ...stylePresets[stylePresetKey] };
         }
       }
@@ -140,9 +139,10 @@ export default {
       const presets = allBlockSettings[blockOptionsIndex].options;
 
       // Ensure the nested object and inject preset values
-      this.ensureNestedObject(block, 'settings', 'block', 'options');
+      this.ensureNestedObject(block, "settings", "block", "options");
       for (let preset of presets) {
-        if (!('value' in preset)) continue;
+        if (!preset) return;
+        if (!("value" in preset)) continue;
         const key = preset.uniqueKey ? preset.uniqueKey : preset.option;
         block.settings.block.options[key] = { value: preset.value };
       }
@@ -157,13 +157,13 @@ export default {
      */
     async importBlock(template, index) {
       let formData = new FormData();
-      let notiID = this.uipApp.notifications.notify(__('Importing template', 'uipress-lite'), '', 'default', false, true);
+      let notiID = this.uipApp.notifications.notify(__("Importing template", "uipress-lite"), "", "default", false, true);
 
       const response = await this.sendServerRequest(template.path, formData);
 
       // Handle error
       if (response.error) {
-        this.uipApp.notifications.notify(response.message, '', 'error', true);
+        this.uipApp.notifications.notify(response.message, "", "error", true);
         this.uipApp.notifications.remove(notiID);
       }
 
@@ -173,22 +173,22 @@ export default {
         parsed.uid = this.createUID();
 
         if (!this.isObject(parsed)) {
-          this.uipApp.notifications.notify(__('Unable to import template right now', 'uipress-lite'), '', 'error', true);
+          this.uipApp.notifications.notify(__("Unable to import template right now", "uipress-lite"), "", "error", true);
           this.uipApp.notifications.remove(notiID);
         }
 
         let freshLayout = [];
-        if ('content' in parsed) {
+        if ("content" in parsed) {
           for (const block of parsed.content) {
             freshLayout.push(this.cleanBlock(block));
           }
           parsed.content = freshLayout;
         }
         this.uipApp.notifications.remove(notiID);
-        this.uipApp.notifications.notify(__('Template imported', 'uipress-lite'), '', 'success', true);
+        this.uipApp.notifications.notify(__("Template imported", "uipress-lite"), "", "success", true);
         this.items.splice(index, 0, parsed);
       } else {
-        this.uipApp.notifications.notify(__('Unable to import template right now', 'uipress-lite'), '', 'error', true);
+        this.uipApp.notifications.notify(__("Unable to import template right now", "uipress-lite"), "", "error", true);
         this.uipApp.notifications.remove(notiID);
       }
     },
@@ -264,7 +264,7 @@ export default {
       }
 
       // New block, add uid
-      if (!('uid' in newBlock)) {
+      if (!("uid" in newBlock)) {
         newBlock.uid = this.createUID();
       }
 
@@ -300,7 +300,7 @@ export default {
               <template v-for="(element, index) in items" 
               :key="index" :index="index">
                 
-                <BlockRender :block="element" :list="items" :index="index" :contextualData="contextualData"/>
+                <BlockRender :block="element" :list="items" :index="index"/>
               
               </template>
               
@@ -311,7 +311,7 @@ export default {
       <div class="uip-flex uip-w-100p" v-else-if="rendered" :class="randomClass">
         <template v-for="(element, index) in items">
           
-          <BlockRender :block="element" :list="items" :index="index" :contextualData="contextualData"/>
+          <BlockRender :block="element" :list="items" :index="index"/>
           
         </template>
       </div>

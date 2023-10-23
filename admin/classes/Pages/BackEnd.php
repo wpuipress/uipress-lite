@@ -7,7 +7,7 @@ use UipressLite\Classes\Scripts\ToolBar;
 use UipressLite\Classes\Scripts\AdminMenu;
 use UipressLite\Classes\PostTypes\UiTemplates;
 
-!defined('ABSPATH') ?? exit();
+!defined("ABSPATH") ?? exit();
 
 class BackEnd
 {
@@ -18,7 +18,7 @@ class BackEnd
    */
   public static function start()
   {
-    add_action('admin_init', ['UipressLite\Classes\Pages\BackEnd', 'actions'], 0);
+    add_action("admin_init", ["UipressLite\Classes\Pages\BackEnd", "actions"], 0);
   }
 
   /**
@@ -30,11 +30,11 @@ class BackEnd
   public static function actions()
   {
     // get template
-    $templates = UiTemplates::get_template_for_user('ui-template', 1);
+    $templates = UiTemplates::get_template_for_user("ui-template", 1);
 
     // No templates so exit
     if (!count($templates)) {
-      define('uip_app_running', false);
+      define("uip_app_running", false);
       return;
     }
 
@@ -45,7 +45,7 @@ class BackEnd
     }
 
     // Define app running constant
-    define('uip_app_running', true);
+    define("uip_app_running", true);
 
     self::output_template($templates[0]);
     self::add_hooks();
@@ -63,7 +63,7 @@ class BackEnd
   {
     $templateContent = UiTemplates::get_content($template->ID);
     $templateAsString = json_encode($templateContent);
-    if (strpos($templateAsString, 'uip-content') === false || (strpos($templateAsString, 'uip-admin-menu') === false && strpos($templateAsString, 'uip-content-navigator') === false)) {
+    if (strpos($templateAsString, "uip-content") === false || (strpos($templateAsString, "uip-admin-menu") === false && strpos($templateAsString, "uip-content-navigator") === false)) {
       return false;
     }
     return true;
@@ -77,12 +77,12 @@ class BackEnd
    */
   private static function output_missing_template_warning()
   {
-    add_action('admin_head', function () {
-      $class = 'notice notice-warning';
-      $title = __('Unable to load UiPress template', 'uipress-lite');
+    add_action("admin_head", function () {
+      $class = "notice notice-warning";
+      $title = __("Unable to load UiPress template", "uipress-lite");
       $message = __(
-        'Current active template does not contain a page content block or a site navigation block such as an admin menu or content navigator. These are required to use a ui template',
-        'uipress-lite'
+        "Current active template does not contain a page content block or a site navigation block such as an admin menu or content navigator. These are required to use a ui template",
+        "uipress-lite"
       );
 
       printf('<div class="%1$s"><h3 style="margin-bottom:5px;margin-top:10px;">%2$s</h3><p>%3$s</p></div>', esc_attr($class), esc_html($title), esc_html($message));
@@ -100,11 +100,11 @@ class BackEnd
     ToolBar::capture();
     AdminMenu::capture();
 
-    add_action('admin_enqueue_scripts', ['UipressLite\Classes\Scripts\UipScripts', 'add_translations']);
-    add_filter('admin_xml_ns', ['UipressLite\Classes\Pages\BackEnd', 'add_dark_mode']);
-    add_action('admin_bar_init', ['UipressLite\Classes\Scripts\UipScripts', 'remove_admin_bar_style']);
-    add_action('admin_enqueue_scripts', ['UipressLite\Classes\Scripts\UipScripts', 'add_uipress_styles']);
-    add_action('admin_enqueue_scripts', ['UipressLite\Classes\Scripts\UipScripts', 'remove_non_standard_styles'], 1);
+    add_action("admin_enqueue_scripts", ["UipressLite\Classes\Scripts\UipScripts", "add_translations"]);
+    add_filter("admin_xml_ns", ["UipressLite\Classes\Pages\BackEnd", "add_dark_mode"]);
+    add_action("admin_bar_init", ["UipressLite\Classes\Scripts\UipScripts", "remove_admin_bar_style"]);
+    add_action("admin_enqueue_scripts", ["UipressLite\Classes\Scripts\UipScripts", "add_uipress_styles"]);
+    add_action("admin_enqueue_scripts", ["UipressLite\Classes\Scripts\UipScripts", "remove_non_standard_styles"], 1);
   }
 
   /**
@@ -118,7 +118,7 @@ class BackEnd
   public static function add_dark_mode()
   {
     $data = ' uip-core-app="true" ';
-    $darkTheme = UserPreferences::get('darkTheme');
+    $darkTheme = UserPreferences::get("darkTheme");
     $data .= $darkTheme ? ' data-theme="dark" ' : ' data-theme="light" ';
     echo wp_kses_post($data);
   }
@@ -135,10 +135,10 @@ class BackEnd
     $templateContent = UiTemplates::get_content($template->ID);
 
     $templateObject = [];
-    $templateObject['settings'] = $templateSettings;
-    $templateObject['content'] = $templateContent;
-    $templateObject['id'] = $template->ID;
-    $templateObject['updated'] = get_the_modified_date('U', $template->ID);
+    $templateObject["settings"] = $templateSettings;
+    $templateObject["content"] = $templateContent;
+    $templateObject["id"] = $template->ID;
+    $templateObject["updated"] = get_the_modified_date("U", $template->ID);
 
     $templateString = json_encode($templateObject);
     $templateString = Sanitize::clean_input_with_code($templateString);
@@ -148,7 +148,7 @@ class BackEnd
     $outputter = function () use ($templateString) {
       // Output template
       $variableFormatter = "var uipUserTemplate = {$templateString}; var uipMasterMenu = {menu:[]}";
-      wp_print_inline_script_tag($variableFormatter, ['id' => 'uip-ui-template']);
+      wp_print_inline_script_tag($variableFormatter, ["id" => "uip-ui-template"]);
 
       $app = '
       <div class="uip-position-absolute uip-w-100vw uip-h-100p uip-background-default uip-top-0 uip-user-frame" id="uip-app-container" style="display:block !important">
@@ -160,11 +160,11 @@ class BackEnd
       echo wp_kses_post($app);
 
       // Trigger pro actions
-      do_action('uip_import_pro_front');
+      do_action("uip_import_pro_front");
     };
 
     // Output template after admin bar render
-    add_action('admin_footer', $outputter, 1);
-    add_action('admin_footer', ['UipressLite\Classes\Scripts\UipScripts', 'add_uip_app'], 2);
+    add_action("admin_footer", $outputter, 1);
+    add_action("admin_footer", ["UipressLite\Classes\Scripts\UipScripts", "add_uip_app"], 2);
   }
 }

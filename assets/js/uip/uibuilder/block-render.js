@@ -8,7 +8,6 @@ export default {
     block: Object,
     list: Array,
     index: Number,
-    contextualData: [Array, Object],
   },
   data() {
     return {
@@ -178,7 +177,6 @@ export default {
         class: this.returnBlockClasses(this.block),
         id: this.block.uid,
         title: this.returnToolTip(this.block),
-        contextualData: this.contextualData,
       };
     },
     /**
@@ -330,7 +328,6 @@ export default {
         class: this.returnBlockClasses(queriedBlock, loopID),
         id: this.block.uid,
         title: this.returnToolTip(queriedBlock),
-        contextualData: this.contextualData,
       };
     },
 

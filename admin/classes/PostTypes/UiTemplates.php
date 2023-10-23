@@ -1,8 +1,9 @@
 <?php
 namespace UipressLite\Classes\PostTypes;
 use UipressLite\Classes\Utils\Dates;
+use UipressLite\Classes\Utils\Objects;
 
-!defined('ABSPATH') ? exit() : '';
+!defined("ABSPATH") ? exit() : "";
 
 class UiTemplates
 {
@@ -15,7 +16,7 @@ class UiTemplates
   public static function create()
   {
     $postTypeArgs = self::return_post_type_args();
-    register_post_type('uip-ui-template', $postTypeArgs);
+    register_post_type("uip-ui-template", $postTypeArgs);
   }
 
   /**
@@ -27,32 +28,32 @@ class UiTemplates
   public static function return_post_type_args()
   {
     $labels = [
-      'name' => _x('UI Template', 'post type general name', 'uipress-lite'),
-      'singular_name' => _x('UI Template', 'post type singular name', 'uipress-lite'),
-      'menu_name' => _x('UI Templates', 'admin menu', 'uipress-lite'),
-      'name_admin_bar' => _x('UI Template', 'add new on admin bar', 'uipress-lite'),
-      'add_new' => _x('Add New', 'Template', 'uipress-lite'),
-      'add_new_item' => __('Add New UI Template', 'uipress-lite'),
-      'new_item' => __('New UI Template', 'uipress-lite'),
-      'edit_item' => __('Edit UI Template', 'uipress-lite'),
-      'view_item' => __('View UI Template', 'uipress-lite'),
-      'all_items' => __('All UI Templates', 'uipress-lite'),
-      'search_items' => __('Search UI Templates', 'uipress-lite'),
-      'not_found' => __('No UI Templates found.', 'uipress-lite'),
-      'not_found_in_trash' => __('No UI Templates found in Trash.', 'uipress-lite'),
+      "name" => _x("UI Template", "post type general name", "uipress-lite"),
+      "singular_name" => _x("UI Template", "post type singular name", "uipress-lite"),
+      "menu_name" => _x("UI Templates", "admin menu", "uipress-lite"),
+      "name_admin_bar" => _x("UI Template", "add new on admin bar", "uipress-lite"),
+      "add_new" => _x("Add New", "Template", "uipress-lite"),
+      "add_new_item" => __("Add New UI Template", "uipress-lite"),
+      "new_item" => __("New UI Template", "uipress-lite"),
+      "edit_item" => __("Edit UI Template", "uipress-lite"),
+      "view_item" => __("View UI Template", "uipress-lite"),
+      "all_items" => __("All UI Templates", "uipress-lite"),
+      "search_items" => __("Search UI Templates", "uipress-lite"),
+      "not_found" => __("No UI Templates found.", "uipress-lite"),
+      "not_found_in_trash" => __("No UI Templates found in Trash.", "uipress-lite"),
     ];
     $args = [
-      'labels' => $labels,
-      'description' => __('Post type used for the uipress UI builder', 'uipress-lite'),
-      'public' => false,
-      'publicly_queryable' => false,
-      'show_ui' => false,
-      'show_in_menu' => false,
-      'query_var' => false,
-      'has_archive' => false,
-      'hierarchical' => false,
-      'supports' => ['title'],
-      'show_in_rest' => true,
+      "labels" => $labels,
+      "description" => __("Post type used for the uipress UI builder", "uipress-lite"),
+      "public" => false,
+      "publicly_queryable" => false,
+      "show_ui" => false,
+      "show_in_menu" => false,
+      "query_var" => false,
+      "has_archive" => false,
+      "hierarchical" => false,
+      "supports" => ["title"],
+      "show_in_rest" => true,
     ];
 
     return $args;
@@ -64,15 +65,15 @@ class UiTemplates
    * @param Array $options args array
    * @since 3.2.13
    */
-  public static function list($options = ['perPage' => 10, 'search' => ''])
+  public static function list($options = ["perPage" => 10, "search" => ""])
   {
     self::order_by_status();
 
     $args = [
-      'post_type' => 'uip-ui-template',
-      'post_status' => ['publish', 'draft'],
-      'posts_per_page' => $options['perPage'],
-      's' => $options['search'],
+      "post_type" => "uip-ui-template",
+      "post_status" => ["publish", "draft"],
+      "posts_per_page" => $options["perPage"],
+      "s" => $options["search"],
     ];
 
     $query = new \WP_Query($args);
@@ -87,7 +88,7 @@ class UiTemplates
    */
   private static function order_by_status()
   {
-    add_filter('posts_orderby', function ($orderby) {
+    add_filter("posts_orderby", function ($orderby) {
       global $wpdb;
       return "{$wpdb->posts}.post_status DESC"; // You can change ASC to DESC if you want descending order
     });
@@ -105,25 +106,25 @@ class UiTemplates
 
     foreach ($templates as $item) {
       // Ensure $item is an object and has the property ID
-      if (!is_object($item) || !property_exists($item, 'ID')) {
+      if (!is_object($item) || !property_exists($item, "ID")) {
         continue;
       }
 
       $temp = [];
-      $temp['name'] = get_the_title($item->ID);
-      $temp['id'] = $item->ID;
-      $temp['modified'] = Dates::getHumanDate($item->ID);
-      $temp['actualType'] = get_post_meta($item->ID, 'uip-template-type', true);
-      $temp['type'] = self::getTemplateType($temp['actualType']);
-      $temp['status'] = get_post_status($item->ID);
+      $temp["name"] = get_the_title($item->ID);
+      $temp["id"] = $item->ID;
+      $temp["modified"] = Dates::getHumanDate($item->ID);
+      $temp["actualType"] = get_post_meta($item->ID, "uip-template-type", true);
+      $temp["type"] = self::getTemplateType($temp["actualType"]);
+      $temp["status"] = get_post_status($item->ID);
 
-      $settings = get_post_meta($item->ID, 'uip-template-settings', true);
+      $settings = get_post_meta($item->ID, "uip-template-settings", true);
       if (is_object($settings)) {
-        $temp['for'] = property_exists($settings, 'rolesAndUsers') ? $settings->rolesAndUsers : [];
-        $temp['excludes'] = property_exists($settings, 'excludesRolesAndUsers') ? $settings->excludesRolesAndUsers : [];
+        $temp["for"] = property_exists($settings, "rolesAndUsers") ? $settings->rolesAndUsers : [];
+        $temp["excludes"] = property_exists($settings, "excludesRolesAndUsers") ? $settings->excludesRolesAndUsers : [];
       } else {
-        $temp['for'] = [];
-        $temp['excludes'] = [];
+        $temp["for"] = [];
+        $temp["excludes"] = [];
       }
 
       $formatted[] = $temp;
@@ -142,10 +143,10 @@ class UiTemplates
   private static function getTemplateType(string $type)
   {
     $types = [
-      'ui-template' => __('UI template', 'uipress-lite'),
-      'ui-admin-page' => __('Admin page', 'uipress-lite'),
-      'ui-login-page' => __('Login page', 'uipress-lite'),
-      'ui-front-template' => __('Frontend toolbar', 'uipress-lite'),
+      "ui-template" => __("UI template", "uipress-lite"),
+      "ui-admin-page" => __("Admin page", "uipress-lite"),
+      "ui-login-page" => __("Login page", "uipress-lite"),
+      "ui-front-template" => __("Frontend toolbar", "uipress-lite"),
     ];
 
     return $types[$type] ?? $type;
@@ -160,13 +161,13 @@ class UiTemplates
    */
   public static function new(array $options = [])
   {
-    $defaults = ['type' => 'ui-template', 'name' => __('UI Template (Draft)', 'uipress-lite')];
+    $defaults = ["type" => "ui-template", "name" => __("UI Template (Draft)", "uipress-lite")];
     $defaults = [...$options, ...$defaults];
 
     $my_post = [
-      'post_title' => $defaults['name'],
-      'post_status' => 'draft',
-      'post_type' => 'uip-ui-template',
+      "post_title" => $defaults["name"],
+      "post_status" => "draft",
+      "post_type" => "uip-ui-template",
     ];
 
     // Insert the post into the database.
@@ -177,7 +178,7 @@ class UiTemplates
       return false;
     }
 
-    update_post_meta($templateID, 'uip-template-type', $defaults['type']);
+    update_post_meta($templateID, "uip-template-type", $defaults["type"]);
 
     return $templateID;
   }
@@ -198,20 +199,20 @@ class UiTemplates
       return false;
     }
 
-    $template = get_post_meta($templateID, 'uip-ui-template', true);
+    $template = get_post_meta($templateID, "uip-ui-template", true);
 
     // Check if template exists and isn't empty
     if (!is_array($template)) {
       $template = [];
     }
 
-    $settings = get_post_meta($templateID, 'uip-template-settings');
-    $type = get_post_meta($templateID, 'uip-template-type', true);
+    $settings = get_post_meta($templateID, "uip-template-settings");
+    $type = get_post_meta($templateID, "uip-template-type", true);
 
     return [
-      'template' => json_decode(html_entity_decode(json_encode($template))),
-      'settings' => json_decode(html_entity_decode(json_encode($settings))),
-      'type' => $type,
+      "template" => json_decode(html_entity_decode(json_encode($template))),
+      "settings" => json_decode(html_entity_decode(json_encode($settings))),
+      "type" => $type,
     ];
   }
 
@@ -231,14 +232,14 @@ class UiTemplates
 
     // Build query
     $args = [
-      'post_type' => 'uip-ui-template',
-      'posts_per_page' => 1,
-      'post_status' => ['publish', 'draft'],
-      'meta_query' => [
+      "post_type" => "uip-ui-template",
+      "posts_per_page" => 1,
+      "post_status" => ["publish", "draft"],
+      "meta_query" => [
         [
-          'key' => 'uip-uid',
-          'value' => $uid,
-          'compare' => '=',
+          "key" => "uip-uid",
+          "value" => $uid,
+          "compare" => "=",
         ],
       ],
     ];
@@ -266,7 +267,7 @@ class UiTemplates
     $userID = get_current_user_id();
 
     // Check permissions
-    if (!user_can($userID, 'uip_delete_ui')) {
+    if (!user_can($userID, "uip_delete_ui")) {
       return false;
     }
 
@@ -277,7 +278,7 @@ class UiTemplates
 
     foreach ($templateIDs as $id) {
       $postType = get_post_type($id);
-      if ($postType == 'uip-ui-template') {
+      if ($postType == "uip-ui-template") {
         wp_delete_post($id, true);
       }
     }
@@ -298,13 +299,13 @@ class UiTemplates
     // Update in settings
     $settings = self::get_settings($templateID);
 
-    $newStatus = $status == 'publish' ? 'uiptrue' : 'uipfalse';
+    $newStatus = $status == "publish" ? "uiptrue" : "uipfalse";
     $settings->status = $newStatus;
     self::update_settings($templateID, $settings);
 
     $updateArgs = [
-      'ID' => $templateID,
-      'post_status' => $status,
+      "ID" => $templateID,
+      "post_status" => $status,
     ];
 
     return wp_update_post($updateArgs);
@@ -329,12 +330,12 @@ class UiTemplates
     }
 
     $name = $template->globalSettings->name;
-    $status = $template->globalSettings->status == 'uipfalse' ? 'draft' : 'publish';
+    $status = $template->globalSettings->status == "uipfalse" ? "draft" : "publish";
 
     $updateArgs = [
-      'post_title' => wp_strip_all_tags($name),
-      'post_status' => $status,
-      'ID' => $templateID,
+      "post_title" => wp_strip_all_tags($name),
+      "post_status" => $status,
+      "ID" => $templateID,
     ];
 
     $updated = wp_update_post($updateArgs);
@@ -379,17 +380,17 @@ class UiTemplates
     $roles = [];
     $users = [];
     foreach ($templateFor as $item) {
-      if ($item->type == 'User') {
+      if ($item->type == "User") {
         $users[] = $item->id;
       }
 
-      if ($item->type == 'Role') {
+      if ($item->type == "Role") {
         $roles[] = $item->name;
       }
     }
 
-    update_post_meta($templateID, 'uip-template-for-roles', $roles);
-    update_post_meta($templateID, 'uip-template-for-users', $users);
+    update_post_meta($templateID, "uip-template-for-roles", $roles);
+    update_post_meta($templateID, "uip-template-for-users", $users);
   }
 
   /**
@@ -415,17 +416,17 @@ class UiTemplates
     $roles = [];
     $users = [];
     foreach ($templateExcludes as $item) {
-      if ($item->type == 'User') {
+      if ($item->type == "User") {
         $users[] = $item->id;
       }
 
-      if ($item->type == 'Role') {
+      if ($item->type == "Role") {
         $roles[] = $item->name;
       }
     }
 
-    update_post_meta($templateID, 'uip-template-excludes-roles', $roles);
-    update_post_meta($templateID, 'uip-template-excludes-users', $users);
+    update_post_meta($templateID, "uip-template-excludes-roles", $roles);
+    update_post_meta($templateID, "uip-template-excludes-users", $users);
   }
 
   /**
@@ -438,7 +439,7 @@ class UiTemplates
   public static function get_settings($templateID)
   {
     // Get settings
-    $settings = get_post_meta($templateID, 'uip-template-settings', true);
+    $settings = get_post_meta($templateID, "uip-template-settings", true);
     return is_object($settings) ? $settings : new \stdClass();
   }
 
@@ -452,7 +453,7 @@ class UiTemplates
   public static function get_content($templateID)
   {
     // Get template
-    $template = get_post_meta($templateID, 'uip-ui-template', true);
+    $template = get_post_meta($templateID, "uip-ui-template", true);
     return is_array($template) ? $template : [];
   }
 
@@ -468,17 +469,17 @@ class UiTemplates
   {
     // Update settings
     if (isset($newSettings)) {
-      update_post_meta($templateID, 'uip-template-settings', $newSettings);
+      update_post_meta($templateID, "uip-template-settings", $newSettings);
     }
 
     if (isset($type)) {
-      update_post_meta($templateID, 'uip-template-type', $type);
+      update_post_meta($templateID, "uip-template-type", $type);
     }
     if (isset($subsites)) {
-      update_post_meta($templateID, 'uip-template-subsites', $subsites);
+      update_post_meta($templateID, "uip-template-subsites", $subsites);
     }
     if (isset($content)) {
-      update_post_meta($templateID, 'uip-ui-template', $content);
+      update_post_meta($templateID, "uip-ui-template", $content);
     }
   }
 
@@ -495,7 +496,7 @@ class UiTemplates
     $username = $current_user->user_login;
 
     // Push super admin role
-    $roles = $current_user->ID == 1 ? ['Super Admin'] : [];
+    $roles = $current_user->ID == 1 ? ["Super Admin"] : [];
 
     //Get current roles
     $user = new \WP_User($current_user->ID);
@@ -509,56 +510,56 @@ class UiTemplates
 
     // Loop through roles and build query
     $roleQuery = [];
-    $roleQuery['relation'] = 'AND';
+    $roleQuery["relation"] = "AND";
     //First level
     $roleQuery[] = [
-      'key' => 'uip-template-type',
-      'value' => $type,
-      'compare' => '=',
+      "key" => "uip-template-type",
+      "value" => $type,
+      "compare" => "=",
     ];
     //Check user id is not excluded
     $roleQuery[] = [
-      'key' => 'uip-template-excludes-users',
-      'value' => serialize($idAsString),
-      'compare' => 'NOT LIKE',
+      "key" => "uip-template-excludes-users",
+      "value" => serialize($idAsString),
+      "compare" => "NOT LIKE",
     ];
     //Check rolename is not excluded
     foreach ($roles as $role) {
       $roleQuery[] = [
-        'key' => 'uip-template-excludes-roles',
-        'value' => serialize($role),
-        'compare' => 'NOT LIKE',
+        "key" => "uip-template-excludes-roles",
+        "value" => serialize($role),
+        "compare" => "NOT LIKE",
       ];
     }
 
     // Check at least one option (roles or users) has a value
     $secondLevel = [];
-    $secondLevel['relation'] = 'OR';
+    $secondLevel["relation"] = "OR";
     $secondLevel[] = [
-      'key' => 'uip-template-for-users',
-      'value' => serialize([]),
-      'compare' => '!=',
+      "key" => "uip-template-for-users",
+      "value" => serialize([]),
+      "compare" => "!=",
     ];
     $secondLevel[] = [
-      'key' => 'uip-template-for-roles',
-      'value' => serialize([]),
-      'compare' => '!=',
+      "key" => "uip-template-for-roles",
+      "value" => serialize([]),
+      "compare" => "!=",
     ];
 
     //Check user if user id is in selected
     $thirdLevel = [];
-    $thirdLevel['relation'] = 'OR';
+    $thirdLevel["relation"] = "OR";
     $thirdLevel[] = [
-      'key' => 'uip-template-for-users',
-      'value' => serialize($idAsString),
-      'compare' => 'LIKE',
+      "key" => "uip-template-for-users",
+      "value" => serialize($idAsString),
+      "compare" => "LIKE",
     ];
 
     foreach ($roles as $role) {
       $thirdLevel[] = [
-        'key' => 'uip-template-for-roles',
-        'value' => serialize($role),
-        'compare' => 'LIKE',
+        "key" => "uip-template-for-roles",
+        "value" => serialize($role),
+        "compare" => "LIKE",
       ];
     }
 
@@ -568,25 +569,29 @@ class UiTemplates
 
     // Fetch templates from primary multsite installation Multisite
     $multiSiteActive = false;
-    if (is_multisite() && is_plugin_active_for_network(uip_plugin_path_name . '/uipress-lite.php') && !is_main_site()) {
+    if (is_multisite() && is_plugin_active_for_network(uip_plugin_path_name . "/uipress-lite.php") && !is_main_site()) {
       $mainSiteId = get_main_site_id();
       switch_to_blog($mainSiteId);
       $multiSiteActive = true;
 
       $roleQuery[] = [
-        'key' => 'uip-template-subsites',
-        'value' => 'uiptrue',
-        'compare' => '==',
+        "key" => "uip-template-subsites",
+        "value" => "uiptrue",
+        "compare" => "==",
       ];
     }
 
     // Build query
     $args = [
-      'post_type' => 'uip-ui-template',
-      'posts_per_page' => $amount,
-      'post_status' => 'publish',
-      'meta_query' => $roleQuery,
+      "post_type" => "uip-ui-template",
+      "posts_per_page" => $amount,
+      "post_status" => "publish",
+      "meta_query" => $roleQuery,
+      "suppress_filters" => true,
     ];
+
+    // Hook into parse query to remove elementors query args
+    self::maybe_remove_elementor_args();
 
     $query = new \WP_Query($args);
 
@@ -598,6 +603,35 @@ class UiTemplates
   }
 
   /**
+   * Loops through wp_filters to find if elementor hook is added and removes it
+   *
+   * Stops elementor from polluting uipress query on template pages with 'parse_query'
+   *
+   * @since 3.3.0
+   */
+  private static function maybe_remove_elementor_args()
+  {
+    global $wp_filter;
+    if (!isset($wp_filter["parse_query"])) {
+      return;
+    }
+    $callbacks = Objects::get_nested_property($wp_filter["parse_query"], ["callbacks"]);
+
+    if (!$callbacks || !isset($callbacks[10]) || !is_array($callbacks[10])) {
+      return;
+    }
+
+    foreach ($callbacks[10] as $callback_key => $callback) {
+      if (!isset($callback["function"]) || !is_array($callback["function"])) {
+        return;
+      }
+      if ($callback["function"][1] == "admin_query_filter_types") {
+        remove_action("parse_query", $callback["function"], 10);
+      }
+    }
+  }
+
+  /**
    * Formats a given template for export
    *
    * returns object
@@ -605,35 +639,35 @@ class UiTemplates
    */
   public static function format_for_export($template)
   {
-    $template = get_post_meta($template->ID, 'uip-ui-template', true);
-    $settings = get_post_meta($template->ID, 'uip-template-settings', true);
-    $type = get_post_meta($template->ID, 'uip-template-type', true);
-    $forRoles = get_post_meta($template->ID, 'uip-template-for-roles', true);
-    $forUsers = get_post_meta($template->ID, 'uip-template-for-users', true);
-    $excludesRoles = get_post_meta($template->ID, 'uip-template-excludes-roles', true);
-    $excludesUsers = get_post_meta($template->ID, 'uip-template-excludes-users', true);
-    $subsites = get_post_meta($template->ID, 'uip-template-subsites', true);
+    $template = get_post_meta($template->ID, "uip-ui-template", true);
+    $settings = get_post_meta($template->ID, "uip-template-settings", true);
+    $type = get_post_meta($template->ID, "uip-template-type", true);
+    $forRoles = get_post_meta($template->ID, "uip-template-for-roles", true);
+    $forUsers = get_post_meta($template->ID, "uip-template-for-users", true);
+    $excludesRoles = get_post_meta($template->ID, "uip-template-excludes-roles", true);
+    $excludesUsers = get_post_meta($template->ID, "uip-template-excludes-users", true);
+    $subsites = get_post_meta($template->ID, "uip-template-subsites", true);
 
     // Ensures a unique ID
-    $uid = get_post_meta($template->ID, 'uip-uid', true);
+    $uid = get_post_meta($template->ID, "uip-uid", true);
     if (!$uid) {
-      $uid = uniqid('uip-', true);
-      update_post_meta($template->ID, 'uip-uid', $uid);
+      $uid = uniqid("uip-", true);
+      update_post_meta($template->ID, "uip-uid", $uid);
     }
 
     //Return data to app
     $returndata = [];
-    $returndata['name'] = get_the_title($template->ID);
-    $returndata['content'] = $template;
-    $returndata['settings'] = $settings;
-    $returndata['type'] = $type;
-    $returndata['forRoles'] = $forRoles;
-    $returndata['forUsers'] = $forUsers;
-    $returndata['excludesRoles'] = $excludesRoles;
-    $returndata['excludesUsers'] = $excludesUsers;
-    $returndata['subsites'] = $subsites;
-    $returndata['uid'] = $uid;
-    $returndata['status'] = get_post_status($template->ID);
+    $returndata["name"] = get_the_title($template->ID);
+    $returndata["content"] = $template;
+    $returndata["settings"] = $settings;
+    $returndata["type"] = $type;
+    $returndata["forRoles"] = $forRoles;
+    $returndata["forUsers"] = $forUsers;
+    $returndata["excludesRoles"] = $excludesRoles;
+    $returndata["excludesUsers"] = $excludesUsers;
+    $returndata["subsites"] = $subsites;
+    $returndata["uid"] = $uid;
+    $returndata["status"] = get_post_status($template->ID);
 
     return $returndata;
   }

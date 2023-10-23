@@ -10,12 +10,11 @@ export default {
     display: String,
     name: String,
     block: Object,
-    contextualData: Object,
   },
   data() {
     return {};
   },
-  
+
   methods: {
     /**
      * Returns styled grid for the content area
@@ -25,7 +24,7 @@ export default {
     returnContentAreaStyles() {
       let columnCount = this.block.settings.block.options.columnsNum.value;
 
-      if (columnCount == '') {
+      if (columnCount == "") {
         columnCount = 3;
       }
 
@@ -36,31 +35,31 @@ export default {
       let rowGapUnits = this.block.settings.block.options.gridGap.value.units;
 
       //Set defaults if values haven't been set
-      if (rowGapValue == '' || columnMinWidthValue == '') {
+      if (rowGapValue == "" || columnMinWidthValue == "") {
         rowGapValue = 1;
-        rowGapUnits = 'rem';
+        rowGapUnits = "rem";
         columnMinWidthValue = 25;
-        columnMinWidthUnits = '%';
+        columnMinWidthUnits = "%";
       }
 
-      let gridStyles = '';
+      let gridStyles = "";
 
-      gridStyles += '--grid-layout-gap: ' + rowGapValue + rowGapUnits + ';';
-      gridStyles += '--grid-column-count: ' + columnCount + ';';
-      gridStyles += '--grid-item--min-width: ' + columnMinWidthValue + columnMinWidthUnits + ';';
+      gridStyles += "--grid-layout-gap: " + rowGapValue + rowGapUnits + ";";
+      gridStyles += "--grid-column-count: " + columnCount + ";";
+      gridStyles += "--grid-item--min-width: " + columnMinWidthValue + columnMinWidthUnits + ";";
 
-      gridStyles += '--gap-count: calc(var(--grid-column-count) - 1);';
-      gridStyles += '--total-gap-width: calc(var(--gap-count) * var(--grid-layout-gap));';
-      gridStyles += '--grid-item--max-width: calc((100% - var(--total-gap-width)) / var(--grid-column-count));';
+      gridStyles += "--gap-count: calc(var(--grid-column-count) - 1);";
+      gridStyles += "--total-gap-width: calc(var(--gap-count) * var(--grid-layout-gap));";
+      gridStyles += "--grid-item--max-width: calc((100% - var(--total-gap-width)) / var(--grid-column-count));";
 
-      gridStyles += 'align-items: flex-start;display: grid;';
-      gridStyles += 'grid-template-columns: repeat(auto-fill, minmax(max(var(--grid-item--min-width), var(--grid-item--max-width)), 1fr));';
-      gridStyles += 'grid-gap: var(--grid-layout-gap);grid-auto-rows: min-content;';
+      gridStyles += "align-items: flex-start;display: grid;";
+      gridStyles += "grid-template-columns: repeat(auto-fill, minmax(max(var(--grid-item--min-width), var(--grid-item--max-width)), 1fr));";
+      gridStyles += "grid-gap: var(--grid-layout-gap);grid-auto-rows: min-content;";
 
       return gridStyles;
     },
   },
   template: `
-        <uip-content-area :contextualData="contextualData" :style="returnContentAreaStyles()"
+        <uip-content-area :style="returnContentAreaStyles()"
         :content="block.content" :returnData="function(data) {block.content = data} " ></uip-content-area>`,
 };

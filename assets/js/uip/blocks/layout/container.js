@@ -4,13 +4,12 @@ export default {
     display: String,
     name: String,
     block: Object,
-    contextualData: Object,
   },
   data() {
     return {};
   },
   template: `
-          <uip-content-area :contextualData="contextualData" class="uip-min-w-20 uip-min-h-20"
+          <uip-content-area class="uip-min-w-20 uip-min-h-20"
           :content="block.content" :returnData="function(data) {block.content = data} " />
           `,
 };

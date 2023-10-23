@@ -94,11 +94,11 @@ const MenuSearch = {
           break;
 
         case "ArrowDown":
-          this.menuSearchIndex = this.menuSearchIndex >= this.searchItems.length - 1 ? 0 : this.menuSearchIndex++;
+          this.menuSearchIndex = this.menuSearchIndex >= this.searchItems.length - 1 ? 0 : this.menuSearchIndex + 1;
           break;
 
         case "ArrowUp":
-          this.menuSearchIndex = this.menuSearchIndex <= 0 ? this.searchItems.length - 1 : this.menuSearchIndex--;
+          this.menuSearchIndex = this.menuSearchIndex <= 0 ? this.searchItems.length - 1 : this.menuSearchIndex - 1;
           break;
       }
     },
@@ -109,7 +109,6 @@ const MenuSearch = {
             <span class="uip-icon uip-text-muted uip-margin-right-xs uip-icon">search</span>
             <input @keydown="watchForArrows" ref="menusearcher" class="uip-blank-input uip-flex-grow uip-text-s" type="search" :placeholder="strings.search" v-model="menuSearch">
           </div>
-          
           
           <div v-if="menuSearch" class="uip-flex uip-flex-column uip-row-gap-xxs" id="uip-menu-search-results">
           
@@ -474,6 +473,16 @@ const DrillDown = {
     returnLevelsLength() {
       return this.levels.length;
     },
+
+    /**
+     * Returns whether to show the search or not
+     *
+     * @since 3.2.0
+     */
+    showSearchBox() {
+      if (this.searching) return true;
+      return this.hasMenuSearch && !this.levels.length;
+    },
   },
   methods: {
     /**
@@ -585,27 +594,31 @@ const DrillDown = {
               <Transition name="translate" mode="out-in">
                 <div :key="currentLevel" class="uip-admin-menu uip-text-normal" :class="{'uip-menu-collapsed' : collapsed}">
                 
-                  <MenuSearch v-if="hasMenuSearch && !levels.length" 
+                  <MenuSearch v-if="showSearchBox" 
                   key="menusearch"
                   @searching="(d)=>{searching = d}"
                   :maybeFollowLink="maybeFollowLink" :workingMenu="menuItems"/>
                   
-                  <!-- Display Back button if there are levels to go back to -->
-                  <a v-if="levels.length" 
-                  role="button" 
-                  :aria-label="strings.goBackPrevious" 
-                  class="uip-flex uip-gap-xxs uip-flex-center uip-flex-row uip-flex-center uip-text-bold uip-text-l uip-sub-menu-header uip-link-default uip-margin-bottom-s uip-gap-xxs" 
-                  @click="goBack">
-                    <div class="uip-icon">chevron_left</div>
-                    <div class="uip-flex-grow" v-html="parentItemName"></div>
-                  </a>
+                  <template v-if="!searching">
                   
-                  <!-- Loop through currentLevel and display each item -->
-                  <template v-for="item of currentLevel">
-                    <TopLevelItem :item="item" :maybeFollowLink="handleLinkClick" :collapsed="isCollapsed" :block="block"/>
+                    <!-- Display Back button if there are levels to go back to -->
+                    <a v-if="levels.length" 
+                    role="button" 
+                    :aria-label="strings.goBackPrevious" 
+                    class="uip-flex uip-gap-xxs uip-flex-center uip-flex-row uip-flex-center uip-text-bold uip-text-l uip-sub-menu-header uip-link-default uip-margin-bottom-s uip-gap-xxs" 
+                    @click="goBack">
+                      <div class="uip-icon">chevron_left</div>
+                      <div class="uip-flex-grow" v-html="parentItemName"></div>
+                    </a>
+                    
+                    <!-- Loop through currentLevel and display each item -->
+                    <template v-for="item of currentLevel">
+                      <TopLevelItem :item="item" :maybeFollowLink="handleLinkClick" :collapsed="isCollapsed" :block="block"/>
+                    </template>
+                    
+                    <MenuCollapse v-if="hasMenuCollapse" :collapsed="isCollapsed" :returnData="(d) => {isCollapsed = d}"/>
+                  
                   </template>
-                  
-                  <MenuCollapse v-if="hasMenuCollapse" :collapsed="isCollapsed" :returnData="(d) => {isCollapsed = d}"/>
                   
                 </div>
               </Transition>
@@ -862,10 +875,13 @@ export default {
      */
     async getStaticMenu() {
       await this.$nextTick();
+      if (!this.returnStaticMenuID) return;
+
+      // Ensures it only fetches menu once in production
+      if (this.uiTemplate.display == "prod" && this.staticMenuEnabled) return;
 
       this.rendered = false;
 
-      if (!this.returnStaticMenuID) return;
       let formData = new FormData();
       formData.append("action", "uip_get_custom_static_menu");
       formData.append("security", uip_ajax.security);
