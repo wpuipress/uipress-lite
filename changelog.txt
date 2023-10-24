@@ -1,7 +1,7 @@
 == Changelog ==
 
-= 3.2.13 =
-*Release Date * August 2023*
+= 3.3.00 =
+*Release Date 24 October August 2023*
 
 * Fixed issue with groundhogg plugin when adding new emails in a modal
 * Fixed issue with code for head where link tags were getting filtered out
@@ -22,6 +22,7 @@
 * Added slug option for admin pages
 * Added static menu option to the admin menu block
 * Fixed issue that could stop uipress menus and uitemplates from loading on elementor template pages
+* Huge performance improvements across all apps
 
 = 3.2.12 =
 *Release Date 28 August 2023*

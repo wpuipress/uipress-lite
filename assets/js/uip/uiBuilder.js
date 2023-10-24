@@ -17,12 +17,12 @@ const pluginVersion = import.meta.url.split("?ver=")[1];
  * @since 3.2.13
  */
 
-import "./blocks/layout/loader.min.js?ver=3.2.12";
-import "./blocks/elements/loader.min.js?ver=3.2.12";
-import "./blocks/inputs/loader.min.js?ver=3.2.12";
-import "./blocks/dynamic/loader.min.js?ver=3.2.12";
-import "./blocks/analytics/loader.min.js?ver=3.2.12";
-import "./blocks/storeanalytics/loader.min.js?ver=3.2.12";
+import "./blocks/layout/loader.min.js?ver=3.3.00";
+import "./blocks/elements/loader.min.js?ver=3.3.00";
+import "./blocks/inputs/loader.min.js?ver=3.3.00";
+import "./blocks/dynamic/loader.min.js?ver=3.3.00";
+import "./blocks/analytics/loader.min.js?ver=3.3.00";
+import "./blocks/storeanalytics/loader.min.js?ver=3.3.00";
 
 // Apply blocks filter
 let AllBlocks = wp.hooks.applyFilters("uipress.blocks.register", []);
@@ -40,7 +40,7 @@ AllBlocks = AllBlocks.filter((item) => {
  *
  * @since 3.2.13
  */
-import blockGroups from "./blocks/block-settings-groups.min.js?ver=3.2.12";
+import blockGroups from "./blocks/block-settings-groups.min.js?ver=3.3.00";
 wp.hooks.addFilter("uipress.blocks.groups.register", "uipress", (current) => ({ ...current, ...blockGroups }));
 const AllBlockGroups = wp.hooks.applyFilters("uipress.blocks.groups.register", {});
 
@@ -57,7 +57,7 @@ const AllPlugins = wp.hooks.applyFilters("uipress.app.plugins.register", []);
  *
  * @since 3.2.13
  */
-import { processSettings } from "./options/dynamic-settings.min.js?ver=3.2.12";
+import { processSettings } from "./options/dynamic-settings.min.js?ver=3.3.00";
 const dynamic_settings = processSettings(uip_ajax.uipAppData.options.dynamicData);
 wp.hooks.addFilter("uipress.uibuilder.dynamicdata.register", "uipress", (current) => ({ ...current, ...dynamic_settings }));
 const AllDynamics = wp.hooks.applyFilters("uipress.uibuilder.dynamicdata.register", {});
@@ -67,7 +67,7 @@ const AllDynamics = wp.hooks.applyFilters("uipress.uibuilder.dynamicdata.registe
  *
  * @since 3.2.13
  */
-import themeStyles from "./options/theme-styles.min.js?ver=3.2.12";
+import themeStyles from "./options/theme-styles.min.js?ver=3.3.00";
 wp.hooks.addFilter("uipress.app.variables.register", "uipress", (current) => ({ ...current, ...themeStyles }));
 const AllThemeStyles = wp.hooks.applyFilters("uipress.app.variables.register");
 
@@ -76,7 +76,7 @@ const AllThemeStyles = wp.hooks.applyFilters("uipress.app.variables.register");
  *
  * @since 3.2.13
  */
-import { templategroups, templateSettings } from "./settings/template-settings-groups.min.js?ver=3.2.12";
+import { templategroups, templateSettings } from "./settings/template-settings-groups.min.js?ver=3.3.00";
 
 wp.hooks.addFilter("uipress.uibuilder.templatesettings.groups.register", "uipress", (current) => ({ ...current, ...templategroups }));
 wp.hooks.addFilter("uipress.uibuilder.templatesettings.options.register", "uipress", (current) => [...current, ...templateSettings]);
@@ -94,7 +94,7 @@ for (let [key, value] of Object.entries(TemplateGroupOptions)) {
  * @since 3.2.13
  */
 
-import { globalSettingsGroups, globalSettings, processGlobalGroups } from "./settings/global-settings-groups.min.js?ver=3.2.12";
+import { globalSettingsGroups, globalSettings, processGlobalGroups } from "./settings/global-settings-groups.min.js?ver=3.3.00";
 
 wp.hooks.addFilter("uipress.app.sitesettings.groups.register", "uipress", (current) => ({ ...current, ...globalSettingsGroups }));
 wp.hooks.addFilter("uipress.app.sitesettings.options.register", "uipress", (current) => [...current, ...globalSettings]);
@@ -245,7 +245,7 @@ const SaveButton = defineAsyncComponent(() => import(`./components/save-button.m
 const ChartComp = defineAsyncComponent(() => import(`./components/chart.min.js?ver=${pluginVersion}`));
 const FloatingPanel = defineAsyncComponent(() => import(`./components/floating-panel.min.js?ver=${pluginVersion}`));
 const Modal = defineAsyncComponent(() => import(`./v3.5/utility/modal.min.js?ver=${pluginVersion}`));
-import { MediaLibrary } from "./v3.5/utility/media-library.min.js?ver=3.2.0";
+const MediaLibrary = defineAsyncComponent(() => import(`./v3.5/utility/media-library.min.js?ver=${pluginVersion}`));
 
 app.component("multi-select", MultiSelect);
 app.component("user-role-select", UserMultiSelect);
@@ -345,7 +345,7 @@ import {
   saveUserPreference,
   updateActiveLink,
   uipParseJson,
-} from "./v3.5/utility/functions.min.js?ver=3.2.12";
+} from "./v3.5/utility/functions.min.js?ver=3.3.00";
 
 app.config.globalProperties.ensureNestedObject = ensureNestedObject;
 app.config.globalProperties.hasNestedPath = hasNestedPath;

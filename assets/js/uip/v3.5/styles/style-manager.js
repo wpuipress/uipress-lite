@@ -4,7 +4,7 @@ import { defineAsyncComponent } from '../../../libs/vue-esm-dev.js';
 export default {
   components: {
     colorSelect: defineAsyncComponent(() => import('../libs/colorpicker.js')),
-    contextmenu: defineAsyncComponent(() => import('../utility/contextmenu.min.js?ver=3.2.12')),
+    contextmenu: defineAsyncComponent(() => import('../utility/contextmenu.min.js?ver=3.3.00')),
   },
   props: {
     currentColor: String,

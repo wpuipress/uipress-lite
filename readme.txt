@@ -55,6 +55,30 @@ Upload the UiPress plugin to your blog, activate it, and then navigate to the ui
 
 == Changelog ==
 
+= 3.3.00 =
+*Release Date 24 October August 2023*
+
+* Fixed issue with groundhogg plugin when adding new emails in a modal
+* Fixed issue with code for head where link tags were getting filtered out
+* Fixed sorting icons issue on post tables
+* New history system for the uiBuilder
+* New image library
+* Layers now highlight when hovering over the relevant block on the canvas
+* New canvas with better scrolling / zoom and block highlighting
+* New and improved block contextmenu (right click)
+* Reworked block styles
+* New colour picker and improved colour variable support
+* New gradient picker
+* Added dvh units to the units selector
+* Overhauled the theme styles editor and added auto save
+* Theme styles changes preview immediately within the frame 
+* Added new admin page title dynamic value
+* Fixed continuous reload issue on some pages
+* Added slug option for admin pages
+* Added static menu option to the admin menu block
+* Fixed issue that could stop uipress menus and uitemplates from loading on elementor template pages
+* Huge performance improvements across all apps
+
 = 3.2.12 =
 *Release Date 28 August 2023*
 

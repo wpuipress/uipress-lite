@@ -2,7 +2,7 @@ const { __, _x, _n, _nx } = wp.i18n;
 import { defineAsyncComponent, nextTick } from '../../libs/vue-esm-dev.js';
 export default {
   components: {
-    contextmenu: defineAsyncComponent(() => import('../v3.5/utility/contextmenu.min.js?ver=3.2.12')),
+    contextmenu: defineAsyncComponent(() => import('../v3.5/utility/contextmenu.min.js?ver=3.3.00')),
   },
   data: function () {
     return {

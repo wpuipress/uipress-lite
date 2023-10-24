@@ -2,7 +2,7 @@ const { __, _x, _n, _nx } = wp.i18n;
 import { defineAsyncComponent, nextTick } from '../../libs/vue-esm-dev.js';
 export default {
   components: {
-    colorBox: defineAsyncComponent(() => import('../v3.5/utility/color-box.min.js?ver=3.2.12')),
+    colorBox: defineAsyncComponent(() => import('../v3.5/utility/color-box.min.js?ver=3.3.00')),
   },
   props: {
     returnData: Function,

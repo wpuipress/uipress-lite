@@ -61,8 +61,20 @@ class BackEnd
    */
   private static function has_required_blocks($template)
   {
+    $multiSiteActive = false;
+    if (is_multisite() && is_plugin_active_for_network(uip_plugin_path_name . "/uipress-lite.php") && !is_main_site()) {
+      switch_to_blog(get_main_site_id());
+      $multiSiteActive = true;
+    }
+
     $templateContent = UiTemplates::get_content($template->ID);
     $templateAsString = json_encode($templateContent);
+
+    // Switch back to main blog if multisite
+    if ($multiSiteActive) {
+      restore_current_blog();
+    }
+
     if (strpos($templateAsString, "uip-content") === false || (strpos($templateAsString, "uip-admin-menu") === false && strpos($templateAsString, "uip-content-navigator") === false)) {
       return false;
     }
@@ -131,6 +143,12 @@ class BackEnd
    */
   private static function output_template($template)
   {
+    $multiSiteActive = false;
+    if (is_multisite() && is_plugin_active_for_network(uip_plugin_path_name . "/uipress-lite.php") && !is_main_site()) {
+      switch_to_blog(get_main_site_id());
+      $multiSiteActive = true;
+    }
+
     $templateSettings = UiTemplates::get_settings($template->ID);
     $templateContent = UiTemplates::get_content($template->ID);
 
@@ -162,6 +180,11 @@ class BackEnd
       // Trigger pro actions
       do_action("uip_import_pro_front");
     };
+
+    // Switch back to main blog if multisite
+    if ($multiSiteActive) {
+      restore_current_blog();
+    }
 
     // Output template after admin bar render
     add_action("admin_footer", $outputter, 1);

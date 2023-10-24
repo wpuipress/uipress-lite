@@ -4,7 +4,7 @@ import { defineAsyncComponent, nextTick } from '../../libs/vue-esm-dev.js';
 const Layer = {
   name: 'Layer',
   components: {
-    BlockList: defineAsyncComponent(() => import('./block-list.min.js?ver=3.2.12')),
+    BlockList: defineAsyncComponent(() => import('./block-list.min.js?ver=3.3.00')),
   },
   props: {
     block: Object,
@@ -181,7 +181,7 @@ export default {
     returnData: Function,
   },
   components: {
-    BlockList: defineAsyncComponent(() => import('./block-list.min.js?ver=3.2.12')),
+    BlockList: defineAsyncComponent(() => import('./block-list.min.js?ver=3.3.00')),
     Layer: Layer,
   },
   data() {

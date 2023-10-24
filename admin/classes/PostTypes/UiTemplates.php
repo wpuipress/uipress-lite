@@ -594,12 +594,13 @@ class UiTemplates
     self::maybe_remove_elementor_args();
 
     $query = new \WP_Query($args);
+    $foundTemplates = $query->get_posts();
 
     if ($multiSiteActive) {
       restore_current_blog();
     }
 
-    return $query->get_posts();
+    return $foundTemplates;
   }
 
   /**

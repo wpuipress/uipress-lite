@@ -1,6 +1,6 @@
 <?php
 
-!defined('ABSPATH') ?? exit();
+!defined("ABSPATH") ?? exit();
 
 class uipress_compiler
 {
@@ -11,10 +11,10 @@ class uipress_compiler
    */
   public function run()
   {
-    require_once uip_plugin_path . 'admin/core/app.php';
-    require_once uip_plugin_path . 'admin/core/ajax-functions.php';
-    require_once uip_plugin_path . 'admin/core/uiBuilder.php';
-    require_once uip_plugin_path . 'admin/core/site-settings.php';
+    require_once uip_plugin_path . "admin/core/app.php";
+    require_once uip_plugin_path . "admin/core/ajax-functions.php";
+    require_once uip_plugin_path . "admin/core/uiBuilder.php";
+    require_once uip_plugin_path . "admin/core/site-settings.php";
 
     // Load main app
     $uip_app = new uip_app();
@@ -37,28 +37,14 @@ class uipress_compiler
   }
 
   /**
-   * Checks if safe mode key has been set and if it has ben added to current page
-   *
-   * @since 3.0.0
-   */
-  public function checkForSafeMode()
-  {
-    if (defined('uip_safe_mode_key')) {
-      if (isset($_GET['uipsm']) && $_GET['uipsm'] == uip_safe_mode) {
-        return true;
-      }
-    }
-  }
-
-  /**
    * Adds hooks for activation and deativation of uipress
    *
    * @since 3.0.0
    */
   public function activations_hooks()
   {
-    register_activation_hook(uip_plugin_path_name . '/uipress-lite.php', [$this, 'add_required_caps']);
-    register_deactivation_hook(uip_plugin_path_name . '/uipress-lite.php', [$this, 'remove_required_caps']);
+    register_activation_hook(uip_plugin_path_name . "/uipress-lite.php", [$this, "add_required_caps"]);
+    register_deactivation_hook(uip_plugin_path_name . "/uipress-lite.php", [$this, "remove_required_caps"]);
   }
 
   /**
@@ -68,7 +54,7 @@ class uipress_compiler
    */
   public function add_required_caps()
   {
-    $role = get_role('administrator');
+    $role = get_role("administrator");
 
     //If current role doesn't have the administrator role
     if (!$role) {
@@ -77,8 +63,8 @@ class uipress_compiler
       $user_role = array_shift($user_roles);
       $role = get_role($user_role);
     }
-    $role->add_cap('uip_manage_ui', true);
-    $role->add_cap('uip_delete_ui', true);
+    $role->add_cap("uip_manage_ui", true);
+    $role->add_cap("uip_delete_ui", true);
   }
 
   /**
@@ -88,7 +74,7 @@ class uipress_compiler
    */
   public function remove_required_caps()
   {
-    $role = get_role('administrator');
+    $role = get_role("administrator");
     //If current role doesn't have the administrator role
     if (!$role) {
       global $current_user;
@@ -96,8 +82,8 @@ class uipress_compiler
       $user_role = array_shift($user_roles);
       $role = get_role($user_role);
     }
-    $role->remove_cap('uip_manage_ui', true);
-    $role->remove_cap('uip_delete_ui', true);
+    $role->remove_cap("uip_manage_ui", true);
+    $role->remove_cap("uip_delete_ui", true);
   }
 
   /**
@@ -107,7 +93,7 @@ class uipress_compiler
    */
   public function load_plugin_textdomain()
   {
-    add_action('init', [$this, 'uipress_languages_loader']);
+    add_action("init", [$this, "uipress_languages_loader"]);
   }
 
   /**
@@ -117,7 +103,7 @@ class uipress_compiler
    */
   public function uipress_languages_loader()
   {
-    load_plugin_textdomain('uipress-lite', false, dirname(dirname(plugin_basename(__FILE__))) . '/languages');
+    load_plugin_textdomain("uipress-lite", false, dirname(dirname(plugin_basename(__FILE__))) . "/languages");
   }
 }
 

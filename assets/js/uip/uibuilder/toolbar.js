@@ -7,7 +7,7 @@ import { defineAsyncComponent, nextTick } from '../../libs/vue-esm-dev.js';
 import { validDateTemplate } from '../v3.5/utility/functions.min.js';
 export default {
   components: {
-    templateHistory: defineAsyncComponent(() => import('./history.min.js?ver=3.2.12')),
+    templateHistory: defineAsyncComponent(() => import('./history.min.js?ver=3.3.00')),
   },
   inject: ['uiTemplate'],
   data() {

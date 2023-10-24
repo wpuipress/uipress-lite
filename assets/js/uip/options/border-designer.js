@@ -5,7 +5,7 @@ import BorderTypes from '../v3.5/lists/border_types.min.js';
 
 export default {
   components: {
-    colorBox: defineAsyncComponent(() => import('../v3.5/utility/color-box.min.js?ver=3.2.12')),
+    colorBox: defineAsyncComponent(() => import('../v3.5/utility/color-box.min.js?ver=3.3.00')),
   },
   props: {
     returnData: Function,
