@@ -8,14 +8,14 @@ export default {
   data() {
     return {
       loading: false,
-      searchString: '',
+      searchString: "",
       options: [],
       selectedOptions: this.selected,
       ui: {
         dropOpen: false,
       },
       strings: {
-        userSearch: __('User search', 'uipress-lite'),
+        userSearch: __("User search", "uipress-lite"),
       },
     };
   },
@@ -51,22 +51,22 @@ export default {
       this.loading = true;
 
       let formData = new FormData();
-      formData.append('action', 'uip_get_users_and_roles');
-      formData.append('security', uip_ajax.security);
-      formData.append('searchString', this.searchString);
+      formData.append("action", "uip_get_users_and_roles");
+      formData.append("security", uip_ajax.security);
+      formData.append("searchString", this.searchString);
 
       const response = await this.sendServerRequest(uip_ajax.ajax_url, formData);
       this.loading = false;
 
       // Handle error
       if (response.error) {
-        this.uipApp.notifications.notify(response.error, 'error');
+        this.uipApp.notifications.notify(response.error, "error");
         return;
       }
 
       // Update options
 
-      this.options = this.returnType == 'userrole' ? response.roles : response.users;
+      this.options = this.returnType == "userrole" ? response.roles : response.users;
     },
 
     /**
@@ -76,20 +76,20 @@ export default {
      * @since 3.2.13
      */
     addSelected(selectedoption) {
-      switch (self.returnType) {
-        case 'userrole':
+      switch (this.returnType) {
+        case "userrole":
           this.updateSelected(selectedoption.label);
           break;
 
-        case 'userlogin':
+        case "userlogin":
           this.updateSelected(selectedoption.login);
           break;
 
-        case 'userid':
+        case "userid":
           this.updateSelected(selectedoption.id);
           break;
 
-        case 'useremail':
+        case "useremail":
           this.updateSelected(selectedoption.email);
           break;
       }

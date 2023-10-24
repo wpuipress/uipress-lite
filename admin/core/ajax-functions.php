@@ -1247,7 +1247,7 @@ class uip_ajax
     Ajax::check_referer() ?? die();
 
     $term = sanitize_text_field($_POST["searchString"]);
-    $page = sanitize_text_field($_POST["page"]);
+    $page = isset($_POST["page"]) ? sanitize_text_field($_POST["page"]) : 1;
 
     $users = Users::get_users($term, $page);
     $roles = Users::get_roles($term);

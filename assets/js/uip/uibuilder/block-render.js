@@ -1,9 +1,10 @@
 import { nextTick, h, Teleport } from "../../libs/vue-esm-dev.js";
 import BlockStyles from "./block-styles.min.js";
+import BlockConditions from "./block-conditions.min.js";
 const { __ } = wp.i18n;
 export default {
   inject: ["uiTemplate"],
-  mixins: [BlockStyles],
+  mixins: [BlockStyles, BlockConditions],
   props: {
     block: Object,
     list: Array,
@@ -524,6 +525,7 @@ export default {
 
     // If block is a remote template abort
     if (this.block.remote) return nodes;
+    if (!this.blockMetConditions()) return nodes;
 
     const styles = this.returnBlockStyles;
     const scripts = this.returnCustomJS;

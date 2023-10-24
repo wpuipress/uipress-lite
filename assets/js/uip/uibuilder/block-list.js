@@ -3,7 +3,7 @@
  * @since 3.0.0
  */
 const { __, _x, _n, _nx } = wp.i18n;
-import { defineAsyncComponent, nextTick } from '../../libs/vue-esm-dev.js';
+import { defineAsyncComponent, nextTick } from "../../libs/vue-esm-dev.js";
 
 /**
  * Toggle section
@@ -30,8 +30,8 @@ const ToggleSection = {
      * @since 3.2.13
      */
     returnVisibilityIcon() {
-      if (this.open) return 'expand_more';
-      if (!this.open) return 'chevron_left';
+      if (this.open) return "expand_more";
+      if (!this.open) return "chevron_left";
     },
   },
   methods: {
@@ -84,15 +84,15 @@ export default {
     return {
       loading: true,
       categories: [],
-      search: '',
+      search: "",
       strings: {
-        proBlock: __('This block requires uipress pro. Upgrade to unlock.', 'uipress-lite'),
-        seachBlocks: __('Search blocks...', 'uipress-lite'),
-        upgrade: __('Upgrade', 'uipress-lite'),
+        proBlock: __("This block requires uipress pro. Upgrade to unlock.", "uipress-lite"),
+        seachBlocks: __("Search blocks...", "uipress-lite"),
+        upgrade: __("Upgrade", "uipress-lite"),
       },
     };
   },
-  inject: ['uiTemplate'],
+  inject: ["uiTemplate"],
   computed: {
     /**
      * Returns list of blocks sorted alphabetically
@@ -110,7 +110,7 @@ export default {
      * @since 3.2.13
      */
     returnCats() {
-      const excludedModules = ['responsive-grid', 'uip-admin-menu', 'uip-user-meta-block'];
+      const excludedModules = ["responsive-grid", "uip-admin-menu", "uip-user-meta-block"];
 
       return Object.entries(this.returnGroups).map(([catKey, catValue]) => {
         const sortedBlocks = this.uipApp.data.blocks.filter((block) => block.group === catKey && !excludedModules.includes(block.moduleName)).sort((a, b) => a.name.localeCompare(b.name));
@@ -146,7 +146,7 @@ export default {
      * @since 3.2.13
      */
     removeOldBlocks() {
-      const excludedModules = ['responsive-grid', 'uip-admin-menu', 'uip-user-meta-block'];
+      const excludedModules = ["responsive-grid", "uip-admin-menu", "uip-user-meta-block"];
       return this.uipApp.data.blocks.filter((block) => !excludedModules.includes(block.moduleName));
     },
     /**
@@ -160,6 +160,9 @@ export default {
       item.tooltip = {};
       item.settings = {};
 
+      // Inject presets
+      this.inject_block_presets(item);
+
       delete item.path;
       delete item.args;
       delete item.category;
@@ -168,6 +171,54 @@ export default {
       delete item.hover;
 
       return item;
+    },
+
+    /**
+     * Injects blocks preset settings
+     *
+     * @param {Object} block
+     * @since 3.2.13
+     */
+    inject_block_presets(block) {
+      const blockModule = block.moduleName;
+      const allBlocks = this.uipApp.data.blocks;
+
+      // Find the originally registered block's enabled settings
+      const masterblockIndex = allBlocks.findIndex((block) => block.moduleName === blockModule);
+      // No block settings so bail
+      if (masterblockIndex < 0) return;
+      const masterBlock = allBlocks[masterblockIndex];
+
+      const allBlockSettings = masterBlock.optionsEnabled;
+      const blockOptionsIndex = allBlockSettings.findIndex((option) => option.name === "block");
+
+      // Inject preset styles
+      const ignoreParts = ["block", "advanced"];
+      for (let part of allBlockSettings) {
+        if (ignoreParts.includes(part.name)) continue;
+        if (!"presets" in part) continue;
+
+        const stylePresets = part.presets;
+        if (!this.isObject(stylePresets)) continue;
+
+        for (let stylePresetKey in stylePresets) {
+          this.ensureNestedObject(block, "settings", part.name, "options", stylePresetKey, "value");
+          block.settings[part.name].options[stylePresetKey].value = { ...stylePresets[stylePresetKey] };
+        }
+      }
+
+      // No settings for block so bail
+      if (blockOptionsIndex < 0) return;
+      const presets = allBlockSettings[blockOptionsIndex].options;
+
+      // Ensure the nested object and inject preset values
+      this.ensureNestedObject(block, "settings", "block", "options");
+      for (let preset of presets) {
+        if (!preset) return;
+        if (!("value" in preset)) continue;
+        const key = preset.uniqueKey ? preset.uniqueKey : preset.option;
+        block.settings.block.options[key] = { value: preset.value };
+      }
     },
 
     /**
@@ -192,7 +243,7 @@ export default {
      */
     async insertAtPos(block) {
       //Check if we allowing click from modal list
-      if (this.mode != 'click') {
+      if (this.mode != "click") {
         return;
       }
       if (!Array.isArray(this.insertArea)) return;
@@ -202,7 +253,7 @@ export default {
       await nextTick();
       const addedBlock = this.insertArea[this.insertArea.length - 1];
       this.uipApp.blockControl.setActive(addedBlock, this.insertArea);
-      this.$emit('item-added');
+      this.$emit("item-added");
     },
 
     /**
@@ -212,7 +263,7 @@ export default {
      * @since 3.2.13
      */
     inSearch(block) {
-      if (this.search == '') {
+      if (this.search == "") {
         return true;
       }
       let str = this.search.toLowerCase();

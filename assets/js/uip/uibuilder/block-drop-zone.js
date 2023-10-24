@@ -101,54 +101,6 @@ export default {
     },
 
     /**
-     * Injects blocks preset settings
-     *
-     * @param {Object} block
-     * @since 3.2.13
-     */
-    inject_block_presets(block) {
-      const blockModule = block.moduleName;
-      const allBlocks = this.uipApp.data.blocks;
-
-      // Find the originally registered block's enabled settings
-      const masterblockIndex = allBlocks.findIndex((block) => block.moduleName === blockModule);
-      // No block settings so bail
-      if (masterblockIndex < 0) return;
-      const masterBlock = allBlocks[masterblockIndex];
-
-      const allBlockSettings = masterBlock.optionsEnabled;
-      const blockOptionsIndex = allBlockSettings.findIndex((option) => option.name === "block");
-
-      // Inject preset styles
-      const ignoreParts = ["block", "advanced"];
-      for (let part of allBlockSettings) {
-        if (ignoreParts.includes(part.name)) continue;
-        if (!"presets" in part) continue;
-
-        const stylePresets = part.presets;
-        if (!this.isObject(stylePresets)) continue;
-
-        for (let stylePresetKey in stylePresets) {
-          this.ensureNestedObject(block, "settings", part.name, "options", stylePresetKey, "value");
-          block.settings[part.name].options[stylePresetKey].value = { ...stylePresets[stylePresetKey] };
-        }
-      }
-
-      // No settings for block so bail
-      if (blockOptionsIndex < 0) return;
-      const presets = allBlockSettings[blockOptionsIndex].options;
-
-      // Ensure the nested object and inject preset values
-      this.ensureNestedObject(block, "settings", "block", "options");
-      for (let preset of presets) {
-        if (!preset) return;
-        if (!("value" in preset)) continue;
-        const key = preset.uniqueKey ? preset.uniqueKey : preset.option;
-        block.settings.block.options[key] = { value: preset.value };
-      }
-    },
-
-    /**
      * Imports a block template
      *
      * @param {JSON} template - the json template
@@ -266,11 +218,6 @@ export default {
       // New block, add uid
       if (!("uid" in newBlock)) {
         newBlock.uid = this.createUID();
-      }
-
-      // New block so let's add settings
-      if (Object.keys(newBlock.settings).length === 0) {
-        this.inject_block_presets(newBlock, newBlock.settings);
       }
 
       // Open block

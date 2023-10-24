@@ -3,15 +3,15 @@
  * @since 3.0.0
  */
 const { __, _x, _n, _nx } = wp.i18n;
-import { defineAsyncComponent, nextTick } from '../../libs/vue-esm-dev.js';
-import BlockControl from './block-control.min.js?ver=3.3.00';
+import { defineAsyncComponent, nextTick } from "../../libs/vue-esm-dev.js";
+import BlockControl from "./block-control.min.js?ver=3.3.00";
 
 export default {
   components: {
     blockControl: BlockControl,
   },
-  inject: ['uiTemplate'],
-  data: function () {
+  inject: ["uiTemplate"],
+  data() {
     return {
       loading: true,
       firstRender: false,
@@ -29,41 +29,41 @@ export default {
       ui: {
         zoom: 0.9,
         zoomoptions: false,
-        viewDevice: 'desktop',
+        viewDevice: "desktop",
         strings: {
-          backToList: __('Exit builder', 'uipress-lite'),
-          toggleLayers: __('Toggle layers panel', 'uipress-lite'),
-          backToList: __('Back to template list', 'uipress-lite'),
-          zoomIn: __('Zoom in', 'uipress-lite'),
-          zoomOut: __('Zoom out', 'uipress-lite'),
-          darkMode: __('Dark mode', 'uipress-lite'),
-          preview: __('Preview', 'uipress-lite'),
-          import: __('Import template', 'uipress-lite'),
-          export: __('Export template', 'uipress-lite'),
-          templateLibrary: __('Template Library', 'uipress-lite'),
-          mobile: __('Mobile', 'uipress-lite'),
-          desktop: __('Desktop', 'uipress-lite'),
-          tablet: __('Tablet', 'uipress-lite'),
-          saveTemplate: __('Save', 'uipress-lite'),
-          help: __('Help', 'uipress-lite'),
-          active: __('Active', 'uipress-lite'),
-          draft: __('Draft', 'uipress-lite'),
-          active: __('Active', 'uipress-lite'),
-          draft: __('Draft', 'uipress-lite'),
-          recenter: __('Re-center', 'uipress-lite'),
-          showGridLines: __('Show grid lines', 'uipress-lite'),
-          frame: __('frame', 'uipress-lite'),
-          zoom100: __('Zoom to fit', 'uipress-lite'),
+          backToList: __("Exit builder", "uipress-lite"),
+          toggleLayers: __("Toggle layers panel", "uipress-lite"),
+          backToList: __("Back to template list", "uipress-lite"),
+          zoomIn: __("Zoom in", "uipress-lite"),
+          zoomOut: __("Zoom out", "uipress-lite"),
+          darkMode: __("Dark mode", "uipress-lite"),
+          preview: __("Preview", "uipress-lite"),
+          import: __("Import template", "uipress-lite"),
+          export: __("Export template", "uipress-lite"),
+          templateLibrary: __("Template Library", "uipress-lite"),
+          mobile: __("Mobile", "uipress-lite"),
+          desktop: __("Desktop", "uipress-lite"),
+          tablet: __("Tablet", "uipress-lite"),
+          saveTemplate: __("Save", "uipress-lite"),
+          help: __("Help", "uipress-lite"),
+          active: __("Active", "uipress-lite"),
+          draft: __("Draft", "uipress-lite"),
+          active: __("Active", "uipress-lite"),
+          draft: __("Draft", "uipress-lite"),
+          recenter: __("Re-center", "uipress-lite"),
+          showGridLines: __("Show grid lines", "uipress-lite"),
+          frame: __("frame", "uipress-lite"),
+          zoom100: __("Zoom to fit", "uipress-lite"),
         },
       },
       previewOptions: [
         {
-          value: 'builder',
-          label: __('Builder', 'uipress-lite'),
+          value: "builder",
+          label: __("Builder", "uipress-lite"),
         },
         {
-          value: 'preview',
-          label: __('Preview', 'uipress-lite'),
+          value: "preview",
+          label: __("Preview", "uipress-lite"),
         },
       ],
     };
@@ -74,7 +74,7 @@ export default {
      *
      * @since 3.2
      */
-    'ui.viewDevice': {
+    "ui.viewDevice": {
       handler(newValue, oldValue) {
         let self = this;
         this.handleViewPortChange();
@@ -86,15 +86,15 @@ export default {
      *
      * @since 3.2
      */
-    'uipApp.data.templateDarkMode': {
+    "uipApp.data.templateDarkMode": {
       handler(newValue, oldValue) {
-        let theme = 'light';
+        let theme = "light";
         if (newValue) {
-          theme = 'dark';
+          theme = "dark";
         }
-        let frame = document.getElementsByClassName('uip-page-content-frame');
+        let frame = document.getElementsByClassName("uip-page-content-frame");
         if (frame[0]) {
-          frame[0].contentWindow.document.documentElement.setAttribute('data-theme', theme);
+          frame[0].contentWindow.document.documentElement.setAttribute("data-theme", theme);
         }
       },
       deep: true,
@@ -104,10 +104,10 @@ export default {
      *
      * @since 3.2
      */
-    'uipApp.data.userPrefs.darkTheme': {
+    "uipApp.data.userPrefs.darkTheme": {
       handler(newValue, oldValue) {
         //Only adjust preview dark mode if we are not in prod
-        if (this.uiTemplate.display != 'prod') {
+        if (this.uiTemplate.display != "prod") {
           this.uipApp.data.templateDarkMode = newValue;
         }
       },
@@ -118,7 +118,7 @@ export default {
      *
      * @since 3.2
      */
-    'ui.zoom': {
+    "ui.zoom": {
       handler(newValue, oldValue) {
         let zoom = this.ui.zoom;
         this.$refs.framewrap.style.transform = `scale( ${zoom} )`;
@@ -127,7 +127,7 @@ export default {
 
         // Save new zoom
         let rounded = Math.round(this.ui.zoom * 10) / 10;
-        this.saveUserPreference('builderPrefersZoom', String(rounded), false);
+        this.saveUserPreference("builderPrefersZoom", String(rounded), false);
       },
     },
     /**
@@ -135,7 +135,7 @@ export default {
      *
      * @since 3.2
      */
-    '$route.params.templateID': {
+    "$route.params.templateID": {
       handler() {
         this.templateID = this.$route.params.templateID;
       },
@@ -145,7 +145,7 @@ export default {
      *
      * @since 3.2
      */
-    '$route.params.uid': {
+    "$route.params.uid": {
       handler() {
         this.activeBlockID = this.$route.params.uid;
       },
@@ -155,8 +155,8 @@ export default {
     this.setTheme();
   },
   beforeUnmount() {
-    this.$refs.previewCanvas.removeEventListener('wheel', this.scrollCanvas);
-    window.addEventListener('keydown', this.watchShortCuts);
+    this.$refs.previewCanvas.removeEventListener("wheel", this.scrollCanvas);
+    window.addEventListener("keydown", this.watchShortCuts);
   },
   mounted() {
     // Mount watchers
@@ -170,7 +170,7 @@ export default {
      * @since 3.2
      */
     returnHumanZoom() {
-      return parseInt(this.ui.zoom * 100) + '%';
+      return parseInt(this.ui.zoom * 100) + "%";
     },
     /**
      * Returns the current block
@@ -189,10 +189,10 @@ export default {
       let self = this;
       if (self.allUiTemplates.length < 1) {
         let formData = new FormData();
-        formData.append('action', 'uip_get_ui_templates');
-        formData.append('security', uip_ajax.security);
-        formData.append('page', 1);
-        formData.append('search', '');
+        formData.append("action", "uip_get_ui_templates");
+        formData.append("security", uip_ajax.security);
+        formData.append("page", 1);
+        formData.append("search", "");
 
         self.sendServerRequest(uip_ajax.ajax_url, formData).then((response) => {
           this.allUiTemplates = response.templates;
@@ -208,11 +208,11 @@ export default {
      * @since 3.2
      */
     returnTemplateJS() {
-      if (typeof this.uiTemplate.globalSettings.options === 'undefined') {
+      if (typeof this.uiTemplate.globalSettings.options === "undefined") {
         return;
       }
-      if ('advanced' in this.uiTemplate.globalSettings.options) {
-        if ('js' in this.uiTemplate.globalSettings.options.advanced) {
+      if ("advanced" in this.uiTemplate.globalSettings.options) {
+        if ("js" in this.uiTemplate.globalSettings.options.advanced) {
           return this.uiTemplate.globalSettings.options.advanced.js;
         }
       }
@@ -223,11 +223,11 @@ export default {
      * @since 3.2
      */
     returnTemplateCSS() {
-      if (typeof this.uiTemplate.globalSettings.options === 'undefined') {
+      if (typeof this.uiTemplate.globalSettings.options === "undefined") {
         return;
       }
-      if ('advanced' in this.uiTemplate.globalSettings.options) {
-        if ('css' in this.uiTemplate.globalSettings.options.advanced) {
+      if ("advanced" in this.uiTemplate.globalSettings.options) {
+        if ("css" in this.uiTemplate.globalSettings.options.advanced) {
           return this.uiTemplate.globalSettings.options.advanced.css;
         }
       }
@@ -239,7 +239,7 @@ export default {
      */
     getBlockFrames() {
       this.blockFrames = [];
-      this.findBlocksByComponentName(this.uiTemplate.content, ['uip-dropdown', 'uip-block-modal', 'uip-slide-out', 'uip-accordion'], this.blockFrames);
+      this.findBlocksByComponentName(this.uiTemplate.content, ["uip-dropdown", "uip-block-modal", "uip-slide-out", "uip-accordion"], this.blockFrames);
       return this.blockFrames;
     },
 
@@ -260,10 +260,10 @@ export default {
      * @since 3.2
      */
     returnColorMode() {
-      if (this.uipApp.data.userPrefs.darkTheme) return 'dark';
-      if (this.uipApp.data.templateDarkMode) return 'dark';
+      if (this.uipApp.data.userPrefs.darkTheme) return "dark";
+      if (this.uipApp.data.templateDarkMode) return "dark";
 
-      return 'light';
+      return "light";
     },
 
     /**
@@ -273,9 +273,9 @@ export default {
      */
     returnThemeIcon() {
       if (this.uipApp.data.userPrefs.darkTheme) {
-        return 'light_mode';
+        return "light_mode";
       }
-      return 'dark_mode';
+      return "dark_mode";
     },
   },
   methods: {
@@ -286,13 +286,13 @@ export default {
      */
     async initiateCanvas() {
       // Add class to body for shortcuts
-      if (this.detectOperatingSystem() == 'Mac') {
-        document.body.classList.add('macos');
+      if (this.detectOperatingSystem() == "Mac") {
+        document.body.classList.add("macos");
       }
 
       //Set zoom level from prefs
       let zoom = parseFloat(this.uipApp.data.userPrefs.builderPrefersZoom);
-      if (typeof zoom !== 'undefined') this.ui.zoom = zoom;
+      if (typeof zoom !== "undefined") this.ui.zoom = zoom;
 
       await nextTick();
 
@@ -310,8 +310,8 @@ export default {
      * @since 3.2.13
      */
     mountWatchers() {
-      this.$refs.previewCanvas.addEventListener('wheel', this.scrollCanvas);
-      window.addEventListener('keydown', this.watchShortCuts);
+      this.$refs.previewCanvas.addEventListener("wheel", this.scrollCanvas);
+      window.addEventListener("keydown", this.watchShortCuts);
     },
 
     /**
@@ -322,17 +322,17 @@ export default {
      */
     watchShortCuts(e) {
       // Command minus / zoom
-      if (e.key === '-' && (e.metaKey || e.ctrlKey)) {
+      if (e.key === "-" && (e.metaKey || e.ctrlKey)) {
         e.preventDefault();
         this.zoom(-0.1);
       }
       // Command plus / zoom
-      if ((e.key === '+' || e.code == 'Equal') && (e.metaKey || e.ctrlKey)) {
+      if ((e.key === "+" || e.code == "Equal") && (e.metaKey || e.ctrlKey)) {
         e.preventDefault();
         this.zoom(0.1);
       }
       // Command 0 - zoom to 100%
-      if (e.key === '0' && (e.metaKey || e.ctrlKey)) {
+      if (e.key === "0" && (e.metaKey || e.ctrlKey)) {
         e.preventDefault();
         this.fitCanvas();
         this.uipApp.data.userPrefs.builderPrefersZoom = 1;
@@ -435,7 +435,7 @@ export default {
       const device = this.detectOperatingSystem();
 
       // Calculate the new top and left values based on the wheel event's delta values
-      if (device == 'Mac') {
+      if (device == "Mac") {
         currentTop -= e.deltaY;
         currentLeft -= e.deltaX;
       } else {
@@ -478,34 +478,34 @@ export default {
      */
     handleViewPortChange() {
       const newValue = this.ui.viewDevice;
-      if (newValue == 'desktop') {
-        this.uiTemplate.windowWidth = '1000';
-        let frame = document.getElementById('uip-preview-content');
+      if (newValue == "desktop") {
+        this.uiTemplate.windowWidth = "1000";
+        let frame = document.getElementById("uip-preview-content");
         if (frame) {
-          frame.classList.add('uip-desktop-view');
-          frame.classList.remove('uip-tablet-view');
-          frame.classList.remove('uip-phone-view');
+          frame.classList.add("uip-desktop-view");
+          frame.classList.remove("uip-tablet-view");
+          frame.classList.remove("uip-phone-view");
         }
       }
-      if (newValue == 'tablet') {
-        this.uiTemplate.windowWidth = '699';
-        let frame = document.getElementById('uip-preview-content');
+      if (newValue == "tablet") {
+        this.uiTemplate.windowWidth = "699";
+        let frame = document.getElementById("uip-preview-content");
         if (frame) {
-          frame.classList.add('uip-tablet-view');
-          frame.classList.remove('uip-desktop-view');
-          frame.classList.remove('uip-phone-view');
+          frame.classList.add("uip-tablet-view");
+          frame.classList.remove("uip-desktop-view");
+          frame.classList.remove("uip-phone-view");
         }
       }
-      if (newValue == 'phone') {
-        this.uiTemplate.windowWidth = '600';
-        let frame = document.getElementById('uip-preview-content');
+      if (newValue == "phone") {
+        this.uiTemplate.windowWidth = "600";
+        let frame = document.getElementById("uip-preview-content");
         if (frame) {
-          frame.classList.add('uip-phone-view');
-          frame.classList.remove('uip-tablet-view');
-          frame.classList.remove('uip-desktop-view');
+          frame.classList.add("uip-phone-view");
+          frame.classList.remove("uip-tablet-view");
+          frame.classList.remove("uip-desktop-view");
         }
       }
-      let previewwidthChange = new CustomEvent('uipress/builder/preview/change', { detail: { windowWidth: this.uiTemplate.windowWidth } });
+      let previewwidthChange = new CustomEvent("uipress/builder/preview/change", { detail: { windowWidth: this.uiTemplate.windowWidth } });
       document.dispatchEvent(previewwidthChange);
       requestAnimationFrame(() => {
         this.setCanvasPosition();
@@ -520,10 +520,10 @@ export default {
     detectOperatingSystem() {
       const userAgent = window.navigator.userAgent.toLowerCase();
 
-      if (userAgent.includes('mac') || userAgent.includes('ipad') || userAgent.includes('iphone')) {
-        return 'Mac';
+      if (userAgent.includes("mac") || userAgent.includes("ipad") || userAgent.includes("iphone")) {
+        return "Mac";
       } else {
-        return 'Windows';
+        return "Windows";
       }
     },
     /**
@@ -547,8 +547,8 @@ export default {
       e.preventDefault();
 
       // Change the cursor and prevent user from selecting the text
-      container.style.cursor = 'grabbing';
-      container.style.userSelect = 'none';
+      container.style.cursor = "grabbing";
+      container.style.userSelect = "none";
 
       let currentTop = parseFloat(canvas.style.top || 0);
       let currentLeft = parseFloat(canvas.style.left || 0);
@@ -566,15 +566,15 @@ export default {
 
       const mouseUpHandler = (e) => {
         // Reset cursor
-        container.style.cursor = 'default';
-        container.style.removeProperty('user-select');
+        container.style.cursor = "default";
+        container.style.removeProperty("user-select");
         // Remove event listeners
-        document.removeEventListener('mousemove', mouseMoveHandler);
-        document.removeEventListener('mouseup', mouseUpHandler);
+        document.removeEventListener("mousemove", mouseMoveHandler);
+        document.removeEventListener("mouseup", mouseUpHandler);
       };
 
-      document.addEventListener('mousemove', mouseMoveHandler);
-      document.addEventListener('mouseup', mouseUpHandler);
+      document.addEventListener("mousemove", mouseMoveHandler);
+      document.addEventListener("mouseup", mouseUpHandler);
     },
     /**
      * Toggles view mode
@@ -582,10 +582,10 @@ export default {
      * @since 3.2.0
      */
     toggleDisplay() {
-      if (this.uiTemplate.display == 'preview') {
-        this.uiTemplate.display = 'builder';
+      if (this.uiTemplate.display == "preview") {
+        this.uiTemplate.display = "builder";
       } else {
-        this.uiTemplate.display = 'preview';
+        this.uiTemplate.display = "preview";
       }
     },
 
@@ -597,7 +597,7 @@ export default {
     toggleDarkMode() {
       this.uipApp.data.userPrefs.darkTheme = !this.uipApp.data.userPrefs.darkTheme;
       this.setTheme();
-      this.saveUserPreference('darkTheme', this.uipApp.data.userPrefs.darkTheme, false);
+      this.saveUserPreference("darkTheme", this.uipApp.data.userPrefs.darkTheme, false);
     },
     /**
      * Sets theme
@@ -605,18 +605,18 @@ export default {
      * @since 3.2.0
      */
     setTheme() {
-      let theme = 'light';
+      let theme = "light";
       if (this.uipApp.data.userPrefs.darkTheme) {
-        theme = 'dark';
+        theme = "dark";
         this.uipApp.data.userPrefs.darkTheme = true;
       } else {
         this.uipApp.data.userPrefs.darkTheme = false;
       }
-      document.getElementsByTagName('html')[0].setAttribute('data-theme', theme);
-      let frames = document.getElementsByClassName('uip-page-content-frame');
+      document.getElementsByTagName("html")[0].setAttribute("data-theme", theme);
+      let frames = document.getElementsByClassName("uip-page-content-frame");
       if (frames[0]) {
         for (const iframe of frames) {
-          iframe.contentWindow.document.documentElement.setAttribute('data-theme', theme);
+          iframe.contentWindow.document.documentElement.setAttribute("data-theme", theme);
         }
       }
     },
@@ -795,15 +795,13 @@ export default {
                     <!--Frame content-->
                     <div class="uip-position-relative uip-frame-content">
                     
-                      <div class="uip-text-normal uip-body-font uip-background-default uip-border-round uip-border uip-min-h-300 uip-min-w-200 uip-overflow-visible uip-block-canvas uip-flex" 
+                      <div class="uip-text-normal uip-body-font uip-background-default uip-border-round uip-border uip-min-h-300 uip-min-w-200 uip-overflow-visible uip-block-canvas uip-flex uip-flex-column" 
                       :id="'block-frame-' + block.uid">
-                        <div class="uip-flex-grow uip-h-100p uip-overflow-visible uip-flex-no-shrink"
-                        :class="returnActiveBlockUID == block.uid ? 'uip-preview-selected-block' : ''"
-                        :block-uid="block.uid">
+                      
+                        
                           <!--BLOCK MAIN DROP AREA-->
-                          <uip-content-area :content="block.content" :returnData="function(data) {block.content = data}" class="user-style-area"></uip-content-area>
+                          <uip-content-area :content="block.content" :returnData="function(data) {block.content = data}" class="user-style-area uip-w-100p uip-flex-grow"/>
                           <!--END OF MAIN DROP AREA-->
-                        </div>
                         
                       </div>
                     

@@ -1,5 +1,5 @@
 const { __, _x, _n, _nx } = wp.i18n;
-import { defineAsyncComponent, nextTick } from '../../libs/vue-esm-dev.js';
+import { defineAsyncComponent, nextTick } from "../../libs/vue-esm-dev.js";
 
 /**
  * Presets list
@@ -7,9 +7,9 @@ import { defineAsyncComponent, nextTick } from '../../libs/vue-esm-dev.js';
  * @since 3.2.13
  */
 const EditPreset = {
-  emits: ['update', 'go-back'],
+  emits: ["update", "go-back"],
   components: {
-    Confirm: defineAsyncComponent(() => import('../v3.5/utility/confirm.min.js?ver=3.3.00')),
+    Confirm: defineAsyncComponent(() => import("../v3.5/utility/confirm.min.js?ver=3.3.00")),
   },
 
   props: {
@@ -20,14 +20,14 @@ const EditPreset = {
   },
   data() {
     return {
-      presetName: '',
+      presetName: "",
       strings: {
-        presetName: __('Preset name', 'uipress-lite'),
-        update: __('Update', 'uipress-lite'),
-        delete: __('Delete', 'uipress-lite'),
+        presetName: __("Preset name", "uipress-lite"),
+        update: __("Update", "uipress-lite"),
+        delete: __("Delete", "uipress-lite"),
         explanation: __(
-          'Create a new style preset from the current block style. Style presets can be used on any block and updating in one place will update across all your templates.',
-          'uipress-lite'
+          "Create a new style preset from the current block style. Style presets can be used on any block and updating in one place will update across all your templates.",
+          "uipress-lite"
         ),
       },
     };
@@ -42,7 +42,7 @@ const EditPreset = {
      * @since 3.2.13
      */
     setName() {
-      const part = this.activePart == 'root' ? 'style' : this.activePart;
+      const part = this.activePart == "root" ? "style" : this.activePart;
       const presets = this.uipApp.data.options.block_preset_styles;
 
       if (!this.presetID) return false;
@@ -59,16 +59,16 @@ const EditPreset = {
      */
     async deletePreset() {
       const confirm = await this.$refs.confirm.show({
-        title: __('Delete preset', 'uipress-lite'),
-        message: __('Are you sure you want to delete this custom preset?', 'uipress-lite'),
-        okButton: __('Delete preset', 'uipress-lite'),
+        title: __("Delete preset", "uipress-lite"),
+        message: __("Are you sure you want to delete this custom preset?", "uipress-lite"),
+        okButton: __("Delete preset", "uipress-lite"),
         disableTeleport: true,
       });
 
       if (confirm) {
         if (!this.uipApp.data.options.block_preset_styles) return;
         delete this.uipApp.data.options.block_preset_styles[this.presetID];
-        this.$emit('go-back');
+        this.$emit("go-back");
       }
     },
 
@@ -80,7 +80,7 @@ const EditPreset = {
     updatePreset() {
       if (!this.uipApp.data.options.block_preset_styles) return;
       this.uipApp.data.options.block_preset_styles[this.presetID].name = this.presetName;
-      this.$emit('go-back');
+      this.$emit("go-back");
     },
   },
   template: `
@@ -116,7 +116,7 @@ const EditPreset = {
  * @since 3.2.13
  */
 const NewPreset = {
-  emits: ['update', 'go-back'],
+  emits: ["update", "go-back"],
   components: {},
 
   props: {
@@ -126,13 +126,13 @@ const NewPreset = {
   },
   data() {
     return {
-      newName: '',
+      newName: "",
       strings: {
-        createPreset: __('Create preset', 'uipress-lite'),
-        presetName: __('Preset name', 'uipress-lite'),
+        createPreset: __("Create preset", "uipress-lite"),
+        presetName: __("Preset name", "uipress-lite"),
         explanation: __(
-          'Create a new style preset from the current block style. Style presets can be used on any block and updating in one place will update across all your templates.',
-          'uipress-lite'
+          "Create a new style preset from the current block style. Style presets can be used on any block and updating in one place will update across all your templates.",
+          "uipress-lite"
         ),
       },
     };
@@ -149,8 +149,8 @@ const NewPreset = {
       const maybePresets = this.uipApp.data.options.block_preset_styles;
       let presets = this.isObject(maybePresets) ? maybePresets : {};
 
-      const part = this.activePart == 'root' ? 'style' : this.activePart;
-      this.ensureNestedObject(this.block, 'settings', part);
+      const part = this.activePart == "root" ? "style" : this.activePart;
+      this.ensureNestedObject(this.block, "settings", part);
       const presetStyle = this.deepClone(this.block.settings[part]);
 
       const uid = this.createUID();
@@ -160,8 +160,8 @@ const NewPreset = {
       };
 
       this.uipApp.data.options.block_preset_styles = { ...presets };
-      this.newName = '';
-      this.$emit('go-back');
+      this.newName = "";
+      this.$emit("go-back");
     },
   },
   template: `
@@ -189,7 +189,7 @@ const NewPreset = {
  * @since 3.2.13
  */
 const PresetList = {
-  emits: ['update', 'request-screen'],
+  emits: ["update", "request-screen"],
   components: {},
 
   props: {
@@ -201,12 +201,12 @@ const PresetList = {
     return {
       open: true,
       strings: {
-        searchPresets: __('Search presets', 'uipress-lite'),
-        newPreset: __('New preset', 'uipress-lite'),
-        noPresets: __('No presets yet', 'uipress-lite'),
-        editPreset: __('Edit preset', 'uipress-lite'),
+        searchPresets: __("Search presets", "uipress-lite"),
+        newPreset: __("New preset", "uipress-lite"),
+        noPresets: __("No presets yet", "uipress-lite"),
+        editPreset: __("Edit preset", "uipress-lite"),
       },
-      search: '',
+      search: "",
     };
   },
   computed: {
@@ -237,8 +237,8 @@ const PresetList = {
      * @since 3.2.13
      */
     returnCurrentPreset() {
-      const part = this.activePart == 'root' ? 'style' : this.activePart;
-      const preset = this.hasNestedPath(this.block, 'settings', part, 'preset');
+      const part = this.activePart == "root" ? "style" : this.activePart;
+      const preset = this.hasNestedPath(this.block, "settings", part, "preset");
       return preset;
     },
   },
@@ -250,10 +250,10 @@ const PresetList = {
      */
     requestNewPreset() {
       const newPresetScreen = {
-        component: 'NewPreset',
+        component: "NewPreset",
         label: this.strings.newPreset,
       };
-      this.$emit('request-screen', newPresetScreen);
+      this.$emit("request-screen", newPresetScreen);
     },
 
     /**
@@ -263,8 +263,8 @@ const PresetList = {
      * @since 3.2.13
      */
     choosePreset(presetID) {
-      const part = this.activePart == 'root' ? 'style' : this.activePart;
-      this.ensureNestedObject(this.block, 'settings', part, 'preset');
+      const part = this.activePart == "root" ? "style" : this.activePart;
+      this.ensureNestedObject(this.block, "settings", part, "preset");
       this.block.settings[part].preset = presetID;
     },
 
@@ -276,11 +276,11 @@ const PresetList = {
      */
     editPreset(presetID) {
       const editPresetScreen = {
-        component: 'EditPreset',
+        component: "EditPreset",
         presetID: presetID,
         label: this.strings.editPreset,
       };
-      this.$emit('request-screen', editPresetScreen);
+      this.$emit("request-screen", editPresetScreen);
     },
   },
   template: `
@@ -328,10 +328,10 @@ const PresetList = {
  * @since 3.2.13
  */
 const StylePresets = {
-  emits: ['update'],
+  emits: ["update"],
 
   components: {
-    screenControl: defineAsyncComponent(() => import('../v3.5/utility/screen-control.min.js?ver=3.3.00')),
+    screenControl: defineAsyncComponent(() => import("../v3.5/utility/screen-control.min.js?ver=3.3.00")),
     PresetList: PresetList,
     NewPreset: NewPreset,
     EditPreset: EditPreset,
@@ -345,9 +345,9 @@ const StylePresets = {
       open: false,
       preset: true,
       strings: {
-        presets: __('Preset', 'uipress-lite'),
-        usePreset: __('Use preset', 'uipress-lite'),
-        add: __('Add', 'uipress-lite'),
+        presets: __("Preset", "uipress-lite"),
+        usePreset: __("Use preset", "uipress-lite"),
+        add: __("Add", "uipress-lite"),
       },
     };
   },
@@ -357,7 +357,7 @@ const StylePresets = {
      *
      * @since 3.2.13
      */
-    'uipApp.data.options.block_preset_styles': {
+    "uipApp.data.options.block_preset_styles": {
       handler() {
         this.saveStylePresets();
       },
@@ -375,8 +375,8 @@ const StylePresets = {
      * @since 3.2.13
      */
     returnVisibilityIcon() {
-      if (this.open) return 'expand_more';
-      if (!this.open) return 'chevron_left';
+      if (this.open) return "expand_more";
+      if (!this.open) return "chevron_left";
     },
 
     /**
@@ -386,7 +386,7 @@ const StylePresets = {
      */
     returnPresetScreen() {
       return {
-        component: 'PresetList',
+        component: "PresetList",
         preset: this.preset,
         label: this.strings.presets,
       };
@@ -398,8 +398,8 @@ const StylePresets = {
      * @since 3.2.13
      */
     returnCurrentPresetName() {
-      const part = this.activePart == 'root' ? 'style' : this.activePart;
-      const presetID = this.hasNestedPath(this.block, 'settings', part, 'preset');
+      const part = this.activePart == "root" ? "style" : this.activePart;
+      const presetID = this.hasNestedPath(this.block, "settings", part, "preset");
       const presets = this.uipApp.data.options.block_preset_styles;
 
       if (!presetID) return false;
@@ -427,10 +427,10 @@ const StylePresets = {
       const options = this.prepareJSON(this.uipApp.data.options.block_preset_styles);
 
       let formData = new FormData();
-      formData.append('action', 'uip_save_site_option');
-      formData.append('security', uip_ajax.security);
-      formData.append('option', options);
-      formData.append('optionName', 'block_preset_styles');
+      formData.append("action", "uip_save_site_option");
+      formData.append("security", uip_ajax.security);
+      formData.append("option", options);
+      formData.append("optionName", "block_preset_styles");
 
       const response = await this.sendServerRequest(uip_ajax.ajax_url, formData);
     },
@@ -441,8 +441,8 @@ const StylePresets = {
      * @since 3.2.13
      */
     removePreset() {
-      const part = this.activePart == 'root' ? 'style' : this.activePart;
-      const presetID = this.hasNestedPath(this.block, 'settings', part, 'preset');
+      const part = this.activePart == "root" ? "style" : this.activePart;
+      const presetID = this.hasNestedPath(this.block, "settings", part, "preset");
       if (!presetID) return;
       delete this.block.settings[part].preset;
     },
@@ -535,7 +535,7 @@ const StylePresets = {
  * @since 3.2.13
  */
 const BlockParts = {
-  emits: ['update'],
+  emits: ["update"],
   components: {},
 
   props: {
@@ -546,9 +546,9 @@ const BlockParts = {
     return {
       part: null,
       strings: {
-        blockPart: __('Block part', 'uipress-lite'),
-        blockParts: __('Block parts', 'uipress-lite'),
-        root: __('Root', 'uipress-lite'),
+        blockPart: __("Block part", "uipress-lite"),
+        blockParts: __("Block parts", "uipress-lite"),
+        root: __("Root", "uipress-lite"),
       },
     };
   },
@@ -560,7 +560,7 @@ const BlockParts = {
      */
     part: {
       handler() {
-        this.$emit('update', this.part);
+        this.$emit("update", this.part);
       },
     },
     /**
@@ -582,7 +582,7 @@ const BlockParts = {
      * @since 3.2.13
      */
     returnActivePart() {
-      if (this.part == 'root') return this.strings.root;
+      if (this.part == "root") return this.strings.root;
       const parts = this.returnBlockParts;
       const index = parts.findIndex((block) => block.name == this.part);
       if (index < 0) return;
@@ -610,7 +610,7 @@ const BlockParts = {
       const blockInfo = allBlocks[blockIndex];
       const blockSettings = [...blockInfo.optionsEnabled];
 
-      const keysToRemove = ['advanced', 'style', 'block'];
+      const keysToRemove = ["advanced", "style", "block"];
 
       keysToRemove.forEach((key) => {
         const index = blockSettings.findIndex((block) => block.name == key);
@@ -723,8 +723,8 @@ const ToggleSection = {
      * @since 3.2.13
      */
     returnVisibilityIcon() {
-      if (this.open) return 'expand_more';
-      if (!this.open) return 'chevron_left';
+      if (this.open) return "expand_more";
+      if (!this.open) return "chevron_left";
     },
   },
   methods: {
@@ -774,17 +774,17 @@ const ToggleSection = {
  */
 
 const BlockStyleHandler = {
-  emits: ['update'],
+  emits: ["update"],
 
   components: {
-    flexLayout: defineAsyncComponent(() => import('../options/flex-layout.min.js?ver=3.3.00')),
-    contextmenu: defineAsyncComponent(() => import('../v3.5/utility/contextmenu.min.js?ver=3.3.00')),
-    Dimensions: defineAsyncComponent(() => import('../options/dimensions.min.js?ver=3.3.00')),
-    Styles: defineAsyncComponent(() => import('../options/styles.min.js?ver=3.3.00')),
-    Spacing: defineAsyncComponent(() => import('../options/spacing.min.js?ver=3.3.00')),
-    TextFormat: defineAsyncComponent(() => import('../options/text-format.min.js?ver=3.3.00')),
-    PositionDesigner: defineAsyncComponent(() => import('../options/position-designer.min.js?ver=3.3.00')),
-    EffectsDesigner: defineAsyncComponent(() => import('../options/effects.min.js?ver=3.3.00')),
+    flexLayout: defineAsyncComponent(() => import("../options/flex-layout.min.js?ver=3.3.00")),
+    contextmenu: defineAsyncComponent(() => import("../v3.5/utility/contextmenu.min.js?ver=3.3.00")),
+    Dimensions: defineAsyncComponent(() => import("../options/dimensions.min.js?ver=3.3.00")),
+    Styles: defineAsyncComponent(() => import("../options/styles.min.js?ver=3.3.00")),
+    Spacing: defineAsyncComponent(() => import("../options/spacing.min.js?ver=3.3.00")),
+    TextFormat: defineAsyncComponent(() => import("../options/text-format.min.js?ver=3.3.00")),
+    PositionDesigner: defineAsyncComponent(() => import("../options/position-designer.min.js?ver=3.3.00")),
+    EffectsDesigner: defineAsyncComponent(() => import("../options/effects.min.js?ver=3.3.00")),
   },
   props: {
     styleSettings: Object,
@@ -797,24 +797,24 @@ const BlockStyleHandler = {
     return {
       blockStyle: {},
       open: false,
-      activeState: 'default',
-      colorTheme: 'light',
+      activeState: "default",
+      colorTheme: "light",
       loading: false,
       strings: {
-        toggleColour: __('Toggle dark / light mode', 'uipress-lite'),
-        resetSection: __('Reset section', 'uipress-lite'),
+        toggleColour: __("Toggle dark / light mode", "uipress-lite"),
+        resetSection: __("Reset section", "uipress-lite"),
       },
       pseudoSelectors: [
-        { value: 'default', label: __('Default', 'uipress-lite') },
-        { value: ':active', label: __(':active', 'uipress-lite') },
-        { value: ':focus', label: __(':focus', 'uipress-lite') },
-        { value: ':hover', label: __(':hover', 'uipress-lite') },
-        { value: ':visited', label: __(':visited', 'uipress-lite') },
-        { value: '::before', label: __('::before', 'uipress-lite') },
-        { value: '::after', label: __('::after', 'uipress-lite') },
-        { value: ':menu-collapsed', label: __('Menu collapsed', 'uipress-lite') },
-        { value: 'tablet', label: __('Tablet', 'uipress-lite') },
-        { value: 'mobile', label: __('Mobile', 'uipress-lite') },
+        { value: "default", label: __("Default", "uipress-lite") },
+        { value: ":active", label: __(":active", "uipress-lite") },
+        { value: ":focus", label: __(":focus", "uipress-lite") },
+        { value: ":hover", label: __(":hover", "uipress-lite") },
+        { value: ":visited", label: __(":visited", "uipress-lite") },
+        { value: "::before", label: __("::before", "uipress-lite") },
+        { value: "::after", label: __("::after", "uipress-lite") },
+        { value: ":menu-collapsed", label: __("Menu collapsed", "uipress-lite") },
+        { value: "tablet", label: __("Tablet", "uipress-lite") },
+        { value: "mobile", label: __("Mobile", "uipress-lite") },
       ],
     };
   },
@@ -839,8 +839,8 @@ const BlockStyleHandler = {
      * @since 3.2.13
      */
     returnVisibilityIcon() {
-      if (this.open) return 'expand_more';
-      if (!this.open) return 'chevron_left';
+      if (this.open) return "expand_more";
+      if (!this.open) return "chevron_left";
     },
 
     /**
@@ -851,15 +851,15 @@ const BlockStyleHandler = {
     returnCurrentBlockStyle() {
       let style;
       switch (this.activeState) {
-        case 'default':
-          style = this.colorTheme == 'light' ? this.blockStyle.value : this.blockStyle.darkValue;
+        case "default":
+          style = this.colorTheme == "light" ? this.blockStyle.value : this.blockStyle.darkValue;
           break;
 
         default:
           const state = this.activeState;
           const theme = this.colorTheme;
           // Create pseudo object
-          this.ensureNestedObject(this.blockStyle, 'pseudo', theme, state);
+          this.ensureNestedObject(this.blockStyle, "pseudo", theme, state);
           style = this.blockStyle.pseudo[theme][state];
           break;
       }
@@ -885,8 +885,8 @@ const BlockStyleHandler = {
      * @since 3.2.13
      */
     returnThemeIcon() {
-      if (this.colorTheme == 'light') return 'light_mode';
-      return 'dark_mode';
+      if (this.colorTheme == "light") return "light_mode";
+      return "dark_mode";
     },
   },
   mounted() {
@@ -923,8 +923,8 @@ const BlockStyleHandler = {
       if (!this.blockStyle.settingName) this.blockStyle.settingName = this.styleName;
 
       switch (this.activeState) {
-        case 'default':
-          const key = this.colorTheme == 'light' ? 'value' : 'darkValue';
+        case "default":
+          const key = this.colorTheme == "light" ? "value" : "darkValue";
           this.blockStyle[key] = newStyle;
 
           this.break;
@@ -933,7 +933,7 @@ const BlockStyleHandler = {
           const state = this.activeState;
           const theme = this.colorTheme;
           // Create pseudo object
-          this.ensureNestedObject(this.blockStyle, 'pseudo', theme, state);
+          this.ensureNestedObject(this.blockStyle, "pseudo", theme, state);
           this.blockStyle.pseudo[theme][state] = newStyle;
           break;
       }
@@ -947,7 +947,7 @@ const BlockStyleHandler = {
      */
     itemHasPseudo(pseudo) {
       const theme = this.colorTheme;
-      let exists = this.hasNestedPath(this.blockStyle, 'pseudo', theme, pseudo);
+      let exists = this.hasNestedPath(this.blockStyle, "pseudo", theme, pseudo);
 
       // Doesn't exist or is empty
       if (!exists) return false;
@@ -963,7 +963,7 @@ const BlockStyleHandler = {
      * @since 3.2.13
      */
     toggleColorMode() {
-      const state = this.colorTheme == 'light' ? 'dark' : 'light';
+      const state = this.colorTheme == "light" ? "dark" : "light";
       this.colorTheme = state;
     },
 
@@ -974,10 +974,10 @@ const BlockStyleHandler = {
      * @since 3.2.13
      */
     clearPseudo(pseudo) {
-      let existsLight = this.hasNestedPath(this.blockStyle, 'pseudo', 'light', pseudo);
+      let existsLight = this.hasNestedPath(this.blockStyle, "pseudo", "light", pseudo);
       if (existsLight) delete this.blockStyle.pseudo.light[pseudo];
 
-      let existsDark = this.hasNestedPath(this.blockStyle, 'pseudo', 'dark', pseudo);
+      let existsDark = this.hasNestedPath(this.blockStyle, "pseudo", "dark", pseudo);
       if (existsDark) delete this.blockStyle.pseudo.dark[pseudo];
     },
 
@@ -1086,12 +1086,12 @@ const BlockStyleHandler = {
 };
 
 export default {
-  inject: ['uiTemplate'],
+  inject: ["uiTemplate"],
   components: {
-    QueryBuilder: defineAsyncComponent(() => import('../options/query-builder.min.js?ver=3.3.00')),
-    responsiveControls: defineAsyncComponent(() => import('../options/responsive.min.js?ver=3.3.00')),
-    Classes: defineAsyncComponent(() => import('../options/classes.min.js?ver=3.3.00')),
-    Conditions: defineAsyncComponent(() => import('../options/conditions.min.js?ver=3.3.00')),
+    QueryBuilder: defineAsyncComponent(() => import("../options/query-builder.min.js?ver=3.3.00")),
+    responsiveControls: defineAsyncComponent(() => import("../options/responsive.min.js?ver=3.3.00")),
+    Classes: defineAsyncComponent(() => import("../options/classes.min.js?ver=3.3.00")),
+    Conditions: defineAsyncComponent(() => import("../options/conditions.min.js?ver=3.3.00")),
     BlockStyleHandler: BlockStyleHandler,
     BlockParts: BlockParts,
     StylePresets: StylePresets,
@@ -1101,52 +1101,52 @@ export default {
     return {
       block: {},
       uid: this.$route.params.uid,
-      section: 'settings',
+      section: "settings",
       loading: true,
       activeTab: false,
       showSettings: false,
-      activePart: 'root',
+      activePart: "root",
       strings: {
-        blockID: __('ID', 'uipress-lite'),
-        proOption: __('This is a pro option. Upgrade to unlock', 'uipress-lite'),
-        options: __('Options', 'uipress-lite'),
-        hiddenOnDevice: __('Hidden on device', 'uipress-lite'),
-        tooltip: __('Tooltip', 'uipress-lite'),
-        tooltipMessage: __('Message', 'uipress-lite'),
-        styles: __('Styles', 'uipress-lite'),
-        queryLoop: __('Query loop', 'uipress-lite'),
-        query: __('Query', 'uipress-lite'),
-        none: __('None', 'uipress-lite'),
-        name: __('Name', 'uipress-lite'),
-        link: __('Link', 'uipress-lite'),
-        general: __('General', 'uipress-lite'),
-        layout: __('Layout', 'uipress-lite'),
-        size: __('Size', 'uipress-lite'),
-        style: __('Style', 'uipress-lite'),
-        spacing: __('Spacing', 'uipress-lite'),
-        text: __('Text', 'uipress-lite'),
-        position: __('Position', 'uipress-lite'),
-        effects: __('Effects', 'uipress-lite'),
-        general: __('General', 'uipress-lite'),
-        code: __('Code', 'uipress-lite'),
-        classes: __('Classes', 'uipress-lite'),
-        conditions: __('Conditions', 'uipress-lite'),
-        content: __('Content', 'uipress-lite'),
+        blockID: __("ID", "uipress-lite"),
+        proOption: __("This is a pro option. Upgrade to unlock", "uipress-lite"),
+        options: __("Options", "uipress-lite"),
+        hiddenOnDevice: __("Hidden on device", "uipress-lite"),
+        tooltip: __("Tooltip", "uipress-lite"),
+        tooltipMessage: __("Message", "uipress-lite"),
+        styles: __("Styles", "uipress-lite"),
+        queryLoop: __("Query loop", "uipress-lite"),
+        query: __("Query", "uipress-lite"),
+        none: __("None", "uipress-lite"),
+        name: __("Name", "uipress-lite"),
+        link: __("Link", "uipress-lite"),
+        general: __("General", "uipress-lite"),
+        layout: __("Layout", "uipress-lite"),
+        size: __("Size", "uipress-lite"),
+        style: __("Style", "uipress-lite"),
+        spacing: __("Spacing", "uipress-lite"),
+        text: __("Text", "uipress-lite"),
+        position: __("Position", "uipress-lite"),
+        effects: __("Effects", "uipress-lite"),
+        general: __("General", "uipress-lite"),
+        code: __("Code", "uipress-lite"),
+        classes: __("Classes", "uipress-lite"),
+        conditions: __("Conditions", "uipress-lite"),
+        content: __("Content", "uipress-lite"),
       },
       optionsSections: {
         settings: {
-          value: 'settings',
-          label: __('Settings', 'uipress-lite'),
+          value: "settings",
+          label: __("Settings", "uipress-lite"),
         },
 
         style: {
-          value: 'style',
-          label: __('Style', 'uipress-lite'),
+          value: "style",
+          label: __("Style", "uipress-lite"),
         },
 
         advanced: {
-          value: 'advanced',
-          label: __('Advanced', 'uipress-lite'),
+          value: "advanced",
+          label: __("Advanced", "uipress-lite"),
         },
       },
     };
@@ -1193,7 +1193,7 @@ export default {
       const masterBlock = allBlocks[masterblockIndex];
 
       const allBlockSettings = masterBlock.optionsEnabled;
-      const blockOptionsIndex = allBlockSettings.findIndex((option) => option.name === 'block');
+      const blockOptionsIndex = allBlockSettings.findIndex((option) => option.name === "block");
 
       // No block specific settings so bail
       if (blockOptionsIndex < 0) return [];
@@ -1209,6 +1209,7 @@ export default {
      */
     async show(block, tab) {
       this.block = block;
+      this.activePart = "root";
 
       await nextTick();
       this.showSettings = true;
@@ -1265,7 +1266,7 @@ export default {
      * @since 3.2.13
      */
     optionFullWidth(option) {
-      return this.hasNestedPath(option, 'args', 'fullWidth');
+      return this.hasNestedPath(option, "args", "fullWidth");
     },
 
     /**
@@ -1288,20 +1289,20 @@ export default {
      * @since 3.2.13
      */
     returnBlockStylePart(styleName) {
-      const part = this.activePart == 'root' ? 'style' : this.activePart;
-      const presetID = this.hasNestedPath(this.block, 'settings', part, 'preset');
+      const part = this.activePart == "root" ? "style" : this.activePart;
+      const presetID = this.hasNestedPath(this.block, "settings", part, "preset");
       const presets = this.uipApp.data.options.block_preset_styles;
 
       // Return preset style if set and exists
       if (presetID && this.isObject(presets)) {
         if (presetID in presets) {
           const preset = presets[presetID];
-          this.ensureNestedObject(preset, 'preset', 'options', styleName);
+          this.ensureNestedObject(preset, "preset", "options", styleName);
           return preset.preset.options[styleName];
         }
       }
 
-      this.ensureNestedObject(this.block, 'settings', part, 'options', styleName);
+      this.ensureNestedObject(this.block, "settings", part, "options", styleName);
       return this.block.settings[part].options[styleName];
     },
 
@@ -1325,7 +1326,7 @@ export default {
      * @since 3.2.13
      */
     returnBlockSettingValue(option) {
-      const blockOptions = this.hasNestedPath(this.block, 'settings', 'block', 'options');
+      const blockOptions = this.hasNestedPath(this.block, "settings", "block", "options");
       if (!blockOptions) return;
 
       // Get the option key
@@ -1348,7 +1349,7 @@ export default {
       // Get the option key
       const key = option.uniqueKey ? option.uniqueKey : option.option;
 
-      this.ensureNestedObject(this.block, 'settings', 'block', 'options', key);
+      this.ensureNestedObject(this.block, "settings", "block", "options", key);
       this.block.settings.block.options[key].value = data;
     },
 
@@ -1359,7 +1360,7 @@ export default {
      * @since 3.2.13
      */
     returnAdvancedValue(option) {
-      const blockOptions = this.hasNestedPath(this.block, 'settings', 'advanced', 'options');
+      const blockOptions = this.hasNestedPath(this.block, "settings", "advanced", "options");
       if (!blockOptions) return;
 
       // Key doesn't exist
@@ -1376,7 +1377,7 @@ export default {
      * @since 3.2.13
      */
     handleBlockAdavancedUpdate(option, data) {
-      this.ensureNestedObject(this.block, 'settings', 'advanced', 'options', option);
+      this.ensureNestedObject(this.block, "settings", "advanced", "options", option);
       this.block.settings.advanced.options[option].value = data;
     },
 
@@ -1387,9 +1388,9 @@ export default {
      * @since 3.2.13
      */
     returnBlockPseudo(pseudo) {
-      const part = this.activePart == 'root' ? 'style' : this.activePart;
-      const value = this.hasNestedPath(this.block, 'settings', part, pseudo);
-      if (!value) return '';
+      const part = this.activePart == "root" ? "style" : this.activePart;
+      const value = this.hasNestedPath(this.block, "settings", part, pseudo);
+      if (!value) return "";
       return value;
     },
 
@@ -1400,8 +1401,8 @@ export default {
      * @since 3.2.13
      */
     handleBlockPseudoChange(data, pseudo) {
-      const part = this.activePart == 'root' ? 'style' : this.activePart;
-      this.ensureNestedObject(this.block, 'settings', part, pseudo);
+      const part = this.activePart == "root" ? "style" : this.activePart;
+      this.ensureNestedObject(this.block, "settings", part, pseudo);
       this.block.settings[part][pseudo] = data;
     },
   },

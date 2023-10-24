@@ -1,8 +1,7 @@
 const { __, _x, _n, _nx } = wp.i18n;
-import { nextTick } from '../../libs/vue-esm-dev.js';
+import { nextTick } from "../../libs/vue-esm-dev.js";
 export default {
-  
-  emits: ['update'],
+  emits: ["update"],
   props: {
     value: Object,
   },
@@ -12,33 +11,33 @@ export default {
       updating: false,
       growOptions: {
         grow: {
-          value: 'grow',
-          label: __('Yes', 'uipress-lite'),
+          value: "grow",
+          label: __("Yes", "uipress-lite"),
         },
         none: {
-          value: 'none',
-          label: __('No', 'uipress-lite'),
+          value: "none",
+          label: __("No", "uipress-lite"),
         },
       },
       shrinkOptions: {
         none: {
-          value: 'none',
-          label: __('No', 'uipress-lite'),
+          value: "none",
+          label: __("No", "uipress-lite"),
         },
         shrink: {
-          value: 'shrink',
-          label: __('Yes', 'uipress-lite'),
+          value: "shrink",
+          label: __("Yes", "uipress-lite"),
         },
       },
       strings: {
-        height: __('Height', 'uipress-lite'),
-        width: __('Width', 'uipress-lite'),
-        maxHeight: __('Max height', 'uipress-lite'),
-        maxWidth: __('Max width', 'uipress-lite'),
-        minHeight: __('Min height', 'uipress-lite'),
-        minWidth: __('Min width', 'uipress-lite'),
-        grow: __('Grow', 'uipress-lite'),
-        flexShrink: __('Shrink', 'uipress-lite'),
+        height: __("Height", "uipress-lite"),
+        width: __("Width", "uipress-lite"),
+        maxHeight: __("Max height", "uipress-lite"),
+        maxWidth: __("Max width", "uipress-lite"),
+        minHeight: __("Min height", "uipress-lite"),
+        minWidth: __("Min width", "uipress-lite"),
+        grow: __("Grow", "uipress-lite"),
+        flexShrink: __("Shrink", "uipress-lite"),
       },
     };
   },
@@ -64,7 +63,7 @@ export default {
     option: {
       handler(newValue, oldValue) {
         if (this.updating) return;
-        this.$emit('update', this.option);
+        this.$emit("update", this.option);
       },
       deep: true,
     },
@@ -86,8 +85,8 @@ export default {
      */
     returnDefaultOptions() {
       return {
-        grow: 'none',
-        flexShrink: 'none',
+        grow: "none",
+        flexShrink: "none",
         updating: false,
         enabled: {
           maxHeight: false,
@@ -97,28 +96,28 @@ export default {
           flexShrink: false,
         },
         width: {
-          value: '',
-          units: '%',
+          value: "",
+          units: "%",
         },
         height: {
-          value: '',
-          units: '%',
+          value: "",
+          units: "%",
         },
         maxWidth: {
-          value: '',
-          units: '%',
+          value: "",
+          units: "%",
         },
         maxHeight: {
-          value: '',
-          units: '%',
+          value: "",
+          units: "%",
         },
         minWidth: {
-          value: '',
-          units: '%',
+          value: "",
+          units: "%",
         },
         minHeight: {
-          value: '',
-          units: '%',
+          value: "",
+          units: "%",
         },
       };
     },
@@ -172,7 +171,7 @@ export default {
           <div class="uip-text-muted uip-flex uip-flex-center uip-text-s"><span>{{strings.minHeight}}</span></div>
             
           <div class="uip-position-relative uip-flex">
-           <value-units :value="returnOption.minHeight" :returnData="function(data) {option.minHeight = data}"></value-units>
+           <value-units :value="returnOption.minHeight" :returnData="function(data) {option.minHeight = data}" class="uip-flex-grow"/>
            
            <button @click="option.enabled.minHeight = false; option.minHeight.value = ''" class="uip-button-default uip-border-rounder uip-icon uip-padding-xxs uip-link-muted uip-margin-left-xs">close</button>
           </div>
@@ -185,7 +184,7 @@ export default {
           <div class="uip-text-muted uip-flex uip-flex-center uip-text-s"><span>{{strings.maxHeight}}</span></div>
             
           <div class="uip-position-relative uip-flex">
-           <value-units :value="returnOption.maxHeight" :returnData="function(data) {option.maxHeight = data}"></value-units>
+           <value-units :value="returnOption.maxHeight" :returnData="function(data) {option.maxHeight = data}" class="uip-flex-grow"/>
            
            <button @click="option.enabled.maxHeight = false; option.maxHeight.value = ''" class="uip-button-default uip-border-rounder uip-icon uip-padding-xxs uip-link-muted uip-margin-left-xs">close</button>
           </div>
@@ -209,7 +208,7 @@ export default {
           <div class="uip-text-muted uip-flex uip-flex-center uip-text-s"><span>{{strings.minWidth}}</span></div>
             
           <div class="uip-position-relative uip-flex">
-           <value-units :value="returnOption.minWidth" :returnData="function(data) {option.minWidth = data}"></value-units>
+           <value-units :value="returnOption.minWidth" :returnData="function(data) {option.minWidth = data}" class="uip-flex-grow"/>
            
            <button @click="option.enabled.minWidth = false; option.minWidth.value = ''" class="uip-button-default uip-border-rounder uip-icon uip-padding-xxs uip-link-muted uip-margin-left-xs">close</button>
           </div>
@@ -222,7 +221,7 @@ export default {
           <div class="uip-text-muted uip-flex uip-flex-center uip-text-s"><span>{{strings.maxWidth}}</span></div>
             
           <div class="uip-position-relative uip-flex">
-           <value-units :value="returnOption.maxWidth" :returnData="function(data) {option.maxWidth = data}"></value-units>
+           <value-units :value="returnOption.maxWidth" :returnData="function(data) {option.maxWidth = data}" class="uip-flex-grow"/>
            
            <button @click="option.enabled.maxWidth = false; option.maxWidth.value = ''" class="uip-button-default uip-border-rounder uip-icon uip-padding-xxs uip-link-muted uip-margin-left-xs">close</button>
           </div>

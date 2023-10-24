@@ -336,7 +336,7 @@ class uip_site_settings
     <style id="uip-theme-styles">
       html[uip-admin-theme="true"]{
         <?php foreach ($styles as $key => $value) {
-          if (isset($value->value)) {
+          if (isset($value->value) && $value->value != "" && $value->value != "uipblank") {
             echo esc_html($key . ":" . $value->value . ";");
           }
         } ?>
@@ -483,14 +483,14 @@ class uip_site_settings
     <style id="uip-theme-styles">
       [data-theme="light"]{
         <?php foreach ($styles as $key => $value) {
-          if (isset($value->value)) {
+          if (isset($value->value) && $value->value != "uipblank" && $value->value) {
             echo esc_html($key . ":" . $value->value . ";");
           }
         } ?>
     }
     [data-theme="dark"]{
         <?php foreach ($styles as $key => $value) {
-          if (isset($value->darkValue)) {
+          if (isset($value->darkValue) && $value->darkValue != "uipblank" && $value->darkValue) {
             echo esc_html($key . ":" . $value->darkValue . ";");
           }
         } ?>
@@ -763,58 +763,24 @@ class uip_site_settings
   {
     if (isset($this->uip_site_settings_object->plugins) && isset($this->uip_site_settings_object->plugins->displayPluginStatus)) {
       $showStatus = $this->uip_site_settings_object->plugins->displayPluginStatus;
-
       if ($showStatus == "uiptrue") {
-        add_filter("manage_plugins_columns", [$this, "add_plugin_status_column"]);
-        add_filter("manage_plugins-network_columns", [$this, "add_plugin_status_column"]);
-        add_action("manage_plugins_custom_column", [$this, "add_plugin_status"], 10, 3);
+        add_action("admin_head", [$this, "push_plugin_status"]);
       }
     }
   }
 
   /**
-   * Adds columns header to plugin table
+   * Add's plugin status to plugins table
    *
-   * @since 3.0.92
+   * @since 3.2.0
    */
-  public function add_plugin_status_column($columns)
+  public function push_plugin_status()
   {
-    $newCoumns = [];
+    $active = __("Active", "uipress-lite");
+    $inactive = __("Inactive", "uipress-lite");
 
-    foreach ($columns as $key => $value) {
-      $newCoumns[$key] = $value;
-
-      if ($key == "cb") {
-        $newCoumns["uip_status"] = __("Status", "uipress-lite");
-      }
-    }
-
-    return $newCoumns;
-  }
-
-  /**
-   * Adds plugin status to plugins table
-   *
-   * @since 3.0.92
-   */
-  public function add_plugin_status($column_name, $plugin_file, $plugin_data)
-  {
-    if ("uip_status" == $column_name) {
-      return;
-    }
-    if (is_plugin_active($plugin_file)) {
-      echo wp_kses_post(
-        '<span class="uip-padding-left-xxs uip-padding-right-xxs uip-background-green-wash uip-border-round uip-margin-top-xs uip-display-table-cell uip-text-bold uip-text-green">' .
-          __("active", "uipress-lite") .
-          "</span>"
-      );
-    } else {
-      echo wp_kses_post(
-        '<span class="uip-padding-left-xxs uip-padding-right-xxs uip-background-orange-wash uip-border-round uip-margin-top-xs uip-display-table-cell uip-text-bold uip-text-orange">' .
-          __("inactive", "uipress-lite") .
-          "</span>"
-      );
-    }
+    $style = "[uip-admin-theme='true'] td.plugin-title strong::after{content:'{$active}'}";
+    $style .= "[uip-admin-theme='true'] tbody tr.inactive td.plugin-title strong::after {content:'{$inactive}'}";
   }
 
   /**
