@@ -287,7 +287,6 @@ export function updateAppPage(newURL, reloadPage) {
 
   // Force a page reload (used for navigation between subsites)
   if (reloadPage && !isBuilder) {
-    url.searchParams.set("uip-framed-page", 0);
     return window.location.assign(url);
   }
 
