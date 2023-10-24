@@ -244,7 +244,7 @@ class UiTemplates
       ],
     ];
 
-    $query = new WP_Query($args);
+    $query = new \WP_Query($args);
     $foundTemplates = $query->get_posts();
 
     // No templates found so abort
@@ -639,25 +639,27 @@ class UiTemplates
    */
   public static function format_for_export($template)
   {
-    $template = get_post_meta($template->ID, "uip-ui-template", true);
-    $settings = get_post_meta($template->ID, "uip-template-settings", true);
-    $type = get_post_meta($template->ID, "uip-template-type", true);
-    $forRoles = get_post_meta($template->ID, "uip-template-for-roles", true);
-    $forUsers = get_post_meta($template->ID, "uip-template-for-users", true);
-    $excludesRoles = get_post_meta($template->ID, "uip-template-excludes-roles", true);
-    $excludesUsers = get_post_meta($template->ID, "uip-template-excludes-users", true);
-    $subsites = get_post_meta($template->ID, "uip-template-subsites", true);
+    $templateID = $template->ID;
+
+    $template = get_post_meta($templateID, "uip-ui-template", true);
+    $settings = get_post_meta($templateID, "uip-template-settings", true);
+    $type = get_post_meta($templateID, "uip-template-type", true);
+    $forRoles = get_post_meta($templateID, "uip-template-for-roles", true);
+    $forUsers = get_post_meta($templateID, "uip-template-for-users", true);
+    $excludesRoles = get_post_meta($templateID, "uip-template-excludes-roles", true);
+    $excludesUsers = get_post_meta($templateID, "uip-template-excludes-users", true);
+    $subsites = get_post_meta($templateID, "uip-template-subsites", true);
 
     // Ensures a unique ID
-    $uid = get_post_meta($template->ID, "uip-uid", true);
+    $uid = get_post_meta($templateID, "uip-uid", true);
     if (!$uid) {
       $uid = uniqid("uip-", true);
-      update_post_meta($template->ID, "uip-uid", $uid);
+      update_post_meta($templateID, "uip-uid", $uid);
     }
 
     //Return data to app
     $returndata = [];
-    $returndata["name"] = get_the_title($template->ID);
+    $returndata["name"] = get_the_title($templateID);
     $returndata["content"] = $template;
     $returndata["settings"] = $settings;
     $returndata["type"] = $type;
@@ -667,7 +669,7 @@ class UiTemplates
     $returndata["excludesUsers"] = $excludesUsers;
     $returndata["subsites"] = $subsites;
     $returndata["uid"] = $uid;
-    $returndata["status"] = get_post_status($template->ID);
+    $returndata["status"] = get_post_status($templateID);
 
     return $returndata;
   }

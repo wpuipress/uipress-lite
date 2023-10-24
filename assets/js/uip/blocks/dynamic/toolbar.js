@@ -1,8 +1,8 @@
 const { __, _x, _n, _nx } = wp.i18n;
-import { nextTick } from '../../../libs/vue-esm-dev.js';
+import { nextTick } from "../../../libs/vue-esm-dev.js";
 
 const submenu = {
-  name: 'SubMenu',
+  name: "SubMenu",
   props: {
     submenu: Object,
     updatePage: Function,
@@ -73,7 +73,7 @@ export default {
     this.updateFromDom();
   },
   beforeUnmount() {
-    document.removeEventListener('uipress/app/page/load/finish', this.handlePagechange);
+    document.removeEventListener("uipress/app/page/load/finish", this.handlePagechange);
   },
   computed: {
     /**
@@ -82,9 +82,8 @@ export default {
      * @since 3.2.12
      */
     getHidden() {
-      let hidden = this.block.settings.block.options.hiddenToolbarItems.value;
-      if (this.isObject(hidden)) return [];
-      return hidden;
+      let hidden = this.get_block_option(this.block, "block", "hiddenToolbarItems");
+      return Array.isArray(hidden) ? hidden : [];
     },
 
     /**
@@ -102,10 +101,10 @@ export default {
      * @since 3.2.12
      */
     returnDropdownPosition() {
-      let position = this.get_block_option(this.block, 'block', 'dropdownPosition');
+      let position = this.get_block_option(this.block, "block", "dropdownPosition");
       position = this.isObject(position) ? position.value : false;
-      position = position ? position : 'bottom left';
-      position = position.includes(' ') ? position : 'bottom left';
+      position = position ? position : "bottom left";
+      position = position.includes(" ") ? position : "bottom left";
       return position;
     },
 
@@ -115,10 +114,10 @@ export default {
      * @since 3.2.13
      */
     returnSubDropdownPosition() {
-      let position = this.get_block_option(this.block, 'block', 'subDropdownPosition');
+      let position = this.get_block_option(this.block, "block", "subDropdownPosition");
       position = this.isObject(position) ? position.value : false;
-      position = position ? position : 'right top';
-      position = position.includes(' ') ? position : 'right top';
+      position = position ? position : "right top";
+      position = position.includes(" ") ? position : "right top";
       return position;
     },
   },
@@ -130,7 +129,7 @@ export default {
      */
     importToolBar() {
       this.toolbar = JSON.parse(JSON.stringify(this.uipApp.data.toolbar));
-      document.addEventListener('uipress/app/page/load/finish', this.handlePagechange);
+      document.addEventListener("uipress/app/page/load/finish", this.handlePagechange);
     },
 
     /**
@@ -157,15 +156,15 @@ export default {
       let styleblock = document.querySelector('link[href*="load-styles.php?"]');
       if (!styleblock) return;
 
-      const newLink = styleblock.href.replace('admin-bar,', ',');
-      const link = document.createElement('link');
+      const newLink = styleblock.href.replace("admin-bar,", ",");
+      const link = document.createElement("link");
       link.href = newLink;
-      link.setAttribute('rel', 'stylesheet');
+      link.setAttribute("rel", "stylesheet");
 
       // Event listener function
       const onLoad = () => {
         styleblock.remove();
-        link.removeEventListener('load', onLoad); // Remove the event listener
+        link.removeEventListener("load", onLoad); // Remove the event listener
         this.rendered = true;
       };
 
@@ -177,7 +176,7 @@ export default {
       }
 
       // Add the event listener
-      link.addEventListener('load', onLoad);
+      link.addEventListener("load", onLoad);
     },
 
     /**
@@ -188,11 +187,11 @@ export default {
      */
     async updateFromDom() {
       // Determine the content frame.
-      const frameElement = document.querySelector('.uip-page-content-frame');
+      const frameElement = document.querySelector(".uip-page-content-frame");
       const contentFrame = frameElement ? frameElement.contentWindow.document : document;
 
-      const toolbarItems = contentFrame.getElementById('wp-admin-bar-root-default');
-      const secondaryToolbarItems = contentFrame.getElementById('wp-admin-bar-top-secondary');
+      const toolbarItems = contentFrame.getElementById("wp-admin-bar-root-default");
+      const secondaryToolbarItems = contentFrame.getElementById("wp-admin-bar-top-secondary");
 
       // If there are no toolbar items, exit early.
       if (!toolbarItems) return;
@@ -204,14 +203,14 @@ export default {
 
       const adminURL = this.uipApp.data.options.adminURL;
       const homeURL = this.uipApp.data.options.domain;
-      const adminPath = adminURL.replace(homeURL, '');
+      const adminPath = adminURL.replace(homeURL, "");
 
       allItems.forEach((item) => {
-        let itemId = item.getAttribute('id');
-        itemId = itemId.replace('wp-admin-bar-', '');
+        let itemId = item.getAttribute("id");
+        itemId = itemId.replace("wp-admin-bar-", "");
 
         // Continue if certain conditions aren't met.
-        if (!itemId || this.toolbar[itemId] || ['site-name', 'menu-toggle', 'app-logo', 'my-account'].includes(itemId)) return;
+        if (!itemId || this.toolbar[itemId] || ["site-name", "menu-toggle", "app-logo", "my-account"].includes(itemId)) return;
 
         const newItem = this.createToolbarItem(item, adminPath, adminURL);
         if (newItem) this.toolbar[itemId] = newItem;
@@ -226,29 +225,29 @@ export default {
      * @param {String} adminURL
      */
     createToolbarItem(item, adminPath, adminURL) {
-      const link = item.querySelector('a.ab-item');
+      const link = item.querySelector("a.ab-item");
       if (!link) return false;
-      let href = link.getAttribute('href') || '';
+      let href = link.getAttribute("href") || "";
 
       if (href.startsWith(adminPath)) {
         href = href.replace(adminPath, adminURL);
       }
 
       const newItem = {
-        id: 'attr',
-        group: '',
+        id: "attr",
+        group: "",
         meta: [],
-        parent: '',
+        parent: "",
         submenu: {},
-        title: link.innerHTML || '',
-        href: href || '',
+        title: link.innerHTML || "",
+        href: href || "",
       };
 
-      const subItems = Array.from(item.querySelectorAll('.ab-sub-wrapper .ab-submenu > *'));
+      const subItems = Array.from(item.querySelectorAll(".ab-sub-wrapper .ab-submenu > *"));
 
       const processSubs = (subItem) => {
-        let subItemId = subItem.getAttribute('id');
-        subItemId = subItemId.replace('wp-admin-bar-', '');
+        let subItemId = subItem.getAttribute("id");
+        subItemId = subItemId.replace("wp-admin-bar-", "");
         if (subItemId) {
           const subItemObject = this.createToolbarItem(subItem, adminPath, adminURL);
           newItem.submenu[subItemId] = subItemObject;
@@ -267,13 +266,13 @@ export default {
      */
     async updateQM() {
       // Check if query monitor is active
-      if (!this.toolbar['query-monitor']) return;
+      if (!this.toolbar["query-monitor"]) return;
       await nextTick();
 
-      const contentFrameElement = document.querySelector('.uip-page-content-frame');
+      const contentFrameElement = document.querySelector(".uip-page-content-frame");
       if (!contentFrameElement) return;
 
-      const qmElement = contentFrameElement.contentWindow.document.querySelector('#wp-admin-bar-query-monitor');
+      const qmElement = contentFrameElement.contentWindow.document.querySelector("#wp-admin-bar-query-monitor");
       if (!qmElement) return;
 
       this.updateQMToolbarTitle(qmElement);
@@ -287,18 +286,18 @@ export default {
      * @since 3.2.13
      */
     updateQMToolbarTitle(qmElement) {
-      const labelElement = qmElement.querySelector('.ab-item');
-      const title = labelElement ? labelElement.innerHTML : this.toolbar['query-monitor'].title;
-      this.toolbar['query-monitor'].title = title;
-      this.toolbar['query-monitor'].frameLink = true;
+      const labelElement = qmElement.querySelector(".ab-item");
+      const title = labelElement ? labelElement.innerHTML : this.toolbar["query-monitor"].title;
+      this.toolbar["query-monitor"].title = title;
+      this.toolbar["query-monitor"].frameLink = true;
 
-      if (qmElement.classList.contains('qm-warning')) {
-        this.appendToolbarStatusIndicator('red');
+      if (qmElement.classList.contains("qm-warning")) {
+        this.appendToolbarStatusIndicator("red");
       }
 
-      const alertClasses = ['qm-alert', 'qm-notice', 'qm-deprecated', 'qm-strict', 'qm-expensive'];
+      const alertClasses = ["qm-alert", "qm-notice", "qm-deprecated", "qm-strict", "qm-expensive"];
       if (alertClasses.some((cls) => qmElement.classList.contains(cls))) {
-        this.appendToolbarStatusIndicator('orange');
+        this.appendToolbarStatusIndicator("orange");
       }
     },
 
@@ -309,7 +308,7 @@ export default {
      * @since 3.2.13
      */
     appendToolbarStatusIndicator(color) {
-      this.toolbar['query-monitor'].title += `<span class="uip-display-inline-block uip-border-circle uip-w-8 uip-ratio-1-1 uip-background-${color} uip-margin-left-xxs"></span>`;
+      this.toolbar["query-monitor"].title += `<span class="uip-display-inline-block uip-border-circle uip-w-8 uip-ratio-1-1 uip-background-${color} uip-margin-left-xxs"></span>`;
     },
 
     /**
@@ -319,27 +318,27 @@ export default {
      * @since 3.2.13
      */
     updateQMSubItems(qmElement) {
-      const subItems = qmElement.querySelectorAll('#wp-admin-bar-query-monitor-default > li');
+      const subItems = qmElement.querySelectorAll("#wp-admin-bar-query-monitor-default > li");
       const newSubItems = {};
 
       subItems.forEach((subItem) => {
-        const originalId = subItem.getAttribute('id');
-        const itemId = originalId.replace('wp-admin-bar-query-monitor-', '');
-        const link = subItem.querySelector('a');
+        const originalId = subItem.getAttribute("id");
+        const itemId = originalId.replace("wp-admin-bar-query-monitor-", "");
+        const link = subItem.querySelector("a");
 
         newSubItems[itemId] = {
-          group: '',
-          href: link.getAttribute('href'),
+          group: "",
+          href: link.getAttribute("href"),
           id: originalId,
           meta: [],
-          parent: 'query-monitor',
+          parent: "query-monitor",
           submenu: {},
           title: link.textContent,
           frameLink: true,
         };
       });
 
-      this.toolbar['query-monitor'].submenu = newSubItems;
+      this.toolbar["query-monitor"].submenu = newSubItems;
     },
 
     /**
@@ -348,12 +347,12 @@ export default {
      * @since 3.2.13
      */
     updateToolBarFromFrame() {
-      const frame = document.querySelector('.uip-page-content-frame');
+      const frame = document.querySelector(".uip-page-content-frame");
 
       // Ensure the frame exists and it has the required toolbar data.
       if (frame) {
-        const toolbarScript = frame.contentWindow.document.querySelector('#uip-admin-toolbar');
-        const toolbar = toolbarScript ? this.uipParseJson(toolbarScript.getAttribute('data-toolbar')) : false;
+        const toolbarScript = frame.contentWindow.document.querySelector("#uip-admin-toolbar");
+        const toolbar = toolbarScript ? this.uipParseJson(toolbarScript.getAttribute("data-toolbar")) : false;
         if (!toolbar) return;
 
         // If the toolbar is not an array, clone it to the current component.
@@ -382,7 +381,7 @@ export default {
      * @since 3.2.13
      */
     customIcon(id) {
-      const icons = this.get_block_option(this.block, 'block', 'editToolbarItems');
+      const icons = this.get_block_option(this.block, "block", "editToolbarItems");
 
       if (this.isObject(icons) && Object.hasOwn(icons, id) && icons[id].icon) {
         return icons[id].icon;
@@ -399,7 +398,7 @@ export default {
      * @since 3.2.13
      */
     customTitle(id) {
-      const titles = this.get_block_option(this.block, 'block', 'editToolbarItems');
+      const titles = this.get_block_option(this.block, "block", "editToolbarItems");
 
       if (this.isObject(titles) && Object.hasOwn(titles, id) && titles[id].title) {
         return titles[id].title;
@@ -424,7 +423,7 @@ export default {
       evt.preventDefault();
 
       if (item.frameLink) {
-        const contentFrame = document.querySelector('.uip-page-content-frame');
+        const contentFrame = document.querySelector(".uip-page-content-frame");
 
         if (contentFrame) {
           const originalLink = contentFrame.contentWindow.document.querySelector(`#${item.id} a`);
@@ -446,7 +445,7 @@ export default {
      */
     formatHREF(link) {
       const { adminURL, domain: homeURL } = this.uipApp.data.options;
-      const adminPath = adminURL.replace(homeURL, '');
+      const adminPath = adminURL.replace(homeURL, "");
 
       if (link && link.startsWith(adminPath)) {
         return link.replace(adminPath, adminURL);

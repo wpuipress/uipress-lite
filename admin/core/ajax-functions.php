@@ -4,6 +4,7 @@ use UipressLite\Classes\Utils\Sanitize;
 use UipressLite\Classes\App\UipOptions;
 use UipressLite\Classes\Utils\ErrorLog;
 use UipressLite\Classes\ImportExport\Import;
+use UipressLite\Classes\ImportExport\Export;
 use UipressLite\Classes\App\BlockQuery;
 use UipressLite\Classes\Utils\Posts;
 use UipressLite\Classes\App\UserPreferences;

@@ -3,7 +3,7 @@ namespace UipressLite\Classes\ImportExport;
 use UipressLite\Classes\PostTypes\UiTemplates;
 use UipressLite\Classes\App\UipOptions;
 
-!defined('ABSPATH') ? exit() : '';
+!defined("ABSPATH") ? exit() : "";
 
 class Import
 {
@@ -15,15 +15,15 @@ class Import
    */
   public function cron_auto_import()
   {
-    $options = UipOptions::get('remote-sync');
-    $syncOptions = $options['syncOptions'];
+    $options = UipOptions::get("remote-sync");
+    $syncOptions = $options["syncOptions"];
 
     $response = self::get_remote($syncOptions);
 
-    if (isset($response['error'])) {
-      error_log('Unable to automatically sync uipress settings: ' . $response['message']);
+    if (isset($response["error"])) {
+      error_log("Unable to automatically sync uipress settings: " . $response["message"]);
     } else {
-      error_log('uiPress settings automatically synced successfully');
+      error_log("uiPress settings automatically synced successfully");
     }
   }
   /**
@@ -42,56 +42,56 @@ class Import
 
     // Missing required params
     if (!$path || !$key || !is_object($types)) {
-      $returndata['error'] = true;
-      $returndata['message'] = __('Missing data required for import', 'uipress-lite');
+      $returndata["error"] = true;
+      $returndata["message"] = __("Missing data required for import", "uipress-lite");
       return $returndata;
     }
 
-    $url = $path . '?key=' . $key . '&sync_options=' . json_encode($types);
+    $url = $path . "?key=" . $key . "&sync_options=" . json_encode($types);
 
     $response = wp_remote_get($url);
 
     if (is_array($response) && !is_wp_error($response) && 200 === wp_remote_retrieve_response_code($response)) {
-      $headers = $response['headers']; // array of http header lines
-      $body = $response['body']; // use the content
+      $headers = $response["headers"]; // array of http header lines
+      $body = $response["body"]; // use the content
     } else {
-      $returndata['error'] = true;
-      $returndata['message'] = __('Unable to connect to host site', 'uipress-lite');
+      $returndata["error"] = true;
+      $returndata["message"] = __("Unable to connect to host site", "uipress-lite");
       return $returndata;
     }
 
     // Unable to decode response
     if (!is_object(json_decode($body))) {
-      $returndata['error'] = true;
-      $returndata['message'] = __('Unable to connect to host site', 'uipress-lite');
+      $returndata["error"] = true;
+      $returndata["message"] = __("Unable to connect to host site", "uipress-lite");
       return $returndata;
     }
 
     $content = json_decode($body);
 
-    if (property_exists($content, 'error')) {
-      $returndata['error'] = true;
-      $returndata['message'] = $content->message;
+    if (property_exists($content, "error")) {
+      $returndata["error"] = true;
+      $returndata["message"] = $content->message;
       return $returndata;
     }
 
     //Templates
-    if (property_exists($content, 'templates')) {
-      $this->import_templates($content->templates);
+    if (property_exists($content, "templates")) {
+      self::templates($content->templates);
     }
 
     //Settings
-    if (property_exists($content, 'siteSettings')) {
-      $this->import_settings($content->siteSettings);
+    if (property_exists($content, "siteSettings")) {
+      self::settings($content->siteSettings);
     }
 
     //Menus
-    if (property_exists($content, 'menus')) {
-      $this->import_menus($content->menus);
+    if (property_exists($content, "menus")) {
+      self::menus($content->menus);
     }
 
-    $returndata['success'] = true;
-    $returndata['message'] = __('Improted', 'uipress-lite');
+    $returndata["success"] = true;
+    $returndata["message"] = __("Improted", "uipress-lite");
     return $returndata;
   }
 
@@ -114,7 +114,7 @@ class Import
       $existingID = false;
 
       // Check to see if the template already exists and therefor should be updated
-      if (property_exists($template, 'uid') && $template->uid) {
+      if (property_exists($template, "uid") && $template->uid) {
         $existingID = UiTemplates::get_by_uid($template->uid);
       }
 
@@ -122,14 +122,14 @@ class Import
       $status = $template->status;
 
       $args = [
-        'post_title' => $name,
-        'post_status' => $status,
-        'post_type' => 'uip-ui-template',
+        "post_title" => $name,
+        "post_status" => $status,
+        "post_type" => "uip-ui-template",
       ];
 
       // Update post if template already exists
       if ($existingID) {
-        $args['ID'] = $existingID;
+        $args["ID"] = $existingID;
         wp_update_post($args);
       } else {
         $existingID = wp_insert_post($args);
@@ -142,14 +142,14 @@ class Import
 
       UiTemplates::update_settings($existingID, $template->settings, $template->type, $template->subsites, $template->content);
 
-      if (property_exists($template, 'uid') && $template->uid) {
-        update_post_meta($existingID, 'uip-uid', $template->uid);
+      if (property_exists($template, "uid") && $template->uid) {
+        update_post_meta($existingID, "uip-uid", $template->uid);
       }
 
-      update_post_meta($existingID, 'uip-template-for-roles', $template->forRoles);
-      update_post_meta($existingID, 'uip-template-for-users', $template->forUsers);
-      update_post_meta($existingID, 'uip-template-excludes-roles', $template->excludesRoles);
-      update_post_meta($existingID, 'uip-template-excludes-users', $template->excludesUsers);
+      update_post_meta($existingID, "uip-template-for-roles", $template->forRoles);
+      update_post_meta($existingID, "uip-template-for-users", $template->forUsers);
+      update_post_meta($existingID, "uip-template-excludes-roles", $template->excludesRoles);
+      update_post_meta($existingID, "uip-template-excludes-users", $template->excludesUsers);
     }
   }
 
@@ -176,7 +176,7 @@ class Import
 
     // Skim out unnecessary keys
     foreach ($settings as $key => $value) {
-      if ($key != 'theme-styles') {
+      if ($key != "theme-styles") {
         $value = (array) $value;
       }
       $currentOptions[$key] = $value;
@@ -193,7 +193,7 @@ class Import
    * @return void
    * @since 3.2.13
    */
-  public function menus($menus)
+  public static function menus($menus)
   {
     // Exit early if not an array
     if (!is_array($menus)) {
@@ -204,21 +204,21 @@ class Import
       $tempID = false;
 
       // Check to see if the template already exists and therefor should be updated
-      if (property_exists($menu, 'uid') && $menu->uid) {
+      if (property_exists($menu, "uid") && $menu->uid) {
         $args = [
-          'post_type' => 'uip-admin-menu',
-          'posts_per_page' => 1,
-          'post_status' => ['publish', 'draft'],
-          'meta_query' => [
+          "post_type" => "uip-admin-menu",
+          "posts_per_page" => 1,
+          "post_status" => ["publish", "draft"],
+          "meta_query" => [
             [
-              'key' => 'uip-uid',
-              'value' => $menu->uid,
-              'compare' => '=',
+              "key" => "uip-uid",
+              "value" => $menu->uid,
+              "compare" => "=",
             ],
           ],
         ];
 
-        $query = new WP_Query($args);
+        $query = new \WP_Query($args);
         $foundTemplates = $query->get_posts();
         if (count($foundTemplates) > 0) {
           $tempID = $foundTemplates[0]->ID;
@@ -226,13 +226,13 @@ class Import
       }
 
       $args = [
-        'post_title' => wp_strip_all_tags($menu->name),
-        'post_status' => $menu->status,
-        'post_type' => 'uip-admin-menu',
+        "post_title" => wp_strip_all_tags($menu->name),
+        "post_status" => $menu->status,
+        "post_type" => "uip-admin-menu",
       ];
 
       if ($tempID) {
-        $args['ID'] = $tempID;
+        $args["ID"] = $tempID;
         wp_update_post($args);
       } else {
         $tempID = wp_insert_post($args);
@@ -242,11 +242,11 @@ class Import
         continue;
       }
 
-      if (property_exists($menu, 'uid') && $menu->uid) {
-        update_post_meta($tempID, 'uip-uid', $menu->uid);
+      if (property_exists($menu, "uid") && $menu->uid) {
+        update_post_meta($tempID, "uip-uid", $menu->uid);
       }
 
-      update_post_meta($tempID, 'uip_menu_settings', $menu->settings);
+      update_post_meta($tempID, "uip_menu_settings", $menu->settings);
     }
   }
 }

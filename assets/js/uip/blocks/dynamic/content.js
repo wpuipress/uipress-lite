@@ -1,5 +1,5 @@
 const { __ } = wp.i18n;
-import { maybeForceReload, stripUIPparams } from '../../v3.5/utility/functions.min.js';
+import { maybeForceReload, stripUIPparams } from "../../v3.5/utility/functions.min.js";
 
 export default {
   props: {
@@ -21,15 +21,15 @@ export default {
       mounted: false,
     };
   },
-  inject: ['uiTemplate'],
+  inject: ["uiTemplate"],
   watch: {
-    'uipApp.data.themeStyles': {
+    "uipApp.data.themeStyles": {
       handler(newValue, oldValue) {
         this.injectStyles();
       },
       deep: true,
     },
-    'uiTemplate.globalSettings.options.advanced.css': {
+    "uiTemplate.globalSettings.options.advanced.css": {
       handler(newValue, oldValue) {
         this.injectStyles();
       },
@@ -51,7 +51,7 @@ export default {
      * @since 3.2.13
      */
     returnStartPage() {
-      if (this.uiTemplate.display == 'prod') return window.location.href;
+      if (this.uiTemplate.display == "prod") return window.location.href;
 
       const defaultAdmin = this.returnAdminPage;
       return this.formatRequiredParams(defaultAdmin);
@@ -64,7 +64,7 @@ export default {
      */
     returnLoadingStyle() {
       if (!this.rendered) {
-        return 'opacity:0';
+        return "opacity:0";
       }
     },
     /**
@@ -74,7 +74,7 @@ export default {
      * @since 3.2.13
      */
     returnHomePage() {
-      return this.getBlockOption('loginRedirect', 'value', false);
+      return this.getBlockOption("loginRedirect", "value", false);
     },
 
     /**
@@ -84,7 +84,7 @@ export default {
      * @since 3.2.13
      */
     returnTheme() {
-      return this.getBlockOption('disableTheme', 'value', false);
+      return this.getBlockOption("disableTheme", "value", false);
     },
 
     /**
@@ -94,9 +94,9 @@ export default {
      * @since 3.2.13
      */
     returnNotices() {
-      let hideNotices = this.getBlockOption('hidePluginNotices', 'value', false);
+      let hideNotices = this.getBlockOption("hidePluginNotices", "value", false);
 
-      if (JSON.stringify(this.uiTemplate.content).includes('site-notifications')) {
+      if (JSON.stringify(this.uiTemplate.content).includes("site-notifications")) {
         hideNotices = true;
       }
 
@@ -110,7 +110,7 @@ export default {
      * @since 3.2.13
      */
     showLoader() {
-      return this.getBlockOption('hideLoader', 'value', true);
+      return this.getBlockOption("hideLoader", "value", true);
     },
 
     /**
@@ -120,7 +120,7 @@ export default {
      * @since 3.2.13
      */
     returnScreen() {
-      return this.getBlockOption('hideScreenOptions', 'value', true);
+      return this.getBlockOption("hideScreenOptions", "value", true);
     },
 
     /**
@@ -130,7 +130,7 @@ export default {
      * @since 3.2.13
      */
     returnHelp() {
-      return this.getBlockOption('hideHelpTab', 'value', true);
+      return this.getBlockOption("hideHelpTab", "value", true);
     },
 
     /**
@@ -140,7 +140,7 @@ export default {
      * @since 3.2.13
      */
     disableFullScreen() {
-      return this.getBlockOption('disableFullScreen', 'value', true);
+      return this.getBlockOption("disableFullScreen", "value", true);
     },
 
     /**
@@ -150,9 +150,9 @@ export default {
      * @since 3.2.13
      */
     returnClasses() {
-      let classes = '';
+      let classes = "";
       if (this.fullScreen) {
-        classes += 'uip-fullscreen-mode uip-scale-in-bottom-right uip-z-index-9';
+        classes += "uip-fullscreen-mode uip-scale-in-bottom-right uip-z-index-9";
       }
       return classes;
     },
@@ -165,10 +165,10 @@ export default {
      */
     returnTemplateCSS() {
       const options = this.uiTemplate.globalSettings.options;
-      if (typeof options === 'undefined') return;
-      if (!('advanced' in options)) return;
+      if (typeof options === "undefined") return;
+      if (!("advanced" in options)) return;
 
-      if ('css' in options.advanced) {
+      if ("css" in options.advanced) {
         return options.advanced.css;
       }
     },
@@ -180,7 +180,7 @@ export default {
      * @since 3.2.13
      */
     returnAdminPage() {
-      let url = this.hasNestedPath(this.uipApp.data, 'dynamicOptions', 'viewadmin', 'value');
+      let url = this.hasNestedPath(this.uipApp.data, "dynamicOptions", "viewadmin", "value");
       return url;
     },
   },
@@ -191,11 +191,11 @@ export default {
      * @since 3.2.13
      */
     removeWatchers() {
-      window.removeEventListener('message', this.handleFrameMessages, false);
-      window.removeEventListener('popstate', this.handleHashChanges, false);
-      window.removeEventListener('hashchange', this.handleHashChanges, false);
-      document.removeEventListener('uipress/app/breadcrumbs/update', this.handleBreadCrumbChange, { once: false });
-      document.removeEventListener('uip_update_frame_url', this.handleURLchangeRequest, { once: false });
+      window.removeEventListener("message", this.handleFrameMessages, false);
+      window.removeEventListener("popstate", this.handleHashChanges, false);
+      window.removeEventListener("hashchange", this.handleHashChanges, false);
+      document.removeEventListener("uipress/app/breadcrumbs/update", this.handleBreadCrumbChange, { once: false });
+      document.removeEventListener("uip_update_frame_url", this.handleURLchangeRequest, { once: false });
     },
     /**
      * Mounts all watchers that are not state specific
@@ -203,8 +203,8 @@ export default {
      * @since 3.2.13
      */
     mountMainWatchers() {
-      document.addEventListener('uipress/app/breadcrumbs/update', this.handleBreadCrumbChange, { once: false });
-      document.addEventListener('uip_update_frame_url', this.handleURLchangeRequest, { once: false });
+      document.addEventListener("uipress/app/breadcrumbs/update", this.handleBreadCrumbChange, { once: false });
+      document.addEventListener("uip_update_frame_url", this.handleURLchangeRequest, { once: false });
       this.iframeURLChange(this.$refs.contentframe, this.handleFrameURLChange);
     },
 
@@ -215,10 +215,10 @@ export default {
      */
     mountProductionFunctions() {
       // Only mount fullscreen listeners on production
-      if (this.uiTemplate.display != 'prod') return;
-      window.addEventListener('message', this.handleFrameMessages, false);
-      window.addEventListener('popstate', this.handleHashChanges, false);
-      window.addEventListener('hashchange', this.handleHashChanges, false);
+      if (this.uiTemplate.display != "prod") return;
+      window.addEventListener("message", this.handleFrameMessages, false);
+      window.addEventListener("popstate", this.handleHashChanges, false);
+      window.addEventListener("hashchange", this.handleHashChanges, false);
     },
 
     /**
@@ -254,8 +254,8 @@ export default {
      * @since 3.2.13
      */
     dynamicLoadingDisabled(url) {
-      const isProd = this.uiTemplate.display == 'prod' ? true : false;
-      if (typeof UIPdisableDynamicLoading !== 'undefined') {
+      const isProd = this.uiTemplate.display == "prod" ? true : false;
+      if (typeof UIPdisableDynamicLoading !== "undefined") {
         const disabledDynamicLoading = UIPdisableDynamicLoading && isProd ? true : false;
         const newURL = stripUIPparams(url);
         if (disabledDynamicLoading) window.location.assign(newURL);
@@ -268,7 +268,7 @@ export default {
      * @since 3.2.13
      */
     initiateLoading() {
-      document.dispatchEvent(new CustomEvent('uipress/app/page/load/start'));
+      document.dispatchEvent(new CustomEvent("uipress/app/page/load/start"));
       this.loading = true;
 
       const stopLoader = () => (this.loading = false);
@@ -282,8 +282,8 @@ export default {
      * @since 3.2.13
      */
     shouldReloadPage(url) {
-      const forceReload = typeof UIPfrontEndReload !== 'undefined' && UIPfrontEndReload;
-      return forceReload && this.uiTemplate.display !== 'builder' && !url.href.includes(this.returnAdminPage);
+      const forceReload = typeof UIPfrontEndReload !== "undefined" && UIPfrontEndReload;
+      return forceReload && this.uiTemplate.display !== "builder" && !url.href.includes(this.returnAdminPage);
     },
 
     /**
@@ -295,15 +295,15 @@ export default {
      * @since 3.2.13
      */
     handleIframeContentChanges(frame, url, newURL) {
-      const fallBackState = frame.contentWindow.document.documentElement && frame.contentWindow.document.documentElement.getAttribute('uip-framed-page');
+      const fallBackState = frame.contentWindow.document.documentElement && frame.contentWindow.document.documentElement.getAttribute("uip-framed-page");
 
       // Check if we have already processed this URL to prevent double loading
-      if (url.searchParams.get('uip-framed-page') || fallBackState) {
+      if (url.searchParams.get("uip-framed-page") || fallBackState) {
         const activeItem = frame.contentWindow.document.querySelectorAll("#adminmenu a[aria-current='page']");
         let path = newURL;
 
         // Get active page from iframe
-        if (activeItem[0]) path = activeItem[0].getAttribute('href');
+        if (activeItem[0]) path = activeItem[0].getAttribute("href");
 
         this.updateActiveLink(path);
         this.injectStyles();
@@ -312,7 +312,7 @@ export default {
       }
 
       // If none of the conditions matched, replace the frame's content with the new URL
-      frame.src = 'about:blank';
+      frame.src = "about:blank";
       const formattedUrl = this.formatUserUrlOptions(url);
       frame.contentWindow.location.replace(formattedUrl);
     },
@@ -345,9 +345,9 @@ export default {
       if (title) document.title = title;
 
       //Update browser address if we are not in builder
-      if (this.uiTemplate.display == 'prod') this.updateBrowserAddress(frame.contentWindow.location.href);
+      if (this.uiTemplate.display == "prod") this.updateBrowserAddress(frame.contentWindow.location.href);
 
-      document.dispatchEvent(new CustomEvent('uipress/app/page/load/finish'));
+      document.dispatchEvent(new CustomEvent("uipress/app/page/load/finish"));
       this.updatePageUrls();
       this.injectWindowOpenMethod();
     },
@@ -360,9 +360,9 @@ export default {
     getAdminPageTitle() {
       const frame = this.$refs.contentframe;
       if (!frame) return;
-      const script = frame.contentWindow.document.querySelector('#uip-admin-page-title');
+      const script = frame.contentWindow.document.querySelector("#uip-admin-page-title");
       if (!script) return;
-      const title = script.getAttribute('data-title');
+      const title = script.getAttribute("data-title");
       this.uipApp.data.dynamicOptions.adminPageTitle.value = title;
     },
 
@@ -380,8 +380,8 @@ export default {
       const handleOpen = (url, target, windowFeatures) => {
         if (target) {
           let tempTarget = target.toLowerCase();
-          if (tempTarget == '_blank' || tempTarget == '_top' || tempTarget == '_parent') {
-            uipWindowOpenMethod(url, '_blank', windowFeatures);
+          if (tempTarget == "_blank" || tempTarget == "_top" || tempTarget == "_parent") {
+            uipWindowOpenMethod(url, "_blank", windowFeatures);
             return;
           }
         }
@@ -389,7 +389,7 @@ export default {
         let origin = window.location.origin;
         let newURL = new URL(url);
         if (newURL.origin != origin) {
-          uipWindowOpenMethod(url, '_parent', windowFeatures);
+          uipWindowOpenMethod(url, "_parent", windowFeatures);
         } else {
           uipWindowOpenMethod(url, target, windowFeatures);
         }
@@ -449,16 +449,16 @@ export default {
     handleFrameMessages(event) {
       if (!event.data) return;
 
-      const isRequestingFullscreen = event.data.eventName === 'uip_request_fullscreen';
-      const isExitingFullscreen = event.data.eventName === 'uip_exit_fullscreen';
+      const isRequestingFullscreen = event.data.eventName === "uip_request_fullscreen";
+      const isExitingFullscreen = event.data.eventName === "uip_exit_fullscreen";
       const frameContainer = this.$refs.frameContainer;
 
       if (isRequestingFullscreen && !this.isFullScreen()) {
-        frameContainer.classList.add('uip-fullscreen-mode', 'uip-scale-in-bottom-right');
+        frameContainer.classList.add("uip-fullscreen-mode", "uip-scale-in-bottom-right");
       }
 
       if (isExitingFullscreen && this.isFullScreen()) {
-        frameContainer.classList.remove('uip-fullscreen-mode', 'uip-scale-in-bottom-right');
+        frameContainer.classList.remove("uip-fullscreen-mode", "uip-scale-in-bottom-right");
       }
     },
 
@@ -506,7 +506,7 @@ export default {
      * @since 3.2.13
      */
     getBlockOption(optNmae, propertyName, returnValue) {
-      const opt = this.get_block_option(this.block, 'block', optNmae, true);
+      const opt = this.get_block_option(this.block, "block", optNmae, true);
 
       if (this.isObject(opt)) {
         return propertyName in opt ? opt[propertyName] : returnValue;
@@ -534,9 +534,9 @@ export default {
      * @since 3.2.13
      */
     checkForUserFullSreen(url) {
-      if (typeof UIPFullscreenUserPages === 'undefined') return;
+      if (typeof UIPFullscreenUserPages === "undefined") return;
       if (!UIPFullscreenUserPages) return;
-      if (this.enviroment == 'builder') return;
+      if (this.enviroment == "builder") return;
       if (!Array.isArray(UIPFullscreenUserPages)) return;
 
       // Loop through fullscreen pages
@@ -558,7 +558,7 @@ export default {
       // Mount link watcher
 
       const iframeClicker = (event) => {
-        if (event.target.tagName != 'A') {
+        if (event.target.tagName != "A") {
           this.forceClickEvent();
           return;
         }
@@ -570,22 +570,22 @@ export default {
         this.updateBrowserAddress(location);
       };
 
-      frame.contentWindow.document.addEventListener('click', iframeClicker);
-      frame.contentWindow.addEventListener('uip-frame-hash-change', hashWatcher);
+      frame.contentWindow.document.addEventListener("click", iframeClicker);
+      frame.contentWindow.addEventListener("uip-frame-hash-change", hashWatcher);
 
       // Return early if not in 'prod' mode
-      if (this.uiTemplate.display !== 'prod') return;
+      if (this.uiTemplate.display !== "prod") return;
 
       // List of form names to check and attach listeners
-      const formNames = ['upgrade-plugins', 'upgrade-themes', 'upgrade'];
+      const formNames = ["upgrade-plugins", "upgrade-themes", "upgrade"];
 
       // Helper function to handle the form submission event
       const handleFormSubmit = function (form) {
-        form.addEventListener('submit', function (evt) {
+        form.addEventListener("submit", function (evt) {
           const url = new URL(form.action);
 
           // If 'uip-framed-page' is not part of the URL, modify the form's action
-          if (!url.searchParams.get('uip-framed-page')) {
+          if (!url.searchParams.get("uip-framed-page")) {
             evt.preventDefault();
             this.formatUserUrlOptions(url);
             form.action = url.href;
@@ -638,12 +638,12 @@ export default {
       const url = new URL(urlString);
 
       // Split the hostname into parts
-      const parts = url.hostname.split('.');
+      const parts = url.hostname.split(".");
       if (parts.length <= 2) {
         return url.hostname; // Return as is for hostnames
       }
 
-      return parts.slice(-2).join('.');
+      return parts.slice(-2).join(".");
     },
 
     /**
@@ -675,11 +675,11 @@ export default {
      * @since 3.2.13
      */
     updateFormActions(adminURL) {
-      const allFormLinks = this.$refs.contentframe.contentWindow.document.querySelectorAll('form');
+      const allFormLinks = this.$refs.contentframe.contentWindow.document.querySelectorAll("form");
       for (let form of allFormLinks) {
         let formAction = form.action;
 
-        if (!formAction || typeof formAction !== 'string') continue;
+        if (!formAction || typeof formAction !== "string") continue;
 
         if (formAction.includes(adminURL)) {
           form.action = this.formatRequiredParams(formAction);
@@ -694,18 +694,18 @@ export default {
      * @since 3.2.13
      */
     updateFormHrefs(adminURL) {
-      const allFormHrefs = this.$refs.contentframe.contentWindow.document.querySelectorAll('body.update-php a');
+      const allFormHrefs = this.$refs.contentframe.contentWindow.document.querySelectorAll("body.update-php a");
       for (let link of allFormHrefs) {
         let href = link.href;
 
-        if (!href || typeof href !== 'string') continue;
+        if (!href || typeof href !== "string") continue;
 
         if (href.includes(adminURL)) {
           link.href = this.formatRequiredParams(href);
         } else {
           let templink = adminURL + href;
           let newLink = this.formatRequiredParams(templink);
-          newLink = newLink.replace(adminURL, '');
+          newLink = newLink.replace(adminURL, "");
           link.href = newLink;
         }
       }
@@ -721,24 +721,24 @@ export default {
      */
     formatUserUrlOptions(url) {
       // Always set 'uip-framed-page' to 1
-      url.searchParams.set('uip-framed-page', 1);
+      url.searchParams.set("uip-framed-page", 1);
 
       // Check and set various search parameters based on the Vue component's state
       if (this.returnScreen) {
-        url.searchParams.set('uip-hide-screen-options', 1);
+        url.searchParams.set("uip-hide-screen-options", 1);
       }
       if (this.returnHelp) {
-        url.searchParams.set('uip-hide-help-tab', 1);
+        url.searchParams.set("uip-hide-help-tab", 1);
       }
       if (this.returnTheme) {
-        url.searchParams.set('uip-default-theme', 1);
+        url.searchParams.set("uip-default-theme", 1);
       }
       if (this.returnNotices) {
-        url.searchParams.set('uip-hide-notices', 1);
+        url.searchParams.set("uip-hide-notices", 1);
       }
 
       // Set 'uipid' based on the component's 'uiTemplate' id
-      url.searchParams.set('uipid', this.uiTemplate.id);
+      url.searchParams.set("uipid", this.uiTemplate.id);
 
       return url;
     },
@@ -755,24 +755,24 @@ export default {
       const url = new URL(unformatted);
 
       // Always set 'uip-framed-page' to 1
-      url.searchParams.set('uip-framed-page', 1);
+      url.searchParams.set("uip-framed-page", 1);
 
       // Check and set various search parameters based on the Vue component's state
       if (this.returnScreen) {
-        url.searchParams.set('uip-hide-screen-options', 1);
+        url.searchParams.set("uip-hide-screen-options", 1);
       }
       if (this.returnHelp) {
-        url.searchParams.set('uip-hide-help-tab', 1);
+        url.searchParams.set("uip-hide-help-tab", 1);
       }
       if (this.returnTheme) {
-        url.searchParams.set('uip-default-theme', 1);
+        url.searchParams.set("uip-default-theme", 1);
       }
       if (this.returnNotices) {
-        url.searchParams.set('uip-hide-notices', 1);
+        url.searchParams.set("uip-hide-notices", 1);
       }
 
       // Always set 'uipid' based on the component's 'uiTemplate' id
-      url.searchParams.set('uipid', this.uiTemplate.id);
+      url.searchParams.set("uipid", this.uiTemplate.id);
 
       return url.href;
     },
@@ -785,7 +785,7 @@ export default {
      */
     isFullScreen() {
       const container = this.$refs.frameContainer;
-      return container.classList.contains('uip-fullscreen-mode');
+      return container.classList.contains("uip-fullscreen-mode");
     },
 
     /**
@@ -808,7 +808,7 @@ export default {
      */
     setFullScreen() {
       const container = this.$refs.frameContainer;
-      container.classList.add('uip-fullscreen-mode', 'uip-scale-in-bottom-right');
+      container.classList.add("uip-fullscreen-mode", "uip-scale-in-bottom-right");
     },
 
     /**
@@ -818,7 +818,7 @@ export default {
      */
     removeFullScreen() {
       const container = this.$refs.frameContainer;
-      container.classList.remove('uip-fullscreen-mode', 'uip-scale-in-bottom-right');
+      container.classList.remove("uip-fullscreen-mode", "uip-scale-in-bottom-right");
     },
 
     /**
@@ -830,12 +830,12 @@ export default {
       const frame = this.$refs.contentframe;
 
       // Only inject custom CSS in production mode
-      if (this.uiTemplate.display === 'prod') {
+      if (this.uiTemplate.display === "prod") {
         return;
       }
 
       const styles = this.uipApp.data.themeStyles;
-      const styleArea = frame.contentWindow.document.querySelector('#uip-theme-styles');
+      const styleArea = frame.contentWindow.document.querySelector("#uip-theme-styles");
 
       // If style area doesn't exist, abort the function
       if (!styleArea) return;
@@ -848,7 +848,7 @@ export default {
           lightStyle += `${item.name}:${item.value};`;
         }
       }
-      lightStyle += '}';
+      lightStyle += "}";
 
       let darkStyle = 'html[data-theme="dark"]{';
 
@@ -858,7 +858,7 @@ export default {
           darkStyle += `${item.name}:${item.darkValue};`;
         }
       }
-      darkStyle += '}';
+      darkStyle += "}";
 
       const globalCSS = this.returnTemplateCSS;
       styleArea.innerHTML = lightStyle + darkStyle + globalCSS;
@@ -870,7 +870,7 @@ export default {
      */
     injectCSS() {
       const frame = this.$refs.contentframe;
-      const styleArea = frame.contentWindow.document.getElementById('uip-theme-styles');
+      const styleArea = frame.contentWindow.document.getElementById("uip-theme-styles");
 
       // If style area doesn't exist, abort the function
       if (!styleArea) return;
@@ -892,11 +892,11 @@ export default {
       const dispatchChange = () => {
         if (!iframe.contentWindow) return;
 
-        let newHref = '';
+        let newHref = "";
         try {
           newHref = iframe.contentWindow.location.href;
         } catch (errr) {
-          console.log('we caught the error');
+          console.log("we caught the error");
           console.log(iframe.src);
           return;
         }
@@ -915,11 +915,11 @@ export default {
       const attachUnload = () => {
         // Remove the unloadHandler in case it was already attached.
         // Prevents attaching multiple identical event handlers.
-        iframe.contentWindow.removeEventListener('unload', unloadHandler);
-        iframe.contentWindow.addEventListener('unload', unloadHandler);
+        iframe.contentWindow.removeEventListener("unload", unloadHandler);
+        iframe.contentWindow.addEventListener("unload", unloadHandler);
       };
 
-      iframe.addEventListener('load', () => {
+      iframe.addEventListener("load", () => {
         attachUnload();
         // Ensure any URL change is caught after the iframe has loaded
         dispatchChange();

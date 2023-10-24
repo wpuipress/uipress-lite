@@ -517,11 +517,11 @@ const PostTable = {
       label: __("Block options", "uipress-lite"),
       icon: "check_box_outline_blank",
       options: [
-        { option: "postTypeSelect", uniqueKey: "activePostTypes", label: __("Post types", "uipress-lite") },
-        { option: "postMetaSelect", uniqueKey: "activeColumns", label: __("Columns", "uipress-lite") },
+        { option: "postTypeSelect", componentName: "post-types", uniqueKey: "activePostTypes", label: __("Post types", "uipress-lite") },
         {
           option: "multiSelect",
           uniqueKey: "actionsEnabled",
+          componentName: "multi-select-option",
           label: __("Actions enabled", "uipress-lite"),
           args: {
             options: [
@@ -540,7 +540,7 @@ const PostTable = {
             ],
           },
         },
-        { option: "number", uniqueKey: "postsPerPage", label: __("Posts per page", "uipress-lite"), value: 10 },
+        { option: "number", componentName: "uip-number", uniqueKey: "postsPerPage", label: __("Posts per page", "uipress-lite"), value: 10 },
         {
           option: "choiceSelect",
           componentName: "choice-select",
@@ -757,8 +757,8 @@ const RecentPosts = {
       label: __("Block options", "uipress-lite"),
       icon: "check_box_outline_blank",
       options: [
-        { option: "postTypeSelect", uniqueKey: "activePostTypes", label: __("Post types", "uipress-lite") },
-        { option: "number", uniqueKey: "postsPerPage", label: __("Posts per page", "uipress-lite"), value: 10 },
+        { option: "postTypeSelect", componentName: "post-types", uniqueKey: "activePostTypes", label: __("Post types", "uipress-lite") },
+        { option: "number", componentName: "uip-number", uniqueKey: "postsPerPage", label: __("Posts per page", "uipress-lite"), value: 10 },
         {
           option: "choiceSelect",
           componentName: "choice-select",

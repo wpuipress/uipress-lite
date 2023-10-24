@@ -155,7 +155,7 @@ class AdminMenu
     $dom = new \DOMDocument();
 
     libxml_use_internal_errors(true);
-    $dom->loadHTML(mb_convert_encoding($html, "HTML-ENTITIES", "UTF-8"), LIBXML_NOWARNING | LIBXML_NOERROR);
+    $dom->loadHTML($html, LIBXML_NOWARNING | LIBXML_NOERROR);
     libxml_clear_errors();
 
     $nodes = $dom->getElementsByTagName("*"); // get all elements

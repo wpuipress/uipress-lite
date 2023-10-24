@@ -1,7 +1,7 @@
 <?php
 namespace UipressLite\Classes\App;
 
-!defined('ABSPATH') ? exit() : '';
+!defined("ABSPATH") ? exit() : "";
 
 class UserPreferences
 {
@@ -14,7 +14,7 @@ class UserPreferences
   public static function get($key = null)
   {
     $userid = get_current_user_id();
-    $userPreferences = get_user_meta($userid, 'uip-prefs', true);
+    $userPreferences = get_user_meta($userid, "uip-prefs", true);
 
     // If key was not defined, return all prefs
     if (!isset($key)) {
@@ -28,10 +28,10 @@ class UserPreferences
 
     $currentValue = $userPreferences[$key] ? $userPreferences[$key] : false;
 
-    if ($currentValue === 'uiptrue') {
+    if ($currentValue === "uiptrue") {
       $currentValue = true;
     }
-    if ($currentValue === 'uipfalse') {
+    if ($currentValue === "uipfalse") {
       $currentValue = false;
     }
 
@@ -47,17 +47,17 @@ class UserPreferences
   public static function update($key = null, $newValue = null)
   {
     $userid = get_current_user_id();
-    $userPreferences = get_user_meta($userid, 'uip-prefs', true);
+    $userPreferences = get_user_meta($userid, "uip-prefs", true);
 
     // If key was not defined, update all user prefs
     if (!isset($key)) {
-      update_user_meta($userid, 'uip-prefs', $newValue);
+      update_user_meta($userid, "uip-prefs", $newValue);
       return;
     }
 
-    $userPreferences = $userPreferences ?? [];
+    $userPreferences = is_array($userPreferences) ? $userPreferences : [];
     $userPreferences[$key] = $newValue;
 
-    update_user_meta($userid, 'uip-prefs', $userPreferences);
+    update_user_meta($userid, "uip-prefs", $userPreferences);
   }
 }

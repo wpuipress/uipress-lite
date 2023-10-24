@@ -305,7 +305,7 @@ export default {
         
         <teleport to="body" :disabled="disableTeleport">
           <div v-if="modelOpen && $slots.content" @mouseleave="maybeClose" @mouseover="clearCloseTimeout()"
-          @click.prevent.stop
+          @click.stop
           ref="uipdrop" class="uip-z-index-9 uip-position-fixed uip-shadow uip-background-default uip-border-rounder uip-body-font" 
           style="border-radius:calc(var(--uip-border-radius-large) + var(--uip-padding-xxs));" :style="position">
         

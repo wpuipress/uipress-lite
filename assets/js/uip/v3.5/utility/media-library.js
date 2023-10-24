@@ -1,49 +1,49 @@
-import Axios from '../libs/axios.min.js';
+import Axios from "../libs/axios.min.js";
 const { __, _x, _n, _nx } = wp.i18n;
 
-import { defineAsyncComponent } from '../../../libs/vue-esm-dev.js';
+import { defineAsyncComponent } from "../../../libs/vue-esm-dev.js";
 
 export const MediaLibrary = {
-  emits: ['image-selected', 'cancel-select'],
+  emits: ["image-selected", "cancel-select"],
   data() {
     return {
       loading: true,
       strings: {
-        mediaLibrary: __('Media library', 'uipress-lite'),
-        select: __('Select', 'uipress-lite'),
-        cancel: __('Cancel', 'uipress-lite'),
-        search: __('Search', 'uipress-lite'),
-        nothingFound: __('Nothing found for search term', 'uipress-lite'),
-        altText: __('Alt text', 'uipress-lite'),
-        caption: __('Caption', 'uipress-lite'),
-        aNicePhoto: __('A nice image', 'uipress-lite'),
-        aNicePhotoDescription: __('A image caption', 'uipress-lite'),
-        title: __('Title', 'uipress-lite'),
-        imageTitle: __('Image title', 'uipress-lite'),
-        photoBy: __('Photo by', 'uipress-lite'),
-        on: __('on', 'uipress-lite'),
-        size: __('Size', 'uipress-lite'),
+        mediaLibrary: __("Media library", "uipress-lite"),
+        select: __("Select", "uipress-lite"),
+        cancel: __("Cancel", "uipress-lite"),
+        search: __("Search", "uipress-lite"),
+        nothingFound: __("Nothing found for search term", "uipress-lite"),
+        altText: __("Alt text", "uipress-lite"),
+        caption: __("Caption", "uipress-lite"),
+        aNicePhoto: __("A nice image", "uipress-lite"),
+        aNicePhotoDescription: __("A image caption", "uipress-lite"),
+        title: __("Title", "uipress-lite"),
+        imageTitle: __("Image title", "uipress-lite"),
+        photoBy: __("Photo by", "uipress-lite"),
+        on: __("on", "uipress-lite"),
+        size: __("Size", "uipress-lite"),
       },
-      returnSize: 'full',
-      activeTab: 'library',
+      returnSize: "full",
+      activeTab: "library",
       tabs: {
         library: {
-          value: 'library',
-          label: __('Library', 'uipress-lite'),
+          value: "library",
+          label: __("Library", "uipress-lite"),
         },
         unsplash: {
-          value: 'unsplash',
-          label: __('Unsplash', 'uipress-lite'),
+          value: "unsplash",
+          label: __("Unsplash", "uipress-lite"),
         },
         upload: {
-          value: 'upload',
-          label: __('Upload', 'uipress-lite'),
+          value: "upload",
+          label: __("Upload", "uipress-lite"),
         },
       },
       media: [],
       unsplashMedia: [],
       restUrl: uip_ajax.rest_url,
-      search: '',
+      search: "",
       total: 0,
       perPage: 20,
       selected: false,
@@ -70,7 +70,7 @@ export const MediaLibrary = {
     selected: {
       handler(newValue, oldValue) {
         if (newValue) {
-          if ('caption' in this.selected) {
+          if ("caption" in this.selected) {
             this.selected.caption.rendered = this.stripHTML(this.selected.caption.rendered);
           }
         }
@@ -99,8 +99,8 @@ export const MediaLibrary = {
      * @since 3.2.13
      */
     maybeGetMedia(hideLoading) {
-      if (this.activeTab == 'unsplash') this.getUnsplashMedia(hideLoading);
-      if (this.activeTab == 'library') this.getMedia(hideLoading);
+      if (this.activeTab == "unsplash") this.getUnsplashMedia(hideLoading);
+      if (this.activeTab == "library") this.getMedia(hideLoading);
     },
     /**
      * Gets media from unsplash
@@ -108,12 +108,12 @@ export const MediaLibrary = {
      * @since 3.2.13
      */
     async getUnsplashMedia(hideLoading) {
-      let path = 'https://api.uipress.co/unsplash/?key=0e49uptg-aw[e0ifjhiljsoevjhbsoe8gilplhirlvi';
+      let path = "https://api.uipress.co/unsplash/?key=0e49uptg-aw[e0ifjhiljsoevjhbsoe8gilplhirlvi";
 
       let params = {
-        status: 'inherit',
+        status: "inherit",
         per_page: this.perPage,
-        media_type: 'image',
+        media_type: "image",
       };
 
       if (this.search) path += `&s=${this.search}`;
@@ -123,7 +123,7 @@ export const MediaLibrary = {
       }
 
       await Axios({
-        method: 'get',
+        method: "get",
         url: path,
       })
         .then((response) => {
@@ -145,9 +145,9 @@ export const MediaLibrary = {
       let path = this.restUrl + `wp/v2/media`;
 
       let params = {
-        status: 'inherit',
+        status: "inherit",
         per_page: this.perPage,
-        media_type: 'image',
+        media_type: "image",
       };
 
       if (this.search) params.search = this.search;
@@ -156,15 +156,14 @@ export const MediaLibrary = {
         this.loading = true;
       }
       await Axios({
-        method: 'get',
+        method: "get",
         url: path,
         headers: uip_ajax.rest_headers,
         params: params,
       })
         .then((response) => {
-          console.log(response.data);
           this.media = response.data;
-          this.total = response.headers['x-wp-total'];
+          this.total = response.headers["x-wp-total"];
           this.loading = false;
         })
         .catch((err) => {
@@ -189,16 +188,16 @@ export const MediaLibrary = {
       };
 
       Axios({
-        method: 'post',
+        method: "post",
         url: path,
         headers: uip_ajax.rest_headers,
         data: postData,
       })
         .then((response) => {
-          this.uipApp.notifications.notify(__('Image saved', 'uipress-lite'), '', 'success', true);
+          this.uipApp.notifications.notify(__("Image saved", "uipress-lite"), "", "success", true);
         })
         .catch((err) => {
-          this.uipApp.notifications.notify(err.message, '', 'error', true);
+          this.uipApp.notifications.notify(err.message, "", "error", true);
         });
     },
     /**
@@ -210,7 +209,7 @@ export const MediaLibrary = {
       this.validDrop = false;
       let path = this.restUrl + `wp/v2/media/`;
 
-      let notiID = this.uipApp.notifications.notify(__('Uploading images', 'uipress-lite'), '', 'default', true, true);
+      let notiID = this.uipApp.notifications.notify(__("Uploading images", "uipress-lite"), "", "default", true, true);
 
       let files;
       if (dragged) files = Array.from(evt.dataTransfer.files);
@@ -218,28 +217,28 @@ export const MediaLibrary = {
 
       for (const file of files) {
         const formData = new FormData();
-        formData.append('file', file, file.name);
+        formData.append("file", file, file.name);
 
         try {
           await Axios({
-            method: 'post',
+            method: "post",
             url: path,
             headers: {
               ...uip_ajax.rest_headers,
-              'Content-Disposition': `attachment; filename="${file.name}"`,
-              'Content-Type': file.type, // Dynamically set based on file type
+              "Content-Disposition": `attachment; filename="${file.name}"`,
+              "Content-Type": file.type, // Dynamically set based on file type
             },
             data: formData,
           });
         } catch (error) {
-          this.uipApp.notifications.notify(__('Failed to upload', 'uipress-lite') + ' ' + file.name, '', 'error', true);
+          this.uipApp.notifications.notify(__("Failed to upload", "uipress-lite") + " " + file.name, "", "error", true);
         }
       }
 
       this.uipApp.notifications.remove(notiID);
-      this.uipApp.notifications.notify(__('uploaded complete', 'uipress-lite'), '', 'success', true);
+      this.uipApp.notifications.notify(__("uploaded complete", "uipress-lite"), "", "success", true);
 
-      this.activeTab = 'library';
+      this.activeTab = "library";
       this.getMedia();
     },
     /**
@@ -252,35 +251,35 @@ export const MediaLibrary = {
       let path = this.restUrl + `wp/v2/media/`;
 
       //Set notification
-      let notiID = this.uipApp.notifications.notify(__('Importing image to library', 'uipress-lite'), '', 'default', true, true);
+      let notiID = this.uipApp.notifications.notify(__("Importing image to library", "uipress-lite"), "", "default", true, true);
 
       // Fetch the image from the URL
-      Axios.get(imageURL, { responseType: 'blob' })
+      Axios.get(imageURL, { responseType: "blob" })
         .then((response) => {
           const imageBlob = response.data;
 
           // Prepare FormData to upload
           const formData = new FormData();
-          formData.append('file', imageBlob, this.selected.user.username + '.jpg'); // Replace 'filename.jpg' with the desired filename
+          formData.append("file", imageBlob, this.selected.user.username + ".jpg"); // Replace 'filename.jpg' with the desired filename
 
           // Upload to WordPress
           return Axios({
-            method: 'post',
+            method: "post",
             url: path,
             headers: {
               ...uip_ajax.rest_headers,
-              'Content-Disposition': `attachment; filename="${this.selected.user.username}.jpg"`,
-              'Content-Type': imageBlob.type, // Dynamically set based on file type
+              "Content-Disposition": `attachment; filename="${this.selected.user.username}.jpg"`,
+              "Content-Type": imageBlob.type, // Dynamically set based on file type
             },
             data: formData,
           });
         })
         .then((uploadResponse) => {
-          this.$emit('image-selected', uploadResponse.data);
+          this.$emit("image-selected", uploadResponse.data);
           this.uipApp.notifications.remove(notiID);
         })
         .catch((error) => {
-          this.uipApp.notifications.notify(__('Failed to import image', 'uipress-lite'), '', 'error', true);
+          this.uipApp.notifications.notify(__("Failed to import image", "uipress-lite"), "", "error", true);
         });
     },
     /**
@@ -301,7 +300,7 @@ export const MediaLibrary = {
       if (this.selected.color) {
         this.importFromUnsplash();
       } else {
-        this.$emit('image-selected', this.returnImage());
+        this.$emit("image-selected", this.returnImage());
       }
     },
 
@@ -336,7 +335,7 @@ export const MediaLibrary = {
      */
     stripHTML(text) {
       if (!text) return;
-      text = text.replace(/(<([^>]+)>)/gi, '');
+      text = text.replace(/(<([^>]+)>)/gi, "");
       return text;
     },
     /**
@@ -354,11 +353,11 @@ export const MediaLibrary = {
      * @since 3.2.13
      */
     returnImagePreview(photo) {
-      if ('medium' in photo.media_details.sizes) return photo.media_details.sizes.medium.source_url;
-      if ('small' in photo.media_details.sizes) return photo.media_details.sizes.small.source_url;
-      if ('thumbnail' in photo.media_details.sizes) return photo.media_details.sizes.thumbnail.source_url;
-      if ('large' in photo.media_details.sizes) return photo.media_details.sizes.large.source_url;
-      if ('full' in photo.media_details.sizes) return photo.media_details.sizes.full.source_url;
+      if ("medium" in photo.media_details.sizes) return photo.media_details.sizes.medium.source_url;
+      if ("small" in photo.media_details.sizes) return photo.media_details.sizes.small.source_url;
+      if ("thumbnail" in photo.media_details.sizes) return photo.media_details.sizes.thumbnail.source_url;
+      if ("large" in photo.media_details.sizes) return photo.media_details.sizes.large.source_url;
+      if ("full" in photo.media_details.sizes) return photo.media_details.sizes.full.source_url;
     },
   },
   template: `
@@ -675,7 +674,7 @@ export const MediaLibrary = {
 
 export default {
   components: {
-    Modal: defineAsyncComponent(() => import('./modal.js')),
+    Modal: defineAsyncComponent(() => import("./modal.js")),
     MediaLibrary: MediaLibrary,
   },
 
@@ -684,7 +683,7 @@ export default {
       resolvePromise: undefined,
       rejectPromise: undefined,
       strings: {
-        mediaLibrary: __('Media library', 'uipress-lite'),
+        mediaLibrary: __("Media library", "uipress-lite"),
       },
     };
   },
@@ -695,7 +694,7 @@ export default {
      * @since 3.2.13
      */
     cancel() {
-      this.$emit('cancel-select');
+      this.$emit("cancel-select");
     },
 
     /**

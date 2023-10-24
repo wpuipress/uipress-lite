@@ -4,40 +4,40 @@ export default {
   data() {
     return {
       loading: false,
-      search: '',
+      search: "",
       allErrrors: [],
       perPage: 20,
-      order: 'desc',
+      order: "desc",
       page: 0,
       totalFound: 0,
       totalPages: 0,
       error: {
         state: false,
-        message: '',
-        description: '',
+        message: "",
+        description: "",
       },
       strings: {
-        pixels: __('Pixels', 'uipress-lite'),
-        searchErrors: __('Search errors', 'uipress-lite'),
-        errorLog: __('Error log', 'uipress-lite'),
-        misc: __('Misc', 'uipress-lite'),
-        fatal: __('Fatal', 'uipress-lite'),
-        warning: __('Warning', 'uipress-lite'),
-        syntax: __('Syntax', 'uipress-lite'),
-        notice: __('Notice', 'uipress-lite'),
-        exception: __('Exception', 'uipress-lite'),
-        results: __('entries', 'uipress-lite'),
-        newestFirst: __('Newest first', 'uipress-lite'),
-        oldestFirst: __('Oldest first', 'uipress-lite'),
-        sortBy: __('Sort by', 'uipress-lite'),
-        line: __('line', 'uipress-lite'),
-        refreshLog: __('Refresh log', 'uipress-lite'),
-        stackTrace: __('Stack trace', 'uipress-lite'),
-        noErrrors: __('No PHP errors to display!', 'uipress-lite'),
+        pixels: __("Pixels", "uipress-lite"),
+        searchErrors: __("Search errors", "uipress-lite"),
+        errorLog: __("Error log", "uipress-lite"),
+        misc: __("Misc", "uipress-lite"),
+        fatal: __("Fatal", "uipress-lite"),
+        warning: __("Warning", "uipress-lite"),
+        syntax: __("Syntax", "uipress-lite"),
+        notice: __("Notice", "uipress-lite"),
+        exception: __("Exception", "uipress-lite"),
+        results: __("entries", "uipress-lite"),
+        newestFirst: __("Newest first", "uipress-lite"),
+        oldestFirst: __("Oldest first", "uipress-lite"),
+        sortBy: __("Sort by", "uipress-lite"),
+        line: __("line", "uipress-lite"),
+        refreshLog: __("Refresh log", "uipress-lite"),
+        stackTrace: __("Stack trace", "uipress-lite"),
+        noErrrors: __("No PHP errors to display!", "uipress-lite"),
       },
     };
   },
-  
+
   watch: {
     order: {
       handler(newVal, oldVal) {
@@ -69,12 +69,12 @@ export default {
       this.error.state = false;
       //Build form data for fetch request
       let formData = new FormData();
-      formData.append('action', 'uip_get_php_errors');
-      formData.append('security', uip_ajax.security);
-      formData.append('perPage', this.perPage);
-      formData.append('search', this.search);
-      formData.append('order', this.order);
-      formData.append('page', this.page);
+      formData.append("action", "uip_get_php_errors");
+      formData.append("security", uip_ajax.security);
+      formData.append("perPage", this.perPage);
+      formData.append("search", this.search);
+      formData.append("order", this.order);
+      formData.append("page", this.page);
 
       const response = await this.sendServerRequest(uip_ajax.ajax_url, formData);
       this.loading = false;
@@ -123,7 +123,7 @@ export default {
   
     <uip-floating-panel closeRoute="/" id="uip-global-settings">
     
-      <div class="uip-body-font uip-h-100p uip-flex uip-max-h-100p uip-overflow-hidden uip-flex uip-flex-column uip-row-gap-s uip-padding-m" style="font-size:14px">
+      <div class="uip-body-font uip-h-100p uip-flex uip-max-h-100p uip-overflow-hidden uip-flex uip-flex-column uip-row-gap-m uip-padding-m" style="font-size:14px">
        
         
           
@@ -135,20 +135,20 @@ export default {
             
             <dropdown pos="bottom left">
               <template v-slot:trigger>
-                <div class="uip-icon uip-text-l hover:uip-background-muted uip-padding-xxxs uip-border-round uip-cursor-pointer">sort</div>
+                <button class="uip-icon uip-button-default uip-padding-xxs">sort</button>
               </template>
               <template v-slot:content>
-                  <div class="uip-padding-xxs uip-flex uip-flex-column uip-row-gap-xxs uip-w-200"> 
+                  <div class="uip-padding-s uip-flex uip-flex-column uip-row-gap-xxs uip-w-200"> 
                   
                     <div class="uip-text-s uip-text-muted">{{strings.sortBy}}</div>
                   
-                    <div class="uip-flex uip-flex-between uip-gap-l hover:uip-background-muted uip-padding-xxs uip-border-round uip-flex-center uip-cursor-pointer"
+                    <div class="uip-flex uip-flex-between uip-gap-l hover:uip-background-muted uip-padding-xxs uip-border-rounder uip-flex-center uip-cursor-pointer"
                     :class="{'uip-background-grey' : order == 'desc'}" @click="order = 'desc'">
                       <div class="">{{strings.newestFirst}}</div>
                       <div v-if="order == 'desc'" class="uip-icon uip-text-l">done</div>
                     </div>
                     
-                    <div class="uip-flex uip-flex-between uip-gap-l hover:uip-background-muted uip-padding-xxs uip-border-round uip-flex-center uip-cursor-pointer" 
+                    <div class="uip-flex uip-flex-between uip-gap-l hover:uip-background-muted uip-padding-xxs uip-border-rounder uip-flex-center uip-cursor-pointer" 
                     :class="{'uip-background-grey' : order == 'asc'}" @click="order = 'asc'">
                       <div class="">{{strings.oldestFirst}}</div>
                       <div v-if="order == 'asc'" class="uip-icon uip-text-l">done</div>
@@ -160,14 +160,12 @@ export default {
             
             
             
-            <div class="uip-flex uip-padding-xxs uip-search-block uip-border-round uip-flex-grow">
-              <span class="uip-icon uip-text-muted uip-margin-right-xs uip-text-l uip-icon-medium">search</span>
+            <div class="uip-flex uip-padding-xxs uip-border-round uip-flex-grow uip-background-muted uip-border-rounder uip-flex-center">
+              <span class="uip-icon uip-text-muted">search</span>
               <input class="uip-blank-input uip-flex-grow uip-text-s" type="search" :placeholder="strings.searchErrors" v-model="search" autofocus="">
             </div>
             
-            <uip-tooltip :message="strings.refreshLog">
-              <div class="uip-icon uip-text-l hover:uip-background-muted uip-padding-xxxs uip-border-round uip-cursor-pointer" @click="fetchErrorLog()">refresh</div>
-            </uip-tooltip>
+            <button :title="strings.refreshLog" class="uip-icon uip-button-default uip-padding-xxs" @click="fetchErrorLog()">refresh</button>
             
           </div>
           
@@ -217,7 +215,7 @@ export default {
                     
                       <div class="uip-text-s uip-padding-xxxs">{{strings.stackTrace}}</div>
                       
-                      <div class="uip-flex uip-flex-column uip-padding-left-xxs">
+                      <div class="uip-flex uip-flex-column uip-padding-left-s">
                         <template v-for="(item, index) in err.stackTrace">
                           <div class="uip-text-xs uip-text-muted uip-padding-xxs uip-border-left uip-padding-left-s uip-circle-before uip-position-relative" 
                           :class="[{'uip-padding-remove-top' : index == 0},{'uip-padding-remove-bottom uip-border-transparent' : index == (err.stackTrace.length - 1)}]">{{item}}</div>
@@ -241,7 +239,7 @@ export default {
           
           
           <div class="uip-flex uip-flex-row uip-flex-between uip-flex-center uip-padding-xs uip-padding-remove-bottom uip-margin-top-s">
-            <div class="uip-text-muted">{{totalFound + ' ' + strings.results}}</div>
+            <div class="uip-text-muted uip-text-s">{{totalFound + ' ' + strings.results}}</div>
             <div class="uip-flex uip-gap-xs" v-if="totalPages > 0">
               <button @click="goBack" v-if="totalPages >= 1" class="uip-button-default uip-icon uip-search-nav-button">chevron_left</button>
               <button @click="goForward" v-if="page < totalPages" class="uip-button-default uip-icon uip-search-nav-button">chevron_right</button>

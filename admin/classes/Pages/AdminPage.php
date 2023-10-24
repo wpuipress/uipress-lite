@@ -218,25 +218,19 @@ class AdminPage
       restore_current_blog();
     }
 
-    // Create anonymous function so we can use the template string at runtime
-    $outputter = function () use ($templateString) {
-      // Output template
-      $variableFormatter = "var uipUserTemplate = {$templateString}; var uipMasterMenu = {menu:[]}";
-      wp_print_inline_script_tag($variableFormatter, ["id" => "uip-admin-page"]);
+    // Output template
+    $variableFormatter = "var uipUserTemplate = {$templateString}; var uipMasterMenu = {menu:[]}";
+    wp_print_inline_script_tag($variableFormatter, ["id" => "uip-admin-page"]);
 
-      $app = "
+    $app = "
       <style>#wpcontent{padding-left: 0;}#wpbody-content{padding-bottom:0px;}@media screen and (max-width: 782px) {.auto-fold #wpcontent { padding: 0 !important;}}</style>
       <div id='uip-ui-app' class='uip-flex uip-w-100p uip-h-viewport uip-text-normal'></div>
       ";
 
-      echo wp_kses_post($app);
+    echo wp_kses_post($app);
 
-      // Trigger pro actions
-      do_action("uip_import_pro_front");
-    };
-
-    // Output template after admin bar render
-    echo wp_kses_post($outputter());
+    // Trigger pro actions
+    do_action("uip_import_pro_front");
     add_action("admin_footer", ["UipressLite\Classes\Scripts\UipScripts", "add_uip_app"], 2);
   }
 }

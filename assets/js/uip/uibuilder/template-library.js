@@ -3,8 +3,8 @@
  * @since 3.0.0
  */
 const { __, _x, _n, _nx } = wp.i18n;
-import { deleteRemotePost } from '../v3.5/utility/functions.min.js';
-import { defineAsyncComponent, nextTick } from '../../libs/vue-esm-dev.js';
+import { deleteRemotePost } from "../v3.5/utility/functions.min.js";
+import { defineAsyncComponent, nextTick } from "../../libs/vue-esm-dev.js";
 
 const screenOverlay = {
   data() {
@@ -21,7 +21,7 @@ const screenOverlay = {
       </div>
       
       <div class="uip-position-relative uip-flex-shrink">
-        <div v-if="show" style="top:70px;bottom:0px;max-height:calc(100vh - 70px);"
+        <div v-if="show" style="top:64px;bottom:0px;max-height:calc(100vh - 64px);"
         class="uip-position-fixed uip-z-index-9 uip-w-400 uip-padding-bottom-l uip-overflow-auto uip-background-default uip-border-left">
         
           <slot name="content"/>
@@ -34,59 +34,59 @@ const screenOverlay = {
 };
 
 export default {
-  inject: [ 'uiTemplate'],
+  inject: ["uiTemplate"],
   components: {
     screenOverlay: screenOverlay,
-    Confirm: defineAsyncComponent(() => import('../v3.5/utility/confirm.min.js?ver=3.2.12')),
+    Confirm: defineAsyncComponent(() => import("../v3.5/utility/confirm.min.js?ver=3.2.12")),
   },
   data() {
     return {
       loading: true,
       themes: [],
-      search: '',
+      search: "",
       activeTemplate: false,
       imageIndex: 0,
       imageHover: false,
       draggingBlock: false,
       strings: {
-        missingMessage: __('This block no longer exists', 'uipress-lite'),
-        templateLibrary: __('Template library', 'uipress-lite'),
-        pro: __('Pro', 'uipress-lite'),
-        searchTemplates: __('Search templates', 'uipress-lite'),
-        backToAllThemes: __('Back to all templates', 'uipress-lite'),
-        includesProBlocks: __('Includes pro blocks', 'uipress-lite'),
-        createdBy: __('Created by', 'uipress-lite'),
-        addToTemplate: __('Add to template', 'uipress-lite'),
-        replaceContent: __('Replace current layout', 'uipress-lite'),
-        addAtEndOfContent: __('Add to end of layout', 'uipress-lite'),
-        requires: __('Requires uipress', 'uipress-lite'),
-        downloadcount: __('How many times this template has been downloaded', 'uipress-lite'),
-        sortBy: __('Sort by', 'uipress-lite'),
-        include: __('Include', 'uipress-lite'),
-        uiTemplates: __('UI templates', 'uipress-lite'),
-        pages: __('Pages', 'uipress-lite'),
-        sections: __('Sections', 'uipress-lite'),
-        patterns: __('Patterns', 'uipress-lite'),
-        patternTitle: __('Name', 'uipress-lite'),
-        patternType: __('Type', 'uipress-lite'),
-        savePattern: __('Save pattern', 'uipress-lite'),
-        description: __('Description', 'uipress-lite'),
-        patternIcon: __('Icon', 'uipress-lite'),
+        missingMessage: __("This block no longer exists", "uipress-lite"),
+        templateLibrary: __("Template library", "uipress-lite"),
+        pro: __("Pro", "uipress-lite"),
+        searchTemplates: __("Search templates", "uipress-lite"),
+        backToAllThemes: __("Back to all templates", "uipress-lite"),
+        includesProBlocks: __("Includes pro blocks", "uipress-lite"),
+        createdBy: __("Created by", "uipress-lite"),
+        addToTemplate: __("Add to template", "uipress-lite"),
+        replaceContent: __("Replace current layout", "uipress-lite"),
+        addAtEndOfContent: __("Add to end of layout", "uipress-lite"),
+        requires: __("Requires uipress", "uipress-lite"),
+        downloadcount: __("How many times this template has been downloaded", "uipress-lite"),
+        sortBy: __("Sort by", "uipress-lite"),
+        include: __("Include", "uipress-lite"),
+        uiTemplates: __("UI templates", "uipress-lite"),
+        pages: __("Pages", "uipress-lite"),
+        sections: __("Sections", "uipress-lite"),
+        patterns: __("Patterns", "uipress-lite"),
+        patternTitle: __("Name", "uipress-lite"),
+        patternType: __("Type", "uipress-lite"),
+        savePattern: __("Save pattern", "uipress-lite"),
+        description: __("Description", "uipress-lite"),
+        patternIcon: __("Icon", "uipress-lite"),
       },
       patternTypes: {
-        layout: { name: 'layout', label: __('Layout', 'uipress-lite') },
-        block: { name: 'block', label: __('Block', 'uipress-lite') },
+        layout: { name: "layout", label: __("Layout", "uipress-lite") },
+        block: { name: "block", label: __("Block", "uipress-lite") },
       },
-      sortby: 'newest',
+      sortby: "newest",
       typeOptions: {
         uiTemplates: {
-          label: __('UI templates', 'uipress-lite'),
-          value: 'ui-template',
+          label: __("UI templates", "uipress-lite"),
+          value: "ui-template",
           selected: true,
         },
         adminPages: {
-          label: __('Admin pages', 'uipress-lite'),
-          value: 'ui-admin-page',
+          label: __("Admin pages", "uipress-lite"),
+          value: "ui-admin-page",
           selected: true,
         },
       },
@@ -116,7 +116,7 @@ export default {
      * @since 3.2.13
      */
     returnThemes() {
-      return this.themes.filter((obj) => obj.type === 'Layout');
+      return this.themes.filter((obj) => obj.type === "Layout");
     },
 
     /**
@@ -126,7 +126,7 @@ export default {
      * @since 3.2.13
      */
     returnPages() {
-      return this.themes.filter((obj) => obj.type === 'Admin Page');
+      return this.themes.filter((obj) => obj.type === "Admin Page");
     },
 
     /**
@@ -136,7 +136,7 @@ export default {
      * @since 3.2.13
      */
     returnSections() {
-      return this.themes.filter((obj) => obj.type === 'Section');
+      return this.themes.filter((obj) => obj.type === "Section");
     },
 
     /**
@@ -159,7 +159,7 @@ export default {
       let filter = Object.values(this.typeOptions)
         .filter((option) => option.selected)
         .map((option) => option.value)
-        .join('||');
+        .join("||");
 
       if (!filter) {
         this.typeOptions.uiTemplates.selected = true;
@@ -181,7 +181,7 @@ export default {
       this.sendServerRequest(URL, formData).then((response) => {
         this.loading = false;
         if (response.error) {
-          this.uipApp.notifications.notify(response.message, 'uipress-lite', '', 'error', true);
+          this.uipApp.notifications.notify(response.message, "uipress-lite", "", "error", true);
         } else {
           this.themes = response;
         }
@@ -216,7 +216,7 @@ export default {
      * @since 3.2.13
      */
     returnThemeIndex(theme) {
-      if (!('imageIndex' in theme)) theme.imageIndex = 0;
+      if (!("imageIndex" in theme)) theme.imageIndex = 0;
       return theme.imageIndex;
     },
 
@@ -267,15 +267,15 @@ export default {
      * @since 3.2.13
      */
     returnIcon(pattern) {
-      if (pattern.icon && pattern.icon !== '') {
+      if (pattern.icon && pattern.icon !== "") {
         return pattern.icon;
       }
-      if (pattern.type === 'layout') {
-        return 'account_tree';
-      } else if (pattern.type === 'block') {
-        return 'add_box';
+      if (pattern.type === "layout") {
+        return "account_tree";
+      } else if (pattern.type === "block") {
+        return "add_box";
       }
-      return 'interests';
+      return "interests";
     },
 
     /**
@@ -286,15 +286,15 @@ export default {
      */
     async deleteThisItem(postID) {
       const confirm = await this.$refs.confirm.show({
-        title: __('Delete pattern', 'uipress-lite'),
-        message: __('Are you sure you want to delete this custom pattern?', 'uipress-lite'),
-        okButton: __('Delete pattern', 'uipress-lite'),
+        title: __("Delete pattern", "uipress-lite"),
+        message: __("Are you sure you want to delete this custom pattern?", "uipress-lite"),
+        okButton: __("Delete pattern", "uipress-lite"),
       });
 
       if (!confirm) return;
 
       await deleteRemotePost(postID);
-      this.uipApp.notifications.notify(__('Pattern deleted', 'uipress-lite'), '', 'success', true);
+      this.uipApp.notifications.notify(__("Pattern deleted", "uipress-lite"), "", "success", true);
       this.getPatterns();
     },
     /**
@@ -304,12 +304,12 @@ export default {
      */
     getPatterns() {
       const formData = new FormData();
-      formData.append('action', 'uip_get_ui_patterns_list');
-      formData.append('security', uip_ajax.security);
+      formData.append("action", "uip_get_ui_patterns_list");
+      formData.append("security", uip_ajax.security);
 
       this.sendServerRequest(uip_ajax.ajax_url, formData).then((response) => {
         if (response.error) {
-          this.uipApp.notifications.notify(response.message, 'uipress-lite', '', 'error', true);
+          this.uipApp.notifications.notify(response.message, "uipress-lite", "", "error", true);
         }
         if (response.success) {
           this.uiTemplate.patterns = response.patterns;

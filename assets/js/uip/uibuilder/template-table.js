@@ -1,9 +1,9 @@
 const { __, _x, _n, _nx } = wp.i18n;
-import { defineAsyncComponent, nextTick } from '../../libs/vue-esm-dev.js';
+import { defineAsyncComponent, nextTick } from "../../libs/vue-esm-dev.js";
 export default {
   components: {
-    contextmenu: defineAsyncComponent(() => import('../v3.5/utility/contextmenu.min.js?ver=3.2.12')),
-    Confirm: defineAsyncComponent(() => import('../v3.5/utility/confirm.min.js?ver=3.2.12')),
+    contextmenu: defineAsyncComponent(() => import("../v3.5/utility/contextmenu.min.js?ver=3.2.12")),
+    Confirm: defineAsyncComponent(() => import("../v3.5/utility/confirm.min.js?ver=3.2.12")),
   },
   data() {
     return {
@@ -15,65 +15,66 @@ export default {
       initialLoading: true,
       selectAll: false,
       showWelcome: true,
-      search: '',
+      search: "",
       strings: {
-        templates: __('Templates', 'uipress-lite'),
-        status: __('Status', 'uipress-lite'),
-        name: __('Name', 'uipress-lite'),
-        type: __('Type', 'uipress-lite'),
-        active: __('Active', 'uipress-lite'),
-        draft: __('Draft', 'uipress-lite'),
-        results: __('results', 'uipress-lite'),
-        searchUsersRoles: __('Search users and roles', 'uipress-lite'),
-        searchTemplates: __('Search templates', 'uipress-lite'),
-        templateDuplicated: __('Template duplicated', 'uipress-lite'),
-        deleteSelected: __('Delete selected', 'uipress-lite'),
-        uiBuilder: __('uiBuilder', 'uipress-lite'),
-        newTemplate: __('New template', 'uipress-lite'),
-        viewDocs: __('View docs', 'uipress-lite'),
-        settings: __('Site settings', 'uipress-lite'),
-        phpErrorLog: __('PHP error log', 'uipress-lite'),
-        setupWizard: __('Setup wizard', 'uipress-lite'),
-        globalExport: __('Global export', 'uipress-lite'),
-        templateType: __('New template', 'uipress-lite'),
-        edit: __('Edit', 'uipress-lite'),
-        duplicate: __('Duplicate', 'uipress-lite'),
-        globalImport: __('Global import', 'uipress-lite'),
-        siteSync: __('Remote sync', 'uipress-lite'),
-        new: __('New', 'uipress-lite'),
-        appliesTo: __('Applies to', 'uipress-lite'),
-        delete: __('Delete', 'uuipress-lite'),
-        documentation: __('Documentation', 'uipress-lite'),
-        siteSettings: __('Site settings', 'uipress-lite'),
-        tipsTricks: __('Tips and updates', 'uipress-lite'),
+        templates: __("Templates", "uipress-lite"),
+        status: __("Status", "uipress-lite"),
+        name: __("Name", "uipress-lite"),
+        type: __("Type", "uipress-lite"),
+        active: __("Active", "uipress-lite"),
+        draft: __("Draft", "uipress-lite"),
+        results: __("results", "uipress-lite"),
+        searchUsersRoles: __("Search users and roles", "uipress-lite"),
+        searchTemplates: __("Search templates", "uipress-lite"),
+        templateDuplicated: __("Template duplicated", "uipress-lite"),
+        deleteSelected: __("Delete selected", "uipress-lite"),
+        uiBuilder: __("uiBuilder", "uipress-lite"),
+        newTemplate: __("New template", "uipress-lite"),
+        viewDocs: __("View docs", "uipress-lite"),
+        settings: __("Site settings", "uipress-lite"),
+        phpErrorLog: __("PHP error log", "uipress-lite"),
+        setupWizard: __("Setup wizard", "uipress-lite"),
+        globalExport: __("Global export", "uipress-lite"),
+        templateType: __("New template", "uipress-lite"),
+        edit: __("Edit", "uipress-lite"),
+        duplicate: __("Duplicate", "uipress-lite"),
+        globalImport: __("Global import", "uipress-lite"),
+        siteSync: __("Remote sync", "uipress-lite"),
+        new: __("New", "uipress-lite"),
+        appliesTo: __("Applies to", "uipress-lite"),
+        delete: __("Delete", "uuipress-lite"),
+        documentation: __("Documentation", "uipress-lite"),
+        siteSettings: __("Site settings", "uipress-lite"),
+        tipsTricks: __("Tips and updates", "uipress-lite"),
+        noTemplatesYet: __("No templates found", "uipress-lite"),
       },
-      activeFilter: 'all',
+      activeFilter: "all",
       tabletabs: [
         {
-          name: 'all',
-          label: __('All templates', 'uipress-lite'),
+          name: "all",
+          label: __("All templates", "uipress-lite"),
         },
         {
-          name: 'ui-template',
-          label: __('UI Templates', 'uipress-lite'),
+          name: "ui-template",
+          label: __("UI Templates", "uipress-lite"),
         },
         {
-          name: 'ui-admin-page',
-          label: __('Admin pages', 'uipress-lite'),
+          name: "ui-admin-page",
+          label: __("Admin pages", "uipress-lite"),
         },
         {
-          name: 'ui-front-template',
-          label: __('Frontend toolbars', 'uipress-lite'),
+          name: "ui-front-template",
+          label: __("Frontend toolbars", "uipress-lite"),
         },
       ],
       activeSwitchOptions: {
         draft: {
-          value: 'draft',
-          label: __('Draft', 'uipress-lite'),
+          value: "draft",
+          label: __("Draft", "uipress-lite"),
         },
         publish: {
-          value: 'publish',
-          label: __('Active', 'uipress-lite'),
+          value: "publish",
+          label: __("Active", "uipress-lite"),
         },
       },
     };
@@ -88,7 +89,7 @@ export default {
     }
 
     if (window.parent) {
-      window.parent.postMessage({ eventName: 'uip_exit_fullscreen' }, '*');
+      window.parent.postMessage({ eventName: "uip_exit_fullscreen" }, "*");
     }
   },
   watch: {
@@ -122,7 +123,7 @@ export default {
       const templates = this.templates;
 
       // If filter is set to all just return the whole list
-      if (this.activeFilter == 'all') return templates;
+      if (this.activeFilter == "all") return templates;
 
       // Filter template list by current type
       return templates.filter((template) => template.actualType == this.activeFilter);
@@ -148,17 +149,17 @@ export default {
       if (!styleblock) return;
 
       // Stylesheet already has admin styles enqueued
-      if (styleblock.href.includes('admin-bar,')) return;
+      if (styleblock.href.includes("admin-bar,")) return;
 
-      const newLink = styleblock.href.replace('admin-menu,', 'admin-menu,admin-bar,');
-      const link = document.createElement('link');
+      const newLink = styleblock.href.replace("admin-menu,", "admin-menu,admin-bar,");
+      const link = document.createElement("link");
       link.href = newLink;
-      link.setAttribute('rel', 'stylesheet');
+      link.setAttribute("rel", "stylesheet");
 
       // Event listener function
       const onLoad = () => {
         styleblock.remove();
-        link.removeEventListener('load', onLoad); // Remove the event listener
+        link.removeEventListener("load", onLoad); // Remove the event listener
       };
 
       const head = document.head;
@@ -169,7 +170,7 @@ export default {
       }
 
       // Add the event listener
-      link.addEventListener('load', onLoad);
+      link.addEventListener("load", onLoad);
     },
 
     /**
@@ -183,11 +184,11 @@ export default {
       this.loading = true;
 
       let formData = new FormData();
-      formData.append('action', 'uip_get_ui_templates');
-      formData.append('security', uip_ajax.security);
-      formData.append('page', this.returnPage);
-      formData.append('search', this.search);
-      formData.append('filter', this.activeTableTab);
+      formData.append("action", "uip_get_ui_templates");
+      formData.append("security", uip_ajax.security);
+      formData.append("page", this.returnPage);
+      formData.append("search", this.search);
+      formData.append("filter", this.activeTableTab);
 
       const response = await this.sendServerRequest(uip_ajax.ajax_url, formData);
 
@@ -210,20 +211,20 @@ export default {
      */
     async duplicateTemplate(id) {
       let formData = new FormData();
-      formData.append('action', 'uip_duplicate_ui_template');
-      formData.append('security', uip_ajax.security);
-      formData.append('id', id);
+      formData.append("action", "uip_duplicate_ui_template");
+      formData.append("security", uip_ajax.security);
+      formData.append("id", id);
 
       const response = await this.sendServerRequest(uip_ajax.ajax_url, formData);
 
       // Catch error
       if (response.error) {
-        this.uipApp.notifications.notify(response.message, '', 'error', true);
+        this.uipApp.notifications.notify(response.message, "", "error", true);
         return;
       }
 
       // Template duplicated
-      this.uipApp.notifications.notify(this.strings.templateDuplicated, '', 'success', true);
+      this.uipApp.notifications.notify(this.strings.templateDuplicated, "", "success", true);
       this.getTemplates();
     },
 
@@ -236,20 +237,20 @@ export default {
      */
     async deleteTemplate(ids) {
       let formData = new FormData();
-      formData.append('action', 'uip_delete_ui_template');
-      formData.append('security', uip_ajax.security);
-      formData.append('templateids', ids);
+      formData.append("action", "uip_delete_ui_template");
+      formData.append("security", uip_ajax.security);
+      formData.append("templateids", ids);
 
       const response = await this.sendServerRequest(uip_ajax.ajax_url, formData);
 
       // Handle error
       if (response.error) {
-        this.uipApp.notifications.notify(response.message, '', 'error', true);
+        this.uipApp.notifications.notify(response.message, "", "error", true);
         return;
       }
 
       // Success message
-      this.uipApp.notifications.notify(response.message, '', 'success', true);
+      this.uipApp.notifications.notify(response.message, "", "success", true);
 
       const index = this.templates.findIndex((item) => item.id === ids);
 
@@ -267,16 +268,16 @@ export default {
       let self = this;
 
       let formData = new FormData();
-      formData.append('action', 'uip_create_new_ui_template');
-      formData.append('security', uip_ajax.security);
-      formData.append('templateType', templateType);
+      formData.append("action", "uip_create_new_ui_template");
+      formData.append("security", uip_ajax.security);
+      formData.append("templateType", templateType);
 
       const response = await this.sendServerRequest(uip_ajax.ajax_url, formData);
 
       // Catch error
       if (!response) return;
 
-      this.$router.push('/uibuilder/' + response.id + '/');
+      this.$router.push("/uibuilder/" + response.id + "/");
     },
 
     /**
@@ -287,9 +288,9 @@ export default {
      */
     async confirmDelete(id) {
       const confirm = await this.$refs.confirm.show({
-        title: __('Delete template', 'uipress-lite'),
-        message: __("Deleted templates can't be recovered", 'uipress-lite'),
-        okButton: __('Delete', 'uipress-lite'),
+        title: __("Delete template", "uipress-lite"),
+        message: __("Deleted templates can't be recovered", "uipress-lite"),
+        okButton: __("Delete", "uipress-lite"),
       });
       if (!confirm) return;
       this.deleteTemplate(id);
@@ -303,9 +304,9 @@ export default {
      */
     async confirmDeleteMultiple(id) {
       const confirm = await this.$refs.confirm.show({
-        title: __('Delete multiple template', 'uipress-lite'),
-        message: __("Deleted templates can't be recovered", 'uipress-lite'),
-        okButton: __('Delete', 'uipress-lite'),
+        title: __("Delete multiple template", "uipress-lite"),
+        message: __("Deleted templates can't be recovered", "uipress-lite"),
+        okButton: __("Delete", "uipress-lite"),
       });
 
       if (!confirm) return;
@@ -322,22 +323,22 @@ export default {
      */
     async updateTemplate(template) {
       let formData = new FormData();
-      formData.append('action', 'uip_update_ui_template_status');
-      formData.append('security', uip_ajax.security);
-      formData.append('templateid', template.id);
-      formData.append('status', template.status);
-      formData.append('templatefor', JSON.stringify(template.for));
+      formData.append("action", "uip_update_ui_template_status");
+      formData.append("security", uip_ajax.security);
+      formData.append("templateid", template.id);
+      formData.append("status", template.status);
+      formData.append("templatefor", JSON.stringify(template.for));
 
       const response = await this.sendServerRequest(uip_ajax.ajax_url, formData);
 
       // Handle error
       if (response.error) {
-        this.uipApp.notifications.notify(response.message, '', 'error', true);
+        this.uipApp.notifications.notify(response.message, "", "error", true);
         return;
       }
 
       // Updated message
-      this.uipApp.notifications.notify(response.message, '', 'success', true);
+      this.uipApp.notifications.notify(response.message, "", "success", true);
     },
 
     /**
@@ -347,9 +348,9 @@ export default {
      * @since 3.2.13
      */
     returnActiveIndicatorStyle(status) {
-      let style = 'border:1px solid var(--uip-color-green)';
-      if (status == 'draft') {
-        style = 'border:1px solid var(--uip-color-orange)';
+      let style = "border:1px solid var(--uip-color-green)";
+      if (status == "draft") {
+        style = "border:1px solid var(--uip-color-orange)";
       }
       return style;
     },
@@ -360,7 +361,7 @@ export default {
      * @param {Number} id - the template id to load
      */
     loadTemplate(id) {
-      this.$router.push('/uibuilder/' + id + '/');
+      this.$router.push("/uibuilder/" + id + "/");
     },
 
     /**
@@ -400,7 +401,7 @@ export default {
      */
     returnTabStyle(item) {
       if (item.name != this.activeFilter) return;
-      return { 'border-bottom': '2px solid var(--uip-color-accent)' };
+      return { "border-bottom": "2px solid var(--uip-color-accent)" };
     },
   },
   template: `
@@ -564,6 +565,11 @@ export default {
           .uip-template-table tr:last-child td:last-child {border-radius: 0 0 8px 0;}
           .uip-template-table tr:last-child td {border: none !important;}
         </component>
+        
+        
+        <div v-if="!returnTableData.length && !loading" class="uip-background-green-wash uip-padding-s uip-border-rounder">
+          {{strings.noTemplatesYet}}
+        </div>
         
         <!-- Table -->
         <TransitionGroup name="list" tag="table" class="uip-background-transparent uip-template-table" style="border-collapse: collapse;

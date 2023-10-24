@@ -4,7 +4,7 @@ use UipressLite\Classes\PostTypes\UiTemplates;
 use UipressLite\Classes\App\UipOptions;
 use UipressLite\Classes\Utils\Sanitize;
 
-!defined('ABSPATH') ? exit() : '';
+!defined("ABSPATH") ? exit() : "";
 
 class Export
 {
@@ -30,18 +30,18 @@ class Export
 
     // Remove unselected properties
     if (!$options->themeStyles) {
-      if (isset($siteSettings['theme-styles'])) {
-        unset($siteSettings['theme-styles']);
+      if (isset($siteSettings["theme-styles"])) {
+        unset($siteSettings["theme-styles"]);
       }
     }
 
     // Remove unselected properties
     if (!$options->siteSettings && $options->themeStyles) {
-      if ($siteSettings['theme-styles']) {
-        unset($siteSettings['block_preset_styles']);
-        unset($siteSettings['google_analytics']);
-        unset($siteSettings['role_redirects']);
-        unset($siteSettings['site-settings']);
+      if ($siteSettings["theme-styles"]) {
+        unset($siteSettings["block_preset_styles"]);
+        unset($siteSettings["google_analytics"]);
+        unset($siteSettings["role_redirects"]);
+        unset($siteSettings["site-settings"]);
       }
     }
 
@@ -51,9 +51,9 @@ class Export
     }
 
     $returndata = [];
-    $returndata['templates'] = $templates;
-    $returndata['siteSettings'] = $siteSettings;
-    $returndata['menus'] = $menus;
+    $returndata["templates"] = $templates;
+    $returndata["siteSettings"] = $siteSettings;
+    $returndata["menus"] = $menus;
 
     return $returndata;
   }
@@ -66,17 +66,17 @@ class Export
    */
   public static function push_to_rest()
   {
-    register_rest_route('uipress/v1', '/export', [
-      'methods' => 'GET',
-      'callback' => ['UipressLite\Classes\ImportExport\Export', 'rest_export_response'],
-      'args' => [
-        'key' => [
-          'validate_callback' => function ($param, $request, $key) {
+    register_rest_route("uipress/v1", "/export", [
+      "methods" => "GET",
+      "callback" => ["UipressLite\Classes\ImportExport\Export", "rest_export_response"],
+      "args" => [
+        "key" => [
+          "validate_callback" => function ($param, $request, $key) {
             return is_string($param);
           },
         ],
-        'sync_options' => [
-          'validate_callback' => function ($param, $request, $key) {
+        "sync_options" => [
+          "validate_callback" => function ($param, $request, $key) {
             return is_object(json_decode($param));
           },
         ],
@@ -94,36 +94,36 @@ class Export
    */
   public static function rest_export_response($request)
   {
-    $options = stripslashes($request->get_param('sync_options'));
+    $options = json_decode(stripslashes($request->get_param("sync_options")));
     $options = Sanitize::clean_input_with_code($options);
 
-    $key = sanitize_text_field($request->get_param('key'));
+    $key = sanitize_text_field($request->get_param("key"));
 
-    $siteOptions = $utils->get_uip_option('remote-sync');
+    $siteOptions = UipOptions::get("remote-sync");
 
-    if (!$key || !$options || !isset($siteOptions['key'])) {
+    if (!$key || !$options || !isset($siteOptions["key"])) {
       $returndata = [];
-      $returndata['error'] = true;
-      $returndata['message'] = __('Incorrect key', 'uipress-lite');
-      return new WP_REST_Response($returndata, 200);
+      $returndata["error"] = true;
+      $returndata["message"] = __("Incorrect key", "uipress-lite");
+      return new \WP_REST_Response($returndata, 200);
     }
 
-    if ($siteOptions['key'] != $key) {
+    if ($siteOptions["key"] != $key) {
       $returndata = [];
-      $returndata['error'] = true;
-      $returndata['message'] = __('Incorrect key', 'uipress-lite');
-      return new WP_REST_Response($returndata, 200);
+      $returndata["error"] = true;
+      $returndata["message"] = __("Incorrect key", "uipress-lite");
+      return new \WP_REST_Response($returndata, 200);
     }
 
     $export = self::get($options);
 
     $returndata = [];
-    $returndata['success'] = true;
-    $returndata['message'] = 'Success';
-    $returndata['export'] = $export;
+    $returndata["success"] = true;
+    $returndata["message"] = "Success";
+    $returndata["export"] = $export;
 
     // Return the response.
-    return new WP_REST_Response($export, 200);
+    return new \WP_REST_Response($export, 200);
   }
 
   /**
@@ -134,7 +134,7 @@ class Export
    */
   private static function templates()
   {
-    $query = UiTemplates::list(['perPage' => -1, 'search' => '']);
+    $query = UiTemplates::list(["perPage" => -1, "search" => ""]);
     $totalFound = $query->found_posts;
     $foundPosts = $query->get_posts();
 
@@ -157,11 +157,11 @@ class Export
   {
     $options = UipOptions::get();
 
-    if ($options['uip_pro']) {
-      unset($options['uip_pro']);
+    if ($options["uip_pro"]) {
+      unset($options["uip_pro"]);
     }
-    if ($options['remote-sync']) {
-      unset($options['remote-sync']);
+    if ($options["remote-sync"]) {
+      unset($options["remote-sync"]);
     }
 
     return $options;
@@ -172,36 +172,36 @@ class Export
    *
    * @since 3.2.13
    */
-  public function admin_menus()
+  public static function admin_menus()
   {
     //Get template
     $args = [
-      'post_type' => 'uip-admin-menu',
-      'posts_per_page' => -1,
-      'post_status' => ['publish', 'draft'],
+      "post_type" => "uip-admin-menu",
+      "posts_per_page" => -1,
+      "post_status" => ["publish", "draft"],
     ];
 
-    $query = new WP_Query($args);
+    $query = new \WP_Query($args);
     $totalFound = $query->found_posts;
     $foundPosts = $query->get_posts();
 
     $formattedMenus = [];
 
     foreach ($foundPosts as $item) {
-      $menuOptions = get_post_meta($item->ID, 'uip_menu_settings', true);
+      $menuOptions = get_post_meta($item->ID, "uip_menu_settings", true);
 
-      $uid = get_post_meta($item->ID, 'uip-uid', true);
+      $uid = get_post_meta($item->ID, "uip-uid", true);
       if (!$uid) {
-        $uid = uniqid('uip-', true);
-        update_post_meta($item->ID, 'uip-uid', $uid);
+        $uid = uniqid("uip-", true);
+        update_post_meta($item->ID, "uip-uid", $uid);
       }
 
       //Return data to app
       $returndata = [];
-      $returndata['name'] = get_the_title($item->ID);
-      $returndata['settings'] = $menuOptions;
-      $returndata['status'] = get_post_status($item->ID);
-      $returndata['uid'] = $uid;
+      $returndata["name"] = get_the_title($item->ID);
+      $returndata["settings"] = $menuOptions;
+      $returndata["status"] = get_post_status($item->ID);
+      $returndata["uid"] = $uid;
 
       $formattedMenus[] = $returndata;
     }

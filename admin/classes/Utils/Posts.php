@@ -1,7 +1,7 @@
 <?php
 namespace UipressLite\Classes\Utils;
 
-!defined('ABSPATH') ? exit() : '';
+!defined("ABSPATH") ? exit() : "";
 
 class Posts
 {
@@ -15,20 +15,20 @@ class Posts
    */
   public static function search(array $options, $limitToAuthor = false)
   {
-    $defaults = ['perPage' => 10, 'search' => '', 'post_type' => 'any', 'page' => 1];
+    $defaults = ["perPage" => 10, "search" => "", "post_type" => "any", "page" => 1];
     $defaults = [...$defaults, ...$options];
 
     //Get template
     $args = [
-      'post_type' => $options['post_type'],
-      's' => $options['search'],
-      'paged' => $options['page'],
-      'posts_per_page' => $options['per_page'],
+      "post_type" => $defaults["post_type"],
+      "s" => $defaults["search"],
+      "paged" => $defaults["page"],
+      "posts_per_page" => $defaults["per_page"],
     ];
 
     // Limit results to current user
-    if ($limitToAuthor == 'true') {
-      $args['author'] = get_current_user_id();
+    if ($limitToAuthor == "true") {
+      $args["author"] = get_current_user_id();
     }
 
     $query = new \WP_Query($args);
@@ -53,19 +53,19 @@ class Posts
     $post = get_post($postID);
 
     $args = [
-      'comment_status' => $post->comment_status,
-      'ping_status' => $post->ping_status,
-      'post_author' => get_current_user_id(),
-      'post_content' => $post->post_content,
-      'post_excerpt' => $post->post_excerpt,
-      'post_name' => $post->post_name,
-      'post_parent' => $post->post_parent,
-      'post_password' => $post->post_password,
-      'post_status' => 'draft',
-      'post_title' => $post->post_title . ' (' . __('copy', 'uipress-pro') . ')',
-      'post_type' => $post->post_type,
-      'to_ping' => $post->to_ping,
-      'menu_order' => $post->menu_order,
+      "comment_status" => $post->comment_status,
+      "ping_status" => $post->ping_status,
+      "post_author" => get_current_user_id(),
+      "post_content" => $post->post_content,
+      "post_excerpt" => $post->post_excerpt,
+      "post_name" => $post->post_name,
+      "post_parent" => $post->post_parent,
+      "post_password" => $post->post_password,
+      "post_status" => "draft",
+      "post_title" => $post->post_title . " (" . __("copy", "uipress-pro") . ")",
+      "post_type" => $post->post_type,
+      "to_ping" => $post->to_ping,
+      "menu_order" => $post->menu_order,
     ];
 
     $new_post_id = wp_insert_post($args);
@@ -77,7 +77,7 @@ class Posts
     $taxonomies = get_object_taxonomies($post->post_type);
 
     foreach ($taxonomies as $taxonomy) {
-      $post_terms = wp_get_object_terms($postID, $taxonomy, ['fields' => 'slugs']);
+      $post_terms = wp_get_object_terms($postID, $taxonomy, ["fields" => "slugs"]);
       wp_set_object_terms($new_post_id, $post_terms, $taxonomy, false);
     }
 
@@ -86,14 +86,14 @@ class Posts
       $sql_query = "INSERT INTO $wpdb->postmeta (post_id, meta_key, meta_value) ";
       foreach ($post_meta_infos as $meta_info) {
         $meta_key = $meta_info->meta_key;
-        if ($meta_key == '_wp_old_slug') {
+        if ($meta_key == "_wp_old_slug") {
           continue;
         }
         $meta_value = addslashes($meta_info->meta_value);
         $sql_query_sel[] = "SELECT $new_post_id, '$meta_key', '$meta_value'";
       }
 
-      $sql_query .= implode(' UNION ALL ', $sql_query_sel);
+      $sql_query .= implode(" UNION ALL ", $sql_query_sel);
       $wpdb->query($sql_query);
     }
 
@@ -111,8 +111,8 @@ class Posts
   {
     $args = [];
 
-    $output = 'objects';
-    $operator = 'and';
+    $output = "objects";
+    $operator = "and";
 
     $post_types = get_post_types($args, $output, $operator);
 
@@ -121,7 +121,7 @@ class Posts
 
     // Loop through post types and get meta keys
     foreach ($post_types as $type) {
-      $posts = get_posts(['post_type' => $type->name, 'limit' => 1]);
+      $posts = get_posts(["post_type" => $type->name, "limit" => 1]);
 
       foreach ($posts as $post) {
         $post_meta_keys = get_post_custom_keys($post->ID);
@@ -136,12 +136,12 @@ class Posts
 
     foreach ($foundColumns as $col) {
       //Keep uipress meta keys out of list
-      if (strpos($col, 'uip-') === false) {
+      if (strpos($col, "uip-") === false) {
         $temp = [];
-        $temp['name'] = $col;
-        $temp['label'] = $col;
-        $temp['active'] = true;
-        $temp['type'] = 'meta';
+        $temp["name"] = $col;
+        $temp["label"] = $col;
+        $temp["active"] = true;
+        $temp["type"] = "meta";
         $formatted[$col] = $temp;
       }
     }

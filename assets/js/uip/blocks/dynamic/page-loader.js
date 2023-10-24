@@ -10,13 +10,13 @@ export default {
       loading: false,
     };
   },
-  inject: [ 'uiTemplate'],
+  inject: ["uiTemplate"],
   created() {
     this.mountEventListeners();
   },
   onUnmounted() {
-    document.removeEventListener('uipress/app/page/load/start', this.handlePageLoadStart, { once: false });
-    document.removeEventListener('uipress/app/page/load/finish', this.handlePageLoadEnd, { once: false });
+    document.removeEventListener("uipress/app/page/load/start", this.handlePageLoadStart);
+    document.removeEventListener("uipress/app/page/load/finish", this.handlePageLoadEnd);
   },
   computed: {
     /**
@@ -26,7 +26,7 @@ export default {
      * @since 3.2.13
      */
     isLoading() {
-      if (this.uiTemplate.isPreview || this.uiTemplate.display == 'prod') {
+      if (this.uiTemplate.isPreview || this.uiTemplate.display == "prod") {
         return this.loading;
       }
       return true;
@@ -37,7 +37,7 @@ export default {
      * @since 3.2.13
      */
     getImage() {
-      let temp = this.get_block_option(this.block, 'block', 'loaderImage');
+      let temp = this.get_block_option(this.block, "block", "loaderImage");
       if (!this.isObject(temp)) return false;
       if (temp.url) return temp.url;
       return false;
@@ -50,8 +50,8 @@ export default {
      * @since 3.2.13
      */
     mountEventListeners() {
-      document.addEventListener('uipress/app/page/load/start', this.handlePageLoadStart, { once: false });
-      document.addEventListener('uipress/app/page/load/finish', this.handlePageLoadEnd, { once: false });
+      document.addEventListener("uipress/app/page/load/start", this.handlePageLoadStart);
+      document.addEventListener("uipress/app/page/load/finish", this.handlePageLoadEnd);
     },
 
     /**
@@ -61,6 +61,11 @@ export default {
      */
     handlePageLoadStart() {
       this.loading = true;
+
+      // Add a timeout to stop loading automatically
+      setTimeout(() => {
+        this.loading = false;
+      }, 2000);
     },
 
     /**
