@@ -91,7 +91,10 @@ export default {
         .filter(([key, item]) => item.type === "color" || !("name" in item))
         .map(([key, item]) => {
           item.name = key;
+<<<<<<< HEAD
           item.type = "color";
+=======
+>>>>>>> main
           return item;
         });
     },
