@@ -461,7 +461,7 @@ export default {
                   </div>
                 </div>
                 
-                <imageBGSelect :value="styles.backgroundImage" :returnData="function(d){styles.backgroundImage = d}"/>
+                <imageBGSelect :value="styles.backgroundImage" :returnData="(d)=>{styles.backgroundImage = d}"/>
                 
               </div>
               

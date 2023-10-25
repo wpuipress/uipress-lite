@@ -1,9 +1,9 @@
 const { __, _x, _n, _nx } = wp.i18n;
-import { defineAsyncComponent, nextTick } from '../../libs/vue-esm.js';
+import { defineAsyncComponent, nextTick } from "../../libs/vue-esm.js";
 export default {
   components: {
-    imageSelect: defineAsyncComponent(() => import('../v3.5/styles/image-select.min.js?ver=3.3.00')),
-    colorBox: defineAsyncComponent(() => import('../v3.5/utility/color-box.min.js?ver=3.3.00')),
+    imageSelect: defineAsyncComponent(() => import("../v3.5/styles/image-select.min.js?ver=3.3.00")),
+    colorBox: defineAsyncComponent(() => import("../v3.5/utility/color-box.min.js?ver=3.3.00")),
   },
   props: {
     returnData: Function,
@@ -13,28 +13,45 @@ export default {
   data() {
     return {
       img: {
-        url: '',
+        url: "",
         dynamic: false,
-        dynamicKey: '',
+        dynamicKey: "",
         loading: false,
         sizing: {},
       },
       strings: {
-        imageSelect: __('Image select', 'seql'),
+        imageSelect: __("Image select", "seql"),
       },
     };
   },
-  
+
   watch: {
+    /**
+     * Watches for changes to the input and returns the value
+     *
+     * @since 3.2.13
+     */
+    value: {
+      handler(newValue, oldValue) {
+        if (this.updating) return;
+        this.formatInput();
+      },
+      deep: true,
+      immediate: true,
+    },
+
+    /**
+     * Watches image input
+     *
+     * @type {Object}
+     */
     img: {
       handler(newValue, oldValue) {
+        if (this.updating) return;
         this.returnData(this.img);
       },
       deep: true,
     },
-  },
-  mounted() {
-    this.formatInput();
   },
   computed: {
     /**
@@ -55,9 +72,24 @@ export default {
      */
     imgReset() {
       return {
-        url: '',
+        url: "",
         dynamic: false,
-        dynamicKey: '',
+        dynamicKey: "",
+        loading: false,
+        sizing: {},
+      };
+    },
+
+    /**
+     * Returns default value
+     *
+     * @since 3.2.0
+     */
+    returnDefault() {
+      return {
+        url: "",
+        dynamic: false,
+        dynamicKey: "",
         loading: false,
         sizing: {},
       };
@@ -72,8 +104,7 @@ export default {
      * @since 3.2.13
      */
     formatInput() {
-      if (!this.isObject(this.value)) return;
-      this.img = { ...this.img, ...this.value };
+      this.img = this.isObject(this.value) ? this.value : this.returnDefault;
     },
   },
   template: `

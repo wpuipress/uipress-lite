@@ -97,7 +97,7 @@ export default {
       const screenWidth = window.innerWidth;
 
       let dynamic = this.formatDynamicMatches;
-      let style = this.returnBlockStylesAsCss(this.block);
+      let style = this.returnBlockStylesAsCss(dynamic);
       let custom = this.returnCustomCSS;
       return style + custom;
     },

@@ -9,7 +9,7 @@ export default {
   data() {
     return {
       strings: {
-        add: __('Add', 'uipress-lite'),
+        add: __("Add", "uipress-lite"),
       },
     };
   },

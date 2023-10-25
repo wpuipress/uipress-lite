@@ -1,20 +1,21 @@
 const { __, _x, _n, _nx } = wp.i18n;
-import BackgroundPositions from '../v3.5/lists/background_positions.min.js';
-import BackgroundRepeat from '../v3.5/lists/background_repeat.min.js';
-import BackgroundSize from '../v3.5/lists/background_size.min.js';
+import BackgroundPositions from "../v3.5/lists/background_positions.min.js";
+import BackgroundRepeat from "../v3.5/lists/background_repeat.min.js";
+import BackgroundSize from "../v3.5/lists/background_size.min.js";
 
 export default {
   props: {
     returnData: Function,
     value: Object,
   },
-  
+
   data() {
     return {
+      updating: false,
       option: {
-        position: '',
-        repeat: 'no-repeat',
-        size: 'cover',
+        position: "",
+        repeat: "no-repeat",
+        size: "cover",
       },
       options: {
         positions: BackgroundPositions,
@@ -22,13 +23,26 @@ export default {
         size: BackgroundSize,
       },
       strings: {
-        position: __('Position', 'uipress-lite'),
-        repeat: __('Repeat', 'uipress-lite'),
-        size: __('Size', 'uipress-lite'),
+        position: __("Position", "uipress-lite"),
+        repeat: __("Repeat", "uipress-lite"),
+        size: __("Size", "uipress-lite"),
       },
     };
   },
   watch: {
+    /**
+     * Watches for changes to the input and returns the value
+     *
+     * @since 3.2.13
+     */
+    value: {
+      handler(newValue, oldValue) {
+        if (this.updating) return;
+        this.formatInput();
+      },
+      deep: true,
+      immediate: true,
+    },
     /**
      * Watches for changes to the options and returns the value
      *
@@ -36,15 +50,25 @@ export default {
      */
     option: {
       handler(newValue, oldValue) {
+        if (this.updating) return;
         this.returnData(this.option);
       },
       deep: true,
     },
   },
-  mounted() {
-    this.formatInput(this.value);
-  },
   computed: {
+    /**
+     * Returns default value
+     *
+     * @since 3.2.0
+     */
+    returnDefault() {
+      return {
+        position: "",
+        repeat: "no-repeat",
+        size: "cover",
+      };
+    },
     /**
      * Returns options
      *
@@ -61,9 +85,11 @@ export default {
      * @param {Mixed} value - the input value
      * @since 3.2.13
      */
-    formatInput(value) {
-      if (!this.isObject(value)) return;
-      this.option = { ...this.option, ...value };
+    async formatInput() {
+      this.updating = true;
+      this.option = this.isObject(this.value) ? this.value : this.returnDefault;
+      await this.$nextTick();
+      this.updating = false;
     },
   },
   template: `

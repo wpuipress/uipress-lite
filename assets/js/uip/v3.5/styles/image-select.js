@@ -1,8 +1,8 @@
 const { __, _x, _n, _nx } = wp.i18n;
-import { defineAsyncComponent, nextTick } from '../../../libs/vue-esm.js';
+import { defineAsyncComponent, nextTick } from "../../../libs/vue-esm.js";
 export default {
   components: {
-    mediaLibrary: defineAsyncComponent(() => import('../utility/media-library.min.js?ver=3.3.00')),
+    mediaLibrary: defineAsyncComponent(() => import("../utility/media-library.min.js?ver=3.3.00")),
   },
   props: {
     returnData: Function,
@@ -15,45 +15,61 @@ export default {
       loading: true,
       hasPositioning: true,
       img: {
-        url: '',
+        url: "",
         dynamic: false,
-        dynamicKey: '',
+        dynamicKey: "",
         loading: false,
         sizing: {},
       },
       //maxUpload: this.uipApp.data.options.maxUpload,
       //fileTypes: this.uipApp.data.options.uploadTypes,
-      fileType: '',
-      manualURL: '',
+      fileType: "",
+      manualURL: "",
       uploading: false,
+      updating: false,
       strings: {
-        dynamicData: __('Dynamic data', 'uipress-lite'),
-        currentValue: __('Current value', 'uipress-lite'),
-        select: __('select', 'uipress-lite'),
-        dataPos: __('Dynamic data position', 'uipress-lite'),
-        replace: __('Replace', 'uipress-lite'),
-        edit: __('Edit', 'uipress-lite'),
-        upload: __('Upload', 'uipress-lite'),
-        uploading: __('Uploading', 'uipress-lite'),
-        library: __('Library', 'uipress-lite'),
-        dynamic: __('Dynamic', 'uipress-lite'),
-        chooseImage: __('Add image', 'uipress-lite'),
-        backgroundImage: __('Image', 'uipress-lite'),
-        addImage: __('Add image', 'uipress-lite'),
-        url: __('URL', 'uipress-lite'),
+        dynamicData: __("Dynamic data", "uipress-lite"),
+        currentValue: __("Current value", "uipress-lite"),
+        select: __("select", "uipress-lite"),
+        dataPos: __("Dynamic data position", "uipress-lite"),
+        replace: __("Replace", "uipress-lite"),
+        edit: __("Edit", "uipress-lite"),
+        upload: __("Upload", "uipress-lite"),
+        uploading: __("Uploading", "uipress-lite"),
+        library: __("Library", "uipress-lite"),
+        dynamic: __("Dynamic", "uipress-lite"),
+        chooseImage: __("Add image", "uipress-lite"),
+        backgroundImage: __("Image", "uipress-lite"),
+        addImage: __("Add image", "uipress-lite"),
+        url: __("URL", "uipress-lite"),
       },
     };
   },
   watch: {
+    /**
+     * Watches for changes to the input and returns the value
+     *
+     * @since 3.2.13
+     */
+    value: {
+      handler(newValue, oldValue) {
+        if (this.updating) return;
+        this.formatInput();
+      },
+      deep: true,
+      immediate: true,
+    },
+
     img: {
       handler(newValue, oldValue) {
+        if (this.updating) return;
         this.returnData(this.img);
       },
       deep: true,
     },
     manualURL: {
       handler(newValue, oldValue) {
-        if (newValue != '') {
+        if (newValue != "") {
           this.removeDynamicItem();
           this.img.url = newValue;
         }
@@ -61,40 +77,42 @@ export default {
     },
   },
   mounted() {
-    this.formatInput(this.value);
-
     if (this.args) {
       if (this.isObject(this.args)) {
-        if ('hasPositioning' in this.args) {
+        if ("hasPositioning" in this.args) {
           this.hasPositioning = this.args.hasPositioning;
         }
       }
     }
   },
   computed: {
-    returnValue() {
-      return this.value;
-    },
+    /**
+     * Returns a default image set
+     *
+     * @since 3.3.0
+     */
     imgReset() {
       return {
-        url: '',
+        url: "",
         dynamic: false,
-        dynamicKey: '',
+        dynamicKey: "",
         loading: false,
         sizing: {},
       };
     },
   },
   methods: {
-    formatInput(value) {
-      if (typeof value === 'undefined') {
-        return;
-      }
-      if (this.isObject(value)) {
-        this.img = { ...this.img, ...this.returnValue };
-        return;
-      }
+    /**
+     * Injects value to component
+     *
+     * @returns {void}
+     *
+     * @since 3.2.13
+     */
+    formatInput() {
+      this.img = this.isObject(this.value) ? this.value : this.imgReset;
     },
+
     /**
      * Opens the media library and waits for user selection
      *
@@ -107,27 +125,28 @@ export default {
         this.img.url = media.source_url;
       }
     },
-    chooseItem(item) {
-      this.img.dynamic = true;
-      this.img.dynamicType = 'img';
-      this.img.dynamicKey = item.key;
-      this.img.url = item.value;
 
-      this.returnData({ url: this.img.value, dynamic: this.img.dynamic, dynamicKey: this.img.dynamicKey, dynamicPos: this.img.dynamicPos });
-    },
+    /**
+     * Removes a dynamic item
+     *
+     * @since 3.3.0
+     */
     removeDynamicItem() {
       this.img.dynamic = false;
-      this.img.dynamicKey = '';
-      this.img.url = '';
+      this.img.dynamicKey = "";
+      this.img.url = "";
 
       this.returnData({ url: this.img.value, dynamic: this.img.dynamic, dynamicKey: this.img.dynamicKey, dynamicPos: this.img.dynamicPos });
     },
+
+    /**
+     * Returns background image
+     *
+     * @since 3.3.0
+     */
     returnBackgroundImage() {
       let img = this.img.url;
-      if (img) {
-        return `background-image: url(${img})`;
-      }
-      return '';
+      return img ? `background-image: url(${img})` : "";
     },
   },
   template: `
