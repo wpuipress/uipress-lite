@@ -127,8 +127,22 @@ class uipress_compiler
       $plugin_version = floatval($plugin_version);
       if ($plugin_version < 3.2) {
         deactivate_plugins($plugin_slug);
+        add_action("admin_head", [$this, "flag_uipress_pro_version_error"], 99);
       }
     }
+  }
+
+  /**
+   * Flags deactivation of uipress pro
+   *
+   * @since 3.3.0
+   */
+  public function flag_uipress_pro_version_error()
+  {
+    $class = "notice notice-warning";
+    $message = __("uiPress Pro needs to be updated to work with version uiPress lite version 3.3", "uipress-pro");
+
+    printf('<div class="%1$s"><p>%2$s</p></div>', esc_attr($class), esc_html($message));
   }
 }
 
