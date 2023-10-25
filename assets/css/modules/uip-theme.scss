@@ -419,6 +419,7 @@ table.widefat {
   border: none;
   margin-top: var(--uip-margin-m);
   border-collapse: collapse;
+  background: transparent;
 
   // Table head
   thead,
@@ -435,7 +436,9 @@ table.widefat {
   tfoot td {
     border-bottom: 1px solid var(--uip-border-color);
   }
-
+  tr {
+    background: transparent;
+  }
   // Table head links
   th.sortable a,
   th.sorted a {

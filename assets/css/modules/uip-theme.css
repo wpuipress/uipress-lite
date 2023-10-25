@@ -481,6 +481,7 @@ table.widefat {
   border: none;
   margin-top: var(--uip-margin-m);
   border-collapse: collapse;
+  background: transparent;
 }
 table.wp-list-table-test thead th,
 table.wp-list-table-test thead td,
@@ -500,6 +501,10 @@ table.wp-list-table-test tfoot td,
 table.widefat tfoot th,
 table.widefat tfoot td {
   border-bottom: 1px solid var(--uip-border-color);
+}
+table.wp-list-table-test tr,
+table.widefat tr {
+  background: transparent;
 }
 table.wp-list-table-test th.sortable a,
 table.wp-list-table-test th.sorted a,
