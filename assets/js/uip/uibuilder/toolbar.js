@@ -3,13 +3,13 @@
  * @since 3.0.0
  */
 const { __, _x, _n, _nx } = wp.i18n;
-import { defineAsyncComponent, nextTick } from '../../libs/vue-esm-dev.js';
-import { validDateTemplate } from '../v3.5/utility/functions.min.js';
+import { defineAsyncComponent, nextTick } from "../../libs/vue-esm-dev.js";
+import { validDateTemplate } from "../v3.5/utility/functions.min.js";
 export default {
   components: {
-    templateHistory: defineAsyncComponent(() => import('./history.min.js?ver=3.3.00')),
+    templateHistory: defineAsyncComponent(() => import("./history.min.js?ver=3.3.00")),
   },
-  inject: ['uiTemplate'],
+  inject: ["uiTemplate"],
   data() {
     return {
       templateID: this.$route.params.templateID,
@@ -18,83 +18,83 @@ export default {
       allUiTemplates: [],
       ui: {
         strings: {
-          backToList: __('Back to template list', 'uipress-lite'),
-          zoomIn: __('Zoom in', 'uipress-lite'),
-          zoomOut: __('Zoom out', 'uipress-lite'),
-          darkMode: __('Dark mode', 'uipress-lite'),
-          preview: __('Preview', 'uipress-lite'),
-          import: __('Import template', 'uipress-lite'),
-          export: __('Export template', 'uipress-lite'),
-          templateLibrary: __('Template Library', 'uipress-lite'),
-          mobile: __('Mobile', 'uipress-lite'),
-          desktop: __('Desktop', 'uipress-lite'),
-          tablet: __('Tablet', 'uipress-lite'),
-          saveTemplate: __('Save', 'uipress-lite'),
-          help: __('Help', 'uipress-lite'),
-          docs: __('Documentation and guides', 'uipress-lite'),
-          draft: __('Draft', 'uipress-lite'),
-          newTemplate: __('New template', 'uipress-lite'),
-          recentTemplates: __('Recent templates', 'uipress-lite'),
-          templateName: __('Template name', 'uipress-lite'),
-          active: __('Active', 'uipress-lite'),
-          draft: __('Draft', 'uipress-lite'),
-          exitBuilder: __('Exit builder', 'uipress-lite'),
-          patterns: __('Patterns', 'uipress-lite'),
-          library: __('Library', 'uipress-lite'),
-          siteSettings: __('Site settings', 'uipress-lite'),
-          settings: __('Settings', 'uipress-lite'),
-          templateSettings: __('Template settings', 'uipress-lite'),
-          next: __('Next', 'uipress-lite'),
-          previous: __('Previous', 'uipress-lite'),
-          done: __('Done', 'uipress-lite'),
-          close: __('Close', 'uipress-lite'),
-          tips: __('Tips and updates', 'uipress-lite'),
-          userInterface: __('User interface', 'uipress-lite'),
-          adminPage: __('Admin Page', 'uipress-lite'),
-          toolBar: __('Frontend toolbar', 'uipress-lite'),
+          backToList: __("Back to template list", "uipress-lite"),
+          zoomIn: __("Zoom in", "uipress-lite"),
+          zoomOut: __("Zoom out", "uipress-lite"),
+          darkMode: __("Dark mode", "uipress-lite"),
+          preview: __("Preview", "uipress-lite"),
+          import: __("Import template", "uipress-lite"),
+          export: __("Export template", "uipress-lite"),
+          templateLibrary: __("Template Library", "uipress-lite"),
+          mobile: __("Mobile", "uipress-lite"),
+          desktop: __("Desktop", "uipress-lite"),
+          tablet: __("Tablet", "uipress-lite"),
+          saveTemplate: __("Save", "uipress-lite"),
+          help: __("Help", "uipress-lite"),
+          docs: __("Documentation and guides", "uipress-lite"),
+          draft: __("Draft", "uipress-lite"),
+          newTemplate: __("New template", "uipress-lite"),
+          recentTemplates: __("Recent templates", "uipress-lite"),
+          templateName: __("Template name", "uipress-lite"),
+          active: __("Active", "uipress-lite"),
+          draft: __("Draft", "uipress-lite"),
+          exitBuilder: __("Exit builder", "uipress-lite"),
+          patterns: __("Patterns", "uipress-lite"),
+          library: __("Library", "uipress-lite"),
+          siteSettings: __("Site settings", "uipress-lite"),
+          settings: __("Settings", "uipress-lite"),
+          templateSettings: __("Template settings", "uipress-lite"),
+          next: __("Next", "uipress-lite"),
+          previous: __("Previous", "uipress-lite"),
+          done: __("Done", "uipress-lite"),
+          close: __("Close", "uipress-lite"),
+          tips: __("Tips and updates", "uipress-lite"),
+          userInterface: __("User interface", "uipress-lite"),
+          adminPage: __("Admin Page", "uipress-lite"),
+          toolBar: __("Frontend toolbar", "uipress-lite"),
         },
       },
       previewOptions: [
         {
-          value: 'builder',
-          label: __('Builder', 'uipress-lite'),
+          value: "builder",
+          label: __("Builder", "uipress-lite"),
         },
         {
-          value: 'preview',
-          label: __('Preview', 'uipress-lite'),
+          value: "preview",
+          label: __("Preview", "uipress-lite"),
         },
       ],
     };
   },
   watch: {
-    'uipApp.data.templateDarkMode': {
+    "uipApp.data.templateDarkMode": {
       handler(newValue, oldValue) {
-        const theme = newValue ? 'dark' : 'light';
-        const frames = document.querySelectorAll('iframe');
+        const theme = newValue ? "dark" : "light";
+        const frames = document.querySelectorAll("iframe");
         if (!frames) return;
 
         frames.forEach((frame) => {
-          frame.contentWindow.document.documentElement.setAttribute('data-theme', theme);
+          frame.contentWindow.document.documentElement.setAttribute("data-theme", theme);
         });
       },
       deep: true,
     },
-    'uipApp.data.userPrefs.darkTheme': {
+    "uipApp.data.userPrefs.darkTheme": {
       handler(newValue, oldValue) {
         //Only adjust preview dark mode if we are not in prod
-        if (this.uiTemplate.display === 'prod') return;
+        if (this.uiTemplate.display === "prod") return;
         this.uipApp.data.templateDarkMode = newValue;
       },
       deep: true,
     },
-    '$route.params.templateID': {
+    "$route.params.templateID": {
       handler() {
         this.templateID = this.$route.params.templateID;
       },
     },
   },
   beforeUnmount() {
-    window.removeEventListener('keydown', this.handleCommandS);
+    window.removeEventListener("keydown", this.handleCommandS);
   },
   mounted() {
     this.mountShortCuts();
@@ -107,7 +107,7 @@ export default {
      */
     returnSettingsLink() {
       let ID = this.$route.params.templateID;
-      return '/uibuilder/' + ID + '/settings/template';
+      return "/uibuilder/" + ID + "/settings/template";
     },
 
     /**
@@ -117,7 +117,7 @@ export default {
      */
     returnLoadStyle() {
       if (this.saving) {
-        return 'opacity:0;';
+        return "opacity:0;";
       }
     },
   },
@@ -128,7 +128,7 @@ export default {
      * @since 3.2.13
      */
     mountShortCuts() {
-      window.addEventListener('keydown', this.handleCommandS);
+      window.addEventListener("keydown", this.handleCommandS);
     },
 
     /**
@@ -151,10 +151,10 @@ export default {
     detectOperatingSystem() {
       const userAgent = window.navigator.userAgent.toLowerCase();
 
-      if (userAgent.includes('mac') || userAgent.includes('ipad') || userAgent.includes('iphone')) {
-        return 'Mac';
+      if (userAgent.includes("mac") || userAgent.includes("ipad") || userAgent.includes("iphone")) {
+        return "Mac";
       } else {
-        return 'Windows';
+        return "Windows";
       }
     },
 
@@ -171,19 +171,19 @@ export default {
       };
 
       const template = JSON.stringify(templateObject, (k, v) =>
-        v === 'true' ? 'uiptrue' : v === true ? 'uiptrue' : v === 'false' ? 'uipfalse' : v === false ? 'uipfalse' : v === '' ? 'uipblank' : v
+        v === "true" ? "uiptrue" : v === true ? "uiptrue" : v === "false" ? "uipfalse" : v === false ? "uipfalse" : v === "" ? "uipblank" : v
       );
       //Build form data for fetch request
       let formData = new FormData();
-      formData.append('action', 'uip_save_ui_template');
-      formData.append('security', uip_ajax.security);
-      formData.append('templateID', this.templateID);
-      formData.append('template', template);
+      formData.append("action", "uip_save_ui_template");
+      formData.append("security", uip_ajax.security);
+      formData.append("templateID", this.templateID);
+      formData.append("template", template);
 
       const response = await this.sendServerRequest(uip_ajax.ajax_url, formData);
 
       if (response.error) {
-        this.uipApp.notifications.notify(__('Unable to save template', 'uipress-lite'), response.message, '', 'error', true);
+        this.uipApp.notifications.notify(__("Unable to save template", "uipress-lite"), response.message, "", "error", true);
         this.saving = false;
         return false;
       }
@@ -191,7 +191,7 @@ export default {
       if (response.success) {
         await this.saveStylePresets();
 
-        this.uipApp.notifications.notify(__('Template saved', 'uipress-lite'), '', 'success', true);
+        this.uipApp.notifications.notify(__("Template saved", "uipress-lite"), "", "success", true);
         this.unsavedChanges = false;
         this.saving = false;
         return true;
@@ -205,14 +205,14 @@ export default {
      */
     async saveStylePresets() {
       const options = JSON.stringify(this.uipApp.data.options.block_preset_styles, (k, v) =>
-        v === 'true' ? 'uiptrue' : v === true ? 'uiptrue' : v === 'false' ? 'uipfalse' : v === false ? 'uipfalse' : v === '' ? 'uipblank' : v
+        v === "true" ? "uiptrue" : v === true ? "uiptrue" : v === "false" ? "uipfalse" : v === false ? "uipfalse" : v === "" ? "uipblank" : v
       );
 
       let formData = new FormData();
-      formData.append('action', 'uip_save_site_option');
-      formData.append('security', uip_ajax.security);
-      formData.append('option', options);
-      formData.append('optionName', 'block_preset_styles');
+      formData.append("action", "uip_save_site_option");
+      formData.append("security", uip_ajax.security);
+      formData.append("option", options);
+      formData.append("optionName", "block_preset_styles");
 
       await this.sendServerRequest(uip_ajax.ajax_url, formData);
       return true;
@@ -224,32 +224,32 @@ export default {
      * @since 3.2.13
      */
     exportTemplate() {
-      let namer = 'uip-ui-template-';
+      let namer = "uip-ui-template-";
       let layout = JSON.stringify({ uipLayout: this.uiTemplate.content });
 
       let name = this.uiTemplate.globalSettings.name;
 
       let today = new Date();
-      let dd = String(today.getDate()).padStart(2, '0');
-      let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+      let dd = String(today.getDate()).padStart(2, "0");
+      let mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
       let yyyy = today.getFullYear();
 
-      let date_today = mm + '-' + dd + '-' + yyyy;
-      let filename = namer + name + '-' + date_today + '.json';
+      let date_today = mm + "-" + dd + "-" + yyyy;
+      let filename = namer + name + "-" + date_today + ".json";
 
-      let dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(layout);
+      let dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(layout);
       let dlAnchorElem = this.$refs.templateexport;
-      dlAnchorElem.setAttribute('href', dataStr);
-      dlAnchorElem.setAttribute('download', filename);
+      dlAnchorElem.setAttribute("href", dataStr);
+      dlAnchorElem.setAttribute("download", filename);
       dlAnchorElem.click();
-      let message = __('Layout exported', 'uipress-lite');
-      if (type == 'block') {
-        message = __('Block exported', 'uipress-lite');
+      let message = __("Layout exported", "uipress-lite");
+      if (type == "block") {
+        message = __("Block exported", "uipress-lite");
       }
-      if (type == 'blockcontent') {
-        message = __('Block content exported', 'uipress-lite');
+      if (type == "blockcontent") {
+        message = __("Block content exported", "uipress-lite");
       }
-      this.uipApp.notifications.notify(message, '', 'success', true);
+      this.uipApp.notifications.notify(message, "", "success", true);
     },
 
     /**
@@ -259,26 +259,26 @@ export default {
      * @since 3.2.13
      */
     importTemplate(event) {
-      let notiID = this.uipApp.notifications.notify(__('Importing layout', 'uipress-lite'), '', 'default', false, true);
+      let notiID = this.uipApp.notifications.notify(__("Importing layout", "uipress-lite"), "", "default", false, true);
       let fileInput = event.target;
       let thefile = fileInput.files[0];
 
-      if (thefile.type != 'application/json') {
-        this.uipApp.notifications.notify(__('Templates must be in valid JSON format', 'uipress-lite'), '', 'error', true, false);
+      if (thefile.type != "application/json") {
+        this.uipApp.notifications.notify(__("Templates must be in valid JSON format", "uipress-lite"), "", "error", true, false);
         this.uipApp.notifications.remove(notiID);
         return;
       }
 
       if (thefile.size > 1000000) {
-        this.uipApp.notifications.notify(__('Uploaded file is too big', 'uipress-lite'), '', 'error', true, false);
+        this.uipApp.notifications.notify(__("Uploaded file is too big", "uipress-lite"), "", "error", true, false);
         this.uipApp.notifications.remove(notiID);
         return;
       }
 
       let reader = new FileReader();
-      reader.readAsText(thefile, 'UTF-8');
+      reader.readAsText(thefile, "UTF-8");
 
-      reader.onload = function (evt) {
+      reader.onload = (evt) => {
         let json_settings = evt.target.result;
         let parsed;
 
@@ -286,30 +286,30 @@ export default {
         try {
           parsed = JSON.parse(json_settings);
         } catch (error) {
-          this.uipApp.notifications.notify(error, '', 'error', true, false);
+          this.uipApp.notifications.notify(error, "", "error", true, false);
           this.uipApp.notifications.remove(notiID);
           return;
         }
 
         if (parsed != null) {
           if (!Array.isArray(parsed) && !this.isObject(parsed)) {
-            this.uipApp.notifications.notify('Template is not valid', '', 'error', true, false);
+            this.uipApp.notifications.notify("Template is not valid", "", "error", true, false);
             this.uipApp.notifications.remove(notiID);
             return;
           }
 
           let temper;
-          let message = __('Template imported', 'uipress-lite');
+          let message = __("Template imported", "uipress-lite");
           if (Array.isArray(parsed)) {
             temper = parsed;
-          } else if ('uipLayout' in parsed) {
+          } else if ("uipLayout" in parsed) {
             if (Array.isArray(parsed.uipLayout)) {
               temper = parsed.uipLayout;
             } else {
               temper = [parsed.uipLayout];
             }
           } else {
-            this.uipApp.notifications.notify(__('Template mismatch', 'uipress-lite'), '', 'error', true, false);
+            this.uipApp.notifications.notify(__("Template mismatch", "uipress-lite"), "", "error", true, false);
             this.uipApp.notifications.remove(notiID);
             return;
           }
@@ -318,15 +318,15 @@ export default {
             if (!response.includes(false)) {
               this.uiTemplate.content = temper;
 
-              this.uipApp.notifications.notify(message, '', 'success', true, false);
+              this.uipApp.notifications.notify(message, "", "success", true, false);
               this.uipApp.notifications.remove(notiID);
             } else {
-              this.uipApp.notifications.notify(__('File is not a valid JSON template', 'uipress-lite'), '', 'error', true, false);
+              this.uipApp.notifications.notify(__("File is not a valid JSON template", "uipress-lite"), "", "error", true, false);
               this.uipApp.notifications.remove(notiID);
             }
           });
         } else {
-          this.uipApp.notifications.notify(__('JSON parse failed', 'uipress-lite'), '', 'error', true, false);
+          this.uipApp.notifications.notify(__("JSON parse failed", "uipress-lite"), "", "error", true, false);
           this.uipApp.notifications.remove(notiID);
         }
       };
@@ -339,15 +339,15 @@ export default {
      */
     async createNewUI() {
       let formData = new FormData();
-      formData.append('action', 'uip_create_new_ui_template');
-      formData.append('security', uip_ajax.security);
-      formData.append('templateType', 'ui-template');
+      formData.append("action", "uip_create_new_ui_template");
+      formData.append("security", uip_ajax.security);
+      formData.append("templateType", "ui-template");
 
       const response = await this.sendServerRequest(uip_ajax.ajax_url, formData);
 
-      this.uipApp.notifications.notify(__('New template created', 'uipress-lite'), '', 'success', true, false);
-      this.$router.push('/');
-      this.$router.push('/uibuilder/' + response.id + '/');
+      this.uipApp.notifications.notify(__("New template created", "uipress-lite"), "", "success", true, false);
+      this.$router.push("/");
+      this.$router.push("/uibuilder/" + response.id + "/");
     },
   },
   template: `
