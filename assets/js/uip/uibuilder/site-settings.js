@@ -3,24 +3,24 @@
  * @since 3.0.0
  */
 const { __, _x, _n, _nx } = wp.i18n;
-import { defineAsyncComponent, nextTick } from '../../libs/vue-esm.js';
+import { defineAsyncComponent, nextTick } from "../../libs/vue-esm.js";
 export default {
   components: {
-    globalVariables: defineAsyncComponent(() => import('./variables.min.js?ver=3.3.00')),
+    globalVariables: defineAsyncComponent(() => import("./variables.min.js?ver=3.3.00")),
   },
   data() {
     return {
       loading: false,
       globalSettings: {},
-      search: '',
+      search: "",
       render: true,
       ui: {
         strings: {
-          siteSettings: __('Site settings', 'uipress-lite'),
-          saveSettings: __('Save settings', 'uipress-lite'),
-          settingsSaved: __('Settings saved', 'uipress-lite'),
-          proOption: __('This is a pro option. Upgrade to unlock', 'uipress-lite'),
-          searchSettings: __('Search settings', 'uipress-lite'),
+          siteSettings: __("Site settings", "uipress-lite"),
+          saveSettings: __("Save settings", "uipress-lite"),
+          settingsSaved: __("Settings saved", "uipress-lite"),
+          proOption: __("This is a pro option. Upgrade to unlock", "uipress-lite"),
+          searchSettings: __("Search settings", "uipress-lite"),
         },
       },
     };
@@ -31,14 +31,14 @@ export default {
     this.getSettings();
   },
   watch: {
-    'uiTemplate.globalSettings': {
+    "uiTemplate.globalSettings": {
       handler(newValue, oldValue) {
         return;
         this.checkTemplateApplies();
       },
       deep: true,
     },
-    'uiTemplate.globalSettings': {
+    "uiTemplate.globalSettings": {
       handler(newValue, oldValue) {
         return;
         this.checkTemplateApplies();
@@ -56,8 +56,8 @@ export default {
       this.loading = true;
 
       let formData = new FormData();
-      formData.append('action', 'uip_get_global_settings');
-      formData.append('security', uip_ajax.security);
+      formData.append("action", "uip_get_global_settings");
+      formData.append("security", uip_ajax.security);
 
       const response = await this.sendServerRequest(uip_ajax.ajax_url, formData);
 
@@ -65,7 +65,7 @@ export default {
 
       // Handle error
       if (response.error) {
-        this.uipApp.notifications.notify(response.message, '', 'error', true);
+        this.uipApp.notifications.notify(response.message, "", "error", true);
         return;
       }
 
@@ -88,8 +88,8 @@ export default {
     async getUserStyles() {
       //Build form data for fetch request
       let formData = new FormData();
-      formData.append('action', 'uip_get_ui_styles');
-      formData.append('security', uip_ajax.security);
+      formData.append("action", "uip_get_ui_styles");
+      formData.append("security", uip_ajax.security);
 
       const response = await this.sendServerRequest(uip_ajax.ajax_url, formData);
 
@@ -115,7 +115,7 @@ export default {
       // Set default values
       switch (option.accepts) {
         case String:
-          options[group][key] = '';
+          options[group][key] = "";
           break;
         case Array:
           options[group][key] = [];
@@ -154,19 +154,19 @@ export default {
       let sendData = this.prepareJSON(this.globalSettings);
 
       let formData = new FormData();
-      formData.append('action', 'uip_save_global_settings');
-      formData.append('security', uip_ajax.security);
-      formData.append('settings', sendData);
+      formData.append("action", "uip_save_global_settings");
+      formData.append("security", uip_ajax.security);
+      formData.append("settings", sendData);
 
       const response = await this.sendServerRequest(uip_ajax.ajax_url, formData);
 
       // Handle error
       if (response.error) {
-        this.uipApp.notifications.notify(response.message, '', 'error', true);
+        this.uipApp.notifications.notify(response.message, "", "error", true);
         return;
       }
 
-      this.uipApp.notifications.notify(this.ui.strings.settingsSaved, '', 'success', true);
+      this.uipApp.notifications.notify(this.ui.strings.settingsSaved, "", "success", true);
     },
 
     /**
@@ -176,7 +176,7 @@ export default {
      * @since 3.2.13
      */
     conditionalShowGroup(group) {
-      if (!('condition' in group)) {
+      if (!("condition" in group)) {
         return true;
       }
 
@@ -210,7 +210,7 @@ export default {
 
       // Get today's date in the format: mm-dd-yyyy.
       const today = new Date();
-      const formattedDate = `${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}-${today.getFullYear()}`;
+      const formattedDate = `${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}-${today.getFullYear()}`;
 
       // Construct the filename for the exported settings.
       const filename = `uip-site-settings-${formattedDate}.json`;
@@ -220,13 +220,13 @@ export default {
 
       // Set the attributes for the download link and trigger the download.
       const dlAnchorElem = this.$refs.exporter;
-      dlAnchorElem.setAttribute('href', dataStr);
-      dlAnchorElem.setAttribute('download', filename);
+      dlAnchorElem.setAttribute("href", dataStr);
+      dlAnchorElem.setAttribute("download", filename);
       dlAnchorElem.click();
 
       // Notify the user about the successful export.
-      const message = __('Settings exported', 'uipress-lite');
-      this.uipApp.notifications.notify(message, '', 'success', true);
+      const message = __("Settings exported", "uipress-lite");
+      this.uipApp.notifications.notify(message, "", "success", true);
     },
 
     /**
@@ -236,37 +236,37 @@ export default {
      * @since 3.2.13
      */
     importSettings(event) {
-      const notiID = this.uipApp.notifications.notify(__('Importing settings', 'uipress-lite'), '', 'default', false, true);
+      const notiID = this.uipApp.notifications.notify(__("Importing settings", "uipress-lite"), "", "default", false, true);
       const fileInput = event.target;
       const thefile = fileInput.files[0];
 
       const handleError = (message) => {
-        this.uipApp.notifications.notify(message, '', 'error', true, false);
+        this.uipApp.notifications.notify(message, "", "error", true, false);
         this.uipApp.notifications.remove(notiID);
       };
 
-      if (thefile.type !== 'application/json') {
-        return handleError(__('Settings must be in valid JSON format', 'uipress-lite'));
+      if (thefile.type !== "application/json") {
+        return handleError(__("Settings must be in valid JSON format", "uipress-lite"));
       }
 
       if (thefile.size > 1000000) {
-        return handleError(__('Uploaded file is too big', 'uipress-lite'));
+        return handleError(__("Uploaded file is too big", "uipress-lite"));
       }
 
       const reader = new FileReader();
-      reader.readAsText(thefile, 'UTF-8');
+      reader.readAsText(thefile, "UTF-8");
 
       reader.onload = (evt) => {
         try {
           const parsed = JSON.parse(evt.target.result);
 
           if (!parsed || !parsed.uipSettings || !this.isObject(parsed.uipSettings)) {
-            return handleError(__('Settings mismatch', 'uipress-lite'));
+            return handleError(__("Settings mismatch", "uipress-lite"));
           }
 
           this.globalSettings = parsed.uipSettings;
 
-          this.uipApp.notifications.notify(__('Settings imported', 'uipress-lite'), '', 'success', true, false);
+          this.uipApp.notifications.notify(__("Settings imported", "uipress-lite"), "", "success", true, false);
           this.uipApp.notifications.remove(notiID);
 
           this.render = false;
@@ -274,7 +274,7 @@ export default {
             this.render = true;
           });
         } catch (error) {
-          handleError(__('JSON parse failed', 'uipress-lite'));
+          handleError(__("JSON parse failed", "uipress-lite"));
         }
       };
     },

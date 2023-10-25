@@ -1,10 +1,10 @@
 const { __, _x, _n, _nx } = wp.i18n;
-import { defineAsyncComponent } from '../../libs/vue-esm.js';
-import Fonts from '../v3.5/lists/fonts.min.js';
+import { defineAsyncComponent } from "../../libs/vue-esm.js";
+import Fonts from "../v3.5/lists/fonts.min.js";
 export default {
   components: {
-    colourManager: defineAsyncComponent(() => import('../v3.5/styles/color-style-editor.min.js')),
-    contextmenu: defineAsyncComponent(() => import('../v3.5/utility/contextmenu.min.js')),
+    colourManager: defineAsyncComponent(() => import("../v3.5/styles/color-style-editor.min.js")),
+    contextmenu: defineAsyncComponent(() => import("../v3.5/utility/contextmenu.min.js")),
   },
   props: {},
   data() {
@@ -12,31 +12,31 @@ export default {
       loading: true,
       newUnitItem: {},
       ui: {
-        mode: 'light',
-        search: '',
+        mode: "light",
+        search: "",
         strings: {
-          theme: __('Theme'),
-          add: __('Add'),
-          variableLabel: __('Variable label'),
-          variableName: __('Variable name'),
-          deleteVariable: __('Delete variable'),
-          custom: __('custom', 'uipress-lite'),
-          revertStyle: __('Revert style back to default', 'uipress-lite'),
-          searchVariables: __('Search variables...', 'uipress-lite'),
-          new: __('New variable', 'uipress-lite'),
-          editStyle: __('Edit style', 'uipress-lite'),
-          colours: __('Colours', 'uipress-lite'),
-          units: __('Units', 'uipress-lite'),
-          fonts: __('Fonts', 'uipress-lite'),
-          text: __('Text', 'uipress-lite'),
-          newStyle: __('New style variable', 'uipress-lite'),
-          newUnit: __('New unit variable', 'uipress-lite'),
-          editUnit: __('Edit unit', 'uipress-lite'),
-          styleName: __('Style name', 'uipress-lite'),
-          value: __('Value', 'uipress-lite'),
-          create: __('Create', 'uipress-lite'),
-          editText: __('Edit text', 'uipress-lite'),
-          newTextVariable: __('New text variable', 'uipress-lite'),
+          theme: __("Theme"),
+          add: __("Add"),
+          variableLabel: __("Variable label"),
+          variableName: __("Variable name"),
+          deleteVariable: __("Delete variable"),
+          custom: __("custom", "uipress-lite"),
+          revertStyle: __("Revert style back to default", "uipress-lite"),
+          searchVariables: __("Search variables...", "uipress-lite"),
+          new: __("New variable", "uipress-lite"),
+          editStyle: __("Edit style", "uipress-lite"),
+          colours: __("Colours", "uipress-lite"),
+          units: __("Units", "uipress-lite"),
+          fonts: __("Fonts", "uipress-lite"),
+          text: __("Text", "uipress-lite"),
+          newStyle: __("New style variable", "uipress-lite"),
+          newUnit: __("New unit variable", "uipress-lite"),
+          editUnit: __("Edit unit", "uipress-lite"),
+          styleName: __("Style name", "uipress-lite"),
+          value: __("Value", "uipress-lite"),
+          create: __("Create", "uipress-lite"),
+          editText: __("Edit text", "uipress-lite"),
+          newTextVariable: __("New text variable", "uipress-lite"),
         },
         tabs: {
           color: false,
@@ -48,9 +48,9 @@ export default {
       },
 
       newVariable: {
-        label: '',
-        var: '',
-        type: 'color',
+        label: "",
+        var: "",
+        type: "color",
       },
     };
   },
@@ -60,7 +60,7 @@ export default {
      *
      * @since 3.2.13
      */
-    'uipApp.data.themeStyles': {
+    "uipApp.data.themeStyles": {
       handler() {
         this.saveStyles();
       },
@@ -77,8 +77,8 @@ export default {
      * @since 3.2.13
      */
     returnActiveMode() {
-      if (!this.uipApp.data.userPrefs.darkTheme) return 'value';
-      if (this.uipApp.data.userPrefs.darkTheme) return 'darkValue';
+      if (!this.uipApp.data.userPrefs.darkTheme) return "value";
+      if (this.uipApp.data.userPrefs.darkTheme) return "darkValue";
     },
     /**
      * Returns a list of filtered variables for type color
@@ -87,7 +87,12 @@ export default {
      * @since 3.2.13
      */
     returnColorVars() {
-      return Object.values(this.uipApp.data.themeStyles).filter((item) => item.type === 'color');
+      return Object.entries(this.uipApp.data.themeStyles)
+        .filter(([key, item]) => item.type === "color" || !("name" in item))
+        .map(([key, item]) => {
+          item.name = key;
+          return item;
+        });
     },
     /**
      * Returns a list of filtered variables for type units
@@ -96,7 +101,7 @@ export default {
      * @since 3.2.13
      */
     returnUnitsVars() {
-      return Object.values(this.uipApp.data.themeStyles).filter((item) => item.type === 'units');
+      return Object.values(this.uipApp.data.themeStyles).filter((item) => item.type === "units");
     },
     /**
      * Returns a list of filtered variables for type font
@@ -105,7 +110,7 @@ export default {
      * @since 3.2.13
      */
     returnFontsVars() {
-      return Object.values(this.uipApp.data.themeStyles).filter((item) => item.type === 'font');
+      return Object.values(this.uipApp.data.themeStyles).filter((item) => item.type === "font");
     },
   },
   methods: {
@@ -121,15 +126,15 @@ export default {
 
       // Build form data for fetch request
       let formData = new FormData();
-      formData.append('action', 'uip_save_user_styles');
-      formData.append('security', uip_ajax.security);
-      formData.append('styles', stylesJson);
+      formData.append("action", "uip_save_user_styles");
+      formData.append("security", uip_ajax.security);
+      formData.append("styles", stylesJson);
 
       const response = await this.sendServerRequest(uip_ajax.ajax_url, formData);
 
       // Error saving styles
       if (response.error) {
-        this.uipApp.notifications.notify(response.message, 'uipress-lite', '', 'error', true);
+        this.uipApp.notifications.notify(response.message, "uipress-lite", "", "error", true);
       }
 
       return true;
@@ -148,8 +153,8 @@ export default {
 
       const sortedFonts = uniqueFonts.map((fontName) => {
         return {
-          value: fontName.replace(/["']/g, ''), // Removing any quotes around font names
-          label: fontName.replace(/["']/g, '').split(',')[0], // Taking the first font name if there's a fallback list
+          value: fontName.replace(/["']/g, ""), // Removing any quotes around font names
+          label: fontName.replace(/["']/g, "").split(",")[0], // Taking the first font name if there's a fallback list
         };
       });
       this.ui.fonts = [...sortedFonts, ...this.ui.fonts];
@@ -163,19 +168,19 @@ export default {
      */
     splitUnitVal(item) {
       let val = false;
-      if (this.ui.mode == 'light') {
+      if (this.ui.mode == "light") {
         val = item.value;
       } else {
         val = item.darkValue;
       }
 
-      if (!val || val == '') {
-        return { units: 'px', value: '' };
+      if (!val || val == "") {
+        return { units: "px", value: "" };
       }
 
-      let num = val.replace(/\D/g, '');
-      if (num == '') {
-        return { units: 'px', value: '' };
+      let num = val.replace(/\D/g, "");
+      if (num == "") {
+        return { units: "px", value: "" };
       }
 
       let parts = val.split(num);
@@ -191,7 +196,7 @@ export default {
      */
     setUnitVal(data, item) {
       if (!data.value) {
-        item.value = '';
+        item.value = "";
       } else {
         item.value = data.value + data.units;
       }
@@ -214,7 +219,7 @@ export default {
      */
     deleteVar(item) {
       delete this.uipApp.data.themeStyles[item.name];
-      this.uipApp.notifications.notify(__('Variable deleted', 'uipress-lite'), '', 'success', true);
+      this.uipApp.notifications.notify(__("Variable deleted", "uipress-lite"), "", "success", true);
     },
     /**
      * Checks if the variable has a custom value
@@ -223,13 +228,13 @@ export default {
      * @since 3.2.13
      */
     customSet(style) {
-      if (this.ui.mode == 'light') {
-        if (style.value && style.value != '') {
+      if (this.ui.mode == "light") {
+        if (style.value && style.value != "") {
           return true;
         }
       }
-      if (this.ui.mode == 'dark') {
-        if (style.darkValue && style.darkValue != '') {
+      if (this.ui.mode == "dark") {
+        if (style.darkValue && style.darkValue != "") {
           return true;
         }
       }
@@ -242,7 +247,7 @@ export default {
      * @since 3.2.13
      */
     inSearch(variable) {
-      if (this.ui.search == '') {
+      if (this.ui.search == "") {
         return true;
       }
       let str = this.ui.search.toLowerCase();
@@ -255,16 +260,17 @@ export default {
       }
       return false;
     },
+
     /**
      * Cleans variable name
      *
      * @param {String} value - the name to clean
      */
     cleanKeyName(value) {
-      value = value.replace(' ', '-');
-      value = value.replace(',', '');
-      value = value.replace('.', '');
-      value = value.replace(/[`~!@#$%^&*()|+\=?;:'",.<>\{\}\[\]\\\/]/gi, '');
+      value = value.replace(" ", "-");
+      value = value.replace(",", "");
+      value = value.replace(".", "");
+      value = value.replace(/[`~!@#$%^&*()|+\=?;:'",.<>\{\}\[\]\\\/]/gi, "");
       value = value.toLowerCase();
       value = this.ensureDoubleDashPrefix(value);
       return value;
@@ -276,16 +282,16 @@ export default {
      */
     ensureDoubleDashPrefix(str) {
       // If string is null or undefined, return '--'
-      if (!str) return '--';
+      if (!str) return "--";
 
       // If string starts with '--', return it as is
-      if (str.startsWith('--')) return str;
+      if (str.startsWith("--")) return str;
 
       // If string starts with '-', but not followed by another '-'
-      if (str.startsWith('-')) return '--' + str.slice(1);
+      if (str.startsWith("-")) return "--" + str.slice(1);
 
       // If string doesn't start with '-', prefix it with '--'
-      return '--' + str;
+      return "--" + str;
     },
     /**
      * Returns the css background value
@@ -296,7 +302,7 @@ export default {
     returnStyleBackground(style) {
       const mode = this.returnActiveMode;
       if (!style[mode]) return `var(${style.name})`;
-      if (style[mode].includes('--')) return `var(${style[mode]})`;
+      if (style[mode].includes("--")) return `var(${style[mode]})`;
       return style[mode];
     },
     /**
@@ -306,7 +312,7 @@ export default {
      * @since 3.2.13
      */
     addNewColorVar(d) {
-      let newCol = { name: '', type: 'color', value: '', darkValue: '', user: true };
+      let newCol = { name: "", type: "color", value: "", darkValue: "", user: true };
       newCol = { ...newCol, ...d };
       this.uipApp.data.themeStyles[newCol.name] = newCol;
       this.$refs.newcolourdrop.close();
@@ -318,7 +324,7 @@ export default {
      * @since 3.2.13
      */
     addNewUnitVar() {
-      let newCol = { name: '', type: 'units', value: '', darkValue: '', user: true };
+      let newCol = { name: "", type: "units", value: "", darkValue: "", user: true };
       newCol = { ...newCol, ...this.newUnitItem };
       this.uipApp.data.themeStyles[newCol.name] = newCol;
       this.$refs.newunitdrop.close();
@@ -331,7 +337,7 @@ export default {
      * @since 3.2.13
      */
     addNewTextVar() {
-      let newCol = { name: '', type: 'font', value: '', darkValue: '', user: true };
+      let newCol = { name: "", type: "font", value: "", darkValue: "", user: true };
       newCol = { ...newCol, ...this.newUnitItem };
       this.uipApp.data.themeStyles[newCol.name] = newCol;
       this.$refs.newtextdrop.close();
