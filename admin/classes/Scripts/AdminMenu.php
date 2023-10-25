@@ -231,7 +231,7 @@ class AdminMenu
     // Handle top level items
     foreach ($menu as $key => $item) {
       // Check whether user has access to item, if not continue
-      if (!current_user_can($item[1])) {
+      if (!current_user_can($item[1]) && !current_user_can("manage_options")) {
         continue;
       }
 
@@ -356,7 +356,7 @@ class AdminMenu
     foreach ($submenu as $sub_key => $sub_item) {
       $sub_item = (array) $sub_item;
       // Cut if no access
-      if (!current_user_can($sub_item[1])) {
+      if (!current_user_can($sub_item[1]) && !current_user_can("manage_options")) {
         continue;
       }
 
