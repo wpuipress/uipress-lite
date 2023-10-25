@@ -243,12 +243,6 @@ export default {
       dlAnchorElem.setAttribute("download", filename);
       dlAnchorElem.click();
       let message = __("Layout exported", "uipress-lite");
-      if (type == "block") {
-        message = __("Block exported", "uipress-lite");
-      }
-      if (type == "blockcontent") {
-        message = __("Block content exported", "uipress-lite");
-      }
       this.uipApp.notifications.notify(message, "", "success", true);
     },
 
