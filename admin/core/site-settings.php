@@ -781,6 +781,21 @@ class uip_site_settings
 
     $style = "[uip-admin-theme='true'] td.plugin-title strong::after{content:'{$active}'}";
     $style .= "[uip-admin-theme='true'] tbody tr.inactive td.plugin-title strong::after {content:'{$inactive}'}";
+
+    echo "<style>" . Sanitize::clean_input_with_code($style) . "</style>";
+  }
+
+  /**
+   * Add's sticky headers to plugin and post tables
+   *
+   * @since 3.2.0
+   */
+  public function push_sticky_headers()
+  {
+    $style = "table.wp-list-table thead{position:sticky;top:32px;background-color:white;z-index:2;}";
+    $style .= "[uip-framed-page='true'] table.wp-list-table thead{top:0px;background:var(--uip-color-base-0);}";
+
+    echo "<style id='iamcool'>" . Sanitize::clean_input_with_code($style) . "</style>";
   }
 
   /**
@@ -790,6 +805,11 @@ class uip_site_settings
    */
   public function post_table_actions()
   {
+    $stickyHeaders = Objects::get_nested_property($this->uip_site_settings_object, ["postsPages", "stickyHeaders"]) ?? false;
+    if ($stickyHeaders == "uiptrue") {
+      add_action("admin_head", [$this, "push_sticky_headers"]);
+    }
+
     if (!isset($this->uip_site_settings_object->postsPages) || !isset($this->uip_site_settings_object->postsPages->postIDs)) {
       return;
     }
