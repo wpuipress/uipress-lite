@@ -1,4 +1,4 @@
-import { nextTick } from '../../libs/vue-esm.js';
+import { nextTick } from "../../libs/vue-esm.js";
 export default {
   props: {
     position: String,
@@ -12,14 +12,14 @@ export default {
       open: false,
     };
   },
-  inject: ['uiTemplate'],
+  inject: ["uiTemplate"],
   mounted() {
     this.mountShortcut();
   },
   beforeUnmount() {
-    document.removeEventListener('uipress/app/page/load/finish', this.handlePageChange, { once: false });
-    window.removeEventListener('keydown', this.handleKeyDown);
-    window.removeEventListener('keyup', this.handleKeyUp);
+    document.removeEventListener("uipress/app/page/load/finish", this.handlePageChange, { once: false });
+    window.removeEventListener("keydown", this.handleKeyDown);
+    window.removeEventListener("keyup", this.handleKeyUp);
   },
   methods: {
     /**
@@ -31,7 +31,7 @@ export default {
      * @since 3.2.13
      */
     mountShortcut() {
-      document.addEventListener('uipress/app/page/load/finish', this.handlePageChange, { once: false });
+      document.addEventListener("uipress/app/page/load/finish", this.handlePageChange, { once: false });
 
       // Return early if shortcut is not defined
       if (!this.shortCut) return;
@@ -43,8 +43,8 @@ export default {
       this.shortcut = [...this.shortCut];
 
       // Add event listeners
-      window.addEventListener('keydown', this.handleKeyDown);
-      window.addEventListener('keyup', this.handleKeyUp);
+      window.addEventListener("keydown", this.handleKeyDown);
+      window.addEventListener("keyup", this.handleKeyUp);
     },
 
     /**
@@ -99,24 +99,24 @@ export default {
       let theBody;
       if (!this.uiTemplate) {
         theBody = document.body;
-      } else if (this.uiTemplate.display != 'prod') {
-        theBody = document.getElementById('uip-template-body');
+      } else if (this.uiTemplate.display != "prod") {
+        theBody = document.getElementById("uip-template-body");
       } else {
         theBody = document.body;
       }
 
-      if (this.overlayStyle == 'push') {
-        theBody.style.left = '0';
-        theBody.style.right = '0';
+      if (this.overlayStyle == "push") {
+        theBody.style.left = "0";
+        theBody.style.right = "0";
       }
 
-      this.$refs.offCanvasCover.classList.remove('uip-fade-in');
-      this.$refs.offCanvasCover.classList.add('uip-fade-out');
-      this.$refs.offCanvasBody.classList.remove('uip-slide-in-left');
-      if (this.position == 'left') {
-        this.$refs.offCanvasBody.classList.add('uip-slide-out-left');
+      this.$refs.offCanvasCover.classList.remove("uip-fade-in");
+      this.$refs.offCanvasCover.classList.add("uip-fade-out");
+      this.$refs.offCanvasBody.classList.remove("uip-slide-in-left");
+      if (this.position == "left") {
+        this.$refs.offCanvasBody.classList.add("uip-slide-out-left");
       } else {
-        this.$refs.offCanvasBody.classList.add('uip-slide-out-right');
+        this.$refs.offCanvasBody.classList.add("uip-slide-out-right");
       }
 
       // Sets timeout for close
@@ -133,25 +133,25 @@ export default {
     async openOffCanvas() {
       this.open = true;
 
-      if (!this.overlayStyle == 'push') return;
+      if (this.overlayStyle != "push") return;
 
       await nextTick();
 
       let width = this.$refs.offCanvasBody.getBoundingClientRect().width;
 
       let theBody;
-      if (this.uiTemplate.display != 'prod') {
-        theBody = document.getElementById('uip-template-body');
+      if (this.uiTemplate.display != "prod") {
+        theBody = document.getElementById("uip-template-body");
       } else {
         theBody = document.body;
       }
 
-      if (this.position == 'left') {
-        theBody.style.position = 'relative';
-        theBody.style.left = width + 'px';
+      if (this.position == "left") {
+        theBody.style.position = "relative";
+        theBody.style.left = width + "px";
       } else {
-        theBody.style.position = 'relative';
-        theBody.style.left = '-' + width + 'px';
+        theBody.style.position = "relative";
+        theBody.style.left = "-" + width + "px";
       }
     },
   },
