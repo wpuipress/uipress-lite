@@ -91,10 +91,7 @@ export default {
         .filter(([key, item]) => item.type === "color" || !("name" in item))
         .map(([key, item]) => {
           item.name = key;
-<<<<<<< HEAD
           item.type = "color";
-=======
->>>>>>> main
           return item;
         });
     },
@@ -363,7 +360,7 @@ export default {
     },
   },
   template: `
-	<div class="uip-flex uip-flex-column uip-row-gap-s">
+  <div class="uip-flex uip-flex-column uip-row-gap-s">
   
   
         <!--Color vars-->
