@@ -347,7 +347,6 @@ class UiTemplates
 
     $multisite = $template->globalSettings->applyToSubsites ?? false;
 
-    error_log(json_encode($template->globalSettings->rolesAndUsers));
     // Update settings
 
     self::update_template_for($templateID, $template->globalSettings->rolesAndUsers);

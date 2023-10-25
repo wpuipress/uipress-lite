@@ -173,6 +173,12 @@ class AdminPage
    */
   public static function add_hooks()
   {
+    // Triggers pro actions for admin pages
+    $framedPage = isset($_GET["uip-framed-page"]) ? $_GET["uip-framed-page"] : false;
+    if ($framedPage) {
+      do_action("uipress/uibuilder/start");
+    }
+
     // If the app is running then the this page will be loaded in a frame
     if (defined("uip_app_running") && uip_app_running) {
       return;
