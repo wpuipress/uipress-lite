@@ -1,17 +1,17 @@
 const { __, _x, _n, _nx } = wp.i18n;
-import { defineAsyncComponent, nextTick } from '../../libs/vue-esm-dev.js';
+import { defineAsyncComponent, nextTick } from "../../libs/vue-esm-dev.js";
 export default {
-  umits: ['update'],
+  umits: ["update"],
   components: {
-    colorBox: defineAsyncComponent(() => import('../v3.5/utility/color-box.min.js?ver=3.3.00')),
-    backgroundFill: defineAsyncComponent(() => import('./background-fill.min.js?ver=3.3.00')),
-    screenControl: defineAsyncComponent(() => import('../v3.5/utility/screen-control.min.js?ver=3.3.00')),
-    ColorPicker: defineAsyncComponent(() => import('../v3.5/styles/color-picker.min.js?ver=3.3.00')),
-    colourStyleEditor: defineAsyncComponent(() => import('../v3.5/styles/color-style-editor.min.js?ver=3.3.00')),
-    imageBGSelect: defineAsyncComponent(() => import('../v3.5/styles/image-select.min.js?ver=3.3.00')),
-    borderDesigner: defineAsyncComponent(() => import('./border-designer.min.js?ver=3.3.00')),
-    shadowDesigner: defineAsyncComponent(() => import('./shadow-designer.min.js?ver=3.3.00')),
-    outlineDesigner: defineAsyncComponent(() => import('./outline-designer.min.js?ver=3.3.00')),
+    colorBox: defineAsyncComponent(() => import("../v3.5/utility/color-box.min.js?ver=3.3.00")),
+    backgroundFill: defineAsyncComponent(() => import("./background-fill.min.js?ver=3.3.00")),
+    screenControl: defineAsyncComponent(() => import("../v3.5/utility/screen-control.min.js?ver=3.3.00")),
+    ColorPicker: defineAsyncComponent(() => import("../v3.5/styles/color-picker.min.js?ver=3.3.00")),
+    colourStyleEditor: defineAsyncComponent(() => import("../v3.5/styles/color-style-editor.min.js?ver=3.3.00")),
+    imageBGSelect: defineAsyncComponent(() => import("../v3.5/styles/image-select.min.js?ver=3.3.00")),
+    borderDesigner: defineAsyncComponent(() => import("./border-designer.min.js?ver=3.3.00")),
+    shadowDesigner: defineAsyncComponent(() => import("./shadow-designer.min.js?ver=3.3.00")),
+    outlineDesigner: defineAsyncComponent(() => import("./outline-designer.min.js?ver=3.3.00")),
   },
   props: {
     value: Object,
@@ -20,93 +20,93 @@ export default {
     return {
       styles: this.returnDefaultOptions,
       updating: false,
-      fillTab: __('Colour', 'uipress-lite'),
+      fillTab: __("Colour", "uipress-lite"),
       strings: {
-        opacity: __('Opacity', 'uipress-lite'),
-        overflow: __('Overflow', 'uipress-lite'),
-        fill: __('Fill', 'uipress-lite'),
-        background: __('Background', 'uipress-lite'),
-        backgroundImage: __('Background image', 'uipress-lite'),
-        border: __('Border', 'uipress-lite'),
-        addImage: __('Add image', 'uipress-lite'),
-        shadow: __('Shadow', 'uipress-lite'),
-        radius: __('Radius', 'uipress-lite'),
-        topleft: __('Top left', 'uipress-lite'),
-        topright: __('Top right', 'uipress-lite'),
-        bottomleft: __('Bottom left', 'uipress-lite'),
-        bottomright: __('Bottom right', 'uipress-lite'),
-        outline: __('Outline', 'uipress-lite'),
+        opacity: __("Opacity", "uipress-lite"),
+        overflow: __("Overflow", "uipress-lite"),
+        fill: __("Fill", "uipress-lite"),
+        background: __("Background", "uipress-lite"),
+        backgroundImage: __("Background image", "uipress-lite"),
+        border: __("Border", "uipress-lite"),
+        addImage: __("Add image", "uipress-lite"),
+        shadow: __("Shadow", "uipress-lite"),
+        radius: __("Radius", "uipress-lite"),
+        topleft: __("Top left", "uipress-lite"),
+        topright: __("Top right", "uipress-lite"),
+        bottomleft: __("Bottom left", "uipress-lite"),
+        bottomright: __("Bottom right", "uipress-lite"),
+        outline: __("Outline", "uipress-lite"),
       },
       syncOptions: {
         true: {
           value: true,
-          icon: 'crop_square',
-          tip: __('Synced', 'uipress-lite'),
+          icon: "crop_square",
+          tip: __("Synced", "uipress-lite"),
         },
         false: {
           value: false,
-          icon: 'crop_free',
-          tip: __('Per side', 'uipress-lite'),
+          icon: "crop_free",
+          tip: __("Per side", "uipress-lite"),
         },
       },
       overflowOptions: [
         {
-          value: 'visible',
-          label: __('Visible', 'uipress-lite'),
+          value: "visible",
+          label: __("Visible", "uipress-lite"),
         },
         {
-          value: 'auto',
-          label: __('Auto', 'uipress-lite'),
+          value: "auto",
+          label: __("Auto", "uipress-lite"),
         },
         {
-          value: 'hidden',
-          label: __('Hidden', 'uipress-lite'),
+          value: "hidden",
+          label: __("Hidden", "uipress-lite"),
         },
         {
-          value: 'scroll',
-          label: __('Scroll', 'uipress-lite'),
+          value: "scroll",
+          label: __("Scroll", "uipress-lite"),
         },
       ],
       spacingOptions: {
         0: {
-          value: '0',
-          label: '0',
-          tip: __('Remove', 'uipress-lite'),
+          value: "0",
+          label: "0",
+          tip: __("Remove", "uipress-lite"),
         },
         XS: {
-          value: 'XS',
-          label: 'XS',
-          tip: __('Extra small', 'uipress-lite'),
+          value: "XS",
+          label: "XS",
+          tip: __("Extra small", "uipress-lite"),
         },
         S: {
-          value: 'S',
-          label: 'S',
-          tip: __('Small', 'uipress-lite'),
+          value: "S",
+          label: "S",
+          tip: __("Small", "uipress-lite"),
         },
         M: {
-          value: 'M',
-          label: 'M',
-          tip: __('Medium', 'uipress-lite'),
+          value: "M",
+          label: "M",
+          tip: __("Medium", "uipress-lite"),
         },
         L: {
-          value: 'L',
-          label: 'L',
-          tip: __('Large', 'uipress-lite'),
+          value: "L",
+          label: "L",
+          tip: __("Large", "uipress-lite"),
         },
         XL: {
-          value: 'XL',
-          label: 'XL',
-          tip: __('Extra large', 'uipress-lite'),
+          value: "XL",
+          label: "XL",
+          tip: __("Extra large", "uipress-lite"),
         },
         custom: {
-          value: 'custom',
-          icon: 'more_vert',
-          tip: __('Custom', 'uipress-lite'),
+          value: "custom",
+          icon: "more_vert",
+          tip: __("Custom", "uipress-lite"),
         },
       },
     };
   },
-  
+
   watch: {
     /**
      * Watches changes to value prop and injects
@@ -130,7 +130,7 @@ export default {
     styles: {
       handler(newValue, oldValue) {
         if (this.updating) return;
-        this.$emit('update', this.styles);
+        this.$emit("update", this.styles);
       },
       deep: true,
     },
@@ -144,7 +144,7 @@ export default {
     returnDefaultOptions() {
       return {
         opacity: 1,
-        overflow: 'visible',
+        overflow: "visible",
         fill: {},
         backgroundImage: {},
         outline: {},
@@ -152,11 +152,11 @@ export default {
         shadows: [],
         radius: {
           sync: true,
-          topleft: '',
-          topright: '',
-          bottomleft: '',
-          bottomright: '',
-          units: 'px',
+          topleft: "",
+          topright: "",
+          bottomleft: "",
+          bottomright: "",
+          units: "px",
         },
       };
     },
@@ -166,12 +166,12 @@ export default {
      * @since 3.2.12
      */
     returnFillStyle() {
-      if (!('value' in this.styles.fill)) return;
+      if (!("value" in this.styles.fill)) return;
       if (!this.styles.fill.value) return;
 
       let val = this.styles.fill.value;
       // Variable style
-      if (val.includes('--')) return `background:var(${val})`;
+      if (val.includes("--")) return `background:var(${val})`;
       return `background:${val}`;
     },
 
@@ -182,12 +182,12 @@ export default {
      */
     returnOutlineStyle() {
       if (!this.styles.outline.color) return;
-      if (!('value' in this.styles.outline.color)) return;
+      if (!("value" in this.styles.outline.color)) return;
       if (!this.styles.outline.color.value) return;
 
       let val = this.styles.outline.color.value;
       // Variable style
-      if (val.includes('--')) return `background:var(${val})`;
+      if (val.includes("--")) return `background:var(${val})`;
       return `background:${val}`;
     },
 
@@ -197,8 +197,8 @@ export default {
      * @since 3.2.12
      */
     returnFillValue() {
-      if (!('value' in this.styles.fill)) return '';
-      if (!this.styles.fill.value) return '';
+      if (!("value" in this.styles.fill)) return "";
+      if (!this.styles.fill.value) return "";
 
       return this.styles.fill.value;
     },
@@ -218,7 +218,7 @@ export default {
      */
     blockFillScreen() {
       return {
-        component: 'backgroundFill',
+        component: "backgroundFill",
         value: this.returnStyles.fill,
         label: this.fillTab,
         returnData: (d) => {
@@ -233,7 +233,7 @@ export default {
      */
     outlineScreen() {
       return {
-        component: 'outlineDesigner',
+        component: "outlineDesigner",
         value: this.returnStyles.outline,
         label: this.strings.outline,
         returnData: (d) => {
@@ -252,7 +252,7 @@ export default {
       if (img) {
         return `background-size:cover;background-image: url(${img})`;
       }
-      return '';
+      return "";
     },
   },
   methods: {
@@ -263,7 +263,7 @@ export default {
      */
     borderScreen(border, index) {
       return {
-        component: 'borderDesigner',
+        component: "borderDesigner",
         value: border,
         label: this.strings.border,
         returnData: (d) => {
@@ -278,7 +278,7 @@ export default {
      */
     shadowScreen(shadow, index) {
       return {
-        component: 'shadowDesigner',
+        component: "shadowDesigner",
         value: shadow,
         label: this.strings.shadow,
         returnData: (d) => {
@@ -310,13 +310,13 @@ export default {
      */
     returnBorderColor(border) {
       let color = border.color;
-      let style = '';
+      let style = "";
       if (color) {
         if (color.value) {
-          if (color.value.includes('--')) {
-            style = 'background-color:var(' + color.value + ');';
+          if (color.value.includes("--")) {
+            style = "background-color:var(" + color.value + ");";
           } else {
-            style = 'background-color:' + color.value;
+            style = "background-color:" + color.value;
           }
         }
       }
@@ -330,13 +330,13 @@ export default {
      */
     returnShadowColor(shadow) {
       let color = shadow.color;
-      let style = '';
+      let style = "";
       if (color) {
         if (color.value) {
-          if (color.value.includes('--')) {
-            style = 'background-color:var(' + color.value + ');';
+          if (color.value.includes("--")) {
+            style = "background-color:var(" + color.value + ");";
           } else {
-            style = 'background-color:' + color.value;
+            style = "background-color:" + color.value;
           }
         }
       }
@@ -358,10 +358,10 @@ export default {
      * @since 3.2.13
      */
     async pushNewBorder() {
-      this.styles.borders.push({});
+      this.styles.borders.push({ style: "solid", color: { value: "#fff" } });
       await nextTick();
       const newIndex = this.styles.borders.length - 1;
-      this.$refs['borderDrop-' + newIndex][0].show();
+      this.$refs["borderDrop-" + newIndex][0].show();
     },
 
     /**
@@ -370,10 +370,10 @@ export default {
      * @since 3.2.13
      */
     async pushNewShadow() {
-      this.styles.shadows.push({});
+      this.styles.shadows.push({ position: "outside", color: { value: "#fff" } });
       await nextTick();
       const newIndex = this.styles.shadows.length - 1;
-      this.$refs['shadowDrop-' + newIndex][0].show();
+      this.$refs["shadowDrop-" + newIndex][0].show();
     },
   },
   template: `

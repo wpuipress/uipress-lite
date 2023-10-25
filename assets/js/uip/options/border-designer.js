@@ -1,11 +1,11 @@
 const { __, _x, _n, _nx } = wp.i18n;
-import { defineAsyncComponent, nextTick } from '../../libs/vue-esm-dev.js';
-import BorderPositions from '../v3.5/lists/border_positions.min.js';
-import BorderTypes from '../v3.5/lists/border_types.min.js';
+import { defineAsyncComponent, nextTick } from "../../libs/vue-esm-dev.js";
+import BorderPositions from "../v3.5/lists/border_positions.min.js";
+import BorderTypes from "../v3.5/lists/border_types.min.js";
 
 export default {
   components: {
-    colorBox: defineAsyncComponent(() => import('../v3.5/utility/color-box.min.js?ver=3.3.00')),
+    colorBox: defineAsyncComponent(() => import("../v3.5/utility/color-box.min.js?ver=3.3.00")),
   },
   props: {
     returnData: Function,
@@ -13,46 +13,39 @@ export default {
   },
   data() {
     return {
-      borderOptions: {
-        width: {
-          value: '',
-          units: 'px',
-        },
-        style: 'solid',
-        color: {
-          type: 'solid',
-          value: '',
-        },
-        position: 'solid',
-        radius: {
-          value: {
-            sync: true,
-            topleft: '',
-            topright: '',
-            bottomleft: '',
-            bottomright: '',
-            units: 'px',
-          },
-        },
-      },
+      borderOptions: this.returnDefault,
       strings: {
-        radius: __('Radius', 'uipress-lite'),
-        topleft: __('Top left', 'uipress-lite'),
-        topright: __('Top right', 'uipress-lite'),
-        bottomleft: __('Bottom left', 'uipress-lite'),
-        bottomright: __('Bottom right', 'uipress-lite'),
-        colour: __('Colour', 'uipress-lite'),
-        style: __('Style', 'uipress-lite'),
-        width: __('Width', 'uipress-lite'),
-        position: __('Position', 'uipress-lite'),
-        borderColor: __('Border colour', 'uipress-lite'),
+        radius: __("Radius", "uipress-lite"),
+        topleft: __("Top left", "uipress-lite"),
+        topright: __("Top right", "uipress-lite"),
+        bottomleft: __("Bottom left", "uipress-lite"),
+        bottomright: __("Bottom right", "uipress-lite"),
+        colour: __("Colour", "uipress-lite"),
+        style: __("Style", "uipress-lite"),
+        width: __("Width", "uipress-lite"),
+        position: __("Position", "uipress-lite"),
+        borderColor: __("Border colour", "uipress-lite"),
       },
       borderPositions: BorderPositions,
       borderTypes: BorderTypes,
+      updating: false,
     };
   },
-  
+
   watch: {
+    /**
+     * Watches for changes to border options and sends the data back
+     *
+     * @since 3.2.13
+     */
+    value: {
+      handler(newValue, oldValue) {
+        if (this.updating) return;
+        this.injectProp(newValue);
+      },
+      deep: true,
+      immediate: true,
+    },
     /**
      * Watches for changes to border options and sends the data back
      *
@@ -60,6 +53,7 @@ export default {
      */
     borderOptions: {
       handler(newValue, oldValue) {
+        if (this.updating) return;
         this.returnData(newValue);
       },
       deep: true,
@@ -69,7 +63,7 @@ export default {
      *
      * @since 3.2.13
      */
-    'borderOptions.radius.value.topleft': {
+    "borderOptions.radius.value.topleft": {
       handler(newValue, oldValue) {
         if (!this.borderOptions.radius.value.sync) return;
         this.borderOptions.radius.value.topright = this.borderOptions.radius.value.topleft;
@@ -79,10 +73,37 @@ export default {
       deep: true,
     },
   },
-  mounted() {
-    this.formatValue();
-  },
   computed: {
+    /**
+     * Returns default option value
+     *
+     * @since 3.2.0
+     */
+    returnDefault() {
+      return {
+        width: {
+          value: "",
+          units: "px",
+        },
+        style: "solid",
+        color: {
+          type: "solid",
+          value: "",
+        },
+        position: "solid",
+        radius: {
+          value: {
+            sync: true,
+            topleft: "",
+            topright: "",
+            bottomleft: "",
+            bottomright: "",
+            units: "px",
+          },
+        },
+      };
+    },
+
     /**
      * Returns the border color as a background css style
      *
@@ -90,7 +111,7 @@ export default {
      */
     returnBorderColor() {
       if (!this.borderOptions.color.value) return;
-      if (this.borderOptions.color.value.startsWith('--')) {
+      if (this.borderOptions.color.value.startsWith("--")) {
         return `background-color:var(${this.borderOptions.color.value})`;
       }
       return `background-color:${this.borderOptions.color.value}`;
@@ -103,14 +124,14 @@ export default {
      */
     returnFillScreen() {
       return {
-        component: 'ColorPicker',
+        component: "ColorPicker",
         label: this.strings.borderColor,
         value: this.borderOptions.color.value,
         returnData: (d) => {
-          if (d.startsWith('--')) {
-            this.borderOptions.color.type = 'variable';
+          if (d.startsWith("--")) {
+            this.borderOptions.color.type = "variable";
           } else {
-            this.borderOptions.color.type = 'solid';
+            this.borderOptions.color.type = "solid";
           }
           this.borderOptions.color.value = d;
         },
@@ -123,9 +144,12 @@ export default {
      *
      * @since 3.2.13
      */
-    formatValue() {
-      if (!this.isObject(this.value)) return;
-      this.borderOptions = { ...this.borderOptions, ...this.value };
+    async injectProp() {
+      this.updating = true;
+      this.borderOptions = this.isObject(this.value) ? { ...this.returnDefault, ...this.value } : this.returnDefault;
+
+      await this.$nextTick();
+      this.updating = false;
     },
   },
   template: `
