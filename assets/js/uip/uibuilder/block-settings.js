@@ -1215,26 +1215,8 @@ export default {
       this.showSettings = true;
       this.loading = false;
 
-      return;
-      this.componenetSettings = {};
-      const status = await this.build_block_settings(this.block);
-      if (!status) return;
-
-      // force reload of settings
-      this.loading = true;
-      await nextTick();
-
       // Set active tab
       if (tab) this.section = tab;
-
-      // Get block presets
-      if (this.uipApp.data.options.block_preset_styles && this.isObject(this.uipApp.data.options.block_preset_styles)) {
-        this.block_preset_styles = this.uipApp.data.options.block_preset_styles;
-      }
-
-      await nextTick();
-      this.showSettings = true;
-      this.loading = false;
     },
     /**
      * Closes block settings
