@@ -8,7 +8,7 @@ export default {
   data() {
     return {};
   },
-  
+
   computed: {
     /**
      * Returns icon for button
@@ -16,15 +16,15 @@ export default {
      * @since 3.2.13
      */
     returnIcon() {
-      let icon = this.get_block_option(this.block, 'block', 'iconSelect');
-      if (!icon) return '';
+      let icon = this.get_block_option(this.block, "block", "iconSelect");
+      if (!icon) return "";
       if (!this.isObject(icon)) return icon;
       if (icon.value) return icon.value;
-      return '';
+      return "";
     },
   },
   template: `
-        <div class="uip-icon uip-text-l">
+        <div class="uip-icon">
           {{returnIcon}}
         </div>
         `,
