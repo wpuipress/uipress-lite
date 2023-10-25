@@ -418,6 +418,12 @@ export function maybeForceReload(url) {
     url.searchParams.set("uip-framed-page", 1);
     return window.location.assign(url);
   }
+
+  // Groundhogg
+  if (url.searchParams.get("page") == "gh_emails" && url.searchParams.get("action") == "edit") {
+    url.searchParams.set("uip-framed-page", 1);
+    return window.location.assign(url);
+  }
 }
 
 /**
