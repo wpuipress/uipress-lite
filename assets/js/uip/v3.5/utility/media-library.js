@@ -733,7 +733,7 @@ export default {
   
     <Modal ref="popup">
   
-      <div ref="confirmBody" @keydown.escape="cancel()" @click.stop.prevent
+      <div ref="confirmBody" @keydown.escape="cancel()" @click.stop
       class="uip-w-500 uip-flex uip-flex-column uip-row-gap-s uip-padding-m" tabindex="1" 
       style="height:70vh;max-height:80vh" autofocus>
       

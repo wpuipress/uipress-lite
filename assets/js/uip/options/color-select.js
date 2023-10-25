@@ -1,11 +1,11 @@
 const { __, _x, _n, _nx } = wp.i18n;
-import { defineAsyncComponent, nextTick } from '../../libs/vue-esm-dev.js';
+import { defineAsyncComponent, nextTick } from "../../libs/vue-esm-dev.js";
 export default {
   components: {
-    colorBox: defineAsyncComponent(() => import('../v3.5/utility/color-box.min.js?ver=3.3.00')),
-    screenControl: defineAsyncComponent(() => import('../v3.5/utility/screen-control.min.js?ver=3.3.00')),
-    colorPicker: defineAsyncComponent(() => import('../v3.5/styles/color-picker.min.js?ver=3.3.00')),
-    colourStyleEditor: defineAsyncComponent(() => import('../v3.5/styles/color-style-editor.min.js?ver=3.3.00')),
+    colorBox: defineAsyncComponent(() => import("../v3.5/utility/color-box.min.js?ver=3.3.00")),
+    screenControl: defineAsyncComponent(() => import("../v3.5/utility/screen-control.min.js?ver=3.3.00")),
+    colorPicker: defineAsyncComponent(() => import("../v3.5/styles/color-picker.min.js?ver=3.3.00")),
+    colourStyleEditor: defineAsyncComponent(() => import("../v3.5/styles/color-style-editor.min.js?ver=3.3.00")),
   },
 
   props: {
@@ -16,11 +16,11 @@ export default {
   data() {
     return {
       colour: {
-        value: '',
-        type: 'solid',
+        value: "",
+        type: "solid",
       },
       strings: {
-        colorPicker: __('Colour picker', 'uipress-lite'),
+        colorPicker: __("Colour picker", "uipress-lite"),
       },
     };
   },
@@ -47,12 +47,12 @@ export default {
      * @since 3.2.13
      */
     returnFillStyle() {
-      if (!('value' in this.colour)) return;
+      if (!("value" in this.colour)) return;
       if (!this.colour.value) return;
 
       const val = this.colour.value;
       // Variable style
-      if (val.includes('--')) return `background:var(${val})`;
+      if (val.includes("--")) return `background:var(${val})`;
       return `background:${val}`;
     },
 
@@ -63,7 +63,7 @@ export default {
      */
     colourPickerScreen() {
       return {
-        component: 'colorPicker',
+        component: "colorPicker",
         value: this.colour.value,
         label: this.strings.colorPicker,
         args: this.args,
@@ -71,6 +71,15 @@ export default {
           this.colour.value = d;
         },
       };
+    },
+
+    /**
+     * Returns droppos for dropdown
+     *
+     * @since 3.2.0
+     */
+    returnDropPos() {
+      return this.hasNestedPath(this.args, "dropPosition") ? this.args.dropPosition : "left center";
     },
   },
   methods: {
@@ -87,7 +96,7 @@ export default {
   template: `
     
     
-    <dropdown pos="left center" 
+    <dropdown :pos="returnDropPos" 
     :snapX="['#uip-block-settings', '#uip-template-settings', '#uip-global-settings']" 
     ref="fillDrop" class="uip-w-100p">
     
