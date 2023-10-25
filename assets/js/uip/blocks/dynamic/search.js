@@ -5,24 +5,24 @@ export default {
     name: String,
     block: Object,
   },
-  data: function () {
+  data() {
     return {
-      searchString: '',
+      searchString: "",
       results: [],
       types: [],
-      activeType: 'all',
+      activeType: "all",
       page: 1,
       totalPages: 0,
       totalFound: 0,
       strings: {
-        searchPlaceHolder: __('Search content', 'uipress-lite'),
-        nothingFound: __('Nothing found for query', 'uipress-lite'),
-        by: __('by', 'uipress-lite'),
-        found: __('found', 'uipress-lite'),
-        all: __('All', 'uipress-lite'),
-        edit: __('Edit', 'uipress-lite'),
-        view: __('View', 'uipress-lite'),
-        copy: __('Copy url', 'uipress-lite'),
+        searchPlaceHolder: __("Search content", "uipress-lite"),
+        nothingFound: __("Nothing found for query", "uipress-lite"),
+        by: __("by", "uipress-lite"),
+        found: __("found", "uipress-lite"),
+        all: __("All", "uipress-lite"),
+        edit: __("Edit", "uipress-lite"),
+        view: __("View", "uipress-lite"),
+        copy: __("Copy url", "uipress-lite"),
       },
       searching: false,
     };
@@ -56,7 +56,7 @@ export default {
      * @since 3.2.13
      */
     getPostTypes() {
-      return this.get_block_option(this.block, 'block', 'searchPostTypes');
+      return this.get_block_option(this.block, "block", "searchPostTypes");
     },
 
     /**
@@ -65,7 +65,7 @@ export default {
      * @since 3.2.13
      */
     limitToAuthor() {
-      let limit = this.get_block_option(this.block, 'block', 'limitToAuthor');
+      let limit = this.get_block_option(this.block, "block", "limitToAuthor");
       if (!limit) return false;
       if (!this.isObject(limit)) return limit;
       if (limit.value) return limit.value;
@@ -96,26 +96,26 @@ export default {
 
       //Build form data for fetch request
       let formData = new FormData();
-      formData.append('action', 'uip_search_content');
-      formData.append('security', uip_ajax.security);
-      formData.append('search', this.searchString);
-      formData.append('page', this.page);
-      formData.append('limitToauthor', limitToauthor);
-      formData.append('postTypes', postTypes);
-      formData.append('filter', this.activeType);
+      formData.append("action", "uip_search_content");
+      formData.append("security", uip_ajax.security);
+      formData.append("search", this.searchString);
+      formData.append("page", this.page);
+      formData.append("limitToauthor", limitToauthor);
+      formData.append("postTypes", postTypes);
+      formData.append("filter", this.activeType);
 
       const response = await this.sendServerRequest(uip_ajax.ajax_url, formData);
 
       // Something went very wrong
       if (!response) {
-        this.uipApp.notifications.notify(__('Unable to fetch posts at this tiem', 'uipress-lite'), '', '', 'error', true);
+        this.uipApp.notifications.notify(__("Unable to fetch posts at this tiem", "uipress-lite"), "", "", "error", true);
         this.searching = false;
         return;
       }
 
       // Handle error
       if (response.error) {
-        this.uipApp.notifications.notify(response.message, '', '', 'error', true);
+        this.uipApp.notifications.notify(response.message, "", "", "error", true);
         this.searching = false;
       }
 
@@ -152,7 +152,7 @@ export default {
             
               <div class="uip-flex uip-padding-xxs uip-border uip-search-block uip-border-round uip-flex-center uip-margin-bottom-s uip-position-relative">
                 <span class="uip-icon uip-text-muted uip-margin-right-xs">search</span> 
-                <input class="uip-blank-input uip-flex-grow uip-text-s" type="search" :placeholder="strings.searchPlaceHolder" v-model="searchString" autofocus="">
+                <input class="uip-blank-input uip-flex-grow uip-text-s" type="search" :placeholder="strings.searchPlaceHolder" v-model="searchString" autofocus>
                 
                 <div class="uip-position-absolute uip-left-0 uip-bottom-0 uip-w-100p" v-if="searching">
                   <div ref="loader" class="uip-ajax-loader">
