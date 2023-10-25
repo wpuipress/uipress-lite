@@ -14,7 +14,7 @@ import {
   Fragment as v,
   renderList as h,
   toDisplayString as d,
-} from '../../../libs/vue-esm-dev.js';
+} from '../../../libs/vue-esm.js';
 function f(e, a, r) {
   return Math.max(a, Math.min(e, r));
 }

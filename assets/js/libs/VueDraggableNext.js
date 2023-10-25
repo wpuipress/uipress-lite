@@ -1,5 +1,5 @@
 import Sortable from './sortable.esm.js';
-import { defineComponent, h, resolveComponent } from './vue-esm-dev.js';
+import { defineComponent, h, resolveComponent } from './vue-esm.js';
 
 function getConsole() {
   if (typeof window !== 'undefined') {

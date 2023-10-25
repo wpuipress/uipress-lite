@@ -1,4 +1,4 @@
-import { defineAsyncComponent, nextTick } from '../../libs/vue-esm-dev.js';
+import { defineAsyncComponent, nextTick } from '../../libs/vue-esm.js';
 const { __, _x, _n, _nx } = wp.i18n;
 export default {
   components: {

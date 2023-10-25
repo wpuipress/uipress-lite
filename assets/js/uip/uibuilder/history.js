@@ -3,7 +3,7 @@
  * @since 3.0.0
  */
 const { __, _x, _n, _nx } = wp.i18n;
-import { nextTick } from '../../libs/vue-esm-dev.js';
+import { nextTick } from '../../libs/vue-esm.js';
 export default {
   data() {
     return {

@@ -1,5 +1,5 @@
 const { __, _x, _n, _nx } = wp.i18n;
-import { defineAsyncComponent } from '../../libs/vue-esm-dev.js';
+import { defineAsyncComponent } from '../../libs/vue-esm.js';
 export default {
   components: {
     IconPicker: defineAsyncComponent(() => import('../v3.5/styles/icon-picker.min.js')),

@@ -2,7 +2,7 @@
  * Builds the main ui builder shell
  * @since 3.0.0
  */
-import { defineAsyncComponent } from "../../libs/vue-esm-dev.js";
+import { defineAsyncComponent } from "../../libs/vue-esm.js";
 const { __, _x, _n, _nx } = wp.i18n;
 
 /**

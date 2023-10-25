@@ -1,5 +1,5 @@
 const { __, _x, _n, _nx } = wp.i18n;
-import { defineAsyncComponent } from '../../libs/vue-esm-dev.js';
+import { defineAsyncComponent } from '../../libs/vue-esm.js';
 import Fonts from '../v3.5/lists/fonts.min.js';
 export default {
   components: {

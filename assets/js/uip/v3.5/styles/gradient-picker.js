@@ -1,4 +1,4 @@
-import { defineAsyncComponent } from '../../../libs/vue-esm-dev.js';
+import { defineAsyncComponent } from '../../../libs/vue-esm.js';
 import { parseGradient } from '../libs/gradient-parser.min.js';
 
 export default {

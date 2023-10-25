@@ -3,7 +3,7 @@
  * @since 3.0.0
  */
 const { __, _x, _n, _nx } = wp.i18n;
-import { defineAsyncComponent, nextTick } from "../../libs/vue-esm-dev.js";
+import { defineAsyncComponent, nextTick } from "../../libs/vue-esm.js";
 import { validDateTemplate } from "../v3.5/utility/functions.min.js";
 export default {
   components: {

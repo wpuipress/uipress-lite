@@ -3,7 +3,7 @@ import FlexDistribution from '../v3.5/lists/flex_distribution.min.js';
 import FlexAlignContent from '../v3.5/lists/flex_align_content.min.js';
 import FlexVerticalAlign from '../v3.5/lists/flex_vertical_align.min.js';
 import FlexAlign from '../v3.5/lists/flex_align.min.js';
-import { nextTick } from '../../libs/vue-esm-dev.js';
+import { nextTick } from '../../libs/vue-esm.js';
 export default {
   emits: ['update'],
   props: {

@@ -1,4 +1,4 @@
-import { nextTick } from "../../libs/vue-esm-dev.js";
+import { nextTick } from "../../libs/vue-esm.js";
 export default {
   props: {
     returnData: Function,

@@ -1,6 +1,6 @@
 const { __, _x, _n, _nx } = wp.i18n;
 import { deleteRemotePost } from '../../v3.5/utility/functions.min.js';
-import { defineAsyncComponent, nextTick } from '../../../libs/vue-esm-dev.js';
+import { defineAsyncComponent, nextTick } from '../../../libs/vue-esm.js';
 
 export default {
   components: {

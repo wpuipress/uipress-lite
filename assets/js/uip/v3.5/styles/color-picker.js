@@ -1,4 +1,4 @@
-import { defineAsyncComponent } from '../../../libs/vue-esm-dev.js';
+import { defineAsyncComponent } from '../../../libs/vue-esm.js';
 
 export default {
   components: {

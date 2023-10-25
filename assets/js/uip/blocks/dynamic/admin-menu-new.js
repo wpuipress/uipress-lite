@@ -1,5 +1,5 @@
 const { __, _x, _n, _nx } = wp.i18n;
-//import { reactive } from '../../../libs/vue-esm-dev.js';
+//import { reactive } from '../../../libs/vue-esm.js';
 const MenuCollapse = {
   props: {
     collapsed: Boolean,

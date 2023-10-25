@@ -3,7 +3,7 @@ import BlendModes from '../v3.5/lists/mix_blend_modes.min.js';
 import TransitionTypes from '../v3.5/lists/css_transitions.min.js';
 import CursorTypes from '../v3.5/lists/cursor_types.min.js';
 import CursorTypesResize from '../v3.5/lists/cursor_resize_types.min.js';
-import { nextTick } from '../../libs/vue-esm-dev.js';
+import { nextTick } from '../../libs/vue-esm.js';
 
 export default {
   emits: ['update'],

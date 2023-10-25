@@ -4,7 +4,7 @@
  * @since 3.2.13
  */
 const { __, _x, _n, _nx } = wp.i18n;
-import { createApp, getCurrentInstance, defineComponent, defineAsyncComponent, reactive } from "./../libs/vue-esm-dev.js";
+import { createApp, getCurrentInstance, defineComponent, defineAsyncComponent, reactive } from "./../libs/vue-esm.js";
 import { VueDraggableNext } from "./../libs/VueDraggableNext.js";
 import { createRouter, createWebHistory, createWebHashHistory } from "./../libs/vue-router-esm.js";
 const pluginVersion = import.meta.url.split("?ver=")[1];

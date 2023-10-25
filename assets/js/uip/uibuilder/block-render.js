@@ -1,4 +1,4 @@
-import { nextTick, h, Teleport } from "../../libs/vue-esm-dev.js";
+import { nextTick, h, Teleport } from "../../libs/vue-esm.js";
 import BlockStyles from "./block-styles.min.js";
 import BlockConditions from "./block-conditions.min.js";
 const { __ } = wp.i18n;

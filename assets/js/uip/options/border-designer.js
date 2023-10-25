@@ -1,5 +1,5 @@
 const { __, _x, _n, _nx } = wp.i18n;
-import { defineAsyncComponent, nextTick } from "../../libs/vue-esm-dev.js";
+import { defineAsyncComponent, nextTick } from "../../libs/vue-esm.js";
 import BorderPositions from "../v3.5/lists/border_positions.min.js";
 import BorderTypes from "../v3.5/lists/border_types.min.js";
 

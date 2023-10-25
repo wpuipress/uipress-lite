@@ -21,7 +21,7 @@ import {
   shallowRef,
   shallowReactive,
   nextTick,
-} from './vue-esm-dev.js';
+} from './vue-esm.js';
 const setupDevtoolsPlugin = false;
 
 const isBrowser = typeof window !== 'undefined';
