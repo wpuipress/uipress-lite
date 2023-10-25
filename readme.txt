@@ -2,7 +2,7 @@
 Contributors: uipress
 Tags: admin theme, custom dashboard, google analytics, woocommerce analytics, white label, user management, role editor, order kanban, admin pages, page builder, ui press
 Requires at least: 6.0
-Requires PHP: 7.0
+Requires PHP: 7.4
 Tested up to: 6.3
 Stable tag: 3.3.00
 License: GPLv2 or later
