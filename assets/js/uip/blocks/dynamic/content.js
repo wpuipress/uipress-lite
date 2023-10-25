@@ -349,7 +349,7 @@ export default {
 
       document.dispatchEvent(new CustomEvent("uipress/app/page/load/finish"));
       this.updatePageUrls();
-      this.injectWindowOpenMethod();
+      //this.injectWindowOpenMethod();
     },
 
     /**
