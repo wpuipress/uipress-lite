@@ -16,7 +16,7 @@ class Posts
   public static function search(array $options, $limitToAuthor = false)
   {
     $defaults = ["perPage" => 10, "search" => "", "post_type" => "any", "page" => 1];
-    $defaults = [...$defaults, ...$options];
+    $defaults = array_merge($defaults, $options);
 
     //Get template
     $args = [
