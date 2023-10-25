@@ -1,8 +1,8 @@
 const { __, _x, _n, _nx } = wp.i18n;
-import { defineAsyncComponent, nextTick } from '../../../libs/vue-esm-dev.js';
+import { defineAsyncComponent, nextTick } from "../../../libs/vue-esm-dev.js";
 export default {
   components: {
-    virtualList: defineAsyncComponent(() => import('../utility/virtual-list.min.js?ver=3.3.00')),
+    virtualList: defineAsyncComponent(() => import("../utility/virtual-list.min.js?ver=3.3.00")),
   },
   props: {
     value: String,
@@ -10,13 +10,13 @@ export default {
   },
   data() {
     return {
-      search: '',
+      search: "",
       icon: this.value,
       icons: [],
       strings: {
-        search: __('Search', 'seql'),
-        viewAllIcons: __('View all icons on the', 'seql'),
-        materialSite: __('Material site', 'seql'),
+        search: __("Search", "seql"),
+        viewAllIcons: __("View all icons on the", "seql"),
+        materialSite: __("Material site", "seql"),
       },
     };
   },
@@ -55,7 +55,7 @@ export default {
      * @since 3.2.13
      */
     async setIcons() {
-      const icons = await import('../lists/icons.min.js');
+      const icons = await import("../lists/icons.min.js");
       this.icons = icons.default;
     },
   },
@@ -66,7 +66,7 @@ export default {
 	
 		<input class="uip-input" type="text" v-model="search" :placeholder="strings.search" autofocus>
 		
-		<virtualList :allItems="returnIcons" containerClass="uip-grid-col-3 uip-grid-gap-xs" :startRowHeight="90" :perRow="3">
+		<virtualList :allItems="returnIcons" containerClass="uip-grid-col-3 uip-grid-gap-xs" :startRowHeight="80" :perRow="3">
 		  
 		  <template #item="{ item }">
 		  

@@ -16,8 +16,8 @@ const passiveSupportMixin = {
             return false;
           },
         };
-        window.addEventListener('test', null, options);
-        window.removeEventListener('test', null, options);
+        window.addEventListener("test", null, options);
+        window.removeEventListener("test", null, options);
       } catch (err) {
         passiveSupported = false;
       }
@@ -136,9 +136,9 @@ export default {
      */
     viewportStyle() {
       return {
-        overflow: 'hidden',
+        overflow: "hidden",
         height: `${this.viewportHeight}px`,
-        position: 'relative',
+        position: "relative",
       };
     },
 
@@ -149,7 +149,7 @@ export default {
     rootStyle() {
       return {
         height: `${this.rootHeight}px`,
-        overflow: 'auto',
+        overflow: "auto",
       };
     },
   },
@@ -170,13 +170,11 @@ export default {
      */
     calculateInitialRowHeight() {
       const children = this.$refs.spacer.children;
-      let largestHeight = 0;
-      for (let i = 0; i < children.length; i++) {
-        if (children[i].offsetHeight > largestHeight) {
-          largestHeight = children[i].offsetHeight;
-        }
-      }
-      return largestHeight;
+      if (!children || !children.length) return this.startRowHeight;
+      const firstChild = children[0];
+      const height = firstChild.getBoundingClientRect().height;
+      console.log(height);
+      return height;
     },
   },
 
@@ -184,13 +182,14 @@ export default {
    * Lifecycle hook when the component is mounted.
    * Calculates the initial row height and adds a scroll event listener.
    */
-  mounted() {
+  async mounted() {
+    await this.$nextTick();
     const largestHeight = this.calculateInitialRowHeight();
-    this.rowHeight = largestHeight || 30; // Use the logical OR as a simpler alternative
+    this.rowHeight = largestHeight || this.startRowHeight; // Use the logical OR as a simpler alternative
 
     // Add scroll event listener
     const scrollOptions = this.doesBrowserSupportPassiveScroll() ? { passive: true } : false;
-    this.$refs.root.addEventListener('scroll', this.handleScroll, scrollOptions);
+    this.$refs.root.addEventListener("scroll", this.handleScroll, scrollOptions);
   },
 
   /**
@@ -199,18 +198,18 @@ export default {
    */
   beforeUnmount() {
     // Remove scroll event listener
-    this.$refs.root.removeEventListener('scroll', this.handleScroll);
+    this.$refs.root.removeEventListener("scroll", this.handleScroll);
   },
 
   template: `
 	<div @scroll="handleScroll" class="root" ref="root" :style="rootStyle">
-	  <div class="seql-overflow-auto" ref="viewport" :style="viewportStyle">
+	  <div ref="viewport" :style="viewportStyle">
 	  
-		  <div :class="containerClass" ref="spacer" :style="spacerStyle">
-		  <template v-for="item in visibleItems">
-			  <slot name="item" :item="item"></slot>
-		  </template>
-		</div>
+		  <div :class="containerClass" ref="spacer" :style="spacerStyle" class="tester">
+		    <template v-for="item in visibleItems">
+			    <slot name="item" :item="item"></slot>
+		    </template>
+		  </div>
 		  
 	  </div>
 	</div>
