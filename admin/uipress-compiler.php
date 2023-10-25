@@ -16,6 +16,8 @@ class uipress_compiler
     require_once uip_plugin_path . "admin/core/uiBuilder.php";
     require_once uip_plugin_path . "admin/core/site-settings.php";
 
+    $this->check_for_uipress_pro_version();
+
     // Load main app
     $uip_app = new uip_app();
     $uip_app->run();
@@ -104,6 +106,29 @@ class uipress_compiler
   public function uipress_languages_loader()
   {
     load_plugin_textdomain("uipress-lite", false, dirname(dirname(plugin_basename(__FILE__))) . "/languages");
+  }
+
+  /**
+   * Checks the version of uipress pro and if it's before a specific level deativates the plugin
+   *
+   * @since 3.3.0
+   */
+  public function check_for_uipress_pro_version()
+  {
+    if (!function_exists("get_plugins")) {
+      require_once ABSPATH . "wp-admin/includes/plugin.php";
+    }
+    $all_plugins = get_plugins();
+
+    $plugin_slug = "uipress-pro/uipress-pro.php"; // Replace with the actual plugin file.
+
+    if (isset($all_plugins[$plugin_slug]) && $all_plugins[$plugin_slug]["Version"]) {
+      $plugin_version = $all_plugins[$plugin_slug]["Version"];
+      $plugin_version = floatval($plugin_version);
+      if ($plugin_version < 3.2) {
+        deactivate_plugins($plugin_slug);
+      }
+    }
   }
 }
 
