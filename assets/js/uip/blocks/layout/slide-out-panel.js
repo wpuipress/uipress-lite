@@ -54,6 +54,10 @@ export default {
      */
     getPanelStyle() {
       const style = this.get_block_option(this.block, "block", "overlayStyle");
+<<<<<<< HEAD
+=======
+      console.log(style);
+>>>>>>> main
       return this.isObject(style) ? style.value : "overlay";
     },
 
