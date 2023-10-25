@@ -13,7 +13,7 @@ use UipressLite\Classes\Scripts\UipScripts;
 use UipressLite\Classes\App\AppOptions;
 
 // Exit if accessed directly
-!defined('ABSPATH') ?? exit();
+!defined("ABSPATH") ?? exit();
 
 /**
  * Builds the uipress ui builder
@@ -41,10 +41,10 @@ class uip_ui_builder extends uip_app
    */
   private function add_hooks()
   {
-    add_action('plugins_loaded', [$this, 'add_ui_builder_actions'], 2);
-    add_action('init', [$this, 'create_builder_post_types']);
-    add_filter('kses_allowed_protocols', [$this, 'allow_data_in_kses']);
-    add_action('admin_enqueue_scripts', ['UipressLite\Classes\Scripts\UipScripts', 'add_icons']);
+    add_action("plugins_loaded", [$this, "add_ui_builder_actions"], 2);
+    add_action("init", [$this, "create_builder_post_types"]);
+    add_filter("kses_allowed_protocols", [$this, "allow_data_in_kses"]);
+    add_action("admin_enqueue_scripts", ["UipressLite\Classes\Scripts\UipScripts", "add_icons"]);
   }
 
   /**
@@ -56,22 +56,22 @@ class uip_ui_builder extends uip_app
   private function add_ajax_fuctions()
   {
     $functions = [
-      'uip_create_new_ui_template',
-      'uip_get_ui_template',
-      'uip_save_ui_template',
-      'uip_save_user_styles',
-      'uip_search_posts_pages',
-      'uip_get_ui_templates',
-      'uip_duplicate_ui_template',
-      'uip_delete_ui_template',
-      'uip_save_ui_pattern',
-      'uip_get_ui_patterns_list',
-      'uip_sync_ui_pattern',
-      'uip_get_global_settings',
-      'uip_save_global_settings',
-      'uip_save_from_wizard',
-      'uip_update_ui_template_status',
-      'uip_get_ui_styles',
+      "uip_create_new_ui_template",
+      "uip_get_ui_template",
+      "uip_save_ui_template",
+      "uip_save_user_styles",
+      "uip_search_posts_pages",
+      "uip_get_ui_templates",
+      "uip_duplicate_ui_template",
+      "uip_delete_ui_template",
+      "uip_save_ui_pattern",
+      "uip_get_ui_patterns_list",
+      "uip_sync_ui_pattern",
+      "uip_get_global_settings",
+      "uip_save_global_settings",
+      "uip_save_from_wizard",
+      "uip_update_ui_template_status",
+      "uip_get_ui_styles",
     ];
 
     // Loop and add functions
@@ -87,7 +87,7 @@ class uip_ui_builder extends uip_app
    */
   public function allow_data_in_kses($protocols)
   {
-    $protocols[] = 'data';
+    $protocols[] = "data";
     return $protocols;
   }
 
@@ -99,11 +99,11 @@ class uip_ui_builder extends uip_app
   public function add_ui_builder_actions()
   {
     // Stop processing if 'uip_stop_plugin' is true
-    defined('uip_stop_plugin') && uip_stop_plugin ? exit() : true;
-    add_action('admin_menu', [$this, 'add_ui_builder_to_menu']);
+    defined("uip_stop_plugin") && uip_stop_plugin ? exit() : true;
+    add_action("admin_menu", [$this, "add_ui_builder_to_menu"]);
 
-    $builderName = uip_plugin_shortname . '-ui-builder';
-    $page = isset($_GET['page']) ? $_GET['page'] : false;
+    $builderName = uip_plugin_shortname . "-ui-builder";
+    $page = isset($_GET["page"]) ? $_GET["page"] : false;
     $onBuilderPage = $page == $builderName ? true : false;
 
     // Exit if not on builder page
@@ -112,14 +112,14 @@ class uip_ui_builder extends uip_app
     }
 
     // Triggers pro actions for builder
-    do_action('uipress/uibuilder/start');
+    do_action("uipress/uibuilder/start");
 
     // Capture toolbar and menu
     AdminMenu::capture();
     ToolBar::capture();
 
-    add_action('admin_enqueue_scripts', [$this, 'add_scripts_and_styles']);
-    add_action('admin_footer', [$this, 'add_footer_scripts'], 9);
+    add_action("admin_enqueue_scripts", [$this, "add_scripts_and_styles"]);
+    add_action("admin_footer", [$this, "add_footer_scripts"], 9);
   }
 
   /**
@@ -130,13 +130,13 @@ class uip_ui_builder extends uip_app
   public function add_ui_builder_to_menu()
   {
     // Only add the page on the primary network site if on multisite
-    $notNetworkSite = is_multisite() && !is_main_site() && is_plugin_active_for_network(uip_plugin_path_name . '/uipress-lite.php') ? true : false;
+    $notNetworkSite = is_multisite() && !is_main_site() && is_plugin_active_for_network(uip_plugin_path_name . "/uipress-lite.php") ? true : false;
     if ($notNetworkSite) {
       return;
     }
 
-    add_options_page(__('uiBuilder', 'uipress-lite'), 'uiBuilder', 'uip_manage_ui', uip_plugin_shortname . '-ui-builder', [$this, 'build_uibuilder_page']);
-    add_options_page(__('uiSettings', 'uipress-lite'), 'uiSettings', 'uip_manage_ui', uip_plugin_shortname . '-ui-builder#/site-settings', [$this, 'build_uibuilder_page']);
+    add_options_page(__("uiBuilder", "uipress-lite"), "uiBuilder", "uip_manage_ui", uip_plugin_shortname . "-ui-builder", [$this, "build_uibuilder_page"]);
+    add_options_page(__("uiSettings", "uipress-lite"), "uiSettings", "uip_manage_ui", uip_plugin_shortname . "-ui-builder#/site-settings", [$this, "build_uibuilder_page"]);
   }
 
   /**
@@ -160,14 +160,14 @@ class uip_ui_builder extends uip_app
   public function add_footer_scripts()
   {
     $builderScript = [
-      'id' => 'uip-ui-builder-js',
-      'src' => uip_plugin_url . 'assets/js/uip/uiBuilder.min.js?ver=' . uip_plugin_version,
-      'type' => 'module',
+      "id" => "uip-ui-builder-js",
+      "src" => uip_plugin_url . "assets/js/uip/uiBuilder.min.js?ver=" . uip_plugin_version,
+      "type" => "module",
     ];
 
     $appOptions = AppOptions::get_options();
     $userPrefs = UserPreferences::get();
-    $path = plugins_url('uipress-lite/');
+    $path = plugins_url("uipress-lite/");
 
     $variableFormatter = "
       const uipressLitePath = '{$path}';
@@ -176,24 +176,24 @@ class uip_ui_builder extends uip_app
       var uip_ajax = JSON.parse(ajaxData, (k, v) => (v === 'uiptrue' ? true : v === 'uipfalse' ? false : v === 'uipblank' ? '' : v));";
 
     $dataScript = [
-      'id' => 'uip-app-data',
-      'uip_ajax' => json_encode([
-        'ajax_url' => admin_url('admin-ajax.php'),
-        'security' => wp_create_nonce('uip-security-nonce'),
-        'rest_url' => get_rest_url(),
-        'rest_headers' => [
-          'Content-Type' => 'application/json',
-          'X-WP-Nonce' => wp_create_nonce('wp_rest'),
+      "id" => "uip-app-data",
+      "uip_ajax" => json_encode([
+        "ajax_url" => admin_url("admin-ajax.php"),
+        "security" => wp_create_nonce("uip-security-nonce"),
+        "rest_url" => get_rest_url(),
+        "rest_headers" => [
+          "Content-Type" => "application/json",
+          "X-WP-Nonce" => wp_create_nonce("wp_rest"),
         ],
-        'uipAppData' => [
-          'options' => Sanitize::clean_input_with_code($appOptions),
-          'userPrefs' => Sanitize::clean_input_with_code($userPrefs),
+        "uipAppData" => [
+          "options" => Sanitize::clean_input_with_code($appOptions),
+          "userPrefs" => Sanitize::clean_input_with_code($userPrefs),
         ],
       ]),
     ];
 
     wp_print_script_tag($dataScript);
-    wp_print_inline_script_tag($variableFormatter, ['id' => 'uip-format-vars']);
+    wp_print_inline_script_tag($variableFormatter, ["id" => "uip-format-vars"]);
     wp_print_script_tag($builderScript);
   }
 
@@ -243,34 +243,32 @@ class uip_ui_builder extends uip_app
     // Check security nonce and 'DOING_AJAX' global
     Ajax::check_referer() ?? die();
 
-    $options = json_decode(stripslashes($_POST['settings']));
+    $options = json_decode(stripslashes($_POST["settings"]));
     $options = Sanitize::clean_input_with_code($options);
 
     $template = false;
 
-    //error_log(json_encode($options));
-
     if (!is_object($options)) {
-      Ajax::error(__('Unable to save site settings. Data corrupted', 'uipress-lite'));
+      Ajax::error(__("Unable to save site settings. Data corrupted", "uipress-lite"));
     }
 
     // Get and decode template
     $template = false;
     if (isset($options->templateJSON)) {
-      if ($options->templateJSON && $options->templateJSON != '' && $options->templateJSON != 'uipblank') {
+      if ($options->templateJSON && $options->templateJSON != "" && $options->templateJSON != "uipblank") {
         $template = json_decode($options->templateJSON);
 
         $newTemplateOptions = (object) [
-          'globalSettings' => (object) [
-            'rolesAndUsers' => $options->appliesTo,
-            'excludesRolesAndUsers' => $options->excludes,
-            'type' => 'ui-template',
-            'status' => 'uiptrue',
+          "globalSettings" => (object) [
+            "rolesAndUsers" => $options->appliesTo,
+            "excludesRolesAndUsers" => $options->excludes,
+            "type" => "ui-template",
+            "status" => "uiptrue",
           ],
-          'content' => $template,
+          "content" => $template,
         ];
 
-        $newTemplateID = UiTemplates::new(['type' => 'ui-template', 'name' => __('Admin theme', 'uipress-lite')]);
+        $newTemplateID = UiTemplates::new(["type" => "ui-template", "name" => __("Admin theme", "uipress-lite")]);
         UiTemplates::new($newTemplateID, $newTemplateOptions);
       }
     }
@@ -285,36 +283,36 @@ class uip_ui_builder extends uip_app
     }
 
     // Ensure nested paths exists
-    Objects::ensureNested($globalSettings, ['site-settings', 'general', 'globalLogo']);
-    Objects::ensureNested($globalSettings, ['site-settings', 'general', 'globalLogoDarkMode']);
-    Objects::ensureNested($globalSettings, ['site-settings', 'login', 'logo']);
-    Objects::ensureNested($globalSettings, ['site-settings', 'login', 'background_image']);
-    Objects::ensureNested($globalSettings, ['site-settings', 'login', 'loginTheme']);
-    $siteSettings = $globalSettings['site-settings'];
+    Objects::ensureNested($globalSettings, ["site-settings", "general", "globalLogo"]);
+    Objects::ensureNested($globalSettings, ["site-settings", "general", "globalLogoDarkMode"]);
+    Objects::ensureNested($globalSettings, ["site-settings", "login", "logo"]);
+    Objects::ensureNested($globalSettings, ["site-settings", "login", "background_image"]);
+    Objects::ensureNested($globalSettings, ["site-settings", "login", "loginTheme"]);
+    $siteSettings = $globalSettings["site-settings"];
 
     // Save light logo
     if (isset($options->logo) && is_object($options->logo)) {
-      if ($options->logo->url != '' && $options->logo->url != 'uipblank') {
+      if ($options->logo->url != "" && $options->logo->url != "uipblank") {
         $siteSettings->general->globalLogo = $options->logo;
       }
     }
     // Save dark logo
     if (isset($options->darkLogo) && $options->darkLogo && is_object($options->darkLogo)) {
-      if ($options->darkLogo->url != '' && $options->darkLogo->url != 'uipblank') {
+      if ($options->darkLogo->url != "" && $options->darkLogo->url != "uipblank") {
         $siteSettings->general->globalLogoDarkMode = $options->darkLogo;
       }
     }
 
     // Save login logo
     if (isset($options->loginLogo) && $options->loginLogo && is_object($options->loginLogo)) {
-      if ($options->loginLogo->url != '' && $options->loginLogo->url != 'uipblank') {
+      if ($options->loginLogo->url != "" && $options->loginLogo->url != "uipblank") {
         $siteSettings->login->logo = $options->loginLogo;
       }
     }
 
     // Save login background
     if (isset($options->loginBackground) && $options->loginBackground && is_object($options->loginBackground)) {
-      if ($options->loginBackground->url != '' && $options->loginBackground->url != 'uipblank') {
+      if ($options->loginBackground->url != "" && $options->loginBackground->url != "uipblank") {
         $siteSettings->login->background_image = $options->loginBackground;
       }
     }
@@ -324,11 +322,11 @@ class uip_ui_builder extends uip_app
       $siteSettings->login->loginTheme = $options->enableLoginTheme;
     }
 
-    $globalSettings['site-settings'] = $siteSettings;
+    $globalSettings["site-settings"] = $siteSettings;
 
     UipOptions::update(null, $globalSettings);
 
-    $returndata['success'] = true;
+    $returndata["success"] = true;
     wp_send_json($returndata);
   }
 
@@ -342,20 +340,20 @@ class uip_ui_builder extends uip_app
     // Check security nonce and 'DOING_AJAX' global
     Ajax::check_referer() ?? die();
 
-    $decoded = json_decode(stripslashes($_POST['settings']));
+    $decoded = json_decode(stripslashes($_POST["settings"]));
     $options = Sanitize::clean_input_with_code($decoded);
 
     // Bail if options are not in correct format
     if (!is_object($options)) {
-      $returndata['error'] = true;
-      $returndata['message'] = __('Unable to save site settings. Data corrupted', 'uipress-lite');
+      $returndata["error"] = true;
+      $returndata["message"] = __("Unable to save site settings. Data corrupted", "uipress-lite");
       wp_send_json($returndata);
     }
 
     // Update site option
-    UipOptions::update('site-settings', $options);
+    UipOptions::update("site-settings", $options);
 
-    $returndata['success'] = true;
+    $returndata["success"] = true;
     wp_send_json($returndata);
   }
 
@@ -370,11 +368,11 @@ class uip_ui_builder extends uip_app
     Ajax::check_referer() ?? die();
 
     // Get site settings
-    $options = UipOptions::get('site-settings');
+    $options = UipOptions::get("site-settings");
     $options = $options ? $options : new stdClass();
 
-    $returndata['success'] = true;
-    $returndata['options'] = json_decode(html_entity_decode(json_encode($options)));
+    $returndata["success"] = true;
+    $returndata["options"] = json_decode(html_entity_decode(json_encode($options)));
 
     wp_send_json($returndata);
   }
@@ -390,22 +388,22 @@ class uip_ui_builder extends uip_app
     Ajax::check_referer() ?? die();
 
     // The type of ui-template to create
-    $type = sanitize_text_field($_POST['templateType']);
+    $type = sanitize_text_field($_POST["templateType"]);
 
-    $draftName = __('UI Template (Draft)', 'uipress-lite');
-    $templateID = UiTemplates::new(['type' => $type, 'name' => $draftName]);
+    $draftName = __("UI Template (Draft)", "uipress-lite");
+    $templateID = UiTemplates::new(["type" => $type, "name" => $draftName]);
 
-    $succesMessage = __('Template created', 'uipress-lite');
-    $errorMessage = __('Unable to create template', 'uipress-lite');
+    $succesMessage = __("Template created", "uipress-lite");
+    $errorMessage = __("Unable to create template", "uipress-lite");
     $message = $templateID ? $succesMessage : $errorMessage;
     $error = $templateID ? false : true;
     $succes = $templateID ? true : false;
 
     $returndata = [];
-    $returndata['success'] = $succes;
-    $returndata['error'] = $error;
-    $returndata['id'] = $templateID;
-    $returndata['message'] = $message;
+    $returndata["success"] = $succes;
+    $returndata["error"] = $error;
+    $returndata["id"] = $templateID;
+    $returndata["message"] = $message;
 
     wp_send_json($returndata);
   }
@@ -420,9 +418,9 @@ class uip_ui_builder extends uip_app
     // Check security nonce and 'DOING_AJAX' global
     Ajax::check_referer() ?? die();
 
-    $search = sanitize_text_field($_POST['search']);
+    $search = sanitize_text_field($_POST["search"]);
 
-    $options = ['perPage' => -1, 'search' => $search];
+    $options = ["perPage" => -1, "search" => $search];
     $templateQuery = UiTemplates::list($options);
     $templates = UiTemplates::format($templateQuery->get_posts());
 
@@ -431,10 +429,10 @@ class uip_ui_builder extends uip_app
 
     // Format data
     $returndata = [];
-    $returndata['success'] = true;
-    $returndata['templates'] = $templates;
-    $returndata['totalFound'] = $totalFound;
-    $returndata['totalPages'] = $maxPages;
+    $returndata["success"] = true;
+    $returndata["templates"] = $templates;
+    $returndata["totalFound"] = $totalFound;
+    $returndata["totalPages"] = $maxPages;
 
     // Return data to app
     wp_send_json($returndata);
@@ -449,32 +447,32 @@ class uip_ui_builder extends uip_app
     // Check security nonce and 'DOING_AJAX' global
     Ajax::check_referer() ?? die();
 
-    $templateID = sanitize_text_field($_POST['templateID']);
+    $templateID = sanitize_text_field($_POST["templateID"]);
 
     $template = UiTemplates::get($templateID);
 
     // Handle template error
     if (!$template) {
-      $returndata['error'] = true;
-      $returndata['message'] = __('Unable to fetch template', 'uipress-lite');
+      $returndata["error"] = true;
+      $returndata["message"] = __("Unable to fetch template", "uipress-lite");
       wp_send_json($returndata);
     }
 
-    $message = __('Succesfully fetched Ui template', 'uipress-lite');
+    $message = __("Succesfully fetched Ui template", "uipress-lite");
 
     // Get patterns list
-    $options = ['perPage' => -1, 'search' => ''];
+    $options = ["perPage" => -1, "search" => ""];
     $patternQuery = UiPatterns::list($options);
     $patterns = UiPatterns::format($patternQuery->get_posts());
 
     //Return data to app
     $returndata = [];
-    $returndata['success'] = true;
-    $returndata['message'] = $message;
-    $returndata['content'] = $template['template'];
-    $returndata['settings'] = $template['settings'];
-    $returndata['type'] = $template['type'];
-    $returndata['patterns'] = $patterns;
+    $returndata["success"] = true;
+    $returndata["message"] = $message;
+    $returndata["content"] = $template["template"];
+    $returndata["settings"] = $template["settings"];
+    $returndata["type"] = $template["type"];
+    $returndata["patterns"] = $patterns;
 
     wp_send_json($returndata);
   }
@@ -488,14 +486,14 @@ class uip_ui_builder extends uip_app
     // Check security nonce and 'DOING_AJAX' global
     Ajax::check_referer() ?? die();
 
-    $styles = UipOptions::get('theme-styles');
+    $styles = UipOptions::get("theme-styles");
     $styles = is_object($styles) ? $styles : new stdClass();
     $styles = json_decode(html_entity_decode(json_encode($styles)));
 
     //Return data to app
     $returndata = [];
-    $returndata['success'] = true;
-    $returndata['styles'] = $styles;
+    $returndata["success"] = true;
+    $returndata["styles"] = $styles;
     wp_send_json($returndata);
   }
 
@@ -509,22 +507,22 @@ class uip_ui_builder extends uip_app
     // Check security nonce and 'DOING_AJAX' global
     Ajax::check_referer() ?? die();
 
-    $templateIDs = json_decode(stripslashes($_POST['templateids']));
+    $templateIDs = json_decode(stripslashes($_POST["templateids"]));
     $templateIDs = Sanitize::clean_input_with_code($templateIDs);
     $templateIDs = is_array($templateIDs) ? $templateIDs : [$templateIDs];
 
     $status = UiTemplates::delete($templateIDs);
 
     if (!$status) {
-      $returndata['error'] = true;
-      $returndata['message'] = __('Unable to delete templates at this time', 'uipress-lite');
+      $returndata["error"] = true;
+      $returndata["message"] = __("Unable to delete templates at this time", "uipress-lite");
       wp_send_json($returndata);
     }
 
-    $message = count($templateIDs) > 1 ? __('Templates deleted', 'uipress-lite') : __('Template deleted', 'uipress-lite');
+    $message = count($templateIDs) > 1 ? __("Templates deleted", "uipress-lite") : __("Template deleted", "uipress-lite");
 
-    $returndata['success'] = true;
-    $returndata['message'] = $message;
+    $returndata["success"] = true;
+    $returndata["message"] = $message;
     wp_send_json($returndata);
   }
 
@@ -537,21 +535,21 @@ class uip_ui_builder extends uip_app
     // Check security nonce and 'DOING_AJAX' global
     Ajax::check_referer() ?? die();
 
-    $templateID = sanitize_text_field($_POST['templateid']);
-    $status = sanitize_text_field($_POST['status']);
+    $templateID = sanitize_text_field($_POST["templateid"]);
+    $status = sanitize_text_field($_POST["status"]);
 
-    $templateFor = json_decode(stripslashes($_POST['templatefor']));
+    $templateFor = json_decode(stripslashes($_POST["templatefor"]));
     $templateFor = Sanitize::clean_input_with_code($templateFor);
 
     if (!$templateID || !$status) {
-      $returndata['error'] = true;
-      $returndata['message'] = __('Unable to update template status', 'uipress-lite');
+      $returndata["error"] = true;
+      $returndata["message"] = __("Unable to update template status", "uipress-lite");
       wp_send_json($returndata);
     }
 
-    if (!current_user_can('edit_post', $templateID)) {
-      $returndata['error'] = true;
-      $returndata['message'] = __("You don't have the correct permissions to edit this template", 'uipress-pro');
+    if (!current_user_can("edit_post", $templateID)) {
+      $returndata["error"] = true;
+      $returndata["message"] = __("You don't have the correct permissions to edit this template", "uipress-pro");
       wp_send_json($returndata);
     }
 
@@ -559,8 +557,8 @@ class uip_ui_builder extends uip_app
     UiTemplates::update_template_for($templateID, $templateFor);
 
     $returndata = [];
-    $returndata['success'] = true;
-    $returndata['message'] = __('Template updated', 'uipress-lite');
+    $returndata["success"] = true;
+    $returndata["message"] = __("Template updated", "uipress-lite");
     wp_send_json($returndata);
   }
 
@@ -574,19 +572,19 @@ class uip_ui_builder extends uip_app
     // Check security nonce and 'DOING_AJAX' global
     Ajax::check_referer() ?? die();
 
-    $templateID = sanitize_text_field($_POST['id']);
+    $templateID = sanitize_text_field($_POST["id"]);
     $newPost = Posts::duplicate($templateID);
 
     if (!$newPost) {
-      $returndata['error'] = true;
-      $returndata['message'] = __('Unable to duplicate template', 'uipress-lite');
+      $returndata["error"] = true;
+      $returndata["message"] = __("Unable to duplicate template", "uipress-lite");
       wp_send_json($returndata);
     }
 
     //Return data to app
     $returndata = [];
-    $returndata['success'] = true;
-    $returndata['message'] = __('Template duplicated', 'uipress-lite');
+    $returndata["success"] = true;
+    $returndata["message"] = __("Template duplicated", "uipress-lite");
     wp_send_json($returndata);
   }
 
@@ -601,22 +599,22 @@ class uip_ui_builder extends uip_app
     Ajax::check_referer() ?? die();
 
     // Sanitise inputs
-    $template = json_decode(stripslashes($_POST['template']));
+    $template = json_decode(stripslashes($_POST["template"]));
     $template = Sanitize::clean_input_with_code($template);
-    $templateID = sanitize_text_field($_POST['templateID']);
+    $templateID = sanitize_text_field($_POST["templateID"]);
 
     $response = UiTemplates::save($templateID, $template);
 
     if (!$response) {
-      $returndata['error'] = true;
-      $returndata['message'] = __('Unable to save template', 'uipress-lite');
+      $returndata["error"] = true;
+      $returndata["message"] = __("Unable to save template", "uipress-lite");
       wp_send_json($returndata);
     }
 
     // Return data to app
     $returndata = [];
-    $returndata['success'] = true;
-    $returndata['message'] = __('Template saved', 'uipress-lite');
+    $returndata["success"] = true;
+    $returndata["message"] = __("Template saved", "uipress-lite");
     wp_send_json($returndata);
   }
 
@@ -631,17 +629,17 @@ class uip_ui_builder extends uip_app
     // Check security nonce and 'DOING_AJAX' global
     Ajax::check_referer() ?? die();
 
-    $styles = json_decode(stripslashes($_POST['styles']));
+    $styles = json_decode(stripslashes($_POST["styles"]));
     $styles = Sanitize::clean_input_with_code($styles);
 
     if ($styles && is_object($styles)) {
-      UipOptions::update('theme-styles', $styles);
+      UipOptions::update("theme-styles", $styles);
     }
 
     //Return data to app
     $returndata = [];
-    $returndata['success'] = true;
-    $returndata['message'] = __('Styles saved', 'uipress-lite');
+    $returndata["success"] = true;
+    $returndata["message"] = __("Styles saved", "uipress-lite");
     wp_send_json($returndata);
   }
 
@@ -655,17 +653,17 @@ class uip_ui_builder extends uip_app
     // Check security nonce and 'DOING_AJAX' global
     Ajax::check_referer() ?? die();
 
-    $pattern = json_decode(stripslashes($_POST['pattern']));
+    $pattern = json_decode(stripslashes($_POST["pattern"]));
     $pattern = Sanitize::clean_input_with_code($pattern);
-    $patternID = sanitize_text_field($_POST['patternID']);
-    $currentTemplateID = sanitize_text_field($_POST['templateID']);
+    $patternID = sanitize_text_field($_POST["patternID"]);
+    $currentTemplateID = sanitize_text_field($_POST["templateID"]);
 
     $newPatternID = false;
     $newTemplate = [];
 
     // Pattern does not exist so create it
     if (!get_post_status($patternID)) {
-      $newPatternID = UiPatterns::new($pattern->name, $pattern, 'layout', '', 'category');
+      $newPatternID = UiPatterns::new($pattern->name, $pattern, "layout", "", "category");
       $pattern->patternID = $newPatternID;
       UiPatterns::update_template($newPatternID, $pattern);
     } else {
@@ -673,13 +671,13 @@ class uip_ui_builder extends uip_app
       UiPatterns::update_template($patternID, $pattern);
     }
 
-    $options = ['perPage' => -1, 'search' => ''];
+    $options = ["perPage" => -1, "search" => ""];
     $templateQuery = UiTemplates::list($options);
     $allTemplates = $templateQuery->get_posts();
 
     foreach ($allTemplates as $template) {
       //Don't edit current template
-      $blocks = get_post_meta($template->ID, 'uip-ui-template', true);
+      $blocks = get_post_meta($template->ID, "uip-ui-template", true);
 
       // Empty template so continue
       if (!is_array($blocks)) {
@@ -697,17 +695,17 @@ class uip_ui_builder extends uip_app
     }
 
     // Get patterns list
-    $options = ['perPage' => -1, 'search' => ''];
+    $options = ["perPage" => -1, "search" => ""];
     $patternQuery = UiPatterns::list($options);
     $patterns = UiPatterns::format($patternQuery->get_posts());
 
     // Return data to app
     $returndata = [];
-    $returndata['success'] = true;
-    $returndata['message'] = __('Patterns synced', 'uipress-lite');
-    $returndata['newPattern'] = $newPatternID;
-    $returndata['patterns'] = $patterns;
-    $returndata['newTemplate'] = $returnTemplate;
+    $returndata["success"] = true;
+    $returndata["message"] = __("Patterns synced", "uipress-lite");
+    $returndata["newPattern"] = $newPatternID;
+    $returndata["patterns"] = $patterns;
+    $returndata["newTemplate"] = $returnTemplate;
     wp_send_json($returndata);
   }
 
@@ -722,34 +720,34 @@ class uip_ui_builder extends uip_app
     // Check security nonce and 'DOING_AJAX' global
     Ajax::check_referer() ?? die();
 
-    $pattern = json_decode(stripslashes($_POST['pattern']));
+    $pattern = json_decode(stripslashes($_POST["pattern"]));
     $pattern = Sanitize::clean_input_with_code($pattern);
 
-    $name = sanitize_text_field($_POST['name']);
-    $type = sanitize_text_field($_POST['type']);
-    $des = sanitize_text_field($_POST['description']);
-    $icon = sanitize_text_field($_POST['icon']);
+    $name = sanitize_text_field($_POST["name"]);
+    $type = sanitize_text_field($_POST["type"]);
+    $des = sanitize_text_field($_POST["description"]);
+    $icon = sanitize_text_field($_POST["icon"]);
 
     $patternID = UiPatterns::new($name, $pattern, $type, $des, $icon);
 
     // Exit if no id
     if (!$patternID) {
-      $returndata['error'] = true;
-      $returndata['message'] = __('Unable to save pattern', 'uipress-lite');
+      $returndata["error"] = true;
+      $returndata["message"] = __("Unable to save pattern", "uipress-lite");
       wp_send_json($returndata);
     }
 
     // Get patterns list
-    $options = ['perPage' => -1, 'search' => ''];
+    $options = ["perPage" => -1, "search" => ""];
     $patternQuery = UiPatterns::list($options);
     $patterns = UiPatterns::format($patternQuery->get_posts());
 
     //Return data to app
     $returndata = [];
-    $returndata['success'] = true;
-    $returndata['message'] = __('Pattern saved', 'uipress-lite');
-    $returndata['patterns'] = $patterns;
-    $returndata['patternid'] = $post;
+    $returndata["success"] = true;
+    $returndata["message"] = __("Pattern saved", "uipress-lite");
+    $returndata["patterns"] = $patterns;
+    $returndata["patternid"] = $post;
     wp_send_json($returndata);
   }
 
@@ -764,9 +762,9 @@ class uip_ui_builder extends uip_app
     Ajax::check_referer() ?? die();
 
     // Sanitise search
-    $string = sanitize_text_field($_POST['searchStr']);
+    $string = sanitize_text_field($_POST["searchStr"]);
 
-    $postsQuery = Posts::search(['perPage' => 20, 'search' => $string, 'post_type' => 'any']);
+    $postsQuery = Posts::search(["perPage" => 20, "search" => $string, "post_type" => "any"]);
     $totalFound = $postsQuery->found_posts;
     $foundPosts = $postsQuery->get_posts();
 
@@ -774,15 +772,15 @@ class uip_ui_builder extends uip_app
 
     foreach ($foundPosts as $item) {
       $temp = [];
-      $temp['name'] = get_the_title($item->ID);
-      $temp['link'] = get_permalink($item->ID);
+      $temp["name"] = get_the_title($item->ID);
+      $temp["link"] = get_permalink($item->ID);
       $formattedPosts[] = $temp;
     }
 
     //Return data to app
     $returndata = [];
-    $returndata['success'] = true;
-    $returndata['posts'] = $formattedPosts;
+    $returndata["success"] = true;
+    $returndata["posts"] = $formattedPosts;
     wp_send_json($returndata);
   }
 
@@ -798,13 +796,13 @@ class uip_ui_builder extends uip_app
     Ajax::check_referer() ?? die();
 
     // Get patterns list
-    $options = ['perPage' => -1, 'search' => ''];
+    $options = ["perPage" => -1, "search" => ""];
     $patternQuery = UiPatterns::list($options);
     $patterns = UiPatterns::format($patternQuery->get_posts());
 
-    $returndata['success'] = true;
-    $returndata['message'] = __('Columns fetched', 'uipress-lite');
-    $returndata['patterns'] = $patterns;
+    $returndata["success"] = true;
+    $returndata["message"] = __("Columns fetched", "uipress-lite");
+    $returndata["patterns"] = $patterns;
     wp_send_json($returndata);
   }
 }

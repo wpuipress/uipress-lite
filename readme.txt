@@ -78,6 +78,7 @@ Upload the UiPress plugin to your blog, activate it, and then navigate to the ui
 * Added static menu option to the admin menu block
 * Fixed issue that could stop uipress menus and uitemplates from loading on elementor template pages
 * Huge performance improvements across all apps
+* Added new site option to add sticky headers to post tables
 
 = 3.2.12 =
 *Release Date 28 August 2023*

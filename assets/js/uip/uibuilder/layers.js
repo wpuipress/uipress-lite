@@ -1,10 +1,10 @@
 const { __, _x, _n, _nx } = wp.i18n;
-import { defineAsyncComponent, nextTick } from '../../libs/vue-esm-dev.js';
+import { defineAsyncComponent, nextTick } from "../../libs/vue-esm-dev.js";
 
 const Layer = {
-  name: 'Layer',
+  name: "Layer",
   components: {
-    BlockList: defineAsyncComponent(() => import('./block-list.min.js?ver=3.3.00')),
+    BlockList: defineAsyncComponent(() => import("./block-list.min.js?ver=3.3.00")),
   },
   props: {
     block: Object,
@@ -14,14 +14,14 @@ const Layer = {
   data() {
     return {
       open: false,
-      queryLoopEnabled: __('Block is using query loop', 'uipress-lite'),
+      queryLoopEnabled: __("Block is using query loop", "uipress-lite"),
       strings: {
-        blocks: __('Blocks', 'uipress-lite'),
+        blocks: __("Blocks", "uipress-lite"),
       },
     };
   },
   watch: {
-    '$route.query.block': {
+    "$route.query.block": {
       handler(newValue, oldValue) {
         this.maybeOpenLayer();
       },
@@ -37,7 +37,7 @@ const Layer = {
      * @since 3.2.13
      */
     isActive() {
-      if ('block' in this.$route.query && this.$route.query.block == this.block.uid) return true;
+      if ("block" in this.$route.query && this.$route.query.block == this.block.uid) return true;
     },
 
     /**
@@ -49,20 +49,20 @@ const Layer = {
      * @since 3.2.13
      */
     buildClasses() {
-      let classes = 'uip-border-rounder uip-padding-xxs';
+      let classes = "uip-border-rounder uip-padding-xxs";
       const isActive = this.isActive;
 
       // Add classes based on active state
       if (isActive) {
-        classes += ' uip-text-emphasis uip-background-secondary uip-text-bold uip-text-inverse ';
+        classes += " uip-text-emphasis uip-background-secondary uip-text-bold uip-text-inverse ";
       } else {
-        classes += ' uip-link-default uip-margin-right-xs';
+        classes += " uip-link-default uip-margin-right-xs";
       }
 
       // Add hover class in a block control context if the element is not active
       if (this.uipApp.blockControl && !isActive) {
         if (this.uipApp.blockControl.returnHoveredBlockUID === this.block.uid) {
-          classes += ' uip-background-primary-wash uip-text-emphasis';
+          classes += " uip-background-primary-wash uip-text-emphasis";
         }
       }
 
@@ -127,6 +127,7 @@ const Layer = {
         
         
           <uip-draggable 
+          :class="{'uip-min-h-30' : !block.content.length}"
           class="uip-flex uip-flex-column uip-row-gap-xxs uip-w-100p uip-template-layers"
           :group="{ name: 'uip-layer-blocks', pull: true, put: true }"
           :list="block.content"
@@ -175,26 +176,26 @@ const Layer = {
   `,
 };
 export default {
-  name: 'layersRecursive',
+  name: "layersRecursive",
   props: {
     content: Array,
     returnData: Function,
   },
   components: {
-    BlockList: defineAsyncComponent(() => import('./block-list.min.js?ver=3.3.00')),
+    BlockList: defineAsyncComponent(() => import("./block-list.min.js?ver=3.3.00")),
     Layer: Layer,
   },
   data() {
     return {
       items: this.content,
-      queryLoopEnabled: __('Block is using query loop', 'uipress-lite'),
+      queryLoopEnabled: __("Block is using query loop", "uipress-lite"),
       drag: false,
       strings: {
-        blocks: __('Blocks', 'uipress-lite'),
+        blocks: __("Blocks", "uipress-lite"),
       },
     };
   },
-  inject: ['uiTemplate'],
+  inject: ["uiTemplate"],
   watch: {
     content: {
       handler(newValue, oldValue) {
@@ -211,7 +212,7 @@ export default {
      */
     returnDragStyle() {
       if (this.uiTemplate.drag) {
-        return 'border-color:var(--uip-background-primary);';
+        return "border-color:var(--uip-background-primary);";
       }
     },
 
@@ -236,20 +237,20 @@ export default {
      * @since [YOUR_VERSION_HERE]
      */
     buildClasses(element) {
-      let classes = 'uip-border-rounder uip-padding-xxs';
+      let classes = "uip-border-rounder uip-padding-xxs";
       const isActive = this.isActive(element.uid);
 
       // Add classes based on active state
       if (isActive) {
-        classes += ' uip-background-secondary uip-text-bold uip-text-inverse';
+        classes += " uip-background-secondary uip-text-bold uip-text-inverse";
       } else {
-        classes += ' uip-background-muted';
+        classes += " uip-background-muted";
       }
 
       // Add hover class in a block control context if the element is not active
       if (this.uipApp.blockControl && !isActive) {
         if (this.uipApp.blockControl.returnHoveredBlockUID === element.uid) {
-          classes += ' uip-background-primary-wash';
+          classes += " uip-background-primary-wash";
         }
       }
 
