@@ -546,6 +546,20 @@ export default {
     },
 
     /**
+     * Traverse through a nodes parents to see if it's in a link
+     *
+     * @param {node} el
+     * @since 3.2.0
+     */
+    findClosestLink(el) {
+      while (el && el !== document) {
+        if (el.tagName === "A") return el;
+        el = el.parentNode;
+      }
+      return null;
+    },
+
+    /**
      * Mounts event listeners on specific forms inside an iframe to modify
      * their action URLs, adding 'uip-framed-page' if it doesn't exist.
      *
@@ -558,11 +572,12 @@ export default {
       // Mount link watcher
 
       const iframeClicker = (event) => {
-        if (event.target.tagName != "A") {
-          this.forceClickEvent();
-          return;
+        const linkElement = this.findClosestLink(event.target);
+        // We found a link so handle the url
+        if (linkElement) {
+          this.handleInsideFrameLink(linkElement.href);
         }
-        this.handleInsideFrameLink(event.target.href);
+        return this.forceClickEvent();
       };
 
       const hashWatcher = (event) => {
@@ -620,6 +635,8 @@ export default {
       if (!absoluteUrlPattern.test(url)) return;
 
       const domain = this.extractDomain(this.uipApp.data.options.domain);
+
+      if (url.includes("googlesitekit_proxy_setup_start")) return (window.location.href = url);
 
       // URL contains domain so exit
       if (url.includes(domain)) return;
@@ -896,8 +913,9 @@ export default {
         try {
           newHref = iframe.contentWindow.location.href;
         } catch (errr) {
-          console.log("we caught the error");
-          console.log(iframe.src);
+          //console.log("we caught the error");
+          //console.log(lastDispatched);
+          //window.location.href = lastDispatched;
           return;
         }
         if (newHref !== lastDispatched) {
