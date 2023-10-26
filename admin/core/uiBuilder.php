@@ -465,6 +465,10 @@ class uip_ui_builder extends uip_app
     $patternQuery = UiPatterns::list($options);
     $patterns = UiPatterns::format($patternQuery->get_posts());
 
+    $styles = UipOptions::get("theme-styles");
+    $styles = is_object($styles) ? $styles : new stdClass();
+    $styles = json_decode(html_entity_decode(json_encode($styles)));
+
     //Return data to app
     $returndata = [];
     $returndata["success"] = true;
@@ -473,6 +477,7 @@ class uip_ui_builder extends uip_app
     $returndata["settings"] = $template["settings"];
     $returndata["type"] = $template["type"];
     $returndata["patterns"] = $patterns;
+    $returndata["styles"] = $styles;
 
     wp_send_json($returndata);
   }
