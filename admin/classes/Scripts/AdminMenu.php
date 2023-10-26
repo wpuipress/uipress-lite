@@ -268,7 +268,7 @@ class AdminMenu
     $item = self::maybe_replace_item_with_original($item, $mastermenu);
 
     $admin_is_parent = false;
-    $class = $item[4];
+    $class = isset($item[4]) ? $item[4] : "";
     $aria_attributes = "";
     $aria_hidden = "";
     $item["active"] = false;
@@ -295,7 +295,7 @@ class AdminMenu
     $notifications = self::extractNumberFromHtml($title);
 
     $item["notifications"] = !is_null($notifications) ? $notifications : 0;
-    $item["id"] = $item[5];
+    $item["id"] = isset($item[5]) ? $item[5] : "";
     $item["name"] = html_entity_decode($strippedName);
     $item["icon"] = self::get_menu_icon($item);
     $item["classes"] = $class;
@@ -443,7 +443,7 @@ class AdminMenu
 
     // SET MENU ICON
     $theicon = "";
-    $wpicon = $menu_item[6];
+    $wpicon = isset($menu_item[6]) ? $menu_item[6] : "";
 
     if (isset($menu_item["icon"]) && $menu_item["icon"] != "") {
       return "<span class='uk-icon-button' uk-icon='icon:{$menu_item["icon"]};ratio:0.8'></span>";
