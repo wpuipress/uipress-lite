@@ -512,7 +512,7 @@ const DrillDown = {
     parentItemName() {
       // If currentItem is not null and it has a parent, return the parent's name.
       if (!this.currentItem) return __("Go back", "uipress-lite");
-      return this.decodeHtmlEntities(this.currentItem.name);
+      return this.decodeHtmlEntities(this.returnName(this.currentItem));
     },
 
     /**
@@ -559,6 +559,14 @@ const DrillDown = {
     },
   },
   methods: {
+    /**
+     * Returns the item name
+     *
+     * @since 3.2.13
+     */
+    returnName(item) {
+      return this.hasNestedPath(item, "custom", "name") ? item.custom.name : item.name;
+    },
     /**
      * Sets new items as current menu and logs parent
      *
