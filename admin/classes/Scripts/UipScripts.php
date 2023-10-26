@@ -127,10 +127,13 @@ class UipScripts
   {
     $nonce = wp_create_nonce("uip-security-nonce");
     $ajaxURL = admin_url("admin-ajax.php");
+    $styles = UipOptions::get("theme-styles");
+    $styles = is_object($styles) ? $styles : new \stdClass();
 
     $options = [
       "options" => Sanitize::clean_input_with_code(AppOptions::get_options()),
       "userPrefs" => Sanitize::clean_input_with_code(UserPreferences::get()),
+      "themeStyles" => Sanitize::clean_input_with_code($styles),
     ];
 
     $scriptData = [

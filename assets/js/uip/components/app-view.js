@@ -1,10 +1,10 @@
-import { nextTick } from '../../libs/vue-esm.js';
+import { nextTick } from "../../libs/vue-esm.js";
 export default {
   props: {},
   data: function () {
     return {
       template: {
-        display: 'prod',
+        display: "prod",
         notifications: [],
         settings: null,
         content: null,
@@ -31,18 +31,27 @@ export default {
     this.loading = false;
   },
   beforeUnmount() {
-    window.removeEventListener('resize', this.handleWindowResize);
-    document.removeEventListener('uipress/app/page/load/finish', this.getNotifications, { once: false });
+    window.removeEventListener("resize", this.handleWindowResize);
+    document.removeEventListener("uipress/app/page/load/finish", this.getNotifications, { once: false });
   },
   computed: {
+    /**
+     * Returns user theme styles
+     *
+     * @since 3.2.0
+     */
+    returnThemeStyles() {
+      console.log(this.uipApp.data.themeStyles);
+      return this.isObject(this.uipApp.data.themeStyles) ? this.uipApp.data.themeStyles : {};
+    },
     /**
      * Returns template javascript if it exists
      *
      * @since 3.2.13
      */
     returnTemplateJS() {
-      if (typeof this.template.globalSettings.options === 'undefined') return;
-      return this.hasNestedPath(this.template, 'globalSettings', 'options', 'advanced', 'js');
+      if (typeof this.template.globalSettings.options === "undefined") return;
+      return this.hasNestedPath(this.template, "globalSettings", "options", "advanced", "js");
     },
 
     /**
@@ -51,8 +60,8 @@ export default {
      * @since 3.2.13
      */
     returnTemplateCSS() {
-      if (typeof this.template.globalSettings.options === 'undefined') return;
-      return this.hasNestedPath(this.template, 'globalSettings', 'options', 'advanced', 'css');
+      if (typeof this.template.globalSettings.options === "undefined") return;
+      return this.hasNestedPath(this.template, "globalSettings", "options", "advanced", "css");
     },
 
     /**
@@ -61,9 +70,9 @@ export default {
      * @since 3.2.13
      */
     returnResponsiveClass() {
-      if (this.windowWidth >= 990) return 'uip-desktop-view';
-      if (this.windowWidth >= 699) return 'uip-tablet-view';
-      if (this.windowWidth < 699) return 'uip-phone-view';
+      if (this.windowWidth >= 990) return "uip-desktop-view";
+      if (this.windowWidth >= 699) return "uip-tablet-view";
+      if (this.windowWidth < 699) return "uip-phone-view";
     },
 
     /**
@@ -95,11 +104,11 @@ export default {
      * @since 3.2.13
      */
     mountEventListeners() {
-      window.addEventListener('resize', this.handleWindowResize);
-      document.addEventListener('uipress/app/page/load/finish', this.getNotifications, { once: false });
+      window.addEventListener("resize", this.handleWindowResize);
+      document.addEventListener("uipress/app/page/load/finish", this.getNotifications, { once: false });
 
       // Check if it's a ui template and watch for updates
-      if (this.template.globalSettings.type != 'ui-template') return;
+      if (this.template.globalSettings.type != "ui-template") return;
       setInterval(this.checkForUpdates, 60000);
     },
 
@@ -118,25 +127,25 @@ export default {
      * @since 3.2.13
      */
     getNotifications() {
-      const frame = document.querySelector('.uip-page-content-frame');
+      const frame = document.querySelector(".uip-page-content-frame");
       //Frame does not exist so abort
       let notifications;
 
       // Get notifications from frame or current document
       const searchDocument = frame ? frame.contentWindow.document : document;
-      notifications = searchDocument.querySelectorAll('.notice:not(#message):not(.inline):not(.update-message),.wp-analytify-notification');
+      notifications = searchDocument.querySelectorAll(".notice:not(#message):not(.inline):not(.update-message),.wp-analytify-notification");
       if (!notifications) return;
 
       this.template.notifications = [];
 
       let notiActive = false;
       const stringTemplate = JSON.stringify(this.template.content);
-      if (stringTemplate.includes('site-notifications')) notiActive = true;
+      if (stringTemplate.includes("site-notifications")) notiActive = true;
 
       for (const noti of notifications) {
-        this.template.notifications.push(noti.outerHTML.replace('uip-framed-page=1', ''));
+        this.template.notifications.push(noti.outerHTML.replace("uip-framed-page=1", ""));
         if (notiActive) {
-          noti.setAttribute('style', 'display:none !important; visibility: hidden !important; opacity: 0 !important;');
+          noti.setAttribute("style", "display:none !important; visibility: hidden !important; opacity: 0 !important;");
         }
       }
 
@@ -153,9 +162,9 @@ export default {
       if (this.updateAvailable) return;
 
       let formData = new FormData();
-      formData.append('action', 'uip_check_for_template_updates');
-      formData.append('security', uip_ajax.security);
-      formData.append('template_id', this.template.id);
+      formData.append("action", "uip_check_for_template_updates");
+      formData.append("security", uip_ajax.security);
+      formData.append("template_id", this.template.id);
 
       const response = await this.sendServerRequest(uip_ajax.ajax_url, formData);
 
@@ -172,8 +181,8 @@ export default {
      * @since 3.2.13
      */
     updateNotification() {
-      let string = __('Changes have been made to your current app. Refresh the page to update', 'uipress-lite');
-      this.uipApp.notifications.notify(__('Update available', 'uipress-lite'), string, '', true);
+      let string = __("Changes have been made to your current app. Refresh the page to update", "uipress-lite");
+      this.uipApp.notifications.notify(__("Update available", "uipress-lite"), string, "", true);
     },
 
     /**
@@ -193,15 +202,15 @@ export default {
 
   template: `
     
-    <component is="style" scoped >
-      .uip-user-frame:not(.uip-app-frame){
-        <template v-for="(item, index) in template.styles">
-          <template v-if="item.value">{{index}}:{{item.value}};</template>
+    <component is="style" scoped id="mycustomstyles">
+      #uip-ui-app{
+        <template v-for="(item, index) in returnThemeStyles">
+          <template v-if="item.value && item.value != 'uipblank'">{{index}}:{{item.value}};</template>
         </template>
       }
-      [data-theme="dark"] :not(.uip-app-frame) *{
-        <template v-for="(item, index) in template.styles">
-          <template v-if="item.darkValue"> {{index}}:{{item.darkValue}};</template>
+      [data-theme="dark"] #uip-ui-app{
+        <template v-for="(item, index) in returnThemeStyles">
+          <template v-if="item.darkValue && item.darkValue != 'uipblank'"> {{index}}:{{item.darkValue}};</template>
         </template>
       }
       {{returnTemplateCSS}}
