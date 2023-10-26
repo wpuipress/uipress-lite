@@ -41,7 +41,6 @@ export default {
      * @since 3.2.0
      */
     returnThemeStyles() {
-      console.log(this.uipApp.data.themeStyles);
       return this.isObject(this.uipApp.data.themeStyles) ? this.uipApp.data.themeStyles : {};
     },
     /**

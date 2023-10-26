@@ -59,8 +59,6 @@ const AllDynamics = wp.hooks.applyFilters("uipress.uibuilder.dynamicdata.registe
 import themeStyles from "./options/theme-styles.min.js?ver=3.3.00";
 wp.hooks.addFilter("uipress.app.variables.register", "uipress", (current) => ({ ...current, ...themeStyles }));
 let AllThemeStyles = wp.hooks.applyFilters("uipress.app.variables.register");
-let UserThemeStyles = uip_ajax.uipAppData.themeStyles;
-AllThemeStyles = { ...AllThemeStyles, ...UserThemeStyles };
 
 /**
  * Builds main args for uip app
@@ -155,6 +153,9 @@ app.config.globalProperties.updateAppPage = updateAppPage.bind({ adminURL: uip_a
 app.config.globalProperties.updateActiveLink = updateActiveLink.bind({ adminURL: uip_ajax.uipAppData.options.adminURL, isBuilder: false });
 app.config.globalProperties.saveUserPreference = saveUserPreference;
 app.config.globalProperties.uipParseJson = uipParseJson;
+
+let UserThemeStyles = uip_ajax.uipAppData.themeStyles;
+AllThemeStyles = isObject(UserThemeStyles) ? { ...AllThemeStyles, ...UserThemeStyles } : AllThemeStyles;
 
 const plugindata = {
   defineAsyncComponent: defineAsyncComponent,
