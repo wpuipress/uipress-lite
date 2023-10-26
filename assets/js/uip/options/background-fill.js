@@ -1,18 +1,18 @@
 const { __, _x, _n, _nx } = wp.i18n;
-import { defineAsyncComponent, nextTick } from '../../libs/vue-esm.js';
+import { defineAsyncComponent, nextTick } from "../../libs/vue-esm.js";
 export default {
   components: {
-    ColorPicker: defineAsyncComponent(() => import('../v3.5/styles/color-picker.min.js')),
-    GradientPicker: defineAsyncComponent(() => import('../v3.5/styles/gradient-picker.min.js')),
+    ColorPicker: defineAsyncComponent(() => import("../v3.5/styles/color-picker.min.js")),
+    GradientPicker: defineAsyncComponent(() => import("../v3.5/styles/gradient-picker.min.js")),
   },
-  
+
   props: {
     returnData: Function,
     value: Object,
   },
   data() {
     return {
-      tab: 'color',
+      tab: "color",
       fill: {},
     };
   },
@@ -51,29 +51,29 @@ export default {
     returnTabs() {
       return {
         color: {
-          value: 'color',
-          icon: 'palette',
-          tip: __('Colour', 'uipress-lite'),
-          component: 'ColorPicker',
+          value: "color",
+          icon: "palette",
+          tip: __("Colour", "uipress-lite"),
+          component: "ColorPicker",
           setValue: this.fill.value,
           returnData: (d) => {
             this.fill.value = d;
-            if (this.fill.value.includes('--')) {
-              this.fill.type = 'variable';
+            if (this.fill.value.includes("--")) {
+              this.fill.type = "variable";
             } else {
-              this.fill.type = 'color';
+              this.fill.type = "color";
             }
           },
         },
         gradient: {
-          value: 'gradient',
-          icon: 'gradient',
-          tip: __('Gradient', 'uipress-lite'),
-          component: 'GradientPicker',
+          value: "gradient",
+          icon: "gradient",
+          tip: __("Gradient", "uipress-lite"),
+          component: "GradientPicker",
           setValue: this.fill.value,
           returnData: (d) => {
             this.fill.value = d;
-            this.fill.type = 'gradient';
+            this.fill.type = "gradient";
           },
         },
       };
@@ -86,7 +86,6 @@ export default {
      * @since 3.2.13
      */
     formatValue() {
-      console.log(this.value);
       if (this.value) {
         this.fill = { ...this.fill, ...this.value };
       }
@@ -98,7 +97,7 @@ export default {
      * @since 0.0.1
      */
     processScreen(d) {
-      this.$emit('request-screen', d);
+      this.$emit("request-screen", d);
     },
   },
   template: `
