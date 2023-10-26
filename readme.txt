@@ -55,6 +55,16 @@ Upload the UiPress plugin to your blog, activate it, and then navigate to the ui
 
 == Changelog ==
 
+= 3.3.01 =
+*Release Date 26 October 2023*
+
+* Added fix for google sitekit connection
+* Fixed with menus where custom menu names and icons where not showing
+* Fixed issue with php warnings for undefined indexes with custom menus
+* Fixed several issues where user styles where not being loaded or displayed
+* Fixed issue with download button on library themes where it would not add template
+* Fixed issue with drilldown menu type not showing the correct go back text
+
 = 3.3.00 =
 *Release Date 24 October 2023*
 

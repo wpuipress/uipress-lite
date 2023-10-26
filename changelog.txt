@@ -1,7 +1,7 @@
 == Changelog ==
 
 = 3.3.01 =
-*Release Date * October 2023*
+*Release Date 26 October 2023*
 
 * Added fix for google sitekit connection
 * Fixed with menus where custom menu names and icons where not showing
