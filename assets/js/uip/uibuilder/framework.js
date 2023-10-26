@@ -3,16 +3,16 @@
  * @since 3.0.0
  */
 const { __, _x, _n, _nx } = wp.i18n;
-import { defineAsyncComponent, nextTick } from '../../libs/vue-esm.js';
+import { defineAsyncComponent, nextTick } from "../../libs/vue-esm.js";
 export default {
   components: {
-    layersPanels: defineAsyncComponent(() => import('./layers.min.js?ver=3.3.00')),
-    blockcontextmenu: defineAsyncComponent(() => import('./block-contextmenu.min.js?ver=3.3.00')),
-    ToolBar: defineAsyncComponent(() => import('./toolbar.min.js?ver=3.3.00')),
-    Canvas: defineAsyncComponent(() => import('./canvas.min.js?ver=3.3.00')),
-    BlockList: defineAsyncComponent(() => import('./block-list.min.js?ver=3.3.00')),
-    TemplateLibrary: defineAsyncComponent(() => import('./template-library.min.js?ver=3.3.00')),
-    DynamicData: defineAsyncComponent(() => import('./dynamic-data-watcher.min.js?ver=3.3.00')),
+    layersPanels: defineAsyncComponent(() => import("./layers.min.js?ver=3.3.00")),
+    blockcontextmenu: defineAsyncComponent(() => import("./block-contextmenu.min.js?ver=3.3.00")),
+    ToolBar: defineAsyncComponent(() => import("./toolbar.min.js?ver=3.3.00")),
+    Canvas: defineAsyncComponent(() => import("./canvas.min.js?ver=3.3.00")),
+    BlockList: defineAsyncComponent(() => import("./block-list.min.js?ver=3.3.00")),
+    TemplateLibrary: defineAsyncComponent(() => import("./template-library.min.js?ver=3.3.00")),
+    DynamicData: defineAsyncComponent(() => import("./dynamic-data-watcher.min.js?ver=3.3.00")),
   },
 
   data() {
@@ -26,39 +26,39 @@ export default {
       ui: {
         contextualMenu: {
           display: false,
-          top: '',
-          left: '',
+          top: "",
+          left: "",
           block: false,
         },
 
         modal: {
           open: false,
-          activeModule: '',
-          title: '',
+          activeModule: "",
+          title: "",
           args: {},
         },
         settingsPanel: {
           pos: {},
         },
         sideBar: {
-          activeTab: 'blocks',
+          activeTab: "blocks",
         },
         strings: {
-          layers: __('Layers', 'uipress-lite'),
-          welcomeTitle: __('Welcome to the uiBuilder', 'uipress-lite'),
+          layers: __("Layers", "uipress-lite"),
+          welcomeTitle: __("Welcome to the uiBuilder", "uipress-lite"),
           welcomeMeta: __(
-            'Brand new for UiPress 3, the uiBuilder is a powerful drag and drop tool for building great looking, functional admin experiences for yourself or your clients',
-            'uipress-lite'
+            "Brand new for UiPress 3, the uiBuilder is a powerful drag and drop tool for building great looking, functional admin experiences for yourself or your clients",
+            "uipress-lite"
           ),
-          blankCanvas: __('Blank canvas', 'uipress-lite'),
-          viewTemplates: __('View templates', 'uipress-lite'),
-          dontShowAgain: __("Don't show this again", 'uipress-lite'),
-          close: __('Close', 'uipress-lite'),
-          deletesAllBlocks: __('Deletes all blocks', 'uipress-lite'),
-          hideLayers: __('Hide layers', 'uipress-lite'),
-          shortCuts: __('Block shortcuts', 'uipress-lite'),
-          deleteLayout: __('Clear layers', 'uipress-lite'),
-          searchData: __('Search', 'uipress-lite'),
+          blankCanvas: __("Blank canvas", "uipress-lite"),
+          viewTemplates: __("View templates", "uipress-lite"),
+          dontShowAgain: __("Don't show this again", "uipress-lite"),
+          close: __("Close", "uipress-lite"),
+          deletesAllBlocks: __("Deletes all blocks", "uipress-lite"),
+          hideLayers: __("Hide layers", "uipress-lite"),
+          shortCuts: __("Block shortcuts", "uipress-lite"),
+          deleteLayout: __("Clear layers", "uipress-lite"),
+          searchData: __("Search", "uipress-lite"),
         },
         keyBlocks: [],
       },
@@ -72,48 +72,48 @@ export default {
         isPreview: false,
         googleAnalyticsRequest: {
           range: {
-            start: '',
-            end: '',
+            start: "",
+            end: "",
           },
           fetching: false,
           data: {},
         },
-        display: 'preview',
+        display: "preview",
         globalSettings: {
-          name: __('Draft Layout', 'uipress-lite'),
+          name: __("Draft Layout", "uipress-lite"),
           status: false,
           rolesAndUsers: [],
           excludesRolesAndUsers: [],
-          type: 'ui-template',
+          type: "ui-template",
           options: {},
           menuIcon: {
-            value: '',
+            value: "",
           },
           code: {
-            css: '',
-            js: '',
+            css: "",
+            js: "",
           },
         },
         content: [],
       },
       switchOptions: {
         blocks: {
-          value: 'blocks',
-          label: __('Blocks', 'uipress-lite'),
+          value: "blocks",
+          label: __("Blocks", "uipress-lite"),
         },
         layers: {
-          value: 'layers',
-          label: __('Layers', 'uipress-lite'),
+          value: "layers",
+          label: __("Layers", "uipress-lite"),
         },
         library: {
-          value: 'library',
-          label: __('Library', 'uipress-lite'),
+          value: "library",
+          label: __("Library", "uipress-lite"),
         },
       },
     };
   },
   watch: {
-    'ui.sideBar.activeTab': {
+    "ui.sideBar.activeTab": {
       handler(newValue, oldValue) {
         this.$router.push({
           query: { ...this.$route.query, ...{ tab: newValue } },
@@ -121,7 +121,7 @@ export default {
       },
       deep: true,
     },
-    '$route.params.templateID': {
+    "$route.params.templateID": {
       handler() {
         this.templateID = this.$route.params.templateID;
         this.template.globalSettings = [];
@@ -143,7 +143,7 @@ export default {
     this.setTab();
   },
   beforeUnmount() {
-    document.addEventListener('uipress/app/page/load/finish', this.getNotifications, { once: false });
+    document.addEventListener("uipress/app/page/load/finish", this.getNotifications, { once: false });
   },
   computed: {
     /**
@@ -162,9 +162,9 @@ export default {
      */
     returnLeftPanelStyle() {
       if (this.template.isPreview) {
-        return 'transform:scale(0,1);max-width:0%;transition: all 0.2s ease-in-out;transform-origin: left;';
+        return "transform:scale(0,1);max-width:0%;transition: all 0.2s ease-in-out;transform-origin: left;";
       } else {
-        return 'max-width:100%;transition:all 0.2s ease-in-out;transform-origin: left;';
+        return "max-width:100%;transition:all 0.2s ease-in-out;transform-origin: left;";
       }
     },
   },
@@ -186,9 +186,9 @@ export default {
      * @since 3.2.13
      */
     mountWatchers() {
-      document.addEventListener('uipress/app/page/load/finish', this.getNotifications, { once: false });
+      document.addEventListener("uipress/app/page/load/finish", this.getNotifications, { once: false });
       if (!window.parent) return;
-      window.parent.postMessage({ eventName: 'uip_request_fullscreen' }, '*');
+      window.parent.postMessage({ eventName: "uip_request_fullscreen" }, "*");
     },
 
     /**
@@ -197,25 +197,25 @@ export default {
      * @since 3.2.13
      */
     getNotifications() {
-      const frame = document.querySelector('.uip-page-content-frame');
+      const frame = document.querySelector(".uip-page-content-frame");
       //Frame does not exist so abort
       let notifications;
 
       // Get notifications from frame or current document
       const searchDocument = frame ? frame.contentWindow.document : document;
-      notifications = searchDocument.querySelectorAll('.notice:not(#message):not(.inline):not(.update-message),.wp-analytify-notification');
+      notifications = searchDocument.querySelectorAll(".notice:not(#message):not(.inline):not(.update-message),.wp-analytify-notification");
       if (!notifications) return;
 
       this.template.notifications = [];
 
       let notiActive = false;
       const stringTemplate = JSON.stringify(this.template.content);
-      if (stringTemplate.includes('site-notifications')) notiActive = true;
+      if (stringTemplate.includes("site-notifications")) notiActive = true;
 
       for (const noti of notifications) {
-        this.template.notifications.push(noti.outerHTML.replace('uip-framed-page=1', ''));
+        this.template.notifications.push(noti.outerHTML.replace("uip-framed-page=1", ""));
         if (notiActive) {
-          noti.setAttribute('style', 'display:none !important; visibility: hidden !important; opacity: 0 !important;');
+          noti.setAttribute("style", "display:none !important; visibility: hidden !important; opacity: 0 !important;");
         }
       }
 
@@ -229,7 +229,7 @@ export default {
      */
     async addCanvas() {
       const containerBlock = this.uipApp.data.blocks.filter((obj) => {
-        return obj.moduleName == 'uip-container';
+        return obj.moduleName == "uip-container";
       });
 
       let copiedConatiner = JSON.parse(JSON.stringify(containerBlock[0]));
@@ -241,7 +241,7 @@ export default {
       delete copiedConatiner.optionsEnabled;
 
       copiedConatiner.uid = this.createUID();
-      copiedConatiner.name = __('Canvas', 'uipress-lite');
+      copiedConatiner.name = __("Canvas", "uipress-lite");
       copiedConatiner.settings = {};
       copiedConatiner.tooltip = {};
 
@@ -256,21 +256,24 @@ export default {
     async getTemplate() {
       //Build form data for fetch request
       let formData = new FormData();
-      formData.append('action', 'uip_get_ui_template');
-      formData.append('security', uip_ajax.security);
-      formData.append('templateID', this.templateID);
+      formData.append("action", "uip_get_ui_template");
+      formData.append("security", uip_ajax.security);
+      formData.append("templateID", this.templateID);
       this.layoutFetched = false;
 
       const response = await this.sendServerRequest(uip_ajax.ajax_url, formData);
 
       // Handle error
       if (response.error) {
-        this.uipApp.notifications.notify(response.message, '', 'error', true);
+        this.uipApp.notifications.notify(response.message, "", "error", true);
         return;
       }
 
       let settings = response.settings[0];
       let content = response.content;
+      let styles = response.styles;
+
+      if (this.isObject(styles)) this.uipApp.data.themeStyles = { ...this.uipApp.data.themeStyles, ...styles };
 
       // Store user patterns
       this.template.patterns = response.patterns;
@@ -287,7 +290,7 @@ export default {
 
       // Nos settings so set up basics
       if (!settings) {
-        if ('type' in response) {
+        if ("type" in response) {
           this.template.globalSettings.type = response.type;
         }
         this.layoutFetched = true;
