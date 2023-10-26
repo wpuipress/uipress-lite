@@ -393,6 +393,24 @@ const TopLevelItem = {
     returnName() {
       return this.hasNestedPath(this.item, "custom", "name") ? this.item.custom.name : this.item.name;
     },
+
+    /**
+     * Returns the item name
+     *
+     * @since 3.2.13
+     */
+    returnName() {
+      return this.hasNestedPath(this.item, "custom", "name") ? this.item.custom.name : this.item.name;
+    },
+
+    /**
+     * Returns the item icon
+     *
+     * @since 3.2.13
+     */
+    returnIcon() {
+      return this.hasNestedPath(this.item, "custom", "icon") ? this.item.custom.icon : this.item.icon;
+    },
   },
   methods: {
     /**
@@ -431,7 +449,7 @@ const TopLevelItem = {
     
     <a v-if="!itemHiden" :href="item.url" @click="maybeFollowLink($event, item, true)" class="uip-no-underline uip-link-default uip-top-level-item" :class="item.customClasses" :active="item.active ? true : false">
     
-      <div v-if="!hideIcons && item.icon" v-html="returnTopIcon(item.icon)" class="uip-flex uip-flex-center uip-menu-icon uip-icon uip-icon-medium"></div>
+      <div v-if="!hideIcons && returnIcon" v-html="returnTopIcon(returnIcon)" class="uip-flex uip-flex-center uip-menu-icon uip-icon uip-icon-medium"></div>
       
       <div v-if="!collapsed" class="uip-flex-grow uip-flex uip-gap-xs uip-flex-center">
         <div class="uip-line-height-1" v-html="returnName"></div>

@@ -4,6 +4,7 @@
 *Release Date * October 2023*
 
 * Added fix for google sitekit connection
+* Fixed with menus where custom menu names and icons where not showing
 
 = 3.3.00 =
 *Release Date 24 October 2023*
