@@ -24,10 +24,12 @@ export default {
   inject: ["uiTemplate"],
   watch: {
     content: {
-      handler(newValue, oldValue) {
+      async handler(newValue, oldValue) {
         this.items = this.content;
         if (!this.$refs.dropzone) return;
         this.$refs.dropzone.computeIndexes();
+        await nextTick();
+        this.maybeImportRemote();
       },
       immediate: true,
       deep: true,
@@ -98,6 +100,23 @@ export default {
       this.rendered = false;
       await nextTick();
       this.rendered = true;
+    },
+
+    /**
+     * Loops through items to check for remote import templates
+     *
+     * @since 3.2.0
+     */
+    maybeImportRemote() {
+      for (let i = this.items.length - 1; i >= 0; i--) {
+        const block = this.items[i];
+        // Example: Remove the item if it's equal to 3
+        if (block.remote) {
+          this.items.splice(i, 1);
+          this.importBlock(block, i);
+          continue;
+        }
+      }
     },
 
     /**
