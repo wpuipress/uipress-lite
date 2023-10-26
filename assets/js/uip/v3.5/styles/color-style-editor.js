@@ -1,8 +1,8 @@
-import { defineAsyncComponent } from '../../../libs/vue-esm.js';
+import { defineAsyncComponent } from "../../../libs/vue-esm.js";
 
 export default {
   components: {
-    colorPicker: defineAsyncComponent(() => import('./color-picker.min.js?ver=0.0.1')),
+    colorPicker: defineAsyncComponent(() => import("./color-picker.min.js?ver=0.0.1")),
   },
 
   props: {
@@ -11,22 +11,23 @@ export default {
   },
   data() {
     return {
-      mode: 'value',
+      mode: "value",
       strings: {
-        styleName: __('Style name', 'uipress-lite'),
-        create: __('Create', 'uipress-lite'),
+        styleName: __("Style name", "uipress-lite"),
+        create: __("Create", "uipress-lite"),
       },
-      color: this.value,
+      color: {},
+      updating: false,
       colorModes: {
         value: {
-          value: 'value',
-          icon: 'light_mode',
-          tip: __('Light mode', 'uipress-lite'),
+          value: "value",
+          icon: "light_mode",
+          tip: __("Light mode", "uipress-lite"),
         },
         darkValue: {
-          value: 'darkValue',
-          icon: 'dark_mode',
-          tip: __('Dark mode', 'uipress-lite'),
+          value: "darkValue",
+          icon: "dark_mode",
+          tip: __("Dark mode", "uipress-lite"),
         },
       },
     };
@@ -39,15 +40,18 @@ export default {
      */
     value: {
       handler() {
-        this.color = this.value;
+        if (this.updating) return;
+        this.injectProp();
       },
+      immediate: true,
+      deep: true,
     },
     /**
      * Watches changes to color name and sanitizes
      *
      * @since 3.2.13
      */
-    'color.name': {
+    "color.name": {
       handler() {
         this.color.name = this.cleanKeyName(this.color.name);
       },
@@ -57,7 +61,7 @@ export default {
      *
      * @since 3.2.13
      */
-    'uipApp.data.userPrefs.darkTheme': {
+    "uipApp.data.userPrefs.darkTheme": {
       handler() {
         this.updateDefaultColorState();
       },
@@ -78,13 +82,13 @@ export default {
       if (!this.color.value && !this.color.darkValue) {
         const rootStyle = getComputedStyle(document.documentElement);
         const variableValue = rootStyle.getPropertyValue(this.color.name).trim();
-        if (!variableValue) return '#b500ff';
+        if (!variableValue) return "#b500ff";
         return variableValue;
       }
 
       // No value set for this mode
       if (!this.color[this.mode]) {
-        return '#b500ff';
+        return "#b500ff";
       }
 
       // Returns custom color
@@ -97,9 +101,21 @@ export default {
      *
      * @since 3.2.13
      */
+    async injectProp() {
+      this.updating = true;
+      this.color = this.isObject(this.value) ? this.value : {};
+      await this.$nextTick();
+      this.updating = false;
+    },
+
+    /**
+     * Updates default start point
+     *
+     * @since 3.2.13
+     */
     updateDefaultColorState() {
-      if (!this.uipApp.data.userPrefs.darkTheme) this.mode = 'value';
-      if (this.uipApp.data.userPrefs.darkTheme) this.mode = 'darkValue';
+      if (!this.uipApp.data.userPrefs.darkTheme) this.mode = "value";
+      if (this.uipApp.data.userPrefs.darkTheme) this.mode = "darkValue";
     },
     /**
      * Cleans variable name
@@ -107,10 +123,10 @@ export default {
      * @param {String} value - the name to clean
      */
     cleanKeyName(value) {
-      value = value.replace(' ', '-');
-      value = value.replace(',', '');
-      value = value.replace('.', '');
-      value = value.replace(/[`~!@#$%^&*()|+\=?;:'",.<>\{\}\[\]\\\/]/gi, '');
+      value = value.replace(" ", "-");
+      value = value.replace(",", "");
+      value = value.replace(".", "");
+      value = value.replace(/[`~!@#$%^&*()|+\=?;:'",.<>\{\}\[\]\\\/]/gi, "");
       value = value.toLowerCase();
       value = this.ensureDoubleDashPrefix(value);
       return value;
@@ -122,16 +138,16 @@ export default {
      */
     ensureDoubleDashPrefix(str) {
       // If string is null or undefined, return '--'
-      if (!str) return '--';
+      if (!str) return "--";
 
       // If string starts with '--', return it as is
-      if (str.startsWith('--')) return str;
+      if (str.startsWith("--")) return str;
 
       // If string starts with '-', but not followed by another '-'
-      if (str.startsWith('-')) return '--' + str.slice(1);
+      if (str.startsWith("-")) return "--" + str.slice(1);
 
       // If string doesn't start with '-', prefix it with '--'
-      return '--' + str;
+      return "--" + str;
     },
 
     /**

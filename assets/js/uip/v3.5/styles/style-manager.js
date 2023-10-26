@@ -1,10 +1,10 @@
 const { __, _x, _n, _nx } = wp.i18n;
-import { defineAsyncComponent } from '../../../libs/vue-esm.js';
+import { defineAsyncComponent } from "../../../libs/vue-esm.js";
 
 export default {
   components: {
-    colorSelect: defineAsyncComponent(() => import('../libs/colorpicker.js')),
-    contextmenu: defineAsyncComponent(() => import('../utility/contextmenu.min.js?ver=3.3.00')),
+    colorSelect: defineAsyncComponent(() => import("../libs/colorpicker.js")),
+    contextmenu: defineAsyncComponent(() => import("../utility/contextmenu.min.js?ver=3.3.00")),
   },
   props: {
     currentColor: String,
@@ -16,16 +16,16 @@ export default {
       contextIndex: false,
       scrollBottom: false,
       showSearch: false,
-      search: '',
+      search: "",
       strings: {
-        styles: __('Styles', 'uipress-lite'),
-        create: __('Create', 'uipress-lite'),
-        delete: __('Delete', 'uipress-lite'),
-        duplicate: __('Duplicate', 'uipress-lite'),
-        edit: __('Edit', 'uipress-lite'),
-        createShades: __('Create shades', 'uipress-lite'),
-        copyVariable: __('Copy variable', 'uipress-lite'),
-        searchStyles: __('Search styles', 'uipress-lite'),
+        styles: __("Styles", "uipress-lite"),
+        create: __("Create", "uipress-lite"),
+        delete: __("Delete", "uipress-lite"),
+        duplicate: __("Duplicate", "uipress-lite"),
+        edit: __("Edit", "uipress-lite"),
+        createShades: __("Create shades", "uipress-lite"),
+        copyVariable: __("Copy variable", "uipress-lite"),
+        searchStyles: __("Search styles", "uipress-lite"),
       },
     };
   },
@@ -35,7 +35,7 @@ export default {
      *
      * @since 3.2.13
      */
-    'uipApp.data.themeStyles': {
+    "uipApp.data.themeStyles": {
       handler() {
         this.saveStyles();
       },
@@ -49,8 +49,8 @@ export default {
      * @since 3.2.13
      */
     returnActiveMode() {
-      if (!this.uipApp.data.userPrefs.darkTheme) return 'value';
-      if (this.uipApp.data.userPrefs.darkTheme) return 'darkValue';
+      if (!this.uipApp.data.userPrefs.darkTheme) return "value";
+      if (this.uipApp.data.userPrefs.darkTheme) return "darkValue";
     },
     /**
      * Checks whether a given style is active
@@ -59,7 +59,7 @@ export default {
      */
     activeStyle() {
       if (!this.actualValue) return;
-      if (!this.actualValue.includes('--')) return;
+      if (!this.actualValue.includes("--")) return;
       return this.actualValue;
     },
     /**
@@ -69,16 +69,17 @@ export default {
      * @since 3.2.13
      */
     returnUserStyles() {
-      console.log(this.uipApp.data.themeStyles);
       let styles = this.uipApp.data.themeStyles;
       if (!styles) this.uipApp.data.themeStyles = {};
       let search = this.search.toLowerCase();
-      return Object.fromEntries(
-        Object.entries(this.uipApp.data.themeStyles).filter(([key, value]) => {
-          let lcName = value.name ? value.name.toLowerCase() : value.label.toLowerCase();
-          return value.type == 'color' && lcName.includes(search);
-        })
-      );
+
+      return Object.entries(this.uipApp.data.themeStyles)
+        .filter(([key, item]) => item.type === "color" || !("name" in item))
+        .map(([key, item]) => {
+          item.name = key;
+          item.type = "color";
+          if (item.name.toLowerCase().includes(search)) return item;
+        });
     },
     /**
      * Checks if the given var can be deleted
@@ -106,15 +107,15 @@ export default {
 
       // Build form data for fetch request
       let formData = new FormData();
-      formData.append('action', 'uip_save_user_styles');
-      formData.append('security', uip_ajax.security);
-      formData.append('styles', stylesJson);
+      formData.append("action", "uip_save_user_styles");
+      formData.append("security", uip_ajax.security);
+      formData.append("styles", stylesJson);
 
       const response = await this.sendServerRequest(uip_ajax.ajax_url, formData);
 
       // Error saving styles
       if (response.error) {
-        this.uipApp.notifications.notify(response.message, 'uipress-lite', '', 'error', true);
+        this.uipApp.notifications.notify(response.message, "uipress-lite", "", "error", true);
       }
 
       return true;
@@ -126,24 +127,24 @@ export default {
      */
     addNewStyle() {
       const newColor = {
-        name: '',
-        type: 'color',
+        name: "",
+        type: "color",
         value: this.currentColor,
         darkValue: this.currentColor,
         user: true,
       };
 
       let screen = {
-        component: 'colourStyleEditor',
-        label: __('New color style', 'uipress-lite'),
+        component: "colourStyleEditor",
+        label: __("New color style", "uipress-lite"),
         value: newColor,
         returnData: (d) => {
           this.uipApp.data.themeStyles[d.name] = d;
-          this.$emit('go-back');
+          this.$emit("go-back");
         },
       };
 
-      this.$emit('request-screen', screen);
+      this.$emit("request-screen", screen);
     },
 
     /**
@@ -155,14 +156,14 @@ export default {
       const color = this.uipApp.data.themeStyles[this.contextIndex];
 
       let screen = {
-        component: 'colourStyleEditor',
-        label: __('Edit color style', 'uipress-lite'),
+        component: "colourStyleEditor",
+        label: __("Edit color style", "uipress-lite"),
         value: color,
         returnData: false,
       };
 
       this.$refs.colorcontext.close();
-      this.$emit('request-screen', screen);
+      this.$emit("request-screen", screen);
     },
     /**
      * Duplicates a color
@@ -172,20 +173,20 @@ export default {
     duplicateColor() {
       const duplicate = this.uipApp.data.themeStyles[this.contextIndex];
       let newColor = JSON.parse(JSON.stringify(duplicate));
-      newColor.name += '-copy';
+      newColor.name += "-copy";
 
       let screen = {
-        component: 'colourStyleEditor',
-        label: __('New color style', 'uipress-lite'),
+        component: "colourStyleEditor",
+        label: __("New color style", "uipress-lite"),
         value: newColor,
         returnData: (d) => {
           this.seqlData.options.app_data.styles.push(d);
-          this.$emit('go-back');
+          this.$emit("go-back");
         },
       };
 
       this.$refs.colorcontext.close();
-      this.$emit('request-screen', screen);
+      this.$emit("request-screen", screen);
     },
     /**
      * Returns color style object
@@ -234,7 +235,7 @@ export default {
     returnStyleBackground(style) {
       const mode = this.returnActiveMode;
       if (!style[mode]) return `var(${style.name})`;
-      if (style[mode].includes('--')) return `var(${style[mode]})`;
+      if (style[mode].includes("--")) return `var(${style[mode]})`;
       return style[mode];
     },
   },
@@ -282,7 +283,7 @@ export default {
 	  
 		<template v-for="(style, index) in returnUserStyles">
 		
-		  <div @contextmenu.prevent.stop="contextIndex = index; $refs.colorcontext.show($event)" 
+		  <div @contextmenu.prevent.stop="contextIndex = style.name; $refs.colorcontext.show($event)" 
 		  @click="setColor(style)"
 		  :class="{'uip-background-muted' : activeStyle == style.name, 'hover:uip-background-muted' : activeStyle != style.name}"
 		  class="uip-flex uip-gap-s uip-flex-center uip-padding-xxs uip-padding-left-xs uip-link-default uip-border-rounder">
