@@ -74,7 +74,7 @@ const MenuSearch = {
         if (!name || typeof name === "undefined") return "";
         return name.toLowerCase();
       };
-      const itemMatchesTerm = ({ name, type }) => type !== "sep" && maybeLowerCase(name).includes(term);
+      const itemMatchesTerm = (item) => item.type !== "sep" && maybeLowerCase(this.returnName(item)).includes(term);
 
       const results = this.workingMenu
         .filter(itemMatchesTerm)
@@ -84,6 +84,15 @@ const MenuSearch = {
     },
   },
   methods: {
+    /**
+     * Returns the item name
+     *
+     * @since 3.2.13
+     */
+    returnName(item) {
+      return this.hasNestedPath(item, "custom", "name") ? item.custom.name : item.name;
+    },
+
     /**
      * Watches keydown event for arrows up / down when searching
      *
@@ -124,7 +133,7 @@ const MenuSearch = {
                   
                   <span class="uip-text-muted" v-if="item.parent">{{item.parent}}</span>
                   <span class="uip-icon" v-if="item.parent">chevron_right</span>
-                  <span class="">{{item.name}}</span>
+                  <span class="">{{returnName(item)}}</span>
                   
                 </a>
               
@@ -216,6 +225,15 @@ const SubMenuItem = {
     itemHiden(item) {
       return this.hasNestedPath(item, "custom", "hidden");
     },
+
+    /**
+     * Returns the item name
+     *
+     * @since 3.2.13
+     */
+    returnName(item) {
+      return this.hasNestedPath(item, "custom", "name") ? item.custom.name : item.name;
+    },
   },
   template: `
     
@@ -236,7 +254,7 @@ const SubMenuItem = {
                         <a :href="sub.url" @click="maybeFollowLink($event, sub)" :class="sub.customClasses" 
                         class="uip-no-underline uip-link-muted uip-sub-level-item uip-flex-grow uip-flex uip-gap-xs uip-flex-center" :active="sub.active ? true : false">
                         
-                          <span>{{sub.name}}</span>
+                          <span>{{returnName(sub)}}</span>
                           
                           <!-- Notifications count -->
                           <div v-if="sub.notifications && sub.notifications > 0" 
@@ -265,7 +283,7 @@ const SubMenuItem = {
                       <!-- Main link -->
                       <a :href="sub.url" @click="maybeFollowLink($event, sub, itemHasSubmenu(sub))" :class="sub.customClasses" 
                       class="uip-no-underline uip-link-muted uip-sub-level-item uip-flex-grow uip-flex uip-gap-xs uip-flex-center" :active="sub.active ? true : false">
-                        <span>{{sub.name}}</span>
+                        <span>{{returnName(sub)}}</span>
                         
                         <!-- Notifications count -->
                         <div v-if="sub.notifications && sub.notifications > 0" 
@@ -366,6 +384,15 @@ const TopLevelItem = {
     itemHiden() {
       return this.hasNestedPath(this.item, "custom", "hidden");
     },
+
+    /**
+     * Returns the item name
+     *
+     * @since 3.2.13
+     */
+    returnName() {
+      return this.hasNestedPath(this.item, "custom", "name") ? this.item.custom.name : this.item.name;
+    },
   },
   methods: {
     /**
@@ -407,7 +434,7 @@ const TopLevelItem = {
       <div v-if="!hideIcons && item.icon" v-html="returnTopIcon(item.icon)" class="uip-flex uip-flex-center uip-menu-icon uip-icon uip-icon-medium"></div>
       
       <div v-if="!collapsed" class="uip-flex-grow uip-flex uip-gap-xs uip-flex-center">
-        <div class="uip-line-height-1" v-html="item.name"></div>
+        <div class="uip-line-height-1" v-html="returnName"></div>
         <div v-if="item.notifications && item.notifications > 0" class="uip-border-round uip-h-14 uip-ratio-1-1 uip-background-secondary uip-text-inverse uip-text-xxs uip-text-bold uip-flex uip-flex-center uip-flex-middle uip-menu-notification"><span>{{item.notifications}}</span></div>
       </div>
       
