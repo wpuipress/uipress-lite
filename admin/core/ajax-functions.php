@@ -530,8 +530,7 @@ class uip_ajax
     $data = json_decode(stripslashes($_POST["formData"]));
     $data = Sanitize::clean_input_with_code($data);
 
-    $objectOrSingle = json_decode(stripslashes($_POST["objectOrSingle"]));
-    $objectOrSingle = Sanitize::clean_input_with_code($objectOrSingle);
+    $objectOrSingle = sanitize_text_field($_POST["objectOrSingle"]);
 
     $userMetaObjectKey = sanitize_key($_POST["userMetaObjectKey"]);
 
@@ -599,7 +598,7 @@ class uip_ajax
     $data = json_decode(stripslashes($_POST["formData"]));
     $data = Sanitize::clean_input_with_code($data);
 
-    $emailTemplate = json_decode(stripslashes($_POST["emailTemplate"]));
+    $emailTemplate = stripslashes($_POST["emailTemplate"]);
     $emailTemplate = Sanitize::clean_input_with_code($emailTemplate);
 
     $emailSubject = sanitize_text_field($_POST["emailSubject"]);

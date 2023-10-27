@@ -10,6 +10,7 @@ export default {
         value: false,
       },
       options: {},
+      updating: false,
     };
   },
   watch: {
@@ -18,26 +19,41 @@ export default {
      *
      * @since 3.2.13
      */
+    value: {
+      handler(newValue, oldValue) {
+        if (this.updating) return;
+        this.formatInput();
+      },
+      deep: true,
+      immediate: true,
+    },
+    /**
+     * Watches changes to option and returns the data back
+     *
+     * @since 3.2.13
+     */
     option: {
       handler(newValue, oldValue) {
+        if (this.updating) return;
         this.returnData(this.option);
       },
       deep: true,
     },
   },
-  
+
   mounted() {
-    this.formatInput(this.value);
     this.formatArgs(this.value);
   },
   computed: {
     /**
      * Returns enabled / disabled options
+     *
+     * @since 3.2.0
      */
     enabledDisabled() {
       return {
-        true: { value: true, label: __('Disabled', 'uipress-lite') },
-        false: { value: false, label: __('Enabled', 'uipress-lite') },
+        true: { value: true, label: __("Disabled", "uipress-lite") },
+        false: { value: false, label: __("Enabled", "uipress-lite") },
       };
     },
 
@@ -48,8 +64,8 @@ export default {
      */
     yesNo() {
       return {
-        false: { value: false, label: __('Disabled', 'uipress-lite') },
-        true: { value: true, label: __('Enabled', 'uipress-lite') },
+        false: { value: false, label: __("Disabled", "uipress-lite") },
+        true: { value: true, label: __("Enabled", "uipress-lite") },
       };
     },
 
@@ -60,8 +76,8 @@ export default {
      */
     hideShow() {
       return {
-        false: { value: false, label: __('Show', 'uipress-lite') },
-        true: { value: true, label: __('Hide', 'uipress-lite') },
+        false: { value: false, label: __("Show", "uipress-lite") },
+        true: { value: true, label: __("Hide", "uipress-lite") },
       };
     },
 
@@ -95,11 +111,11 @@ export default {
 
       // Update defaults
       switch (this.args.type) {
-        case 'enabledDisabled':
+        case "enabledDisabled":
           this.options = this.enabledDisabled;
           break;
 
-        case 'hideShow':
+        case "hideShow":
           this.options = this.hideShow;
           break;
       }
@@ -110,15 +126,13 @@ export default {
      *
      * @since 3.2.13
      */
-    formatInput() {
-      if (typeof this.value === 'undefined') return;
+    async formatInput() {
+      this.updating = true;
+      let tempValue = this.value == true ? true : false;
+      this.option = this.isObject(this.value) ? { ...this.value } : { value: tempValue };
 
-      if (this.isObject(this.value)) {
-        this.option = { ...this.option, ...this.value };
-        return;
-      }
-
-      this.option.value = this.value == true ? true : false;
+      await this.$nextTick();
+      this.updating = false;
     },
   },
   template: `

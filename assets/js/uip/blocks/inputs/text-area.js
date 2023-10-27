@@ -67,9 +67,7 @@ export default {
      */
     returnRequired() {
       let required = this.get_block_option(this.block, "block", "inputRequired");
-      if (!this.isObject(required)) return false;
-      if (required.value) return required.value;
-      return required;
+      return this.isObject(required) ? required.value : required;
     },
     /**
      * Returns the name of the input
