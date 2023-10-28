@@ -236,9 +236,9 @@ export default {
      * @since 3.3.0
      */
     handleClickEvents(evt) {
-      if (!this.$refs.uipTemplateSettings) return;
-      if (this.$refs.uipTemplateSettings.contains(evt.target)) return;
-      this.goBack();
+      const canvas = document.querySelector("#uip-preview-canvas");
+      if (!evt.target || !canvas) return;
+      if (canvas.contains(evt.target)) this.goBack();
     },
     /**
      * Retrieves the template option based on the provided group and option.
