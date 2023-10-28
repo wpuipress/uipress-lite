@@ -73,13 +73,18 @@ export default {
       if (!styles) this.uipApp.data.themeStyles = {};
       let search = this.search.toLowerCase();
 
-      return Object.entries(this.uipApp.data.themeStyles)
-        .filter(([key, item]) => item.type === "color" || !("name" in item))
+      const plop = Object.entries(this.uipApp.data.themeStyles)
+        .filter(([key, item]) => {
+          item.name = key; // Assign the name here
+          return (item.type === "color" || !("name" in item)) && this.maybeToLowerCase(item.name).includes(search);
+        })
         .map(([key, item]) => {
-          item.name = key;
           item.type = "color";
-          if (item.name.toLowerCase().includes(search)) return item;
+          return item;
         });
+
+      console.log(plop);
+      return plop;
     },
     /**
      * Checks if the given var can be deleted
@@ -95,6 +100,15 @@ export default {
     },
   },
   methods: {
+    /**
+     * Checks a string before lowercasing it
+     *
+     * @param {string} str
+     * @since 3.3.02
+     */
+    maybeToLowerCase(str) {
+      return str ? str.toLowerCase() : "";
+    },
     /**
      * Saves users styles
      *
