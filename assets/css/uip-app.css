@@ -1185,6 +1185,10 @@ html[uip-core-app=true] p {
   width: 400px;
 }
 
+.uip-w-420 {
+  width: 420px;
+}
+
 .uip-w-440 {
   width: 440px;
 }
