@@ -353,11 +353,11 @@ export default {
           
       
       
-          <div class="uip-flex uip-h-100p uip-flex-grow uip-overflow-hidden uip-position-relative">
+          <div class="uip-flex uip-h-100p uip-flex-grow uip-overflow-hidden uip-position-relative" style="max-width:100vw">
           
 
             <!--Left panel -->
-            <div class="uip-overflow-auto uip-scrollbar uip-border-right uip-app-frame uip-flex-no-shrink uip-w-300 uip-max-h-100p uip-background-default uip-z-index-1" 
+            <div class="uip-overflow-auto uip-border-right uip-app-frame uip-flex-no-shrink uip-w-300 uip-max-h-100p uip-background-default uip-z-index-1" 
             :style="returnLeftPanelStyle">
               
               
