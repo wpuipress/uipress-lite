@@ -73,7 +73,7 @@ export default {
       if (!styles) this.uipApp.data.themeStyles = {};
       let search = this.search.toLowerCase();
 
-      const plop = Object.entries(this.uipApp.data.themeStyles)
+      return Object.entries(this.uipApp.data.themeStyles)
         .filter(([key, item]) => {
           item.name = key; // Assign the name here
           return (item.type === "color" || !("name" in item)) && this.maybeToLowerCase(item.name).includes(search);
@@ -82,9 +82,6 @@ export default {
           item.type = "color";
           return item;
         });
-
-      console.log(plop);
-      return plop;
     },
     /**
      * Checks if the given var can be deleted
