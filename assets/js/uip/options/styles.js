@@ -295,8 +295,12 @@ export default {
     async injectProp() {
       this.updating = true;
       const defaultOptions = this.returnDefaultOptions;
+      console.log(this.value);
       const newOptions = this.isObject(this.value) ? this.value : {};
       this.styles = { ...defaultOptions, ...newOptions };
+
+      if (!newOptions.borders) this.styles.borders = [];
+      if (!newOptions.shadows) this.styles.shadows = [];
 
       await nextTick();
       this.updating = false;
@@ -557,8 +561,8 @@ export default {
         <div class="uip-text-muted uip-flex uip-flex-center uip-text-s uip-flex-start uip-padding-top-xxs"><span>{{strings.border}}</span></div>
         
         <div class="uip-flex uip-flex-column uip-row-gap-xs">
-        
-          <template v-for="(border, index) in styles.borders">
+          
+          <template v-for="(border, index) in styles.borders" :key="index">
           
             <div class="uip-flex uip-gap-xs uip-row-gap-xs uip-flex-center">
             
@@ -611,7 +615,7 @@ export default {
         <div class="uip-text-muted uip-flex uip-flex-center uip-text-s uip-flex-start uip-padding-top-xxs"><span>{{strings.shadow}}</span></div>
         
         <div class="uip-flex uip-flex-column uip-row-gap-xs">
-        
+          
           <template v-for="(shadow, index) in styles.shadows">
           
             <div class="uip-flex uip-gap-xs uip-row-gap-xs uip-flex-center">
