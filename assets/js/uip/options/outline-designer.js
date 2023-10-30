@@ -1,8 +1,8 @@
 const { __, _x, _n, _nx } = wp.i18n;
-import { defineAsyncComponent, nextTick } from '../../libs/vue-esm.js';
+import { defineAsyncComponent, nextTick } from "../../libs/vue-esm.js";
 export default {
   components: {
-    colorBox: defineAsyncComponent(() => import('../v3.5/utility/color-box.min.js?ver=3.3.00')),
+    colorBox: defineAsyncComponent(() => import("../v3.5/utility/color-box.min.js?ver=3.3.00")),
   },
   props: {
     returnData: Function,
@@ -10,77 +10,103 @@ export default {
   },
   data() {
     return {
-      outlineOptions: {
-        width: {
-          value: '',
-          units: 'px',
-        },
-        offset: {
-          value: '',
-          units: 'px',
-        },
-        style: 'solid',
-        color: {
-          type: 'solid',
-          value: '',
-        },
-      },
+      updating: false,
+      outlineOptions: this.returnDefault,
       strings: {
-        topleft: __('Top left', 'uipress-lite'),
-        topright: __('Top right', 'uipress-lite'),
-        bottomleft: __('Bottom left', 'uipress-lite'),
-        bottomright: __('Bottom right', 'uipress-lite'),
-        colour: __('Colour', 'uipress-lite'),
-        style: __('Style', 'uipress-lite'),
-        width: __('Width', 'uipress-lite'),
-        offset: __('Offset', 'uipress-lite'),
-        outlineColour: __('Outline colour', 'seql'),
+        topleft: __("Top left", "uipress-lite"),
+        topright: __("Top right", "uipress-lite"),
+        bottomleft: __("Bottom left", "uipress-lite"),
+        bottomright: __("Bottom right", "uipress-lite"),
+        colour: __("Colour", "uipress-lite"),
+        style: __("Style", "uipress-lite"),
+        width: __("Width", "uipress-lite"),
+        offset: __("Offset", "uipress-lite"),
+        outlineColour: __("Outline colour", "seql"),
       },
       borderTypes: [
         {
-          label: __('Solid', 'uipress-lite'),
-          value: 'solid',
+          label: __("Solid", "uipress-lite"),
+          value: "solid",
         },
         {
-          label: __('Dashed', 'uipress-lite'),
-          value: 'dashed',
+          label: __("Dashed", "uipress-lite"),
+          value: "dashed",
         },
         {
-          label: __('Dotted', 'uipress-lite'),
-          value: 'dotted',
+          label: __("Dotted", "uipress-lite"),
+          value: "dotted",
         },
         {
-          label: __('Double', 'uipress-lite'),
-          value: 'double',
+          label: __("Double", "uipress-lite"),
+          value: "double",
         },
         {
-          label: __('Groove', 'uipress-lite'),
-          value: 'groove',
+          label: __("Groove", "uipress-lite"),
+          value: "groove",
         },
         {
-          label: __('Ridge', 'uipress-lite'),
-          value: 'ridge',
+          label: __("Ridge", "uipress-lite"),
+          value: "ridge",
         },
         {
-          label: __('Inset', 'uipress-lite'),
-          value: 'inset',
+          label: __("Inset", "uipress-lite"),
+          value: "inset",
         },
       ],
     };
   },
-  
+
   watch: {
+    /**
+     * Watches for changes to border options and sends the data back
+     *
+     * @since 3.2.13
+     */
+    value: {
+      handler(newValue, oldValue) {
+        if (this.updating) return;
+        this.injectProp(newValue);
+      },
+      deep: true,
+      immediate: true,
+    },
+
+    /**
+     * Watches for changes to outline options and sends the data back
+     *
+     * @since 3.2.13
+     */
     outlineOptions: {
       handler(newValue, oldValue) {
+        if (this.updating) return;
         this.returnData(newValue);
       },
       deep: true,
     },
   },
-  mounted() {
-    this.formatValue();
-  },
   computed: {
+    /**
+     * Returns default option value
+     *
+     * @since 3.2.0
+     */
+    returnDefault() {
+      return {
+        width: {
+          value: "",
+          units: "px",
+        },
+        offset: {
+          value: "",
+          units: "px",
+        },
+        style: "solid",
+        color: {
+          type: "solid",
+          value: "",
+        },
+      };
+    },
     /**
      * Returns the shadow color as a background css style
      *
@@ -88,7 +114,7 @@ export default {
      */
     returnOutlineColor() {
       if (!this.outlineOptions.color.value) return;
-      if (this.outlineOptions.color.value.startsWith('--')) {
+      if (this.outlineOptions.color.value.startsWith("--")) {
         return `background-color:var(${this.outlineOptions.color.value})`;
       }
       return `background-color:${this.outlineOptions.color.value}`;
@@ -101,14 +127,14 @@ export default {
      */
     returnFillScreen() {
       return {
-        component: 'ColorPicker',
+        component: "ColorPicker",
         label: this.strings.outlineColour,
         value: this.outlineOptions.color.value,
         returnData: (d) => {
-          if (d.startsWith('--')) {
-            this.outlineOptions.color.type = 'variable';
+          if (d.startsWith("--")) {
+            this.outlineOptions.color.type = "variable";
           } else {
-            this.outlineOptions.color.type = 'solid';
+            this.outlineOptions.color.type = "solid";
           }
           this.outlineOptions.color.value = d;
         },
@@ -121,9 +147,12 @@ export default {
      *
      * @since 3.2.13
      */
-    formatValue() {
-      if (!this.isObject(this.value)) return;
-      this.outlineOptions = { ...this.outlineOptions, ...this.value };
+    async injectProp() {
+      this.updating = true;
+      this.outlineOptions = this.isObject(this.value) ? { ...this.returnDefault, ...this.value } : this.returnDefault;
+
+      await this.$nextTick();
+      this.updating = false;
     },
   },
   template: `
