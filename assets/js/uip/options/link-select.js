@@ -7,62 +7,71 @@ export default {
   },
   data() {
     return {
+      updating: false,
       open: false,
-      link: {
-        value: '',
-        newTab: 'dynamic',
-        dynamic: false,
-        dynamicKey: '',
-        dynamicType: '',
-      },
+      link: this.returnDefault,
       hideLinkType: false,
       adminMenu: this.uipApp.data.adminMenu.menu,
       dynamics: this.uipApp.data.dynamicOptions,
       posts: [],
-      searchString: '',
-      fetchSearchString: '',
+      searchString: "",
+      fetchSearchString: "",
       serverActive: false,
       strings: {
-        searchLinks: __('Search admin pages', 'uipress-lite'),
-        searchPages: __('Search pages and posts', 'uipress-lite'),
-        noneFound: __('No posts found for current query', 'uipress-lite'),
-        newTab: __('Link mode', 'uipress-lite'),
-        linkSelect: __('Link select', 'uipress-lite'),
-        currentValue: __('Current value', 'uipress-lite'),
-        select: __('select', 'uipress-lite'),
+        searchLinks: __("Search admin pages", "uipress-lite"),
+        searchPages: __("Search pages and posts", "uipress-lite"),
+        noneFound: __("No posts found for current query", "uipress-lite"),
+        newTab: __("Link mode", "uipress-lite"),
+        linkSelect: __("Link select", "uipress-lite"),
+        currentValue: __("Current value", "uipress-lite"),
+        select: __("select", "uipress-lite"),
       },
       linkTypes: {
         admin: {
-          value: 'admin',
-          label: __('Admin', 'uipress-lite'),
+          value: "admin",
+          label: __("Admin", "uipress-lite"),
         },
         content: {
-          value: 'content',
-          label: __('Content', 'uipress-lite'),
+          value: "content",
+          label: __("Content", "uipress-lite"),
         },
       },
       linkModes: {
         dynamic: {
-          value: 'dynamic',
-          label: __('Dynamic', 'uipress-lite'),
-          placeHolder: __('Dynamic links will load in the available content frame without page refresh. If none exists then it will perform a normal relead.'),
+          value: "dynamic",
+          label: __("Dynamic", "uipress-lite"),
+          placeHolder: __("Dynamic links will load in the available content frame without page refresh. If none exists then it will perform a normal relead."),
         },
         default: {
-          value: 'default',
-          label: __('Default', 'uipress-lite'),
-          placeHolder: __('Default links load like a normal link and will refresh the whole page.'),
+          value: "default",
+          label: __("Default", "uipress-lite"),
+          placeHolder: __("Default links load like a normal link and will refresh the whole page."),
         },
         newTab: {
-          value: 'newTab',
-          label: __('New tab', 'uipress-lite'),
-          placeHolder: __('New tab links open in a new browser tab.'),
+          value: "newTab",
+          label: __("New tab", "uipress-lite"),
+          placeHolder: __("New tab links open in a new browser tab."),
         },
       },
-      activeValue: 'admin',
+      activeValue: "admin",
     };
   },
 
   watch: {
+    /**
+     * Watches for changes to border options and sends the data back
+     *
+     * @since 3.2.13
+     */
+    value: {
+      handler(newValue, oldValue) {
+        if (this.updating) return;
+        this.injectProp();
+      },
+      deep: true,
+      immediate: true,
+    },
+
     fetchSearchString: {
       handler(newValue, oldValue) {
         this.searchPosts();
@@ -71,13 +80,13 @@ export default {
     },
     link: {
       handler(newValue, oldValue) {
+        if (this.updating) return;
         this.returnData(newValue);
       },
       deep: true,
     },
   },
   mounted() {
-    this.formatValue();
     this.formatArgs();
   },
   computed: {
@@ -99,10 +108,25 @@ export default {
      */
     createOptionObject() {
       return {
-        value: '',
-        newTab: 'dynamic',
+        value: "",
+        newTab: "dynamic",
         dynamic: false,
-        dynamicKey: '',
+        dynamicKey: "",
+      };
+    },
+
+    /**
+     * Returns default option value
+     *
+     * @since 3.2.0
+     */
+    returnDefault() {
+      return {
+        value: "",
+        newTab: "dynamic",
+        dynamic: false,
+        dynamicKey: "",
+        dynamicType: "",
       };
     },
   },
@@ -112,9 +136,12 @@ export default {
      *
      * @since 3.2.13
      */
-    formatValue() {
-      if (!this.isObject(this.value)) return;
-      this.link = { ...this.link, ...this.value };
+    async injectProp() {
+      this.updating = true;
+      this.link = this.isObject(this.value) ? { ...this.value } : this.returnDefault;
+
+      await this.$nextTick();
+      this.updating = false;
     },
 
     /**
@@ -132,8 +159,8 @@ export default {
       //Only add this option if it was already as it uses the old dynamic system
       if (this.link.dynamic) {
         this.linkTypes.dynamic = {
-          value: 'dynamic',
-          label: __('Dynamic', 'uipress-lite'),
+          value: "dynamic",
+          label: __("Dynamic", "uipress-lite"),
         };
       }
     },
@@ -154,9 +181,9 @@ export default {
 
       //Build form data for fetch request
       let formData = new FormData();
-      formData.append('action', 'uip_search_posts_pages');
-      formData.append('security', uip_ajax.security);
-      formData.append('searchStr', str);
+      formData.append("action", "uip_search_posts_pages");
+      formData.append("security", uip_ajax.security);
+      formData.append("searchStr", str);
 
       const response = await this.sendServerRequest(uip_ajax.ajax_url, formData);
 
@@ -176,7 +203,7 @@ export default {
     chooseLink(option) {
       this.link.value = option;
       this.link.dynamic = false;
-      this.link.dynamicKey = '';
+      this.link.dynamicKey = "";
       this.returnData(this.link);
     },
 
@@ -209,7 +236,7 @@ export default {
       this.link.dynamic = true;
       this.link.dynamicKey = item.key;
       this.link.value = item.value;
-      this.link.dynamicType = 'link';
+      this.link.dynamicType = "link";
     },
 
     /**
@@ -219,9 +246,9 @@ export default {
      */
     removeDynamicItem() {
       this.link.dynamic = false;
-      this.link.dynamicKey = '';
-      this.link.value = '';
-      this.link.dynamicType = '';
+      this.link.dynamicKey = "";
+      this.link.value = "";
+      this.link.dynamicType = "";
     },
   },
   template: `
