@@ -10,16 +10,17 @@ export default {
   },
   data() {
     return {
-      option: '',
-      userInput: '',
+      option: "",
+      userInput: "",
       selected: [],
       rendered: false,
-      search: '',
+      search: "",
       allRules: [],
+      updating: false,
       strings: {
-        manualPlaceHolder: __('Classes', 'uipress-lite'),
-        searchClasses: __('Search classes', 'uipress-lite'),
-        search: __('Search', 'uipress-lite'),
+        manualPlaceHolder: __("Classes", "uipress-lite"),
+        searchClasses: __("Search classes", "uipress-lite"),
+        search: __("Search", "uipress-lite"),
       },
     };
   },
@@ -29,8 +30,22 @@ export default {
      *
      * @since 3.2.13
      */
+    value: {
+      handler(newValue, oldValue) {
+        if (this.updating) return;
+        this.parseInput();
+      },
+      deep: true,
+      immediate: true,
+    },
+    /**
+     * Watches for changes to option and returns the data
+     *
+     * @since 3.2.13
+     */
     option: {
       handler(newValue, oldValue) {
+        if (this.updating) return;
         this.returnData(this.option);
       },
       deep: true,
@@ -43,14 +58,14 @@ export default {
     userInput: {
       handler(newValue, oldValue) {
         if (!newValue || !this.rendered) return;
-        if (!newValue.includes(' ')) return;
-        let parts = newValue.split(' ');
+        if (!newValue.includes(" ")) return;
+        let parts = newValue.split(" ");
         for (const userClass of parts) {
           if (userClass) {
             this.selected.push(userClass);
           }
         }
-        this.userInput = '';
+        this.userInput = "";
       },
     },
     /**
@@ -60,13 +75,12 @@ export default {
      */
     selected: {
       handler(newValue, oldValue) {
-        this.returnData(this.selected.join(' '));
+        this.returnData(this.selected.join(" "));
       },
       deep: true,
     },
   },
   created() {
-    this.parseInput();
     this.getClassNames();
   },
   async mounted() {
@@ -84,24 +98,29 @@ export default {
      *
      * @since 3.2.13
      */
-    parseInput() {
-      // No value so exit
-      if (!this.value) return;
+    async parseInput() {
+      this.updating = true;
 
-      this.option = this.value;
+      this.selected = [];
+      this.option = this.value && typeof this.value !== "undefined" ? this.value : "";
 
       // No spaces so just a single class
-      if (!this.option.includes(' ')) {
+      if (!this.option.includes(" ") && this.option != "") {
         this.selected.push(this.option);
+        await this.$nextTick();
+        this.updating = false;
         return;
       }
 
-      const parts = this.option.split(' ');
+      const parts = this.option.split(" ");
 
       for (const userClass of parts) {
         if (!userClass) continue;
         this.selected.push(userClass);
       }
+
+      await this.$nextTick();
+      this.updating = false;
     },
 
     /**
@@ -114,19 +133,19 @@ export default {
       let newValue = this.userInput;
       if (!newValue) return;
 
-      if (!newValue.includes(' ')) {
+      if (!newValue.includes(" ")) {
         this.selected.push(newValue);
-        this.userInput = '';
+        this.userInput = "";
         return;
       }
 
-      let parts = newValue.split(' ');
+      let parts = newValue.split(" ");
 
       for (const userClass of parts) {
         if (!userClass) continue;
         this.selected.push(userClass);
       }
-      this.userInput = '';
+      this.userInput = "";
     },
     /**
      * Retrieves and sets unique class names from stylesheets.
@@ -182,10 +201,10 @@ export default {
     isValidClassSelector(selector) {
       if (!selector) return false;
 
-      const invalidPatterns = ['::', ' ', '[', '>', ':', '~', '#'];
+      const invalidPatterns = ["::", " ", "[", ">", ":", "~", "#"];
       const hasInvalidPattern = invalidPatterns.some((pattern) => selector.includes(pattern));
 
-      return selector.startsWith('.') && !hasInvalidPattern && !selector.slice(1).includes('.');
+      return selector.startsWith(".") && !hasInvalidPattern && !selector.slice(1).includes(".");
     },
 
     /**
