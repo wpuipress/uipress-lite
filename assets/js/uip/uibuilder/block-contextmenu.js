@@ -1,31 +1,31 @@
-import { defineAsyncComponent } from '../../libs/vue-esm.js';
-import { validDateTemplate } from '../v3.5/utility/functions.min.js';
+import { defineAsyncComponent } from "../../libs/vue-esm.js";
+import { validDateTemplate } from "../v3.5/utility/functions.min.js";
 export default {
   components: {
-    contextmenu: defineAsyncComponent(() => import('../v3.5/utility/contextmenu.min.js?ver=3.3.00')),
-    SaveAsPattern: defineAsyncComponent(() => import('./save-as-pattern.min.js?ver=3.3.00')),
+    contextmenu: defineAsyncComponent(() => import("../v3.5/utility/contextmenu.min.js?ver=3.3.00")),
+    SaveAsPattern: defineAsyncComponent(() => import("./save-as-pattern.min.js?ver=3.3.00")),
   },
-  inject: ['uiTemplate'],
+  inject: ["uiTemplate"],
   data() {
     return {
       block: {},
       list: null,
       blockIndex: null,
       strings: {
-        settings: __('Settings', 'uipress-lite'),
-        styles: __('Styles', 'uipress-lite'),
-        delete: __('Delete', 'uipress-lite'),
-        duplicate: __('Duplicate', 'uipress-lite'),
-        copy: __('Copy', 'uipress-lite'),
-        paste: __('Paste', 'uipress-lite'),
-        editTemplate: __('Edit template', 'uipress-lite'),
-        resetTemplate: __('Reset template', 'uipress-lite'),
-        insert: __('Insert', 'uipress-lite'),
-        loremIpsum: __('Lorem Ipsum', 'uipress-lite'),
-        autoGenerate: __('Auto generate', 'uipress-lite'),
-        fromPrompt: __('From prompt', 'uipress-lite'),
-        editStates: __('Edit states', 'uipress-lite'),
-        copyStyles: __('Copy styles', 'uipress-lite'),
+        settings: __("Settings", "uipress-lite"),
+        styles: __("Styles", "uipress-lite"),
+        delete: __("Delete", "uipress-lite"),
+        duplicate: __("Duplicate", "uipress-lite"),
+        copy: __("Copy", "uipress-lite"),
+        paste: __("Paste", "uipress-lite"),
+        editTemplate: __("Edit template", "uipress-lite"),
+        resetTemplate: __("Reset template", "uipress-lite"),
+        insert: __("Insert", "uipress-lite"),
+        loremIpsum: __("Lorem Ipsum", "uipress-lite"),
+        autoGenerate: __("Auto generate", "uipress-lite"),
+        fromPrompt: __("From prompt", "uipress-lite"),
+        editStates: __("Edit states", "uipress-lite"),
+        copyStyles: __("Copy styles", "uipress-lite"),
       },
       enabled: {
         settings: true,
@@ -48,53 +48,53 @@ export default {
       },
       links: [
         {
-          name: 'settings',
-          label: __('Settings', 'uipress-lite'),
-          icon: 'tune',
+          name: "settings",
+          label: __("Settings", "uipress-lite"),
+          icon: "tune",
           action: () => {
-            this.uipApp.blockSettings.show(this.block, 'settings');
+            this.uipApp.blockSettings.show(this.block, "settings");
             this.$refs.blockcontextmenu.close();
           },
         },
         {
-          name: 'styles',
-          label: __('Styles', 'uipress-lite'),
-          icon: 'palette',
+          name: "styles",
+          label: __("Styles", "uipress-lite"),
+          icon: "palette",
           action: () => {
-            this.uipApp.blockSettings.show(this.block, 'style');
+            this.uipApp.blockSettings.show(this.block, "style");
             this.$refs.blockcontextmenu.close();
           },
         },
         {
-          name: 'advanced',
-          label: __('Advanced', 'uipress-lite'),
-          icon: 'code',
+          name: "advanced",
+          label: __("Advanced", "uipress-lite"),
+          icon: "code",
           action: () => {
-            this.uipApp.blockSettings.show(this.block, 'advanced');
+            this.uipApp.blockSettings.show(this.block, "advanced");
             this.$refs.blockcontextmenu.close();
           },
         },
-        { name: 'divider' },
+        { name: "divider" },
 
         {
-          name: 'copy',
-          label: __('Copy', 'uipress-lite'),
-          icon: 'chevron_right',
+          name: "copy",
+          label: __("Copy", "uipress-lite"),
+          icon: "chevron_right",
           action: () => {},
           children: [
             {
-              name: 'copyblock',
-              label: __('Block', 'uipress-lite'),
-              icon: 'copy_all',
+              name: "copyblock",
+              label: __("Block", "uipress-lite"),
+              icon: "copy_all",
               action: () => {
                 this.uiTemplate.copied = this.block;
                 this.$refs.blockcontextmenu.close();
               },
             },
             {
-              name: 'copystyles',
-              label: __('Styles', 'uipress-lite'),
-              icon: 'palette',
+              name: "copystyles",
+              label: __("Styles", "uipress-lite"),
+              icon: "palette",
               action: () => {
                 this.uiTemplate.stylesCopied = this.block.settings;
                 this.$refs.blockcontextmenu.close();
@@ -103,15 +103,15 @@ export default {
           ],
         },
         {
-          name: 'paste',
-          label: __('Paste', 'uipress-lite'),
-          icon: 'chevron_right',
+          name: "paste",
+          label: __("Paste", "uipress-lite"),
+          icon: "chevron_right",
           action: () => {},
           children: [
             {
-              name: 'pastecontent',
-              label: __('Content', 'uipress-lite'),
-              icon: 'content_paste',
+              name: "pastecontent",
+              label: __("Content", "uipress-lite"),
+              icon: "content_paste",
               condition: () => {
                 if (this.block.content && this.uiTemplate.copied) return true;
                 return false;
@@ -122,9 +122,9 @@ export default {
               },
             },
             {
-              name: 'pastestyles',
-              label: __('Styles', 'uipress-lite'),
-              icon: 'content_paste',
+              name: "pastestyles",
+              label: __("Styles", "uipress-lite"),
+              icon: "content_paste",
               condition: () => {
                 if (this.uiTemplate.stylesCopied) return true;
                 return false;
@@ -137,11 +137,11 @@ export default {
           ],
         },
         {
-          name: 'duplicate',
-          label: __('Duplicate', 'uipress-lite'),
+          name: "duplicate",
+          label: __("Duplicate", "uipress-lite"),
           shortcut: [
-            { type: 'icon', value: 'keyboard_command_key' },
-            { type: 'text', value: 'D' },
+            { type: "icon", value: "keyboard_command_key" },
+            { type: "text", value: "D" },
           ],
           action: () => {
             this.uipApp.blockControl.duplicateBlock();
@@ -149,21 +149,21 @@ export default {
           },
         },
 
-        { name: 'divider' },
+        { name: "divider" },
 
         {
-          name: 'saveAsPattern',
-          label: __('Save as pattern', 'uipress-lite'),
-          icon: 'bookmark_add',
+          name: "saveAsPattern",
+          label: __("Save as pattern", "uipress-lite"),
+          icon: "bookmark_add",
           action: () => {
             this.$refs.saveaspattern.show(this.block);
             this.$refs.blockcontextmenu.close();
           },
         },
         {
-          name: 'syncPattern',
-          label: __('Sync pattern', 'uipress-lite'),
-          icon: 'sync',
+          name: "syncPattern",
+          label: __("Sync pattern", "uipress-lite"),
+          icon: "sync",
           condition: () => {
             if (this.block.patternID) return true;
             return false;
@@ -173,11 +173,11 @@ export default {
             this.$refs.blockcontextmenu.close();
           },
         },
-        { name: 'divider' },
+        { name: "divider" },
         {
-          name: 'import',
-          label: __('Import', 'uipress-lite'),
-          icon: 'chevron_right',
+          name: "import",
+          label: __("Import", "uipress-lite"),
+          icon: "chevron_right",
           action: () => {},
           condition: () => {
             if (this.block.content) return true;
@@ -185,81 +185,81 @@ export default {
           },
           children: [
             {
-              name: 'blockimport',
-              label: __('Block', 'uipress-lite'),
-              icon: 'file_upload',
+              name: "blockimport",
+              label: __("Block", "uipress-lite"),
+              icon: "file_upload",
               action: () => {
-                this.importSomething('block');
+                this.importSomething("block");
                 this.$refs.blockcontextmenu.close();
               },
             },
             {
-              name: 'contentimport',
-              label: __('Content', 'uipress-lite'),
-              icon: 'file_upload',
+              name: "contentimport",
+              label: __("Content", "uipress-lite"),
+              icon: "file_upload",
               action: () => {
-                this.importSomething('blockcontent');
+                this.importSomething("blockcontent");
                 this.$refs.blockcontextmenu.close();
               },
             },
             {
-              name: 'templateimport',
-              label: __('Template', 'uipress-lite'),
-              icon: 'file_upload',
+              name: "templateimport",
+              label: __("Template", "uipress-lite"),
+              icon: "file_upload",
               action: () => {
-                this.importSomething('template');
+                this.importSomething("template");
                 this.$refs.blockcontextmenu.close();
               },
             },
           ],
         },
         {
-          name: 'export',
-          label: __('Export', 'uipress-lite'),
-          icon: 'chevron_right',
+          name: "export",
+          label: __("Export", "uipress-lite"),
+          icon: "chevron_right",
           action: () => {},
           children: [
             {
-              name: 'blockexport',
-              label: __('Block', 'uipress-lite'),
-              icon: 'file_download',
+              name: "blockexport",
+              label: __("Block", "uipress-lite"),
+              icon: "file_download",
               action: () => {
-                this.exportStuff('block');
+                this.exportStuff("block");
                 this.$refs.blockcontextmenu.close();
               },
             },
             {
-              name: 'contentexport',
-              label: __('Content', 'uipress-lite'),
-              icon: 'file_download',
+              name: "contentexport",
+              label: __("Content", "uipress-lite"),
+              icon: "file_download",
               condition: () => {
                 if (this.block.content) return true;
                 return false;
               },
               action: () => {
-                this.exportStuff('blockcontent');
+                this.exportStuff("blockcontent");
                 this.$refs.blockcontextmenu.close();
               },
             },
             {
-              name: 'templateexport',
-              label: __('Template', 'uipress-lite'),
-              icon: 'file_download',
+              name: "templateexport",
+              label: __("Template", "uipress-lite"),
+              icon: "file_download",
               action: () => {
-                this.exportStuff('template');
+                this.exportStuff("template");
                 this.$refs.blockcontextmenu.close();
               },
             },
           ],
         },
 
-        { name: 'divider' },
+        { name: "divider" },
         {
-          name: 'delete',
-          label: __('Delete', 'uipress-lite'),
+          name: "delete",
+          label: __("Delete", "uipress-lite"),
           shortcut: [
-            { type: 'icon', value: 'keyboard_command_key' },
-            { type: 'icon', value: 'backspace' },
+            { type: "icon", value: "keyboard_command_key" },
+            { type: "icon", value: "backspace" },
           ],
           danger: true,
           action: () => {
@@ -311,10 +311,10 @@ export default {
      */
     importSomething(context) {
       // Create the file input element
-      const fileInput = document.createElement('input');
-      fileInput.type = 'file';
-      fileInput.accept = '.json';
-      fileInput.style.display = 'none';
+      const fileInput = document.createElement("input");
+      fileInput.type = "file";
+      fileInput.accept = ".json";
+      fileInput.style.display = "none";
 
       // Add the input to the DOM
       document.body.appendChild(fileInput);
@@ -323,12 +323,12 @@ export default {
       const eventHandler = (event) => {
         const file = event.target.files[0];
         if (!file) return;
-        if (file.type !== 'application/json') return;
+        if (file.type !== "application/json") return;
         if (file.size > 1000000) return;
 
         this.importSettings(file, context);
       };
-      fileInput.addEventListener('change', eventHandler);
+      fileInput.addEventListener("change", eventHandler);
 
       // Programmatically click the file input to open the file selector
       fileInput.click();
@@ -343,7 +343,7 @@ export default {
      */
     importSettings(thefile, type) {
       const reader = new FileReader();
-      reader.readAsText(thefile, 'UTF-8');
+      reader.readAsText(thefile, "UTF-8");
 
       reader.onload = (evt) => {
         const json_settings = evt.target.result;
@@ -353,67 +353,67 @@ export default {
         try {
           parsed = JSON.parse(json_settings);
         } catch (error) {
-          this.uipApp.notifications.notify(error, '', 'error', true, false);
+          this.uipApp.notifications.notify(error, "", "error", true, false);
           return;
         }
 
         if (parsed) {
           if (!Array.isArray(parsed) && !this.isObject(parsed)) {
-            this.uipApp.notifications.notify('Template is not valid', '', 'error', true, false);
+            this.uipApp.notifications.notify("Template is not valid", "", "error", true, false);
             return;
           }
 
           let temper;
-          let message = __('Template imported', 'uipress-lite');
+          let message = __("Template imported", "uipress-lite");
 
           switch (type) {
-            case 'template':
+            case "template":
               if (Array.isArray(parsed)) {
                 temper = parsed;
               } else if (parsed.uipLayout) {
                 temper = Array.isArray(parsed.uipLayout) ? parsed.uipLayout : [parsed.uipLayout];
               } else {
-                return this.uipApp.notifications.notify(__('Template mismatch', 'uipress-lite'), '', 'error', true, false);
+                return this.uipApp.notifications.notify(__("Template mismatch", "uipress-lite"), "", "error", true, false);
               }
               break;
-            case 'block':
+            case "block":
               if (!parsed.uipLayout) {
-                return this.uipApp.notifications.notify(__('Template mismatch', 'uipress-lite'), '', 'error', true, false);
+                return this.uipApp.notifications.notify(__("Template mismatch", "uipress-lite"), "", "error", true, false);
               }
-              message = __('Block imported', 'uipress-lite');
+              message = __("Block imported", "uipress-lite");
               temper = [parsed.uipLayout];
               break;
-            case 'blockcontent':
+            case "blockcontent":
               if (!parsed.uipBlockContent) {
-                return this.uipApp.notifications.notify(__('Template mismatch', 'uipress-lite'), '', 'error', true, false);
+                return this.uipApp.notifications.notify(__("Template mismatch", "uipress-lite"), "", "error", true, false);
               }
-              message = __('Content imported', 'uipress-lite');
+              message = __("Content imported", "uipress-lite");
               temper = parsed.uipBlockContent;
               break;
             default:
-              console.error('Invalid type provided to importSettings function');
+              console.error("Invalid type provided to importSettings function");
               return;
           }
 
           validDateTemplate(temper).then((response) => {
             if (!response.includes(false)) {
-              if (type === 'template') {
+              if (type === "template") {
                 this.uiTemplate.content = temper;
               }
-              if (type === 'block') {
+              if (type === "block") {
                 this.block.content.push(temper[0]);
               }
-              if (type === 'blockcontent') {
+              if (type === "blockcontent") {
                 this.block.content = temper;
               }
 
-              this.uipApp.notifications.notify(message, '', 'success', true, false);
+              this.uipApp.notifications.notify(message, "", "success", true, false);
             } else {
-              this.uipApp.notifications.notify(__('File is not a valid JSON template', 'uipress-lite'), '', 'error', true, false);
+              this.uipApp.notifications.notify(__("File is not a valid JSON template", "uipress-lite"), "", "error", true, false);
             }
           });
         } else {
-          this.uipApp.notifications.notify(__('JSON parse failed', 'uipress-lite'), '', 'error', true, false);
+          this.uipApp.notifications.notify(__("JSON parse failed", "uipress-lite"), "", "error", true, false);
         }
       };
     },
@@ -423,22 +423,22 @@ export default {
      */
     exportStuff(type) {
       let layout;
-      let namer = 'uip-ui-template-';
+      let namer = "uip-ui-template-";
 
       switch (type) {
-        case 'template':
+        case "template":
           layout = JSON.stringify({ uipLayout: this.uiTemplate.content });
           break;
-        case 'block':
+        case "block":
           layout = JSON.stringify({ uipLayout: this.block });
-          namer = 'uip-ui-block-';
+          namer = "uip-ui-block-";
           break;
-        case 'blockcontent':
+        case "blockcontent":
           layout = JSON.stringify({ uipBlockContent: this.block.content });
-          namer = 'uip-ui-block-content-';
+          namer = "uip-ui-block-content-";
           break;
         default:
-          console.error('Invalid type provided to exportStuff function');
+          console.error("Invalid type provided to exportStuff function");
           return;
       }
 
@@ -450,13 +450,13 @@ export default {
 
       const dataStr = `data:text/json;charset=utf-8,${encodeURIComponent(layout)}`;
       const dlAnchorElem = this.$refs.templateexport;
-      dlAnchorElem.setAttribute('href', dataStr);
-      dlAnchorElem.setAttribute('download', filename);
+      dlAnchorElem.setAttribute("href", dataStr);
+      dlAnchorElem.setAttribute("download", filename);
       dlAnchorElem.click();
 
-      let message = __('Exported', 'uipress-lite');
+      let message = __("Exported", "uipress-lite");
 
-      this.uipApp.notifications.notify(message, '', 'success', true);
+      this.uipApp.notifications.notify(message, "", "success", true);
     },
 
     /**
@@ -478,7 +478,7 @@ export default {
 
       for (let key in this.uiTemplate.stylesCopied) {
         //These are not styles so don't copy them
-        if (key == 'advanced' || key == 'block' || key == 'container') {
+        if (key == "advanced" || key == "block" || key == "container") {
           continue;
         }
         //Check if the new block has the same settings
@@ -499,7 +499,7 @@ export default {
       let currentTem = JSON.parse(JSON.stringify(this.uiTemplate.content));
 
       //Duplicate it
-      let item = Object.assign({}, this.uiTemplate.copied);
+      let item = JSON.parse(JSON.stringify(this.uiTemplate.copied));
       item.uid = this.createUID();
       item.options = [];
       item.settings = JSON.parse(JSON.stringify(item.settings));
@@ -519,7 +519,7 @@ export default {
      * @since 0.0.1
      */
     async canEditBlockTemplates() {
-      return await this.seqlData.permissions.user_can({ request: 'edit_block_templates', showMessage: true });
+      return await this.seqlData.permissions.user_can({ request: "edit_block_templates", showMessage: true });
     },
     /**
      * Enters template edit
@@ -559,9 +559,9 @@ export default {
       if (!canEdit) return;
 
       const ok = await this.seqlData.confirm.show({
-        title: __('Reset template', 'uipress-lite'),
-        message: __("Are you sure you want to reset this block's template? Any custom changes to the template will be lost", 'uipress-lite'),
-        okButton: __('Reset template', 'uipress-lite'),
+        title: __("Reset template", "uipress-lite"),
+        message: __("Are you sure you want to reset this block's template? Any custom changes to the template will be lost", "uipress-lite"),
+        okButton: __("Reset template", "uipress-lite"),
       });
       // If you throw an error, the method will terminate here unless you surround it wil try/catch
       if (ok) {
@@ -585,7 +585,7 @@ export default {
      */
     maybeShowSubMenu(evt, item) {
       if (!item.children) return;
-      this.$refs[item.name + 'menu'][0].show(evt, this.returnThisPosition(evt));
+      this.$refs[item.name + "menu"][0].show(evt, this.returnThisPosition(evt));
     },
     /**
      * Hides submenu for items with children
@@ -594,7 +594,7 @@ export default {
      */
     maybeHideSubMenu(evt, item) {
       if (!item.children) return;
-      this.$refs[item.name + 'menu'][0].close();
+      this.$refs[item.name + "menu"][0].close();
     },
   },
   template: `
