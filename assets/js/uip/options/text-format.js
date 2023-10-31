@@ -1,13 +1,13 @@
 const { __, _x, _n, _nx } = wp.i18n;
-import { defineAsyncComponent, nextTick } from '../../libs/vue-esm.js';
-import FontFamilies from '../v3.5/lists/fonts.js';
+import { defineAsyncComponent, nextTick } from "../../libs/vue-esm.js";
+import FontFamilies from "../v3.5/lists/fonts.js";
 export default {
-  emits: ['update'],
+  emits: ["update"],
   components: {
-    colorBox: defineAsyncComponent(() => import('../v3.5/utility/color-box.min.js?ver=3.3.00')),
-    screenControl: defineAsyncComponent(() => import('../v3.5/utility/screen-control.min.js?ver=3.3.00')),
-    ColorPicker: defineAsyncComponent(() => import('../v3.5/styles/color-picker.min.js?ver=3.3.00')),
-    colourStyleEditor: defineAsyncComponent(() => import('../v3.5/styles/color-style-editor.min.js?ver=3.3.00')),
+    colorBox: defineAsyncComponent(() => import("../v3.5/utility/color-box.min.js?ver=3.3.00")),
+    screenControl: defineAsyncComponent(() => import("../v3.5/utility/screen-control.min.js?ver=3.3.00")),
+    ColorPicker: defineAsyncComponent(() => import("../v3.5/styles/color-picker.min.js?ver=3.3.00")),
+    colourStyleEditor: defineAsyncComponent(() => import("../v3.5/styles/color-style-editor.min.js?ver=3.3.00")),
   },
   props: {
     value: Object,
@@ -18,171 +18,171 @@ export default {
       option: this.returnDefaultOptions,
       updating: false,
       strings: {
-        fontSize: __('size', 'uipress-lite'),
-        lineHeight: __('Line height', 'uipress-lite'),
-        fontWeight: __('Weight', 'uipress-lite'),
-        textTransform: __('Transform', 'uipress-lite'),
-        fontFamily: __('Font', 'uipress-lite'),
-        colour: __('Colour', 'uipress-lite'),
-        align: __('Align', 'uipress-lite'),
-        decoration: __('Decoration', 'uipress-lite'),
-        fontURL: __('Font url', 'uipress-lite'),
-        customFontName: __('Font family', 'uipress-lite'),
-        spacing: __('Spacing', 'uipress-lite'),
+        fontSize: __("size", "uipress-lite"),
+        lineHeight: __("Line height", "uipress-lite"),
+        fontWeight: __("Weight", "uipress-lite"),
+        textTransform: __("Transform", "uipress-lite"),
+        fontFamily: __("Font", "uipress-lite"),
+        colour: __("Colour", "uipress-lite"),
+        align: __("Align", "uipress-lite"),
+        decoration: __("Decoration", "uipress-lite"),
+        fontURL: __("Font url", "uipress-lite"),
+        customFontName: __("Font family", "uipress-lite"),
+        spacing: __("Spacing", "uipress-lite"),
       },
       alignOptions: {
         left: {
-          value: 'left',
-          icon: 'format_align_left',
-          tip: __('Left', 'uipress-lite'),
+          value: "left",
+          icon: "format_align_left",
+          tip: __("Left", "uipress-lite"),
         },
         center: {
-          value: 'center',
-          icon: 'format_align_center',
-          tip: __('Center', 'uipress-lite'),
+          value: "center",
+          icon: "format_align_center",
+          tip: __("Center", "uipress-lite"),
         },
         right: {
-          value: 'right',
-          icon: 'format_align_right',
-          tip: __('Right', 'uipress-lite'),
+          value: "right",
+          icon: "format_align_right",
+          tip: __("Right", "uipress-lite"),
         },
         justify: {
-          value: 'justify',
-          icon: 'format_align_justify',
-          tip: __('Justify', 'uipress-lite'),
+          value: "justify",
+          icon: "format_align_justify",
+          tip: __("Justify", "uipress-lite"),
         },
       },
       decorationOptions: {
         none: {
-          value: 'none',
-          icon: 'block',
-          tip: __('None', 'uipress-lite'),
+          value: "none",
+          icon: "block",
+          tip: __("None", "uipress-lite"),
         },
         italic: {
-          value: 'italic',
-          icon: 'format_italic',
-          tip: __('Italic', 'uipress-lite'),
+          value: "italic",
+          icon: "format_italic",
+          tip: __("Italic", "uipress-lite"),
         },
         underline: {
-          value: 'underline',
-          icon: 'format_underlined',
-          tip: __('Underline', 'uipress-lite'),
+          value: "underline",
+          icon: "format_underlined",
+          tip: __("Underline", "uipress-lite"),
         },
         strikethrough: {
-          value: 'strikethrough',
-          icon: 'format_strikethrough',
-          tip: __('Strikethrough', 'uipress-lite'),
+          value: "strikethrough",
+          icon: "format_strikethrough",
+          tip: __("Strikethrough", "uipress-lite"),
         },
       },
       fontSizeOptions: {
         XS: {
-          value: 'XS',
-          label: 'XS',
-          tip: __('Extra small', 'uipress-lite'),
+          value: "XS",
+          label: "XS",
+          tip: __("Extra small", "uipress-lite"),
         },
         S: {
-          value: 'S',
-          label: 'S',
-          tip: __('Small', 'uipress-lite'),
+          value: "S",
+          label: "S",
+          tip: __("Small", "uipress-lite"),
         },
         M: {
-          value: 'M',
-          label: 'M',
-          tip: __('Medium', 'uipress-lite'),
+          value: "M",
+          label: "M",
+          tip: __("Medium", "uipress-lite"),
         },
         L: {
-          value: 'L',
-          label: 'L',
-          tip: __('Large', 'uipress-lite'),
+          value: "L",
+          label: "L",
+          tip: __("Large", "uipress-lite"),
         },
         XL: {
-          value: 'XL',
-          label: 'XL',
-          tip: __('Extra large', 'uipress-lite'),
+          value: "XL",
+          label: "XL",
+          tip: __("Extra large", "uipress-lite"),
         },
         custom: {
-          value: 'custom',
-          icon: 'more_vert',
-          tip: __('Custom', 'uipress-lite'),
+          value: "custom",
+          icon: "more_vert",
+          tip: __("Custom", "uipress-lite"),
         },
       },
       fontWeights: [
         {
-          value: '100',
-          label: __('100', 'uipress-lite'),
+          value: "100",
+          label: __("100", "uipress-lite"),
         },
         {
-          value: '200',
-          label: __('200', 'uipress-lite'),
+          value: "200",
+          label: __("200", "uipress-lite"),
         },
         {
-          value: '300',
-          label: __('300', 'uipress-lite'),
+          value: "300",
+          label: __("300", "uipress-lite"),
         },
         {
-          value: '400',
-          label: __('400', 'uipress-lite'),
+          value: "400",
+          label: __("400", "uipress-lite"),
         },
         {
-          value: '500',
-          label: __('500', 'uipress-lite'),
+          value: "500",
+          label: __("500", "uipress-lite"),
         },
         {
-          value: '600',
-          label: __('600', 'uipress-lite'),
+          value: "600",
+          label: __("600", "uipress-lite"),
         },
         {
-          value: '700',
-          label: __('700', 'uipress-lite'),
+          value: "700",
+          label: __("700", "uipress-lite"),
         },
         {
-          value: '800',
-          label: __('800', 'uipress-lite'),
+          value: "800",
+          label: __("800", "uipress-lite"),
         },
         {
-          value: '900',
-          label: __('900', 'uipress-lite'),
+          value: "900",
+          label: __("900", "uipress-lite"),
         },
         {
-          value: 'bold',
-          label: __('Bold', 'uipress-lite'),
+          value: "bold",
+          label: __("Bold", "uipress-lite"),
         },
         {
-          value: 'bolder',
-          label: __('Bolder', 'uipress-lite'),
+          value: "bolder",
+          label: __("Bolder", "uipress-lite"),
         },
         {
-          value: 'lighter',
-          label: __('Lighter', 'uipress-lite'),
+          value: "lighter",
+          label: __("Lighter", "uipress-lite"),
         },
         {
-          value: 'normal',
-          label: __('Normal', 'uipress-lite'),
+          value: "normal",
+          label: __("Normal", "uipress-lite"),
         },
         {
-          value: 'inherit',
-          label: __('Inherit', 'uipress-lite'),
+          value: "inherit",
+          label: __("Inherit", "uipress-lite"),
         },
       ],
       textTransform: [
         {
-          value: 'none',
-          label: __('None', 'uipress-lite'),
+          value: "none",
+          label: __("None", "uipress-lite"),
         },
         {
-          value: 'capitalize',
-          label: __('Capitalize', 'uipress-lite'),
+          value: "capitalize",
+          label: __("Capitalize", "uipress-lite"),
         },
         {
-          value: 'lowercase',
-          label: __('Lowercase', 'uipress-lite'),
+          value: "lowercase",
+          label: __("Lowercase", "uipress-lite"),
         },
         {
-          value: 'uppercase',
-          label: __('Uppercase', 'uipress-lite'),
+          value: "uppercase",
+          label: __("Uppercase", "uipress-lite"),
         },
       ],
-      fonts: [...FontFamilies, ...[{ value: 'custom', label: __('Custom', 'uipress-lite') }]],
+      fonts: [...FontFamilies, ...[{ value: "custom", label: __("Custom", "uipress-lite") }]],
     };
   },
 
@@ -208,7 +208,7 @@ export default {
     option: {
       handler(newValue, oldValue) {
         if (this.updating) return;
-        this.$emit('update', this.option);
+        this.$emit("update", this.option);
       },
       deep: true,
     },
@@ -221,27 +221,27 @@ export default {
      */
     returnDefaultOptions() {
       return {
-        align: 'left',
-        weight: 'inherit',
-        decoration: 'none',
+        align: "left",
+        weight: "inherit",
+        decoration: "none",
         color: {
-          value: '',
-          type: 'solid',
+          value: "",
+          type: "solid",
         },
-        font: 'inherit',
+        font: "inherit",
         size: {
-          preset: 'M',
-          units: 'px',
+          preset: "M",
+          units: "px",
         },
         spacing: {
-          units: 'px',
+          units: "px",
         },
         lineHeight: {
-          units: 'em',
+          units: "em",
         },
-        customURL: '',
-        customName: '',
-        transform: 'none',
+        customURL: "",
+        customName: "",
+        transform: "none",
       };
     },
     /**
@@ -259,14 +259,14 @@ export default {
      */
     colorFillScreen() {
       return {
-        component: 'ColorPicker',
+        component: "ColorPicker",
         value: this.option.color.value,
         label: this.strings.colour,
         returnData: (d) => {
-          if (d.startsWith('--')) {
-            this.option.color.type = 'variable';
+          if (d.startsWith("--")) {
+            this.option.color.type = "variable";
           } else {
-            this.option.color.type = 'solid';
+            this.option.color.type = "solid";
           }
           this.option.color.value = d;
         },
@@ -279,7 +279,7 @@ export default {
      */
     returnTextColor() {
       if (!this.option.color.value) return;
-      if (this.option.color.value.startsWith('--')) {
+      if (this.option.color.value.startsWith("--")) {
         return `background-color:var(${this.option.color.value})`;
       }
       return `background-color:${this.option.color.value}`;
@@ -293,9 +293,14 @@ export default {
      */
     async injectProp() {
       this.updating = true;
-      const defaultOptions = this.returnDefaultOptions;
-      const newOptions = this.isObject(this.value) ? this.value : {};
-      this.option = { ...defaultOptions, ...newOptions };
+      this.option = this.isObject(this.value) ? { ...this.value } : this.returnDefaultOptions;
+
+      if (this.isObject(this.value)) {
+        if (!this.value.color) this.option.color = this.returnDefaultOptions.color;
+        if (!this.value.size) this.option.size = this.returnDefaultOptions.size;
+        if (!this.value.spacing) this.option.spacing = this.returnDefaultOptions.spacing;
+        if (!this.value.lineHeight) this.option.lineHeight = this.returnDefaultOptions.lineHeight;
+      }
 
       await nextTick();
       this.updating = false;
@@ -355,7 +360,7 @@ export default {
           <!--Spacer-->
           <div></div>
           <div>
-            <value-units :value="option.size" :returnData="function(data){option.size = data}"></value-units>
+            <value-units :value="option.size" :returnData="(data)=>{option.size = data}"/>
           </div>
           
         </template>

@@ -1,7 +1,7 @@
 const { __, _x, _n, _nx } = wp.i18n;
-import { nextTick } from '../../libs/vue-esm.js';
+import { nextTick } from "../../libs/vue-esm.js";
 export default {
-  emits: ['update'],
+  emits: ["update"],
   props: {
     value: Object,
   },
@@ -9,66 +9,66 @@ export default {
     return {
       spacing: this.returnDefaultOptions,
       strings: {
-        right: __('Right', 'uipress-lite'),
-        left: __('Left', 'uipress-lite'),
-        top: __('Top', 'uipress-lite'),
-        bottom: __('Bottom', 'uipress-lite'),
-        custom: __('Custom', 'uipress-lite'),
-        padding: __('Paddding', 'uipress-lite'),
-        margin: __('Margin', 'uipress-lite'),
+        right: __("Right", "uipress-lite"),
+        left: __("Left", "uipress-lite"),
+        top: __("Top", "uipress-lite"),
+        bottom: __("Bottom", "uipress-lite"),
+        custom: __("Custom", "uipress-lite"),
+        padding: __("Paddding", "uipress-lite"),
+        margin: __("Margin", "uipress-lite"),
       },
       syncOptions: {
         true: {
           value: true,
-          icon: 'crop_square',
-          tip: __('Synced', 'uipress-lite'),
+          icon: "crop_square",
+          tip: __("Synced", "uipress-lite"),
         },
         false: {
           value: false,
-          icon: 'crop_free',
-          tip: __('Per side', 'uipress-lite'),
+          icon: "crop_free",
+          tip: __("Per side", "uipress-lite"),
         },
       },
       spacingOptions: {
         0: {
-          value: '0',
-          label: '0',
-          tip: __('Remove', 'uipress-lite'),
+          value: "0",
+          label: "0",
+          tip: __("Remove", "uipress-lite"),
         },
         XS: {
-          value: 'XS',
-          label: 'XS',
-          tip: __('Extra small', 'uipress-lite'),
+          value: "XS",
+          label: "XS",
+          tip: __("Extra small", "uipress-lite"),
         },
         S: {
-          value: 'S',
-          label: 'S',
-          tip: __('Small', 'uipress-lite'),
+          value: "S",
+          label: "S",
+          tip: __("Small", "uipress-lite"),
         },
         M: {
-          value: 'M',
-          label: 'M',
-          tip: __('Medium', 'uipress-lite'),
+          value: "M",
+          label: "M",
+          tip: __("Medium", "uipress-lite"),
         },
         L: {
-          value: 'L',
-          label: 'L',
-          tip: __('Large', 'uipress-lite'),
+          value: "L",
+          label: "L",
+          tip: __("Large", "uipress-lite"),
         },
         XL: {
-          value: 'XL',
-          label: 'XL',
-          tip: __('Extra large', 'uipress-lite'),
+          value: "XL",
+          label: "XL",
+          tip: __("Extra large", "uipress-lite"),
         },
         custom: {
-          value: 'custom',
-          icon: 'more_vert',
-          tip: __('Custom', 'uipress-lite'),
+          value: "custom",
+          icon: "more_vert",
+          tip: __("Custom", "uipress-lite"),
         },
       },
     };
   },
-  
+
   watch: {
     /**
      * Watches changes to value prop and injects
@@ -92,7 +92,7 @@ export default {
       handler(newValue, oldValue) {
         this.maybeSyncSides();
         if (this.updating) return;
-        this.$emit('update', this.spacing);
+        this.$emit("update", this.spacing);
       },
       deep: true,
     },
@@ -106,14 +106,14 @@ export default {
     returnDefaultOptions() {
       return {
         padding: {
-          preset: '0',
+          preset: "0",
           sync: true,
-          units: 'px',
+          units: "px",
         },
         margin: {
-          preset: '0',
+          preset: "0",
           sync: true,
-          units: 'px',
+          units: "px",
         },
       };
     },
@@ -146,52 +146,53 @@ export default {
     async injectProp() {
       this.updating = true;
       const defaultOptions = this.returnDefaultOptions;
-      const newOptions = this.isObject(this.value) ? this.value : {};
-      this.spacing = { ...defaultOptions, ...newOptions };
+      this.spacing = { ...defaultOptions };
 
-      // Update padding
-      if ('padding' in this.value) {
-        this.spacing.padding = { ...this.spacing.padding, ...this.value.padding };
-      }
+      if (this.isObject(this.value)) {
+        // Update padding
+        if ("padding" in this.value) {
+          this.spacing.padding = { ...defaultOptions.padding, ...this.value.padding };
+        }
 
-      // Update margin
-      if ('margin' in this.value) {
-        this.spacing.margin = { ...this.spacing.margin, ...this.value.margin };
+        // Update margin
+        if ("margin" in this.value) {
+          this.spacing.margin = { ...defaultOptions.margin, ...this.value.margin };
+        }
       }
 
       switch (this.spacing.margin.preset) {
-        case 'remove':
-          this.spacing.margin.preset = '0';
+        case "remove":
+          this.spacing.margin.preset = "0";
           break;
 
-        case 'small':
-          this.spacing.margin.preset = 'S';
+        case "small":
+          this.spacing.margin.preset = "S";
           break;
 
-        case 'medium':
-          this.spacing.margin.preset = 'M';
+        case "medium":
+          this.spacing.margin.preset = "M";
           break;
 
-        case 'large':
-          this.spacing.margin.preset = 'L';
+        case "large":
+          this.spacing.margin.preset = "L";
           break;
       }
 
       switch (this.spacing.padding.preset) {
-        case 'remove':
-          this.spacing.padding.preset = '0';
+        case "remove":
+          this.spacing.padding.preset = "0";
           break;
 
-        case 'small':
-          this.spacing.padding.preset = 'S';
+        case "small":
+          this.spacing.padding.preset = "S";
           break;
 
-        case 'medium':
-          this.spacing.padding.preset = 'M';
+        case "medium":
+          this.spacing.padding.preset = "M";
           break;
 
-        case 'large':
-          this.spacing.padding.preset = 'L';
+        case "large":
+          this.spacing.padding.preset = "L";
           break;
       }
 
