@@ -1553,7 +1553,7 @@ export default {
                   <code-editor :args="{language:'css'}" :value="returnAdvancedValue('css')" :returnData="(d)=>{handleBlockAdavancedUpdate('css', d)}"/>
                 
                   <div class="uip-text-muted uip-flex uip-flex-center uip-text-s"><span>Javscript</span></div>
-                  <code-editor :args="{language:'javascript'}" :value="returnAdvancedValue('css')" :returnData="(d)=>{handleBlockAdavancedUpdate('js', d)}"/>
+                  <code-editor :args="{language:'javascript'}" :value="returnAdvancedValue('js')" :returnData="(d)=>{handleBlockAdavancedUpdate('js', d)}"/>
                                       
               </div>
             </ToggleSection>
