@@ -1,5 +1,5 @@
-import * as charts from '../../libs/charts.min.js';
-import { nextTick } from '../../libs/vue-esm.js';
+import * as charts from "../../libs/charts.min.js";
+import { nextTick } from "../../libs/vue-esm.js";
 export default {
   props: {
     chartData: Object,
@@ -56,23 +56,23 @@ export default {
       if (this.chart) return;
 
       // Retrieve styles
-      let primaryColor = this.getComputedOrOverriddenColor('--uip-color-accent', this.acceptedData.colors.main);
-      let lightColor = this.getComputedOrOverriddenColor('--uip-color-red-lighter', this.acceptedData.colors.comp);
+      let primaryColor = this.getComputedOrOverriddenColor("--uip-color-accent", this.acceptedData.colors.main);
+      let lightColor = this.getComputedOrOverriddenColor("--uip-color-red-lighter", this.acceptedData.colors.comp);
 
       const labels = this.formatLabels(this.acceptedData.labels);
 
       const datasetDefaults = {
-        dataBackground: '',
+        dataBackground: "",
         fillDataBackground: false,
-        compBackground: '',
+        compBackground: "",
         fillCompBackground: false,
       };
 
       // Handle custom data backgrounds if provided
       if (this.isObject(this.acceptedData.custom)) {
-        datasetDefaults.dataBackground = this.acceptedData.custom.dataBackground || '';
+        datasetDefaults.dataBackground = this.acceptedData.custom.dataBackground || "";
         datasetDefaults.fillDataBackground = Boolean(datasetDefaults.dataBackground);
-        datasetDefaults.compBackground = this.acceptedData.custom.compBackground || '';
+        datasetDefaults.compBackground = this.acceptedData.custom.compBackground || "";
         datasetDefaults.fillCompBackground = Boolean(datasetDefaults.compBackground);
       }
 
@@ -119,7 +119,7 @@ export default {
      * @since 3.2.13
      */
     getComputedOrOverriddenColor(cssProperty, overrideValue) {
-      if (overrideValue && overrideValue !== '') {
+      if (overrideValue && overrideValue !== "") {
         return overrideValue;
       }
       return getComputedStyle(document.documentElement).getPropertyValue(cssProperty);
@@ -137,7 +137,7 @@ export default {
         let processed = value;
         if (labels.comparison) {
           if (labels.comparison[index]) {
-            processed = value + ';' + labels.comparison[index];
+            processed = value + ";" + labels.comparison[index];
           }
         }
         formatted.push(processed);
@@ -172,7 +172,7 @@ export default {
       }
 
       return {
-        cutout: '0%',
+        cutout: "0%",
         spacing: 0,
         borderRadius: 0,
         tension: tension,
@@ -183,7 +183,7 @@ export default {
         borderWidth: borderWidth,
         //aspectRatio: 9,
         interaction: {
-          mode: 'nearest',
+          mode: "nearest",
         },
         hover: {
           intersect: false,
@@ -192,11 +192,11 @@ export default {
         plugins: {
           legend: {
             display: false,
-            position: 'bottom',
+            position: "bottom",
           },
           tooltip: {
-            position: 'average',
-            backgroundColor: '#fff',
+            position: "average",
+            backgroundColor: "#fff",
             padding: 20,
             bodySpacing: 10,
             bodyFont: {
@@ -204,18 +204,18 @@ export default {
             },
             titleFont: {
               size: 14,
-              weight: 'bold',
+              weight: "bold",
             },
-            mode: 'index',
+            mode: "index",
             intersect: false,
-            xAlign: 'left',
-            yAlign: 'center',
+            xAlign: "left",
+            yAlign: "center",
             caretPadding: 10,
             cornerRadius: 4,
-            borderColor: 'rgba(162, 162, 162, 0.2)',
+            borderColor: "rgba(162, 162, 162, 0.2)",
             borderWidth: 1,
-            titleColor: '#333',
-            bodyColor: '#777',
+            titleColor: "#333",
+            bodyColor: "#777",
             titleMarginBottom: 10,
             bodyFontSize: 100,
             usePointStyle: true,
@@ -236,7 +236,7 @@ export default {
               borderWidth: 0,
               display: showYaxisGrid,
               borderDash: [10, 8],
-              color: 'rgba(162, 162, 162, 0.4)',
+              color: "rgba(162, 162, 162, 0.4)",
             },
           },
           y: {
@@ -290,10 +290,10 @@ export default {
      * @since 3.2.13
      */
     getOrCreateTooltipElement() {
-      let tooltipEl = document.getElementById('chartjs-tooltip');
+      let tooltipEl = document.getElementById("chartjs-tooltip");
       if (!tooltipEl) {
-        tooltipEl = document.createElement('div');
-        tooltipEl.id = 'chartjs-tooltip';
+        tooltipEl = document.createElement("div");
+        tooltipEl.id = "chartjs-tooltip";
         tooltipEl.innerHTML = "<div class='uip-background-default uip-border uip-shadow uip-border-rounder uip-overflow-hidden'></div>";
         document.body.appendChild(tooltipEl);
       }
@@ -310,11 +310,11 @@ export default {
      * @since 3.2.13
      */
     alignTooltip(tooltipEl, tooltipModel) {
-      tooltipEl.classList.remove('above', 'below', 'no-transform');
+      tooltipEl.classList.remove("above", "below", "no-transform");
       if (tooltipModel.yAlign) {
         tooltipEl.classList.add(tooltipModel.yAlign);
       } else {
-        tooltipEl.classList.add('no-transform');
+        tooltipEl.classList.add("no-transform");
       }
     },
 
@@ -337,7 +337,7 @@ export default {
         `;
 
       tooltipModel.dataPoints.forEach((item, i) => {
-        const label = item.label.split(';')[i];
+        const label = item.label.split(";")[i];
         const color = tooltipModel.labelColors[i].borderColor;
 
         tooltipHTML += `
@@ -348,16 +348,16 @@ export default {
             `;
       });
 
-      tooltipHTML += '</div></div>';
-      tooltipEl.querySelector('div').innerHTML = tooltipHTML;
+      tooltipHTML += "</div></div>";
+      tooltipEl.querySelector("div").innerHTML = tooltipHTML;
 
       const position = context.chart.canvas.getBoundingClientRect();
       tooltipEl.style.opacity = 1;
-      tooltipEl.style.position = 'absolute';
+      tooltipEl.style.position = "absolute";
       tooltipEl.style.left = `${position.left + window.pageXOffset + tooltipModel.caretX}px`;
       tooltipEl.style.top = `${position.top + window.pageYOffset + tooltipModel.caretY}px`;
       tooltipEl.style.padding = `${tooltipModel.padding}px ${tooltipModel.padding}px`;
-      tooltipEl.style.pointerEvents = 'none';
+      tooltipEl.style.pointerEvents = "none";
     },
   },
   template: `
