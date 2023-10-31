@@ -203,14 +203,14 @@ export default {
               
               <!--TODO LIST-->
               <div v-if="loading" class="uip-padding-m uip-flex uip-flex-center uip-flex-middle"><loading-chart></loading-chart></div>
-              <div v-if="!loading" class="uip-flex uip-flex-column uip-row-gap-xs uip-padding-xxs uip-list-area">
+              <div v-if="!loading" class="uip-flex uip-flex-column uip-row-gap-s uip-padding-xxs uip-list-area">
                 <TransitionGroup name="list" >
                       <div v-for="(item, index) in returnToDos" class="uip-flex uip-flex-row uip-gap-xs" :key="item" :data-index="index">
                         <div >
                           <input type="checkbox" class="uip-checkbox uip-checkbox-round" v-model="item.done">
                         </div>
                         <div class="uip-flex uip-flex-column uip-row-gap-xxxs uip-flex-grow">
-                          <input class="uip-blank-input uip-text-bold uip-list-item-title" v-model="item.name" type="text" :placeholder="strings.title">
+                          <input class="uip-blank-input uip-text-bold uip-list-item-title uip-text-emphasis" v-model="item.name" type="text" :placeholder="strings.title">
                           <textarea v-model="item.description" class="uip-input uip-text-s uip-text-muted uip-no-resize uip-blank-input uip-list-item-description uip-min-h-20 uip-overflow-hidden"  :placeholder="strings.description" @input="resizeTextarea($event)"></textarea>
                         </div>
                         <div class="uip-w-50 uip-flex uip-flex-right uip-padding-xxs uip-flex-middle">
