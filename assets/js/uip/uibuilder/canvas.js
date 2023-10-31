@@ -74,9 +74,20 @@ export default {
      *
      * @since 3.2
      */
+    "uiTemplate.globalSettings.type": {
+      async handler(newValue, oldValue) {
+        await nextTick();
+        await this.setCanvasPosition();
+      },
+      deep: true,
+    },
+    /**
+     * Watch changes to the viewport and update accordingly
+     *
+     * @since 3.2
+     */
     "ui.viewDevice": {
       handler(newValue, oldValue) {
-        let self = this;
         this.handleViewPortChange();
       },
       deep: true,
@@ -88,10 +99,7 @@ export default {
      */
     "uipApp.data.templateDarkMode": {
       handler(newValue, oldValue) {
-        let theme = "light";
-        if (newValue) {
-          theme = "dark";
-        }
+        let theme = newValue ? "dark" : "light";
         let frame = document.getElementsByClassName("uip-page-content-frame");
         if (frame[0]) {
           frame[0].contentWindow.document.documentElement.setAttribute("data-theme", theme);
