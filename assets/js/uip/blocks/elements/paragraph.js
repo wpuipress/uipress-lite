@@ -8,7 +8,7 @@ export default {
   data() {
     return {};
   },
-  
+
   computed: {
     /**
      * Returns text for button if exists
@@ -16,16 +16,16 @@ export default {
      * @since 3.2.13
      */
     returnText() {
-      const item = this.get_block_option(this.block, 'block', 'paragraph', true);
-      if (!item) return '';
+      const item = this.get_block_option(this.block, "block", "paragraph", true);
+      if (!item) return "";
 
       if (!this.isObject(item)) return item;
       if (item.string) return item.string;
-      return '';
+      return "";
     },
   },
   template: `
-          <div class="uip-paragraph-block" v-html="returnText">
+          <div class="uip-paragraph-block uip-text-normal" v-html="returnText">
           </div>
           `,
 };
