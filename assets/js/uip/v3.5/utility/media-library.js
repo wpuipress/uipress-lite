@@ -690,11 +690,13 @@ export default {
   methods: {
     /**
      * Cancels and closes modal
-     * post (Object) rest base (string)
+     *
      * @since 3.2.13
      */
     cancel() {
       this.$emit("cancel-select");
+      this.$refs.popup.close();
+      this.resolvePromise(false);
     },
 
     /**
