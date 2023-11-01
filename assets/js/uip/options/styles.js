@@ -295,7 +295,6 @@ export default {
     async injectProp() {
       this.updating = true;
       const defaultOptions = this.returnDefaultOptions;
-      console.log(this.value);
       const newOptions = this.isObject(this.value) ? this.value : {};
       this.styles = { ...defaultOptions, ...newOptions };
 
