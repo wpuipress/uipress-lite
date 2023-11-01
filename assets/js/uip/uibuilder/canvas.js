@@ -308,7 +308,6 @@ export default {
 
       //Set zoom level from prefs
       let zoom = parseFloat(this.uipApp.data.userPrefs.builderPrefersZoom);
-      console.log(zoom);
       if (typeof zoom !== "undefined" && !isNaN(zoom)) this.ui.zoom = zoom;
 
       await nextTick();
