@@ -13,6 +13,7 @@ export default {
   inject: ["uiTemplate"],
   data() {
     return {
+      mounted: false,
       loading: true,
       firstRender: false,
       templateID: this.$route.params.templateID,
@@ -26,6 +27,7 @@ export default {
       domBlocks: [],
       scrollDebounce: null,
       scrollTimeout: false,
+      zoomTimeout: false,
       ui: {
         zoom: 0.9,
         zoomoptions: false,
@@ -127,15 +129,18 @@ export default {
      * @since 3.2
      */
     "ui.zoom": {
-      handler(newValue, oldValue) {
+      async handler(newValue, oldValue) {
+        if (!this.mounted) return;
+
         let zoom = this.ui.zoom;
         this.$refs.framewrap.style.transform = `scale( ${zoom} )`;
-        // Bail if we are currently zooming
-        if (this.uipApp.scrolling || this.loading) return;
 
-        // Save new zoom
-        let rounded = Math.round(this.ui.zoom * 10) / 10;
-        this.saveUserPreference("builderPrefersZoom", String(rounded), false);
+        clearTimeout(this.zoomTimeout);
+        this.zoomTimeout = setTimeout(() => {
+          // Save new zoom
+          let rounded = Math.round(this.ui.zoom * 10) / 10;
+          this.saveUserPreference("builderPrefersZoom", String(rounded), false);
+        }, 300);
       },
     },
     /**
@@ -166,10 +171,13 @@ export default {
     this.$refs.previewCanvas.removeEventListener("wheel", this.scrollCanvas);
     window.addEventListener("keydown", this.watchShortCuts);
   },
-  mounted() {
+  async mounted() {
     // Mount watchers
     this.initiateCanvas();
     this.mountWatchers();
+
+    await this.$nextTick();
+    this.mounted = true;
   },
   computed: {
     /**
@@ -300,6 +308,7 @@ export default {
 
       //Set zoom level from prefs
       let zoom = parseFloat(this.uipApp.data.userPrefs.builderPrefersZoom);
+      console.log(zoom);
       if (typeof zoom !== "undefined" && !isNaN(zoom)) this.ui.zoom = zoom;
 
       await nextTick();
