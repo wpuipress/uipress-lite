@@ -9,7 +9,7 @@ import { defineAsyncComponent, nextTick } from "../../libs/vue-esm.js";
 const EditPreset = {
   emits: ["update", "go-back"],
   components: {
-    Confirm: defineAsyncComponent(() => import("../v3.5/utility/confirm.min.js?ver=3.3.00")),
+    Confirm: defineAsyncComponent(() => import("../v3.5/utility/confirm.min.js?ver=3.3.03")),
   },
 
   props: {
@@ -331,7 +331,7 @@ const StylePresets = {
   emits: ["update"],
 
   components: {
-    screenControl: defineAsyncComponent(() => import("../v3.5/utility/screen-control.min.js?ver=3.3.00")),
+    screenControl: defineAsyncComponent(() => import("../v3.5/utility/screen-control.min.js?ver=3.3.03")),
     PresetList: PresetList,
     NewPreset: NewPreset,
     EditPreset: EditPreset,
@@ -777,14 +777,14 @@ const BlockStyleHandler = {
   emits: ["update"],
 
   components: {
-    flexLayout: defineAsyncComponent(() => import("../options/flex-layout.min.js?ver=3.3.00")),
-    contextmenu: defineAsyncComponent(() => import("../v3.5/utility/contextmenu.min.js?ver=3.3.00")),
-    Dimensions: defineAsyncComponent(() => import("../options/dimensions.min.js?ver=3.3.00")),
-    Styles: defineAsyncComponent(() => import("../options/styles.min.js?ver=3.3.00")),
-    Spacing: defineAsyncComponent(() => import("../options/spacing.min.js?ver=3.3.00")),
-    TextFormat: defineAsyncComponent(() => import("../options/text-format.min.js?ver=3.3.00")),
-    PositionDesigner: defineAsyncComponent(() => import("../options/position-designer.min.js?ver=3.3.00")),
-    EffectsDesigner: defineAsyncComponent(() => import("../options/effects.min.js?ver=3.3.00")),
+    flexLayout: defineAsyncComponent(() => import("../options/flex-layout.min.js?ver=3.3.03")),
+    contextmenu: defineAsyncComponent(() => import("../v3.5/utility/contextmenu.min.js?ver=3.3.03")),
+    Dimensions: defineAsyncComponent(() => import("../options/dimensions.min.js?ver=3.3.03")),
+    Styles: defineAsyncComponent(() => import("../options/styles.min.js?ver=3.3.03")),
+    Spacing: defineAsyncComponent(() => import("../options/spacing.min.js?ver=3.3.03")),
+    TextFormat: defineAsyncComponent(() => import("../options/text-format.min.js?ver=3.3.03")),
+    PositionDesigner: defineAsyncComponent(() => import("../options/position-designer.min.js?ver=3.3.03")),
+    EffectsDesigner: defineAsyncComponent(() => import("../options/effects.min.js?ver=3.3.03")),
   },
   props: {
     styleSettings: Object,
@@ -1088,10 +1088,10 @@ const BlockStyleHandler = {
 export default {
   inject: ["uiTemplate"],
   components: {
-    QueryBuilder: defineAsyncComponent(() => import("../options/query-builder.min.js?ver=3.3.00")),
-    responsiveControls: defineAsyncComponent(() => import("../options/responsive.min.js?ver=3.3.00")),
-    Classes: defineAsyncComponent(() => import("../options/classes.min.js?ver=3.3.00")),
-    Conditions: defineAsyncComponent(() => import("../options/conditions.min.js?ver=3.3.00")),
+    QueryBuilder: defineAsyncComponent(() => import("../options/query-builder.min.js?ver=3.3.03")),
+    responsiveControls: defineAsyncComponent(() => import("../options/responsive.min.js?ver=3.3.03")),
+    Classes: defineAsyncComponent(() => import("../options/classes.min.js?ver=3.3.03")),
+    Conditions: defineAsyncComponent(() => import("../options/conditions.min.js?ver=3.3.03")),
     BlockStyleHandler: BlockStyleHandler,
     BlockParts: BlockParts,
     StylePresets: StylePresets,

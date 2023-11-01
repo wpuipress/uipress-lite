@@ -1,5 +1,16 @@
 == Changelog ==
 
+= 3.3.03 =
+*Release Date 1 November 2023*
+
+* Fixed dropdown positions in RTL
+* Fix to dark mode styles not applying outside the frame
+* Fixed issue with custom styles on multisite subsites
+* Fixed setup wizard importer
+* Fixed issues with closing media library close buttons
+* Fixed issue where background sizing wasn't applied unless background position was set
+* Fixed color picker input validation
+
 = 3.3.02 =
 *Release Date 31 October 2023*
 

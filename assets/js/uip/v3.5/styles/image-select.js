@@ -2,7 +2,7 @@ const { __, _x, _n, _nx } = wp.i18n;
 import { defineAsyncComponent, nextTick } from "../../../libs/vue-esm.js";
 export default {
   components: {
-    mediaLibrary: defineAsyncComponent(() => import("../utility/media-library.min.js?ver=3.3.00")),
+    mediaLibrary: defineAsyncComponent(() => import("../utility/media-library.min.js?ver=3.3.03")),
   },
   props: {
     returnData: Function,
