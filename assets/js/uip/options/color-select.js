@@ -15,10 +15,8 @@ export default {
   },
   data() {
     return {
-      colour: {
-        value: "",
-        type: "solid",
-      },
+      updating: false,
+      colour: this.returnDefaultValue,
       strings: {
         colorPicker: __("Colour picker", "uipress-lite"),
       },
@@ -27,20 +25,29 @@ export default {
   watch: {
     colour: {
       handler() {
+        if (this.updating) return;
         this.returnData(this.colour);
       },
       deep: true,
     },
     value: {
       handler(newValue, oldValue) {
+        if (this.updating) return;
         this.formatValue();
       },
+      deep: true,
+      immediate: true,
     },
   },
-  mounted() {
-    this.formatValue();
-  },
   computed: {
+    /**
+     * Returns default value
+     *
+     * @since 3.3.03
+     */
+    returnDefaultValue() {
+      return { value: "", type: "solid" };
+    },
     /**
      * Returns background fill for preview
      *
@@ -74,7 +81,7 @@ export default {
     },
 
     /**
-     * Returns droppos for dropdown
+     * Returns drop pos for dropdown
      *
      * @since 3.2.0
      */
@@ -88,9 +95,14 @@ export default {
      *
      * @since 3.2.13
      */
-    formatValue() {
-      if (!this.isObject(this.value)) return;
-      this.colour = { ...this.colour, ...this.value };
+    async formatValue() {
+      this.updating = true;
+
+      this.colour = this.returnDefaultValue;
+      this.colour = this.isObject(this.value) ? { ...this.value } : this.returnDefaultValue;
+
+      await this.$nextTick();
+      this.updating = false;
     },
   },
   template: `

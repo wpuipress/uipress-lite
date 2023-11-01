@@ -1,11 +1,11 @@
-import { defineAsyncComponent, nextTick } from '../../libs/vue-esm.js';
+import { defineAsyncComponent, nextTick } from "../../libs/vue-esm.js";
 const { __, _x, _n, _nx } = wp.i18n;
 export default {
   components: {
-    BlockSettings: defineAsyncComponent(() => import('./block-settings.min.js?ver=3.3.00')),
-    Confirm: defineAsyncComponent(() => import('../v3.5/utility/confirm.min.js?ver=3.3.00')),
+    BlockSettings: defineAsyncComponent(() => import("./block-settings.min.js?ver=3.3.00")),
+    Confirm: defineAsyncComponent(() => import("../v3.5/utility/confirm.min.js?ver=3.3.00")),
   },
-  inject: ['uiTemplate'],
+  inject: ["uiTemplate"],
   data() {
     return {
       ai: false,
@@ -18,8 +18,8 @@ export default {
       node: false,
       hovernode: false,
       strings: {
-        loremIpsum: __('Gnerate lorem ipsum', 'uipress-lite'),
-        aiFill: __('Create with AI', 'uipress-lite'),
+        loremIpsum: __("Gnerate lorem ipsum", "uipress-lite"),
+        aiFill: __("Create with AI", "uipress-lite"),
       },
       wrapPos: {
         top: null,
@@ -56,7 +56,7 @@ export default {
      * no args
      * @since 3.2.13
      */
-    'uipApp.scrolling': {
+    "uipApp.scrolling": {
       handler(newVal, oldVal) {
         if (!newVal) {
           this.setWrapPosition();
@@ -89,7 +89,7 @@ export default {
      *
      * @since 0.0.1
      */
-    'uiTemplate.content': {
+    "uiTemplate.content": {
       immediate: true,
       async handler() {
         if (!this.block) return;
@@ -109,7 +109,7 @@ export default {
     this.uipApp.blockControl = this;
   },
   mounted() {
-    document.addEventListener('keydown', this.watchBlockShortcuts);
+    document.addEventListener("keydown", this.watchBlockShortcuts);
   },
   /**
    * Removes watchers on destroy
@@ -117,7 +117,7 @@ export default {
    * @since 3.2.13
    */
   beforeUnmount() {
-    document.removeEventListener('keydown', this.watchBlockShortcuts);
+    document.removeEventListener("keydown", this.watchBlockShortcuts);
   },
   computed: {
     /**
@@ -127,7 +127,7 @@ export default {
      * @since 3.2.13
      */
     isProduction() {
-      if (this.uiTemplate.display == 'prod') return true;
+      if (this.uiTemplate.display == "prod") return true;
       if (this.uiTemplate.isPreview) return true;
       return false;
     },
@@ -148,7 +148,7 @@ export default {
      * @since 3.2.13
      */
     returnWrapStyle() {
-      let color = '#0080ffff';
+      let color = "#0080ffff";
 
       this.wrapPos.border = `1px solid ${color}`;
       return this.wrapPos;
@@ -159,7 +159,7 @@ export default {
      * @since 3.2.13
      */
     returnHoverWrapStyle() {
-      let color = '#0080ffff';
+      let color = "#0080ffff";
 
       this.hoverWrapPos.border = `1px solid ${color}`;
       return this.hoverWrapPos;
@@ -185,10 +185,10 @@ export default {
       // Return if no block or list
       if (!this.block || !this.wrapVisible || !this.list) return;
       // Bail on input
-      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+      if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA") return;
 
       // Logic for Cmd + D
-      if (e.key.toLowerCase() === 'd' && e.metaKey && !e.altKey && !e.shiftKey) {
+      if (e.key.toLowerCase() === "d" && e.metaKey && !e.altKey && !e.shiftKey) {
         e.preventDefault();
         this.duplicateBlock();
       }
@@ -237,9 +237,9 @@ export default {
     async syncBlockPattern() {
       // Confirm user decision
       const confirm = await this.$refs.confirm.show({
-        title: __('Sync patern', 'uipress-lite'),
-        message: __("This will update the pattern template and will sync this pattern's changes accross all templates using the same pattern?", 'uipress-lite'),
-        okButton: __('Sync patern', 'uipress-lite'),
+        title: __("Sync patern", "uipress-lite"),
+        message: __("This will update the pattern template and will sync this pattern's changes accross all templates using the same pattern?", "uipress-lite"),
+        okButton: __("Sync patern", "uipress-lite"),
       });
 
       // Bail if they bailed
@@ -247,9 +247,9 @@ export default {
 
       // Start notification
       const notificationID = this.uipApp.notifications.create({
-        title: __('Syncing patterns', 'uipress-lite'),
-        status: 'success',
-        message: '',
+        title: __("Syncing patterns", "uipress-lite"),
+        status: "success",
+        message: "",
         dismissable: false,
         loader: true,
       });
@@ -258,17 +258,17 @@ export default {
       const templateID = this.$route.params.templateID;
 
       let formData = new FormData();
-      formData.append('action', 'uip_sync_ui_pattern');
-      formData.append('security', uip_ajax.security);
-      formData.append('pattern', pattern);
-      formData.append('patternID', this.block.patternID);
-      formData.append('templateID', templateID);
+      formData.append("action", "uip_sync_ui_pattern");
+      formData.append("security", uip_ajax.security);
+      formData.append("pattern", pattern);
+      formData.append("patternID", this.block.patternID);
+      formData.append("templateID", templateID);
 
       const response = await this.sendServerRequest(uip_ajax.ajax_url, formData);
 
       // Handle error
       if (response.error) {
-        this.uipApp.notifications.notify(response.message, 'uipress-lite', '', 'error', true);
+        this.uipApp.notifications.notify(response.message, "uipress-lite", "", "error", true);
         return;
       }
 
@@ -292,9 +292,9 @@ export default {
 
       // Update new notification
       this.uipApp.notifications.create({
-        title: __('Patterns synced succesfully', 'uipress-lite'),
-        status: 'success',
-        message: '',
+        title: __("Patterns synced succesfully", "uipress-lite"),
+        status: "success",
+        message: "",
         dismissable: true,
         loader: false,
       });
@@ -381,7 +381,7 @@ export default {
     maybeCloseSiteSettings() {
       const ID = this.$route.params.templateID;
 
-      if (this.$route.name != 'templateSettings') return;
+      if (this.$route.name != "templateSettings") return;
 
       this.$router.push({
         path: `/uibuilder/${ID}/`,
@@ -437,10 +437,10 @@ export default {
       // Get domBlock position
       let rect = domBlock.getBoundingClientRect();
       this.hoverWrapPos = {
-        top: rect.top + 'px',
-        left: rect.left + 'px',
-        width: rect.width + 'px',
-        height: rect.height + 'px',
+        top: rect.top + "px",
+        left: rect.left + "px",
+        width: rect.width + "px",
+        height: rect.height + "px",
       };
 
       requestAnimationFrame(() => {
@@ -469,10 +469,10 @@ export default {
       // Get domBlock position
       let rect = domBlock.getBoundingClientRect();
       this.wrapPos = {
-        top: rect.top + 'px',
-        left: rect.left + 'px',
-        width: rect.width + 'px',
-        height: rect.height + 'px',
+        top: rect.top + "px",
+        left: rect.left + "px",
+        width: rect.width + "px",
+        height: rect.height + "px",
       };
 
       requestAnimationFrame(() => {
