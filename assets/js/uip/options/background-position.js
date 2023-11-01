@@ -64,7 +64,7 @@ export default {
      */
     returnDefault() {
       return {
-        position: "",
+        position: "center center",
         repeat: "no-repeat",
         size: "cover",
       };

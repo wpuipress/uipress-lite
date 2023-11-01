@@ -629,7 +629,7 @@ export default {
         styleString += bgImage ? `background-image: url(${bgImage});` : "";
 
         /** Background sizing */
-        if (this.hasNestedPath(styles, "backgroundImage", "sizing", "position")) {
+        if (this.hasNestedPath(styles, "backgroundImage", "sizing")) {
           const bgSizing = styles.backgroundImage.sizing;
           styleString += bgSizing.position ? `background-position:${bgSizing.position};` : "";
           styleString += bgSizing.repeat ? `background-repeat:${bgSizing.repeat};` : "";
