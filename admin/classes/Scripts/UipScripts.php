@@ -127,7 +127,7 @@ class UipScripts
   {
     $nonce = wp_create_nonce("uip-security-nonce");
     $ajaxURL = admin_url("admin-ajax.php");
-    $styles = UipOptions::get("theme-styles");
+    $styles = UipOptions::get("theme-styles", true);
     $styles = is_object($styles) ? $styles : new \stdClass();
 
     $options = [

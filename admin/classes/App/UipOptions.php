@@ -1,7 +1,7 @@
 <?php
 namespace UipressLite\Classes\App;
 
-!defined('ABSPATH') ? exit() : '';
+!defined("ABSPATH") ? exit() : "";
 
 class UipOptions
 {
@@ -16,8 +16,8 @@ class UipOptions
     $multiSiteActive = false;
     $isMultisite = is_multisite();
     $pluginActiveNetwork = true;
-    if (function_exists('is_plugin_active_for_network')) {
-      $pluginActiveNetwork = is_plugin_active_for_network(uip_plugin_path_name . '/uipress-lite.php');
+    if (function_exists("is_plugin_active_for_network")) {
+      $pluginActiveNetwork = is_plugin_active_for_network(uip_plugin_path_name . "/uipress-lite.php");
     }
     $isMainSite = is_main_site();
 
@@ -28,7 +28,7 @@ class UipOptions
       $multiSiteActive = true;
     }
 
-    $options = get_option('uip-global-settings');
+    $options = get_option("uip-global-settings");
 
     if ($multiSiteActive) {
       restore_current_blog();
@@ -57,7 +57,7 @@ class UipOptions
    */
   public static function update($key = null, $newValue = false)
   {
-    $options = get_option('uip-global-settings');
+    $options = get_option("uip-global-settings");
     $options = $options ? $options : [];
 
     if (isset($key)) {
@@ -66,6 +66,6 @@ class UipOptions
       $options = $newValue;
     }
 
-    update_option('uip-global-settings', $options);
+    update_option("uip-global-settings", $options);
   }
 }
