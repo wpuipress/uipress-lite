@@ -133,7 +133,7 @@ const MenuSearch = {
                   
                   <span class="uip-text-muted" v-if="item.parent">{{item.parent}}</span>
                   <span class="uip-icon" v-if="item.parent">chevron_right</span>
-                  <span class="">{{returnName(item)}}</span>
+                  <span v-html="returnName(item)"></span>
                   
                 </a>
               
@@ -254,7 +254,7 @@ const SubMenuItem = {
                         <a :href="sub.url" @click="maybeFollowLink($event, sub)" :class="sub.customClasses" 
                         class="uip-no-underline uip-link-muted uip-sub-level-item uip-flex-grow uip-flex uip-gap-xs uip-flex-center" :active="sub.active ? true : false">
                         
-                          <span>{{returnName(sub)}}</span>
+                          <span v-html="returnName(sub)"></span>
                           
                           <!-- Notifications count -->
                           <div v-if="sub.notifications && sub.notifications > 0" 
@@ -283,7 +283,7 @@ const SubMenuItem = {
                       <!-- Main link -->
                       <a :href="sub.url" @click="maybeFollowLink($event, sub, itemHasSubmenu(sub))" :class="sub.customClasses" 
                       class="uip-no-underline uip-link-muted uip-sub-level-item uip-flex-grow uip-flex uip-gap-xs uip-flex-center" :active="sub.active ? true : false">
-                        <span>{{returnName(sub)}}</span>
+                        <span v-html="returnName(sub)"></span>
                         
                         <!-- Notifications count -->
                         <div v-if="sub.notifications && sub.notifications > 0" 
