@@ -230,7 +230,7 @@ export default {
       let href = link.getAttribute("href") || "";
 
       if (href.startsWith(adminPath)) {
-        href = href.replace(adminPath, adminURL);
+        href = href ? href.replace(adminPath, adminURL) : "";
       }
 
       const newItem = {
@@ -247,7 +247,7 @@ export default {
 
       const processSubs = (subItem) => {
         let subItemId = subItem.getAttribute("id");
-        subItemId = subItemId.replace("wp-admin-bar-", "");
+        subItemId = subItemId ? subItemId.replace("wp-admin-bar-", "") : "";
         if (subItemId) {
           const subItemObject = this.createToolbarItem(subItem, adminPath, adminURL);
           newItem.submenu[subItemId] = subItemObject;
