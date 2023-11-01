@@ -256,8 +256,12 @@ export default {
         let dropRect = drop.getBoundingClientRect();
         if (dropRect.top < 0) this.position.top = `${triggerRect.top}px`;
         if (dropRect.bottom > windowHeight) this.position.top = `${dropRect.top - (dropRect.bottom - windowHeight) - 16}px`;
-        if (dropRect.left < 0) this.position.left = "0px";
+        if (dropRect.left < 0) {
+          this.position.left = "auto";
+          this.position.right = `${windowWidth - drop.offsetWidth * 2}px`;
+        }
         if (dropRect.right > windowWidth) this.position.left = `${windowWidth - drop.offsetWidth}px`;
+
         this.position.opacity = 1;
       });
     },

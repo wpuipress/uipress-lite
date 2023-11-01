@@ -1,7 +1,7 @@
 import { nextTick } from "../../libs/vue-esm.js";
 export default {
   props: {},
-  data: function () {
+  data() {
     return {
       template: {
         display: "prod",
