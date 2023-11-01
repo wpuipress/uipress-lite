@@ -1,9 +1,9 @@
 const { __, _x, _n, _nx } = wp.i18n;
-import { defineAsyncComponent, nextTick } from '../../libs/vue-esm.js';
+import { defineAsyncComponent, nextTick } from "../../libs/vue-esm.js";
 export default {
   components: {
-    Modal: defineAsyncComponent(() => import('../v3.5/utility/modal.min.js?ver=3.3.00')),
-    Variables: defineAsyncComponent(() => import('./variables.min.js?ver=3.3.00')),
+    Modal: defineAsyncComponent(() => import("../v3.5/utility/modal.min.js?ver=3.3.00")),
+    Variables: defineAsyncComponent(() => import("./variables.min.js?ver=3.3.00")),
   },
   props: {
     args: Object,
@@ -17,52 +17,52 @@ export default {
       saving: false,
       finished: false,
       strings: {
-        setupWizard: __('Setup wizard', 'uipress-lite'),
-        previous: __('Previous', 'uipress-lite'),
-        next: __('Next', 'uipress-lite'),
-        finish: __('Finish', 'uipress-lite'),
-        siteLogo: __('Site logo', 'uipress-lite'),
-        siteLogoDarkMode: __('Site logo dark mode'),
-        appliesTo: __('Applies to', 'uipress-lite'),
-        excludes: __('Excludes', 'uipress-lite'),
-        selectUsersAndRoles: __('Select users and roles', 'uipress-lite'),
-        searchUsersAndRoles: __('Search users and roles', 'uipress-lite'),
-        loginLogo: __('Login logo', 'uipress-lite'),
-        loginBackground: __('Login background', 'uipress-lite'),
-        enableLoginTheme: __('Enable login theme', 'uipress-lite'),
-        setupComplete: __('Setup complete!', 'uipress-lite'),
-        finishedDescription: __('Settings from the wizard have been saved to your site. If you chose a admin template you will need to reload the page to use it.'),
-        newAdmin: __('Refresh admin', 'uipress-lite'),
-        close: __('Exit', 'uipress-lite'),
-        lightMode: __('Light mode', 'uipress-lite'),
-        darkMode: __('Dark mode', 'uipress-lite'),
+        setupWizard: __("Setup wizard", "uipress-lite"),
+        previous: __("Previous", "uipress-lite"),
+        next: __("Next", "uipress-lite"),
+        finish: __("Finish", "uipress-lite"),
+        siteLogo: __("Site logo", "uipress-lite"),
+        siteLogoDarkMode: __("Site logo dark mode"),
+        appliesTo: __("Applies to", "uipress-lite"),
+        excludes: __("Excludes", "uipress-lite"),
+        selectUsersAndRoles: __("Select users and roles", "uipress-lite"),
+        searchUsersAndRoles: __("Search users and roles", "uipress-lite"),
+        loginLogo: __("Login logo", "uipress-lite"),
+        loginBackground: __("Login background", "uipress-lite"),
+        enableLoginTheme: __("Enable login theme", "uipress-lite"),
+        setupComplete: __("Setup complete!", "uipress-lite"),
+        finishedDescription: __("Settings from the wizard have been saved to your site. If you chose a admin template you will need to reload the page to use it."),
+        newAdmin: __("Refresh admin", "uipress-lite"),
+        close: __("Exit", "uipress-lite"),
+        lightMode: __("Light mode", "uipress-lite"),
+        darkMode: __("Dark mode", "uipress-lite"),
       },
       currentStep: 1,
       steps: [
         {
           key: 1,
-          title: __('Site logo', 'uipress-lite'),
-          description: __('Choose a logo for the admin area.', 'uipress-lite'),
+          title: __("Site logo", "uipress-lite"),
+          description: __("Choose a logo for the admin area.", "uipress-lite"),
         },
         {
           key: 2,
-          title: __('Template', 'uipress-lite'),
-          description: __('Choose a template for the admin area. This can be editied after the intiial setup.', 'uipress-lite'),
+          title: __("Template", "uipress-lite"),
+          description: __("Choose a template for the admin area. This can be editied after the intiial setup.", "uipress-lite"),
         },
         {
           key: 3,
-          title: __('Theme styles', 'uipress-lite'),
-          description: __('Choose your colors and styles to run through the admin area.', 'uipress-lite'),
+          title: __("Theme styles", "uipress-lite"),
+          description: __("Choose your colors and styles to run through the admin area.", "uipress-lite"),
         },
         {
           key: 4,
-          title: __('Applies to', 'uipress-lite'),
-          description: __('Choose who you want to use the new admin template', 'uipress-lite'),
+          title: __("Applies to", "uipress-lite"),
+          description: __("Choose who you want to use the new admin template", "uipress-lite"),
         },
         {
           key: 5,
-          title: __('Login page', 'uipress-lite'),
-          description: __('Use the options below to customise your login page.', 'uipress-lite'),
+          title: __("Login page", "uipress-lite"),
+          description: __("Use the options below to customise your login page.", "uipress-lite"),
         },
       ],
       setupDetails: {
@@ -95,7 +95,7 @@ export default {
      */
     returnThemes() {
       return this.themes.filter(function (theme) {
-        return theme.type == 'Layout';
+        return theme.type == "Layout";
       });
     },
   },
@@ -117,13 +117,13 @@ export default {
     async fetchThemes() {
       this.themeLoading = true;
       let formData = new FormData();
-      let URL = 'https://api.uipress.co/templates/list/' + '?sort=newest&filter=ui-template&v321=true';
+      let URL = "https://api.uipress.co/templates/list/" + "?sort=newest&filter=ui-template&v321=true";
 
       const response = await this.sendServerRequest(URL, formData);
 
       // Handle error
       if (response.error) {
-        this.uipApp.notifications.notify(response.message, 'uipress-lite', '', 'error', true);
+        this.uipApp.notifications.notify(response.message, "uipress-lite", "", "error", true);
         this.themeLoading = false;
       }
 
@@ -137,7 +137,7 @@ export default {
      * @since 3.2.13
      */
     closeThisComponent() {
-      this.$router.push('/');
+      this.$router.push("/");
     },
 
     /**
@@ -165,14 +165,14 @@ export default {
      */
     async getTemplate() {
       let formData = new FormData();
-      let URL = 'https://api.uipress.co/templates/get/?templateid=' + this.setupDetails.chosenTemplate;
-      let notiID = this.uipApp.notifications.notify(__('Importing template', 'uipress-lite'), '', 'default', false, true);
+      let URL = "https://api.uipress.co/templates/get/?templateid=" + this.setupDetails.chosenTemplate;
+      let notiID = this.uipApp.notifications.notify(__("Importing template", "uipress-lite"), "", "default", false, true);
 
       const response = await this.sendServerRequest(URL, formData);
 
       // Handle error
       if (response.error) {
-        this.uipApp.notifications.notify(response.message, '', 'error', true);
+        this.uipApp.notifications.notify(response.message, "", "error", true);
         this.uipApp.notifications.remove(notiID);
         this.saveSettings();
       }
@@ -191,17 +191,17 @@ export default {
       const settings = this.prepareJSON(this.setupDetails);
       const stylesJson = this.prepareJSON(styles);
 
-      const notiID = this.uipApp.notifications.notify(__('Confirguring settings', 'uipress-lite'), '', 'default', false, true);
+      const notiID = this.uipApp.notifications.notify(__("Confirguring settings", "uipress-lite"), "", "default", false, true);
 
       let formData = new FormData();
-      formData.append('action', 'uip_save_from_wizard');
-      formData.append('security', uip_ajax.security);
-      formData.append('settings', settings);
+      formData.append("action", "uip_save_from_wizard");
+      formData.append("security", uip_ajax.security);
+      formData.append("settings", settings);
 
       const response = await this.sendServerRequest(uip_ajax.ajax_url, formData);
       this.uipApp.notifications.remove(notiID);
       this.saving = false;
-      this.uipApp.notifications.notify('Setup complete', '', 'success', true);
+      this.uipApp.notifications.notify("Setup complete", "", "success", true);
       this.finished = true;
     },
 
@@ -221,7 +221,7 @@ export default {
      * @since 3.2.13
      */
     returnActiveIndex(theme) {
-      if (!('activeIndex' in theme)) theme.activeIndex = 0;
+      if (!("activeIndex" in theme)) theme.activeIndex = 0;
       return theme.activeIndex;
     },
   },
@@ -332,7 +332,7 @@ export default {
                             </div>
                           </div>
                           <div class="uip-text-s uip-text-muted uip-max-w-100p uip-margin-bottom-xs">{{theme.description}}</div>
-                          <button v-if="setupDetails.chosenTemplate != theme.ID" class="uip-button-default uip-flex-left" @click="setupDetails.chosenTemplate = theme.ID">Select this template</button>
+                          <button v-if="setupDetails.chosenTemplate != theme.ID" class="uip-button-default uip-flex-left" @click.stop="setupDetails.chosenTemplate = theme.ID">Select this template</button>
                           <button v-else class="uip-button-secondary uip-flex-left">Selected</button>
                         </div>
                       </div>
