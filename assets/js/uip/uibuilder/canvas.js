@@ -670,7 +670,7 @@ export default {
              <template v-if="item.value">{{item.name}}:{{item.value}};</template>
           </template>
         }
-        [data-theme="dark"] .user-style-area, .uip-dark-mode .user-style-area, .uip-dark-mode.user-style-area{
+        [data-theme="dark"] .user-style-area, .uip-dark-mode .user-style-area, .uip-dark-mode.user-style-area, .user-style-area .uip-dark-mode {
           <template v-for="item in uipApp.data.themeStyles">
              <template v-if="item.darkValue"> {{item.name}}:{{item.darkValue}};</template>
           </template>

@@ -207,7 +207,7 @@ export default {
           <template v-if="item.value && item.value != 'uipblank'">{{index}}:{{item.value}};</template>
         </template>
       }
-      [data-theme="dark"] #uip-ui-app{
+      [data-theme="dark"] #uip-ui-app, .uip-dark-mode #uip-ui-app, .uip-dark-mode#uip-ui-app, #uip-ui-app .uip-dark-mode {
         <template v-for="(item, index) in returnThemeStyles">
           <template v-if="item.darkValue && item.darkValue != 'uipblank'"> {{index}}:{{item.darkValue}};</template>
         </template>
