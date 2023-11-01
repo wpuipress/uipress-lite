@@ -181,7 +181,7 @@ app.config.globalProperties.uipApp = reactive({
 
     // Import from global
     options: uip_ajax.uipAppData.options,
-    userPrefs: uip_ajax.uipAppData.userPrefs,
+    userPrefs: isObject(uip_ajax.uipAppData.userPrefs) ? uip_ajax.uipAppData.userPrefs : {},
     adminMenu: uipMasterMenu,
     toolbar: toolbarScript,
 
