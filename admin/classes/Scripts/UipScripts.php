@@ -218,7 +218,7 @@ class UipScripts
 	{$userCSS}
 	";
 
-    $cleaned = htmlspecialchars_decode(esc_html($allStyles));
+    $cleaned = htmlspecialchars_decode(Sanitize::clean_input_with_code($allStyles));
     $allStyles = " <style id='uip-theme-styles'>{$cleaned}</style>";
 
     // Output code
