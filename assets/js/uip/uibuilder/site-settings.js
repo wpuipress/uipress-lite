@@ -6,7 +6,7 @@ const { __, _x, _n, _nx } = wp.i18n;
 import { defineAsyncComponent, nextTick } from "../../libs/vue-esm.js";
 export default {
   components: {
-    globalVariables: defineAsyncComponent(() => import("./variables.min.js?ver=3.3.00")),
+    globalVariables: defineAsyncComponent(() => import("./variables.min.js?ver=3.3.03")),
   },
   data() {
     return {
