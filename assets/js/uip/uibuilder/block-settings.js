@@ -1449,7 +1449,7 @@ export default {
             <!-- Query loop  -->
             <ToggleSection :title="strings.queryLoop">
             
-              <QueryBuilder v-if="uiTemplate.proActivated" :block="block" :value="returnBlockQuerySettings" :returnData="(d)=>{ block.query.settings = d}"/>
+              <QueryBuilder v-if="uiTemplate.proActivated" :block="block" :value="returnBlockQuerySettings"/>
               
               <div class="uip-grid-col-1-3" v-else>
                 <div class="uip-text-muted uip-flex uip-flex-center uip-text-s"><span>{{ strings.queryLoop }}</span></div>

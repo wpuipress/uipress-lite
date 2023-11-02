@@ -1,15 +1,15 @@
 const { __, _x, _n, _nx } = wp.i18n;
-import { defineAsyncComponent, nextTick } from '../../libs/vue-esm.js';
-import { core as PostTypeSelect, preview as PostTypeSelectPreview } from '../components/post-type-select.min.js?ver=3.3.04';
-import { core as StatusTypeSelect, preview as StatusTypeSelectPreview } from '../components/multiselect.min.js?ver=3.3.04';
-import { core as UserRoleSelect, preview as UserRoleSelectPreview } from '../components/user-role-multiselect.min.js?ver=3.3.04';
+import { defineAsyncComponent, nextTick } from "../../libs/vue-esm.js";
+import { core as PostTypeSelect, preview as PostTypeSelectPreview } from "../components/post-type-select.min.js?ver=3.3.04";
+import { core as StatusTypeSelect, preview as StatusTypeSelectPreview } from "../components/multiselect.min.js?ver=3.3.04";
+import { core as UserRoleSelect, preview as UserRoleSelectPreview } from "../components/user-role-multiselect.min.js?ver=3.3.04";
 
-import Comparisons from '../v3.5/lists/comparisons.min.js';
-import DataTypes from '../v3.5/lists/query_data_types.min.js';
-import FieldTypes from '../v3.5/lists/tax_field_types.min.js';
-import OrderByOptions from '../v3.5/lists/query_orderby.min.js';
-import OrderByOptionsUser from '../v3.5/lists/query_orderby_user.min.js';
-import OrderByOptionsSites from '../v3.5/lists/query_orderby_sites.min.js';
+import Comparisons from "../v3.5/lists/comparisons.min.js";
+import DataTypes from "../v3.5/lists/query_data_types.min.js";
+import FieldTypes from "../v3.5/lists/tax_field_types.min.js";
+import OrderByOptions from "../v3.5/lists/query_orderby.min.js";
+import OrderByOptionsUser from "../v3.5/lists/query_orderby_user.min.js";
+import OrderByOptionsSites from "../v3.5/lists/query_orderby_sites.min.js";
 
 const QueryBuilder = {
   components: {
@@ -26,17 +26,17 @@ const QueryBuilder = {
     return {
       open: false,
       options: {
-        type: 'post',
-        postType: ['post'],
-        order: 'DESC',
-        orderBy: 'date',
+        type: "post",
+        postType: ["post"],
+        order: "DESC",
+        orderBy: "date",
         roles: [],
-        orderBykEY: '',
+        orderBykEY: "",
         perPage: 20,
-        status: ['publish'],
-        relation: 'AND',
-        taxRelation: 'AND',
-        offset: '',
+        status: ["publish"],
+        relation: "AND",
+        taxRelation: "AND",
+        offset: "",
         taxQuery: [],
         metaQuery: [],
         limitToAuthor: false,
@@ -44,55 +44,55 @@ const QueryBuilder = {
         search: false,
       },
       strings: {
-        type: __('Type', 'uipress-lite'),
-        postType: __('Post type', 'uipress-lite'),
-        orderBy: __('Order by', 'uipress-lite'),
-        perPage: __('Per page', 'uipress-lite'),
-        offset: __('Offset', 'uipress-lite'),
-        metaQuery: __('Meta query', 'uipress-lite'),
-        taxQuery: __('Tax query', 'uipress-lite'),
-        postTypes: __('Post types', 'uipress-lite'),
-        searchPostTypes: __('Search post types', 'uipress-lite'),
-        seacrhStatus: __('Search statuses', 'uipress-lite'),
-        metaKey: __('Meta key', 'uipress-lite'),
-        metaValue: __('Meta value', 'uipress-lite'),
-        terms: __('Terms', 'uipress-lite'),
-        compare: __('Compare', 'uipress-lite'),
-        order: __('Order', 'uipress-lite'),
-        metaKey: __('Meta key', 'uipress-lite'),
-        status: __('Status', 'uipress-lite'),
-        relation: __('Relation', 'uipress-lite'),
-        postStatus: __('Post statuses', 'uipress-lite'),
-        seacrhPostStatus: __('Search post statuses', 'uipress-lite'),
-        pagination: __('Pagination', 'uipress-lite'),
-        roles: __('Roles', 'uipress-lite'),
-        searchRoles: __('Search roles', 'uipress-lite'),
-        search: __('Search', 'uipress-lite'),
-        usersOwnContent: __('Own content', 'uipress-lite'),
-        taxonomy: __('Taxonomy', 'uipress-lite'),
-        field: __('Field', 'uipress-lite'),
-        taxValue: __('Tax value', 'uipress-lite'),
-        includeChildren: __('Include children', 'uipress-lite'),
+        type: __("Type", "uipress-lite"),
+        postType: __("Post type", "uipress-lite"),
+        orderBy: __("Order by", "uipress-lite"),
+        perPage: __("Per page", "uipress-lite"),
+        offset: __("Offset", "uipress-lite"),
+        metaQuery: __("Meta query", "uipress-lite"),
+        taxQuery: __("Tax query", "uipress-lite"),
+        postTypes: __("Post types", "uipress-lite"),
+        searchPostTypes: __("Search post types", "uipress-lite"),
+        seacrhStatus: __("Search statuses", "uipress-lite"),
+        metaKey: __("Meta key", "uipress-lite"),
+        metaValue: __("Meta value", "uipress-lite"),
+        terms: __("Terms", "uipress-lite"),
+        compare: __("Compare", "uipress-lite"),
+        order: __("Order", "uipress-lite"),
+        metaKey: __("Meta key", "uipress-lite"),
+        status: __("Status", "uipress-lite"),
+        relation: __("Relation", "uipress-lite"),
+        postStatus: __("Post statuses", "uipress-lite"),
+        seacrhPostStatus: __("Search post statuses", "uipress-lite"),
+        pagination: __("Pagination", "uipress-lite"),
+        roles: __("Roles", "uipress-lite"),
+        searchRoles: __("Search roles", "uipress-lite"),
+        search: __("Search", "uipress-lite"),
+        usersOwnContent: __("Own content", "uipress-lite"),
+        taxonomy: __("Taxonomy", "uipress-lite"),
+        field: __("Field", "uipress-lite"),
+        taxValue: __("Tax value", "uipress-lite"),
+        includeChildren: __("Include children", "uipress-lite"),
       },
       fieldTypes: FieldTypes,
       queryType: {
         post: {
-          value: 'post',
-          label: __('Posts', 'uipress-lite'),
+          value: "post",
+          label: __("Posts", "uipress-lite"),
         },
         user: {
-          value: 'user',
-          label: __('Users', 'uipress-lite'),
+          value: "user",
+          label: __("Users", "uipress-lite"),
         },
       },
       relationOptions: {
         AND: {
-          value: 'AND',
-          label: __('AND', 'uipress-lite'),
+          value: "AND",
+          label: __("AND", "uipress-lite"),
         },
         OR: {
-          value: 'OR',
-          label: __('OR', 'uipress-lite'),
+          value: "OR",
+          label: __("OR", "uipress-lite"),
         },
       },
       comparisons: Comparisons,
@@ -101,41 +101,50 @@ const QueryBuilder = {
       showPagination: {
         false: {
           value: false,
-          label: __('Hide', 'uipress-lite'),
+          label: __("Hide", "uipress-lite"),
         },
         true: {
           value: true,
-          label: __('Show', 'uipress-lite'),
+          label: __("Show", "uipress-lite"),
         },
       },
 
-      activeSection: 'query',
+      activeSection: "query",
       metaSections: {
         query: {
-          value: 'query',
-          label: __('Query', 'uipress-lite'),
+          value: "query",
+          label: __("Query", "uipress-lite"),
         },
         meta: {
-          value: 'meta',
-          label: __('Meta', 'uipress-lite'),
+          value: "meta",
+          label: __("Meta", "uipress-lite"),
         },
         tax: {
-          value: 'tax',
-          label: __('Tax', 'uipress-lite'),
+          value: "tax",
+          label: __("Tax", "uipress-lite"),
         },
         settings: {
-          value: 'settings',
-          label: __('Settings', 'uipress-lite'),
+          value: "settings",
+          label: __("Settings", "uipress-lite"),
         },
       },
-
+      updating: false,
       orderByOptions: OrderByOptions,
       orderByOptionsUser: OrderByOptionsUser,
       orderByOptionsSites: OrderByOptionsSites,
     };
   },
-  
+
   watch: {
+    value: {
+      handler(newValue, oldValue) {
+        if (this.updating) return;
+        this.formatValue();
+      },
+      deep: true,
+      immediate: true,
+    },
+
     options: {
       handler(newValue, oldValue) {
         this.returnData(newValue);
@@ -144,7 +153,6 @@ const QueryBuilder = {
     },
   },
   mounted() {
-    this.formatValue(this.value);
     this.maybePushSiteOption();
   },
   computed: {
@@ -154,13 +162,13 @@ const QueryBuilder = {
      * @since 3.2.13
      */
     returnOrderOptions() {
-      if (this.options.type == 'post') {
+      if (this.options.type == "post") {
         return this.orderByOptions;
       }
-      if (this.options.type == 'user') {
+      if (this.options.type == "user") {
         return this.orderByOptionsUser;
       }
-      if (this.options.type == 'site') {
+      if (this.options.type == "site") {
         return this.orderByOptionsSites;
       }
     },
@@ -171,9 +179,9 @@ const QueryBuilder = {
      */
     returnMetaSections() {
       let temp = { ...this.metaSections };
-      if (this.options.type != 'post') {
+      if (this.options.type != "post") {
         delete temp.tax;
-        if (this.activeSection == 'tax') this.activeSection = 'query';
+        if (this.activeSection == "tax") this.activeSection = "query";
       }
 
       return temp;
@@ -185,9 +193,12 @@ const QueryBuilder = {
      *
      * @since 3.2.13
      */
-    formatValue() {
-      if (!this.isObject(this.value)) return;
-      this.options = { ...this.options, ...this.value };
+    async formatValue() {
+      this.updating = true;
+      this.options = this.isObject(this.value) ? { ...this.options, ...this.value } : { ...this.options };
+
+      await this.$nextTick();
+      this.updating = false;
     },
 
     /**
@@ -198,8 +209,8 @@ const QueryBuilder = {
     maybePushSiteOption() {
       if (!this.uipApp.data.options.multisite) return;
       this.queryType.site = {
-        value: 'site',
-        label: __('Sites', 'uipress-lite'),
+        value: "site",
+        label: __("Sites", "uipress-lite"),
       };
     },
 
@@ -210,10 +221,10 @@ const QueryBuilder = {
      */
     defaultMetaQuery() {
       return structuredClone({
-        key: '',
-        value: '',
-        compare: '=',
-        type: 'CHAR',
+        key: "",
+        value: "",
+        compare: "=",
+        type: "CHAR",
       });
     },
 
@@ -224,10 +235,10 @@ const QueryBuilder = {
      */
     defaultTaxQuery() {
       return structuredClone({
-        taxonomy: '',
-        value: '',
-        fieldType: 'term_id',
-        compare: '=',
+        taxonomy: "",
+        value: "",
+        fieldType: "term_id",
+        compare: "=",
         includeChildren: true,
       });
     },
@@ -249,7 +260,7 @@ const QueryBuilder = {
      */
     requestMetaScreen(meta) {
       const screen = {
-        component: 'MetaBuilder',
+        component: "MetaBuilder",
         value: meta,
         label: this.strings.metaQuery,
         returnData: (d) => {
@@ -257,7 +268,7 @@ const QueryBuilder = {
         },
       };
 
-      this.$emit('request-screen', screen);
+      this.$emit("request-screen", screen);
     },
 
     /**
@@ -284,7 +295,7 @@ const QueryBuilder = {
      */
     requestTaxScreen(tax) {
       const screen = {
-        component: 'TaxBuilder',
+        component: "TaxBuilder",
         value: tax,
         label: this.strings.taxQuery,
         returnData: (d) => {
@@ -292,7 +303,7 @@ const QueryBuilder = {
         },
       };
 
-      this.$emit('request-screen', screen);
+      this.$emit("request-screen", screen);
     },
 
     /**
@@ -319,7 +330,7 @@ const QueryBuilder = {
      */
     requestOrderByScreen() {
       const screen = {
-        component: 'OrderByBuilder',
+        component: "OrderByBuilder",
         value: this.options,
         label: this.strings.orderBy,
         returnData: (d) => {
@@ -327,7 +338,7 @@ const QueryBuilder = {
         },
       };
 
-      this.$emit('request-screen', screen);
+      this.$emit("request-screen", screen);
     },
 
     /**
@@ -337,7 +348,7 @@ const QueryBuilder = {
      */
     requestPostTypeScreen() {
       const screen = {
-        component: 'PostTypeSelect',
+        component: "PostTypeSelect",
         label: this.strings.postTypes,
         attributes: {
           selected: this.options.postType,
@@ -349,7 +360,7 @@ const QueryBuilder = {
         },
       };
 
-      this.$emit('request-screen', screen);
+      this.$emit("request-screen", screen);
     },
 
     /**
@@ -359,7 +370,7 @@ const QueryBuilder = {
      */
     requestPostStatusScreen() {
       const screen = {
-        component: 'StatusTypeSelect',
+        component: "StatusTypeSelect",
         label: this.strings.postStatus,
         attributes: {
           selected: this.options.status,
@@ -372,7 +383,7 @@ const QueryBuilder = {
         },
       };
 
-      this.$emit('request-screen', screen);
+      this.$emit("request-screen", screen);
     },
 
     /**
@@ -382,10 +393,10 @@ const QueryBuilder = {
      */
     requestRoleSelectScreen() {
       const screen = {
-        component: 'UserRoleSelect',
+        component: "UserRoleSelect",
         label: this.strings.roles,
         attributes: {
-          type: 'roles',
+          type: "roles",
           selected: this.options.roles,
           placeHolder: this.strings.roles,
           searchPlaceHolder: this.strings.searchRoles,
@@ -395,7 +406,7 @@ const QueryBuilder = {
         },
       };
 
-      this.$emit('request-screen', screen);
+      this.$emit("request-screen", screen);
     },
   },
   template: `
@@ -691,9 +702,9 @@ const OrderBy = {
   data() {
     return {
       strings: {
-        order: __('Order', 'uipress-lite'),
-        orderBy: __('Order by', 'uipress-lite'),
-        metaKey: __('Meta key', 'uipress-lite'),
+        order: __("Order", "uipress-lite"),
+        orderBy: __("Order by", "uipress-lite"),
+        metaKey: __("Meta key", "uipress-lite"),
       },
       options: {},
       orderByOptions: OrderByOptions,
@@ -716,13 +727,13 @@ const OrderBy = {
      * @since 3.2.13
      */
     returnOrderOptions() {
-      if (this.options.type == 'post') {
+      if (this.options.type == "post") {
         return this.orderByOptions;
       }
-      if (this.options.type == 'user') {
+      if (this.options.type == "user") {
         return this.orderByOptionsUser;
       }
-      if (this.options.type == 'site') {
+      if (this.options.type == "site") {
         return this.orderByOptionsSites;
       }
     },
@@ -734,12 +745,12 @@ const OrderBy = {
     orderDirectionsOptions() {
       return {
         DESC: {
-          value: 'DESC',
-          label: __('Descending', 'uipress-lite'),
+          value: "DESC",
+          label: __("Descending", "uipress-lite"),
         },
         ASC: {
-          value: 'ASC',
-          label: __('Ascending', 'uipress-lite'),
+          value: "ASC",
+          label: __("Ascending", "uipress-lite"),
         },
       };
     },
@@ -783,7 +794,6 @@ const OrderBy = {
 };
 
 const TaxQuery = {
-  
   props: {
     returnData: Function,
     value: Object,
@@ -791,11 +801,11 @@ const TaxQuery = {
   data() {
     return {
       strings: {
-        taxonomy: __('Taxonomy', 'uipress-lite'),
-        taxValue: __('Tax value', 'uipress-lite'),
-        field: __('Field', 'uipress-lite'),
-        compare: __('Compare', 'uipress-lite'),
-        includeChildren: __('Include children'),
+        taxonomy: __("Taxonomy", "uipress-lite"),
+        taxValue: __("Tax value", "uipress-lite"),
+        field: __("Field", "uipress-lite"),
+        compare: __("Compare", "uipress-lite"),
+        includeChildren: __("Include children"),
       },
       tax: {},
       comparisons: Comparisons,
@@ -892,10 +902,10 @@ const MetaQuery = {
   data() {
     return {
       strings: {
-        metaKey: __('Meta key', 'uipress-lite'),
-        metaValue: __('Meta value', 'uipress-lite'),
-        compare: __('Compare', 'uipress-lite'),
-        type: __('Type', 'uipress-lite'),
+        metaKey: __("Meta key", "uipress-lite"),
+        metaValue: __("Meta value", "uipress-lite"),
+        compare: __("Compare", "uipress-lite"),
+        type: __("Type", "uipress-lite"),
       },
       meta: {},
       comparisons: Comparisons,
@@ -958,7 +968,7 @@ const MetaQuery = {
 
 export default {
   components: {
-    ScreenControl: defineAsyncComponent(() => import('../v3.5/utility/screen-control.min.js?ver=3.3.04')),
+    ScreenControl: defineAsyncComponent(() => import("../v3.5/utility/screen-control.min.js?ver=3.3.04")),
     PostTypeSelect: PostTypeSelect,
     QueryBuilder: QueryBuilder,
     MetaBuilder: MetaQuery,
@@ -977,24 +987,24 @@ export default {
     return {
       open: false,
       strings: {
-        query: __('Query', 'uipress-lite'),
-        editQuery: __('Edit query', 'uipress-lite'),
-        add: __('Add', 'uipress-lite'),
+        query: __("Query", "uipress-lite"),
+        editQuery: __("Edit query", "uipress-lite"),
+        add: __("Add", "uipress-lite"),
       },
       enabledDisabled: {
         false: {
           value: false,
-          label: __('Disabled', 'uipress-lite'),
+          label: __("Disabled", "uipress-lite"),
         },
         true: {
           value: true,
-          label: __('Enabled', 'uipress-lite'),
+          label: __("Enabled", "uipress-lite"),
         },
       },
     };
   },
   watch: {
-    'block.query.enabled': {
+    "block.query.enabled": {
       async handler() {
         if (this.block.query.enabled) {
           await nextTick();
@@ -1011,7 +1021,7 @@ export default {
      * @since 3.2.13
      */
     returnQueryVal() {
-      if (!('query' in this.block)) {
+      if (!("query" in this.block)) {
         this.block.query = {
           enabled: false,
           settings: {},
@@ -1028,13 +1038,33 @@ export default {
      */
     queryFillScreen() {
       return {
-        component: 'QueryBuilder',
+        component: "QueryBuilder",
         value: this.block.query.settings,
         label: this.strings.query,
         returnData: (d) => {
-          this.block.query.settings = d;
+          this.block.query.settings = { ...d };
         },
       };
+    },
+
+    /**
+     * Checks if block has active query
+     *
+     * @since 3.3.05
+     */
+    emptyBlockQuery() {
+      return !this.returnBlockQueryType && !this.returnBlockQueryPerPage;
+    },
+
+    returnBlockQueryType() {
+      return this.hasNestedPath(this.block, ["query", "settings", "type"]) ? this.block.query.settings.type : false;
+    },
+    returnBlockQueryPerPage() {
+      return this.hasNestedPath(this.block, ["query", "settings", "perPage"]) ? this.block.query.settings.perPage : false;
+    },
+    returnQueryPreviewText() {
+      if (this.emptyBlockQuery) return this.strings.add;
+      return this.returnBlockQueryType + " | " + this.returnBlockQueryPerPage;
     },
   },
   template: `
@@ -1063,11 +1093,11 @@ export default {
               <span class="uip-icon">all_inclusive</span>
             </div>
             
+            
             <div class="uip-no-wrap uip-flex uip-gap-xxs uip-flex-grow uip-flex-center">
-              <span v-if="!block.query.settings.type && !block.query.settings.perPage" class="uip-text-muted">{{strings.add}}...</span>
-              <span v-if="block.query.settings.type">{{ block.query.settings.type }}</span>
-              <span class="uip-text-muted uip-text-s">|</span>
-              <span v-if="block.query.settings.perPage">{{ block.query.settings.perPage }}</span>
+            
+              <span class="uip-text-muted" key="add">{{returnQueryPreviewText}}</span>
+              
             </div>
             
             <a @click.prevent.stop="block.query.settings = {}"
