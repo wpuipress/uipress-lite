@@ -448,7 +448,7 @@ export default {
       const formattedDate = `${today.getMonth() + 1}-${today.getDate()}-${today.getFullYear()}`;
       const filename = `${namer}${name}-${formattedDate}.json`;
 
-      const dataStr = `data:text/json;charset=utf-8,${encodeURIComponent(layout)}`;
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(layout);
       const dlAnchorElem = this.$refs.templateexport;
       dlAnchorElem.setAttribute("href", dataStr);
       dlAnchorElem.setAttribute("download", filename);
@@ -660,9 +660,11 @@ export default {
 		  
 		  </div>
 	  
-	      <a class="uip-hidden" ref="templateexport"></a>
+	      
 			  
 		</contextmenu>
+    
+        <a ref="templateexport" href="" style="display:none;"></a>
     
         <SaveAsPattern ref="saveaspattern"/>
 		  
