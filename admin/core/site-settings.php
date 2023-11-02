@@ -39,7 +39,7 @@ class uip_site_settings
   public function set_site_settings()
   {
     // Get global options
-    $options = UipOptions::get();
+    $options = UipOptions::get(null, true);
 
     // Return of no settings available
     if (!$options || !is_array($options)) {
