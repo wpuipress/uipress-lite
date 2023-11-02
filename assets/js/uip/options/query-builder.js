@@ -1056,12 +1056,29 @@ export default {
       return !this.returnBlockQueryType && !this.returnBlockQueryPerPage;
     },
 
+    /**
+     * Returns query type
+     *
+     * @since 3.3.05
+     */
     returnBlockQueryType() {
       return this.hasNestedPath(this.block, ["query", "settings", "type"]) ? this.block.query.settings.type : false;
     },
+
+    /**
+     * Returns query per page
+     *
+     * @since 3.3.05
+     */
     returnBlockQueryPerPage() {
       return this.hasNestedPath(this.block, ["query", "settings", "perPage"]) ? this.block.query.settings.perPage : false;
     },
+
+    /**
+     * Returns query preview text
+     *
+     * @since 3.3.05
+     */
     returnQueryPreviewText() {
       if (this.emptyBlockQuery) return this.strings.add;
       return this.returnBlockQueryType + " | " + this.returnBlockQueryPerPage;
