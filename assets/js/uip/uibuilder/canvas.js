@@ -4,7 +4,7 @@
  */
 const { __, _x, _n, _nx } = wp.i18n;
 import { defineAsyncComponent, nextTick } from "../../libs/vue-esm.js";
-import BlockControl from "./block-control.min.js?ver=3.3.03";
+import BlockControl from "./block-control.min.js?ver=3.3.04";
 
 export default {
   components: {

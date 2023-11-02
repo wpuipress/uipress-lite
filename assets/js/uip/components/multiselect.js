@@ -168,7 +168,7 @@ export const core = {
 export const preview = {
   components: {
     PostTypeSelect: core,
-    contextmenu: defineAsyncComponent(() => import('../v3.5/utility/contextmenu.min.js?ver=3.3.03')),
+    contextmenu: defineAsyncComponent(() => import('../v3.5/utility/contextmenu.min.js?ver=3.3.04')),
   },
   props: {
     selected: Array,

@@ -1065,6 +1065,16 @@ export default {
     },
 
     /**
+     * Returns given items URL
+     *
+     * @param {object} item
+     * @since 3.2.0
+     */
+    returnItemLink(item) {
+      return this.hasNestedPath(item, "custom", "url") ? item.custom.url : item.url;
+    },
+
+    /**
      * Checks content frame for an updated menu on page load
      *
      * @since 3.2.13
@@ -1122,7 +1132,7 @@ export default {
       }
 
       // Update the active link
-      this.updateAppPage(item.url);
+      this.updateAppPage(this.returnItemLink(item));
     },
 
     /**
