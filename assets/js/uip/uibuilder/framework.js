@@ -6,13 +6,13 @@ const { __, _x, _n, _nx } = wp.i18n;
 import { defineAsyncComponent, nextTick } from "../../libs/vue-esm.js";
 export default {
   components: {
-    layersPanels: defineAsyncComponent(() => import("./layers.min.js?ver=3.3.04")),
-    blockcontextmenu: defineAsyncComponent(() => import("./block-contextmenu.min.js?ver=3.3.04")),
-    ToolBar: defineAsyncComponent(() => import("./toolbar.min.js?ver=3.3.04")),
-    Canvas: defineAsyncComponent(() => import("./canvas.min.js?ver=3.3.04")),
-    BlockList: defineAsyncComponent(() => import("./block-list.min.js?ver=3.3.04")),
-    TemplateLibrary: defineAsyncComponent(() => import("./template-library.min.js?ver=3.3.04")),
-    DynamicData: defineAsyncComponent(() => import("./dynamic-data-watcher.min.js?ver=3.3.04")),
+    layersPanels: defineAsyncComponent(() => import("./layers.min.js?ver=3.3.05")),
+    blockcontextmenu: defineAsyncComponent(() => import("./block-contextmenu.min.js?ver=3.3.05")),
+    ToolBar: defineAsyncComponent(() => import("./toolbar.min.js?ver=3.3.05")),
+    Canvas: defineAsyncComponent(() => import("./canvas.min.js?ver=3.3.05")),
+    BlockList: defineAsyncComponent(() => import("./block-list.min.js?ver=3.3.05")),
+    TemplateLibrary: defineAsyncComponent(() => import("./template-library.min.js?ver=3.3.05")),
+    DynamicData: defineAsyncComponent(() => import("./dynamic-data-watcher.min.js?ver=3.3.05")),
   },
 
   data() {

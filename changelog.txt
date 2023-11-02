@@ -1,5 +1,10 @@
 == Changelog ==
 
+= 3.3.05 =
+*Release Date 2 November 2023*
+
+* Fixed issue with query builder
+
 = 3.3.04 =
 *Release Date 2 November 2023*
 

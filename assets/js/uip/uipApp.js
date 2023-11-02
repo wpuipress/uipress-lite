@@ -15,12 +15,12 @@ const pluginVersion = import.meta.url.split("?ver=")[1];
  *
  * @since 3.2.13
  */
-import "./blocks/layout/loader.min.js?ver=3.3.04";
-import "./blocks/elements/loader.min.js?ver=3.3.04";
-import "./blocks/inputs/loader.min.js?ver=3.3.04";
-import "./blocks/dynamic/loader.min.js?ver=3.3.04";
-import "./blocks/analytics/loader.min.js?ver=3.3.04";
-import "./blocks/storeanalytics/loader.min.js?ver=3.3.04";
+import "./blocks/layout/loader.min.js?ver=3.3.05";
+import "./blocks/elements/loader.min.js?ver=3.3.05";
+import "./blocks/inputs/loader.min.js?ver=3.3.05";
+import "./blocks/dynamic/loader.min.js?ver=3.3.05";
+import "./blocks/analytics/loader.min.js?ver=3.3.05";
+import "./blocks/storeanalytics/loader.min.js?ver=3.3.05";
 
 // Apply blocks filter
 let AllBlocks = wp.hooks.applyFilters("uipress.blocks.register", []);
@@ -46,7 +46,7 @@ const AllPlugins = wp.hooks.applyFilters("uipress.app.plugins.register", []);
  *
  * @since 3.2.13
  */
-import { processSettings } from "./options/dynamic-settings.min.js?ver=3.3.04";
+import { processSettings } from "./options/dynamic-settings.min.js?ver=3.3.05";
 const dynamic_settings = processSettings(uip_ajax.uipAppData.options.dynamicData);
 wp.hooks.addFilter("uipress.uibuilder.dynamicdata.register", "uipress", (current) => ({ ...current, ...dynamic_settings }));
 const AllDynamics = wp.hooks.applyFilters("uipress.uibuilder.dynamicdata.register", {});
@@ -56,7 +56,7 @@ const AllDynamics = wp.hooks.applyFilters("uipress.uibuilder.dynamicdata.registe
  *
  * @since 3.2.13
  */
-import themeStyles from "./options/theme-styles.min.js?ver=3.3.04";
+import themeStyles from "./options/theme-styles.min.js?ver=3.3.05";
 wp.hooks.addFilter("uipress.app.variables.register", "uipress", (current) => ({ ...current, ...themeStyles }));
 let AllThemeStyles = wp.hooks.applyFilters("uipress.app.variables.register");
 
@@ -137,7 +137,7 @@ import {
   saveUserPreference,
   updateActiveLink,
   uipParseJson,
-} from "./v3.5/utility/functions.min.js?ver=3.3.04";
+} from "./v3.5/utility/functions.min.js?ver=3.3.05";
 
 app.config.globalProperties.ensureNestedObject = ensureNestedObject;
 app.config.globalProperties.hasNestedPath = hasNestedPath;
