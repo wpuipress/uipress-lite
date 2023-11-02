@@ -658,7 +658,7 @@ body:not(.block-editor-page) {
     }
     select:not(.uip-input) {
       min-height: 27px;
-      height: 27px;
+      height: auto;
       -webkit-appearance: none;
       padding-left: 7px;
       padding-right: 7px;
