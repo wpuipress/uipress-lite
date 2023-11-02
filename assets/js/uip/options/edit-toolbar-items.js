@@ -8,8 +8,9 @@ export default {
     return {
       toolbar: this.uipApp.data.toolbar,
       selected: {},
+      updating: false,
       strings: {
-        renameItem: __('Rename item', 'uipress-lite'),
+        renameItem: __("Rename item", "uipress-lite"),
       },
     };
   },
@@ -19,15 +20,26 @@ export default {
      *
      * @since 3.2.13
      */
+    value: {
+      handler(newValue, oldValue) {
+        if (this.updating) return;
+        this.formatInput();
+      },
+      deep: true,
+      immediate: true,
+    },
+    /**
+     * Watches selected items and returns data to caller
+     *
+     * @since 3.2.13
+     */
     selected: {
       handler(newValue, oldValue) {
+        if (this.updating) return;
         this.returnData(this.selected);
       },
       deep: true,
     },
-  },
-  mopunted() {
-    this.formatInput();
   },
   methods: {
     /**
@@ -35,9 +47,13 @@ export default {
      *
      * @since 3.2.13
      */
-    formatInput() {
-      if (!this.isObject(this.value)) return;
-      this.selected = this.value;
+    async formatInput() {
+      this.updating = true;
+
+      this.selected = this.isObject(this.value) ? { ...this.value } : {};
+
+      await this.$nextTick();
+      this.updating = false;
     },
 
     /**
@@ -47,13 +63,7 @@ export default {
      * @since 3.2.13
      */
     returnIcon(id) {
-      // Not object so create one
-      if (!this.isObject(this.selected)) return '';
-
-      /// Id exists
-      if (this.selected.id) return this.selected[id].icon;
-
-      return '';
+      return this.selected[id] ? this.selected[id].icon : "";
     },
 
     /**
@@ -63,9 +73,7 @@ export default {
      * @since 3.2.13
      */
     setItemData(id) {
-      this.selected[id] = {};
-      this.selected[id].icon = '';
-      this.selected[id].title = '';
+      this.selected[id] = { icon: "", title: "" };
     },
 
     /**
@@ -75,9 +83,8 @@ export default {
      * @since 3.2.13
      */
     returnIconPreview(id) {
-      const icon = this.returnIcon();
-      if (!icon) return 'favorite';
-      return icon;
+      const icon = this.returnIcon(id);
+      return icon ? icon : "favorite";
     },
 
     /**
@@ -87,13 +94,7 @@ export default {
      * @since 3.2.13
      */
     returnTitle(id) {
-      // Not object so create one
-      if (!this.isObject(this.selected)) return '';
-
-      /// Id exists
-      if (this.selected.id) return this.selected[id].title;
-
-      return '';
+      return this.selected[id] ? this.selected[id].title : "";
     },
 
     /**
@@ -104,7 +105,9 @@ export default {
      * @since 3.2.13
      */
     setIcon(id, icon) {
-      if (!this.selected[id]) this.setItemData(id);
+      // Sets the object
+      if (!(id in this.selected)) this.setItemData(id);
+
       this.selected[id].icon = icon.value;
     },
   },
@@ -114,7 +117,6 @@ export default {
         <template v-for="item in toolbar">
           <div class="uip-flex uip-flex-row uip-gap-xs uip-w-100p">
             
-            <div class="uip-icon uip-text-l uip-padding-xxxs uip-background-muted uip-border-rounder uip-dragger uip-cursor-drag">drag_indicator</div>
             
             <inline-icon-select :value="{value:returnIcon(item.id)}" :returnData="(data)=>{setIcon(item.id, data)}">
               <template v-slot:trigger>

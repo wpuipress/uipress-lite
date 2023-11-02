@@ -154,7 +154,7 @@ export default {
      */
     dequeueAdminBarStyles() {
       let styleblock = document.querySelector('link[href*="load-styles.php?"]');
-      if (!styleblock) return;
+      if (!styleblock) return (this.rendered = true);
 
       const newLink = styleblock.href.replace("admin-bar,", ",");
       const link = document.createElement("link");
@@ -467,7 +467,6 @@ export default {
   },
   template: `
             
-              
               <div id="wpadminbar" style="display: block !important;" class="uip-text-normal" v-if="rendered">
               
                 <component is="style">
