@@ -1,5 +1,5 @@
 const { __, _x, _n, _nx } = wp.i18n;
-import { defineAsyncComponent } from '../../libs/vue-esm.js';
+import { defineAsyncComponent } from "../../libs/vue-esm.js";
 export const core = {
   props: {
     selected: Array,
@@ -13,30 +13,31 @@ export const core = {
   data() {
     return {
       loading: false,
-      thisSearchInput: '',
+      thisSearchInput: "",
       options: [],
       roles: [],
       users: [],
       page: 1,
       totalUsers: 0,
       selectedOptions: [],
-      activeTab: 'roles',
+      activeTab: "roles",
       rendered: false,
+      updating: false,
       switchOptions: {
         roles: {
-          value: 'roles',
-          label: __('Roles', 'uipress-lite'),
+          value: "roles",
+          label: __("Roles", "uipress-lite"),
         },
         users: {
-          value: 'users',
-          label: __('Users', 'uipress-lite'),
+          value: "users",
+          label: __("Users", "uipress-lite"),
         },
       },
       strings: {
-        users: __('Users', 'uipress-lite'),
-        roles: __('Roles', 'uipress-lite'),
-        roleSelect: __('Role select', 'uipress-lite'),
-        search: __('Search', 'uipress-lite'),
+        users: __("Users", "uipress-lite"),
+        roles: __("Roles", "uipress-lite"),
+        roleSelect: __("Role select", "uipress-lite"),
+        search: __("Search", "uipress-lite"),
       },
       ui: {
         dropOpen: false,
@@ -47,6 +48,7 @@ export const core = {
   watch: {
     selectedOptions: {
       handler(newValue, oldValue) {
+        if (this.updating) return;
         this.updateSelected(this.selectedOptions);
       },
       deep: true,
@@ -58,6 +60,7 @@ export const core = {
     },
     selected: {
       handler(newValue, oldValue) {
+        if (this.updating) return;
         this.injectValue();
       },
       deep: true,
@@ -92,10 +95,13 @@ export const core = {
      *
      * @since 3.2.13
      */
-    injectValue() {
-      if (Array.isArray(this.selected)) {
-        this.selectedOptions = this.selected;
-      }
+    async injectValue() {
+      this.updating = true;
+
+      this.selectedOptions = Array.isArray(this.selected) ? this.selected : [];
+
+      await this.$nextTick();
+      this.updating = false;
     },
 
     /**
@@ -105,16 +111,16 @@ export const core = {
      */
     async queryUsersRoles() {
       let type = this.type;
-      if (!type || typeof type === 'undefined') {
-        type = 'all';
+      if (!type || typeof type === "undefined") {
+        type = "all";
       }
 
       let formData = new FormData();
-      formData.append('action', 'uip_get_users_and_roles');
-      formData.append('security', uip_ajax.security);
-      formData.append('searchString', this.thisSearchInput);
-      formData.append('type', type);
-      formData.append('page', this.page);
+      formData.append("action", "uip_get_users_and_roles");
+      formData.append("security", uip_ajax.security);
+      formData.append("searchString", this.thisSearchInput);
+      formData.append("type", type);
+      formData.append("page", this.page);
 
       this.loading = true;
 
@@ -124,7 +130,7 @@ export const core = {
 
       // Handle error
       if (response.error) {
-        this.uipApp.notifications.notify(response.error, 'error');
+        this.uipApp.notifications.notify(response.error, "error");
         return;
       }
 
@@ -304,7 +310,7 @@ export const core = {
 
 export const preview = {
   components: {
-    contextmenu: defineAsyncComponent(() => import('../v3.5/utility/contextmenu.min.js?ver=3.3.03')),
+    contextmenu: defineAsyncComponent(() => import("../v3.5/utility/contextmenu.min.js?ver=3.3.03")),
   },
   props: {
     selected: Array,
@@ -320,11 +326,11 @@ export const preview = {
       selectedOptions: [],
       updating: false,
       strings: {
-        users: __('Users', 'uipress-lite'),
-        roles: __('Roles', 'uipress-lite'),
-        roleSelect: __('Role select', 'uipress-lite'),
-        others: __('others', 'uipress-lite'),
-        other: __('other', 'uipress-lite'),
+        users: __("Users", "uipress-lite"),
+        roles: __("Roles", "uipress-lite"),
+        roleSelect: __("Role select", "uipress-lite"),
+        others: __("others", "uipress-lite"),
+        other: __("other", "uipress-lite"),
       },
       ui: {
         dropOpen: false,
@@ -372,7 +378,7 @@ export const preview = {
      */
     returnDropWidth() {
       const rect = this.$refs.multiselect.getBoundingClientRect();
-      return { width: rect.width + 'px' };
+      return { width: rect.width + "px" };
     },
   },
   methods: {
@@ -513,7 +519,7 @@ export default {
   data() {
     return {
       strings: {
-        roleSelect: __('Role select', 'uipress-lite'),
+        roleSelect: __("Role select", "uipress-lite"),
       },
     };
   },
