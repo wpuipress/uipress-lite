@@ -206,7 +206,7 @@ class UipScripts
     // Process dark styles
     $darkStyles = "";
     foreach ($styles as $key => $value) {
-      if (!isset($value->darkValue) || !$value->darkValue || $value->value == "uipblank") {
+      if (!isset($value->darkValue) || !$value->darkValue || $value->darkValue == "uipblank") {
         continue;
       }
       $darkStyles .= "{$key}:{$value->darkValue};";
