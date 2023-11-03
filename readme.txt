@@ -4,7 +4,7 @@ Tags: admin theme, custom dashboard, google analytics, woocommerce analytics, wh
 Requires at least: 6.0
 Requires PHP: 7.4
 Tested up to: 6.3
-Stable tag: 3.3.05
+Stable tag: 3.3.06
 License: GPLv2 or later
 
 Effortless custom WordPress admin dashboards.
