@@ -33,9 +33,10 @@ class BlockQuery
 
     // Site (subsite) based query
     if ($query->type == "site") {
-      $userQuery = new \WP_Site_Query($queryArgs);
-      $totalFound = $userQuery->get_total;
-      $foundPosts = $userQuery->get_sites();
+      $siteQuery = new \WP_Site_Query($queryArgs);
+      $totalFound = $siteQuery->found_sites;
+      $foundPosts = $siteQuery->get_sites();
+      $totalPages = ceil($totalFound / $query->perPage);
     }
 
     $pattern = "/{{(.*?)}}/";
@@ -173,8 +174,9 @@ class BlockQuery
         }
       }
     }
+
     // Standard 'post_title' key etc
-    if (property_exists($item, $dynamic)) {
+    if (property_exists($item, $dynamic) && !property_exists($item, "blog_id")) {
       $replacer = $item->{$dynamic};
       if ($dynamic == "post_title") {
         return $item->post_title;
@@ -218,6 +220,7 @@ class BlockQuery
       }
 
       // Sites query
+
       if (property_exists($item, "blog_id")) {
         if ($dynamic == "site_name") {
           $current_blog_details = get_blog_details(["blog_id" => $item->blog_id]);
@@ -228,6 +231,26 @@ class BlockQuery
         }
         if ($dynamic == "site_dashboard_url") {
           return get_admin_url($item->blog_id);
+        }
+        if ($dynamic == "blog_id") {
+          return $item->blog_id;
+        }
+        if ($dynamic == "registered") {
+          $current_blog_details = get_blog_details(["blog_id" => $item->blog_id]);
+          $registered = $current_blog_details->registered;
+          $date_format = get_option("date_format");
+          return $registered ? date_i18n($date_format, strtotime($registered)) : "";
+        }
+        if ($dynamic == "domain") {
+          $current_blog_details = get_blog_details(["blog_id" => $item->blog_id]);
+          return $current_blog_details->domain;
+        }
+        if ($dynamic == "last_updated") {
+          return $wpdb->get_var($wpdb->prepare("SELECT last_updated FROM $wpdb->blogs WHERE blog_id = %d", $item->blog_id));
+        }
+        if ($dynamic == "path") {
+          $current_blog_details = get_blog_details(["blog_id" => $item->blog_id]);
+          return $current_blog_details->path;
         }
       }
     }
