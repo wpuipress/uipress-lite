@@ -1,5 +1,13 @@
 == Changelog ==
 
+= 3.3.06 =
+*Release Date 3 November 2023*
+
+* Fixed issue that could cause some older templates to break and result in white screen
+* Fixed issue that would cause all toolbar items to flash before removing hidden items
+* fixed issues with site query vars and pagination
+* Fixed issues with setup wizard
+
 = 3.3.05 =
 *Release Date 2 November 2023*
 

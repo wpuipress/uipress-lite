@@ -3,7 +3,7 @@ import { parseGradient } from '../libs/gradient-parser.min.js';
 
 export default {
   components: {
-    contextmenu: defineAsyncComponent(() => import('../utility/contextmenu.min.js?ver=3.3.05')),
+    contextmenu: defineAsyncComponent(() => import('../utility/contextmenu.min.js?ver=3.3.06')),
   },
   props: {
     value: String,

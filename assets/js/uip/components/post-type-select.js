@@ -195,7 +195,7 @@ export const core = {
 
 export const preview = {
   components: {
-    contextmenu: defineAsyncComponent(() => import('../v3.5/utility/contextmenu.min.js?ver=3.3.05')),
+    contextmenu: defineAsyncComponent(() => import('../v3.5/utility/contextmenu.min.js?ver=3.3.06')),
   },
   props: {
     selected: Array,
