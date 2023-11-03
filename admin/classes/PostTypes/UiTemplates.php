@@ -162,7 +162,7 @@ class UiTemplates
   public static function new(array $options = [])
   {
     $defaults = ["type" => "ui-template", "name" => __("UI Template (Draft)", "uipress-lite")];
-    $defaults = array_merge($options, $defaults);
+    $defaults = array_merge($defaults, $options);
 
     $my_post = [
       "post_title" => $defaults["name"],
