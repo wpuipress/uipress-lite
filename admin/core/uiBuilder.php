@@ -280,8 +280,13 @@ class uip_ui_builder extends uip_app
     $globalSettings = UipOptions::get();
 
     // Global settings doesn't exist so create it
-    if (!$globalSettings) {
+    if (!$globalSettings || is_null($globalSettings)) {
       $globalSettings = [];
+      $globalSettings["site-settings"] = new \stdClass();
+    }
+
+    // Global settings doesn't exist so create it
+    if (!isset($globalSettings["site-settings"]) || !is_object($globalSettings["site-settings"])) {
       $globalSettings["site-settings"] = new \stdClass();
     }
 
