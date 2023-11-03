@@ -257,6 +257,7 @@ class uip_ui_builder extends uip_app
     if (isset($options->templateJSON)) {
       if ($options->templateJSON && $options->templateJSON != "" && $options->templateJSON != "uipblank") {
         $template = json_decode($options->templateJSON);
+        $name = __("Admin theme", "uipress-lite");
 
         $newTemplateOptions = (object) [
           "globalSettings" => (object) [
@@ -264,12 +265,13 @@ class uip_ui_builder extends uip_app
             "excludesRolesAndUsers" => $options->excludes,
             "type" => "ui-template",
             "status" => "uiptrue",
+            "name" => $name,
           ],
           "content" => $template,
         ];
 
-        $newTemplateID = UiTemplates::new(["type" => "ui-template", "name" => __("Admin theme", "uipress-lite")]);
-        UiTemplates::new($newTemplateID, $newTemplateOptions);
+        $newTemplateID = UiTemplates::new(["type" => "ui-template", "name" => $name]);
+        UiTemplates::save($newTemplateID, $newTemplateOptions);
       }
     }
 
@@ -279,15 +281,16 @@ class uip_ui_builder extends uip_app
 
     // Global settings doesn't exist so create it
     if (!$globalSettings) {
-      $globalSettings = new \stdClass();
+      $globalSettings = [];
+      $globalSettings["site-settings"] = new \stdClass();
     }
 
     // Ensure nested paths exists
-    Objects::ensureNested($globalSettings, ["site-settings", "general", "globalLogo"]);
-    Objects::ensureNested($globalSettings, ["site-settings", "general", "globalLogoDarkMode"]);
-    Objects::ensureNested($globalSettings, ["site-settings", "login", "logo"]);
-    Objects::ensureNested($globalSettings, ["site-settings", "login", "background_image"]);
-    Objects::ensureNested($globalSettings, ["site-settings", "login", "loginTheme"]);
+    Objects::ensureNested($globalSettings["site-settings"], ["general", "globalLogo"]);
+    Objects::ensureNested($globalSettings["site-settings"], ["general", "globalLogoDarkMode"]);
+    Objects::ensureNested($globalSettings["site-settings"], ["login", "logo"]);
+    Objects::ensureNested($globalSettings["site-settings"], ["login", "background_image"]);
+    Objects::ensureNested($globalSettings["site-settings"], ["login", "loginTheme"]);
     $siteSettings = $globalSettings["site-settings"];
 
     // Save light logo
