@@ -189,7 +189,6 @@ export default {
      */
     async saveSettings() {
       const settings = this.prepareJSON(this.setupDetails);
-      const stylesJson = this.prepareJSON(styles);
 
       const notiID = this.uipApp.notifications.notify(__("Confirguring settings", "uipress-lite"), "", "default", false, true);
 
@@ -386,11 +385,11 @@ export default {
             <!--Navigation -->
             
             <div class="uip-flex uip-gap-xs">
-              <button class="uip-button-default" @click="currentStep -= 1"
+              <button class="uip-button-default" @click.stop.prevent="currentStep -= 1"
               :disabled="currentStep <= 1">{{strings.previous}}</button>
-              <button v-if="currentStep < steps.length" class="uip-button-default" @click="currentStep += 1">{{strings.next}}</button>
+              <button v-if="currentStep < steps.length" class="uip-button-default" @click.stop.prevent="currentStep += 1">{{strings.next}}</button>
               
-              <button type="button" v-if="currentStep == steps.length" class="uip-button-primary uip-flex- uip-flex-center uip-gap-xxs uip-position-relative" @click="finishSetup()">
+              <button type="button" v-if="currentStep == steps.length" class="uip-button-primary uip-flex- uip-flex-center uip-gap-xxs uip-position-relative" @click.stop.prevent="finishSetup()">
               
                 <span v-if="!saving">{{strings.finish}}</span>
                 <div class="uip-position-relative" v-if="saving">
