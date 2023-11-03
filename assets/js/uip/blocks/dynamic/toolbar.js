@@ -476,12 +476,11 @@ export default {
               
                 <div class="uip-admin-toolbar uip-flex">
                 
-                  <template v-for="item in returnToolbar">
+                  <template v-for="(item, key) in returnToolbar">
                   
-                    
                       <!--FIRST DROP -->
                       <dropdown :hover="true" :pos="returnDropdownPosition" :disableTeleport="true"
-                      v-if="ifHidden(item.id)" :id="'wp-admin-bar-' + item.id" :class="item.meta.class">
+                      v-if="ifHidden(key)" :id="'wp-admin-bar-' + item.id" :class="item.meta.class">
                         <template v-slot:trigger>
                         
                           <a :href="formatHREF(item.href)" @click="updatePage(item, $event)" class="uip-link-default uip-no-underline uip-toolbar-top-item uip-flex uip-gap-xs uip-flex-center">
