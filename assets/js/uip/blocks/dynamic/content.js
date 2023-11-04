@@ -196,6 +196,8 @@ export default {
       window.removeEventListener("hashchange", this.handleHashChanges, false);
       document.removeEventListener("uipress/app/breadcrumbs/update", this.handleBreadCrumbChange, { once: false });
       document.removeEventListener("uip_update_frame_url", this.handleURLchangeRequest, { once: false });
+      document.removeEventListener("keydown", this.handleEscapeFullScreen);
+      document.removeEventListener("uipress/app/window/fullscreen", this.toggleFullScreen);
     },
     /**
      * Mounts all watchers that are not state specific
@@ -204,6 +206,7 @@ export default {
      */
     mountMainWatchers() {
       document.addEventListener("uipress/app/breadcrumbs/update", this.handleBreadCrumbChange, { once: false });
+      document.addEventListener("uipress/app/window/fullscreen", this.toggleFullScreen);
       document.addEventListener("uip_update_frame_url", this.handleURLchangeRequest, { once: false });
       this.iframeURLChange(this.$refs.contentframe, this.handleFrameURLChange);
     },
@@ -454,11 +457,11 @@ export default {
       const frameContainer = this.$refs.frameContainer;
 
       if (isRequestingFullscreen && !this.isFullScreen()) {
-        frameContainer.classList.add("uip-fullscreen-mode", "uip-scale-in-bottom-right");
+        this.setFullScreen();
       }
 
       if (isExitingFullscreen && this.isFullScreen()) {
-        frameContainer.classList.remove("uip-fullscreen-mode", "uip-scale-in-bottom-right");
+        this.removeFullScreen();
       }
     },
 
@@ -826,6 +829,7 @@ export default {
     setFullScreen() {
       const container = this.$refs.frameContainer;
       container.classList.add("uip-fullscreen-mode", "uip-scale-in-bottom-right");
+      document.addEventListener("keydown", this.handleEscapeFullScreen);
     },
 
     /**
@@ -836,6 +840,21 @@ export default {
     removeFullScreen() {
       const container = this.$refs.frameContainer;
       container.classList.remove("uip-fullscreen-mode", "uip-scale-in-bottom-right");
+      document.removeEventListener("keydown", this.handleEscapeFullScreen);
+    },
+
+    /**
+     * Handles escape key press on fullscreen
+     *
+     * @param {object} evt - keydown event
+     * @since 3.3.07
+     */
+    handleEscapeFullScreen(evt) {
+      if (evt.target.tagName === "INPUT") return;
+      // Check if the pressed key is the Escape key
+      if (evt.key === "Escape" || evt.keyCode === 27) {
+        this.removeFullScreen();
+      }
     },
 
     /**
@@ -958,7 +977,7 @@ export default {
   template: `
     
     <div ref="frameContainer" class="uip-flex uip-flex-column uip-overflow-hidden uip-content-frame uip-overflow-hidden uip-position-relative" 
-    :class="returnClasses" @mouseenter="scrollOver = true;" >
+    :class="returnClasses" @mouseenter="scrollOver = true;" @keydown.esc="removeFullScreen" tabindex="1">
     
       <div class="uip-position-relative" v-if="!showLoader">
         <div ref="loader" :class="block.uid" class="uip-ajax-loader" v-if="loading">
