@@ -234,18 +234,13 @@ export default {
      */
     handleRedirect() {
       const formOptions = this.get_block_option(this.block, "block", "submitAction");
-
-      // No redirect so exit early
-      if (!formOptions.redirectURL.value) return;
-
-      const redirectURL = formOptions.redirectURL.value;
+      const redirectURL = this.hasNestedPath(formOptions, "redirectURL", "value");
+      const redirectType = this.hasNestedPath(formOptions, "redirectURL", "newTab");
 
       // No redirect so exit early
       if (!redirectURL) return;
 
-      const redirectType = formOptions.redirectURL.newTab;
-
-      // Dybamic redirect / update frame
+      // Dynamic redirect / update frame
       if (redirectType == "" || redirectType == "dynamic") {
         this.updateAppPage(redirectURL);
         return;
