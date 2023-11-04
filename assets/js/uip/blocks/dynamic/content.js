@@ -960,7 +960,7 @@ export default {
     <div ref="frameContainer" class="uip-flex uip-flex-column uip-overflow-hidden uip-content-frame uip-overflow-hidden uip-position-relative" 
     :class="returnClasses" @mouseenter="scrollOver = true;" >
     
-      <div class="uip-position-relative" v-if="showLoader">
+      <div class="uip-position-relative" v-if="!showLoader">
         <div ref="loader" :class="block.uid" class="uip-ajax-loader" v-if="loading">
         <div :class="block.uid" class="uip-loader-bar"></div>
         </div>
