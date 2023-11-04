@@ -1,4 +1,9 @@
 export default {
+  data() {
+    return {
+      mountedFonts: [],
+    };
+  },
   computed: {},
   methods: {
     /**
@@ -388,7 +393,15 @@ export default {
       styleString += text.font && text.font != "custom" ? `font-family: ${text.font};` : "";
       /** Custom font family */
       styleString += text.customName && text.font == "custom" ? `font-family: ${text.customName};` : "";
-      styleString += text.customURL ? `@import url('${text.customURL}');` : "";
+
+      if (!this.mountedFonts.includes(text.customURL) && text.customURL) {
+        // Create a new style element
+        const style = document.createElement("style");
+        style.textContent = `@import url('${text.customURL}');`;
+        // Append the style element to the document's head
+        document.head.appendChild(style);
+        this.mountedFonts.push(text.customURL);
+      }
 
       return styleString;
     },
