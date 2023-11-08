@@ -133,7 +133,6 @@ export default {
         if (!this.mounted) return;
 
         let zoom = this.ui.zoom;
-        this.$refs.framewrap.style.transform = `scale( ${zoom} )`;
 
         clearTimeout(this.zoomTimeout);
         this.zoomTimeout = setTimeout(() => {
@@ -699,7 +698,8 @@ export default {
         :data-theme="returnColorMode" @click="uipApp.blockControl.removeActive()" @mousedown="handleCanvasDrag($event)">
         
               
-              <div ref="framewrap" class="uip-flex uip-gap-l uip-flex-start uip-w-auto uip-position-absolute" id="uip-frame-wrap">
+              <div ref="framewrap" class="uip-flex uip-gap-l uip-flex-start uip-w-auto uip-position-absolute" id="uip-frame-wrap"
+              :style="'transform:scale('+ui.zoom+')'">
                 
                 <!--Primary template -->
                 <div class="uip-flex uip-flex-column">
