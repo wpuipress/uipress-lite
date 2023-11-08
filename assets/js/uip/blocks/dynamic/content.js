@@ -19,6 +19,7 @@ export default {
       rendered: false,
       scrollOver: true,
       mounted: false,
+      updatingBrowserWindow: false,
     };
   },
   inject: ["uiTemplate"],
@@ -471,7 +472,12 @@ export default {
      * @param {Object} - event - Message event
      * @since 3.2.13
      */
-    handleHashChanges(event) {
+    async handleHashChanges(event) {
+      // Check if event came from this block manually updating browser adress
+      if (this.isObject(event.state)) {
+        if (event.state.blockEvent) return;
+      }
+
       if (window.location.href == this.startPage) return;
       this.$refs.contentframe.contentWindow.location.assign(window.location.href);
     },
@@ -573,7 +579,6 @@ export default {
       const frame = this.$refs.contentframe;
 
       // Mount link watcher
-
       const iframeClicker = (event) => {
         const linkElement = this.findClosestLink(event.target);
         // We found a link so handle the url
@@ -589,6 +594,7 @@ export default {
       };
 
       frame.contentWindow.document.addEventListener("click", iframeClicker);
+      frame.contentWindow.addEventListener("hashchange", hashWatcher);
       frame.contentWindow.addEventListener("uip-frame-hash-change", hashWatcher);
 
       // Return early if not in 'prod' mode
@@ -628,6 +634,8 @@ export default {
     handleInsideFrameLink(url) {
       // No url so bail
       if (!url) return;
+
+      if (url.startsWith("#")) return;
 
       // Check if dynamic loading is disabled
       this.dynamicLoadingDisabled(url);
@@ -671,9 +679,11 @@ export default {
      *
      * @param {String} url - url to update address too
      */
-    updateBrowserAddress(url) {
+    async updateBrowserAddress(url) {
       const processed = stripUIPparams(url);
-      history.pushState({}, null, processed);
+      // Exit if address is same as current
+      if (processed == window.location.href) return;
+      history.pushState({ blockEvent: true }, null, processed);
     },
 
     /**
@@ -937,7 +947,8 @@ export default {
           //window.location.href = lastDispatched;
           return;
         }
-        if (newHref !== lastDispatched) {
+
+        if (!this.compareURLsWithoutHash(newHref, lastDispatched)) {
           callback(newHref);
           lastDispatched = newHref;
         }
@@ -964,6 +975,27 @@ export default {
 
       // Attach the unload event handler when the function is first called
       attachUnload();
+    },
+
+    /**
+     * Compares two URLs without hash changes
+     *
+     * @param {string} url1
+     * @param {string} url2
+     * @since 3.3.07
+     */
+    compareURLsWithoutHash(url1, url2) {
+      if (!url1 || !url2) return false;
+
+      const parsedUrl1 = new URL(url1);
+      const parsedUrl2 = new URL(url2);
+
+      // Remove the hash from both URLs
+      parsedUrl1.hash = "";
+      parsedUrl2.hash = "";
+
+      // Compare the URLs without the hash
+      return parsedUrl1.href === parsedUrl2.href;
     },
     /**
      * Handles clicks inside iframes and bubbles up the event so dropdowns etc can response
