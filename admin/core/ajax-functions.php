@@ -130,6 +130,10 @@ class uip_ajax
 
     $menu = AdminMenu::format_admin_menu($mastermenu);
 
+    if ($multiSiteActive) {
+      restore_current_blog();
+    }
+
     $returnData["data"] = $menu;
     wp_send_json($returnData);
   }
