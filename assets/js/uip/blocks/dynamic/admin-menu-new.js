@@ -859,10 +859,9 @@ export default {
      * @returns {boolean}
      * @since 3.2.13
      */
-    autoLoadIsDisabled() {
+    autoLoadIsEnabled() {
       const disbaled = this.get_block_option(this.block, "block", "loadOnClick");
-      if (this.isObject(disbaled)) return disbaled.value;
-      return disbaled;
+      return this.isObject(disbaled) ? disbaled.value : false;
     },
 
     /**
@@ -1117,7 +1116,7 @@ export default {
       evt.preventDefault();
 
       // If we have disabled autoload on top level items and there is a submenu just open the menu and return
-      if (topLevel && this.autoLoadIsDisabled && item.submenu && item.submenu.length > 0) {
+      if (topLevel && !this.autoLoadIsEnabled && item.submenu && item.submenu.length > 0) {
         item.open = !item.open;
         this.activeMenu = item;
         return;
