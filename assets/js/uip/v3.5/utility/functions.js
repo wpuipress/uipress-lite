@@ -232,6 +232,7 @@ export function updateAppPage(newURL, reloadPage) {
   const adminURL = this.adminURL;
 
   if (!newURL) return;
+  if (newURL.startsWith("#")) return (location.hash = newURL);
 
   newURL = newURL.replace(/&amp;/g, "&");
   //Dispatch link change event
