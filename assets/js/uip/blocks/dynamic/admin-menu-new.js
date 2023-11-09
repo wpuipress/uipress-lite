@@ -963,10 +963,13 @@ export default {
 
       this.rendered = false;
 
+      const isMultisite = this.uipApp.data.options.multisite && this.uipApp.data.options.networkActivated ? "uiptrue" : false;
+
       let formData = new FormData();
       formData.append("action", "uip_get_custom_static_menu");
       formData.append("security", uip_ajax.security);
       formData.append("menuid", this.returnStaticMenuID);
+      formData.append("isMultisite", isMultisite);
 
       const response = await this.sendServerRequest(uip_ajax.ajax_url, formData);
 

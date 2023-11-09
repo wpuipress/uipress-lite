@@ -71,6 +71,7 @@ class uip_ajax
     Ajax::check_referer();
 
     $menuid = sanitize_text_field($_POST["menuid"]);
+    $isMultisite = sanitize_text_field($_POST["isMultisite"]);
 
     // No menu id supplied
     if (!$menuid || $menuid == "") {
@@ -78,18 +79,16 @@ class uip_ajax
       Ajax::error($message);
     }
 
+    // Fetch templates from primary multisite installation Multisite
+    if ($isMultisite == "uiptrue") {
+      $mainSiteId = get_main_site_id();
+      switch_to_blog($mainSiteId);
+    }
+
     // Menu no longer exists
     if (!get_post_status($menuid)) {
       $message = __("Menu no longer exists", "uipress-lite");
       Ajax::error($message);
-    }
-
-    // Fetch templates from primary multisite installation Multisite
-    $multiSiteActive = false;
-    if (is_multisite() && is_plugin_active_for_network(uip_plugin_path_name . "/uipress-lite.php") && !is_main_site()) {
-      $mainSiteId = get_main_site_id();
-      switch_to_blog($mainSiteId);
-      $multiSiteActive = true;
     }
 
     $menuSettings = get_post_meta($menuid, "uip_menu_settings", true);
@@ -128,11 +127,11 @@ class uip_ajax
 
     do_action("admin_menu");
 
-    $menu = AdminMenu::format_admin_menu($mastermenu);
-
-    if ($multiSiteActive) {
+    if ($isMultisite == "uiptrue") {
       restore_current_blog();
     }
+
+    $menu = AdminMenu::format_admin_menu($mastermenu);
 
     $returnData["data"] = $menu;
     wp_send_json($returnData);
