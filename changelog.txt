@@ -1,5 +1,17 @@
 == Changelog ==
 
+= 3.3.07 =
+*Release Date 9 November 2023*
+
+* Fixed auto load on menu block
+* Fix issue with starting zoom always being fixed
+* Fixed issue with hashchange within frame that could cause some pages to be broken
+* Fixed issue with static menus on multisite
+* Corrected menu auto load issue
+* Fixed start zoom level in builder
+* Fixed issue with ajax referer check
+* Fixed issue with abspath check
+
 = 3.3.06 =
 *Release Date 3 November 2023*
 

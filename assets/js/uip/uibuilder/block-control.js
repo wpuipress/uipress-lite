@@ -2,8 +2,8 @@ import { defineAsyncComponent, nextTick } from "../../libs/vue-esm.js";
 const { __, _x, _n, _nx } = wp.i18n;
 export default {
   components: {
-    BlockSettings: defineAsyncComponent(() => import("./block-settings.min.js?ver=3.3.06")),
-    Confirm: defineAsyncComponent(() => import("../v3.5/utility/confirm.min.js?ver=3.3.06")),
+    BlockSettings: defineAsyncComponent(() => import("./block-settings.min.js?ver=3.3.07")),
+    Confirm: defineAsyncComponent(() => import("../v3.5/utility/confirm.min.js?ver=3.3.07")),
   },
   inject: ["uiTemplate"],
   data() {
