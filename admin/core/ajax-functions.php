@@ -68,7 +68,7 @@ class uip_ajax
   public function uip_get_custom_static_menu()
   {
     // Check security nonce and 'DOING_AJAX' global
-    Ajax::check_referer() ?? die();
+    Ajax::check_referer();
 
     $menuid = sanitize_text_field($_POST["menuid"]);
 
@@ -146,7 +146,7 @@ class uip_ajax
   public function uip_start_site_sync()
   {
     // Check security nonce and 'DOING_AJAX' global
-    Ajax::check_referer() ?? die();
+    Ajax::check_referer();
 
     $options = json_decode(stripslashes($_POST["options"]));
     $options = Sanitize::clean_input_with_code($options);
@@ -176,7 +176,7 @@ class uip_ajax
   public function uip_refresh_sync_key()
   {
     // Check security nonce and 'DOING_AJAX' global
-    Ajax::check_referer() ?? die();
+    Ajax::check_referer();
 
     // Get new key
     $options = UipOptions::get("remote-sync");
@@ -199,7 +199,7 @@ class uip_ajax
   public function uip_save_sync_options()
   {
     // Check security nonce and 'DOING_AJAX' global
-    Ajax::check_referer() ?? die();
+    Ajax::check_referer();
 
     $options = json_decode(stripslashes($_POST["options"]));
     $options = Sanitize::clean_input_with_code($options);
@@ -233,7 +233,7 @@ class uip_ajax
   public function uip_get_sync_options()
   {
     // Check security nonce and 'DOING_AJAX' global
-    Ajax::check_referer() ?? die();
+    Ajax::check_referer();
 
     $options = UipOptions::get("remote-sync");
 
@@ -260,7 +260,7 @@ class uip_ajax
   public function uip_global_import()
   {
     // Check security nonce and 'DOING_AJAX' global
-    Ajax::check_referer() ?? die();
+    Ajax::check_referer();
 
     $content = json_decode(stripslashes($_POST["content"]));
     $content = Sanitize::clean_input_with_code($content);
@@ -301,7 +301,7 @@ class uip_ajax
   public function uip_global_export()
   {
     // Check security nonce and 'DOING_AJAX' global
-    Ajax::check_referer() ?? die();
+    Ajax::check_referer();
 
     $options = json_decode(stripslashes($_POST["options"]));
     $options = Sanitize::clean_input_with_code($options);
@@ -330,7 +330,7 @@ class uip_ajax
   public function uip_send_message_to_gpt()
   {
     // Check security nonce and 'DOING_AJAX' global
-    Ajax::check_referer() ?? die();
+    Ajax::check_referer();
 
     $messages = json_decode(stripslashes($_POST["messages"]));
     $messages = Sanitize::clean_input_with_code($messages);
@@ -390,7 +390,7 @@ class uip_ajax
   public function uip_save_site_option()
   {
     // Check security nonce and 'DOING_AJAX' global
-    Ajax::check_referer() ?? die();
+    Ajax::check_referer();
 
     $option = json_decode(stripslashes($_POST["option"]));
     $option = Sanitize::clean_input_with_code($option);
@@ -414,7 +414,7 @@ class uip_ajax
   public function uip_process_block_query()
   {
     // Check security nonce and 'DOING_AJAX' global
-    Ajax::check_referer() ?? die();
+    Ajax::check_referer();
 
     $query = json_decode(stripslashes($_POST["query"]));
     $query = Sanitize::clean_input_with_code($query);
@@ -438,7 +438,7 @@ class uip_ajax
   public function uip_check_for_template_updates()
   {
     // Check security nonce and 'DOING_AJAX' global
-    Ajax::check_referer() ?? die();
+    Ajax::check_referer();
 
     $templateID = sanitize_text_field($_POST["template_id"]);
 
@@ -463,7 +463,7 @@ class uip_ajax
   public function uip_get_php_errors()
   {
     // Check security nonce and 'DOING_AJAX' global
-    Ajax::check_referer() ?? die();
+    Ajax::check_referer();
 
     $perPage = sanitize_text_field($_POST["perPage"]);
     $order = sanitize_text_field($_POST["order"]);
@@ -507,7 +507,7 @@ class uip_ajax
   public function uip_create_frame_switch()
   {
     // Check security nonce and 'DOING_AJAX' global
-    Ajax::check_referer() ?? die();
+    Ajax::check_referer();
 
     $uid = sanitize_text_field($_POST["uid"]);
 
@@ -529,7 +529,7 @@ class uip_ajax
   public function uip_save_form_as_user_option()
   {
     // Check security nonce and 'DOING_AJAX' global
-    Ajax::check_referer() ?? die();
+    Ajax::check_referer();
 
     $data = json_decode(stripslashes($_POST["formData"]));
     $data = Sanitize::clean_input_with_code($data);
@@ -570,7 +570,7 @@ class uip_ajax
   public function uip_save_form_as_option()
   {
     // Check security nonce and 'DOING_AJAX' global
-    Ajax::check_referer() ?? die();
+    Ajax::check_referer();
 
     $data = json_decode(stripslashes($_POST["formData"]));
     $data = Sanitize::clean_input_with_code($data);
@@ -597,7 +597,7 @@ class uip_ajax
   public function uip_send_form_email()
   {
     // Check security nonce and 'DOING_AJAX' global
-    Ajax::check_referer() ?? die();
+    Ajax::check_referer();
 
     $data = json_decode(stripslashes($_POST["formData"]));
     $data = Sanitize::clean_input_with_code($data);
@@ -656,7 +656,7 @@ class uip_ajax
   public function uip_pre_populate_form_data()
   {
     // Check security nonce and 'DOING_AJAX' global
-    Ajax::check_referer() ?? die();
+    Ajax::check_referer();
 
     $formKeys = json_decode(stripslashes($_POST["formKeys"]));
     $formKeys = Sanitize::clean_input_with_code($formKeys);
@@ -740,7 +740,7 @@ class uip_ajax
   public function uip_process_form_input()
   {
     // Check security nonce and 'DOING_AJAX' global
-    Ajax::check_referer() ?? die();
+    Ajax::check_referer();
 
     $data = json_decode(stripslashes($_POST["formData"]));
     $data = Sanitize::clean_input_with_code($data);
@@ -772,7 +772,7 @@ class uip_ajax
   public function uip_search_content()
   {
     // Check security nonce and 'DOING_AJAX' global
-    Ajax::check_referer() ?? die();
+    Ajax::check_referer();
 
     $postTypes = json_decode(stripslashes($_POST["postTypes"]));
     $postTypes = Sanitize::clean_input_with_code($postTypes);
@@ -861,7 +861,7 @@ class uip_ajax
   public function uip_get_user_preference()
   {
     // Check security nonce and 'DOING_AJAX' global
-    Ajax::check_referer() ?? die();
+    Ajax::check_referer();
 
     $key = sanitize_text_field($_POST["key"]);
 
@@ -882,7 +882,7 @@ class uip_ajax
   public function uip_save_user_preference()
   {
     // Check security nonce and 'DOING_AJAX' global
-    Ajax::check_referer() ?? die();
+    Ajax::check_referer();
 
     $key = sanitize_text_field($_POST["key"]);
 
@@ -907,7 +907,7 @@ class uip_ajax
   public function uip_delete_post()
   {
     // Check security nonce and 'DOING_AJAX' global
-    Ajax::check_referer() ?? die();
+    Ajax::check_referer();
 
     $ids = json_decode(stripslashes($_POST["id"]));
     $ids = Sanitize::clean_input_with_code($ids);
@@ -952,7 +952,7 @@ class uip_ajax
   public function uip_get_posts_for_table()
   {
     // Check security nonce and 'DOING_AJAX' global
-    Ajax::check_referer() ?? die();
+    Ajax::check_referer();
 
     $types = json_decode(stripslashes($_POST["postTypes"]));
     $types = Sanitize::clean_input_with_code($types);
@@ -1142,7 +1142,7 @@ class uip_ajax
   public function uip_get_recent_posts()
   {
     // Check security nonce and 'DOING_AJAX' global
-    Ajax::check_referer() ?? die();
+    Ajax::check_referer();
 
     $types = json_decode(stripslashes($_POST["postTypes"]));
     $types = Sanitize::clean_input_with_code($types);
@@ -1198,7 +1198,7 @@ class uip_ajax
   public function uip_get_post_table_columns()
   {
     // Check security nonce and 'DOING_AJAX' global
-    Ajax::check_referer() ?? die();
+    Ajax::check_referer();
 
     $keys = Posts::get_meta_keys_for_post_type("post");
 
@@ -1214,7 +1214,7 @@ class uip_ajax
   public function uip_get_post_types()
   {
     // Check security nonce and 'DOING_AJAX' global
-    Ajax::check_referer() ?? die();
+    Ajax::check_referer();
 
     $multi = false;
     $returndata = [];
@@ -1247,7 +1247,7 @@ class uip_ajax
   public function uip_get_users_and_roles()
   {
     // Check security nonce and 'DOING_AJAX' global
-    Ajax::check_referer() ?? die();
+    Ajax::check_referer();
 
     $term = sanitize_text_field($_POST["searchString"]);
     $page = isset($_POST["page"]) ? sanitize_text_field($_POST["page"]) : 1;

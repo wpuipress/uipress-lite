@@ -1,7 +1,7 @@
 <?php
 namespace UipressLite\Classes\Utils;
 
-!defined('ABSPATH') ? exit() : '';
+!defined("ABSPATH") ? exit() : "";
 
 class Ajax
 {
@@ -13,10 +13,15 @@ class Ajax
    */
   public static function check_referer()
   {
-    $doingAjax = defined('DOING_AJAX') && DOING_AJAX ? true : false;
-    $referer = check_ajax_referer('uip-security-nonce', 'security') > 0 ? true : false;
+    $doingAjax = defined("DOING_AJAX") && DOING_AJAX ? true : false;
+    $referer = check_ajax_referer("uip-security-nonce", "security") > 0 ? true : false;
     $result = $doingAjax && $referer ? true : false;
-    return $result;
+
+    // Abort if not doing ajax or bad referer
+    if (!$result) {
+      $message = __("Unable to perform action", "uipress-lite");
+      self::error($message);
+    }
   }
 
   /**
@@ -28,8 +33,8 @@ class Ajax
    */
   public static function error(string $message)
   {
-    $returndata['error'] = true;
-    $returndata['message'] = $message;
+    $returndata["error"] = true;
+    $returndata["message"] = $message;
     wp_send_json($returndata);
   }
 }

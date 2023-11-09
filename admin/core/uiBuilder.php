@@ -241,7 +241,7 @@ class uip_ui_builder extends uip_app
   public function uip_save_from_wizard()
   {
     // Check security nonce and 'DOING_AJAX' global
-    Ajax::check_referer() ?? die();
+    Ajax::check_referer();
 
     $options = json_decode(stripslashes($_POST["settings"]));
     $options = Sanitize::clean_input_with_code($options);
@@ -346,7 +346,7 @@ class uip_ui_builder extends uip_app
   public function uip_save_global_settings()
   {
     // Check security nonce and 'DOING_AJAX' global
-    Ajax::check_referer() ?? die();
+    Ajax::check_referer();
 
     $decoded = json_decode(stripslashes($_POST["settings"]));
     $options = Sanitize::clean_input_with_code($decoded);
@@ -373,7 +373,7 @@ class uip_ui_builder extends uip_app
   public function uip_get_global_settings()
   {
     // Check security nonce and 'DOING_AJAX' global
-    Ajax::check_referer() ?? die();
+    Ajax::check_referer();
 
     // Get site settings
     $options = UipOptions::get("site-settings");
@@ -393,7 +393,7 @@ class uip_ui_builder extends uip_app
   public function uip_create_new_ui_template()
   {
     // Check security nonce and 'DOING_AJAX' global
-    Ajax::check_referer() ?? die();
+    Ajax::check_referer();
 
     // The type of ui-template to create
     $type = sanitize_text_field($_POST["templateType"]);
@@ -424,7 +424,7 @@ class uip_ui_builder extends uip_app
   public function uip_get_ui_templates()
   {
     // Check security nonce and 'DOING_AJAX' global
-    Ajax::check_referer() ?? die();
+    Ajax::check_referer();
 
     $search = sanitize_text_field($_POST["search"]);
 
@@ -453,7 +453,7 @@ class uip_ui_builder extends uip_app
   public function uip_get_ui_template()
   {
     // Check security nonce and 'DOING_AJAX' global
-    Ajax::check_referer() ?? die();
+    Ajax::check_referer();
 
     $templateID = sanitize_text_field($_POST["templateID"]);
 
@@ -497,7 +497,7 @@ class uip_ui_builder extends uip_app
   public function uip_get_ui_styles()
   {
     // Check security nonce and 'DOING_AJAX' global
-    Ajax::check_referer() ?? die();
+    Ajax::check_referer();
 
     $styles = UipOptions::get("theme-styles");
     $styles = is_object($styles) ? $styles : new stdClass();
@@ -518,7 +518,7 @@ class uip_ui_builder extends uip_app
   public function uip_delete_ui_template()
   {
     // Check security nonce and 'DOING_AJAX' global
-    Ajax::check_referer() ?? die();
+    Ajax::check_referer();
 
     $templateIDs = json_decode(stripslashes($_POST["templateids"]));
     $templateIDs = Sanitize::clean_input_with_code($templateIDs);
@@ -546,7 +546,7 @@ class uip_ui_builder extends uip_app
   public function uip_update_ui_template_status()
   {
     // Check security nonce and 'DOING_AJAX' global
-    Ajax::check_referer() ?? die();
+    Ajax::check_referer();
 
     $templateID = sanitize_text_field($_POST["templateid"]);
     $status = sanitize_text_field($_POST["status"]);
@@ -583,7 +583,7 @@ class uip_ui_builder extends uip_app
   public function uip_duplicate_ui_template()
   {
     // Check security nonce and 'DOING_AJAX' global
-    Ajax::check_referer() ?? die();
+    Ajax::check_referer();
 
     $templateID = sanitize_text_field($_POST["id"]);
     $newPost = Posts::duplicate($templateID);
@@ -609,7 +609,7 @@ class uip_ui_builder extends uip_app
   public function uip_save_ui_template()
   {
     // Check security nonce and 'DOING_AJAX' global
-    Ajax::check_referer() ?? die();
+    Ajax::check_referer();
 
     // Sanitise inputs
     $template = json_decode(stripslashes($_POST["template"]));
@@ -640,7 +640,7 @@ class uip_ui_builder extends uip_app
   public function uip_save_user_styles()
   {
     // Check security nonce and 'DOING_AJAX' global
-    Ajax::check_referer() ?? die();
+    Ajax::check_referer();
 
     $styles = json_decode(stripslashes($_POST["styles"]));
     $styles = Sanitize::clean_input_with_code($styles);
@@ -664,7 +664,7 @@ class uip_ui_builder extends uip_app
   public function uip_sync_ui_pattern()
   {
     // Check security nonce and 'DOING_AJAX' global
-    Ajax::check_referer() ?? die();
+    Ajax::check_referer();
 
     $pattern = json_decode(stripslashes($_POST["pattern"]));
     $pattern = Sanitize::clean_input_with_code($pattern);
@@ -731,7 +731,7 @@ class uip_ui_builder extends uip_app
   public function uip_save_ui_pattern()
   {
     // Check security nonce and 'DOING_AJAX' global
-    Ajax::check_referer() ?? die();
+    Ajax::check_referer();
 
     $pattern = json_decode(stripslashes($_POST["pattern"]));
     $pattern = Sanitize::clean_input_with_code($pattern);
@@ -772,7 +772,7 @@ class uip_ui_builder extends uip_app
   public function uip_search_posts_pages()
   {
     // Check security nonce and 'DOING_AJAX' global
-    Ajax::check_referer() ?? die();
+    Ajax::check_referer();
 
     // Sanitise search
     $string = sanitize_text_field($_POST["searchStr"]);
@@ -806,7 +806,7 @@ class uip_ui_builder extends uip_app
   public function uip_get_ui_patterns_list()
   {
     // Check security nonce and 'DOING_AJAX' global
-    Ajax::check_referer() ?? die();
+    Ajax::check_referer();
 
     // Get patterns list
     $options = ["perPage" => -1, "search" => ""];
