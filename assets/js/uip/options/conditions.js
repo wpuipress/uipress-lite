@@ -130,8 +130,6 @@ export default {
       this.updating = true;
       this.option = this.isObject(this.value) ? this.value : { relation: "and", conditions: [] };
 
-      console.log(this.option);
-
       await nextTick();
       this.updating = false;
     },
@@ -163,7 +161,6 @@ export default {
 
     handleUserReturn(d, element) {
       element.value = d;
-      console.log(d);
     },
   },
   template: `
