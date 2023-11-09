@@ -1,6 +1,6 @@
 <?php
 
-!defined("ABSPATH") ?? exit();
+!defined("ABSPATH") ? exit() : "";
 
 class uipress_compiler
 {

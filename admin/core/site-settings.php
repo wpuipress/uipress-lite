@@ -8,7 +8,7 @@ use UipressLite\Classes\ImportExport\Import;
 use UipressLite\Classes\ImportExport\Export;
 use UipressLite\Classes\Scripts\UipScripts;
 
-!defined("ABSPATH") ?? exit();
+!defined("ABSPATH") ? exit() : "";
 
 /**
  * Adds filter to watch for auto import for site sync

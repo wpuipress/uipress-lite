@@ -7,7 +7,7 @@ use UipressLite\Classes\Pages\BackEnd;
 use UipressLite\Classes\Pages\AdminPage;
 
 // Exit if accessed directly
-!defined("ABSPATH") ?? exit();
+!defined("ABSPATH") ? exit() : "";
 
 /**
  * Main uipress class. Loads scripts and styles and builds the main admin framework

@@ -13,7 +13,7 @@ use UipressLite\Classes\Scripts\UipScripts;
 use UipressLite\Classes\App\AppOptions;
 
 // Exit if accessed directly
-!defined("ABSPATH") ?? exit();
+!defined("ABSPATH") ? exit() : "";
 
 /**
  * Builds the uipress ui builder

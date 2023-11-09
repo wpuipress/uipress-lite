@@ -7,7 +7,7 @@ use UipressLite\Classes\Scripts\ToolBar;
 use UipressLite\Classes\Scripts\AdminMenu;
 use UipressLite\Classes\PostTypes\UiTemplates;
 
-!defined("ABSPATH") ?? exit();
+!defined("ABSPATH") ? exit() : "";
 
 class BackEnd
 {

@@ -12,7 +12,7 @@ use UipressLite\Classes\Utils\Users;
 use UipressLite\Classes\Utils\Objects;
 use UipressLite\Classes\Scripts\AdminMenu;
 
-!defined("ABSPATH") ?? exit();
+!defined("ABSPATH") ? exit() : "";
 
 /**
  * Main uipress ajax class. Loads all ajax functions for the main uipress functionality
