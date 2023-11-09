@@ -1,5 +1,10 @@
 == Changelog ==
 
+= 3.3.08 =
+*Release Date 9 November 2023*
+
+* Fixed static menu retrieval on subsites for users other than admin
+
 = 3.3.07 =
 *Release Date 9 November 2023*
 

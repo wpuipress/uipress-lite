@@ -2,10 +2,10 @@ const { __, _x, _n, _nx } = wp.i18n;
 import { defineAsyncComponent, nextTick } from "../../libs/vue-esm.js";
 export default {
   components: {
-    colorBox: defineAsyncComponent(() => import("../v3.5/utility/color-box.min.js?ver=3.3.07")),
-    screenControl: defineAsyncComponent(() => import("../v3.5/utility/screen-control.min.js?ver=3.3.07")),
-    colorPicker: defineAsyncComponent(() => import("../v3.5/styles/color-picker.min.js?ver=3.3.07")),
-    colourStyleEditor: defineAsyncComponent(() => import("../v3.5/styles/color-style-editor.min.js?ver=3.3.07")),
+    colorBox: defineAsyncComponent(() => import("../v3.5/utility/color-box.min.js?ver=3.3.08")),
+    screenControl: defineAsyncComponent(() => import("../v3.5/utility/screen-control.min.js?ver=3.3.08")),
+    colorPicker: defineAsyncComponent(() => import("../v3.5/styles/color-picker.min.js?ver=3.3.08")),
+    colourStyleEditor: defineAsyncComponent(() => import("../v3.5/styles/color-style-editor.min.js?ver=3.3.08")),
   },
 
   props: {
