@@ -22,7 +22,6 @@ export default {
       helpLoaded: false,
       allUiTemplates: [],
       blockFrames: [],
-      previewWidth: 2000,
       deviceSwitcherOpen: false,
       domBlocks: [],
       scrollDebounce: null,
@@ -484,6 +483,8 @@ export default {
       this.$refs.framewrap.style.top = `${centeredY}px`;
       this.$refs.framewrap.style.left = `${centeredX}px`;
 
+      await this.$nextTick();
+
       return true;
     },
     /**
@@ -690,7 +691,7 @@ export default {
 
       
       
-      <div ref="previewcontainer" class="uip-h-100p uip-w-100p uip-flex uip-flex-column uip-max-h-100p uip-overflow-hidden">
+      <div ref="previewcontainer" class="uip-h-100p uip-w-100p uip-flex uip-flex-column uip-max-h-100p uip-overflow-hidden uip-flex-grow uip-flex-shrink">
         
         <!--preview area -->
         
@@ -773,7 +774,7 @@ export default {
                   </div>
                 
                   <div class="uip-position-relative" :class="uiTemplate.globalSettings.type">
-                    <div id="uip-preview-content" class="uip-flex uip-flex-column uip-text-normal uip-desktop-view uip-position-relative uip-block-canvas" style="width:2000px;">
+                    <div id="uip-preview-content" class="uip-flex uip-flex-column uip-text-normal uip-desktop-view uip-position-relative uip-block-canvas">
                       
                       <!--PAGE BODY-->
                       <div ref="templatebody" id="uip-template-body" class="uip-flex uip-flex-grow uip-text-normal uip-body-font uip-background-default uip-border-round uip-border" >

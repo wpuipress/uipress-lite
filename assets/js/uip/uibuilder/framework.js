@@ -404,7 +404,7 @@ export default {
             <!--End Layers panel -->
             
             <!-- Main canvas -->
-            <div class="uip-flex-grow uip-canvas-background">
+            <div class="uip-flex-grow uip-canvas-background uip-overflow-hidden">
               <Canvas/>
             </div>
             <!--End canvas-->
