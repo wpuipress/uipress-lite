@@ -3612,13 +3612,13 @@ body.macos .uip-alt-icon {
   .uip-tablet-view {
     min-width: 701px;
     max-width: 990px;
-    aspect-ratio: 3/4;
+    min-height: 100vh;
   }
 
   .uip-phone-view {
     min-width: 700px;
     max-width: 700px;
-    aspect-ratio: 6/10;
+    min-height: 100vh;
   }
 }
 .ui-admin-page,
