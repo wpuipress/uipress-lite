@@ -6,14 +6,15 @@ export default {
   data() {
     return {
       option: {
-        value: '',
-        units: 'px',
+        value: "",
+        units: "px",
       },
       focus: false,
       rendered: false,
+      updating: false,
     };
   },
-  
+
   watch: {
     /**
      * Watches changes to option and return back to caller
@@ -22,6 +23,7 @@ export default {
      */
     option: {
       handler(newValue, oldValue) {
+        if (this.updating) return;
         this.setReturnUnits();
       },
       deep: true,
@@ -35,16 +37,25 @@ export default {
     value: {
       handler(newValue, oldValue) {
         // Only update if value is different
-        if (JSON.stringify(newValue) === JSON.stringify(this.option)) return;
+        if (this.updating) return;
         this.formatValue();
       },
       deep: true,
+      immediate: true,
     },
   },
-  mounted() {
-    this.formatValue();
-  },
   computed: {
+    /**
+     * Returns default units
+     *
+     * @since 3.3.09
+     */
+    returnDefault() {
+      return {
+        value: "",
+        units: "px",
+      };
+    },
     /**
      * Returns units value
      *
@@ -60,9 +71,12 @@ export default {
      *
      * @since 3.2.13
      */
-    formatValue() {
-      if (!this.isObject(this.value)) return;
-      this.option = { ...this.option, ...this.value };
+    async formatValue() {
+      this.updating = true;
+      this.option = this.isObject(this.value) ? { ...this.returnDefault, ...this.value } : { ...this.returnDefault };
+
+      await this.$nextTick();
+      this.updating = false;
     },
 
     /**
@@ -74,8 +88,8 @@ export default {
       let data = this.option;
 
       // If auto set custom return data
-      if (data.units == 'auto') {
-        data = { value: ' ', units: 'auto' };
+      if (data.units == "auto") {
+        data = { value: " ", units: "auto" };
       }
 
       this.returnData(data);
