@@ -234,6 +234,15 @@ const SubMenuItem = {
     returnName(item) {
       return this.hasNestedPath(item, "custom", "name") ? item.custom.name : item.name;
     },
+
+    /**
+     * Returns items custom classes
+     *
+     * @since 3.3.09
+     */
+    returnItemClasses(item) {
+      return this.hasNestedPath(item, "custom", "classes") ? item.custom.classes : "";
+    },
   },
   template: `
     
@@ -251,7 +260,7 @@ const SubMenuItem = {
                       <template #trigger>
                       
                         <!-- Main link -->
-                        <a :href="sub.url" @click="maybeFollowLink($event, sub)" :class="sub.customClasses" 
+                        <a :href="sub.url" @click="maybeFollowLink($event, sub)" :class="returnItemClasses(sub)" 
                         class="uip-no-underline uip-link-muted uip-sub-level-item uip-flex-grow uip-flex uip-gap-xs uip-flex-center" :active="sub.active ? true : false">
                         
                           <span v-html="returnName(sub)"></span>
@@ -278,10 +287,10 @@ const SubMenuItem = {
                     </dropdown>
                 
                     <!-- Normal subitem -->
-                    <div v-else-if="sub.type != 'sep'" class="uip-flex-grow uip-flex-column uip-flex uip-row-gap-xs">
+                    <div v-else-if="sub.type != 'sep'" class="uip-flex-grow uip-flex-column uip-flex uip-row-gap-xs" :class="returnItemClasses(sub)" >
                       
                       <!-- Main link -->
-                      <a :href="sub.url" @click="maybeFollowLink($event, sub, itemHasSubmenu(sub))" :class="sub.customClasses" 
+                      <a :href="sub.url" @click="maybeFollowLink($event, sub, itemHasSubmenu(sub))" :class="returnItemClasses(sub)" 
                       class="uip-no-underline uip-link-muted uip-sub-level-item uip-flex-grow uip-flex uip-gap-xs uip-flex-center" :active="sub.active ? true : false">
                         <span v-html="returnName(sub)"></span>
                         
@@ -305,10 +314,10 @@ const SubMenuItem = {
                     </div>
                     
                     <!-- Normal seperator-->
-                    <div v-else-if="!sepHasCustomName(sub)" class="uip-margin-bottom-s uip-menu-separator"></div>
+                    <div v-else-if="!sepHasCustomName(sub)" class="uip-margin-bottom-s uip-menu-separator" :class="returnItemClasses(sub)" ></div>
                     
                     <!-- Named seperator-->
-                    <div v-else class="uip-margin-bottom-s uip-margin-top-s uip-flex uip-flex-row uip-gap-xxs uip-menu-separator">
+                    <div v-else class="uip-margin-bottom-s uip-margin-top-s uip-flex uip-flex-row uip-gap-xxs uip-menu-separator" :class="returnItemClasses(sub)">
                       <span v-if="sub.custom.icon && sub.custom.icon != 'uipblank'" class="uip-icon">{{sub.custom.icon}}</span>
                       <span>{{sub.custom.name}}</span>
                     </div>
@@ -411,6 +420,15 @@ const TopLevelItem = {
     returnIcon() {
       return this.hasNestedPath(this.item, "custom", "icon") ? this.item.custom.icon : this.item.icon;
     },
+
+    /**
+     * Returns items custom classes
+     *
+     * @since 3.3.09
+     */
+    returnItemClasses() {
+      return this.hasNestedPath(this.item, "custom", "classes") ? this.item.custom.classes : "";
+    },
   },
   methods: {
     /**
@@ -447,7 +465,7 @@ const TopLevelItem = {
   },
   template: `
     
-    <a v-if="!itemHiden" :href="item.url" @click="maybeFollowLink($event, item, true)" class="uip-no-underline uip-link-default uip-top-level-item" :class="item.customClasses" :active="item.active ? true : false">
+    <a v-if="!itemHiden" :href="item.url" @click="maybeFollowLink($event, item, true)" class="uip-no-underline uip-link-default uip-top-level-item" :class="returnItemClasses" :active="item.active ? true : false">
     
       <div v-if="!hideIcons && returnIcon" v-html="returnTopIcon(returnIcon)" class="uip-flex uip-flex-center uip-menu-icon uip-icon uip-icon-medium"></div>
       
@@ -1210,6 +1228,15 @@ export default {
       if (!item.submenu.length) return false;
       if (item.active || item.open) return true;
     },
+
+    /**
+     * Returns items custom classes
+     *
+     * @since 3.3.09
+     */
+    returnItemClasses(item) {
+      return this.hasNestedPath(item, "custom", "classes") ? item.custom.classes : "";
+    },
   },
   template: `
     
@@ -1239,9 +1266,9 @@ export default {
                     
                   </div>
                   
-                  <div v-else-if="!sepHasCustomName(item)" class="uip-margin-bottom-s uip-menu-separator"></div>
+                  <div v-else-if="!sepHasCustomName(item)" class="uip-margin-bottom-s uip-menu-separator" :class="returnItemClasses(item)"></div>
                   
-                  <div v-else class="uip-margin-bottom-xs uip-margin-top-xs uip-flex uip-flex-row uip-gap-xxs uip-menu-separator">
+                  <div v-else class="uip-margin-bottom-xs uip-margin-top-xs uip-flex uip-flex-row uip-gap-xxs uip-menu-separator" :class="returnItemClasses(item)">
                     <span v-if="item.custom.icon && item.custom.icon != 'uipblank'" class="uip-icon">{{item.custom.icon}}</span>
                     <span>{{item.custom.name}}</span>
                   </div>
@@ -1275,9 +1302,9 @@ export default {
                   </dropdown>
                   
                   
-                  <div v-else-if="!sepHasCustomName(item)" class="uip-margin-bottom-s uip-menu-separator"></div>
+                  <div v-else-if="!sepHasCustomName(item)" class="uip-margin-bottom-s uip-menu-separator" :class="returnItemClasses(item)"></div>
                   
-                  <div v-else class="uip-margin-bottom-xs uip-margin-top-xs uip-flex uip-flex-row uip-gap-xxs uip-menu-separator">
+                  <div v-else class="uip-margin-bottom-xs uip-margin-top-xs uip-flex uip-flex-row uip-gap-xxs uip-menu-separator" :class="returnItemClasses(item)">
                     <span v-if="item.custom.icon && item.custom.icon != 'uipblank'" class="uip-icon">{{item.custom.icon}}</span>
                     <span>{{item.custom.name}}</span>
                   </div>
