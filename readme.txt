@@ -65,6 +65,7 @@ Upload the UiPress plugin to your blog, activate it, and then navigate to the ui
 * Fixed issue preventing the menu from showing custom menu classes
 * Fixed issue that could cause uipress pro to be disabled but not able to update
 * Fixed potential fatal when using mailpoet
+* Fixed separators display in drilldown menu where they would show as empty menu items
 
 = 3.3.08 =
 *Release Date 9 November 2023*

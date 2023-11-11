@@ -9,7 +9,8 @@
 * Fixed incorrect link issues with some menu items (woocommerce analytics etc)
 * Fixed issue preventing the menu from showing custom menu classes
 * Fixed issue that could cause uipress pro to be disabled but not able to update
-* fixed potential fatal when using mailpoet
+* Fixed potential fatal when using mailpoet
+* Fixed separators display in drilldown menu where they would show as empty menu items
 
 = 3.3.08 =
 *Release Date 9 November 2023*
