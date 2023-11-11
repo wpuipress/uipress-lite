@@ -137,7 +137,7 @@ class uipress_compiler
    *
    * @since 3.3.09
    */
-  public function require_pro_upgrade_script($version)
+  public function require_pro_upgrade_script($plugin_version)
   {
     if (class_exists("uip_pro_update")) {
       return;
