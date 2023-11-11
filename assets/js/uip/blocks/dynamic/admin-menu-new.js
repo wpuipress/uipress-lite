@@ -686,6 +686,25 @@ const DrillDown = {
         .replace(/&nbsp;/g, " ")
         .replace(/%20/g, " ");
     },
+
+    /**
+     * Checks if a separator has a custom name. Returns name on success, false on failure
+     *
+     * @param {Object} item - the separator object
+     * @since 3.2.13
+     */
+    sepHasCustomName(item) {
+      return this.hasNestedPath(item, ["custom", "name"]);
+    },
+
+    /**
+     * Returns items custom classes
+     *
+     * @since 3.3.09
+     */
+    returnItemClasses(item) {
+      return this.hasNestedPath(item, "custom", "classes") ? item.custom.classes : "";
+    },
   },
   template: `
     
@@ -713,7 +732,15 @@ const DrillDown = {
                     
                     <!-- Loop through currentLevel and display each item -->
                     <template v-for="item of currentLevel">
-                      <TopLevelItem :item="item" :maybeFollowLink="handleLinkClick" :collapsed="isCollapsed" :block="block"/>
+                      <TopLevelItem v-if="item.type != 'sep'" :item="item" :maybeFollowLink="handleLinkClick" :collapsed="isCollapsed" :block="block"/> 
+                      
+                      <div v-else-if="!sepHasCustomName(item)" class="uip-margin-bottom-s uip-menu-separator" :class="returnItemClasses(item)"></div>
+                      
+                      <div v-else class="uip-margin-bottom-xs uip-margin-top-xs uip-flex uip-flex-row uip-gap-xxs uip-menu-separator" :class="returnItemClasses(item)">
+                        <span v-if="item.custom.icon && item.custom.icon != 'uipblank'" class="uip-icon">{{item.custom.icon}}</span>
+                        <span>{{item.custom.name}}</span>
+                      </div>
+                      
                     </template>
                     
                     <MenuCollapse v-if="hasMenuCollapse" :collapsed="isCollapsed" :returnData="(d) => {isCollapsed = d}"/>
