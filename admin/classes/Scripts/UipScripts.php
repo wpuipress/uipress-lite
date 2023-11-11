@@ -98,7 +98,7 @@ class UipScripts
    * @return array
    * @since 3.2.13
    */
-  private static function handle_script_whitelist($scripts)
+  public static function handle_script_whitelist($scripts)
   {
     $scripts[] = "uipress-lite"; // plugin name to whitelist
     return $scripts;
