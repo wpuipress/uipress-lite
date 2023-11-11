@@ -132,6 +132,7 @@ export default {
         if (!this.mounted) return;
 
         let zoom = this.ui.zoom;
+        this.$refs.framewrap.style.transform = `scale(${this.ui.zoom})`;
 
         clearTimeout(this.zoomTimeout);
         this.zoomTimeout = setTimeout(() => {
@@ -307,6 +308,7 @@ export default {
       //Set zoom level from prefs
       let zoom = parseFloat(this.uipApp.data.userPrefs.builderPrefersZoom);
       if (typeof zoom !== "undefined" && !isNaN(zoom)) this.ui.zoom = zoom;
+      this.$refs.framewrap.style.transform = `scale(${this.ui.zoom})`;
 
       await nextTick();
 
@@ -437,8 +439,8 @@ export default {
       // Pinch zoom
       if (e.ctrlKey) {
         // Now handle the zoom action
-        if (e.deltaY < 0) this.zoom(0.03);
-        if (e.deltaY >= 0) this.zoom(-0.03);
+        if (e.deltaY < 0) this.zoom(0.02);
+        if (e.deltaY >= 0) this.zoom(-0.02);
         return;
       }
 
@@ -691,7 +693,7 @@ export default {
 
       
       
-      <div ref="previewcontainer" class="uip-h-100p uip-w-100p uip-flex uip-flex-column uip-max-h-100p uip-overflow-hidden uip-flex-grow uip-flex-shrink">
+      <div ref="previewcontainer" class="uip-h-100p uip-w-100p uip-flex uip-flex-column uip-max-h-100p uip-overflow-hidden">
         
         <!--preview area -->
         
@@ -699,8 +701,7 @@ export default {
         :data-theme="returnColorMode" @click="uipApp.blockControl.removeActive()" @mousedown="handleCanvasDrag($event)">
         
               
-              <div ref="framewrap" class="uip-flex uip-gap-l uip-flex-start uip-w-auto uip-position-absolute" id="uip-frame-wrap"
-              :style="'transform:scale('+ui.zoom+')'">
+              <div ref="framewrap" class="uip-flex uip-gap-l uip-flex-start uip-w-auto uip-position-absolute" id="uip-frame-wrap">
                 
                 <!--Primary template -->
                 <div class="uip-flex uip-flex-column">
