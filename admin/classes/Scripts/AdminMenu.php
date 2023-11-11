@@ -33,7 +33,7 @@ class AdminMenu
     $menu = self::push_unique_ids($menu);
     $submenu = self::push_submenu_unique_ids($submenu);
 
-    $mergedMenu = array_merge($menu, (array) $submenu);
+    $mergedMenu = self::create_merged_menu($menu, $submenu);
 
     // Create menu object
     $mastermenu["self"] = $self;
@@ -56,6 +56,37 @@ class AdminMenu
     self::output_menu($mastermenu);
 
     return $parent_file;
+  }
+
+  /**
+   * Merges menus into one array to allow for retrieval
+   *
+   * @param array $menu
+   * @param array $submenu
+   *
+   * @since 3.3.09
+   */
+  private static function create_merged_menu($menu, $submenu)
+  {
+    $returner = [];
+    foreach ($menu as $item) {
+      array_push($returner, $item);
+
+      $id = isset($item[2]) ? $item[2] : false;
+
+      if (!$id) {
+        continue;
+      }
+
+      $submenu_items = !empty($submenu[$id]) ? (array) $submenu[$id] : [];
+
+      foreach ($submenu_items as $subitem) {
+        $subitem["master_parent"] = $id;
+        array_push($returner, $subitem);
+      }
+    }
+
+    return $returner;
   }
 
   /**
@@ -244,6 +275,25 @@ class AdminMenu
   }
 
   /**
+   * Loops through an array of menu items and returns the item matching the ID
+   *
+   * @param string $id
+   * @param array $menu
+   *
+   * @since 3.3.09
+   */
+  private static function find_original_menu_parent($id, $menu)
+  {
+    foreach ($menu as $item) {
+      // Check if the key exists and the value matches
+      if (isset($item[2]) && $item[2] === $id) {
+        return $item; // Return the matching sub-array
+      }
+    }
+    return false; // Return null if no match is found
+  }
+
+  /**
    * Processes top level menu items
    *
    * @param object $item
@@ -266,6 +316,16 @@ class AdminMenu
 
     // Replace the item with original if it exists:
     $item = self::maybe_replace_item_with_original($item, $mastermenu);
+
+    // Check to see if this is a subitem added as a top level item
+    $parentID = isset($item["master_parent"]) ? $item["master_parent"] : false;
+    if ($parentID) {
+      $parentItem = self::find_original_menu_parent($parentID, $menu);
+      $processed_as_sub_items = self::process_sub_menu_items([$item], $parentItem, false, $mastermenu);
+      if (is_array($processed_as_sub_items) && isset($processed_as_sub_items[0])) {
+        return $processed_as_sub_items[0];
+      }
+    }
 
     $admin_is_parent = false;
     $class = isset($item[4]) ? $item[4] : "";
@@ -293,6 +353,8 @@ class AdminMenu
     $nameParts = explode("<", $item[0]);
     $strippedName = $nameParts[0] != "" ? $nameParts[0] : $item[0];
     $notifications = self::extractNumberFromHtml($title);
+
+    $item[2] = isset($item[2]) && !is_null($item[2]) ? html_entity_decode($item[2]) : "";
 
     $item["notifications"] = !is_null($notifications) ? $notifications : 0;
     $item["id"] = isset($item[5]) ? $item[5] : "";
@@ -355,6 +417,7 @@ class AdminMenu
 
     foreach ($submenu as $sub_key => $sub_item) {
       $sub_item = (array) $sub_item;
+      $sub_item[2] = isset($sub_item[2]) && !is_null($sub_item[2]) ? html_entity_decode($sub_item[2]) : "";
       // Cut if no access
       if (!current_user_can($sub_item[1]) && !current_user_can("manage_options")) {
         continue;
@@ -377,12 +440,12 @@ class AdminMenu
       $class = [];
       $aria_attributes = "";
 
-      $menu_file = $parentItem[2];
+      $menu_file = isset($sub_item["master_parent"]) ? $sub_item["master_parent"] : $parentItem[2];
       $pos = strpos($menu_file, "?");
 
       $menu_file = $pos !== false ? substr($menu_file, 0, $pos) : $menu_file;
 
-      $menu_hook = get_plugin_page_hook($sub_item[2], $parentItem[2]);
+      $menu_hook = get_plugin_page_hook($sub_item[2], $menu_file);
       $sub_file = $sub_item[2];
       $pos = strpos($sub_file, "?");
       $sub_file = $pos !== false ? substr($sub_file, 0, $pos) : $sub_file;
@@ -404,7 +467,6 @@ class AdminMenu
       $sub_item["notifications"] = !is_null($notifications) ? $notifications : 0;
 
       $sub_item["name"] = $strippedName;
-      $sub_item["id"] = $parentItem["id"] . $sub_item["url"];
       $sub_item["type"] = "menu";
 
       // Recursively handle sub subs

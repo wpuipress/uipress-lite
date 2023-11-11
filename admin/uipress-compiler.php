@@ -1,5 +1,4 @@
 <?php
-
 !defined("ABSPATH") ? exit() : "";
 
 class uipress_compiler
@@ -127,8 +126,32 @@ class uipress_compiler
       $plugin_version = floatval($plugin_version);
       if ($plugin_version < 3.2) {
         deactivate_plugins($plugin_slug);
+        $this->require_pro_upgrade_script($plugin_version);
         add_action("admin_head", [$this, "flag_uipress_pro_version_error"], 99);
       }
+    }
+  }
+
+  /**
+   * Requires the pro plugin update script to ensure you can still update
+   *
+   * @since 3.3.09
+   */
+  public function require_pro_upgrade_script($version)
+  {
+    if (class_exists("uip_pro_update")) {
+      return;
+    }
+
+    if (!defined("uip_pro_plugin_version")) {
+      define("uip_pro_plugin_version", $plugin_version);
+    }
+
+    $other_plugin_path = WP_PLUGIN_DIR . "/uipress-pro/admin/classes/uip-update.php";
+    if (file_exists($other_plugin_path)) {
+      require_once $other_plugin_path;
+      $uip_pro_update = new uip_pro_update();
+      $uip_pro_update->run();
     }
   }
 
@@ -145,5 +168,3 @@ class uipress_compiler
     printf('<div class="%1$s"><p>%2$s</p></div>', esc_attr($class), esc_html($message));
   }
 }
-
-?>

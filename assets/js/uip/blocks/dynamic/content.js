@@ -680,7 +680,8 @@ export default {
      * @param {String} url - url to update address too
      */
     async updateBrowserAddress(url) {
-      const processed = stripUIPparams(url);
+      let processed = stripUIPparams(url);
+      processed = processed ? decodeURIComponent(processed) : processed;
       // Exit if address is same as current
       if (processed == window.location.href) return;
       history.pushState({ blockEvent: true }, null, processed);
