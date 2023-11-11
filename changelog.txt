@@ -1,5 +1,16 @@
 == Changelog ==
 
+= 3.3.09 =
+*Release Date 11 November 2023*
+
+* Fixed issue that was causing the canvas preview to be an incorrect ratio
+* Fixed input validation with responsive options and value units
+* Fixed bug that cause alignment issues in the uiBuilder canvas
+* Fixed incorrect link issues with some menu items (woocommerce analytics etc)
+* Fixed issue preventing the menu from showing custom menu classes
+* Fixed issue that could cause uipress pro to be disabled but not able to update
+* fixed potential fatal when using mailpoet
+
 = 3.3.08 =
 *Release Date 9 November 2023*
 

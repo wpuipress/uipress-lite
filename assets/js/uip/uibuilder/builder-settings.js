@@ -76,7 +76,7 @@ const ToggleSection = {
 
 export default {
   components: {
-    globalVariables: defineAsyncComponent(() => import("./variables.min.js?ver=3.3.08")),
+    globalVariables: defineAsyncComponent(() => import("./variables.min.js?ver=3.3.09")),
     ToggleSection: ToggleSection,
   },
   data() {

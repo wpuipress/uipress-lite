@@ -37,7 +37,7 @@ export default {
   inject: ["uiTemplate"],
   components: {
     screenOverlay: screenOverlay,
-    Confirm: defineAsyncComponent(() => import("../v3.5/utility/confirm.min.js?ver=3.3.08")),
+    Confirm: defineAsyncComponent(() => import("../v3.5/utility/confirm.min.js?ver=3.3.09")),
   },
   data() {
     return {
