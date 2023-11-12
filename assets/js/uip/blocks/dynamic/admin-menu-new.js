@@ -243,6 +243,15 @@ const SubMenuItem = {
     returnItemClasses(item) {
       return this.hasNestedPath(item, "custom", "classes") ? item.custom.classes : "";
     },
+
+    /**
+     * Returns items href
+     *
+     * @since 3.3.09
+     */
+    returnItemHref(item) {
+      return this.hasNestedPath(item, "custom", "url") ? item.custom.url : item.url;
+    },
   },
   template: `
     
@@ -260,7 +269,7 @@ const SubMenuItem = {
                       <template #trigger>
                       
                         <!-- Main link -->
-                        <a :href="sub.url" @click="maybeFollowLink($event, sub)" :class="returnItemClasses(sub)" 
+                        <a :href="returnItemHref(sub)" @click="maybeFollowLink($event, sub)" :class="returnItemClasses(sub)" 
                         class="uip-no-underline uip-link-muted uip-sub-level-item uip-flex-grow uip-flex uip-gap-xs uip-flex-center" :active="sub.active ? true : false">
                         
                           <span v-html="returnName(sub)"></span>
@@ -290,7 +299,7 @@ const SubMenuItem = {
                     <div v-else-if="sub.type != 'sep'" class="uip-flex-grow uip-flex-column uip-flex uip-row-gap-xs" :class="returnItemClasses(sub)" >
                       
                       <!-- Main link -->
-                      <a :href="sub.url" @click="maybeFollowLink($event, sub, itemHasSubmenu(sub))" :class="returnItemClasses(sub)" 
+                      <a :href="returnItemHref(sub)" @click="maybeFollowLink($event, sub, itemHasSubmenu(sub))" :class="returnItemClasses(sub)" 
                       class="uip-no-underline uip-link-muted uip-sub-level-item uip-flex-grow uip-flex uip-gap-xs uip-flex-center" :active="sub.active ? true : false">
                         <span v-html="returnName(sub)"></span>
                         
@@ -429,6 +438,15 @@ const TopLevelItem = {
     returnItemClasses() {
       return this.hasNestedPath(this.item, "custom", "classes") ? this.item.custom.classes : "";
     },
+
+    /**
+     * Returns items custom href
+     *
+     * @since 3.3.09
+     */
+    returnItemHref() {
+      return this.hasNestedPath(this.item, "custom", "url") ? this.item.custom.url : this.item.url;
+    },
   },
   methods: {
     /**
@@ -465,7 +483,7 @@ const TopLevelItem = {
   },
   template: `
     
-    <a v-if="!itemHiden" :href="item.url" @click="maybeFollowLink($event, item, true)" class="uip-no-underline uip-link-default uip-top-level-item" :class="returnItemClasses" :active="item.active ? true : false">
+    <a v-if="!itemHiden" :href="returnItemHref" @click="maybeFollowLink($event, item, true)" class="uip-no-underline uip-link-default uip-top-level-item" :class="returnItemClasses" :active="item.active ? true : false">
     
       <div v-if="!hideIcons && returnIcon" v-html="returnTopIcon(returnIcon)" class="uip-flex uip-flex-center uip-menu-icon uip-icon uip-icon-medium"></div>
       
