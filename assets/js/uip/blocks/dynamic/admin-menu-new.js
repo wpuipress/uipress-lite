@@ -997,6 +997,7 @@ export default {
   beforeUnmount() {
     document.removeEventListener("uipress/app/page/change", this.updateActiveLink, { once: false });
     document.removeEventListener("uipress/app/page/load/finish", this.updateMenuFromFrame, { once: false });
+    document.removeEventListener("uipress/blocks/adminmenu/togglecollapse", this.handleMenuCollapse, { once: false });
   },
   methods: {
     /**
@@ -1005,7 +1006,7 @@ export default {
      * @since 3.2.13
      */
     setMenu() {
-      if (this.uipApp.data.userPrefs.menuCollapsed && this.hasMenuCollapse) this.collapsed = true;
+      if (this.uipApp.data.userPrefs.menuCollapsed) this.collapsed = true;
 
       // Only set the menu if we are not using a static menu
       if (this.returnStaticMenuID && this.hasStaticMenuEnabled) return;
@@ -1065,6 +1066,17 @@ export default {
     mountEventListeners() {
       document.addEventListener("uipress/app/page/change", this.updateActiveLink, { once: false });
       document.addEventListener("uipress/app/page/load/finish", this.updateMenuFromFrame, { once: false });
+      document.addEventListener("uipress/blocks/adminmenu/togglecollapse", this.handleMenuCollapse, { once: false });
+    },
+
+    /**
+     * Handles menu collapse event from outside block
+     *
+     * @param {object} evt
+     * @since 3.3.091
+     */
+    handleMenuCollapse(evt) {
+      this.collapsed = !this.collapsed;
     },
 
     /**
