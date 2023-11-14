@@ -18,10 +18,15 @@ export default {
         search: __("Search", "uipress-lite"),
         totalItems: __("total items", "uipress-lite"),
       },
+      windowWidth: window.innerWidth,
     };
+  },
+  beforeUnmount() {
+    window.removeEventListener("resize", this.handleWindowResize);
   },
   mounted() {
     this.returnBlockParts;
+    window.addEventListener("resize", this.handleWindowResize);
   },
   watch: {
     "block.query": {
@@ -187,9 +192,7 @@ export default {
      */
     isHiddenForViewport() {
       const responsive = this.block.responsive;
-      const templateWidth = this.uiTemplate.windowWidth;
-      let screenWidth = window.innerWidth;
-      if (templateWidth) screenWidth = templateWidth;
+      let screenWidth = this.windowWidth;
 
       // No responsive settings so bail
       if (typeof responsive === "undefined") return false;
@@ -217,6 +220,14 @@ export default {
     },
   },
   methods: {
+    /**
+     * Handles window resize event
+     *
+     * @since 3.2.13
+     */
+    handleWindowResize() {
+      this.windowWidth = window.innerWidth;
+    },
     /**
      * Runs the main block query
      *
