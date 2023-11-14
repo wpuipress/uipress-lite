@@ -1,16 +1,16 @@
 const { __, _x, _n, _nx } = wp.i18n;
-import { defineAsyncComponent, nextTick } from '../../libs/vue-esm.js';
-import '../../libs/ace-editor.min.js';
-import '../../libs/ace-editor-css.min.js';
-import '../../libs/ace-editor-javascript.min.js';
-import '../../libs/ace-editor-html.min.js';
-import '../../libs/ace-theme-dracular.min.js';
-import '../../libs/ace-editor-beautify.min.js';
-import '../../libs/ace-theme-xcode.min.js';
+import { defineAsyncComponent, nextTick } from "../../libs/vue-esm.js";
+import "../../libs/ace-editor.min.js";
+import "../../libs/ace-editor-css.min.js";
+import "../../libs/ace-editor-javascript.min.js";
+import "../../libs/ace-editor-html.min.js";
+import "../../libs/ace-theme-dracular.min.js";
+import "../../libs/ace-editor-beautify.min.js";
+import "../../libs/ace-theme-xcode.min.js";
 
 export default {
   components: {
-    Modal: defineAsyncComponent(() => import('../v3.5/utility/modal.min.js?ver=3.3.091')),
+    Modal: defineAsyncComponent(() => import("../v3.5/utility/modal.min.js?ver=3.3.091")),
   },
   props: {
     returnData: Function,
@@ -19,30 +19,41 @@ export default {
   },
   data() {
     return {
-      option: '',
+      option: "",
       editor: Object,
       language: this.args.language,
       fullScreen: false,
-      finalVal: '',
+      finalVal: "",
       modalOpen: false,
+      updating: false,
       strings: {
-        openFullscreen: __('Fullscreen', 'uipress-lite'),
-        closeFullscreen: __('Exit fullscreen', 'uipress-lite'),
-        codeEditor: __('Code editor', 'uipress-lite'),
-        editCode: __('Edit code', 'uipress-lite'),
-        add: __('Add', 'uipress-lite'),
-        updateCode: __('Update code', 'uipress-lite'),
-        discard: __('Discard changes', 'uipress-lite'),
+        openFullscreen: __("Fullscreen", "uipress-lite"),
+        closeFullscreen: __("Exit fullscreen", "uipress-lite"),
+        codeEditor: __("Code editor", "uipress-lite"),
+        editCode: __("Edit code", "uipress-lite"),
+        add: __("Add", "uipress-lite"),
+        updateCode: __("Update code", "uipress-lite"),
+        discard: __("Discard changes", "uipress-lite"),
       },
     };
   },
-  
+
   mounted() {
     this.option = this.value;
   },
   watch: {
+    value: {
+      handler(newValue, oldValue) {
+        if (this.updating) return;
+        this.injectProp();
+      },
+      deep: true,
+      immediate: true,
+    },
+
     option: {
       handler(newValue, oldValue) {
+        if (this.updating) return;
         this.returnData(this.option);
       },
       deep: true,
@@ -58,14 +69,28 @@ export default {
   },
   methods: {
     /**
+     * Injects prop value
+     *
+     * @since 3.3.092
+     */
+    async injectProp() {
+      this.updating = true;
+
+      this.option = this.value;
+
+      await this.$nextTick();
+
+      this.updating = false;
+    },
+    /**
      * Builds editor and sets code editor options
      *
      * @since 3.2.13
      */
     initiateEditor() {
-      this.beautify = ace.require('ace/ext/beautify');
+      this.beautify = ace.require("ace/ext/beautify");
       this.editor = ace.edit(this.$refs.codeeditor);
-      this.editor.setTheme('ace/theme/xcode');
+      this.editor.setTheme("ace/theme/xcode");
       this.editor.session.setUseWrapMode(true);
       this.editor.setShowPrintMargin(false);
       this.editor.container.style.lineHeight = 1.6;
@@ -77,25 +102,25 @@ export default {
         tabSize: 3,
         wrap: 1, // wrap text to view
         indentedSoftWrap: false,
-        fontSize: '0.8rem',
+        fontSize: "0.8rem",
         indentedSoftWrap: true,
         useWorker: false,
-        fontSize: '12px',
+        fontSize: "12px",
       });
 
-      if (!this.language) this.language = 'css';
+      if (!this.language) this.language = "css";
 
       switch (this.language) {
-        case 'css':
-          this.editor.session.setMode('ace/mode/css');
+        case "css":
+          this.editor.session.setMode("ace/mode/css");
           break;
 
-        case 'javascript':
-          this.editor.session.setMode('ace/mode/javascript');
+        case "javascript":
+          this.editor.session.setMode("ace/mode/javascript");
           break;
 
-        case 'html':
-          this.editor.session.setMode('ace/mode/html');
+        case "html":
+          this.editor.session.setMode("ace/mode/html");
           break;
       }
 
@@ -109,7 +134,7 @@ export default {
       const onChange = () => {
         this.finalVal = this.editor.getValue();
       };
-      this.editor.session.on('change', onChange);
+      this.editor.session.on("change", onChange);
     },
 
     /**
@@ -120,7 +145,7 @@ export default {
     saveCode() {
       this.option = this.finalVal;
       this.$refs.codemodal.close();
-      this.uipApp.notifications.notify(__('Code updated', 'uipress-lite'), '', 'success');
+      this.uipApp.notifications.notify(__("Code updated", "uipress-lite"), "", "success");
     },
 
     /**
@@ -129,7 +154,7 @@ export default {
      * @since 3.2.13
      */
     clearCode() {
-      this.option = '';
+      this.option = "";
     },
 
     /**
