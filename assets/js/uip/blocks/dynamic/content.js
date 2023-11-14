@@ -680,6 +680,8 @@ export default {
      * @param {String} url - url to update address too
      */
     async updateBrowserAddress(url) {
+      if (!url || url == "about:blank") return;
+
       let processed = stripUIPparams(url);
       processed = processed ? decodeURIComponent(processed) : processed;
       // Exit if address is same as current
