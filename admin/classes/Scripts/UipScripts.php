@@ -192,7 +192,7 @@ class UipScripts
     $userCSS = $userCSS ?? "";
 
     // Restore current blog if multisite is active
-    !$multiSiteActive ?? restore_current_blog();
+    $multiSiteActive ? restore_current_blog() : "";
 
     // Process light styles
     $lightStyles = "";
