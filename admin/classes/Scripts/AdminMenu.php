@@ -440,12 +440,12 @@ class AdminMenu
       $class = [];
       $aria_attributes = "";
 
-      $menu_file = isset($sub_item["master_parent"]) ? $sub_item["master_parent"] : $parentItem[2];
-      $pos = strpos($menu_file, "?");
+      $parent_id = isset($sub_item["master_parent"]) ? $sub_item["master_parent"] : $parentItem[2];
 
-      $menu_file = $pos !== false ? substr($menu_file, 0, $pos) : $menu_file;
+      $pos = strpos($parent_id, "?");
+      $menu_file = $pos !== false ? substr($parent_id, 0, $pos) : $parent_id;
 
-      $menu_hook = get_plugin_page_hook($sub_item[2], $menu_file);
+      $menu_hook = get_plugin_page_hook($sub_item[2], $parent_id);
       $sub_file = $sub_item[2];
       $pos = strpos($sub_file, "?");
       $sub_file = $pos !== false ? substr($sub_file, 0, $pos) : $sub_file;
