@@ -194,6 +194,9 @@ export default {
       const responsive = this.block.responsive;
       let screenWidth = this.windowWidth;
 
+      const templateWidth = this.uiTemplate.windowWidth;
+      if (templateWidth) screenWidth = templateWidth;
+
       // No responsive settings so bail
       if (typeof responsive === "undefined") return false;
       if (!responsive) return false;
