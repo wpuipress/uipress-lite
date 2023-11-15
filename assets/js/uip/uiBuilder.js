@@ -377,9 +377,14 @@ const uipMasterMenu = menuScript ? uipParseJson(menuScript.getAttribute("data-me
 const toolbarScript = document.querySelector("#uip-admin-toolbar");
 const uipMasterToolbar = toolbarScript ? uipParseJson(toolbarScript.getAttribute("data-toolbar")) : [];
 
+//Check for RTL
+let RTL = document.documentElement.getAttribute("dir");
+RTL = RTL === "rtl" ? true : false;
+
 app.config.globalProperties.uipApp = reactive({
   scrolling: false,
   litePath: uip_ajax.uipAppData.options.pluginURL,
+  isRTL: RTL,
   data: {
     plugins: AllPlugins,
     blockGroups: AllBlockGroups,
