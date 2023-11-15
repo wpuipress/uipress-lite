@@ -1,5 +1,5 @@
 const { __, _x, _n, _nx } = wp.i18n;
-import { nextTick } from '../../libs/vue-esm.js';
+import { nextTick } from "../../libs/vue-esm.js";
 export default {
   // Define component properties
   props: {
@@ -17,17 +17,18 @@ export default {
       showBack: true,
       enabledOptions: {
         false: {
-          label: __('No', 'uipress-lite'),
+          label: __("No", "uipress-lite"),
           value: false,
         },
         true: {
-          label: __('Yes', 'uipress-lite'),
+          label: __("Yes", "uipress-lite"),
           value: true,
         },
       },
       bgStyle: {
         width: null,
         left: null,
+        right: null,
       },
     };
   },
@@ -100,9 +101,9 @@ export default {
      * @since 3.2.13
      */
     injectProp() {
-      this.optionValue = typeof this.activeValue === 'undefined' ? '' : this.activeValue;
-      if (this.optionValue === 'true') this.optionValue = true;
-      if (this.optionValue === 'false') this.optionValue = false;
+      this.optionValue = typeof this.activeValue === "undefined" ? "" : this.activeValue;
+      if (this.optionValue === "true") this.optionValue = true;
+      if (this.optionValue === "false") this.optionValue = false;
 
       // Inject options
       if (!this.options) return;
@@ -118,6 +119,8 @@ export default {
 
       let index = Object.keys(this.enabledOptions).indexOf(val);
 
+      let key = this.uipApp.isRTL ? "right" : "left";
+
       if (index < 0) {
         this.showBack = false;
         return;
@@ -127,7 +130,7 @@ export default {
       let width = 100 / Object.keys(this.enabledOptions).length;
       let left = width * index;
       this.bgStyle.width = `calc(${width}% - 6px)`;
-      this.bgStyle.left = `calc(${left}% + 2px)`;
+      this.bgStyle[key] = `calc(${left}% + 2px)`;
     },
 
     /**
@@ -175,7 +178,7 @@ export default {
      * @since 3.2.13
      */
     returnActiveClass(item) {
-      return item.value === this.optionValue ? 'uip-link-default uip-text-emphasis' : 'uip-link-muted uip-opacity-70';
+      return item.value === this.optionValue ? "uip-link-default uip-text-emphasis" : "uip-link-muted uip-opacity-70";
     },
   },
   template: `
@@ -184,7 +187,7 @@ export default {
         style="border-radius: calc(var(--uip-border-radius-large) + 2px)">
       
         <div v-if="showBack" class="uip-position-absolute uip-top-2 uip-bottom-2 uip-transition-all uip-background-highlight uip-border uip-border-rounder" 
-        :style="{width: bgStyle.width, left: bgStyle.left}"></div>
+        :style="bgStyle"></div>
       
         <template v-for="(item, index) in enabledOptions">
             <a type="button" :title="returnTip(item)"
