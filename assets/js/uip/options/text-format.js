@@ -4,10 +4,10 @@ import FontFamilies from "../v3.5/lists/fonts.js";
 export default {
   emits: ["update"],
   components: {
-    colorBox: defineAsyncComponent(() => import("../v3.5/utility/color-box.min.js?ver=3.3.091")),
-    screenControl: defineAsyncComponent(() => import("../v3.5/utility/screen-control.min.js?ver=3.3.091")),
-    ColorPicker: defineAsyncComponent(() => import("../v3.5/styles/color-picker.min.js?ver=3.3.091")),
-    colourStyleEditor: defineAsyncComponent(() => import("../v3.5/styles/color-style-editor.min.js?ver=3.3.091")),
+    colorBox: defineAsyncComponent(() => import("../v3.5/utility/color-box.min.js?ver=3.3.092")),
+    screenControl: defineAsyncComponent(() => import("../v3.5/utility/screen-control.min.js?ver=3.3.092")),
+    ColorPicker: defineAsyncComponent(() => import("../v3.5/styles/color-picker.min.js?ver=3.3.092")),
+    colourStyleEditor: defineAsyncComponent(() => import("../v3.5/styles/color-style-editor.min.js?ver=3.3.092")),
   },
   props: {
     value: Object,
