@@ -1,7 +1,7 @@
 const { __, _x, _n, _nx } = wp.i18n;
-import { nextTick } from '../../libs/vue-esm.js';
+import { nextTick } from "../../libs/vue-esm.js";
 export default {
-  emits: ['update'],
+  emits: ["update"],
   props: {
     value: Object,
   },
@@ -11,111 +11,111 @@ export default {
       updating: false,
       verticalAlignOptions: {
         none: {
-          value: 'none',
-          icon: 'block',
-          tip: __('None', 'uipress-lite'),
+          value: "none",
+          icon: "block",
+          tip: __("None", "uipress-lite"),
         },
         top: {
-          value: 'top',
-          icon: 'align_vertical_top',
-          tip: __('Top', 'uipress-lite'),
+          value: "top",
+          icon: "align_vertical_top",
+          tip: __("Top", "uipress-lite"),
         },
         center: {
-          value: 'center',
-          icon: 'align_vertical_center',
-          tip: __('Center', 'uipress-lite'),
+          value: "center",
+          icon: "align_vertical_center",
+          tip: __("Center", "uipress-lite"),
         },
         bottom: {
-          value: 'bottom',
-          icon: 'align_vertical_bottom',
-          tip: __('Bottom', 'uipress-lite'),
+          value: "bottom",
+          icon: "align_vertical_bottom",
+          tip: __("Bottom", "uipress-lite"),
         },
       },
       horizontalAlignOptions: {
         none: {
-          value: 'none',
-          icon: 'block',
-          tip: __('None', 'uipress-lite'),
+          value: "none",
+          icon: "block",
+          tip: __("None", "uipress-lite"),
         },
         left: {
-          value: 'left',
-          icon: 'align_horizontal_left',
-          tip: __('Left', 'uipress-lite'),
+          value: "left",
+          icon: "align_horizontal_left",
+          tip: __("Left", "uipress-lite"),
         },
         center: {
-          value: 'center',
-          icon: 'align_horizontal_center',
-          tip: __('Center', 'uipress-lite'),
+          value: "center",
+          icon: "align_horizontal_center",
+          tip: __("Center", "uipress-lite"),
         },
         right: {
-          value: 'right',
-          icon: 'align_horizontal_right',
-          tip: __('Right', 'uipress-lite'),
+          value: "right",
+          icon: "align_horizontal_right",
+          tip: __("Right", "uipress-lite"),
         },
       },
       positionOptions: [
         {
-          label: __('Relative', 'uipress-lite'),
-          value: 'relative',
+          label: __("Relative", "uipress-lite"),
+          value: "relative",
         },
         {
-          label: __('Absolute', 'uipress-lite'),
-          value: 'absolute',
+          label: __("Absolute", "uipress-lite"),
+          value: "absolute",
         },
         {
-          label: __('Fixed', 'uipress-lite'),
-          value: 'fixed',
+          label: __("Fixed", "uipress-lite"),
+          value: "fixed",
         },
         {
-          label: __('Sticky', 'uipress-lite'),
-          value: 'sticky',
+          label: __("Sticky", "uipress-lite"),
+          value: "sticky",
         },
         {
-          label: __('Static', 'uipress-lite'),
-          value: 'static',
+          label: __("Static", "uipress-lite"),
+          value: "static",
         },
       ],
       displayOptions: [
         {
-          label: __('Block', 'uipress-lite'),
-          value: 'block',
+          label: __("Block", "uipress-lite"),
+          value: "block",
         },
         {
-          label: __('Inline', 'uipress-lite'),
-          value: 'inline',
+          label: __("Inline", "uipress-lite"),
+          value: "inline",
         },
         {
-          label: __('Flex', 'uipress-lite'),
-          value: 'flex',
+          label: __("Flex", "uipress-lite"),
+          value: "flex",
         },
         {
-          label: __('Grid', 'uipress-lite'),
-          value: 'grid',
+          label: __("Grid", "uipress-lite"),
+          value: "grid",
         },
         {
-          label: __('Inherit', 'uipress-lite'),
-          value: 'inherit',
+          label: __("Inherit", "uipress-lite"),
+          value: "inherit",
         },
         {
-          label: __('None', 'uipress-lite'),
-          value: 'none',
+          label: __("None", "uipress-lite"),
+          value: "none",
         },
       ],
       strings: {
-        position: __('Position', 'uipress-lite'),
-        left: __('Left', 'uipress-lite'),
-        top: __('Top', 'uipress-lite'),
-        right: __('Right', 'uipress-lite'),
-        bottom: __('Bottom', 'uipress-lite'),
-        inset: __('Inset', 'uipress-lite'),
-        verticalAlign: __('Vertical align', 'uipress-lite'),
-        horizontalAlign: __('Horizontal align', 'uipress-lite'),
-        zIndex: __('z-index', 'uipress-lite'),
-        display: __('Display', 'uipress-lite'),
+        position: __("Position", "uipress-lite"),
+        left: __("Left", "uipress-lite"),
+        top: __("Top", "uipress-lite"),
+        right: __("Right", "uipress-lite"),
+        bottom: __("Bottom", "uipress-lite"),
+        inset: __("Inset", "uipress-lite"),
+        verticalAlign: __("Vertical align", "uipress-lite"),
+        horizontalAlign: __("Horizontal align", "uipress-lite"),
+        zIndex: __("z-index", "uipress-lite"),
+        display: __("Display", "uipress-lite"),
       },
     };
   },
-  
+
   watch: {
     /**
      * Watches changes to value prop and injects
@@ -138,7 +138,7 @@ export default {
     option: {
       handler(newValue, oldValue) {
         if (this.updating) return;
-        this.$emit('update', this.option);
+        this.$emit("update", this.option);
       },
       deep: true,
     },
@@ -151,13 +151,13 @@ export default {
      */
     returnDefaultOptions() {
       return {
-        position: '',
-        display: '',
-        verticalAlign: 'none',
-        horizontalAlign: 'none',
-        zIndex: '',
+        position: "",
+        display: "",
+        verticalAlign: "none",
+        horizontalAlign: "none",
+        zIndex: "",
         offset: {
-          units: 'px',
+          units: "px",
           left: 0,
           right: 0,
           top: 0,
@@ -177,6 +177,12 @@ export default {
       const defaultOptions = this.returnDefaultOptions;
       const newOptions = this.isObject(this.value) ? this.value : {};
       this.option = { ...defaultOptions, ...newOptions };
+
+      if (this.isObject(this.value)) {
+        if ("offset" in this.value) {
+          this.option.offset = { ...this.value.offset };
+        }
+      }
 
       await nextTick();
       this.updating = false;
