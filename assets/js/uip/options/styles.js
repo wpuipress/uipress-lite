@@ -160,6 +160,22 @@ export default {
         },
       };
     },
+
+    /**
+     * Returns default radius
+     *
+     * @since 3.3.093
+     */
+    returnDefaultRadius() {
+      return {
+        sync: true,
+        topleft: "",
+        topright: "",
+        bottomleft: "",
+        bottomright: "",
+        units: "px",
+      };
+    },
     /**
      * Returns value for background fill
      *
@@ -300,6 +316,7 @@ export default {
 
       if (!newOptions.borders) this.styles.borders = [];
       if (!newOptions.shadows) this.styles.shadows = [];
+      if (!newOptions.radius) this.styles.radius = { ...this.returnDefaultRadius };
 
       await nextTick();
       this.updating = false;
