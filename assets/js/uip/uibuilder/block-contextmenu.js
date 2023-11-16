@@ -476,15 +476,17 @@ export default {
     async pasteStyles() {
       if (!this.uiTemplate.stylesCopied) return;
 
-      for (let key in this.uiTemplate.stylesCopied) {
+      let newStyles = JSON.parse(JSON.stringify(this.uiTemplate.stylesCopied));
+
+      for (let key in newStyles) {
         //These are not styles so don't copy them
         if (key == "advanced" || key == "block" || key == "container") {
           continue;
         }
         //Check if the new block has the same settings
         if (key in this.block.settings) {
-          let options = this.uiTemplate.stylesCopied[key].options;
-          this.block.settings[key] = { ...this.block.settings[key], ...this.uiTemplate.stylesCopied[key] };
+          let options = newStyles[key].options;
+          this.block.settings[key] = { ...this.block.settings[key], ...newStyles[key] };
           this.block.settings[key].options = { ...this.block.settings[key].options, ...options };
         }
       }
