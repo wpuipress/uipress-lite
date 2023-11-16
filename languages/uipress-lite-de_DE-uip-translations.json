@@ -1,0 +1,3720 @@
+{
+   "domain": "uipress-lite",
+   "locale_data": {
+      "uipress-lite": {
+         "100": [
+            ""
+         ],
+         "200": [
+            ""
+         ],
+         "300": [
+            ""
+         ],
+         "400": [
+            ""
+         ],
+         "500": [
+            ""
+         ],
+         "600": [
+            ""
+         ],
+         "700": [
+            ""
+         ],
+         "800": [
+            ""
+         ],
+         "900": [
+            ""
+         ],
+         "": {
+            "domain": "uipress-lite",
+            "plural_forms": "nplurals=2; plural=(n > 1);",
+            "lang": "de_DE"
+         },
+         "User id": [
+            ""
+         ],
+         "User roles": [
+            ""
+         ],
+         "Username": [
+            ""
+         ],
+         "User first name": [
+            ""
+         ],
+         "User last name": [
+            ""
+         ],
+         "User full name": [
+            ""
+         ],
+         "User display name": [
+            ""
+         ],
+         "User email": [
+            ""
+         ],
+         "User initials": [
+            ""
+         ],
+         "User profile": [
+            ""
+         ],
+         "Site title": [
+            ""
+         ],
+         "Admin page title": [
+            ""
+         ],
+         "Logout link": [
+            ""
+         ],
+         "View site": [
+            ""
+         ],
+         "Admin home": [
+            ""
+         ],
+         "View profile": [
+            ""
+         ],
+         "Current date": [
+            ""
+         ],
+         "PHP version": [
+            ""
+         ],
+         "WordPress version": [
+            ""
+         ],
+         "Notification count": [
+            ""
+         ],
+         "Active plugins": [
+            ""
+         ],
+         "Inactive plugins": [
+            ""
+         ],
+         "Installed themes": [
+            ""
+         ],
+         "New post": [
+            ""
+         ],
+         "New page": [
+            ""
+         ],
+         "Site logo": [
+            ""
+         ],
+         "Site logo dark mode": [
+            ""
+         ],
+         "Query fetched": [
+            ""
+         ],
+         "Incorrect key": [
+            ""
+         ],
+         "Missing data required for import": [
+            ""
+         ],
+         "Unable to connect to host site": [
+            ""
+         ],
+         "Improted": [
+            ""
+         ],
+         "Unable to load UiPress template": [
+            ""
+         ],
+         "Current active template does not contain a page content block or a site navigation block such as an admin menu or content navigator. These are required to use a ui template": [
+            ""
+         ],
+         "Add New UI Pattern": [
+            ""
+         ],
+         "New UI Pattern": [
+            ""
+         ],
+         "Edit UI Pattern": [
+            ""
+         ],
+         "View UI Patterns": [
+            ""
+         ],
+         "All UI Patterns": [
+            ""
+         ],
+         "Search UI Patterns": [
+            ""
+         ],
+         "No UI Patterns found.": [
+            ""
+         ],
+         "No UI Patterns found in Trash.": [
+            ""
+         ],
+         "Post type used for the uipress UI builder for storing patterns": [
+            ""
+         ],
+         "Add New UI Template": [
+            ""
+         ],
+         "New UI Template": [
+            ""
+         ],
+         "Edit UI Template": [
+            ""
+         ],
+         "View UI Template": [
+            ""
+         ],
+         "All UI Templates": [
+            ""
+         ],
+         "Search UI Templates": [
+            ""
+         ],
+         "No UI Templates found.": [
+            ""
+         ],
+         "No UI Templates found in Trash.": [
+            ""
+         ],
+         "Post type used for the uipress UI builder": [
+            ""
+         ],
+         "UI template": [
+            ""
+         ],
+         "Admin page": [
+            ""
+         ],
+         "Login page": [
+            ""
+         ],
+         "Frontend toolbar": [
+            ""
+         ],
+         "UI Template (Draft)": [
+            ""
+         ],
+         "Site settings": [
+            ""
+         ],
+         "ago": [
+            ""
+         ],
+         "copy": [
+            ""
+         ],
+         "All": [
+            "Alle"
+         ],
+         "Read": [
+            ""
+         ],
+         "Edit": [
+            ""
+         ],
+         "Publish": [
+            ""
+         ],
+         "Create": [
+            ""
+         ],
+         "Delete": [
+            ""
+         ],
+         "View": [
+            ""
+         ],
+         "Manage": [
+            ""
+         ],
+         "Export": [
+            ""
+         ],
+         "Import": [
+            ""
+         ],
+         "Custom": [
+            ""
+         ],
+         "User": [
+            ""
+         ],
+         "Role": [
+            ""
+         ],
+         "No menu to fetch": [
+            ""
+         ],
+         "Menu no longer exists": [
+            ""
+         ],
+         "No valid menu discovered": [
+            ""
+         ],
+         "Unable to get import options": [
+            ""
+         ],
+         "Unable to save site sync options": [
+            ""
+         ],
+         "Unable to get export options": [
+            ""
+         ],
+         "Unable to send message to chat": [
+            ""
+         ],
+         "No valid API key provided": [
+            ""
+         ],
+         "No option name specified": [
+            ""
+         ],
+         "Option saved": [
+            ""
+         ],
+         "Corrupt query. Unable to loop posts": [
+            ""
+         ],
+         "Unable to get last updated for template": [
+            ""
+         ],
+         "Unable to locate error log": [
+            ""
+         ],
+         "No error log path set in your PHP ini file": [
+            ""
+         ],
+         "Log file does not exist or is empty": [
+            ""
+         ],
+         "Either the PHP error log path is incorrect or you don't have any errors yet. Path: ": [
+            ""
+         ],
+         "Errros fetched": [
+            ""
+         ],
+         "Unable to create temporary frame": [
+            ""
+         ],
+         "Transient created": [
+            ""
+         ],
+         "Config error: You need to specifiy a meta key to save the meta data to": [
+            ""
+         ],
+         "Config error: No site option name supplied": [
+            ""
+         ],
+         "Config error: Recipient email is not valid": [
+            ""
+         ],
+         "Config error: No email template set": [
+            ""
+         ],
+         "Unable to send mail at this time": [
+            ""
+         ],
+         "Passed function doesn't exist": [
+            ""
+         ],
+         "Preference updated": [
+            ""
+         ],
+         "Unable to read post ids to delete": [
+            ""
+         ],
+         "Item deleted": [
+            ""
+         ],
+         "Title": [
+            ""
+         ],
+         "Author": [
+            ""
+         ],
+         "Type": [
+            ""
+         ],
+         "Date": [
+            ""
+         ],
+         "Categories": [
+            ""
+         ],
+         "Tags": [
+            ""
+         ],
+         "ID": [
+            ""
+         ],
+         "Actions": [
+            ""
+         ],
+         "Status": [
+            ""
+         ],
+         "active": [
+            ""
+         ],
+         "inactive": [
+            ""
+         ],
+         "Last modified": [
+            ""
+         ],
+         "uiBuilder": [
+            ""
+         ],
+         "uiSettings": [
+            ""
+         ],
+         "Unable to save site settings. Data corrupted": [
+            ""
+         ],
+         "Admin theme": [
+            ""
+         ],
+         "Template created": [
+            ""
+         ],
+         "Unable to create template": [
+            ""
+         ],
+         "Unable to fetch template": [
+            ""
+         ],
+         "Succesfully fetched Ui template": [
+            ""
+         ],
+         "Unable to delete templates at this time": [
+            ""
+         ],
+         "Templates deleted": [
+            ""
+         ],
+         "Template deleted": [
+            ""
+         ],
+         "Unable to update template status": [
+            ""
+         ],
+         "You don't have the correct permissions to edit this template": [
+            ""
+         ],
+         "Template updated": [
+            ""
+         ],
+         "Unable to duplicate template": [
+            ""
+         ],
+         "Template duplicated": [
+            ""
+         ],
+         "Unable to save template": [
+            ""
+         ],
+         "Template saved": [
+            ""
+         ],
+         "Styles saved": [
+            ""
+         ],
+         "Patterns synced": [
+            ""
+         ],
+         "Unable to save pattern": [
+            ""
+         ],
+         "Pattern saved": [
+            ""
+         ],
+         "Columns fetched": [
+            ""
+         ],
+         "GA charts": [
+            ""
+         ],
+         "Outputs your choice of charts and options on what data to display": [
+            ""
+         ],
+         "Analytics": [
+            ""
+         ],
+         "GA tables": [
+            ""
+         ],
+         "Outputs your choice of tables and options on what data to display": [
+            ""
+         ],
+         "GA realtime": [
+            ""
+         ],
+         "Displays live visitor data about your site": [
+            ""
+         ],
+         "GA map": [
+            ""
+         ],
+         "Outputs your visitor data to a interactive map": [
+            ""
+         ],
+         "Elements": [
+            ""
+         ],
+         "Layout": [
+            ""
+         ],
+         "Dynamic": [
+            ""
+         ],
+         "Form": [
+            ""
+         ],
+         "Visitor Analytics": [
+            ""
+         ],
+         "Store Analytics": [
+            ""
+         ],
+         "Collapse menu": [
+            "Menü zuklappen"
+         ],
+         "Search menu": [
+            ""
+         ],
+         "Go back to previous menu": [
+            ""
+         ],
+         "Go back": [
+            ""
+         ],
+         "Home": [
+            ""
+         ],
+         "Main menu": [
+            ""
+         ],
+         "Send a message...": [
+            ""
+         ],
+         "Please add an openAI api key to use this block": [
+            ""
+         ],
+         "Admin": [
+            ""
+         ],
+         "Admin menu": [
+            ""
+         ],
+         "Outputs the admin menu": [
+            ""
+         ],
+         "Block options": [
+            ""
+         ],
+         "Inline": [
+            ""
+         ],
+         "Hover": [
+            ""
+         ],
+         "Behaviour": [
+            ""
+         ],
+         "Direction": [
+            ""
+         ],
+         "Vertical": [
+            ""
+         ],
+         "Horizontal": [
+            ""
+         ],
+         "Menu editor": [
+            ""
+         ],
+         "Enabled": [
+            ""
+         ],
+         "Disabled": [
+            ""
+         ],
+         "Collapse option": [
+            ""
+         ],
+         "Auto update": [
+            ""
+         ],
+         "Auto update will automatically update the menu when new plugins are or menu items are added.": [
+            ""
+         ],
+         "Auto load": [
+            ""
+         ],
+         "Auto load will load top level menu items when you click on them. If disabled clicking top level items will simply open the items submenu.": [
+            ""
+         ],
+         "Icons": [
+            ""
+         ],
+         "Submenu Icon": [
+            ""
+         ],
+         "Style": [
+            ""
+         ],
+         "Menu headers": [
+            ""
+         ],
+         "Menu headers hover": [
+            ""
+         ],
+         "Menu headers active": [
+            ""
+         ],
+         "Menu sepators": [
+            ""
+         ],
+         "Submenu": [
+            ""
+         ],
+         "Header submenu icon": [
+            ""
+         ],
+         "Sub menu header": [
+            ""
+         ],
+         "Sub menu items": [
+            ""
+         ],
+         "Sub menu items hover": [
+            ""
+         ],
+         "Sub menu items active": [
+            ""
+         ],
+         "Notifications": [
+            ""
+         ],
+         "Menu collapse": [
+            ""
+         ],
+         "Drilldown": [
+            ""
+         ],
+         "Bottom left": [
+            ""
+         ],
+         "Bottom right": [
+            ""
+         ],
+         "Top left": [
+            ""
+         ],
+         "Top right": [
+            ""
+         ],
+         "Left": [
+            ""
+         ],
+         "Right": [
+            ""
+         ],
+         "Drop posisition": [
+            ""
+         ],
+         "Show": [
+            ""
+         ],
+         "Hide": [
+            ""
+         ],
+         "Menu search": [
+            ""
+         ],
+         "Static menu": [
+            ""
+         ],
+         "If enabled, this menu block will load a custom menu from the menu builder. The menu will become static and will not react to plugin changes.": [
+            ""
+         ],
+         "Posts table": [
+            ""
+         ],
+         "Create a list of recent posts": [
+            ""
+         ],
+         "Post types": [
+            ""
+         ],
+         "Actions enabled": [
+            ""
+         ],
+         "Posts per page": [
+            ""
+         ],
+         "Content": [
+            ""
+         ],
+         "If enabled, only the users own content will show": [
+            ""
+         ],
+         "Search": [
+            ""
+         ],
+         "Table styles": [
+            ""
+         ],
+         "Table head": [
+            ""
+         ],
+         "Table head cell": [
+            ""
+         ],
+         "Table row": [
+            ""
+         ],
+         "Table cell": [
+            ""
+         ],
+         "Grid item": [
+            ""
+         ],
+         "Grid item title": [
+            ""
+         ],
+         "Pagination buttons": [
+            ""
+         ],
+         "Post type label": [
+            ""
+         ],
+         "Table post count": [
+            ""
+         ],
+         "Page content": [
+            ""
+         ],
+         "Outputs the page content block": [
+            ""
+         ],
+         "Screen options": [
+            ""
+         ],
+         "Help tab": [
+            ""
+         ],
+         "Fullscreen": [
+            ""
+         ],
+         "Plugin notices": [
+            ""
+         ],
+         "Loading bar": [
+            ""
+         ],
+         "Login redirect": [
+            ""
+         ],
+         "Content frame": [
+            ""
+         ],
+         "Frame toolbar": [
+            ""
+         ],
+         "Loading bar track": [
+            ""
+         ],
+         "Recent posts": [
+            ""
+         ],
+         "Posts list": [
+            ""
+         ],
+         "Item title": [
+            ""
+         ],
+         "Item meta": [
+            ""
+         ],
+         "Outputs a search block that queries your sites content": [
+            ""
+         ],
+         "Select post types": [
+            ""
+         ],
+         "Search post types": [
+            ""
+         ],
+         "Search style": [
+            ""
+         ],
+         "Search results area": [
+            ""
+         ],
+         "Found items list": [
+            ""
+         ],
+         "Search item title": [
+            ""
+         ],
+         "Search item meta": [
+            ""
+         ],
+         "Toolbar": [
+            ""
+         ],
+         "Outputs default toolbar items": [
+            ""
+         ],
+         "Hidden toolbar items": [
+            ""
+         ],
+         "Toolbar icons": [
+            ""
+         ],
+         "Bottom center": [
+            ""
+         ],
+         "Top center": [
+            ""
+         ],
+         "Left center": [
+            ""
+         ],
+         "Left top": [
+            ""
+         ],
+         "Left bottom": [
+            ""
+         ],
+         "Right center": [
+            ""
+         ],
+         "Right top": [
+            ""
+         ],
+         "Right bottom": [
+            ""
+         ],
+         "Submenu pos": [
+            ""
+         ],
+         "Sub submenu pos": [
+            ""
+         ],
+         "Admin bar": [
+            ""
+         ],
+         "Toolbar item": [
+            ""
+         ],
+         "Submenu items": [
+            ""
+         ],
+         "Bread crumbs": [
+            ""
+         ],
+         "Shows the current page path (breadcrumbs)": [
+            ""
+         ],
+         "Icon separator": [
+            ""
+         ],
+         "Breadcrumb item": [
+            ""
+         ],
+         "Fullscreen toggle": [
+            ""
+         ],
+         "A customisable button that can toggle the fullscreen mode of the content frame": [
+            ""
+         ],
+         "Button text": [
+            ""
+         ],
+         "Icon": [
+            ""
+         ],
+         "Icon position": [
+            ""
+         ],
+         "Open without frame": [
+            ""
+         ],
+         "This will open the current page outside the current frame and optionally without UiPress all together": [
+            ""
+         ],
+         "Open outside frame": [
+            ""
+         ],
+         "Default": [
+            ""
+         ],
+         "New tab": [
+            ""
+         ],
+         "Load without uiPress": [
+            ""
+         ],
+         "No": [
+            ""
+         ],
+         "Yes": [
+            ""
+         ],
+         "Hover styles": [
+            ""
+         ],
+         "Active styles": [
+            ""
+         ],
+         "Page loader": [
+            ""
+         ],
+         "This block allows you to place a loading bar wherever you choose and has the option to replace the bar with a custom image.": [
+            ""
+         ],
+         "Image": [
+            ""
+         ],
+         "Ai chat": [
+            ""
+         ],
+         "This block allows you to add an ai chat to your templates. OpenAi (chatGPT) API key is required.": [
+            ""
+         ],
+         "openAI API key": [
+            ""
+         ],
+         "Welcome message": [
+            ""
+         ],
+         "System message": [
+            ""
+         ],
+         "The system message helps set the behavior of the assistant. For example, you can modify the personality of the assistant or provide specific instructions about how it should behave throughout the conversation.": [
+            ""
+         ],
+         "Chat model": [
+            ""
+         ],
+         "Messages area": [
+            ""
+         ],
+         "Bot message": [
+            ""
+         ],
+         "User message": [
+            ""
+         ],
+         "Chat input": [
+            ""
+         ],
+         "Media library": [
+            ""
+         ],
+         "Outputs a media library, with upload, delete and folder features": [
+            ""
+         ],
+         "Plugin updates": [
+            ""
+         ],
+         "Outputs a list of available plugin and allows you update from the block": [
+            ""
+         ],
+         "Plugin search": [
+            ""
+         ],
+         "Search the plugin directory with quick filters, discover new plugins and install all from one block": [
+            ""
+         ],
+         "Grouped Date range": [
+            ""
+         ],
+         "Outputs a grouped date picker. This date picker is used for controlling it's siblings range such as analytic blocks.": [
+            ""
+         ],
+         "User meta": [
+            ""
+         ],
+         "Outputs selected user meta, either as a string or an list of values": [
+            ""
+         ],
+         "Content navigator": [
+            ""
+         ],
+         "Creates a navigatable file tree of all your site content like posts, pages and media. Allows for creation of new folders and organisation of content": [
+            ""
+         ],
+         "Orders kanban": [
+            ""
+         ],
+         "Creates a kanban view of recent woocommerce orders and allows for drag and drop management": [
+            ""
+         ],
+         "Site notifications": [
+            ""
+         ],
+         "Collects all site notifications and displays theme inside thise block": [
+            ""
+         ],
+         "Nothing posts found": [
+            ""
+         ],
+         "By": [
+            ""
+         ],
+         "items": [
+            ""
+         ],
+         "Search items": [
+            ""
+         ],
+         "Grid view": [
+            ""
+         ],
+         "List view": [
+            ""
+         ],
+         "Unable to fetch posts at this tiem": [
+            ""
+         ],
+         "Delete post": [
+            ""
+         ],
+         "Are you sure you want to delete this post?": [
+            ""
+         ],
+         "Post deleted": [
+            ""
+         ],
+         "Search content": [
+            ""
+         ],
+         "Nothing found for query": [
+            ""
+         ],
+         "by": [
+            ""
+         ],
+         "found": [
+            ""
+         ],
+         "Copy url": [
+            ""
+         ],
+         "Are you sure": [
+            ""
+         ],
+         "This will remove the current UI and revert to the default admin page": [
+            ""
+         ],
+         "Confirm": [
+            ""
+         ],
+         "Button": [
+            ""
+         ],
+         "Creates a button link": [
+            ""
+         ],
+         "Press me": [
+            ""
+         ],
+         "Link": [
+            ""
+         ],
+         "JS on click": [
+            ""
+         ],
+         "Heading": [
+            ""
+         ],
+         "Creates a heading block": [
+            ""
+         ],
+         "Heading text": [
+            ""
+         ],
+         "Heading type": [
+            ""
+         ],
+         "Paragraph": [
+            ""
+         ],
+         "Creates a paragraph block": [
+            ""
+         ],
+         "Creates a image block": [
+            ""
+         ],
+         "Accordion": [
+            ""
+         ],
+         "Creates a accordion block": [
+            ""
+         ],
+         "Accordion title": [
+            ""
+         ],
+         "Content style": [
+            ""
+         ],
+         "Chevron style": [
+            ""
+         ],
+         "Creates a icon block": [
+            ""
+         ],
+         "Dark mode": [
+            ""
+         ],
+         "Outputs a toggle for switiching between light and dark modes": [
+            ""
+         ],
+         "Auto detect color theme?": [
+            ""
+         ],
+         "Inactive toggle": [
+            ""
+         ],
+         "Active toggle": [
+            ""
+         ],
+         "Track": [
+            ""
+         ],
+         "Tabs": [
+            ""
+         ],
+         "Create a tabbed navigation with different styles": [
+            ""
+         ],
+         "Tab item": [
+            ""
+         ],
+         "Tab item hover": [
+            ""
+         ],
+         "Tab item active": [
+            ""
+         ],
+         "Tab content": [
+            ""
+         ],
+         "To do list": [
+            ""
+         ],
+         "Outputs a customisable to do list": [
+            ""
+         ],
+         "Add todo button": [
+            ""
+         ],
+         "Tab": [
+            ""
+         ],
+         "Active tab": [
+            ""
+         ],
+         "List area": [
+            ""
+         ],
+         "Item description": [
+            ""
+         ],
+         "Video": [
+            ""
+         ],
+         "Outputs a video block. Can be a direct URL, media library link or embed": [
+            ""
+         ],
+         "Video URL": [
+            ""
+         ],
+         "Video embed": [
+            ""
+         ],
+         "Quote": [
+            ""
+         ],
+         "Displays a quote in a decorative way": [
+            ""
+         ],
+         "When the power of love overcomes the love of power, the world will know peace": [
+            ""
+         ],
+         "Quote meta": [
+            ""
+         ],
+         "Jimi Hendrix": [
+            ""
+         ],
+         "Exit to dashboard": [
+            ""
+         ],
+         "This button is designed for admins with active ui templates. When clicked it will remove the current UI layer and display the default WordPress admin page": [
+            ""
+         ],
+         "Exit to admin": [
+            ""
+         ],
+         "iFrame": [
+            ""
+         ],
+         "Outputs a iframe block": [
+            ""
+         ],
+         "HTML": [
+            ""
+         ],
+         "This block allows you to output your own HTML into the template": [
+            ""
+         ],
+         "Icon list": [
+            ""
+         ],
+         "Creates a list with icons": [
+            ""
+         ],
+         "Shortcode": [
+            ""
+         ],
+         "This block allows you to output custom shortcodes into the template": [
+            ""
+         ],
+         "Add todo": [
+            "ToDo hinzufügen"
+         ],
+         "What would you like to do?": [
+            "ToDo oder Notiz…"
+         ],
+         "Add a description...": [
+            ""
+         ],
+         "Todo": [
+            ""
+         ],
+         "Completed": [
+            "Abgeschlossen"
+         ],
+         "Submit": [
+            ""
+         ],
+         "Configuration error": [
+            ""
+         ],
+         "No php function supplied to send form data to": [
+            ""
+         ],
+         "Form elements can be dragged into this block to create custom forms": [
+            ""
+         ],
+         "Submit text": [
+            ""
+         ],
+         "Send": [
+            ""
+         ],
+         "Prefill data": [
+            ""
+         ],
+         "Success message": [
+            ""
+         ],
+         "Form sent successfully!": [
+            ""
+         ],
+         "Form area": [
+            ""
+         ],
+         "Submit button": [
+            ""
+         ],
+         "Text input": [
+            ""
+         ],
+         "A simple text input for use with the form block": [
+            ""
+         ],
+         "Label": [
+            ""
+         ],
+         "Meta key": [
+            ""
+         ],
+         "Placeholder": [
+            ""
+         ],
+         "Placeholder text...": [
+            ""
+         ],
+         "Inut type": [
+            ""
+         ],
+         "Text": [
+            ""
+         ],
+         "Number": [
+            ""
+         ],
+         "Email": [
+            ""
+         ],
+         "Phone number": [
+            ""
+         ],
+         "Password": [
+            ""
+         ],
+         "Required field": [
+            ""
+         ],
+         "Input style": [
+            ""
+         ],
+         "Text area": [
+            ""
+         ],
+         "A simple textarea input for use with the form block": [
+            ""
+         ],
+         "Textarea style": [
+            ""
+         ],
+         "Select": [
+            ""
+         ],
+         "Option 1": [
+            ""
+         ],
+         "Option 2": [
+            ""
+         ],
+         "Select options": [
+            ""
+         ],
+         "Select style": [
+            ""
+         ],
+         "Radio": [
+            ""
+         ],
+         "Outputs a radio type input": [
+            ""
+         ],
+         "Checkbox": [
+            ""
+         ],
+         "Outputs a checkbox type input": [
+            ""
+         ],
+         "Image select": [
+            ""
+         ],
+         "Outputs a image select input": [
+            ""
+         ],
+         "Date range": [
+            ""
+         ],
+         "Outputs a date range input. Can be a single date, date range, or a comparison date range": [
+            ""
+         ],
+         "Colour select": [
+            ""
+         ],
+         "Outputs a colour select input. For use with the form block": [
+            ""
+         ],
+         "Input placeholder...": [
+            ""
+         ],
+         "Container": [
+            ""
+         ],
+         "Creates a container block with options for aligning content": [
+            ""
+         ],
+         "Dropdown": [
+            ""
+         ],
+         "Creates a dropdown with a customisable trigger": [
+            ""
+         ],
+         "Trigger text": [
+            ""
+         ],
+         "Click": [
+            ""
+         ],
+         "Mode": [
+            ""
+         ],
+         "Dropdown position": [
+            ""
+         ],
+         "Keyboard shortcut": [
+            ""
+         ],
+         "Trigger styles": [
+            ""
+         ],
+         "Dropdown styles": [
+            ""
+         ],
+         "Responsive grid": [
+            ""
+         ],
+         "Outputs a responsive grid": [
+            ""
+         ],
+         "Columns": [
+            ""
+         ],
+         "Min col width": [
+            ""
+         ],
+         "Grid gap": [
+            ""
+         ],
+         "Content area": [
+            ""
+         ],
+         "Slide out panel": [
+            ""
+         ],
+         "Creates a slide out panel with a customisable trigger": [
+            ""
+         ],
+         "Panel position": [
+            ""
+         ],
+         "Overlay": [
+            ""
+         ],
+         "Push": [
+            ""
+         ],
+         "Close on page change": [
+            ""
+         ],
+         "Trigger style": [
+            ""
+         ],
+         "Panel styles": [
+            ""
+         ],
+         "Modal": [
+            ""
+         ],
+         "Outputs a modal block with a customisable trigger": [
+            ""
+         ],
+         "WC charts": [
+            ""
+         ],
+         "Outputs your choice of order data from woocommerce as a chart": [
+            ""
+         ],
+         "WC tables": [
+            ""
+         ],
+         "Outputs your choice of order data from woocommerce as a table": [
+            ""
+         ],
+         "WC map": [
+            ""
+         ],
+         "Outputs order data from woocommerce as a interactive map": [
+            ""
+         ],
+         "Changes have been made to your current app. Refresh the page to update": [
+            ""
+         ],
+         "Update available": [
+            ""
+         ],
+         "Post type select": [
+            ""
+         ],
+         "Roles": [
+            ""
+         ],
+         "Users": [
+            ""
+         ],
+         "Role select": [
+            ""
+         ],
+         "others": [
+            ""
+         ],
+         "other": [
+            ""
+         ],
+         "User search": [
+            ""
+         ],
+         "New item": [
+            ""
+         ],
+         "Colour": [
+            ""
+         ],
+         "Gradient": [
+            ""
+         ],
+         "Position": [
+            ""
+         ],
+         "Repeat": [
+            ""
+         ],
+         "Size": [
+            ""
+         ],
+         "Radius": [
+            ""
+         ],
+         "Width": [
+            ""
+         ],
+         "Border colour": [
+            ""
+         ],
+         "Classes": [
+            ""
+         ],
+         "Search classes": [
+            ""
+         ],
+         "Exit fullscreen": [
+            ""
+         ],
+         "Code editor": [
+            ""
+         ],
+         "Edit code": [
+            ""
+         ],
+         "Add": [
+            ""
+         ],
+         "Update code": [
+            ""
+         ],
+         "Discard changes": [
+            ""
+         ],
+         "Code updated": [
+            ""
+         ],
+         "Colour picker": [
+            ""
+         ],
+         "New condition": [
+            ""
+         ],
+         "Operator": [
+            ""
+         ],
+         "Value": [
+            ""
+         ],
+         "Add condition": [
+            ""
+         ],
+         "And": [
+            ""
+         ],
+         "Or": [
+            ""
+         ],
+         "User role": [
+            ""
+         ],
+         "User login": [
+            ""
+         ],
+         "User ID": [
+            ""
+         ],
+         "Is": [
+            ""
+         ],
+         "Is not": [
+            ""
+         ],
+         "Height": [
+            ""
+         ],
+         "Max height": [
+            ""
+         ],
+         "Max width": [
+            ""
+         ],
+         "Min height": [
+            ""
+         ],
+         "Min width": [
+            ""
+         ],
+         "Grow": [
+            ""
+         ],
+         "Shrink": [
+            ""
+         ],
+         "Dynamic data": [
+            ""
+         ],
+         "Current value": [
+            ""
+         ],
+         "select": [
+            ""
+         ],
+         "Dynamic data position": [
+            ""
+         ],
+         "Rename item": [
+            ""
+         ],
+         "Transform": [
+            ""
+         ],
+         "Translate": [
+            ""
+         ],
+         "Scale": [
+            ""
+         ],
+         "Rotate": [
+            ""
+         ],
+         "Skew": [
+            ""
+         ],
+         "Settings": [
+            ""
+         ],
+         "Filters": [
+            ""
+         ],
+         "Mix blend mode": [
+            ""
+         ],
+         "Grayscale": [
+            ""
+         ],
+         "Blur": [
+            ""
+         ],
+         "Saturate": [
+            ""
+         ],
+         "Contrast": [
+            ""
+         ],
+         "Backdrop blur": [
+            ""
+         ],
+         "Ease": [
+            ""
+         ],
+         "Time": [
+            ""
+         ],
+         "Delay": [
+            ""
+         ],
+         "Cursor": [
+            ""
+         ],
+         "General": [
+            ""
+         ],
+         "Resizing": [
+            ""
+         ],
+         "Distribute": [
+            ""
+         ],
+         "Align": [
+            ""
+         ],
+         "Wrap": [
+            ""
+         ],
+         "Gap": [
+            ""
+         ],
+         "Rows": [
+            ""
+         ],
+         "Column width": [
+            ""
+         ],
+         "Place": [
+            ""
+         ],
+         "Responsive": [
+            ""
+         ],
+         "Stack": [
+            ""
+         ],
+         "Grid": [
+            ""
+         ],
+         "Search toolbar items": [
+            ""
+         ],
+         "Icon select": [
+            ""
+         ],
+         "Search admin pages": [
+            ""
+         ],
+         "Search pages and posts": [
+            ""
+         ],
+         "No posts found for current query": [
+            ""
+         ],
+         "Link mode": [
+            ""
+         ],
+         "Link select": [
+            ""
+         ],
+         "Dynamic links will load in the available content frame without page refresh. If none exists then it will perform a normal relead.": [
+            ""
+         ],
+         "Default links load like a normal link and will refresh the whole page.": [
+            ""
+         ],
+         "New tab links open in a new browser tab.": [
+            ""
+         ],
+         "Selected items": [
+            ""
+         ],
+         "Offset": [
+            ""
+         ],
+         "Outline colour": [
+            ""
+         ],
+         "Solid": [
+            ""
+         ],
+         "Dashed": [
+            ""
+         ],
+         "Dotted": [
+            ""
+         ],
+         "Double": [
+            ""
+         ],
+         "Groove": [
+            ""
+         ],
+         "Ridge": [
+            ""
+         ],
+         "Inset": [
+            ""
+         ],
+         "None": [
+            ""
+         ],
+         "Top": [
+            ""
+         ],
+         "Center": [
+            ""
+         ],
+         "Bottom": [
+            ""
+         ],
+         "Relative": [
+            ""
+         ],
+         "Absolute": [
+            ""
+         ],
+         "Fixed": [
+            ""
+         ],
+         "Sticky": [
+            ""
+         ],
+         "Static": [
+            ""
+         ],
+         "Block": [
+            ""
+         ],
+         "Flex": [
+            ""
+         ],
+         "Inherit": [
+            ""
+         ],
+         "Vertical align": [
+            ""
+         ],
+         "Horizontal align": [
+            ""
+         ],
+         "z-index": [
+            ""
+         ],
+         "Display": [
+            ""
+         ],
+         "Seach post types": [
+            ""
+         ],
+         "Post type": [
+            ""
+         ],
+         "Order by": [
+            ""
+         ],
+         "Per page": [
+            ""
+         ],
+         "Meta query": [
+            ""
+         ],
+         "Tax query": [
+            ""
+         ],
+         "Search statuses": [
+            ""
+         ],
+         "Meta value": [
+            ""
+         ],
+         "Terms": [
+            ""
+         ],
+         "Compare": [
+            ""
+         ],
+         "Order": [
+            ""
+         ],
+         "Relation": [
+            ""
+         ],
+         "Post statuses": [
+            ""
+         ],
+         "Search post statuses": [
+            ""
+         ],
+         "Pagination": [
+            ""
+         ],
+         "Search roles": [
+            ""
+         ],
+         "Own content": [
+            ""
+         ],
+         "Taxonomy": [
+            ""
+         ],
+         "Field": [
+            ""
+         ],
+         "Tax value": [
+            ""
+         ],
+         "Include children": [
+            ""
+         ],
+         "Posts": [
+            ""
+         ],
+         "AND": [
+            ""
+         ],
+         "OR": [
+            ""
+         ],
+         "Query": [
+            ""
+         ],
+         "Meta": [
+            ""
+         ],
+         "Tax": [
+            ""
+         ],
+         "Sites": [
+            ""
+         ],
+         "Descending": [
+            ""
+         ],
+         "Ascending": [
+            ""
+         ],
+         "Edit query": [
+            ""
+         ],
+         "Mobile": [
+            ""
+         ],
+         "Tablet": [
+            ""
+         ],
+         "Desktop": [
+            ""
+         ],
+         "New option": [
+            ""
+         ],
+         "Option": [
+            ""
+         ],
+         "Outside": [
+            ""
+         ],
+         "Inside": [
+            ""
+         ],
+         "Horizontal distance": [
+            ""
+         ],
+         "Vertical distance": [
+            ""
+         ],
+         "Shadow colour": [
+            ""
+         ],
+         "Paddding": [
+            ""
+         ],
+         "Margin": [
+            ""
+         ],
+         "Synced": [
+            ""
+         ],
+         "Per side": [
+            ""
+         ],
+         "Remove": [
+            ""
+         ],
+         "Extra small": [
+            ""
+         ],
+         "Small": [
+            ""
+         ],
+         "Medium": [
+            ""
+         ],
+         "Large": [
+            ""
+         ],
+         "Extra large": [
+            ""
+         ],
+         "Opacity": [
+            ""
+         ],
+         "Overflow": [
+            ""
+         ],
+         "Fill": [
+            ""
+         ],
+         "Background": [
+            ""
+         ],
+         "Background image": [
+            ""
+         ],
+         "Border": [
+            ""
+         ],
+         "Add image": [
+            ""
+         ],
+         "Shadow": [
+            ""
+         ],
+         "Outline": [
+            ""
+         ],
+         "Visible": [
+            ""
+         ],
+         "Auto": [
+            ""
+         ],
+         "Hidden": [
+            ""
+         ],
+         "Scroll": [
+            ""
+         ],
+         "Save as site option": [
+            ""
+         ],
+         "Save as user meta": [
+            ""
+         ],
+         "Send to PHP function": [
+            ""
+         ],
+         "Individual keys": [
+            ""
+         ],
+         "Group object": [
+            ""
+         ],
+         "Pixels": [
+            ""
+         ],
+         "Submit type": [
+            ""
+         ],
+         "PHP function": [
+            ""
+         ],
+         "Option name": [
+            ""
+         ],
+         "Recipient email": [
+            ""
+         ],
+         "Email subject": [
+            ""
+         ],
+         "Email template": [
+            ""
+         ],
+         "Use form values in the email template by using {{meta_keys}} set inside from input blocks": [
+            ""
+         ],
+         "The form data will be saved as an object to your database using the function update_site_option(). You will then be able to access your data using the function get_site_option('your_option_key')": [
+            ""
+         ],
+         "Save as": [
+            ""
+         ],
+         "Submission redirect": [
+            ""
+         ],
+         "Action": [
+            ""
+         ],
+         "size": [
+            ""
+         ],
+         "Line height": [
+            ""
+         ],
+         "Weight": [
+            ""
+         ],
+         "Font": [
+            ""
+         ],
+         "Decoration": [
+            ""
+         ],
+         "Font url": [
+            ""
+         ],
+         "Font family": [
+            ""
+         ],
+         "Spacing": [
+            ""
+         ],
+         "Justify": [
+            ""
+         ],
+         "Italic": [
+            ""
+         ],
+         "Underline": [
+            ""
+         ],
+         "Strikethrough": [
+            ""
+         ],
+         "Bold": [
+            ""
+         ],
+         "Bolder": [
+            ""
+         ],
+         "Lighter": [
+            ""
+         ],
+         "Normal": [
+            ""
+         ],
+         "Capitalize": [
+            ""
+         ],
+         "Lowercase": [
+            ""
+         ],
+         "Uppercase": [
+            ""
+         ],
+         "Primary color": [
+            ""
+         ],
+         "Primary color darker": [
+            ""
+         ],
+         "Primary color lighter": [
+            ""
+         ],
+         "Accent color": [
+            ""
+         ],
+         "Accent color darker": [
+            ""
+         ],
+         "Accent color lighter": [
+            ""
+         ],
+         "Success color": [
+            ""
+         ],
+         "Success color darker": [
+            ""
+         ],
+         "Success color lighter": [
+            ""
+         ],
+         "Warning color": [
+            ""
+         ],
+         "Warning color darker": [
+            ""
+         ],
+         "Warning color lighter": [
+            ""
+         ],
+         "Danger color": [
+            ""
+         ],
+         "Danger color darker": [
+            ""
+         ],
+         "Danger color lighter": [
+            ""
+         ],
+         "Base": [
+            ""
+         ],
+         "Base 1": [
+            ""
+         ],
+         "Base 2": [
+            ""
+         ],
+         "Text color base": [
+            ""
+         ],
+         "Text color emphasis": [
+            ""
+         ],
+         "Text color muted": [
+            ""
+         ],
+         "Text color inverted": [
+            ""
+         ],
+         "Border color": [
+            ""
+         ],
+         "Percent": [
+            ""
+         ],
+         "Points": [
+            ""
+         ],
+         "Font size": [
+            ""
+         ],
+         "Root font size": [
+            ""
+         ],
+         "Viewport height": [
+            ""
+         ],
+         "Dynamic Viewport height": [
+            ""
+         ],
+         "Viewport width": [
+            ""
+         ],
+         "auto": [
+            ""
+         ],
+         "Element size": [
+            ""
+         ],
+         "Root size": [
+            ""
+         ],
+         "Advanced": [
+            ""
+         ],
+         "White label": [
+            ""
+         ],
+         "Theme": [
+            ""
+         ],
+         "Login": [
+            ""
+         ],
+         "Posts and pages": [
+            ""
+         ],
+         "Media": [
+            ""
+         ],
+         "Plugins": [
+            ""
+         ],
+         "Extensions": [
+            ""
+         ],
+         "This will replace the WordPress logo with your own. The logo will also become available in the dynamic options in the builder.": [
+            ""
+         ],
+         "Remove jQuery Migrate front end": [
+            ""
+         ],
+         "Removes jQuery migrate script from all front end pages.": [
+            ""
+         ],
+         "Remove jQuery Migrate back end": [
+            ""
+         ],
+         "Removes jQuery migrate script from all back end pages. This may break some functions in the back end": [
+            ""
+         ],
+         "Add post ID to table": [
+            ""
+         ],
+         "Adds the post ID to each row in a table. Works for posts, custom post types, pages and users.": [
+            ""
+         ],
+         "Disply last modified in table": [
+            ""
+         ],
+         "Adds a last modified column to post tables. Works for posts, custom post types and pages.": [
+            ""
+         ],
+         "Add plugin status": [
+            ""
+         ],
+         "Adds a plugin status column to the plugin table": [
+            ""
+         ],
+         "Logo": [
+            ""
+         ],
+         "This will replace the WordPress logo with your own on the login page.": [
+            ""
+         ],
+         "Logo alignment": [
+            ""
+         ],
+         "Sets the logo alignment.": [
+            ""
+         ],
+         "Adds a modern theme to the login page": [
+            ""
+         ],
+         "Form alignment": [
+            ""
+         ],
+         "Sets the position of the login form.": [
+            ""
+         ],
+         "Adds a background image to the login page.": [
+            ""
+         ],
+         "Forces dark mode on the login page": [
+            ""
+         ],
+         "Disable language selector": [
+            ""
+         ],
+         "Disables the language selector on the login page": [
+            ""
+         ],
+         "Remove UiPress link": [
+            ""
+         ],
+         "Removes the powered by uipress link": [
+            ""
+         ],
+         "Custom HTML": [
+            ""
+         ],
+         "HTML to be added to the side panel of the login page. Only works when the login theme is enabled and not using the centered form.": [
+            ""
+         ],
+         "Custom CSS": [
+            ""
+         ],
+         "CSS to be added to the login page": [
+            ""
+         ],
+         "Hide UiPress from plugin table": [
+            ""
+         ],
+         "If enabled, both UiPress lite and pro (if installed) will be hidden from the plugins table": [
+            ""
+         ],
+         "Change Howdy message": [
+            ""
+         ],
+         "Replaces the Howdy message in the toolbar with one of your choosing": [
+            ""
+         ],
+         "Howdy message": [
+            ""
+         ],
+         "Removes the Howdy message in the toolbar": [
+            ""
+         ],
+         "Add user roles as body class": [
+            ""
+         ],
+         "If enabled, the current user roles will be added as classes to the admin body tag. This can give you more flexibility in your css for role based conditions": [
+            ""
+         ],
+         "Dynamic loading": [
+            ""
+         ],
+         "If enabled, dynamic loading on templates will be disabled and every link will be loaded with a page refresh": [
+            ""
+         ],
+         "Load frontend outside frame": [
+            ""
+         ],
+         "If enabled, all page links not inside the wordpress admin will be reloaded outside the frame": [
+            ""
+         ],
+         "Enqueue styles": [
+            ""
+         ],
+         "Add stylesheets to the head of every admin page": [
+            ""
+         ],
+         "Enqueue scripts": [
+            ""
+         ],
+         "Add scripts to the head of every admin page": [
+            ""
+         ],
+         "HTML for head": [
+            ""
+         ],
+         "Add HTML here to be added to every admin page head section": [
+            ""
+         ],
+         "Disable uipress on pages": [
+            ""
+         ],
+         "Add URLs of pages here that you wish uiPress to be disabled on, separated by a comma. The URL can be an absolute URL, partial path or a query paramater.": [
+            ""
+         ],
+         "Enter fullscreen on pages": [
+            ""
+         ],
+         "Add URLs of pages here that you wish to be fullscreen when using a uiTemplate, separated by a comma. The URL can be an absolute URL, partial path or a query paramater.": [
+            ""
+         ],
+         "If enabled, a simple modernised theme will be applied to the admin area. This is an alternative to using the builder for your UI": [
+            ""
+         ],
+         "Private library": [
+            ""
+         ],
+         "If enabled, users will only be able to view their own media in the media library. This does not apply to administrators": [
+            ""
+         ],
+         "Private posts": [
+            ""
+         ],
+         "If enabled, users will only be able to view their own posts and pages in the post tables. This does not apply to administrators": [
+            ""
+         ],
+         "Menu builder": [
+            ""
+         ],
+         "The menu builder allows you to create custom admin menus for roles and users": [
+            ""
+         ],
+         "User management": [
+            ""
+         ],
+         "The user management page allows you manage your users, roles and user activity all in one place": [
+            ""
+         ],
+         "Content folders": [
+            ""
+         ],
+         "Enables a folder system for posts, pages, custom post types and media": [
+            ""
+         ],
+         "CSS": [
+            ""
+         ],
+         "JavaScript": [
+            ""
+         ],
+         "Search errors": [
+            ""
+         ],
+         "Error log": [
+            ""
+         ],
+         "Misc": [
+            ""
+         ],
+         "Fatal": [
+            ""
+         ],
+         "Warning": [
+            ""
+         ],
+         "Syntax": [
+            ""
+         ],
+         "Notice": [
+            ""
+         ],
+         "Exception": [
+            ""
+         ],
+         "entries": [
+            ""
+         ],
+         "Newest first": [
+            ""
+         ],
+         "Oldest first": [
+            ""
+         ],
+         "Sort by": [
+            ""
+         ],
+         "line": [
+            ""
+         ],
+         "Refresh log": [
+            ""
+         ],
+         "Stack trace": [
+            ""
+         ],
+         "No PHP errors to display!": [
+            ""
+         ],
+         "List View": [
+            ""
+         ],
+         "Setup wizard": [
+            ""
+         ],
+         "Global export": [
+            ""
+         ],
+         "Global import": [
+            ""
+         ],
+         "Site sync": [
+            ""
+         ],
+         "Block Settings": [
+            ""
+         ],
+         "Styles": [
+            ""
+         ],
+         "Duplicate": [
+            ""
+         ],
+         "Copy": [
+            ""
+         ],
+         "Paste": [
+            ""
+         ],
+         "Edit template": [
+            ""
+         ],
+         "Reset template": [
+            ""
+         ],
+         "Insert": [
+            ""
+         ],
+         "Lorem Ipsum": [
+            ""
+         ],
+         "Auto generate": [
+            ""
+         ],
+         "From prompt": [
+            ""
+         ],
+         "Edit states": [
+            ""
+         ],
+         "Copy styles": [
+            ""
+         ],
+         "Save as pattern": [
+            ""
+         ],
+         "Sync pattern": [
+            ""
+         ],
+         "Template": [
+            ""
+         ],
+         "Template imported": [
+            ""
+         ],
+         "Template mismatch": [
+            ""
+         ],
+         "Block imported": [
+            ""
+         ],
+         "Content imported": [
+            ""
+         ],
+         "File is not a valid JSON template": [
+            ""
+         ],
+         "JSON parse failed": [
+            ""
+         ],
+         "Exported": [
+            ""
+         ],
+         "Are you sure you want to reset this block's template? Any custom changes to the template will be lost": [
+            ""
+         ],
+         "Gnerate lorem ipsum": [
+            ""
+         ],
+         "Create with AI": [
+            ""
+         ],
+         "Sync patern": [
+            ""
+         ],
+         "This will update the pattern template and will sync this pattern's changes accross all templates using the same pattern?": [
+            ""
+         ],
+         "Syncing patterns": [
+            ""
+         ],
+         "Patterns synced succesfully": [
+            ""
+         ],
+         "This component is missing or can't be loaded": [
+            ""
+         ],
+         "Total items": [
+            ""
+         ],
+         "This is a pro option. Upgrade to unlock": [
+            ""
+         ],
+         "Importing template": [
+            ""
+         ],
+         "Unable to import template right now": [
+            ""
+         ],
+         "This block requires uipress pro. Upgrade to unlock.": [
+            ""
+         ],
+         "Search blocks...": [
+            ""
+         ],
+         "Upgrade": [
+            ""
+         ],
+         "total items": [
+            ""
+         ],
+         "Preset name": [
+            ""
+         ],
+         "Update": [
+            ""
+         ],
+         "Create a new style preset from the current block style. Style presets can be used on any block and updating in one place will update across all your templates.": [
+            ""
+         ],
+         "Delete preset": [
+            ""
+         ],
+         "Are you sure you want to delete this custom preset?": [
+            ""
+         ],
+         "Create preset": [
+            ""
+         ],
+         "Search presets": [
+            ""
+         ],
+         "New preset": [
+            ""
+         ],
+         "No presets yet": [
+            ""
+         ],
+         "Edit preset": [
+            ""
+         ],
+         "Preset": [
+            ""
+         ],
+         "Use preset": [
+            ""
+         ],
+         "Block part": [
+            ""
+         ],
+         "Block parts": [
+            ""
+         ],
+         "Root": [
+            ""
+         ],
+         "Toggle dark / light mode": [
+            ""
+         ],
+         "Reset section": [
+            ""
+         ],
+         ":active": [
+            ""
+         ],
+         ":focus": [
+            ""
+         ],
+         ":hover": [
+            ""
+         ],
+         ":visited": [
+            ""
+         ],
+         "::before": [
+            ""
+         ],
+         "::after": [
+            ""
+         ],
+         "Menu collapsed": [
+            ""
+         ],
+         "Options": [
+            ""
+         ],
+         "Hidden on device": [
+            ""
+         ],
+         "Tooltip": [
+            ""
+         ],
+         "Message": [
+            ""
+         ],
+         "Query loop": [
+            ""
+         ],
+         "Name": [
+            ""
+         ],
+         "Effects": [
+            ""
+         ],
+         "Code": [
+            ""
+         ],
+         "Conditions": [
+            ""
+         ],
+         "Theme styles": [
+            ""
+         ],
+         "Revert style back to default": [
+            ""
+         ],
+         "Applies to": [
+            ""
+         ],
+         "Excludes": [
+            ""
+         ],
+         "Template type": [
+            ""
+         ],
+         "Admin Page": [
+            ""
+         ],
+         "Template will now load for you!": [
+            ""
+         ],
+         "Take care not to revoke access to anything you may need in the admin.": [
+            ""
+         ],
+         "If you haven't already, we recommend setting up:": [
+            ""
+         ],
+         "safe mode": [
+            ""
+         ],
+         "Javascript": [
+            ""
+         ],
+         "Light": [
+            ""
+         ],
+         "Dark": [
+            ""
+         ],
+         "Template name": [
+            ""
+         ],
+         "Active": [
+            ""
+         ],
+         "Users and roles": [
+            ""
+         ],
+         "Search users and roles": [
+            ""
+         ],
+         "custom": [
+            ""
+         ],
+         "Menu icon": [
+            ""
+         ],
+         "Add to submenu": [
+            ""
+         ],
+         "None (top level)": [
+            ""
+         ],
+         "Apply to subsites": [
+            ""
+         ],
+         "Is this an admin page?": [
+            ""
+         ],
+         "This template does not contain a content block. The content block is key to navigating the admin. Setting this live as a uiTemplate can cause a lock out.": [
+            ""
+         ],
+         "Template settings": [
+            ""
+         ],
+         "Slug": [
+            ""
+         ],
+         "Exit builder": [
+            ""
+         ],
+         "Toggle layers panel": [
+            ""
+         ],
+         "Back to template list": [
+            ""
+         ],
+         "Zoom in": [
+            ""
+         ],
+         "Zoom out": [
+            ""
+         ],
+         "Preview": [
+            ""
+         ],
+         "Import template": [
+            ""
+         ],
+         "Export template": [
+            ""
+         ],
+         "Template Library": [
+            ""
+         ],
+         "Save": [
+            ""
+         ],
+         "Help": [
+            ""
+         ],
+         "Draft": [
+            ""
+         ],
+         "Re-center": [
+            ""
+         ],
+         "Show grid lines": [
+            ""
+         ],
+         "frame": [
+            ""
+         ],
+         "Zoom to fit": [
+            ""
+         ],
+         "Builder": [
+            ""
+         ],
+         "Array": [
+            ""
+         ],
+         "Post title": [
+            ""
+         ],
+         "Post author": [
+            ""
+         ],
+         "Post date": [
+            ""
+         ],
+         "Post link": [
+            ""
+         ],
+         "Post edit link": [
+            ""
+         ],
+         "Post featured image": [
+            ""
+         ],
+         "Post content": [
+            ""
+         ],
+         "Post excerpt": [
+            ""
+         ],
+         "Post status": [
+            ""
+         ],
+         "Comment count": [
+            ""
+         ],
+         "ACF Meta key": [
+            ""
+         ],
+         "Metabox Meta key": [
+            ""
+         ],
+         "Attachment image": [
+            ""
+         ],
+         "Attachment type": [
+            ""
+         ],
+         "User nicename": [
+            ""
+         ],
+         "User registered": [
+            ""
+         ],
+         "User profile image": [
+            ""
+         ],
+         "ACF User meta": [
+            ""
+         ],
+         "Site registered": [
+            ""
+         ],
+         "Site domain": [
+            ""
+         ],
+         "Site last updated": [
+            ""
+         ],
+         "Site path": [
+            ""
+         ],
+         "Site id": [
+            ""
+         ],
+         "Site name": [
+            ""
+         ],
+         "Site home url": [
+            ""
+         ],
+         "Site admin url": [
+            ""
+         ],
+         "Site meta": [
+            ""
+         ],
+         "Layers": [
+            ""
+         ],
+         "Welcome to the uiBuilder": [
+            ""
+         ],
+         "Brand new for UiPress 3, the uiBuilder is a powerful drag and drop tool for building great looking, functional admin experiences for yourself or your clients": [
+            ""
+         ],
+         "Blank canvas": [
+            ""
+         ],
+         "View templates": [
+            ""
+         ],
+         "Don't show this again": [
+            ""
+         ],
+         "Close": [
+            ""
+         ],
+         "Deletes all blocks": [
+            ""
+         ],
+         "Hide layers": [
+            ""
+         ],
+         "Block shortcuts": [
+            ""
+         ],
+         "Clear layers": [
+            ""
+         ],
+         "Draft Layout": [
+            ""
+         ],
+         "Blocks": [
+            ""
+         ],
+         "Library": [
+            ""
+         ],
+         "Canvas": [
+            ""
+         ],
+         "Choose the sections you wish to export to another site and click export to generate a file containing all of uiPress settings, templates, menus and theme styles": [
+            ""
+         ],
+         "Templates": [
+            ""
+         ],
+         "Admin menus": [
+            ""
+         ],
+         "Cancel": [
+            ""
+         ],
+         "Exporting uiPress content": [
+            ""
+         ],
+         "Export complete": [
+            ""
+         ],
+         "If you have global exported uiPress on another site then drag and select the .json file below to import.": [
+            ""
+         ],
+         "Importing uiPress content": [
+            ""
+         ],
+         "Global exports must be in valid JSON format": [
+            ""
+         ],
+         "Content imported succesfully": [
+            ""
+         ],
+         "Undo": [
+            ""
+         ],
+         "Redo": [
+            ""
+         ],
+         "Block is using query loop": [
+            ""
+         ],
+         "Pattern title": [
+            ""
+         ],
+         "Pattern type": [
+            ""
+         ],
+         "Patterns can be either single components or entire layoutsd and are a great way of creating reusable blocks for your projects.": [
+            ""
+         ],
+         "Save pattern": [
+            ""
+         ],
+         "Description": [
+            ""
+         ],
+         "Pattern icon": [
+            ""
+         ],
+         "Pattern not saved": [
+            ""
+         ],
+         "Pattern title is required": [
+            ""
+         ],
+         "Previous": [
+            ""
+         ],
+         "Next": [
+            ""
+         ],
+         "Finish": [
+            ""
+         ],
+         "Select users and roles": [
+            ""
+         ],
+         "Login logo": [
+            ""
+         ],
+         "Login background": [
+            ""
+         ],
+         "Enable login theme": [
+            ""
+         ],
+         "Setup complete!": [
+            ""
+         ],
+         "Settings from the wizard have been saved to your site. If you chose a admin template you will need to reload the page to use it.": [
+            ""
+         ],
+         "Refresh admin": [
+            ""
+         ],
+         "Exit": [
+            ""
+         ],
+         "Light mode": [
+            ""
+         ],
+         "Choose a logo for the admin area.": [
+            ""
+         ],
+         "Choose a template for the admin area. This can be editied after the intiial setup.": [
+            ""
+         ],
+         "Choose your colors and styles to run through the admin area.": [
+            ""
+         ],
+         "Choose who you want to use the new admin template": [
+            ""
+         ],
+         "Use the options below to customise your login page.": [
+            ""
+         ],
+         "Confirguring settings": [
+            ""
+         ],
+         "Save settings": [
+            ""
+         ],
+         "Settings saved": [
+            ""
+         ],
+         "Search settings": [
+            ""
+         ],
+         "Settings exported": [
+            ""
+         ],
+         "Importing settings": [
+            ""
+         ],
+         "Settings must be in valid JSON format": [
+            ""
+         ],
+         "Uploaded file is too big": [
+            ""
+         ],
+         "Settings mismatch": [
+            ""
+         ],
+         "Settings imported": [
+            ""
+         ],
+         "Enabling this site as a host allows you to sync other sites to this site's uiPress settings. Please note, rest API needs to be enabled to use this feature.": [
+            ""
+         ],
+         "Choose the sections you sync with a remote site. Enabling auto update will allow uiPress to routinely check for changes at the host site and sync updates.": [
+            ""
+         ],
+         "Host enabled": [
+            ""
+         ],
+         "Import URL": [
+            ""
+         ],
+         "Import key": [
+            ""
+         ],
+         "Refresh key": [
+            ""
+         ],
+         "Sync options": [
+            ""
+         ],
+         "Sync now": [
+            ""
+         ],
+         "Host": [
+            ""
+         ],
+         "Sync": [
+            ""
+         ],
+         "Import complete": [
+            ""
+         ],
+         "This block no longer exists": [
+            ""
+         ],
+         "Template library": [
+            ""
+         ],
+         "Pro": [
+            ""
+         ],
+         "Search templates": [
+            ""
+         ],
+         "Back to all templates": [
+            ""
+         ],
+         "Includes pro blocks": [
+            ""
+         ],
+         "Created by": [
+            ""
+         ],
+         "Add to template": [
+            ""
+         ],
+         "Replace current layout": [
+            ""
+         ],
+         "Add to end of layout": [
+            ""
+         ],
+         "Requires uipress": [
+            ""
+         ],
+         "How many times this template has been downloaded": [
+            ""
+         ],
+         "Include": [
+            ""
+         ],
+         "UI templates": [
+            ""
+         ],
+         "Pages": [
+            ""
+         ],
+         "Sections": [
+            ""
+         ],
+         "Patterns": [
+            ""
+         ],
+         "Admin pages": [
+            ""
+         ],
+         "Delete pattern": [
+            ""
+         ],
+         "Are you sure you want to delete this custom pattern?": [
+            ""
+         ],
+         "Pattern deleted": [
+            ""
+         ],
+         "results": [
+            ""
+         ],
+         "Delete selected": [
+            ""
+         ],
+         "New template": [
+            ""
+         ],
+         "View docs": [
+            ""
+         ],
+         "PHP error log": [
+            ""
+         ],
+         "Remote sync": [
+            ""
+         ],
+         "New": [
+            ""
+         ],
+         "Documentation": [
+            ""
+         ],
+         "Tips and updates": [
+            ""
+         ],
+         "No templates found": [
+            ""
+         ],
+         "All templates": [
+            ""
+         ],
+         "UI Templates": [
+            ""
+         ],
+         "Frontend toolbars": [
+            ""
+         ],
+         "Delete template": [
+            ""
+         ],
+         "Deleted templates can't be recovered": [
+            ""
+         ],
+         "Delete multiple template": [
+            ""
+         ],
+         "Done": [
+            ""
+         ],
+         "Typing \"{{\" in any window now opens the new dynamic data flow. Continue typing to search or press enter to select. Dynamic data will render in preview mode.": [
+            ""
+         ],
+         "Query builder": [
+            ""
+         ],
+         "The new query builder can be enabled on any block and allows you to query posts, pages, users and sites (multsitie only). The query builder is designed to work perfectly with the new dynamic data selector.": [
+            ""
+         ],
+         "Style presets": [
+            ""
+         ],
+         "Style presets allow you to create custom presets that you can apply to any blocks. Presets are global and making changes to them in one place will update them across all of your templates": [
+            ""
+         ],
+         "Redesigned block styles": [
+            ""
+         ],
+         "The new editor makes it easier to adjust block styles and create more advanced layouts. Use the new pseudo switcher to create detailed templates": [
+            ""
+         ],
+         "Effects and transitions": [
+            ""
+         ],
+         "You can add and manage transitions within the uiBuilder. Adjust timings and animation styles to get the perfect result.": [
+            ""
+         ],
+         "Contextual options": [
+            ""
+         ],
+         "Common actions are just a right click away. Duplicate blocks, copy styles or export your entire template": [
+            ""
+         ],
+         "Documentation and guides": [
+            ""
+         ],
+         "Recent templates": [
+            ""
+         ],
+         "User interface": [
+            ""
+         ],
+         "Layout exported": [
+            ""
+         ],
+         "Block exported": [
+            ""
+         ],
+         "Block content exported": [
+            ""
+         ],
+         "Importing layout": [
+            ""
+         ],
+         "Templates must be in valid JSON format": [
+            ""
+         ],
+         "New template created": [
+            ""
+         ],
+         "Variable label": [
+            ""
+         ],
+         "Variable name": [
+            ""
+         ],
+         "Delete variable": [
+            ""
+         ],
+         "Search variables...": [
+            ""
+         ],
+         "New variable": [
+            ""
+         ],
+         "Edit style": [
+            ""
+         ],
+         "Colours": [
+            ""
+         ],
+         "Units": [
+            ""
+         ],
+         "Fonts": [
+            ""
+         ],
+         "New style variable": [
+            ""
+         ],
+         "New unit variable": [
+            ""
+         ],
+         "Edit unit": [
+            ""
+         ],
+         "Style name": [
+            ""
+         ],
+         "Edit text": [
+            ""
+         ],
+         "New text variable": [
+            ""
+         ],
+         "Variable deleted": [
+            ""
+         ],
+         "Center left": [
+            ""
+         ],
+         "Center center": [
+            ""
+         ],
+         "Center right": [
+            ""
+         ],
+         "No repeat": [
+            ""
+         ],
+         "Repeat x": [
+            ""
+         ],
+         "Repeat y": [
+            ""
+         ],
+         "Cover": [
+            ""
+         ],
+         "Contain": [
+            ""
+         ],
+         "Equal": [
+            ""
+         ],
+         "Not equal": [
+            ""
+         ],
+         "Greater than": [
+            ""
+         ],
+         "Greater than or equal": [
+            ""
+         ],
+         "Lesser than": [
+            ""
+         ],
+         "Lesser than or equal": [
+            ""
+         ],
+         "LIKE": [
+            ""
+         ],
+         "NOT LIKE": [
+            ""
+         ],
+         "IN": [
+            ""
+         ],
+         "NOT IN": [
+            ""
+         ],
+         "Linear": [
+            ""
+         ],
+         "Ease in": [
+            ""
+         ],
+         "Ease in out": [
+            ""
+         ],
+         "Ease out": [
+            ""
+         ],
+         "Out sine": [
+            ""
+         ],
+         "Out quadratic": [
+            ""
+         ],
+         "Back out": [
+            ""
+         ],
+         "Start": [
+            ""
+         ],
+         "End": [
+            ""
+         ],
+         "Stretch": [
+            ""
+         ],
+         "Baseline": [
+            ""
+         ],
+         "Space around": [
+            ""
+         ],
+         "Space between": [
+            ""
+         ],
+         "Space evenly": [
+            ""
+         ],
+         "Arial / Helvetica": [
+            ""
+         ],
+         "Times New Roman": [
+            ""
+         ],
+         "Courier New": [
+            ""
+         ],
+         "Tahoma": [
+            ""
+         ],
+         "Trebuchet MS": [
+            ""
+         ],
+         "Verdana": [
+            ""
+         ],
+         "Georgia": [
+            ""
+         ],
+         "Garamond": [
+            ""
+         ],
+         "Arial Black": [
+            ""
+         ],
+         "Impact": [
+            ""
+         ],
+         "Brush Script MT": [
+            ""
+         ],
+         "UiPress icons": [
+            ""
+         ],
+         "Multiply": [
+            ""
+         ],
+         "Screen": [
+            ""
+         ],
+         "Darken": [
+            ""
+         ],
+         "Lighten": [
+            ""
+         ],
+         "Color dodge": [
+            ""
+         ],
+         "Color burn": [
+            ""
+         ],
+         "Hard light": [
+            ""
+         ],
+         "Soft light": [
+            ""
+         ],
+         "Difference": [
+            ""
+         ],
+         "Exclusion": [
+            ""
+         ],
+         "Hue": [
+            ""
+         ],
+         "Saturation": [
+            ""
+         ],
+         "Color": [
+            ""
+         ],
+         "Luminosity": [
+            ""
+         ],
+         "Initial": [
+            ""
+         ],
+         "Unset": [
+            ""
+         ],
+         "NUMERIC": [
+            ""
+         ],
+         "CHAR": [
+            ""
+         ],
+         "DATE": [
+            ""
+         ],
+         "DATETIME": [
+            ""
+         ],
+         "DECIMAL": [
+            ""
+         ],
+         "SIGNED": [
+            ""
+         ],
+         "TIME": [
+            ""
+         ],
+         "UNSIGNED": [
+            ""
+         ],
+         "Modified": [
+            ""
+         ],
+         "Random": [
+            ""
+         ],
+         "Commend count": [
+            ""
+         ],
+         "Domain": [
+            ""
+         ],
+         "Path": [
+            ""
+         ],
+         "Network ID": [
+            ""
+         ],
+         "Last updated": [
+            ""
+         ],
+         "Registered": [
+            ""
+         ],
+         "Domain length": [
+            ""
+         ],
+         "Path length": [
+            ""
+         ],
+         "Nicename": [
+            ""
+         ],
+         "Registered date": [
+            ""
+         ],
+         "Post count": [
+            ""
+         ],
+         "Delete stop": [
+            ""
+         ],
+         "Radial": [
+            ""
+         ],
+         "Circle": [
+            ""
+         ],
+         "Ellipse": [
+            ""
+         ],
+         "View all icons on the": [
+            ""
+         ],
+         "Material site": [
+            ""
+         ],
+         "Replace": [
+            ""
+         ],
+         "Upload": [
+            ""
+         ],
+         "Uploading": [
+            ""
+         ],
+         "URL": [
+            ""
+         ],
+         "Create shades": [
+            ""
+         ],
+         "Copy variable": [
+            ""
+         ],
+         "Search styles": [
+            ""
+         ],
+         "New color style": [
+            ""
+         ],
+         "Edit color style": [
+            ""
+         ],
+         "Bad request": [
+            ""
+         ],
+         "Nothing found for search term": [
+            ""
+         ],
+         "Alt text": [
+            ""
+         ],
+         "Caption": [
+            ""
+         ],
+         "A nice image": [
+            ""
+         ],
+         "A image caption": [
+            ""
+         ],
+         "Image title": [
+            ""
+         ],
+         "Photo by": [
+            ""
+         ],
+         "on": [
+            ""
+         ],
+         "Unsplash": [
+            ""
+         ],
+         "Image saved": [
+            ""
+         ],
+         "Uploading images": [
+            ""
+         ],
+         "Failed to upload": [
+            ""
+         ],
+         "uploaded complete": [
+            ""
+         ],
+         "Importing image to library": [
+            ""
+         ],
+         "Failed to import image": [
+            ""
+         ],
+         "UiPress Lite": [
+            ""
+         ],
+         "https://uipress.co": [
+            ""
+         ],
+         "UiPress is an all in one solution for tailoring your WordPress admin. From custom dashboards, profile pages to entire admin frameworks, the uiBuilder can do it all. Pre-made intuitive blocks and a library of professional templates make it super easy to transform the way your site users interact with your content.": [
+            ""
+         ],
+         "Admin 2020": [
+            ""
+         ],
+         "post type general name\u0004UI Pattern": [
+            ""
+         ],
+         "post type general name\u0004UI Template": [
+            ""
+         ],
+         "post type singular name\u0004UI Pattern": [
+            ""
+         ],
+         "post type singular name\u0004UI Template": [
+            ""
+         ],
+         "admin menu\u0004UI Patterns": [
+            ""
+         ],
+         "admin menu\u0004UI Templates": [
+            ""
+         ],
+         "add new on admin bar\u0004UI Pattern": [
+            ""
+         ],
+         "add new on admin bar\u0004UI Template": [
+            ""
+         ],
+         "UI Pattern\u0004Add New": [
+            ""
+         ],
+         "Template\u0004Add New": [
+            ""
+         ]
+      }
+   }
+}
