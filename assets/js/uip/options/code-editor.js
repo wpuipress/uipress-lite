@@ -26,6 +26,7 @@ export default {
       finalVal: "",
       modalOpen: false,
       updating: false,
+      changed: false,
       strings: {
         openFullscreen: __("Fullscreen", "uipress-lite"),
         closeFullscreen: __("Exit fullscreen", "uipress-lite"),
@@ -97,6 +98,8 @@ export default {
       this.editor.renderer.updateFontSize();
       this.editor.setHighlightActiveLine(false);
 
+      this.changed = false;
+
       this.editor.setOptions({
         maxLines: Infinity,
         tabSize: 3,
@@ -132,6 +135,7 @@ export default {
       this.beautify.beautify(this.editor.session);
 
       const onChange = () => {
+        this.changed = true;
         this.finalVal = this.editor.getValue();
       };
       this.editor.session.on("change", onChange);
@@ -143,7 +147,7 @@ export default {
      * @since 3.2.13
      */
     saveCode() {
-      this.option = this.finalVal;
+      this.option = this.changed ? this.finalVal : this.option;
       this.$refs.codemodal.close();
       this.uipApp.notifications.notify(__("Code updated", "uipress-lite"), "", "success");
     },
