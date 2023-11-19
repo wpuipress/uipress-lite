@@ -267,7 +267,8 @@ export default {
       let zoom = parseFloat(this.ui.zoom);
       let width = zoom * 100;
       const calc = 1 / zoom;
-      return `scale:${calc};transform-origin:bottom left;width:${width}%`;
+      const origin = this.uipApp.isRTL ? "bottom right" : "bottom left";
+      return `scale:${calc};transform-origin:${origin};width:${width}%`;
     },
     /**
      * Returns the current color theme
