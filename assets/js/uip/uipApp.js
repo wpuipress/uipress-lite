@@ -87,6 +87,7 @@ const DropZone = defineAsyncComponent(() => import(`./uibuilder/block-drop-zone.
 const DropDown = defineAsyncComponent(() => import(`./components/dropdown.min.js?ver=${pluginVersion}`));
 const MultiSelect = defineAsyncComponent(() => import(`./components/multiselect.min.js?ver=${pluginVersion}`));
 const UserMultiSelect = defineAsyncComponent(() => import(`./components/user-role-multiselect.min.js?ver=${pluginVersion}`));
+const UIbuilderColorSelect = defineAsyncComponent(() => import(`./options/color-select.min.js?ver=${pluginVersion}`));
 const UserSearch = defineAsyncComponent(() => import(`./components/user-role-search.min.js?ver=${pluginVersion}`));
 const PostTypeMultiselect = defineAsyncComponent(() => import(`./components/post-type-select.min.js?ver=${pluginVersion}`));
 const Accordion = defineAsyncComponent(() => import(`./components/accordion.min.js?ver=${pluginVersion}`));
@@ -116,6 +117,7 @@ app.component("uip-floating-panel", FloatingPanel);
 app.component("uip-draggable", VueDraggableNext);
 app.component("uipMediaLibrary", MediaLibrary);
 app.component("uipModal", Modal);
+app.component("color-select", UIbuilderColorSelect);
 
 /**
  * Sets up global properties and functions
