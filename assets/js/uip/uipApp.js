@@ -99,6 +99,7 @@ const SaveButton = defineAsyncComponent(() => import(`./components/save-button.m
 const ChartComp = defineAsyncComponent(() => import(`./components/chart.min.js?ver=${pluginVersion}`));
 const FloatingPanel = defineAsyncComponent(() => import(`./components/floating-panel.min.js?ver=${pluginVersion}`));
 const Modal = defineAsyncComponent(() => import(`./v3.5/utility/modal.min.js?ver=${pluginVersion}`));
+const UIbuilderInlineImageSelect = defineAsyncComponent(() => import(`./options/inline-image-select.min.js?ver=${pluginVersion}`));
 import { MediaLibrary } from "./v3.5/utility/media-library.min.js?ver=3.2.0";
 
 app.component("multi-select", MultiSelect);
@@ -118,6 +119,7 @@ app.component("uip-draggable", VueDraggableNext);
 app.component("uipMediaLibrary", MediaLibrary);
 app.component("uipModal", Modal);
 app.component("color-select", UIbuilderColorSelect);
+app.component("inline-image-select", UIbuilderInlineImageSelect);
 
 /**
  * Sets up global properties and functions
