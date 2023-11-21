@@ -1133,6 +1133,11 @@ export default {
 
         if (item.submenu) {
           item.submenu.forEach(processSubItem);
+          let subState = item.submenu.some((subitem) => subitem.active === true);
+
+          if (subState) {
+            item.active = true;
+          }
         }
       };
 
