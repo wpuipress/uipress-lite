@@ -142,6 +142,11 @@ class UipScripts
         "ajax_url" => $ajaxURL,
         "security" => $nonce,
         "uipAppData" => $options,
+        "rest_url" => get_rest_url(),
+        "rest_headers" => [
+          "Content-Type" => "application/json",
+          "X-WP-Nonce" => wp_create_nonce("wp_rest"),
+        ],
       ]),
     ];
     wp_print_script_tag($scriptData);
