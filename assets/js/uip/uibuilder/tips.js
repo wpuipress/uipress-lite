@@ -1,5 +1,5 @@
 import { defineAsyncComponent, nextTick } from '../../libs/vue-esm.js';
-import Modal from '../v3.5/utility/modal.min.js?ver=3.3.092';
+import Modal from '../v3.5/utility/modal.min.js?ver=3.3.093';
 export default {
   components: {
     Modal: Modal,

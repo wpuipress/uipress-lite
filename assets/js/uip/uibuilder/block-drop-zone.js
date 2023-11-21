@@ -1,5 +1,5 @@
 import { nextTick } from "../../libs/vue-esm.js";
-import blockRender from "./block-render.min.js?ver=3.3.092";
+import blockRender from "./block-render.min.js?ver=3.3.093";
 const { __ } = wp.i18n;
 export default {
   components: {

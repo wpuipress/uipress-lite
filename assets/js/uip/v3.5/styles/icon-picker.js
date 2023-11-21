@@ -2,7 +2,7 @@ const { __, _x, _n, _nx } = wp.i18n;
 import { defineAsyncComponent, nextTick } from "../../../libs/vue-esm.js";
 export default {
   components: {
-    virtualList: defineAsyncComponent(() => import("../utility/virtual-list.min.js?ver=3.3.092")),
+    virtualList: defineAsyncComponent(() => import("../utility/virtual-list.min.js?ver=3.3.093")),
   },
   props: {
     value: String,

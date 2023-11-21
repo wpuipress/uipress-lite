@@ -2,8 +2,8 @@ import { defineAsyncComponent } from "../../libs/vue-esm.js";
 import { validDateTemplate } from "../v3.5/utility/functions.min.js";
 export default {
   components: {
-    contextmenu: defineAsyncComponent(() => import("../v3.5/utility/contextmenu.min.js?ver=3.3.092")),
-    SaveAsPattern: defineAsyncComponent(() => import("./save-as-pattern.min.js?ver=3.3.092")),
+    contextmenu: defineAsyncComponent(() => import("../v3.5/utility/contextmenu.min.js?ver=3.3.093")),
+    SaveAsPattern: defineAsyncComponent(() => import("./save-as-pattern.min.js?ver=3.3.093")),
   },
   inject: ["uiTemplate"],
   data() {
