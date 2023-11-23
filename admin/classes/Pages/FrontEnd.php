@@ -100,6 +100,12 @@ class FrontEnd
    */
   private static function output_template($template)
   {
+    $multiSiteActive = false;
+    if (is_multisite() && is_plugin_active_for_network(uip_plugin_path_name . "/uipress-lite.php") && !is_main_site()) {
+      switch_to_blog(get_main_site_id());
+      $multiSiteActive = true;
+    }
+
     $templateSettings = UiTemplates::get_settings($template->ID);
     $templateContent = UiTemplates::get_content($template->ID);
 
@@ -108,6 +114,11 @@ class FrontEnd
     $templateObject["content"] = $templateContent;
     $templateObject["id"] = $template->ID;
     $templateObject["updated"] = get_the_modified_date("U", $template->ID);
+
+    // Switch back to current blog
+    if ($multiSiteActive) {
+      restore_current_blog();
+    }
 
     $templateString = Sanitize::clean_input_with_code($templateObject);
     $templateString = json_encode($templateString);
