@@ -58,12 +58,17 @@ class uipress_compiler
     $role = get_role("administrator");
 
     //If current role doesn't have the administrator role
-    if (!$role) {
+    if (!$role || is_null($role)) {
       global $current_user;
       $user_roles = $current_user->roles;
       $user_role = array_shift($user_roles);
       $role = get_role($user_role);
     }
+
+    if (!$role || is_null($role)) {
+      return;
+    }
+
     $role->add_cap("uip_manage_ui", true);
     $role->add_cap("uip_delete_ui", true);
   }
