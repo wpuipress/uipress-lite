@@ -1,4 +1,4 @@
-import * as QuillEditor from '../../libs/quill.min.js';
+import * as QuillEditor from "../../libs/quill.min.js";
 export default {
   props: {
     returnData: Function,
@@ -7,11 +7,24 @@ export default {
   data() {
     return {
       option: this.value,
-      quillEditor: '',
+      quillEditor: "",
       variableTrigger: false,
     };
   },
+  watch: {
+    value: {
+      handler() {
+        if (this.updating) return;
+        this.option = this.value;
 
+        if (this.quillEditor) {
+          this.quillEditor.root.innerHTML = this.option;
+        } else {
+          this.startEditor();
+        }
+      },
+    },
+  },
   mounted() {
     this.startEditor();
   },
@@ -22,7 +35,7 @@ export default {
      * @since 3.2.13
      */
     returnStylePath() {
-      return this.uipApp.litePath + 'assets/css/modules/uip-quill.css';
+      return this.uipApp.litePath + "assets/css/modules/uip-quill.css";
     },
 
     /**
@@ -34,10 +47,11 @@ export default {
       const container = this.$refs.uipeditor;
 
       this.quillEditor = new Quill(container, {
-        theme: 'snow',
+        theme: "snow",
       });
 
-      this.quillEditor.on('text-change', this.handleTextChange);
+      this.quillEditor.on("text-change", this.handleTextChange);
+      this.quillEditor.root.innerHTML = this.option;
     },
 
     /**
@@ -45,8 +59,12 @@ export default {
      *
      * @since 3.2.13
      */
-    handleTextChange(delta, oldDelta, source) {
+    async handleTextChange(delta, oldDelta, source) {
+      this.updating = true;
       this.returnData(this.quillEditor.root.innerHTML);
+
+      await this.$nextTick();
+      this.updating = false;
     },
   },
   template: `
@@ -56,6 +74,6 @@ export default {
         @import '{{returnStylePath()}}';
       </component>
     
-      <div ref="uipeditor" class="uip-h-100p uip-w-100p" v-html="option"></div>
+      <div ref="uipeditor" class="uip-h-100p uip-w-100p"></div>
     </div>`,
 };
