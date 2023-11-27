@@ -775,7 +775,7 @@ export default {
                     
                   </div>
                 
-                  <div class="uip-position-relative" :class="uiTemplate.globalSettings.type">
+                  <div class="uip-position-relative" :class="uiTemplate.globalSettings.type" style="transform: translate(0, 0)">
                     <div id="uip-preview-content" class="uip-flex uip-flex-column uip-text-normal uip-desktop-view uip-position-relative uip-block-canvas">
                       
                       <!--PAGE BODY-->
