@@ -38,6 +38,11 @@ class uip_site_settings
    */
   public function set_site_settings()
   {
+    // Catch for yootheme
+    if (isset($_GET["action"]) && $_GET["action"] === "kernel" && isset($_GET["p"]) && $_GET["p"] === "customizer") {
+      return;
+    }
+
     // Get global options
     $options = UipOptions::get(null, true);
 
@@ -272,6 +277,8 @@ class uip_site_settings
       wp_enqueue_style("uip-app");
       wp_register_style("uip-theme-basic", uip_plugin_url . "assets/css/modules/uip-theme-basic.css", [], uip_plugin_version);
       wp_enqueue_style("uip-theme-basic");
+      wp_register_style("uip-app-icons", uip_plugin_url . "assets/css/uip-icons.css", [], uip_plugin_version);
+      wp_enqueue_style("uip-app-icons");
     });
 
     //Add user logo to the admin menu
