@@ -44,7 +44,6 @@ class uip_ui_builder extends uip_app
     add_action("plugins_loaded", [$this, "add_ui_builder_actions"], 2);
     add_action("init", [$this, "create_builder_post_types"]);
     add_filter("kses_allowed_protocols", [$this, "allow_data_in_kses"]);
-    add_action("admin_enqueue_scripts", ["UipressLite\Classes\Scripts\UipScripts", "add_icons"]);
   }
 
   /**
@@ -100,7 +99,8 @@ class uip_ui_builder extends uip_app
   {
     // Stop processing if 'uip_stop_plugin' is true
     defined("uip_stop_plugin") && uip_stop_plugin ? exit() : true;
-    add_action("admin_menu", [$this, "add_ui_builder_to_menu"]);
+    $hook_suffix = add_action("admin_menu", [$this, "add_ui_builder_to_menu"]);
+    add_action("admin_print_scripts-{$hook_suffix}", ["UipressLite\Classes\Scripts\UipScripts", "add_icons"]);
 
     $builderName = uip_plugin_shortname . "-ui-builder";
     $page = isset($_GET["page"]) ? $_GET["page"] : false;
