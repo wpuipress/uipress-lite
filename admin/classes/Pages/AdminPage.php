@@ -67,7 +67,8 @@ class AdminPage
 
       // Check if we are adding as submenu or top level
       if ($uiPage["parent"] != "" && $uiPage["parent"] != "uipblank") {
-        $hook_suffix = add_submenu_page($uiPage["parent"], $uiPage["pageName"], $uiPage["pageName"], "read", $uiPage["url"], $handler);
+        $parent_slug = str_replace("admin.php?page=", "", $uiPage["parent"]);
+        $hook_suffix = add_submenu_page($parent_slug, $uiPage["pageName"], $uiPage["pageName"], "read", $uiPage["url"], $handler);
       } else {
         $hook_suffix = add_menu_page($uiPage["pageName"], $uiPage["pageName"], "read", $uiPage["url"], $handler, $uiPage["icon"], 1);
       }
@@ -75,6 +76,7 @@ class AdminPage
       add_action("admin_print_scripts-{$hook_suffix}", ["UipressLite\Classes\Pages\AdminPage", "add_hooks"]);
       add_action("admin_print_scripts-{$hook_suffix}", ["UipressLite\Classes\Scripts\UipScripts", "add_translations"]);
       add_action("admin_print_scripts-{$hook_suffix}", ["UipressLite\Classes\Scripts\UipScripts", "add_uipress_styles"]);
+      add_action("admin_print_scripts-{$hook_suffix}", ["UipressLite\Classes\Scripts\UipScripts", "add_icons"]);
     }
   }
 
