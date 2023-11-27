@@ -414,6 +414,12 @@ body.import-php,
     display: none;
   }
 }
+
+.form-table th,
+.form-wrap label {
+  color: var(--uip-text-color-base);
+}
+
 table.wp-list-table-test,
 table.widefat {
   border: none;
