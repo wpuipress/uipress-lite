@@ -94,6 +94,15 @@ const MenuSearch = {
     },
 
     /**
+     * Returns items custom href
+     *
+     * @since 3.3.09
+     */
+    returnItemTarget(item) {
+      return this.hasNestedPath(item, "custom", "newTab") ? "_BLANK" : "_SELF";
+    },
+
+    /**
      * Watches keydown event for arrows up / down when searching
      *
      * @param {Object} event - the keydown event
@@ -127,7 +136,8 @@ const MenuSearch = {
           
             <template v-for="(item, index) in searchItems">
             
-                <a class="uip-flex uip-flex- uip-gap-xxxs uip-link-default uip-no-underline uip-flex-center uip-text-s uip-padding-xxxs uip-border-rounder"
+                <a :target="returnItemTarget(item)"
+                class="uip-flex uip-flex- uip-gap-xxxs uip-link-default uip-no-underline uip-flex-center uip-text-s uip-padding-xxxs uip-border-rounder"
                 @click="maybeFollowLink($event, item)"
                 :class="menuSearchIndex == index ? 'uip-background-high-light' : ''" :href="item.url" :data-id="index">
                   
@@ -252,6 +262,15 @@ const SubMenuItem = {
     returnItemHref(item) {
       return this.hasNestedPath(item, "custom", "url") ? item.custom.url : item.url;
     },
+
+    /**
+     * Returns items custom href
+     *
+     * @since 3.3.09
+     */
+    returnItemTarget(item) {
+      return this.hasNestedPath(item, "custom", "newTab") ? "_BLANK" : "_SELF";
+    },
   },
   template: `
     
@@ -269,7 +288,8 @@ const SubMenuItem = {
                       <template #trigger>
                       
                         <!-- Main link -->
-                        <a :href="returnItemHref(sub)" @click="maybeFollowLink($event, sub)" :class="returnItemClasses(sub)" 
+                        <a :target="returnItemTarget(sub)"
+                        :href="returnItemHref(sub)" @click="maybeFollowLink($event, sub)" :class="returnItemClasses(sub)" 
                         class="uip-no-underline uip-link-muted uip-sub-level-item uip-flex-grow uip-flex uip-gap-xs uip-flex-center" :active="sub.active ? true : false">
                         
                           <span v-html="returnName(sub)"></span>
@@ -299,7 +319,8 @@ const SubMenuItem = {
                     <div v-else-if="sub.type != 'sep'" class="uip-flex-grow uip-flex-column uip-flex uip-row-gap-xs" :class="returnItemClasses(sub)" >
                       
                       <!-- Main link -->
-                      <a :href="returnItemHref(sub)" @click="maybeFollowLink($event, sub, itemHasSubmenu(sub))" :class="returnItemClasses(sub)" 
+                      <a :target="returnItemTarget(sub)"
+                      :href="returnItemHref(sub)" @click="maybeFollowLink($event, sub, itemHasSubmenu(sub))" :class="returnItemClasses(sub)" 
                       class="uip-no-underline uip-link-muted uip-sub-level-item uip-flex-grow uip-flex uip-gap-xs uip-flex-center" :active="sub.active ? true : false">
                         <span v-html="returnName(sub)"></span>
                         
@@ -447,6 +468,15 @@ const TopLevelItem = {
     returnItemHref() {
       return this.hasNestedPath(this.item, "custom", "url") ? this.item.custom.url : this.item.url;
     },
+
+    /**
+     * Returns items custom href
+     *
+     * @since 3.3.09
+     */
+    returnItemTarget() {
+      return this.hasNestedPath(this.item, "custom", "newTab") ? "_BLANK" : "_SELF";
+    },
   },
   methods: {
     /**
@@ -483,7 +513,9 @@ const TopLevelItem = {
   },
   template: `
     
-    <a v-if="!itemHiden" :href="returnItemHref" @click="maybeFollowLink($event, item, true)" class="uip-no-underline uip-link-default uip-top-level-item" :class="returnItemClasses" :active="item.active ? true : false">
+    <a v-if="!itemHiden" 
+    :target="returnItemTarget"
+    :href="returnItemHref" @click="maybeFollowLink($event, item, true)" class="uip-no-underline uip-link-default uip-top-level-item" :class="returnItemClasses" :active="item.active ? true : false">
     
       <div v-if="!hideIcons && returnIcon" v-html="returnTopIcon(returnIcon)" class="uip-flex uip-flex-center uip-menu-icon uip-icon uip-icon-medium"></div>
       
@@ -1194,6 +1226,9 @@ export default {
     maybeFollowLink(evt, item, topLevel) {
       // If modifier keys allow the event to happen naturally
       if (evt.ctrlKey || evt.shiftKey || evt.metaKey || evt.button == 1) return;
+
+      // New tab so let the browser handle it
+      if (this.hasNestedPath(item, "custom", "newTab")) return;
 
       // Prevent default link click
       evt.preventDefault();
