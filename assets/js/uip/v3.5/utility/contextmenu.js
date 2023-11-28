@@ -72,12 +72,21 @@ export default {
       let bounds = this.$refs.contextmenu.getBoundingClientRect();
       let bottom = bounds.bottom;
       let right = bounds.right;
+      let left = bounds.left;
 
       if (bottom > window.innerHeight) {
         this.position.y = this.position.y - (bottom - window.innerHeight) - 20;
       }
       if (right > window.innerWidth) {
         this.position.x = this.position.x - (right - window.innerWidth) - 40;
+      }
+
+      if (left < 0) {
+        if (this.snapRight) {
+          this.position.x = 400;
+        } else {
+          this.position.x = 32;
+        }
       }
     },
     /**
@@ -95,8 +104,8 @@ export default {
      * @since 0.0.1
      */
     setupClickOutside() {
-      document.addEventListener('click', this.onClickOutside);
-      document.addEventListener('contextmenu', this.onClickOutside);
+      document.addEventListener("click", this.onClickOutside);
+      document.addEventListener("contextmenu", this.onClickOutside);
     },
     /**
      * Removes the click listener
@@ -104,8 +113,8 @@ export default {
      * @since 0.0.1
      */
     removeClickOutside() {
-      document.removeEventListener('click', this.onClickOutside);
-      document.removeEventListener('contextmenu', this.onClickOutside);
+      document.removeEventListener("click", this.onClickOutside);
+      document.removeEventListener("contextmenu", this.onClickOutside);
     },
     /**
      * Watches for clicks outside the context menu
@@ -128,8 +137,8 @@ export default {
      * @since 0.0.1
      */
     returnPosition() {
-      let transform = '';
-      if (this.snapRight) transform = 'transform:translateX(-100%)';
+      let transform = "";
+      if (this.snapRight) transform = "transform:translateX(-100%)";
 
       if (!this.aboveClick) return `top: ${this.position.y}px; left: ${this.position.x}px;${transform}`;
       let bottom = window.innerHeight - this.position.y;
