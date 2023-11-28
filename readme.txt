@@ -4,7 +4,7 @@ Tags: admin theme, custom dashboard, google analytics, woocommerce analytics, wh
 Requires at least: 6.0
 Requires PHP: 7.4
 Tested up to: 6.4
-Stable tag: 3.3.093
+Stable tag: 3.3.094
 License: GPLv2 or later
 
 Effortless custom WordPress admin dashboards.
@@ -54,6 +54,17 @@ Upload the UiPress plugin to your blog, activate it, and then navigate to the ui
 1, 2, 3: You're done!
 
 == Changelog ==
+
+= 3.3.094 =
+*Release Date 28 November 2023*
+
+* Fixed issue with toolbars showing on subsites
+* Fixed issue with cap application on install
+* Fixed issue with paragraph input not updating input on block change
+* Fixed issue with adding admin pages as submenus of other admin pages
+* Added style fixes for: Wicked folders, Groundhogg, Gutenburg dark mode panels, Table text colours
+* Fixed input validation on paragraph input
+* Fixed media library blank screen bug
 
 = 3.3.093 =
 *Release Date 21 November 2023*
