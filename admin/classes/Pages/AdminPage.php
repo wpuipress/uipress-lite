@@ -68,7 +68,8 @@ class AdminPage
       // Check if we are adding as submenu or top level
       if ($uiPage["parent"] != "" && $uiPage["parent"] != "uipblank") {
         $parent_slug = str_replace("admin.php?page=", "", $uiPage["parent"]);
-        $hook_suffix = add_submenu_page($parent_slug, $uiPage["pageName"], $uiPage["pageName"], "read", $uiPage["url"], $handler);
+        $sub_url = strpos($uiPage["url"], "admin.php?page=") !== false ? $uiPage["url"] : "admin.php?page=" . $uiPage["url"];
+        $hook_suffix = add_submenu_page($parent_slug, $uiPage["pageName"], $uiPage["pageName"], "read", $sub_url, $handler);
       } else {
         $hook_suffix = add_menu_page($uiPage["pageName"], $uiPage["pageName"], "read", $uiPage["url"], $handler, $uiPage["icon"], 1);
       }
