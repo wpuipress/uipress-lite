@@ -353,6 +353,10 @@ export const MediaLibrary = {
      * @since 3.2.13
      */
     returnImagePreview(photo) {
+      // No sizes so return full url
+      if (!("sizes" in photo.media_details)) return photo.source_url;
+
+      // Get size
       if ("medium" in photo.media_details.sizes) return photo.media_details.sizes.medium.source_url;
       if ("small" in photo.media_details.sizes) return photo.media_details.sizes.small.source_url;
       if ("thumbnail" in photo.media_details.sizes) return photo.media_details.sizes.thumbnail.source_url;
