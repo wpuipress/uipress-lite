@@ -53,6 +53,8 @@ class AdminMenu
     $formattedMenu = $menuOptions["menu"];
 
     $mastermenu["menu"] = $formattedMenu;
+    $mastermenu["menu_id"] = $menuOptions["menu_id"];
+    $mastermenu["custom"] = $menuOptions["custom"];
     self::output_menu($mastermenu);
 
     return $parent_file;
@@ -107,6 +109,8 @@ class AdminMenu
       $type = strpos($item[4] ?? "", "wp-menu-separator") !== false ? "sep" : "item";
       $name = $item[2] . ($type === "sep" ? $item[4] : $item[5]);
       $item["uip_uid"] = hash("ripemd160", $name);
+
+      $item[4] .= $item[4] . " uip_uid_" . $item["uip_uid"] . " uip_wp_id_" . $item[1] . " uip_unp_url_" . $item["2"];
 
       $returner[$key] = $item;
     }
@@ -270,6 +274,8 @@ class AdminMenu
     }
 
     $returner["menu"] = $returnmenu;
+    $returner["menu_id"] = isset($mastermenu["menu_id"]) ? $mastermenu["menu_id"] : false;
+    $returner["custom"] = isset($mastermenu["custom"]) ? $mastermenu["custom"] : false;
 
     return $returner;
   }
@@ -508,7 +514,7 @@ class AdminMenu
     $wpicon = isset($menu_item[6]) ? $menu_item[6] : "";
 
     if (isset($menu_item["icon"]) && $menu_item["icon"] != "") {
-      return "<span class='uk-icon-button' uk-icon='icon:{$menu_item["icon"]};ratio:0.8'></span>";
+      return "<span class='uip-icon uip-icon-medium'>collections</span>";
     }
 
     if (isset($icons[$wpicon])) {
