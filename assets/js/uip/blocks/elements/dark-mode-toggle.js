@@ -11,16 +11,16 @@ export default {
     };
   },
   watch: {
-    'block.settings.block.options.prefersColorScheme.value': {
+    "block.settings.block.options.prefersColorScheme.value": {
       handler(newValue, oldValue) {
         this.checkAutoDark();
       },
       deep: true,
     },
-    'uipApp.data.userPrefs.darkTheme': {
+    "uipApp.data.userPrefs.darkTheme": {
       handler(newValue, oldValue) {
         this.setTheme();
-        this.saveUserPreference('darkTheme', newValue, false);
+        this.saveUserPreference("darkTheme", newValue, false);
       },
       deep: true,
     },
@@ -47,7 +47,7 @@ export default {
      * @since 3.2.13
      */
     returnAutoDetect() {
-      const auto = this.get_block_option(this.block, 'block', 'prefersColorScheme', true);
+      const auto = this.get_block_option(this.block, "block", "prefersColorScheme", true);
       if (!auto) return;
 
       if (!this.isObject(auto)) return auto;
@@ -62,10 +62,10 @@ export default {
      */
     setTheme() {
       const darkTheme = this.uipApp.data.userPrefs.darkTheme;
-      const theme = darkTheme ? 'dark' : 'light';
+      const theme = darkTheme ? "dark" : "light";
 
-      document.documentElement.setAttribute('data-theme', theme);
-      const frames = document.querySelectorAll('iframe');
+      document.documentElement.setAttribute("data-theme", theme);
+      const frames = document.querySelectorAll("iframe");
 
       // No iframes to update so bail
       if (!frames) return;
@@ -74,7 +74,7 @@ export default {
       for (const iframe of frames) {
         const head = iframe.contentWindow.document.documentElement;
         if (!head) continue;
-        head.setAttribute('data-theme', theme);
+        head.setAttribute("data-theme", theme);
       }
     },
 
@@ -84,7 +84,7 @@ export default {
      * @since 3.2.13
      */
     checkAutoDark() {
-      const userPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const userPrefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
       const autoEnabled = this.returnAutoDetect;
 
       // Feature is disabled so exit
