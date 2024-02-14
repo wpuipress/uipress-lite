@@ -54,8 +54,7 @@ export default {
     returnStartPage() {
       if (this.uiTemplate.display == "prod") return window.location.href;
 
-      const defaultAdmin = this.returnAdminPage;
-      return this.formatRequiredParams(defaultAdmin);
+      return this.returnAdminPage;
     },
 
     /**
@@ -64,7 +63,7 @@ export default {
      * @since 3.2.13
      */
     returnLoadingStyle() {
-      if (!this.rendered) {
+      if (!this.rendered || this.loading) {
         return "opacity:0";
       }
     },
@@ -79,32 +78,6 @@ export default {
     },
 
     /**
-     * Determines if themes are disabled based on block option.
-     *
-     * @returns {boolean} Returns true if theme is disabled, otherwise false.
-     * @since 3.2.13
-     */
-    returnTheme() {
-      return this.getBlockOption("disableTheme", "value", false);
-    },
-
-    /**
-     * Determines if plugin notices should be hidden.
-     *
-     * @returns {boolean} Returns true if notices should be hidden, otherwise false.
-     * @since 3.2.13
-     */
-    returnNotices() {
-      let hideNotices = this.getBlockOption("hidePluginNotices", "value", false);
-
-      if (JSON.stringify(this.uiTemplate.content).includes("site-notifications")) {
-        hideNotices = true;
-      }
-
-      return hideNotices;
-    },
-
-    /**
      * Determines if the loader should be hidden.
      *
      * @returns {boolean} Returns true if loader should be hidden, otherwise false.
@@ -112,26 +85,6 @@ export default {
      */
     showLoader() {
       return this.getBlockOption("hideLoader", "value", true);
-    },
-
-    /**
-     * Determines if screen options should be hidden.
-     *
-     * @returns {boolean} Returns true if screen options should be hidden, otherwise false.
-     * @since 3.2.13
-     */
-    returnScreen() {
-      return this.getBlockOption("hideScreenOptions", "value", true);
-    },
-
-    /**
-     * Determines if the help tab should be hidden.
-     *
-     * @returns {boolean} Returns true if help tab should be hidden, otherwise false.
-     * @since 3.2.13
-     */
-    returnHelp() {
-      return this.getBlockOption("hideHelpTab", "value", true);
     },
 
     /**
@@ -186,6 +139,26 @@ export default {
     },
   },
   methods: {
+    /**
+     * Returns public methods available to the interactions API
+     *
+     * @since 3.3.095
+     */
+    returnPublicMethods() {
+      return ["reloadFrame"];
+    },
+
+    /**
+     * Reloads iframe
+     *
+     * @since 3.3.095
+     */
+    reloadFrame() {
+      const frame = this.$refs.contentframe;
+      if (!frame) return;
+      frame.contentWindow.location.reload();
+    },
+
     /**
      * Removes all watchers
      *
@@ -299,26 +272,18 @@ export default {
      * @since 3.2.13
      */
     handleIframeContentChanges(frame, url, newURL) {
-      const fallBackState = frame.contentWindow.document.documentElement && frame.contentWindow.document.documentElement.getAttribute("uip-framed-page");
+      //const fallBackState = frame.contentWindow.document.documentElement && frame.contentWindow.document.documentElement.getAttribute("uip-framed-page");
 
-      // Check if we have already processed this URL to prevent double loading
-      if (url.searchParams.get("uip-framed-page") || fallBackState) {
-        const activeItem = frame.contentWindow.document.querySelectorAll("#adminmenu a[aria-current='page']");
-        let path = newURL;
+      const activeItem = frame.contentWindow.document.querySelectorAll("#adminmenu a[aria-current='page']");
+      let path = newURL;
 
-        // Get active page from iframe
-        if (activeItem[0]) path = activeItem[0].getAttribute("href");
+      // Get active page from iframe
+      if (activeItem[0]) path = activeItem[0].getAttribute("href");
 
-        this.updateActiveLink(path);
-        this.injectStyles();
-        this.loading = false;
-        return;
-      }
-
-      // If none of the conditions matched, replace the frame's content with the new URL
-      frame.src = "about:blank";
-      const formattedUrl = this.formatUserUrlOptions(url);
-      frame.contentWindow.location.replace(formattedUrl);
+      this.updateActiveLink(path);
+      this.injectStyles();
+      this.loading = false;
+      return;
     },
 
     /**
@@ -348,12 +313,10 @@ export default {
       const title = frame.contentDocument.title;
       if (title) document.title = title;
 
-      //Update browser address if we are not in builder
+      // Update browser address if we are not in builder
       if (this.uiTemplate.display == "prod") this.updateBrowserAddress(frame.contentWindow.location.href);
 
       document.dispatchEvent(new CustomEvent("uipress/app/page/load/finish"));
-      this.updatePageUrls();
-      //this.injectWindowOpenMethod();
     },
 
     /**
@@ -370,37 +333,6 @@ export default {
       this.uipApp.data.dynamicOptions.adminPageTitle.value = title;
     },
 
-    /**
-     * Injects a handler to ensure window.open methods open in new tab and not inside frame
-     *
-     * helps avoid CORS issues
-     * @since 3.2.13
-     */
-    injectWindowOpenMethod() {
-      const frame = this.$refs.contentframe;
-      const uipWindowOpenMethod = frame.contentWindow.open;
-
-      // Build custom handler for window.open
-      const handleOpen = (url, target, windowFeatures) => {
-        if (target) {
-          let tempTarget = target.toLowerCase();
-          if (tempTarget == "_blank" || tempTarget == "_top" || tempTarget == "_parent") {
-            uipWindowOpenMethod(url, "_blank", windowFeatures);
-            return;
-          }
-        }
-
-        let origin = window.location.origin;
-        let newURL = new URL(url);
-        if (newURL.origin != origin) {
-          uipWindowOpenMethod(url, "_parent", windowFeatures);
-        } else {
-          uipWindowOpenMethod(url, target, windowFeatures);
-        }
-      };
-      // Mount custom method
-      frame.contentWindow.open = handleOpen;
-    },
     /**
      * Attemps to get page title to see if the page loaded or was blocked by CORS
      *
@@ -429,9 +361,14 @@ export default {
       const stopLoading = () => (this.loading = false);
       setTimeout(stopLoading, 2000);
 
-      url = this.formatUserUrlOptions(url);
+      // If iFrame doesn't exist bail
       if (!this.$refs.contentframe.contentWindow) return;
-      this.$refs.contentframe.contentWindow.location.assign(url);
+
+      try {
+        this.$refs.contentframe.contentWindow.location.assign(url);
+      } catch (err) {
+        this.$refs.contentframe.src = url;
+      }
     },
 
     /**
@@ -531,7 +468,6 @@ export default {
      */
     navigateFrameToStartPage() {
       let url = new URL(this.startPage);
-      url = this.formatUserUrlOptions(url);
       this.$refs.contentframe.contentWindow.location.replace(url);
       this.updateActiveLink(this.startPage);
     },
@@ -581,15 +517,22 @@ export default {
       // Mount link watcher
       const iframeClicker = (event) => {
         const linkElement = this.findClosestLink(event.target);
+
         // We found a link so handle the url
         if (linkElement) {
-          this.handleInsideFrameLink(linkElement.href);
+          // Check if in guten
+          const gutenburg = linkElement.closest(".edit-post-visual-editor");
+
+          // Not in guten so continue with processing
+          if (!gutenburg) {
+            this.handleInsideFrameLink(linkElement);
+          }
         }
         return this.forceClickEvent();
       };
 
       const hashWatcher = (event) => {
-        const location = this.$refs.contentframe.contentWindow.location;
+        const location = event.newURL;
         this.updateBrowserAddress(location);
       };
 
@@ -597,31 +540,19 @@ export default {
       frame.contentWindow.addEventListener("hashchange", hashWatcher);
       frame.contentWindow.addEventListener("uip-frame-hash-change", hashWatcher);
 
-      // Return early if not in 'prod' mode
-      if (this.uiTemplate.display !== "prod") return;
+      // Watch for dark mode toggles
+      frame.contentWindow.document.addEventListener("uipress/app/darkmode/toggle", () => {
+        document.dispatchEvent(new CustomEvent("uipress/app/darkmode/toggle"));
+      });
 
-      // List of form names to check and attach listeners
-      const formNames = ["upgrade-plugins", "upgrade-themes", "upgrade"];
+      // Watch for menu collapse toggles
+      frame.contentWindow.document.addEventListener("uipress/blocks/adminmenu/togglecollapse", () => {
+        document.dispatchEvent(new CustomEvent("uipress/blocks/adminmenu/togglecollapse"));
+      });
 
-      // Helper function to handle the form submission event
-      const handleFormSubmit = function (form) {
-        form.addEventListener("submit", function (evt) {
-          const url = new URL(form.action);
-
-          // If 'uip-framed-page' is not part of the URL, modify the form's action
-          if (!url.searchParams.get("uip-framed-page")) {
-            evt.preventDefault();
-            this.formatUserUrlOptions(url);
-            form.action = url.href;
-            form.submit();
-          }
-        });
-      }.bind(this); // Ensure `this` inside function refers to Vue component
-
-      // Iterate over each form name and attach event listener
-      formNames.forEach((name) => {
-        const form = frame.contentWindow.document.querySelector(`form[name="${name}"]`);
-        if (form) handleFormSubmit(form);
+      // Watch for menu collapse toggles
+      frame.contentWindow.document.addEventListener("uipress/app/window/fullscreen", () => {
+        document.dispatchEvent(new CustomEvent("uipress/app/window/fullscreen"));
       });
     },
 
@@ -631,7 +562,13 @@ export default {
      *
      * @since 3.2.13
      */
-    handleInsideFrameLink(url) {
+    handleInsideFrameLink(linkItem) {
+      const url = linkItem.href;
+      const target = linkItem.target ? linkItem.target.toLowerCase() : false;
+
+      // New tab so bail
+      if (target === "_blank") return;
+
       // No url so bail
       if (!url) return;
 
@@ -647,6 +584,7 @@ export default {
 
       const domain = this.extractDomain(this.uipApp.data.options.domain);
 
+      // Catch for google sitekit
       if (url.includes("googlesitekit_proxy_setup_start")) return (window.location.href = url);
 
       // URL contains domain so exit
@@ -680,134 +618,20 @@ export default {
      * @param {String} url - url to update address too
      */
     async updateBrowserAddress(url) {
-      if (!url || url == "about:blank") return;
+      url = url ? url.toLowerCase() : url;
+      if (!url || url === "about:blank") return;
 
-      let processed = stripUIPparams(url);
-      processed = processed ? decodeURIComponent(processed) : processed;
+      let processed = url ? decodeURIComponent(url) : url;
+
       // Exit if address is same as current
-      if (processed == window.location.href) return;
-      history.pushState({ blockEvent: true }, null, processed);
-    },
+      if (processed === window.location.href) return;
 
-    /**
-     * Updates form actions and hrefs in the frame content based on the admin URL.
-     *
-     * @since 3.2.13
-     */
-    updatePageUrls() {
-      const adminURL = this.uipApp.data.options.adminURL;
-
-      this.updateFormActions(adminURL);
-      this.updateFormHrefs(adminURL);
-    },
-
-    /**
-     * Update form action attributes based on the admin URL.
-     *
-     * @param {string} adminURL - The admin URL to check and format with.
-     * @since 3.2.13
-     */
-    updateFormActions(adminURL) {
-      const allFormLinks = this.$refs.contentframe.contentWindow.document.querySelectorAll("form");
-      for (let form of allFormLinks) {
-        let formAction = form.action;
-
-        if (!formAction || typeof formAction !== "string") continue;
-
-        if (formAction.includes(adminURL)) {
-          form.action = this.formatRequiredParams(formAction);
-        }
-      }
-    },
-
-    /**
-     * Update anchor href attributes based on the admin URL.
-     *
-     * @param {string} adminURL - The admin URL to check and format with.
-     * @since 3.2.13
-     */
-    updateFormHrefs(adminURL) {
-      const allFormHrefs = this.$refs.contentframe.contentWindow.document.querySelectorAll("body.update-php a");
-      for (let link of allFormHrefs) {
-        let href = link.href;
-
-        if (!href || typeof href !== "string") continue;
-
-        if (href.includes(adminURL)) {
-          link.href = this.formatRequiredParams(href);
-        } else {
-          let templink = adminURL + href;
-          let newLink = this.formatRequiredParams(templink);
-          newLink = newLink.replace(adminURL, "");
-          link.href = newLink;
-        }
-      }
-    },
-
-    /**
-     * Modifies the given URL by adding various search parameters based on the
-     * current state of the Vue component.
-     *
-     * @param {URL} url - The URL to be formatted.
-     * @returns {URL} - The modified URL with the appropriate search parameters.
-     * @since 3.2.13
-     */
-    formatUserUrlOptions(url) {
-      // Always set 'uip-framed-page' to 1
-      url.searchParams.set("uip-framed-page", 1);
-
-      // Check and set various search parameters based on the Vue component's state
-      if (this.returnScreen) {
-        url.searchParams.set("uip-hide-screen-options", 1);
-      }
-      if (this.returnHelp) {
-        url.searchParams.set("uip-hide-help-tab", 1);
-      }
-      if (this.returnTheme) {
-        url.searchParams.set("uip-default-theme", 1);
-      }
-      if (this.returnNotices) {
-        url.searchParams.set("uip-hide-notices", 1);
-      }
-
-      // Set 'uipid' based on the component's 'uiTemplate' id
-      url.searchParams.set("uipid", this.uiTemplate.id);
-
-      return url;
-    },
-
-    /**
-     * Modifies the provided URL string by adding or updating various search parameters
-     * based on the current state of the Vue component.
-     *
-     * @param {string} unformatted - The original URL string to be formatted.
-     * @returns {string} - The formatted URL string with the appropriate search parameters.
-     * @since 3.2.13
-     */
-    formatRequiredParams(unformatted) {
-      const url = new URL(unformatted);
-
-      // Always set 'uip-framed-page' to 1
-      url.searchParams.set("uip-framed-page", 1);
-
-      // Check and set various search parameters based on the Vue component's state
-      if (this.returnScreen) {
-        url.searchParams.set("uip-hide-screen-options", 1);
-      }
-      if (this.returnHelp) {
-        url.searchParams.set("uip-hide-help-tab", 1);
-      }
-      if (this.returnTheme) {
-        url.searchParams.set("uip-default-theme", 1);
-      }
-      if (this.returnNotices) {
-        url.searchParams.set("uip-hide-notices", 1);
-      }
-
-      // Always set 'uipid' based on the component's 'uiTemplate' id
-      url.searchParams.set("uipid", this.uiTemplate.id);
-
-      return url.href;
+      const delayURLchange = () => {
+        try {
+          history.pushState({ blockEvent: true }, null, processed);
+        } catch (err) {}
+      };
+      setTimeout(delayURLchange, 600);
     },
 
     /**
@@ -1000,6 +824,7 @@ export default {
       // Compare the URLs without the hash
       return parsedUrl1.href === parsedUrl2.href;
     },
+
     /**
      * Handles clicks inside iframes and bubbles up the event so dropdowns etc can response
      *
@@ -1020,9 +845,13 @@ export default {
         </div>
       </div>
       
-      <iframe :style="returnLoadingStyle" :src="returnStartPage" ref="contentframe" 
+      <iframe :style="returnLoadingStyle" :src="returnStartPage" 
+      
+      ref="contentframe" 
       @load="handleIframeLoad"
-      class="uip-page-content-frame uip-background-default uip-scrollbar uip-w-100p uip-flex-grow" :class="{'uip-no-select' : uiTemplate.display != 'prod' && !uiTemplate.isPreview}"></iframe>
+      style="transition:opacity 0.3s ease-in-out"
+      class="uip-page-content-frame uip-background-default uip-scrollbar uip-w-100p uip-flex-grow" 
+      :class="{'uip-no-select' : uiTemplate.display != 'prod' && !uiTemplate.isPreview}"></iframe>
        
       <div @mouseover="cornertickle = true" @mouseleave="cornertickle = false" class="uip-position-absolute uip-text-muted uip-top-0 uip-right-0 uip-cursor-pointer uip-flex uip-flex-column uip-flex-middle uip-padding-xs" v-if="!disableFullScreen">
       
