@@ -29,6 +29,11 @@ class BackEnd
    */
   public static function actions()
   {
+    // Reset transient
+    $user_id = get_current_user_id();
+    $transient_name = "uip_template_active_" . $user_id;
+    delete_transient($transient_name);
+
     // get template
     $templates = UiTemplates::get_template_for_user("ui-template", 1);
 
@@ -44,11 +49,36 @@ class BackEnd
       return;
     }
 
+    // App should not load
+    if (defined("uip_app_running") && !uip_app_running) {
+      return;
+    }
+
     // Define app running constant
-    define("uip_app_running", true);
+    if (!defined("uip_app_running")) {
+      define("uip_app_running", true);
+    }
+
+    self::define_active_transient($templates[0], $user_id);
 
     self::output_template($templates[0]);
     self::add_hooks();
+  }
+
+  /**
+   * Set's active template id as transient
+   *
+   * @param object $template - the template object
+   * @param number $user_id - the current user id
+   *
+   * @since 3.3.095
+   */
+  private static function define_active_transient($template, $user_id)
+  {
+    $transient_name = "uip_template_active_" . $user_id;
+    $transient_value = $template->ID;
+
+    set_transient($transient_name, $transient_value, 0);
   }
 
   /**
