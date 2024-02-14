@@ -1,5 +1,5 @@
 const { __, _x, _n, _nx } = wp.i18n;
-import { renderKeyShortCut } from '../../v3.5/utility/functions.min.js';
+import { renderKeyShortCut } from "../../v3.5/utility/functions.min.js";
 export default {
   props: {
     display: String,
@@ -16,12 +16,12 @@ export default {
      * @since 3.2.13
      */
     returnText() {
-      const item = this.get_block_option(this.block, 'block', 'buttonText', true);
-      if (!item) return '';
+      const item = this.get_block_option(this.block, "block", "buttonText", true);
+      if (!item) return "";
 
       if (!this.isObject(item)) return item;
       if (item.string) return item.string;
-      return '';
+      return "";
     },
 
     /**
@@ -41,7 +41,7 @@ export default {
      * @since 3.2.13
      */
     getShortcutValue() {
-      const shortcut = this.get_block_option(this.block, 'block', 'keyboardShortcut');
+      const shortcut = this.get_block_option(this.block, "block", "keyboardShortcut");
       if (!this.isObject(shortcut)) return;
 
       // Shortcut is not enabled so bail
@@ -60,10 +60,10 @@ export default {
      *  @since 3.2.13
      */
     returnDropPosition() {
-      let dropPosition = this.get_block_option(this.block, 'block', 'dropDirection');
+      let dropPosition = this.get_block_option(this.block, "block", "dropDirection");
       if (this.isObject(dropPosition)) return dropPosition.value;
 
-      if (!dropPosition) return 'bottom left';
+      if (!dropPosition) return "bottom left";
       return dropPosition;
     },
 
@@ -73,10 +73,10 @@ export default {
      * @since 3.2.13
      */
     returnOpenHover() {
-      const mode = this.get_block_option(this.block, 'block', 'openMode');
+      const mode = this.get_block_option(this.block, "block", "openMode");
       if (!mode) return false;
-      if (!this.isObject(mode) && mode == 'hover') return true;
-      if (mode.value && mode.value == 'hover') return true;
+      if (!this.isObject(mode) && mode == "hover") return true;
+      if (mode.value && mode.value == "hover") return true;
       return false;
     },
 
@@ -86,10 +86,10 @@ export default {
      * @since 3.2.13
      */
     returnClasses() {
-      const position = this.get_block_option(this.block, 'block', 'iconPosition');
+      const position = this.get_block_option(this.block, "block", "iconPosition");
       if (!position) return;
-      if (!this.isObject(position) && position == 'right') return 'uip-flex-reverse';
-      if (position.value && position.value == 'right') return 'uip-flex-reverse';
+      if (!this.isObject(position) && position == "right") return "uip-flex-reverse";
+      if (position.value && position.value == "right") return "uip-flex-reverse";
     },
 
     /**
@@ -98,17 +98,44 @@ export default {
      * @since 3.2.13
      */
     returnIcon() {
-      let icon = this.get_block_option(this.block, 'block', 'iconSelect');
-      if (!icon) return '';
+      let icon = this.get_block_option(this.block, "block", "iconSelect");
+      if (!icon) return "";
       if (!this.isObject(icon)) return icon;
       if (icon.value) return icon.value;
-      return '';
+      return "";
     },
   },
 
-  methods: {},
+  methods: {
+    /**
+     * Returns public methods available to the interactions API
+     *
+     * @since 3.3.095
+     */
+    returnPublicMethods() {
+      return ["show", "close"];
+    },
+
+    /**
+     * Shows dropdown
+     *
+     * @since 3.3.095
+     */
+    show() {
+      this.$refs.dropdown.show();
+    },
+
+    /**
+     * Closes dropdown
+     *
+     * @since 3.3.095
+     */
+    close() {
+      this.$refs.dropdown.close();
+    },
+  },
   template: `
-        <dropdown :pos="returnDropPosition" :shortCut="getShortcutValue" :disableTeleport="true" :hover="returnOpenHover">
+        <dropdown ref="dropdown" :pos="returnDropPosition" :shortCut="getShortcutValue" :disableTeleport="true" :hover="returnOpenHover">
         
           <template #trigger>
           
