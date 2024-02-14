@@ -16,8 +16,10 @@ class AdminPage
    *
    * @return void
    */
-  public static function start()
+  private static $isFramedPage = false;
+  public static function start($isFramedPage)
   {
+    self::$isFramedPage = $isFramedPage;
     add_action("plugins_loaded", ["UipressLite\Classes\Pages\AdminPage", "actions"], 10);
   }
 
@@ -40,6 +42,11 @@ class AdminPage
     $handler = function () use ($templates) {
       self::add_menu_pages($templates);
     };
+
+    // Triggers icon load
+    if (!self::$isFramedPage) {
+      add_action("admin_enqueue_scripts", ["UipressLite\Classes\Scripts\UipScripts", "add_icons"]);
+    }
     add_action("admin_menu", $handler, 1);
     add_action("admin_footer", ["UipressLite\Classes\Pages\AdminPage", "add_wp_menu_icons"]);
   }
@@ -68,8 +75,8 @@ class AdminPage
       // Check if we are adding as submenu or top level
       if ($uiPage["parent"] != "" && $uiPage["parent"] != "uipblank") {
         $parent_slug = str_replace("admin.php?page=", "", $uiPage["parent"]);
-        $sub_url = strpos($uiPage["url"], "admin.php?page=") !== false ? $uiPage["url"] : "admin.php?page=" . $uiPage["url"];
-        $hook_suffix = add_submenu_page($parent_slug, $uiPage["pageName"], $uiPage["pageName"], "read", $sub_url, $handler);
+        //$sub_url = strpos($uiPage["url"], "admin.php?page=") !== false ? $uiPage["url"] : "admin.php?page=" . $uiPage["url"];
+        $hook_suffix = add_submenu_page($parent_slug, $uiPage["pageName"], $uiPage["pageName"], "read", $uiPage["url"], $handler);
       } else {
         $hook_suffix = add_menu_page($uiPage["pageName"], $uiPage["pageName"], "read", $uiPage["url"], $handler, $uiPage["icon"], 1);
       }
@@ -177,8 +184,7 @@ class AdminPage
   public static function add_hooks()
   {
     // Triggers pro actions for admin pages
-    $framedPage = isset($_GET["uip-framed-page"]) ? $_GET["uip-framed-page"] : false;
-    if ($framedPage) {
+    if (self::$isFramedPage) {
       do_action("uipress/uibuilder/start");
     }
 
