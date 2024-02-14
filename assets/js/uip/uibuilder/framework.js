@@ -143,7 +143,8 @@ export default {
     this.setTab();
   },
   beforeUnmount() {
-    document.addEventListener("uipress/app/page/load/finish", this.getNotifications, { once: false });
+    document.removeEventListener("uipress/app/page/load/finish", this.getNotifications, { once: false });
+    document.removeEventListener("uipress/app/darkmode/toggle", this.toggleDarkMode, { once: false });
   },
   computed: {
     /**
@@ -187,8 +188,37 @@ export default {
      */
     mountWatchers() {
       document.addEventListener("uipress/app/page/load/finish", this.getNotifications, { once: false });
+      document.addEventListener("uipress/app/darkmode/toggle", this.toggleDarkMode, { once: false });
       if (!window.parent) return;
       window.parent.postMessage({ eventName: "uip_request_fullscreen" }, "*");
+    },
+
+    /**
+     * Toggles dark mode
+     *
+     * @since 3.3.095
+     */
+    toggleDarkMode() {
+      const state = this.uipApp.data.userPrefs.darkTheme;
+
+      this.uipApp.data.userPrefs.darkTheme = state ? false : true;
+
+      const theme = state ? "light" : "dark";
+
+      document.documentElement.setAttribute("data-theme", theme);
+      const frames = document.querySelectorAll("iframe");
+
+      // No iframes to update so bail
+      if (!frames) return;
+
+      // Update all iframes with data theme tag
+      for (const iframe of frames) {
+        const head = iframe.contentWindow.document.documentElement;
+        if (!head) continue;
+        head.setAttribute("data-theme", theme);
+      }
+
+      this.saveUserPreference("darkTheme", !state, false);
     },
 
     /**
