@@ -112,9 +112,36 @@ export default {
       if (position.value && position.value == "right") return "uip-flex-reverse";
     },
   },
-  methods: {},
+  methods: {
+    /**
+     * Returns public methods available to the interactions API
+     *
+     * @since 3.3.095
+     */
+    returnPublicMethods() {
+      return ["show", "close"];
+    },
+
+    /**
+     * Show off canvas
+     *
+     * @since 3.3.095
+     */
+    show() {
+      this.$refs.offcanvas.show();
+    },
+
+    /**
+     * Closes off canvas
+     *
+     * @since 3.3.095
+     */
+    close() {
+      this.$refs.offcanvas.close();
+    },
+  },
   template: `
-        <uip-offcanvas :position="getPanelPos" :shortCut="getShortcutValue" :overlayStyle="getPanelStyle" :closeOnLoad="closeOnPageChange">
+        <uip-offcanvas ref="offcanvas" :position="getPanelPos" :shortCut="getShortcutValue" :overlayStyle="getPanelStyle" :closeOnLoad="closeOnPageChange">
         
           <template #trigger>
           
