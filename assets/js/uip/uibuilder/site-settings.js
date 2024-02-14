@@ -7,6 +7,7 @@ import { defineAsyncComponent, nextTick } from "../../libs/vue-esm.js";
 export default {
   components: {
     globalVariables: defineAsyncComponent(() => import("./variables.min.js?ver=3.3.094")),
+    LicenceManager: defineAsyncComponent(() => import("./licence-manager.min.js?ver=3.3.094")),
   },
   data() {
     return {
@@ -21,6 +22,7 @@ export default {
           settingsSaved: __("Settings saved", "uipress-lite"),
           proOption: __("This is a pro option. Upgrade to unlock", "uipress-lite"),
           searchSettings: __("Search settings", "uipress-lite"),
+          licence: __("Licence", "uipress-lite"),
         },
       },
     };
@@ -44,6 +46,18 @@ export default {
         this.checkTemplateApplies();
       },
       deep: true,
+    },
+  },
+  computed: {
+    /**
+     * Checks if pro plugin is activated
+     *
+     * @since 3.3.095
+     */
+    proPluginActivated() {
+      let activePlugins = this.uipApp.data.options.activePlugins;
+      activePlugins = this.isObject(activePlugins) ? Object.values(activePlugins) : activePlugins;
+      return activePlugins.includes("uipress-pro/uipress-pro.php");
     },
   },
   methods: {
@@ -341,8 +355,31 @@ export default {
               </div>
               
               
+              <template v-if="proPluginActivated">
+                <accordion v-if="!search" :openOnTick="false" :startOpen="true">
+                
+                  <template #title>
+                    <div class="uip-flex-grow uip-flex uip-gap-xxs uip-flex-center uip-text-bold">
+                      <div class="">{{ui.strings.licence}}</div>
+                    </div>
+                  </template>
+                  
+                  <template #content>
+                  
+                    <LicenceManager/>
+                  
+                  </template>
+                
+                </accordion>
+                
+                <div class="uip-border-top"></div>
+                
+              </template>
+              
+             
+              
               <!-- Dynamic settings -->
-              <template v-else v-for="(group, index) in uipApp.data.globalGroupOptions">
+              <template v-if="!search" v-for="(group, index) in uipApp.data.globalGroupOptions">
                 <accordion :openOnTick="false" v-if="conditionalShowGroup(group)">
                   <template v-slot:title>
                     <div class="uip-flex-grow uip-flex uip-gap-xxs uip-flex-center uip-text-bold">
