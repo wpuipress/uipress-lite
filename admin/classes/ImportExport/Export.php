@@ -69,6 +69,7 @@ class Export
     register_rest_route("uipress/v1", "/export", [
       "methods" => "GET",
       "callback" => ["UipressLite\Classes\ImportExport\Export", "rest_export_response"],
+      "permission_callback" => "__return_true",
       "args" => [
         "key" => [
           "validate_callback" => function ($param, $request, $key) {
