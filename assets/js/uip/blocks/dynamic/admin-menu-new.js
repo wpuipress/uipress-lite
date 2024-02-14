@@ -1,5 +1,5 @@
 const { __, _x, _n, _nx } = wp.i18n;
-//import { reactive } from '../../../libs/vue-esm.js';
+import { defineAsyncComponent } from "../../../libs/vue-esm.js";
 const MenuCollapse = {
   props: {
     collapsed: Boolean,
@@ -816,6 +816,7 @@ export default {
     DrillDownMenu: DrillDown,
     MenuSearch: MenuSearch,
     MenuCollapse: MenuCollapse,
+    Confirm: defineAsyncComponent(() => import("../../v3.5/utility/confirm.min.js?ver=3.3.094")),
   },
   data() {
     return {
@@ -823,6 +824,7 @@ export default {
       activeMenu: false,
       rendered: true,
       workingMenu: [],
+      watchMenu: [],
       activeLink: "",
       breadCrumbs: [{ name: __("Home", "uipress-lite"), url: this.uipApp.data.dynamicOptions.viewadmin.value }],
       searching: false,
@@ -1197,11 +1199,13 @@ export default {
       // Don't update because we have a static menu set
       if (this.staticMenuEnabled) return;
 
-      //Watch for menu changes in frame
+      // Watch for menu changes in frame
       const frame = document.querySelector(".uip-page-content-frame");
 
       // Frame does not exist so bail
       if (!frame) return;
+
+      this.setWatchMenu(frame);
 
       const menuScript = frame.contentWindow.document.querySelector("#uip-admin-menu");
       const masterMenu = menuScript ? this.uipParseJson(menuScript.getAttribute("data-menu")) : false;
@@ -1213,6 +1217,376 @@ export default {
       // Update menu
       this.menu = masterMenu.menu;
       this.buildMenu();
+    },
+
+    /**
+     * Set's a watch menu to detect new items added / removed to menu
+     *
+     * @since 3.2.13
+     */
+    setWatchMenu(frame) {
+      // Disabled auto update feature for now, needs more work
+      return;
+      //("menu-top toplevel_page_woocommerce menu-top-first");
+      // We only need to watch for changes on a custom menu
+      const menuIsCustom = this.uipApp.data.adminMenu.custom;
+      if (!menuIsCustom) return;
+
+      // Get menu node
+      const menuNode = frame.contentWindow.document.querySelector("#adminmenu");
+      let stackedMenuItems = [];
+
+      // No menu node so probably a front end page
+      if (!menuNode) return;
+
+      // Get all direct children that are 'li' elements
+      const menuItems = menuNode.querySelectorAll(":scope > li");
+
+      // Loop through each link
+      const processMenuItems = (link) => {
+        const processedLink = this.processWatchMenuItem(link);
+        if (processedLink) stackedMenuItems.push(processedLink);
+      };
+
+      // Loop items
+      menuItems.forEach(processMenuItems);
+
+      //console.log(stackedMenuItems);
+      console.log(this.uipApp.data.adminMenu.menu);
+
+      // First time setting the menu so need to compare
+      if (!this.watchMenu.length) return (this.watchMenu = stackedMenuItems);
+
+      const removedItems = this.findRemovedItems(this.watchMenu, stackedMenuItems);
+      const addedItems = this.findAddedItems(this.watchMenu, stackedMenuItems);
+
+      if (addedItems.length) this.handleNewMenuItems(addedItems);
+      if (removedItems.length) this.handleRemovedMenuItems(removedItems);
+
+      this.watchMenu = JSON.parse(JSON.stringify(stackedMenuItems));
+    },
+
+    /**
+     * Handles new items added to the menu
+     *
+     * @param {Array} newItems - The new items added
+     *
+     * @since 3.3.095
+     */
+    async handleNewMenuItems(newItems) {
+      const count = newItems.length;
+
+      const itemsExist = this.findExistingObjectsByUID(this.uipApp.data.adminMenu.menu, newItems);
+
+      if (itemsExist.length === newItems.length) {
+        console.log("aborted all items already exist");
+        return;
+      }
+
+      console.log(itemsExist);
+
+      if (itemsExist.length) {
+        newItems = this.removeObjectsByUID(newItems, itemsExist);
+      }
+
+      let renderedNewItems = `<div class="uip-margin-top-s uip-margin-bottom-s uip-flex uip-flex-column uip-row-gap-xs">`;
+
+      for (let newitem of newItems) {
+        renderedNewItems += `<div><div class="uip-text-bold uip-text-normal">${newitem.name}</div>`;
+        renderedNewItems += `<a href="${newitem.url}" target="_BLANK" class="uip-text-s">${newitem.url}</a></div>`;
+      }
+
+      renderedNewItems += `</div>`;
+
+      const confirm = await this.$refs.confirm.show({
+        title: __("New menu items detected!", "uipress-lite"),
+        message: __("Do you want to add the below items to your menu?", "uipress-lite") + renderedNewItems,
+        okButton: __("Add items to menu", "uipress-lite"),
+      });
+
+      if (!confirm) return;
+
+      console.log("added");
+
+      // Push items to the menu
+      this.pushNewItemsToServerMenu(newItems);
+      this.menu = [...this.menu, ...newItems];
+      this.buildMenu();
+    },
+
+    /**
+     * Saves new menu items to menu saved in database
+     *
+     * @param {Array} newItems - The items to add
+     *
+     * @since 3.3.095
+     */
+    async pushNewItemsToServerMenu(newItems) {
+      const menu_id = this.uipApp.data.adminMenu.menu_id;
+
+      let formData = new FormData();
+      formData.append("action", "uip_push_new_custom_menu_items");
+      formData.append("security", uip_ajax.security);
+      formData.append("menu_id", menu_id);
+      formData.append("new_items", JSON.stringify(newItems));
+
+      const response = await this.sendServerRequest(uip_ajax.ajax_url, formData);
+
+      if (response.error) {
+        this.uipApp.notifications.notify(__("Something went wrong", "uipress-lite"), response.message, "", "error");
+        return false;
+      }
+
+      if (response.success) {
+        this.uipApp.notifications.notify(__("Menu updated", "uipress-lite"), "", "success");
+        return true;
+      }
+    },
+
+    /**
+     * Saves new menu items to menu saved in database
+     *
+     * @param {Array} newItems - The items to add
+     *
+     * @since 3.3.095
+     */
+    async removeItemsFromServerMenu(removedItems) {
+      const menu_id = this.uipApp.data.adminMenu.menu_id;
+
+      let formData = new FormData();
+      formData.append("action", "uip_remove_custom_menu_items");
+      formData.append("security", uip_ajax.security);
+      formData.append("menu_id", menu_id);
+      formData.append("new_items", JSON.stringify(removedItems));
+
+      const response = await this.sendServerRequest(uip_ajax.ajax_url, formData);
+
+      if (response.error) {
+        this.uipApp.notifications.notify(__("Something went wrong", "uipress-lite"), response.message, "", "error");
+        return false;
+      }
+
+      if (response.success) {
+        this.uipApp.notifications.notify(__("Menu updated", "uipress-lite"), "", "success");
+        return true;
+      }
+    },
+
+    /**
+     * Handles new items removed from the menu
+     *
+     * @param {Array} removedItems - The items removed
+     *
+     * @since 3.3.095
+     */
+    async handleRemovedMenuItems(removedItems) {
+      const count = removedItems.length;
+
+      const itemsExist = this.findExistingObjectsByUID(this.uipApp.data.adminMenu.menu, removedItems);
+
+      if (!itemsExist.length) {
+        console.log("aborted");
+        return;
+      }
+
+      removedItems = itemsExist;
+
+      let renderedNewItems = `<div class="uip-margin-top-s uip-margin-bottom-s uip-flex uip-flex-column uip-row-gap-xs">`;
+
+      for (let newitem of removedItems) {
+        renderedNewItems += `<div><div class="uip-text-bold uip-text-normal">${newitem.name}</div>`;
+        renderedNewItems += `<a href="${newitem.url}" target="_BLANK" class="uip-text-s">${newitem.url}</a></div>`;
+      }
+
+      renderedNewItems += `</div>`;
+
+      const confirm = await this.$refs.confirm.show({
+        title: __("Items removed from menu!", "uipress-lite"),
+        message: __("Do you want to remove the below items from your menu?", "uipress-lite") + renderedNewItems,
+        okButton: __("Remove items from menu", "uipress-lite"),
+      });
+
+      if (!confirm) return;
+
+      console.log("removed");
+
+      // Push items to the menu
+      this.removeItemsFromServerMenu(removedItems);
+      this.menu = this.removeObjectsByUID(this.menu, removedItems);
+      this.buildMenu();
+    },
+
+    /**
+     * Finds removed items from and removes them from the array
+     *
+     * @param {Array} originalArray - the original array
+     * @param {Array} newArray - the new array
+     *
+     * @since 3.3.095
+     */
+    removeObjectsByUID(sourceArray, objectsToRemove) {
+      // Extract uip_uid values from objectsToRemove array
+      const uidsToRemove = objectsToRemove.map((obj) => obj.uip_uid);
+
+      // Filter out objects from sourceArray whose uip_uid is in uidsToRemove
+      return sourceArray.filter((obj) => !uidsToRemove.includes(obj.uip_uid));
+    },
+
+    /**
+     * Compares two arrays and returns items that exists in source array
+     *
+     * @param {Array} sourceArray - the original array
+     * @param {Array} objectsToCheck - the new array
+     *
+     * @since 3.3.095
+     */
+    findExistingObjectsByUID(sourceArray, objectsToCheck) {
+      // Extract uip_uid values from objectsToCheck array
+      const uidsToCheck = objectsToCheck.map((obj) => obj.uip_uid);
+
+      // Filter sourceArray for objects whose uip_uid is in uidsToCheck
+      return sourceArray.filter((obj) => uidsToCheck.includes(obj.uip_uid));
+    },
+
+    /**
+     * Finds removed items from two arrays
+     *
+     * @param {Array} originalArray - the original array
+     * @param {Array} newArray - the new array
+     *
+     * @since 3.3.095
+     */
+    findRemovedItems(originalArray, newArray) {
+      return originalArray.filter((origItem) => !newArray.find((newItem) => newItem.uip_uid === origItem.uip_uid));
+    },
+
+    /**
+     * Finds new items from two arrays
+     *
+     * @param {Array} originalArray - the original array
+     * @param {Array} newArray - the new array
+     *
+     * @since 3.3.095
+     */
+    findAddedItems(originalArray, newArray) {
+      return newArray.filter((newItem) => !originalArray.find((origItem) => origItem.id === newItem.id));
+    },
+
+    /**
+     * Process menu items and returns an array of items
+     *
+     * @since 3.3.095
+     */
+    processWatchMenuItem(link, isSubMenu) {
+      let itemID = link.id;
+      let linkNode = link.querySelector(":scope > a");
+
+      // Don't track collapse menu object and only track items with links
+      if (itemID === "collapse-menu" || !linkNode) return;
+
+      // Don't watch hidden items
+      if (linkNode.getAttribute("aria-hidden") == "true") return;
+
+      // Get link name
+
+      let nameNode = !isSubMenu ? linkNode.querySelector(":scope > .wp-menu-name") : linkNode;
+      let name = nameNode ? nameNode.innerText : "";
+      let cleanName = nameNode ? nameNode.innerHTML.split("<")[0] : "";
+      let notifications = nameNode ? this.extractNumberFromHtml(nameNode.innerHTML) : 0;
+      let iconNode = !isSubMenu ? linkNode.querySelector(":scope > .wp-menu-image") : false;
+
+      if (iconNode) {
+        const classesToAdd = ["uip-w-16", "uip-ratio-1-1", "uip-background-no-repeat", "uip-background-center", "uip-background-contain"];
+        if (iconNode.classList.contains("svg")) iconNode.classList.add(...classesToAdd);
+      }
+
+      let classes = isSubMenu ? "" : `${itemID} menu-top menu-top-first`;
+
+      let icon = iconNode ? iconNode.outerHTML : "";
+      let linkhref = linkNode.getAttribute("href");
+
+      // Get custom uip classes
+      let uip_uid_ = this.findClassWithPrefix(link, "uip_uid_");
+      uip_uid_ = uip_uid_ ? uip_uid_.replace("uip_uid_", "") : this.createUID();
+
+      let uip_wp_id_ = this.findClassWithPrefix(link, "uip_wp_id_");
+      uip_wp_id_ = uip_wp_id_ ? uip_wp_id_.replace("uip_wp_id_", "") : this.createUID();
+
+      let uip_unp_url_ = this.findClassWithPrefix(link, "uip_unp_url_");
+      uip_unp_url_ = uip_unp_url_ ? uip_unp_url_.replace("uip_unp_url_", "") : linkhref;
+
+      // Set ID for submenus
+      itemID = itemID ? itemID : linkNode.href;
+
+      // Get submenu
+      let submenu = link.querySelector(":scope > ul.wp-submenu");
+
+      let processedSubMenu = [];
+
+      if (submenu) {
+        const subItems = submenu.querySelectorAll(":scope > li");
+        subItems.forEach((sublink) => {
+          const processedSubLink = this.processWatchMenuItem(sublink, true);
+          if (processedSubLink) processedSubMenu.push(processedSubLink);
+        });
+      }
+
+      return {
+        0: name,
+        1: uip_wp_id_,
+        2: uip_unp_url_,
+        id: itemID,
+        url: linkhref,
+        submenu: processedSubMenu,
+        name: name,
+        cleanName: cleanName,
+        icon: icon,
+        custom: {},
+        notifications: notifications,
+        type: "menu",
+        uip_uid: uip_uid_,
+        active: false,
+        classes: classes,
+      };
+    },
+
+    /**
+     * Extracts a class with specified prefix if exists
+     *
+     * @param {Node} node - the html node to search
+     * @param {String} html - the html string to parse
+     *
+     * @since 3.3.095
+     */
+    findClassWithPrefix(node, prefix) {
+      return Array.from(node.classList).find((className) => className.startsWith(prefix));
+    },
+
+    /**
+     * Extracts a number from a given html string
+     *
+     * @param {String} html - the html string to parse
+     *
+     * @since 3.3.095
+     */
+    extractNumberFromHtml(html) {
+      if (!html) {
+        return null;
+      }
+
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, "text/html");
+
+      const nodes = doc.getElementsByTagName("*"); // get all elements
+
+      for (let i = 0; i < nodes.length; i++) {
+        const nodeValue = nodes[i].textContent.trim();
+        if (!isNaN(nodeValue) && nodeValue !== "") {
+          return parseInt(nodeValue, 10);
+        }
+      }
+
+      return null;
     },
 
     /**
@@ -1334,6 +1708,16 @@ export default {
     returnItemClasses(item) {
       return this.hasNestedPath(item, "custom", "classes") ? item.custom.classes : "";
     },
+
+    /**
+     * Returns whether the menu item is hidden
+     *
+     * @returns {boolean} - whether to hide item
+     * @since 3.2.13
+     */
+    itemHiden(item) {
+      return this.hasNestedPath(item, "custom", "hidden");
+    },
   },
   template: `
     
@@ -1344,6 +1728,8 @@ export default {
     
           <div v-else-if="rendered" class="uip-admin-menu uip-text-normal" :class="returnClasses">
           
+            <Confirm ref="confirm"/> 
+          
             <MenuSearch v-if="hasMenuSearch && !collapsed" 
             @searching="(d)=>{searching = d}"
             :maybeFollowLink="maybeFollowLink" :workingMenu="workingMenu"/>
@@ -1353,7 +1739,7 @@ export default {
             
                 <template v-for="item in workingMenu">
                 
-                  <div v-if="item.type != 'sep'" class="uip-flex uip-flex-column uip-row-gap-xs">
+                  <div v-if="item.type != 'sep' && !itemHiden(item)" class="uip-flex uip-flex-column uip-row-gap-xs">
                   
                     <TopLevelItem :item="item" :maybeFollowLink="maybeFollowLink" :collapsed="collapsed" :block="block"/>
                     
@@ -1363,9 +1749,9 @@ export default {
                     
                   </div>
                   
-                  <div v-else-if="!sepHasCustomName(item)" class="uip-margin-bottom-s uip-menu-separator" :class="returnItemClasses(item)"></div>
+                  <div v-else-if="!sepHasCustomName(item) && !itemHiden(item)" class="uip-margin-bottom-s uip-menu-separator" :class="returnItemClasses(item)"></div>
                   
-                  <div v-else class="uip-margin-bottom-xs uip-margin-top-xs uip-flex uip-flex-row uip-gap-xxs uip-menu-separator" :class="returnItemClasses(item)">
+                  <div v-else-if="!itemHiden(item)" class="uip-margin-bottom-xs uip-margin-top-xs uip-flex uip-flex-row uip-gap-xxs uip-menu-separator" :class="returnItemClasses(item)">
                     <span v-if="item.custom.icon && item.custom.icon != 'uipblank'" class="uip-icon">{{item.custom.icon}}</span>
                     <span>{{item.custom.name}}</span>
                   </div>
@@ -1382,7 +1768,7 @@ export default {
             
                 <template v-for="item in workingMenu">
                 
-                  <dropdown v-if="item.type != 'sep'"  :pos="returnDropdownPosition" class="uip-flex uip-flex-column uip-row-gap-xs" 
+                  <dropdown v-if="item.type != 'sep' && !itemHiden(item)"  :pos="returnDropdownPosition" class="uip-flex uip-flex-column uip-row-gap-xs" 
                   :hover="true" :disableTeleport="true">
                     
                     <template v-slot:trigger>
@@ -1399,9 +1785,9 @@ export default {
                   </dropdown>
                   
                   
-                  <div v-else-if="!sepHasCustomName(item)" class="uip-margin-bottom-s uip-menu-separator" :class="returnItemClasses(item)"></div>
+                  <div v-else-if="!sepHasCustomName(item) && !itemHiden(item)" class="uip-margin-bottom-s uip-menu-separator" :class="returnItemClasses(item)"></div>
                   
-                  <div v-else class="uip-margin-bottom-xs uip-margin-top-xs uip-flex uip-flex-row uip-gap-xxs uip-menu-separator" :class="returnItemClasses(item)">
+                  <div v-else-if="!itemHiden(item)" class="uip-margin-bottom-xs uip-margin-top-xs uip-flex uip-flex-row uip-gap-xxs uip-menu-separator" :class="returnItemClasses(item)">
                     <span v-if="item.custom.icon && item.custom.icon != 'uipblank'" class="uip-icon">{{item.custom.icon}}</span>
                     <span>{{item.custom.name}}</span>
                   </div>
