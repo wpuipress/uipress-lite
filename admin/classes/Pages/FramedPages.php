@@ -4,7 +4,7 @@ use UipressLite\Classes\Scripts\AdminMenu;
 use UipressLite\Classes\Scripts\ToolBar;
 use UipressLite\Classes\App\UserPreferences;
 
-!defined('ABSPATH') ? exit() : '';
+!defined("ABSPATH") ? exit() : "";
 
 class FramedPages
 {
@@ -29,19 +29,19 @@ class FramedPages
    */
   private static function add_hooks()
   {
-    add_action('admin_enqueue_scripts', ['UipressLite\Classes\Scripts\UipScripts', 'add_uipress_styles']);
-    add_action('admin_enqueue_scripts', ['UipressLite\Classes\Scripts\UipScripts', 'add_frame_styles']);
-    add_action('admin_enqueue_scripts', ['UipressLite\Classes\Scripts\UipScripts', 'add_icons']);
-    add_action('wp_enqueue_scripts', ['UipressLite\Classes\Scripts\UipScripts', 'add_frame_styles']);
+    add_action("admin_enqueue_scripts", ["UipressLite\Classes\Scripts\UipScripts", "add_uipress_styles"]);
+    add_action("admin_enqueue_scripts", ["UipressLite\Classes\Scripts\UipScripts", "add_frame_styles"]);
+    add_action("admin_enqueue_scripts", ["UipressLite\Classes\Scripts\UipScripts", "add_icons"]);
+    add_action("wp_enqueue_scripts", ["UipressLite\Classes\Scripts\UipScripts", "add_frame_styles"]);
 
-    add_action('admin_xml_ns', ['UipressLite\Classes\Pages\FramedPages', 'html_attributes']);
-    add_action('admin_bar_init', ['UipressLite\Classes\Scripts\UipScripts', 'remove_admin_bar_style']);
-    add_action('admin_footer', ['UipressLite\Classes\Scripts\UipScripts', 'output_user_styles'], 0);
-    add_filter('admin_body_class', ['UipressLite\Classes\Pages\FramedPages', 'push_body_class']);
-    add_action('admin_head-profile.php', ['UipressLite\Classes\Pages\FramedPages', 'remove_admin_color_scheme']);
+    add_action("admin_xml_ns", ["UipressLite\Classes\Pages\FramedPages", "html_attributes"]);
+    add_action("admin_bar_init", ["UipressLite\Classes\Scripts\UipScripts", "remove_admin_bar_style"]);
+    add_action("admin_footer", ["UipressLite\Classes\Scripts\UipScripts", "output_user_styles"], 0);
+    add_filter("admin_body_class", ["UipressLite\Classes\Pages\FramedPages", "push_body_class"]);
+    add_action("admin_head-profile.php", ["UipressLite\Classes\Pages\FramedPages", "remove_admin_color_scheme"]);
 
     // Push admin page title
-    add_action('admin_head', ['UipressLite\Classes\Pages\FramedPages', 'push_admin_page_title']);
+    add_action("admin_head", ["UipressLite\Classes\Pages\FramedPages", "push_admin_page_title"]);
   }
 
   /**
@@ -52,7 +52,7 @@ class FramedPages
   public static function push_admin_page_title()
   {
     $title = get_admin_page_title();
-    wp_print_inline_script_tag('', ['id' => 'uip-admin-page-title', 'data-title' => $title]);
+    wp_print_inline_script_tag("", ["id" => "uip-admin-page-title", "data-title" => $title]);
   }
 
   /**
@@ -63,7 +63,7 @@ class FramedPages
    */
   public static function remove_admin_color_scheme()
   {
-    remove_action('admin_color_scheme_picker', 'admin_color_scheme_picker');
+    remove_action("admin_color_scheme_picker", "admin_color_scheme_picker");
   }
 
   /**
@@ -73,7 +73,7 @@ class FramedPages
    */
   public static function push_body_class($classes)
   {
-    $classes .= ' uip-user-frame';
+    $classes .= " uip-user-frame";
     return $classes;
   }
 
@@ -84,23 +84,31 @@ class FramedPages
    */
   public static function html_attributes()
   {
-    $data = '';
+    $data = "";
     $data .= 'uip-framed-page="true" ';
 
+    // Get active template ID
+    $user_id = get_current_user_id();
+    $activeTemplateID = get_transient("uip_template_active_" . $user_id);
+
+    // Get settings
+    $settings = get_post_meta($activeTemplateID, "uip-template-settings", true);
+    $settings = is_object($settings) ? $settings : new \stdClass();
+
     // Check if screenOptions are disabled
-    $screenOptions = isset($_GET['uip-hide-screen-options']) ? $_GET['uip-hide-screen-options'] : false;
-    $data .= $screenOptions == '1' ? 'uip-hide-screen-options="true" ' : '';
+    $screenOptions = property_exists($settings, "screenOptions") ? $settings->screenOptions : false;
+    $data .= $screenOptions == "uiptrue" ? "" : 'uip-hide-screen-options="true" ';
 
-    $helpTab = isset($_GET['uip-hide-help-tab']) ? $_GET['uip-hide-help-tab'] : false;
-    $data .= $helpTab == '1' ? 'uip-hide-help-tab="true" ' : '';
+    $helpTab = property_exists($settings, "helpTab") ? $settings->helpTab : false;
+    $data .= $helpTab == "uiptrue" ? "" : 'uip-hide-help-tab="true" ';
 
-    $notices = isset($_GET['uip-hide-notices']) ? $_GET['uip-hide-notices'] : false;
-    $data .= $notices == '1' ? 'uip-hide-notices="true" ' : '';
+    $notices = property_exists($settings, "pluginNotices") ? $settings->pluginNotices : false;
+    $data .= $notices == "uiptrue" ? "" : 'uip-hide-notices="true" ';
 
-    $theme = isset($_GET['uip-default-theme']) ? $_GET['uip-default-theme'] : false;
-    $data .= $theme == '1' ? 'uip-admin-theme="false" ' : 'uip-admin-theme="true" ';
+    $theme = property_exists($settings, "contentTheme") ? $settings->contentTheme : false;
+    $data .= $theme == "uipfalse" ? 'uip-admin-theme="false" ' : 'uip-admin-theme="true" ';
 
-    $darkTheme = UserPreferences::get('darkTheme');
+    $darkTheme = UserPreferences::get("darkTheme");
     $data .= $darkTheme ? 'data-theme="dark" ' : 'data-theme="light" ';
 
     echo wp_kses_post($data);
