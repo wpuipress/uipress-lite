@@ -19,6 +19,19 @@ export default {
      *
      * @since 3.2.13
      */
+    args: {
+      handler(newValue, oldValue) {
+        if (this.updating) return;
+        this.formatArgs();
+      },
+      deep: true,
+      immediate: true,
+    },
+    /**
+     * Watches changes to option and returns the data back
+     *
+     * @since 3.2.13
+     */
     value: {
       handler(newValue, oldValue) {
         if (this.updating) return;
@@ -41,9 +54,6 @@ export default {
     },
   },
 
-  mounted() {
-    this.formatArgs(this.value);
-  },
   computed: {
     /**
      * Returns enabled / disabled options
