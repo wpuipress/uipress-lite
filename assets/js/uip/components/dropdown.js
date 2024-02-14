@@ -161,15 +161,15 @@ export default {
       // Listen to scroll event to adjust the dropdown's position.
       document.addEventListener("scroll", this.handleScroll, true);
 
-      // Listen for a click outside the dropdown to close it.
-      document.body.addEventListener("click", this.onClickOutside);
-
       // If an onOpen function was provided, call it.
       if (this.onOpen) this.onOpen();
 
       // After a slight delay, set the dropdown's initial position.
       setTimeout(() => {
         this.setPosition();
+
+        // Listen for a click outside the dropdown to close it.
+        document.body.addEventListener("click", this.onClickOutside);
       }, 100);
     },
     /**
