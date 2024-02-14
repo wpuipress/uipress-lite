@@ -45,23 +45,35 @@ class uip_app
    */
   public function start_uipress_app()
   {
+    // Checks if the app should be running at all
     if ($this->should_we_exit()) {
       return;
     }
 
+    // Define app constants
     $this->define_constants();
+
     // White list uiPress scripts / styles with other plugins
     UipScripts::whitelist_plugins();
 
     // Checks if we are on a iframe page and if so start framed page actions and exit
-    $framedPage = isset($_GET["uip-framed-page"]) ? $_GET["uip-framed-page"] : false;
-    if ($framedPage == "1") {
-      FramedPages::start();
-      AdminPage::start();
-      return;
-    }
+    $user_id = get_current_user_id();
+    $activeTransient = get_transient("uip_template_active_" . $user_id);
 
-    $this->start_apps();
+    $isIframe = isset($_SERVER["HTTP_SEC_FETCH_DEST"]) && strtolower($_SERVER["HTTP_SEC_FETCH_DEST"]) === "iframe";
+    $referer = isset($_SERVER["HTTP_REFERER"]) ? $_SERVER["HTTP_REFERER"] : false;
+    $needle = "options-general.php?page=uip-ui-builder";
+
+    // We are loading within the frame
+    if ($isIframe && ($activeTransient || ($referer && strpos($referer, $needle) !== false))) {
+      error_log("hits once");
+      FramedPages::start();
+      AdminPage::start(true);
+    }
+    // Outside the frame
+    else {
+      $this->start_apps();
+    }
   }
 
   /**
@@ -77,7 +89,7 @@ class uip_app
 
     FrontEnd::start();
     BackEnd::start();
-    AdminPage::start();
+    AdminPage::start(false);
   }
 
   /**
