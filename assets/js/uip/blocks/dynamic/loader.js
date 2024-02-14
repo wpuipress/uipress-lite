@@ -690,11 +690,7 @@ const PageContent = {
       label: __("Block options", "uipress-lite"),
       icon: "check_box_outline_blank",
       options: [
-        { option: "choiceSelect", componentName: "choice-select", args: { type: "hideShow" }, uniqueKey: "hideScreenOptions", label: __("Screen options", "uipress-lite") },
-        { option: "choiceSelect", componentName: "choice-select", args: { type: "hideShow" }, uniqueKey: "hideHelpTab", label: __("Help tab", "uipress-lite") },
-        { option: "choiceSelect", componentName: "choice-select", args: { type: "enabledDisabled" }, uniqueKey: "disableTheme", label: __("Admin theme", "uipress-lite") },
         { option: "choiceSelect", componentName: "choice-select", args: { type: "enabledDisabled" }, uniqueKey: "disableFullScreen", label: __("Fullscreen", "uipress-lite") },
-        { option: "choiceSelect", componentName: "choice-select", args: { type: "hideShow" }, uniqueKey: "hidePluginNotices", label: __("Plugin notices", "uipress-lite") },
         { option: "choiceSelect", componentName: "choice-select", args: { type: "hideShow" }, uniqueKey: "hideLoader", label: __("Loading bar", "uipress-lite") },
         { option: "startPage", componentName: "link-select", args: { hideLinkType: true }, uniqueKey: "loginRedirect", label: __("Login redirect", "uipress-lite") },
       ],
