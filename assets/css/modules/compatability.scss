@@ -184,3 +184,15 @@ html[uip-framed-page="true"] .toplevel_page_WishListMember {
     padding-left: 0;
   }
 }
+
+// Latepoint
+.wp-toolbar body.latepoint-admin {
+  margin-top: 0 !important;
+}
+
+html[uip-framed-page="true"] {
+  body:not(.is-fullscreen-mode) .interface-interface-skeleton {
+    left: 0;
+    top: 0;
+  }
+}
