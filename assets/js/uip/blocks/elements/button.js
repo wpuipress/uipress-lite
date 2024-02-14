@@ -130,7 +130,9 @@ export default {
   },
   template: `
     
-          <a :href="getLink" :target="returnTarget" class="uip-button-default uip-flex uip-gap-xxs uip-flex-center uip-no-underline"
+          <a :href="getLink" :target="returnTarget" 
+          class="uip-button-default uip-flex uip-gap-xxs uip-flex-center uip-no-underline"
+          tabindex="0"
           :class="returnClasses" @click="followLink($event);" ref="newTab">
           
             <span class="uip-icon" v-if="returnIcon">{{returnIcon}}</span>
