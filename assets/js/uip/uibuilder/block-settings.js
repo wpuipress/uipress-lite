@@ -1089,6 +1089,7 @@ export default {
   inject: ["uiTemplate"],
   components: {
     QueryBuilder: defineAsyncComponent(() => import("../options/query-builder.min.js?ver=3.3.094")),
+    Interactions: defineAsyncComponent(() => import("../options/interactions.min.js?ver=3.3.094")),
     responsiveControls: defineAsyncComponent(() => import("../options/responsive.min.js?ver=3.3.094")),
     Classes: defineAsyncComponent(() => import("../options/classes.min.js?ver=3.3.094")),
     Conditions: defineAsyncComponent(() => import("../options/conditions.min.js?ver=3.3.094")),
@@ -1132,6 +1133,7 @@ export default {
         classes: __("Classes", "uipress-lite"),
         conditions: __("Conditions", "uipress-lite"),
         content: __("Content", "uipress-lite"),
+        interactions: __("Interactions", "uipress-lite"),
       },
       optionsSections: {
         settings: {
@@ -1155,6 +1157,16 @@ export default {
     this.uipApp.blockSettings = this;
   },
   computed: {
+    /**
+     * Shows interaction panel on open if interactions applied
+     *
+     * @since 3.3.095
+     */
+    maybeShowInteractionPanel() {
+      if (this.block.interactions) return this.block.interactions.length;
+      return false;
+    },
+
     /**
      * Returns the current blocks component name
      *
@@ -1450,6 +1462,21 @@ export default {
             <ToggleSection :title="strings.queryLoop">
             
               <QueryBuilder v-if="uiTemplate.proActivated" :block="block" :value="returnBlockQuerySettings"/>
+              
+              <div class="uip-grid-col-1-3" v-else>
+                <div class="uip-text-muted uip-flex uip-flex-center uip-text-s"><span>{{ strings.queryLoop }}</span></div>
+                <div class="uip-padding-xxs uip-border-rounder uip-background-green-wash uip-text-s">{{strings.proOption}}</div>
+              </div>
+              
+            </ToggleSection>
+            <!-- End query -->
+            
+            <div class="uip-border-top"></div>
+            
+            <!-- Interactions  -->
+            <ToggleSection :title="strings.interactions" :startOpen="maybeShowInteractionPanel">
+            
+              <Interactions v-if="uiTemplate.proActivated" :block="block"/>
               
               <div class="uip-grid-col-1-3" v-else>
                 <div class="uip-text-muted uip-flex uip-flex-center uip-text-s"><span>{{ strings.queryLoop }}</span></div>
