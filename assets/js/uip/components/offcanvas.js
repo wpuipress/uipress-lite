@@ -126,6 +126,24 @@ export default {
     },
 
     /**
+     * Shorthand opener function
+     *
+     * @since 3.3.095
+     */
+    show() {
+      this.openOffCanvas();
+    },
+
+    /**
+     * Shorthand close function
+     *
+     * @since 3.3.095
+     */
+    close() {
+      this.closeOffcanvas();
+    },
+
+    /**
      * Opens off canvas and applies entry styles
      *
      * @since 3.2.13
