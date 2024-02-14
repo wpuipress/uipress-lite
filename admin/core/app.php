@@ -66,7 +66,6 @@ class uip_app
 
     // We are loading within the frame
     if ($isIframe && ($activeTransient || ($referer && strpos($referer, $needle) !== false))) {
-      error_log("hits once");
       FramedPages::start();
       AdminPage::start(true);
     }
