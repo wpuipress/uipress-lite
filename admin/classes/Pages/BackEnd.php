@@ -54,6 +54,13 @@ class BackEnd
       return;
     }
 
+    // Check for secure connection
+    if (!self::check_for_secure_conection()) {
+      add_action("admin_head", ["UipressLite\Classes\Pages\BackEnd", "secure_connection_flag"], 99);
+      define("uip_app_running", false);
+      return;
+    }
+
     // Define app running constant
     if (!defined("uip_app_running")) {
       define("uip_app_running", true);
@@ -63,6 +70,40 @@ class BackEnd
 
     self::output_template($templates[0]);
     self::add_hooks();
+  }
+
+  /**
+   * Flags non secure connection
+   *
+   * @since 3.3.1
+   */
+  public static function secure_connection_flag()
+  {
+    $class = "notice notice-warning";
+    $message = __("uiPress needs a secure connection to load templates. Please ensure site is loaded over HTTPS", "uipress-pro");
+
+    printf('<div class="%1$s"><p>%2$s</p></div>', esc_attr($class), esc_html($message));
+  }
+
+  /**
+   * Checks for a secure connection
+   *
+   * @return void
+   * @since 3.3.1
+   */
+  private static function check_for_secure_conection()
+  {
+    if (!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] !== "off") {
+      // The request is using HTTPS
+      return true;
+    } elseif (isset($_SERVER["HTTP_X_FORWARDED_PROTO"]) && $_SERVER["HTTP_X_FORWARDED_PROTO"] == "https") {
+      // Check for HTTP_X_FORWARDED_PROTO headers in case of reverse proxy
+      // This header can be set by load balancers or reverse proxies to indicate the original protocol used.
+      return true;
+    } else {
+      // The request is using HTTP
+      return false;
+    }
   }
 
   /**

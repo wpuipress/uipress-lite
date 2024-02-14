@@ -174,6 +174,9 @@ class UipScripts
   {
     // Check if we are on multisite, if we are then switch to primary blog
     $multiSiteActive = false;
+    $user_id = get_current_user_id();
+    $templateID = get_transient("uip_template_active_" . $user_id);
+
     if (is_multisite() && is_plugin_active_for_network(uip_plugin_path_name . "/uipress-lite.php") && !is_main_site()) {
       $mainSiteId = get_main_site_id();
       switch_to_blog($mainSiteId);
@@ -185,8 +188,8 @@ class UipScripts
     $styles = is_object($styles) ? $styles : new \stdClass();
 
     // Handle url requested styles
-    $templateID = isset($_GET["uipid"]) ? sanitize_text_field($_GET["uipid"]) : false;
-    if (is_numeric($templateID)) {
+
+    if ($templateID && is_numeric($templateID)) {
       $settings = UiTemplates::get_settings($templateID);
 
       // Ensure object exists before checking
