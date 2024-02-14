@@ -1,17 +1,17 @@
 const { __, _x, _n, _nx } = wp.i18n;
-import { defineAsyncComponent, nextTick } from '../../../libs/vue-esm.js';
+import { defineAsyncComponent, nextTick } from "../../../libs/vue-esm.js";
 
 export default {
   components: {
-    modal: defineAsyncComponent(() => import('./modal.min.js?ver=3.3.094')),
+    modal: defineAsyncComponent(() => import("./modal.min.js?ver=3.3.094")),
   },
   data() {
     return {
       title: undefined,
       message: undefined,
       okButton: undefined,
-      cancelButton: __('Cancel', 'uipress-lite'),
-      icon: 'report',
+      cancelButton: __("Cancel", "uipress-lite"),
+      icon: "report",
       resolvePromise: undefined,
       rejectPromise: undefined,
       disableTeleport: false,
@@ -69,7 +69,7 @@ export default {
   template: `
   
 	  <modal ref="popup" :disableTeleport="disableTeleport">
-		<div ref="confirmBody" @keydown.escape="cancel()" @keydown.enter="confirm()" class="uip-w-320 uip-max-w-320 uip-flex uip-flex-column uip-row-gap-s uip-padding-m" tabindex="1" autofocus>
+		<div ref="confirmBody" @keydown.escape="cancel()" @keydown.enter="confirm()" class="uip-min-w-320 uip-flex uip-flex-column uip-row-gap-s uip-padding-m" tabindex="1" autofocus>
 		
 		  <div class="uip-flex uip-gap-xs uip-flex-start uip-flex-no-wrap">
 			
@@ -80,7 +80,7 @@ export default {
 		  
 		  </div>
 		  
-		  <div class="uip-text-muted">{{ message }}</div>
+		  <div class="uip-text-muted" v-html="message"></div>
 		  
 		  <div class="uip-flex uip-gap-s">
 		  
