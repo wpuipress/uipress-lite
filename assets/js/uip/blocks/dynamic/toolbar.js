@@ -207,9 +207,11 @@ export default {
 
       allItems.forEach((item) => {
         let itemId = item.getAttribute("id");
+
         itemId = itemId.replace("wp-admin-bar-", "");
 
         // Continue if certain conditions aren't met.
+        if (!this.toolbar) return;
         if (!itemId || this.toolbar[itemId] || ["site-name", "menu-toggle", "app-logo", "my-account"].includes(itemId)) return;
 
         const newItem = this.createToolbarItem(item, adminPath, adminURL);
@@ -225,6 +227,9 @@ export default {
      * @param {String} adminURL
      */
     createToolbarItem(item, adminPath, adminURL) {
+      let itemId = item.getAttribute("id");
+      itemId = itemId.replace("wp-admin-bar-", "");
+
       const link = item.querySelector("a.ab-item");
       if (!link) return false;
       let href = link.getAttribute("href") || "";
@@ -234,7 +239,7 @@ export default {
       }
 
       const newItem = {
-        id: "attr",
+        id: itemId,
         group: "",
         meta: [],
         parent: "",
