@@ -1,7 +1,7 @@
 == Changelog ==
 
-= 3.3.095 =
-*Release Date 09 January 2024*
+= 3.3.1 =
+* Release Date 14 February 2024*
 
 * Fixed issue with disabling uipress on specific pages
 * Fixed issue with ACSS tabs

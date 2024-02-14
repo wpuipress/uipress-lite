@@ -816,7 +816,7 @@ export default {
     DrillDownMenu: DrillDown,
     MenuSearch: MenuSearch,
     MenuCollapse: MenuCollapse,
-    Confirm: defineAsyncComponent(() => import("../../v3.5/utility/confirm.min.js?ver=3.3.094")),
+    Confirm: defineAsyncComponent(() => import("../../v3.5/utility/confirm.min.js?ver=3.3.1")),
   },
   data() {
     return {

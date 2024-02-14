@@ -1,8 +1,8 @@
 const { __, _x, _n, _nx } = wp.i18n;
 import { defineAsyncComponent, nextTick } from "../../libs/vue-esm.js";
-import { core as PostTypeSelect, preview as PostTypeSelectPreview } from "../components/post-type-select.min.js?ver=3.3.094";
-import { core as StatusTypeSelect, preview as StatusTypeSelectPreview } from "../components/multiselect.min.js?ver=3.3.094";
-import { core as UserRoleSelect, preview as UserRoleSelectPreview } from "../components/user-role-multiselect.min.js?ver=3.3.094";
+import { core as PostTypeSelect, preview as PostTypeSelectPreview } from "../components/post-type-select.min.js?ver=3.3.1";
+import { core as StatusTypeSelect, preview as StatusTypeSelectPreview } from "../components/multiselect.min.js?ver=3.3.1";
+import { core as UserRoleSelect, preview as UserRoleSelectPreview } from "../components/user-role-multiselect.min.js?ver=3.3.1";
 
 import Comparisons from "../v3.5/lists/comparisons.min.js";
 import DataTypes from "../v3.5/lists/query_data_types.min.js";
@@ -968,7 +968,7 @@ const MetaQuery = {
 
 export default {
   components: {
-    ScreenControl: defineAsyncComponent(() => import("../v3.5/utility/screen-control.min.js?ver=3.3.094")),
+    ScreenControl: defineAsyncComponent(() => import("../v3.5/utility/screen-control.min.js?ver=3.3.1")),
     PostTypeSelect: PostTypeSelect,
     QueryBuilder: QueryBuilder,
     MetaBuilder: MetaQuery,
