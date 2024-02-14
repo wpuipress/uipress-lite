@@ -95,7 +95,7 @@ export default {
           appliesTo: __("Applies to", "uipress-lite"),
           excludes: __("Excludes", "uipress-lite"),
           templateType: __("Template type", "uipress-lite"),
-          uiTemplate: __("UI template", "uipress-lite"),
+          uiTemplate: __("User template (admin theme)", "uipress-lite"),
           adminPage: __("Admin Page", "uipress-lite"),
           toolBar: __("Frontend toolbar", "uipress-lite"),
           loginPage: __("Login page", "uipress-lite"),
@@ -128,6 +128,13 @@ export default {
           status: __("Status", "uipress-lite"),
           general: __("General", "uipress-lite"),
           slug: __("Slug", "uipress-lite"),
+          content: __("Content", "uipress-lite"),
+          theme: __("Theme", "uipress-lite"),
+          helpTab: __("Help tab", "uipress-lite"),
+          screenOptions: __("Screen options", "uipress-lite"),
+          pluginNotices: __("Plugin notices", "uipress-lite"),
+          adminTheme: __("Admin theme", "uipress-lite"),
+          frameDescription: __("The following options will only take effect on live templates.", "uipress-lite"),
         },
       },
       enabledDisabled: {
@@ -138,6 +145,16 @@ export default {
         true: {
           value: true,
           label: __("Enabled", "uipress-lite"),
+        },
+      },
+      showHide: {
+        false: {
+          value: false,
+          label: __("Hide", "uipress-lite"),
+        },
+        true: {
+          value: true,
+          label: __("Show", "uipress-lite"),
         },
       },
       switchOptions: {
@@ -167,6 +184,7 @@ export default {
   async mounted() {
     this.loading = false;
     setTimeout(this.mountHandlers, 100);
+    this.setDefaults();
   },
   beforeUnmount() {
     document.removeEventListener("click", this.handleClickEvents);
@@ -220,6 +238,20 @@ export default {
     },
   },
   methods: {
+    /**
+     * Sets up defaults for template settings
+     *
+     * @since 3.3.095
+     */
+    setDefaults() {
+      if (!this.isObject(this.uiTemplate.globalSettings)) this.uiTemplate.globalSettings = {};
+
+      if (!("contentTheme" in this.uiTemplate.globalSettings)) this.uiTemplate.globalSettings.contentTheme = true;
+      if (!("helpTab" in this.uiTemplate.globalSettings)) this.uiTemplate.globalSettings.helpTab = false;
+      if (!("screenOptions" in this.uiTemplate.globalSettings)) this.uiTemplate.globalSettings.screenOptions = false;
+      if (!("pluginNotices" in this.uiTemplate.globalSettings)) this.uiTemplate.globalSettings.pluginNotices = false;
+    },
+
     /**
      * Mounts click watcher to detect outside clicks
      *
@@ -374,7 +406,7 @@ export default {
             
               <div class="uip-flex uip-flex-column uip-row-gap-s">
                 
-                <div v-if="isTemplateWithoutFrame" class=" uip-background-red-wash uip-border-rounder uip-text-s uip-padding-xs uip-scale-in-top uip-flex uip-flex-column uip-row-gap-xs">
+                <div v-if="isTemplateWithoutFrame" class="uip-background-red-wash uip-border-rounder uip-text-s uip-padding-xs uip-scale-in-top uip-flex uip-flex-column uip-row-gap-xs">
                   <div class="uip-text-bold uip-text-l uip-text-emphasis">{{ui.strings.watchOut}}</div>
                   <div>{{ui.strings.watchOutDescription}}</div>
                 </div>
@@ -474,6 +506,55 @@ export default {
                 
               </div>  
             </ToggleSection>
+            
+            
+            <!--Frame settings-->
+            <template v-if="uiTemplate.globalSettings.type == 'ui-template'">
+            
+              <div class="uip-border-top"></div>
+              
+              <ToggleSection :title="ui.strings.content" :startOpen="true">
+              
+                <div class="uip-background-orange-wash uip-border-rounder uip-text-s uip-padding-xs uip-scale-in-top uip-flex uip-flex-column uip-row-gap-xs uip-margin-bottom-s uip-text-muted">
+                  {{ui.strings.frameDescription}}
+                </div>
+                
+                <div class="uip-grid-col-1-3">
+                
+                  <!--Theme enabled-->
+                  <div class="uip-text-muted uip-flex uip-flex-center uip-text-s uip-h-30 uip-gap-xs">
+                    <span>{{ui.strings.theme}}</span>
+                  </div>
+                  <toggle-switch :options="enabledDisabled" :activeValue="uiTemplate.globalSettings.contentTheme" :dontAccentActive="true" 
+                  :returnValue="(data)=>{ uiTemplate.globalSettings.contentTheme = data}"/>
+                  
+                  <!--Help tab-->
+                  <div class="uip-text-muted uip-flex uip-flex-center uip-text-s uip-h-30 uip-gap-xs">
+                    <span>{{ui.strings.helpTab}}</span>
+                  </div>
+                  <toggle-switch :options="showHide" :activeValue="uiTemplate.globalSettings.helpTab" :dontAccentActive="true" 
+                  :returnValue="(data)=>{ uiTemplate.globalSettings.helpTab = data}"/>
+                  
+                  <!--Screen options-->
+                  <div class="uip-text-muted uip-flex uip-flex-center uip-text-s uip-h-30 uip-gap-xs">
+                    <span>{{ui.strings.screenOptions}}</span>
+                  </div>
+                  <toggle-switch :options="showHide" :activeValue="uiTemplate.globalSettings.screenOptions" :dontAccentActive="true" 
+                  :returnValue="(data)=>{ uiTemplate.globalSettings.screenOptions = data}"/>
+                  
+                  <!--Plugin notices-->
+                  <div class="uip-text-muted uip-flex uip-flex-center uip-text-s uip-h-30 uip-gap-xs">
+                    <span>{{ui.strings.pluginNotices}}</span>
+                  </div>
+                  <toggle-switch :options="showHide" :activeValue="uiTemplate.globalSettings.pluginNotices" :dontAccentActive="true" 
+                  :returnValue="(data)=>{ uiTemplate.globalSettings.pluginNotices = data}"/>  
+                
+                </div>
+              
+              
+              </ToggleSection>  
+              
+            </template>
             
             
             <div class="uip-border-top"></div>
