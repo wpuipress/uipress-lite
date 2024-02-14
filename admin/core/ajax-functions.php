@@ -52,6 +52,8 @@ class uip_ajax
       "uip_global_export",
       "uip_global_import",
       "uip_get_custom_static_menu",
+      "uip_push_new_custom_menu_items",
+      "uip_remove_custom_menu_items",
     ];
 
     // Push ajax actions
@@ -135,6 +137,91 @@ class uip_ajax
 
     $returnData["data"] = $menu;
     wp_send_json($returnData);
+  }
+
+  /**
+   * Updates given menu with new items from auto detect
+   *
+   * @since 3.3.095
+   */
+  public function uip_push_new_custom_menu_items()
+  {
+    // Check security nonce and 'DOING_AJAX' global
+    Ajax::check_referer();
+
+    $menuItems = json_decode(stripslashes($_POST["new_items"]));
+    $menuItems = Sanitize::clean_input_with_code($menuItems);
+    $menuid = sanitize_text_field($_POST["menu_id"]);
+
+    if (!$menuid || !is_array($menuItems)) {
+      $message = __("Unable to update menu", "uipress-lite");
+      Ajax::error($message);
+    }
+
+    $menuSettings = get_post_meta($menuid, "uip_menu_settings", true);
+    $customMenu = Objects::get_nested_property($menuSettings, ["menu", "menu"]);
+    if (!is_array($customMenu)) {
+      $message = __("No valid menu discovered", "uipress-lite");
+      Ajax::error($message);
+    }
+
+    $customMenu = [...$customMenu, ...$menuItems];
+    $menuSettings->menu->menu = $customMenu;
+
+    update_post_meta($menuid, "uip_menu_settings", $menuSettings);
+
+    $returndata = [];
+    $returndata["success"] = true;
+    $returndata["message"] = "Success";
+
+    wp_send_json($returndata);
+  }
+
+  /**
+   * Updates given menu with new items from auto detect
+   *
+   * @since 3.3.095
+   */
+  public function uip_remove_custom_menu_items()
+  {
+    // Check security nonce and 'DOING_AJAX' global
+    Ajax::check_referer();
+
+    $menuItems = json_decode(stripslashes($_POST["new_items"]));
+    $menuItems = Sanitize::clean_input_with_code($menuItems);
+    $menuid = sanitize_text_field($_POST["menu_id"]);
+
+    if (!$menuid || !is_array($menuItems)) {
+      $message = __("Unable to update menu", "uipress-lite");
+      Ajax::error($message);
+    }
+
+    $menuSettings = get_post_meta($menuid, "uip_menu_settings", true);
+    $customMenu = Objects::get_nested_property($menuSettings, ["menu", "menu"]);
+    if (!is_array($customMenu)) {
+      $message = __("No valid menu discovered", "uipress-lite");
+      Ajax::error($message);
+    }
+
+    // Filter out menu items
+    $uidsToRemove = array_map(function ($obj) {
+      return $obj->uip_uid;
+    }, $menuItems);
+
+    // Filter out objects from sourceArray whose uip_uid is in uidsToRemove
+    $customMenu = array_filter($customMenu, function ($obj) use ($uidsToRemove) {
+      return !in_array($obj->uip_uid, $uidsToRemove);
+    });
+
+    $menuSettings->menu->menu = $customMenu;
+
+    update_post_meta($menuid, "uip_menu_settings", $menuSettings);
+
+    $returndata = [];
+    $returndata["success"] = true;
+    $returndata["message"] = "Success";
+
+    wp_send_json($returndata);
   }
 
   /**
