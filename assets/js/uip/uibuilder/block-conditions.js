@@ -2,14 +2,17 @@ export default {
   data() {
     return {
       currentDate: new Date(),
+      currentURL: window.location.href,
     };
   },
   mounted() {
     this.updateDate();
     this.interval = setInterval(this.updateDate, 60000);
+    document.addEventListener("uipress/app/page/change", this.updateCurrentURL, { once: false });
   },
   beforeUnmount() {
     clearInterval(this.interval); // Clear the interval when the component is destroyed
+    document.removeEventListener("uipress/app/page/change", this.updateCurrentURL, { once: false });
   },
   computed: {
     /**
@@ -52,6 +55,16 @@ export default {
   },
   methods: {
     /**
+     * Updates current url
+     *
+     * @param {object} e - event object
+     *
+     * @since 3.3.095
+     */
+    updateCurrentURL(e) {
+      this.currentURL = e.detail.url ? e.detail.url.replaceAll("%2F", "/") : e.detail.url;
+    },
+    /**
      * Updates current date / time
      *
      * @since 3.3.095
@@ -72,7 +85,7 @@ export default {
     handleConditionLogic(value, condition, valueAsArray) {
       let conditionMet = false;
 
-      value = !valueAsArray ? value.toLowerCase() : value;
+      value = typeof value !== "boolean" && !valueAsArray ? value.toLowerCase() : value;
       const userValue = condition.value.toLowerCase();
 
       const valuesMatch = valueAsArray ? value.includes(userValue) : value === userValue;
@@ -269,8 +282,7 @@ export default {
 
           // Weekday condition
           case "weekday":
-            matcher = this.currentDayOfWeek == condition.value.toLowerCase();
-            tempValue = this.handleConditionLogic(matcher, condition);
+            tempValue = this.handleConditionLogic(this.currentDayOfWeek, condition);
             metAnds.push(tempValue);
             break;
 
@@ -308,7 +320,7 @@ export default {
             break;
           // Current url condition
           case "currentURL":
-            tempValue = this.handleConditionLogic(window.location.href, condition);
+            tempValue = this.handleConditionLogic(this.currentURL, condition);
             metAnds.push(tempValue);
             break;
           // Current locale condition
