@@ -1,10 +1,11 @@
-import { nextTick, h, Teleport } from "../../libs/vue-esm.js";
+import { nextTick, h, Teleport, ref } from "../../libs/vue-esm.js";
 import BlockStyles from "./block-styles.min.js";
 import BlockConditions from "./block-conditions.min.js";
+import BlockInteractions from "./block-interactions.min.js";
 const { __ } = wp.i18n;
 export default {
   inject: ["uiTemplate"],
-  mixins: [BlockStyles, BlockConditions],
+  mixins: [BlockStyles, BlockConditions, BlockInteractions],
   props: {
     block: Object,
     list: Array,
@@ -406,9 +407,11 @@ export default {
 
       // If production then mount the link handler
       if (this.isProduction) {
-        watchers.onclick = (evt) => {
-          this.maybeFollowLink(evt, block);
-        };
+        watchers = this.handleBlockInteractions(block, watchers);
+
+        //watchers.onclick = (evt) => {
+        //this.maybeFollowLink(evt, block);
+        //};
         return watchers;
       }
 
@@ -566,7 +569,8 @@ export default {
       return nodes;
     }
 
-    const args = { ...this.returnParams, ...this.returnWatchers(this.block) };
+    const blockREF = ref(null);
+    const args = { ...this.returnParams, ...this.returnWatchers(this.block), ...{ ref: blockREF } };
     const coreBlockNode = h(blockTemplate, args);
 
     // If has block query
@@ -584,6 +588,16 @@ export default {
     else {
       nodes.push(coreBlockNode);
     }
+
+    // Build ref object if doesn't exist
+    if (!this.isObject(this.uiTemplate.blockRefs)) this.uiTemplate.blockRefs = {};
+
+    // Store block ref and id for interactions
+    this.uiTemplate.blockRefs[this.block.uid] = {
+      uid: this.block.uid,
+      name: this.block.name,
+      ref: blockREF,
+    };
 
     // Return block and style
     return nodes;
