@@ -584,7 +584,7 @@ export default {
      * @since 3.2.13
      */
     handleInsideFrameLink(linkItem) {
-      const url = linkItem.href;
+      const url = linkItem.getAttribute("href");
       const target = linkItem.target ? linkItem.target.toLowerCase() : false;
 
       // New tab so bail
@@ -864,7 +864,7 @@ export default {
       
       <ModLoader v-if="!showLoader" ref="modernloader" color="repeating-linear-gradient(to right,var(--uip-color-accent) 0%,var(--uip-color-accent-darker) 100%)"/>
       
-      <iframe :style="returnLoadingStyle" :src="returnStartPage" 
+      <iframe :src="returnStartPage" 
       ref="contentframe" 
       @load="handleIframeLoad"
       style="transition:opacity 0.3s ease-in-out"
