@@ -58,14 +58,14 @@ class uip_app
 
     // Checks if we are on a iframe page and if so start framed page actions and exit
     $user_id = get_current_user_id();
-    $activeTransient = get_transient("uip_template_active_" . $user_id);
+    //$activeTransient = get_transient("uip_template_active_" . $user_id);
 
     $isIframe = isset($_SERVER["HTTP_SEC_FETCH_DEST"]) && strtolower($_SERVER["HTTP_SEC_FETCH_DEST"]) === "iframe";
     $referer = isset($_SERVER["HTTP_REFERER"]) ? $_SERVER["HTTP_REFERER"] : false;
     $needle = "options-general.php?page=uip-ui-builder";
 
     // We are loading within the frame
-    if ($isIframe && ($activeTransient || ($referer && strpos($referer, $needle) !== false))) {
+    if ($isIframe || ($referer && strpos($referer, $needle) !== false)) {
       FramedPages::start();
       AdminPage::start(true);
     }

@@ -3,7 +3,7 @@ import { defineAsyncComponent, nextTick } from '../../../libs/vue-esm.js';
 
 export default {
   components: {
-    Confirm: defineAsyncComponent(() => import('../../v3.5/utility/confirm.min.js?ver=3.3.1')),
+    Confirm: defineAsyncComponent(() => import('../../v3.5/utility/confirm.min.js?ver=3.3.101')),
   },
   props: {
     display: String,

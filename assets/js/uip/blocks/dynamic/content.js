@@ -1,7 +1,10 @@
 const { __ } = wp.i18n;
 import { maybeForceReload, stripUIPparams } from "../../v3.5/utility/functions.min.js";
+import { nextTick } from "../../../libs/vue-esm.js";
+import Loader from "../../v3.5/utility/loader.js";
 
 export default {
+  components: { ModLoader: Loader },
   props: {
     display: String,
     name: String,
@@ -20,6 +23,7 @@ export default {
       scrollOver: true,
       mounted: false,
       updatingBrowserWindow: false,
+      loadingtimeout: false,
     };
   },
   inject: ["uiTemplate"],
@@ -36,11 +40,27 @@ export default {
       },
       deep: true,
     },
+    loading: {
+      handler(newValue, oldValue) {
+        if (this.loadingtimeout) clearTimeout(this.loadingtimeout);
+        // Loading is true so set a timeout to prevent endless load
+        if (newValue) {
+          const stopLoader = () => (this.loading = false);
+          this.loadingtimeout = setTimeout(stopLoader, 6000);
+
+          if (this.$refs.modernloader) this.$refs.modernloader.start();
+        } else {
+          if (this.$refs.modernloader) this.$refs.modernloader.finish();
+        }
+      },
+      immediate: true,
+    },
   },
   mounted() {
     this.mountProductionFunctions();
     this.mountMainWatchers();
     this.mounted = true;
+    if (this.$refs.modernloader) this.$refs.modernloader.start();
   },
   beforeUnmount() {
     this.removeWatchers();
@@ -248,8 +268,8 @@ export default {
       document.dispatchEvent(new CustomEvent("uipress/app/page/load/start"));
       this.loading = true;
 
-      const stopLoader = () => (this.loading = false);
-      setTimeout(stopLoader, 2000);
+      //const stopLoader = () => (this.loading = false);
+      //setTimeout(stopLoader, 2000);
     },
 
     /**
@@ -282,8 +302,7 @@ export default {
 
       this.updateActiveLink(path);
       this.injectStyles();
-      this.loading = false;
-      return;
+      //this.loading = false;
     },
 
     /**
@@ -307,8 +326,10 @@ export default {
       this.getAdminPageTitle();
       this.checkForUserFullSreen(currentURL);
 
-      this.loading = false;
-      this.rendered = true;
+      nextTick(() => {
+        this.loading = false;
+        this.rendered = true;
+      });
 
       const title = frame.contentDocument.title;
       if (title) document.title = title;
@@ -359,7 +380,7 @@ export default {
 
       // Set a timeout to stop endless loading bar if plugin doesn't trigger an iframe load
       const stopLoading = () => (this.loading = false);
-      setTimeout(stopLoading, 2000);
+      //setTimeout(stopLoading, 2000);
 
       // If iFrame doesn't exist bail
       if (!this.$refs.contentframe.contentWindow) return;
@@ -573,6 +594,8 @@ export default {
       if (!url) return;
 
       if (url.startsWith("#")) return;
+
+      this.loading = true;
 
       // Check if dynamic loading is disabled
       this.dynamicLoadingDisabled(url);
@@ -838,15 +861,10 @@ export default {
     
     <div ref="frameContainer" class="uip-flex uip-flex-column uip-overflow-hidden uip-content-frame uip-overflow-hidden uip-position-relative" 
     :class="returnClasses" @mouseenter="scrollOver = true;" @keydown.esc="removeFullScreen" tabindex="1">
-    
-      <div class="uip-position-relative" v-if="!showLoader">
-        <div ref="loader" :class="block.uid" class="uip-ajax-loader" v-if="loading">
-        <div :class="block.uid" class="uip-loader-bar"></div>
-        </div>
-      </div>
+      
+      <ModLoader v-if="!showLoader" ref="modernloader" color="repeating-linear-gradient(to right,var(--uip-color-accent) 0%,var(--uip-color-accent-darker) 100%)"/>
       
       <iframe :style="returnLoadingStyle" :src="returnStartPage" 
-      
       ref="contentframe" 
       @load="handleIframeLoad"
       style="transition:opacity 0.3s ease-in-out"

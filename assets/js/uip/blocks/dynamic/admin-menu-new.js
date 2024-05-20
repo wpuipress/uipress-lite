@@ -673,6 +673,9 @@ const DrillDown = {
      * @since 3.2.13
      */
     handleLinkClick(evt, item) {
+      // New tab so let the browser handle it
+      if (this.hasNestedPath(item, "custom", "newTab")) return;
+
       if (item.submenu && item.submenu.length) {
         this.drillDown(item);
         evt.preventDefault();
@@ -816,7 +819,7 @@ export default {
     DrillDownMenu: DrillDown,
     MenuSearch: MenuSearch,
     MenuCollapse: MenuCollapse,
-    Confirm: defineAsyncComponent(() => import("../../v3.5/utility/confirm.min.js?ver=3.3.1")),
+    Confirm: defineAsyncComponent(() => import("../../v3.5/utility/confirm.min.js?ver=3.3.101")),
   },
   data() {
     return {

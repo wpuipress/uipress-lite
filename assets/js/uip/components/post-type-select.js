@@ -1,5 +1,5 @@
 const { __, _x, _n, _nx } = wp.i18n;
-import { defineAsyncComponent } from '../../libs/vue-esm.js';
+import { defineAsyncComponent } from "../../libs/vue-esm.js";
 export const core = {
   props: {
     selected: Array,
@@ -10,13 +10,13 @@ export const core = {
   },
   data() {
     return {
-      thisSearchInput: '',
+      thisSearchInput: "",
       options: [],
       loading: false,
       selectedOptions: [],
     };
   },
-  
+
   watch: {
     selected: {
       handler(newValue, oldValue) {
@@ -73,12 +73,12 @@ export const core = {
     getPostTypes() {
       this.loading = true;
       let formData = new FormData();
-      formData.append('action', 'uip_get_post_types');
-      formData.append('security', uip_ajax.security);
+      formData.append("action", "uip_get_post_types");
+      formData.append("security", uip_ajax.security);
 
       this.sendServerRequest(uip_ajax.ajax_url, formData).then((response) => {
         if (response.error) {
-          this.uipApp.notifications.notify(response.error, 'error');
+          this.uipApp.notifications.notify(response.error, "error");
           this.loading = false;
           return;
         }
@@ -195,7 +195,7 @@ export const core = {
 
 export const preview = {
   components: {
-    contextmenu: defineAsyncComponent(() => import('../v3.5/utility/contextmenu.min.js?ver=3.3.1')),
+    contextmenu: defineAsyncComponent(() => import("../v3.5/utility/contextmenu.min.js?ver=3.3.101")),
   },
   props: {
     selected: Array,
@@ -206,12 +206,12 @@ export const preview = {
   },
   data() {
     return {
-      thisSearchInput: '',
+      thisSearchInput: "",
       options: [],
       loading: false,
       selectedOptions: [],
       strings: {
-        postTypeSelect: __('Post type select', 'uipress-lite'),
+        postTypeSelect: __("Post type select", "uipress-lite"),
       },
     };
   },
@@ -253,7 +253,7 @@ export const preview = {
      */
     returnDropWidth() {
       const rect = this.$refs.multiselect.getBoundingClientRect();
-      return { width: rect.width + 'px' };
+      return { width: rect.width + "px" };
     },
   },
   methods: {
@@ -382,17 +382,31 @@ export default {
   },
   props: {
     selected: Array,
+    value: Array,
     placeHolder: String,
     searchPlaceHolder: String,
     single: Boolean,
     updateSelected: Function,
+    returnData: Function,
   },
   data() {
     return {
       strings: {
-        postTypeSelect: __('Post type select', 'uipress-lite'),
+        postTypeSelect: __("Post type select", "uipress-lite"),
       },
     };
+  },
+  computed: {
+    returnValue() {
+      if (this.value) return this.value;
+      if (this.selected) return this.selected;
+    },
+  },
+  methods: {
+    updateDataSelected(data) {
+      if (this.updateSelected) this.updateSelected(data);
+      if (this.returnData) this.returnData(data);
+    },
   },
   template: `
   
@@ -401,7 +415,7 @@ export default {
       
       <template #trigger>
       
-       <PostTypePreview :selected="selected" :placeHolder="placeHolder" :searchPlaceHolder="searchPlaceHolder" :single="single" :updateSelected="updateSelected"/>
+       <PostTypePreview :selected="returnValue" :placeHolder="placeHolder" :searchPlaceHolder="searchPlaceHolder" :single="single" :updateSelected="updateDataSelected"/>
         
       </template>
       
@@ -420,7 +434,7 @@ export default {
             
           </div>
         
-          <PostTypeSelect :selected="selected" :placeHolder="placeHolder" :searchPlaceHolder="searchPlaceHolder" :single="single" :updateSelected="updateSelected"/>
+          <PostTypeSelect :selected="returnValue" :placeHolder="placeHolder" :searchPlaceHolder="searchPlaceHolder" :single="single" :updateSelected="updateDataSelected"/>
         
         
         </div>

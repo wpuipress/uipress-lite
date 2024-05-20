@@ -2,8 +2,8 @@ const { __, _x, _n, _nx } = wp.i18n;
 import { defineAsyncComponent, nextTick } from "../../libs/vue-esm.js";
 export default {
   components: {
-    imageSelect: defineAsyncComponent(() => import("../v3.5/styles/image-select.min.js?ver=3.3.1")),
-    colorBox: defineAsyncComponent(() => import("../v3.5/utility/color-box.min.js?ver=3.3.1")),
+    imageSelect: defineAsyncComponent(() => import("../v3.5/styles/image-select.min.js?ver=3.3.101")),
+    colorBox: defineAsyncComponent(() => import("../v3.5/utility/color-box.min.js?ver=3.3.101")),
   },
   props: {
     returnData: Function,

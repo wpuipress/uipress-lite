@@ -217,7 +217,11 @@ export async function sendServerRequest(url, data) {
  * @since 3.0.0
  */
 export function uipParseJson(data) {
-  return JSON.parse(data, (k, v) => (v === "uiptrue" ? true : v === "uipfalse" ? false : v === "uipblank" ? "" : v));
+  try {
+    return JSON.parse(data, (k, v) => (v === "uiptrue" ? true : v === "uipfalse" ? false : v === "uipblank" ? "" : v));
+  } catch (err) {
+    return {};
+  }
 }
 
 /**
@@ -253,6 +257,11 @@ export function updateAppPage(newURL, reloadPage) {
   }
 
   let url = new URL(newURL);
+
+  /// Check for cors issues
+  if (url.hostname !== window.location.hostname) {
+    return window.location.assign(url);
+  }
 
   const isBuilder = this.isBuilder;
 

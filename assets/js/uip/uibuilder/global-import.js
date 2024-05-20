@@ -2,7 +2,7 @@ const { __, _x, _n, _nx } = wp.i18n;
 import { defineAsyncComponent, nextTick } from '../../libs/vue-esm.js';
 export default {
   components: {
-    Modal: defineAsyncComponent(() => import('../v3.5/utility/modal.min.js?ver=3.3.1')),
+    Modal: defineAsyncComponent(() => import('../v3.5/utility/modal.min.js?ver=3.3.101')),
   },
   props: {
     args: Object,

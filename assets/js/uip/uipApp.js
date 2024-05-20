@@ -15,12 +15,12 @@ const pluginVersion = import.meta.url.split("?ver=")[1];
  *
  * @since 3.2.13
  */
-import "./blocks/layout/loader.min.js?ver=3.3.1";
-import "./blocks/elements/loader.min.js?ver=3.3.1";
-import "./blocks/inputs/loader.min.js?ver=3.3.1";
-import "./blocks/dynamic/loader.min.js?ver=3.3.1";
-import "./blocks/analytics/loader.min.js?ver=3.3.1";
-import "./blocks/storeanalytics/loader.min.js?ver=3.3.1";
+import "./blocks/layout/loader.min.js?ver=3.3.101";
+import "./blocks/elements/loader.min.js?ver=3.3.101";
+import "./blocks/inputs/loader.min.js?ver=3.3.101";
+import "./blocks/dynamic/loader.min.js?ver=3.3.101";
+import "./blocks/analytics/loader.min.js?ver=3.3.101";
+import "./blocks/storeanalytics/loader.min.js?ver=3.3.101";
 
 // Apply blocks filter
 let AllBlocks = wp.hooks.applyFilters("uipress.blocks.register", []);
@@ -46,7 +46,7 @@ const AllPlugins = wp.hooks.applyFilters("uipress.app.plugins.register", []);
  *
  * @since 3.2.13
  */
-import { processSettings } from "./options/dynamic-settings.min.js?ver=3.3.1";
+import { processSettings } from "./options/dynamic-settings.min.js?ver=3.3.101";
 const dynamic_settings = processSettings(uip_ajax.uipAppData.options.dynamicData);
 wp.hooks.addFilter("uipress.uibuilder.dynamicdata.register", "uipress", (current) => ({ ...current, ...dynamic_settings }));
 const AllDynamics = wp.hooks.applyFilters("uipress.uibuilder.dynamicdata.register", {});
@@ -56,7 +56,7 @@ const AllDynamics = wp.hooks.applyFilters("uipress.uibuilder.dynamicdata.registe
  *
  * @since 3.2.13
  */
-import themeStyles from "./options/theme-styles.min.js?ver=3.3.1";
+import themeStyles from "./options/theme-styles.min.js?ver=3.3.101";
 wp.hooks.addFilter("uipress.app.variables.register", "uipress", (current) => ({ ...current, ...themeStyles }));
 let AllThemeStyles = wp.hooks.applyFilters("uipress.app.variables.register");
 
@@ -100,7 +100,7 @@ const ChartComp = defineAsyncComponent(() => import(`./components/chart.min.js?v
 const FloatingPanel = defineAsyncComponent(() => import(`./components/floating-panel.min.js?ver=${pluginVersion}`));
 const Modal = defineAsyncComponent(() => import(`./v3.5/utility/modal.min.js?ver=${pluginVersion}`));
 const UIbuilderInlineImageSelect = defineAsyncComponent(() => import(`./options/inline-image-select.min.js?ver=${pluginVersion}`));
-import { MediaLibrary } from "./v3.5/utility/media-library.min.js?ver=3.3.1";
+import { MediaLibrary } from "./v3.5/utility/media-library.min.js?ver=3.3.101";
 
 app.component("multi-select", MultiSelect);
 app.component("user-role-select", UserMultiSelect);
@@ -141,7 +141,7 @@ import {
   saveUserPreference,
   updateActiveLink,
   uipParseJson,
-} from "./v3.5/utility/functions.min.js?ver=3.3.1";
+} from "./v3.5/utility/functions.min.js?ver=3.3.101";
 
 app.config.globalProperties.ensureNestedObject = ensureNestedObject;
 app.config.globalProperties.hasNestedPath = hasNestedPath;

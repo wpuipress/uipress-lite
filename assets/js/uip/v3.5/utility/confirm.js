@@ -3,7 +3,7 @@ import { defineAsyncComponent, nextTick } from "../../../libs/vue-esm.js";
 
 export default {
   components: {
-    modal: defineAsyncComponent(() => import("./modal.min.js?ver=3.3.1")),
+    modal: defineAsyncComponent(() => import("./modal.min.js?ver=3.3.101")),
   },
   data() {
     return {

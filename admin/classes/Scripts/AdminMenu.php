@@ -467,7 +467,7 @@ class AdminMenu
       $sub_item["url"] = !$conditions ? $sub_item[2] : $sub_item["url"];
 
       $title = wptexturize($sub_item[0]);
-      $nameParts = explode("<", $title);
+      $nameParts = $title ? explode("<", $title) : [];
       $strippedName = $nameParts[0] != "" ? $nameParts[0] : $sub_item[0];
       $notifications = self::extractNumberFromHtml($title);
       $sub_item["notifications"] = !is_null($notifications) ? $notifications : 0;

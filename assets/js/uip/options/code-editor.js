@@ -10,7 +10,7 @@ import "../../libs/ace-theme-xcode.min.js";
 
 export default {
   components: {
-    Modal: defineAsyncComponent(() => import("../v3.5/utility/modal.min.js?ver=3.3.1")),
+    Modal: defineAsyncComponent(() => import("../v3.5/utility/modal.min.js?ver=3.3.101")),
   },
   props: {
     returnData: Function,

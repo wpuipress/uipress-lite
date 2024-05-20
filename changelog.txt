@@ -1,5 +1,15 @@
 == Changelog ==
 
+= 3.3.101 =
+* Release Date 20 May 2024*
+
+* Fixed potential fatal with iconv being undefined
+* Fixed issue with failed JSON parses causing app to crash
+* Fixed issue with new tab link clicks in drilldown menu
+* Date dynamic now respects current site language
+* Fixed issue with post type select
+* Fixed issue with menu names in custom menus
+
 = 3.3.1 =
 * Release Date 14 February 2024*
 

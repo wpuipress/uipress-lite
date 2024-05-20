@@ -3,7 +3,7 @@ Contributors: uipress
 Tags: admin theme, custom dashboard, google analytics, woocommerce analytics, white label, user management, role editor, order kanban, admin pages, page builder, ui press
 Requires at least: 6.0
 Requires PHP: 7.4
-Tested up to: 6.4.3
+Tested up to: 6.5.2
 Stable tag: 3.3.1
 License: GPLv2 or later
 
@@ -54,6 +54,16 @@ Upload the UiPress plugin to your blog, activate it, and then navigate to the ui
 1, 2, 3: You're done!
 
 == Changelog ==
+
+= 3.3.101 =
+* Release Date 20 May 2024*
+
+* Fixed potential fatal with iconv being undefined
+* Fixed issue with failed JSON parses causing app to crash
+* Fixed issue with new tab link clicks in drilldown menu
+* Date dynamic now respects current site language
+* Fixed issue with post type select
+* Fixed issue with menu names in custom menus
 
 = 3.3.1 =
 * Release Date 14 February 2024*
