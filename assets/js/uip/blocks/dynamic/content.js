@@ -585,13 +585,14 @@ export default {
      */
     handleInsideFrameLink(linkItem) {
       const url = linkItem.getAttribute("href");
+      const role = linkItem.getAttribute("role");
       const target = linkItem.target ? linkItem.target.toLowerCase() : false;
 
       // New tab so bail
       if (target === "_blank") return;
 
       // No url so bail
-      if (!url) return;
+      if (!url || role == "button") return;
 
       if (url.startsWith("#")) return;
 
