@@ -64,6 +64,7 @@ Upload the UiPress plugin to your blog, activate it, and then navigate to the ui
 * Date dynamic now respects current site language
 * Fixed issue with post type select
 * Fixed issue with menu names in custom menus
+* Updated loading logic and removed opacity transition
 
 = 3.3.1 =
 * Release Date 14 February 2024*
