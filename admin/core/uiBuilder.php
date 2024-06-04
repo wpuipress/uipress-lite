@@ -161,7 +161,7 @@ class uip_ui_builder extends uip_app
   {
     $builderScript = [
       "id" => "uip-ui-builder-js",
-      "src" => uip_plugin_url . "assets/js/uip/uiBuilder.min.js?ver=" . uip_plugin_version,
+      "src" => uip_plugin_url . "app/dist/builder.build.js?ver=" . uip_plugin_version,
       "type" => "module",
     ];
 

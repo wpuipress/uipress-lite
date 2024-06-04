@@ -4,7 +4,7 @@
  * @since 3.2.13
  */
 const { __, _x, _n, _nx } = wp.i18n;
-import { createApp, getCurrentInstance, defineComponent, defineAsyncComponent, reactive } from "./../libs/vue-esm.js";
+import { createApp, getCurrentInstance, defineComponent, defineAsyncComponent, reactive } from "vue";
 import { VueDraggableNext } from "./../libs/VueDraggableNext.js";
 import { createRouter, createWebHistory, createWebHashHistory } from "./../libs/vue-router-esm.js";
 const pluginVersion = import.meta.url.split("?ver=")[1];
@@ -246,6 +246,7 @@ const ChartComp = defineAsyncComponent(() => import(`./components/chart.min.js?v
 const FloatingPanel = defineAsyncComponent(() => import(`./components/floating-panel.min.js?ver=${pluginVersion}`));
 const Modal = defineAsyncComponent(() => import(`./v3.5/utility/modal.min.js?ver=${pluginVersion}`));
 const MediaLibrary = defineAsyncComponent(() => import(`./v3.5/utility/media-library.min.js?ver=${pluginVersion}`));
+const AppIcon = defineAsyncComponent(() => import(`./v3.5/utility/icons.min.js?ver=${pluginVersion}`));
 
 app.component("multi-select", MultiSelect);
 app.component("user-role-select", UserMultiSelect);
@@ -262,6 +263,7 @@ app.component("uip-chart", ChartComp);
 app.component("uip-floating-panel", FloatingPanel);
 app.component("uipMediaLibrary", MediaLibrary);
 app.component("uipModal", Modal);
+app.component("AppIcon", AppIcon);
 
 //Option components
 const UIbuilderInlineImageSelect = defineAsyncComponent(() => import(`./options/inline-image-select.min.js?ver=${pluginVersion}`));

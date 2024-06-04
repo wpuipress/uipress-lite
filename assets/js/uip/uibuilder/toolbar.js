@@ -360,7 +360,7 @@ export default {
                 <template v-slot:trigger>
                   <div class="uip-flex uip-gap-xs uip-flex-center uip-link-default uip-border-rounder uip-background-muted uip-padding-xs uip-padding-top-xxs uip-padding-bottom-xxs">
                     <div class="uip-logo uip-w-18 uip-ratio-1-1"></div>
-                    <div class="uip-icon uip-text-l uip-text-muted">expand_more</div>
+                    <AppIcon icon="expand_more" class="uip-icon uip-text-l uip-text-muted"/>
                   </div>
                 </template>  
                 <template v-slot:content>
@@ -372,14 +372,14 @@ export default {
                       <router-link to="/" class="uip-link-default uip-no-underline uip-flex uip-flex-center uip-gap-m uip-padding-xxs uip-border-round hover:uip-background-muted">
                         
                         <div class="uip-flex-grow">{{ui.strings.backToList}}</div>
-                        <div class="uip-icon uip-text-l uip-text-muted">chevron_left</div>
+                        <AppIcon icon="chevron_left" class="uip-icon uip-text-l uip-text-muted"/>
                       </router-link>
                       
                       <router-link @click="$refs.logomenu.close()"
                       to="/site-settings" class="uip-link-default uip-no-underline uip-flex uip-flex-center uip-gap-m uip-padding-xxs uip-border-round hover:uip-background-muted">
                         
                         <div class="uip-flex-grow">{{ui.strings.siteSettings}}</div>
-                        <div class="uip-icon uip-text-l uip-text-muted">tune</div>
+                        <AppIcon icon="tune" class="uip-icon uip-text-l uip-text-muted"/>
                         
                       </router-link>
                       
@@ -390,7 +390,7 @@ export default {
                       <a @click="createNewUI();$refs.logomenu.close()" class="uip-link-default uip-no-underline uip-flex uip-flex-center uip-gap-m uip-padding-xxs uip-border-round hover:uip-background-muted">
                         
                         <div class="uip-flex-grow">{{ui.strings.newTemplate}}</div>
-                        <div class="uip-icon uip-text-l uip-text-muted">add</div>
+                        <AppIcon icon="add" class="uip-icon uip-text-l uip-text-muted"/>
                         
                       </a>
                       
@@ -398,14 +398,14 @@ export default {
                       :to="returnSettingsLink" class="uip-link-default uip-no-underline uip-flex uip-flex-center uip-gap-m uip-padding-xxs uip-border-round hover:uip-background-muted">
                         
                         <div class="uip-flex-grow">{{ui.strings.templateSettings}}</div>
-                        <div class="uip-icon uip-text-l uip-text-muted">settings</div>
+                        <AppIcon icon="settings" class="uip-icon uip-text-l uip-text-muted"/>
                         
                       </router-link>
                       
                       <label class="uip-link-default uip-no-underline uip-flex uip-flex-center uip-gap-m uip-padding-xxs uip-border-round hover:uip-background-muted">
                         
                         <div class="uip-flex-grow">{{ui.strings.import}}</div>
-                        <div class="uip-icon uip-text-l uip-text-muted">file_upload</div>
+                        <AppIcon icon="file_upload" class="uip-icon uip-text-l uip-text-muted"/>
                         <input hidden accept=".json" type="file" single="" id="uip-import-layout" @change="importTemplate($event, 'template')">
                         
                       </label>
@@ -413,7 +413,7 @@ export default {
                       <a @click="exportTemplate('template');$refs.logomenu.close()" class="uip-link-default uip-no-underline uip-flex uip-flex-center uip-gap-m uip-padding-xxs uip-border-round hover:uip-background-muted">
                         
                         <div class="uip-flex-grow">{{ui.strings.export}}</div>
-                        <div class="uip-icon uip-text-l uip-text-muted">file_download</div>
+                        <AppIcon icon="file_download" class="uip-icon uip-text-l uip-text-muted"/>
                         <a ref="templateexport" href="" style="display:none;"></a>
                         
                       </a>
@@ -426,7 +426,7 @@ export default {
                       <a @click="$refs.logomenu.close()" class="uip-link-default uip-no-underline uip-flex uip-flex-center uip-gap-m uip-padding-xxs uip-border-round hover:uip-background-muted" href="https://uipress.co/docs/#/" target="_BLANK">
                         
                         <div class="uip-flex-grow">{{ui.strings.docs}}</div>
-                        <div class="uip-icon uip-text-l uip-text-muted">open_in_new</div>
+                        <AppIcon icon="open_in_new" class="uip-icon uip-text-l uip-text-muted"/>
                       </a>
                       
                       
@@ -434,7 +434,7 @@ export default {
                       class="uip-link-default uip-no-underline uip-flex uip-flex-center uip-gap-m uip-padding-xxs uip-border-round hover:uip-background-muted" >
                         
                         <div class="uip-flex-grow">{{ui.strings.tips}}</div>
-                        <div class="uip-icon uip-text-l uip-text-muted">tips_and_updates</div>
+                        <AppIcon icon="tips_and_updates" class="uip-icon uip-text-l uip-text-muted"/>
                       </div>
                     
                     </div>
@@ -489,11 +489,11 @@ export default {
             
             <div @click="uiTemplate.isPreview = !uiTemplate.isPreview;uipApp.blockSettings.close()" :title="ui.strings.preview" class="uip-border-rounder uip-flex uip-gap-xxs uip-flex-center uip-padding-xxs"
             :class="uiTemplate.isPreview ? 'uip-button-primary uip-text-inverse' : 'uip-button-default'">
-              <div class="uip-icon uip-text-xl">play_arrow</div>
+              <AppIcon icon="play_arrow" class="uip-icon uip-text-xl"/>
             </div>
             
             <router-link :to="returnSettingsLink" class="uip-button-default uip-no-underline uip-flex uip-gap-xxs uip-flex-center uip-text-s">
-              <div class="uip-icon uip-text-l">settings</div>
+              <AppIcon icon="settings" class="uip-icon uip-text-l"/>
               <div class="">{{ui.strings.settings}}</div>
             </router-link>
             

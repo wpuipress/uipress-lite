@@ -301,7 +301,7 @@ const SubMenuItem = {
                           </div>
                           
                           <div v-if="itemHasSubmenu(sub)" class="uip-flex uip-flex-grow uip-flex-center uip-flex-center uip-flex-right">
-                            <div class="uip-icon">{{returnSubIcon(sub)}}</div>
+                            <AppIcon :icon="returnSubIcon(sub)" class="uip-icon"/>
                           </div>
                           
                         </a>
@@ -331,7 +331,7 @@ const SubMenuItem = {
                         </div>
                         
                         <div v-if="itemHasSubmenu(sub)" class="uip-flex uip-flex-grow uip-flex-center uip-flex-center uip-flex-right">
-                          <div class="uip-icon">{{returnSubIcon(sub)}}</div>
+                          <AppIcon :icon="returnSubIcon(sub)" class="uip-icon"/>
                         </div>
                         
                       </a>

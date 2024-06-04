@@ -61,11 +61,9 @@ class uip_app
     //$activeTransient = get_transient("uip_template_active_" . $user_id);
 
     $isIframe = isset($_SERVER["HTTP_SEC_FETCH_DEST"]) && strtolower($_SERVER["HTTP_SEC_FETCH_DEST"]) === "iframe";
-    $referer = isset($_SERVER["HTTP_REFERER"]) ? $_SERVER["HTTP_REFERER"] : false;
-    $needle = "options-general.php?page=uip-ui-builder";
 
     // We are loading within the frame
-    if ($isIframe || ($referer && strpos($referer, $needle) !== false)) {
+    if ($isIframe) {
       FramedPages::start();
       AdminPage::start(true);
     }
