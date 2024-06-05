@@ -418,7 +418,7 @@ export default {
         <template #trigger>
           <div class="uip-flex uip-gap-xs uip-flex-center uip-link-default uip-border-rounder uip-background-muted uip-padding-xs uip-padding-top-xxs uip-padding-bottom-xxs">
             <div class="uip-logo uip-w-18 uip-ratio-1-1"></div>
-            <div class="uip-icon uip-text-l uip-text-muted">expand_more</div>
+            <AppIcon icon="expand_more" class="uip-icon uip-text-l uip-text-muted" />
           </div>
         </template>
 
@@ -430,7 +430,7 @@ export default {
               class="uip-link-default uip-flex uip-flex-center uip-flex-between uip-gap-m uip-padding-xxs hover:uip-background-muted uip-border-rounder uip-no-underline"
             >
               <span class="">{{ strings.siteSettings }}</span>
-              <span class="uip-icon">tune</span>
+              <AppIcon icon="tune" class="uip-icon" />
             </router-link>
 
             <router-link
@@ -439,7 +439,7 @@ export default {
               class="uip-link-default uip-flex uip-flex-center uip-flex-between uip-gap-m uip-padding-xxs hover:uip-background-muted uip-border-rounder uip-no-underline"
             >
               <span class="">{{ strings.setupWizard }}</span>
-              <span class="uip-icon">magic_button</span>
+              <AppIcon icon="magic_button" class="uip-icon" />
             </router-link>
 
             <div class="uip-border-top uip-margin-top-xs uip-margin-bottom-xs"></div>
@@ -451,7 +451,7 @@ export default {
               class="uip-link-default uip-flex uip-flex-center uip-flex-between uip-gap-m uip-padding-xxs hover:uip-background-muted uip-border-rounder uip-no-underline"
             >
               <span class="">{{ strings.documentation }}</span>
-              <span class="uip-icon">import_contacts</span>
+              <AppIcon icon="import_contacts" class="uip-icon" />
             </a>
 
             <a
@@ -463,7 +463,7 @@ export default {
               class="uip-link-default uip-flex uip-flex-center uip-flex-between uip-gap-m uip-padding-xxs hover:uip-background-muted uip-border-rounder uip-no-underline"
             >
               <span class="">{{ strings.tipsTricks }}</span>
-              <span class="uip-icon">lightbulb</span>
+              <AppIcon icon="lightbulb" class="uip-icon" />
             </a>
 
             <div class="uip-border-top uip-margin-top-xs uip-margin-bottom-xs"></div>
@@ -474,7 +474,7 @@ export default {
               class="uip-link-default uip-flex uip-flex-center uip-flex-between uip-gap-m uip-padding-xxs hover:uip-background-muted uip-border-rounder uip-no-underline"
             >
               <span class="">{{ strings.globalExport }}</span>
-              <span class="uip-icon">file_download</span>
+              <AppIcon icon="file_download" class="uip-icon" />
             </router-link>
 
             <router-link
@@ -483,7 +483,7 @@ export default {
               class="uip-link-default uip-flex uip-flex-center uip-flex-between uip-gap-m uip-padding-xxs hover:uip-background-muted uip-border-rounder uip-no-underline"
             >
               <span class="">{{ strings.globalImport }}</span>
-              <span class="uip-icon">file_upload</span>
+              <AppIcon icon="file_upload" class="uip-icon" />
             </router-link>
 
             <router-link
@@ -492,7 +492,7 @@ export default {
               class="uip-link-default uip-flex uip-flex-center uip-flex-between uip-gap-m uip-padding-xxs hover:uip-background-muted uip-border-rounder uip-no-underline"
             >
               <span class="">{{ strings.siteSync }}</span>
-              <span class="uip-icon">sync</span>
+              <AppIcon icon="sync" class="uip-icon" />
             </router-link>
 
             <div class="uip-border-top uip-margin-top-xs uip-margin-bottom-xs"></div>
@@ -503,7 +503,7 @@ export default {
               class="uip-link-default uip-flex uip-flex-center uip-flex-between uip-gap-m uip-padding-xxs hover:uip-background-muted uip-border-rounder uip-no-underline"
             >
               <span class="">{{ strings.phpErrorLog }}</span>
-              <span class="uip-icon">code</span>
+              <AppIcon icon="code" class="uip-icon" />
             </router-link>
           </div>
         </template>
@@ -512,7 +512,7 @@ export default {
       <!-- Global search -->
       <div class="uip-position-absolute uip-left-50p uip-translateX--50p uip-flex uip-flex-center uip-flex-middle">
         <div class="uip-flex uip-background-muted uip-border-rounder uip-padding-xxs uip-flex-center uip-w-240">
-          <span class="uip-icon uip-text-muted uip-margin-right-xs">search</span>
+          <AppIcon icon="search" class="uip-icon uip-text-muted uip-margin-right-xs" />
           <input class="uip-blank-input uip-flex-grow uip-text-s" type="search" v-model="search" :placeholder="strings.searchTemplates" autofocus="" />
         </div>
       </div>
@@ -625,7 +625,7 @@ export default {
                   @click.prevent.stop="$refs['templatemenu-' + index][0].show($event)"
                   class="uip-link-muted hover:uip-background-muted uip-border-rounder uip-padding-xxs uip-inline-flex uip-flex-centers uip-text-l"
                 >
-                  <span class="uip-icon">more_vert</span>
+                  <AppIcon icon="more_vert" class="uip-icon" />
                 </a>
               </td>
             </tr>
@@ -641,7 +641,7 @@ export default {
                 class="uip-link-muted uip-flex uip-flex-center uip-flex-between uip-gap-m uip-padding-xxs hover:uip-background-muted uip-border-rounder uip-no-underline"
               >
                 <span class="">{{ strings.edit }}</span>
-                <span class="uip-icon">edit</span>
+                <AppIcon icon="edit" class="uip-icon" />
               </router-link>
 
               <a
@@ -652,7 +652,7 @@ export default {
                 "
               >
                 <span class="">{{ strings.duplicate }}</span>
-                <span class="uip-icon">content_copy</span>
+                <AppIcon icon="content_copy" class="uip-icon" />
               </a>
 
               <div class="uip-border-top uip-margin-top-xs uip-margin-bottom-xs"></div>
@@ -665,7 +665,7 @@ export default {
                 "
               >
                 <span class="">{{ strings.delete }}</span>
-                <span class="uip-icon">delete</span>
+                <AppIcon icon="delete" class="uip-icon" />
               </a>
             </div>
           </contextmenu>

@@ -1,5 +1,6 @@
 <script>
-import { __ } from '@wordpress/i18n';
+import { __ } from "@wordpress/i18n";
+import { VueDraggableNext } from "vue-draggable-next";
 export default {
   props: {
     returnData: Function,
@@ -73,7 +74,7 @@ export default {
 
 <template>
   <div class="uip-flex uip-flex-column uip-row-gap-xs uip-w-100p">
-    <uip-draggable
+    <VueDraggableNext
       class="uip-flex uip-flex-column uip-row-gap-xs uip-w-100p"
       :group="{ name: 'uip-drop', pull: false, put: false }"
       :list="options"
@@ -91,10 +92,10 @@ export default {
           <button @click="deleteOption(index)" class="uip-button-default uip-border-rounder uip-icon uip-padding-xxs uip-link-muted">close</button>
         </div>
       </template>
-    </uip-draggable>
+    </VueDraggableNext>
 
     <div @click="newOption()" class="uip-padding-xxs uip-border-rounder uip-background-muted hover:uip-background-grey uip-cursor-pointer uip-flex uip-flex-middle uip-flex-center uip-gap-xs">
-      <span class="uip-icon">add</span>
+      <AppIcon icon="add" class="uip-icon" />
     </div>
   </div>
 </template>

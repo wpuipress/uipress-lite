@@ -65,7 +65,7 @@ export default {
           v-if="currentScreen.component != homeScreen"
           class="uip-flex uip-flex-center uip-flex-middle uip-padding-xxs uip-link-muted hover:uip-background-muted uip-border-rounder"
         >
-          <span class="uip-icon">chevron_left</span>
+          <AppIcon icon="chevron_left" class="uip-icon" />
         </div>
 
         <div class="uip-text-emphasis uip-text-bold" :class="largeNavigation ? 'uip-text-l' : 'uip-text-s'">{{ currentScreen.label }}</div>
@@ -74,7 +74,7 @@ export default {
         <div v-if="!closer"></div>
 
         <div v-else @click="closer()" class="uip-flex uip-flex-center uip-flex-middle uip-padding-xxs uip-link-muted hover:uip-background-muted uip-border-rounder">
-          <span class="uip-icon">close</span>
+          <AppIcon icon="close" class="uip-icon" />
         </div>
       </div>
     </Transition>

@@ -84,7 +84,7 @@ export default {
 
 <template>
   <button class="uip-button-default uip-flex uip-gap-xxs uip-flex-center" @click="collapseMenu()">
-    <span class="uip-icon" v-if="currentIcon">{{ currentIcon }}</span>
+    <AppIcon :icon="currentIcon" class="uip-icon" v-if="currentIcon" />
     <span class="uip-flex-grow" v-if="returnText != ''">{{ returnText }}</span>
   </button>
 </template>

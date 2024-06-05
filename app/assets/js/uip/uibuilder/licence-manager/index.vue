@@ -188,7 +188,7 @@ export default {
       </div>
 
       <button @click="removeData()" class="uip-button-primary uip-text-s uip-flex uip-gap-xxs uip-flex-center">
-        <div class="uip-icon uip-text-muted uip-text-l uip-text-inverse">close</div>
+        <AppIcon icon="close" class="uip-icon uip-text-muted uip-text-l uip-text-inverse" />
         <span>{{ strings.removeKey }}</span>
       </button>
     </div>

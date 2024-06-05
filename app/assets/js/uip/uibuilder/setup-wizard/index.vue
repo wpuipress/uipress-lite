@@ -234,13 +234,13 @@ export default {
       <!-- title -->
       <div class="uip-flex uip-flex-between uip-flex-center">
         <div class="uip-text-bold">{{ strings.setupWizard }}</div>
-        <div class="uip-icon uip-link-muted uip-padding-xxs uip-border-round hover:uip-background-muted" @click="closeThisComponent()">close</div>
+        <AppIcon icon="close" class="uip-icon uip-link-muted uip-padding-xxs uip-border-round hover:uip-background-muted" @click="closeThisComponent()" />
       </div>
       <!-- end title -->
 
       <template v-if="returnFinished()">
         <div class="uip-text-center uip-flex uip-flex-column uip-row-gap-s">
-          <div class="uip-icon uip-text-green" style="font-size: 80px">check_circle</div>
+          <AppIcon icon="check_circle" class="uip-icon uip-text-green" style="font-size: 80px" />
           <div class="uip-text-bold uip-margin-bottom-xxs uip-text-xl">{{ strings.setupComplete }}</div>
           <div class="uip-text-muted">{{ strings.finishedDescription }}</div>
         </div>
@@ -334,7 +334,7 @@ export default {
                           <span class="uip-text-xs uip-background-primary-wash uip-border-round uip-padding-xxxs uip-post-type-label">{{ theme.type }}</span>
                           <uip-tooltip :message="strings.downloadcount">
                             <div class="uip-text-xs uip-background-primary-wash uip-border-round uip-padding-xxxs uip-post-type-label uip-flex uip-flex-row uip-gap-xxxs">
-                              <span class="uip-icon">file_download</span>
+                              <AppIcon icon="file_download" class="uip-icon" />
                               {{ theme.downloads }}
                             </div>
                           </uip-tooltip>

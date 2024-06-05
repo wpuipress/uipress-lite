@@ -3,7 +3,7 @@
  * Builds the main ui builder shell
  * @since 3.0.0
  */
-import { __ } from '@wordpress/i18n';
+import { __ } from "@wordpress/i18n";
 import { nextTick } from "vue";
 export default {
   data() {
@@ -156,22 +156,20 @@ export default {
 
 <template>
   <div class="uip-flex uip-gap-xxs uip-flex-center uip-background-muted uip-border-rounder uip-padding-xs uip-padding-top-xxs uip-padding-bottom-xxs">
-    <div
+    <AppIcon
       :title="strings.undo"
       @click="handleBackInHistory()"
       class="hover:uip-background-muted uip-border-round uip-flex uip-flex-center uip-icon uip-link-default uip-text-xl uip-ratio-1-1 uip-line-height-1 uip-icon-medium"
       :class="{ 'uip-link-disabled': currentIndex <= 0 }"
-    >
-      undo
-    </div>
+      icon="undo"
+    />
 
-    <div
+    <AppIcon
       :title="strings.redo"
       @click="handleForwardsInHistory()"
       class="hover:uip-background-muted uip-border-round uip-flex uip-flex-center uip-icon uip-link-default uip-text-xl uip-ratio-1-1 uip-line-height-1 uip-icon-medium"
       :class="{ 'uip-link-disabled': currentIndex >= history.length - 1 }"
-    >
-      redo
-    </div>
+      icon="redo"
+    />
   </div>
 </template>

@@ -1,5 +1,5 @@
 <script>
-import { __ } from '@wordpress/i18n';
+import { __ } from "@wordpress/i18n";
 
 export default {
   props: {
@@ -115,12 +115,12 @@ export default {
         <div class="uip-flex uip-flex-between uip-flex-center">
           <div class="uip-text-emphasis uip-text-bold uip-text-s">{{ strings.userSearch }}</div>
           <div @click.prevent.stop="$refs.userDropdown.close()" class="uip-flex uip-flex-center uip-flex-middle uip-padding-xxs uip-link-muted hover:uip-background-muted uip-border-rounder">
-            <span class="uip-icon">close</span>
+            <AppIcon icon="close" class="uip-icon" />
           </div>
         </div>
 
         <div class="uip-flex uip-background-muted uip-border-rounder uip-padding-xxs uip-flex-center">
-          <span class="uip-icon uip-text-muted uip-margin-right-xs">search</span>
+          <AppIcon icon="search" class="uip-icon uip-text-muted uip-margin-right-xs" />
           <input class="uip-blank-input uip-flex-grow uip-text-s" type="search" :placeholder="searchPlaceHolder" v-model="searchString" autofocus />
         </div>
 

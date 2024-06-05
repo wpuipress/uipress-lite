@@ -87,9 +87,9 @@ export default {
     <input type="number" class="uip-input-small uip-w-100p uip-flex-grow" v-model="option" :placeholder="placeHolder" />
 
     <div class="uip-padding-xxxs uip-border-rounder uip-background-muted uip-flex uip-gap-xxs uip-no-text-select">
-      <div class="uip-link-muted uip-icon uip-text-l" @click="stepDownNumber()">remove</div>
+      <AppIcon icon="remove" class="uip-link-muted uip-icon uip-text-l" @click="stepDownNumber()" />
       <div class="uip-border-right"></div>
-      <div class="uip-link-muted uip-icon uip-text-l" @click="stepUpNumber()">add</div>
+      <AppIcon icon="add" class="uip-link-muted uip-icon uip-text-l" @click="stepUpNumber()" />
     </div>
   </div>
 </template>

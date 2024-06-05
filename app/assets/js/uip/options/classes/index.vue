@@ -1,5 +1,5 @@
 <script>
-import { __ } from '@wordpress/i18n';
+import { __ } from "@wordpress/i18n";
 
 export default {
   props: {
@@ -240,7 +240,7 @@ export default {
     <div class="uip-flex uip-gap-xxs uip-w-100p uip-flex-wrap uip-flex-center">
       <dropdown pos="left center" :snapX="['#uip-block-settings', '#uip-template-settings', '#uip-global-settings']" ref="classDrop">
         <template v-slot:trigger>
-          <div class="uip-button-default uip-border-rounder uip-icon uip-padding-xxs uip-link-muted">search</div>
+          <AppIcon icon="search" class="uip-button-default uip-border-rounder uip-icon uip-padding-xxs uip-link-muted" />
         </template>
 
         <template v-slot:content>
@@ -248,12 +248,12 @@ export default {
             <div class="uip-flex uip-flex-between uip-flex-center">
               <div class="uip-text-emphasis uip-text-bold uip-text-s">{{ strings.searchClasses }}</div>
               <div @click.prevent.stop="$refs.classDrop.close()" class="uip-flex uip-flex-center uip-flex-middle uip-padding-xxs uip-link-muted hover:uip-background-muted uip-border-rounder">
-                <span class="uip-icon">close</span>
+                <AppIcon icon="close" class="uip-icon" />
               </div>
             </div>
 
             <div class="uip-flex uip-background-muted uip-border-rounder uip-padding-xxs uip-flex-center">
-              <span class="uip-icon uip-text-muted uip-margin-right-xs">search</span>
+              <AppIcon icon="search" class="uip-icon uip-text-muted uip-margin-right-xs" />
               <input class="uip-blank-input uip-flex-grow uip-text-s" type="search" :placeholder="strings.search" v-model="search" autofocus />
             </div>
 
@@ -265,7 +265,7 @@ export default {
                   @click="selected.push(className)"
                 >
                   <div class="">{{ className }}</div>
-                  <div class="uip-icon">add</div>
+                  <AppIcon icon="add" class="uip-icon" />
                 </div>
               </template>
             </div>

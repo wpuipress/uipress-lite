@@ -128,7 +128,7 @@ export default {
 <template>
   <div class="uip-flex uip-flex-column uip-row-gap-s">
     <div class="uip-flex uip-background-muted uip-border-rounder uip-flex-center uip-padding-xxs uip-gap-xs">
-      <span class="uip-icon uip-text-muted">search</span>
+      <AppIcon icon="search" class="uip-icon uip-text-muted" />
       <input class="uip-blank-input uip-flex-grow uip-text-s" type="search" :placeholder="searchPlaceHolder" v-model="thisSearchInput" autofocus />
     </div>
 

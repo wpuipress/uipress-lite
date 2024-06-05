@@ -22,6 +22,7 @@ export default defineConfig({
       input: {
         // Specify the entry point you want to build
         builder: "assets/js/uip/uiBuilder.js",
+        //builder: "assets/js/uip/test.js",
         //app: "assets/js/uip/uipApp.js",
       },
       output: {
@@ -36,16 +37,10 @@ export default defineConfig({
         // The '[format]' placeholder specifies the module format (e.g., 'es', 'cjs', 'umd', etc.)
         // You can omit this placeholder if you want to use the default module format
         // For example, 'es' for ES module format and 'cjs' for CommonJS module format
+
         entryFileNames: "[name].build.js",
         // Optionally specify the output directory (default is 'dist')
         dir: "dist/",
-        // Change css output
-        assetFileNames: ({ name }) => {
-          if (/\.css$/.test(name)) {
-            //Custom pattern for CSS files
-            return "assets/styles/[name][extname]";
-          }
-        },
       },
     },
   },

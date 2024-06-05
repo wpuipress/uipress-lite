@@ -497,7 +497,7 @@ export default {
         <div class="uip-padding-xs uip-flex uip-flex-column uip-text-weight-normal uip-text-s">
           <a class="uip-link-danger uip-flex uip-flex-center uip-flex-between" @click.prevent="gradient.colorStops.splice(index, 1)">
             <span class="">{{ strings.deleteStop }}</span>
-            <span class="uip-icon">delete</span>
+            <AppIcon icon="delete" class="uip-icon" />
           </a>
         </div>
       </contextmenu>

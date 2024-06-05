@@ -617,11 +617,11 @@ export default {
         >
           <span class="">{{ item.label }}</span>
 
-          <span v-if="item.icon" class="uip-flex-no-shrink uip-icon" :class="{ 'uip-link-muted': !item.danger }">{{ item.icon }}</span>
+          <AppIcon v-if="item.icon" :icon="item.icon" class="uip-flex-no-shrink uip-icon" :class="{ 'uip-link-muted': !item.danger }" />
 
           <span v-if="item.shortcut" class="uip-flex uip-flex-center uip-gap-xxxs uip-opacity-50">
             <template v-for="cut in item.shortcut">
-              <span v-if="cut.type == 'icon'" class="uip-icon">{{ cut.value }}</span>
+              <AppIcon v-if="cut.type == 'icon'" :icon="cut.value" class="uip-icon" />
               <span v-if="cut.type == 'text'" class="uip-text-s">{{ cut.value }}</span>
             </template>
           </span>
@@ -638,7 +638,7 @@ export default {
                   type="menuLink"
                 >
                   <span class="">{{ subitem.label }}</span>
-                  <span class="uip-flex-no-shrink uip-text-muted uip-icon">{{ subitem.icon }}</span>
+                  <AppIcon :icon="subitem.icon" class="uip-flex-no-shrink uip-text-muted uip-icon" />
                 </a>
               </template>
             </div>

@@ -108,7 +108,7 @@ export default {
   <div class="uip-flex uip-flex-column">
     <div class="uip-flex uip-flex-center uip-gap-xs uip-margin-bottom-s">
       <div class="uip-flex uip-gap-xs uip-flex-center uip-padding-xxs uip-padding-left-xs uip-background-muted uip-border-rounder uip-flex-grow">
-        <span class="uip-icon">search</span>
+        <AppIcon icon="search" class="uip-icon" />
         <input class="uip-blank-input uip-text-s" type="text" v-model="search" :placeholder="strings.searchPresets" />
       </div>
 
@@ -126,7 +126,7 @@ export default {
         >
           <span class="">{{ preset.name }}</span>
 
-          <span @click.prevent.stop="editPreset(key)" class="uip-icon">edit</span>
+          <AppIcon @click.prevent.stop="editPreset(key)" icon="edit" class="uip-icon" />
         </a>
       </template>
     </div>

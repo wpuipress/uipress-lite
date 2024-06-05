@@ -76,7 +76,7 @@ export default {
           @click="icon = item"
         >
           <div class="uip-flex uip-flex-column uip-row-gap-xs uip-flex-center uip-flex-middle uip-max-w-100p">
-            <span class="uip-icon uip-text-xl">{{ item }}</span>
+            <AppIcon :icon="item" class="uip-icon uip-text-xl" />
             <span class="uip-text-muted uip-text-xs uip-max-w-100p uip-overflow-auto uip-no-wrap uip-text-ellipsis">{{ item }}</span>
           </div>
         </div>

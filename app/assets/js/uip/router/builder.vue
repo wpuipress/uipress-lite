@@ -4,7 +4,10 @@ import Tips from "@/js/uip/uibuilder/tips/index.vue";
 </script>
 
 <template>
-  <RouterView />
-  <Notify />
-  <Tips />
+  <div>
+    <Notify />
+    <Tips />
+
+    <RouterView />
+  </div>
 </template>

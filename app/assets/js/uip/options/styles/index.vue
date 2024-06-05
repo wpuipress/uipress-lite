@@ -1,5 +1,5 @@
 <script>
-import { __ } from '@wordpress/i18n';
+import { __ } from "@wordpress/i18n";
 import { defineAsyncComponent, nextTick } from "vue";
 
 import colorBox from "@/js/uip/components/color-box/index.vue";
@@ -502,7 +502,7 @@ export default {
                 <div class="uip-text-emphasis uip-text-bold uip-text-s">{{ strings.backgroundImage }}</div>
 
                 <div @click="$refs.backgroundDrop.close()" class="uip-flex uip-flex-center uip-flex-middle uip-padding-xxs uip-link-muted hover:uip-background-muted uip-border-rounder">
-                  <span class="uip-icon">close</span>
+                  <AppIcon icon="close" class="uip-icon" />
                 </div>
               </div>
 

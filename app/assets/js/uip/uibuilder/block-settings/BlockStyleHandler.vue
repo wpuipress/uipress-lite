@@ -244,24 +244,23 @@ export default {
       <div class="uip-flex uip-gap-xxs uip-flex-center uip-cursor-pointer uip-flex-between" :class="{ 'uip-flex-grow': !open }" @click="toggleVisibility()">
         <span class="uip-text-bold uip-text-emphasis">{{ title }}</span>
 
-        <a class="uip-link-muted uip-icon">{{ returnVisibilityIcon }}</a>
+        <AppIcon class="uip-link-muted uip-icon" :icon="returnVisibilityIcon" />
       </div>
 
       <div @click.prevent.stop="$refs.blockstates.show($event)" class="uip-flex uip-gap-xs uip-fade-in" v-if="open">
-        <span
+        <AppIcon
           @click.prevent.stop="toggleColorMode"
           :title="strings.toggleColour"
           class="uip-link-default hover:uip-background-muted uip-border-rounder uip-icon uip-padding-xxs uip-padding-top-xxxs uip-padding-bottom-xxxs"
-        >
-          {{ returnThemeIcon }}
-        </span>
+          :icon="returnThemeIcon"
+        />
 
         <div
           @click.prevent.stop="$refs.blockstates.show($event)"
           class="uip-text-xs uip-padding-xxxs uip-padding-left-xs uip-padding-right-xxs uip-border-rounder uip-background-muted uip-link-default uip-flex uip-gap-xxs uip-flex-center"
         >
           <span>{{ returnActiveState }}</span>
-          <a class="uip-link-muted uip-icon">expand_more</a>
+          <AppIcon class="uip-link-muted uip-icon" icon="expand_more" />
         </div>
       </div>
     </div>
@@ -294,7 +293,7 @@ export default {
         <a @click="resetStyleSection" class="hover:uip-background-muted uip-link-danger uip-padding-xxs uip-border-rounder uip-no-wrap uip-flex uip-flex-center uip-flex-between uip-gap-s">
           <span>{{ strings.resetSection }}</span>
 
-          <span class="uip-icon">restart_alt</span>
+          <AppIcon icon="restart_alt" class="uip-icon" />
         </a>
       </div>
     </contextmenu>

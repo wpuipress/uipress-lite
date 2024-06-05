@@ -131,7 +131,7 @@ export default {
         <div class="uip-flex uip-flex-between uip-flex-center">
           <div class="uip-text-emphasis uip-text-bold uip-text-s">{{ strings.imageSelect }}</div>
           <div @click="$refs.imageDropdown.close()" class="uip-flex uip-flex-center uip-flex-middle uip-padding-xxs uip-link-muted hover:uip-background-muted uip-border-rounder">
-            <span class="uip-icon">close</span>
+            <AppIcon icon="close" class="uip-icon" />
           </div>
         </div>
 

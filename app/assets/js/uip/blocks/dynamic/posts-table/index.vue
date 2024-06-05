@@ -241,7 +241,7 @@ export default {
   <div class="uip-flex uip-flex-column uip-self-flex-start uip-max-w-100p uip-table-wrap">
     <div class="uip-margin-bottom-xs uip-flex uip-flex-between">
       <div class="uip-flex uip-padding-xxs uip-search-block uip-border-round uip-flex-center" v-if="!searchDisabled">
-        <span class="uip-icon uip-text-muted uip-margin-right-xs">search</span>
+        <AppIcon icon="search" class="uip-icon uip-text-muted uip-margin-right-xs" />
         <input class="uip-blank-input uip-flex-grow" type="search" :placeholder="strings.searchPlaceHolder" v-model="searchString" autofocus="" />
       </div>
 
@@ -277,17 +277,17 @@ export default {
               <div>
                 <dropdown pos="left center">
                   <template v-slot:trigger>
-                    <div class="uip-icon uip-icon-medium uip-text-l uip-link-muted hover:uip-background-muted uip-padding-xxs uip-border-round">more_vert</div>
+                    <AppIcon icon="more_vert" class="uip-icon uip-icon-medium uip-text-l uip-link-muted hover:uip-background-muted uip-padding-xxs uip-border-round" />
                   </template>
                   <template v-slot:content>
                     <div class="uip-padding-xs uip-flex uip-flex-column uip-row-gap-xs">
                       <template v-for="action in item.actions">
                         <div v-if="action.name == 'delete'" class="uip-flex uip-gap-xxs uip-flex-center uip-link-muted" @click="deleteThisItem(action.ID)">
-                          <div class="uip-icon uip-icon-small-emphasis">{{ action.icon }}</div>
+                          <AppIcon :icon="action.icon" class="uip-icon uip-icon-small-emphasis" />
                           <div>{{ action.label }}</div>
                         </div>
                         <div v-else class="uip-flex uip-gap-xxs uip-flex-center uip-link-muted" @click="updateAppPage(action.link)">
-                          <div class="uip-icon uip-icon-small-emphasis">{{ action.icon }}</div>
+                          <AppIcon :icon="action.icon" class="uip-icon uip-icon-small-emphasis" />
                           <div>{{ action.label }}</div>
                         </div>
                       </template>
@@ -357,7 +357,7 @@ export default {
                       <div class="uip-flex uip-flex-row uip-gap-xxs uip-flex-center">
                         <div class="uip-text-bold uip-post-title uip-link-default uip-cursor-pointer" @click="updateAppPage(item.editLink)">{{ item.name }}</div>
                         <div class="uip-flex uip-gap-xxs uip-flex-center" v-if="item.hover">
-                          <div @click="updateAppPage(item.editLink)" :href="item.editLink" class="uip-icon uip-cursor-pointer uip-link-default">edit_document</div>
+                          <AppIcon @click="updateAppPage(item.editLink)" :href="item.editLink" icon="edit_document" class="uip-icon uip-cursor-pointer uip-link-default" />
                           <a :href="item.link" target="_BLANK" class="uip-icon uip-cursor-pointer uip-link-default uip-no-underline">open_in_new</a>
                         </div>
                       </div>
@@ -372,17 +372,17 @@ export default {
                     <div class="uip-flex uip-flex-row uip-flex-wrap uip-gap-xs uip-row-gap-xs uip-flex-right">
                       <dropdown pos="bottom right">
                         <template v-slot:trigger>
-                          <div class="uip-icon uip-icon-medium uip-text-l uip-link-muted hover:uip-background-muted uip-padding-xxs uip-border-round">more_vert</div>
+                          <AppIcon icon="more_vert" class="uip-icon uip-icon-medium uip-text-l uip-link-muted hover:uip-background-muted uip-padding-xxs uip-border-round" />
                         </template>
                         <template v-slot:content>
                           <div class="uip-padding-xs uip-flex uip-flex-column uip-row-gap-xs">
                             <template v-for="action in item[column.name]">
                               <div v-if="action.name == 'delete'" class="uip-flex uip-gap-xxs uip-flex-center uip-link-muted" @click="deleteThisItem(action.ID)">
-                                <div class="uip-icon uip-icon-small-emphasis">{{ action.icon }}</div>
+                                <AppIcon :icon="action.icon" class="uip-icon uip-icon-small-emphasis" />
                                 <div class="">{{ action.label }}</div>
                               </div>
                               <div v-else class="uip-flex uip-gap-xxs uip-flex-center uip-link-muted" @click="updateAppPage(action.link)">
-                                <div class="uip-icon uip-icon-small-emphasis">{{ action.icon }}</div>
+                                <AppIcon :icon="action.icon" class="uip-icon uip-icon-small-emphasis" />
                                 <div>{{ action.label }}</div>
                               </div>
                             </template>

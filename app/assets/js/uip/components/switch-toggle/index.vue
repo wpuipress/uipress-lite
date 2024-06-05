@@ -1,5 +1,5 @@
 <script>
-import { __ } from '@wordpress/i18n';
+import { __ } from "@wordpress/i18n";
 import { nextTick } from "vue";
 export default {
   // Define component properties
@@ -198,7 +198,7 @@ export default {
         :class="returnActiveClass(item)"
         @click="returnData(item.value)"
       >
-        <span class="uip-icon" v-if="item.icon" :class="{ 'uip-text-l': !small }">{{ item.icon }}</span>
+        <AppIcon :icon="item.icon" class="uip-icon" v-if="item.icon" :class="{ 'uip-text-l': !small }" />
         <span class="" v-if="item.label">{{ item.label }}</span>
       </a>
     </template>

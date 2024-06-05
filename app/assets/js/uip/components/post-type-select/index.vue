@@ -1,5 +1,5 @@
 <script>
-import { __ } from '@wordpress/i18n';
+import { __ } from "@wordpress/i18n";
 import { defineAsyncComponent } from "vue";
 
 import preview from "./preview.vue";
@@ -52,7 +52,7 @@ export default {
         <div class="uip-flex uip-flex-between uip-flex-center">
           <div class="uip-text-emphasis uip-text-bold uip-text-s">{{ strings.postTypeSelect }}</div>
           <div @click="$refs.postselect.close()" class="uip-flex uip-flex-center uip-flex-middle uip-padding-xxs uip-link-muted hover:uip-background-muted uip-border-rounder">
-            <span class="uip-icon">close</span>
+            <AppIcon icon="close" class="uip-icon" />
           </div>
         </div>
 

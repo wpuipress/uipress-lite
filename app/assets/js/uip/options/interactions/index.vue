@@ -1,10 +1,11 @@
 <script>
-import { nextTick } from "vue";
+import { nextTick, defineAsyncComponent } from "vue";
 export default {
   inject: ["uiTemplate"],
 
   props: {
     block: Object,
+    CodeEditor: defineAsyncComponent(() => import("@/js/uip/options/code-editor/index.vue")),
   },
 
   data() {
@@ -333,7 +334,7 @@ export default {
             <div class="uip-flex uip-flex-between uip-flex-center">
               <div class="uip-text-emphasis uip-text-bold uip-text-s">{{ strings.editinteraction }}</div>
               <div @click="$refs['interaction' + index][0].close()" class="uip-flex uip-flex-center uip-flex-middle uip-padding-xxs uip-link-muted hover:uip-background-muted uip-border-rounder">
-                <span class="uip-icon">close</span>
+                <AppIcon icon="close" class="uip-icon" />
               </div>
             </div>
 
@@ -395,8 +396,8 @@ export default {
                         <span v-else class="uip-overflow-hidden uip-text-ellipsis uip-max-w-140">{{ element.blockTarget }}</span>
 
                         <a v-if="element.blockTarget" @click.prevent="element.blockTarget = ''" class="uip-no-underline uip-border-rounder uip-padding-xxxs uip-link-muted"
-                          ><span class="uip-icon">close</span></a
-                        >
+                          ><AppIcon icon="close" class="uip-icon"
+                        /></a>
                       </div>
                     </template>
 
@@ -409,7 +410,7 @@ export default {
                             @click="$refs['blocksearch_' + index][0].close()"
                             class="uip-flex uip-flex-center uip-flex-middle uip-padding-xxs uip-link-muted hover:uip-background-muted uip-border-rounder"
                           >
-                            <span class="uip-icon">close</span>
+                            <AppIcon icon="close" class="uip-icon" />
                           </div>
                         </div>
 
@@ -478,7 +479,7 @@ export default {
               <template v-if="element.action == 'javascript'">
                 <div class="uip-text-muted uip-flex uip-flex-center uip-text-s"><span>Javascript</span></div>
 
-                <code-editor
+                <CodeEditor
                   :value="element.javascript"
                   :returnData="
                     (d) => {
@@ -517,7 +518,7 @@ export default {
         @click="addinteraction()"
         class="uip-padding-xxs uip-border-rounder uip-background-muted hover:uip-background-grey uip-cursor-pointer uip-flex uip-flex-middle uip-flex-center uip-gap-xs uip-flex-grow"
       >
-        <span class="uip-icon">add</span>
+        <AppIcon icon="add" class="uip-icon" />
       </div>
     </div>
   </div>

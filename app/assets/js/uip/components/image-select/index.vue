@@ -163,7 +163,7 @@ export default {
       <button @click="chooseImage()" class="uip-button-primary uip-text-s">
         <div v-if="img.url" class="uip-text-bold">{{ strings.replace }}</div>
         <div v-if="!img.url" class="uip-flex uip-gap-xxs uip-flex-center">
-          <div class="uip-icon uip-icon-medium">add</div>
+          <AppIcon icon="add" class="uip-icon uip-icon-medium" />
           <div class="uip-text-bold">{{ strings.chooseImage }}</div>
         </div>
       </button>

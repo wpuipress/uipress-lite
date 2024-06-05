@@ -19,7 +19,7 @@ export const metadata = {
       icon: "check_box_outline_blank",
       options: [
         { option: "textField", componentName: "uip-input", uniqueKey: "videoURL", label: __("Video URL", "uipress-lite"), value: "https://player.vimeo.com/video/794492622?h=31cc9f209b" },
-        { option: "youtubeEmbed", componentName: "code-editor", args: { language: "html" }, uniqueKey: "youtube", label: __("Video embed", "uipress-lite") },
+        { option: "youtubeEmbed", componentName: "CodeEditor", args: { language: "html" }, uniqueKey: "youtube", label: __("Video embed", "uipress-lite") },
       ],
     },
 

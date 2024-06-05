@@ -1,7 +1,7 @@
 <script>
 import { nextTick } from "vue";
 import BlockRender from "@/js/uip/uibuilder/block-render/index.vue";
-
+import { VueDraggableNext } from "vue-draggable-next";
 import { __ } from "@wordpress/i18n";
 export default {
   components: { BlockRender },
@@ -249,7 +249,7 @@ export default {
 </script>
 
 <template>
-  <uip-draggable
+  <VueDraggableNext
     v-if="rendered && !isProduction"
     ref="dropzone"
     :class="[{ 'uip-border-dashed': uiTemplate.display == 'builder' }, randomClass]"
@@ -266,7 +266,7 @@ export default {
     <template v-for="(element, index) in items" :key="index" :index="index">
       <BlockRender :block="element" :list="items" :index="index" />
     </template>
-  </uip-draggable>
+  </VueDraggableNext>
 
   <!-- Production template-->
   <div class="uip-flex uip-w-100p" v-else-if="rendered" :class="randomClass">

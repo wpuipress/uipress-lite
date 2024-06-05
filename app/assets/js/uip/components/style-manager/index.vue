@@ -265,13 +265,13 @@ export default {
 
         <!-- Search -->
         <div key="search" v-else @mouseleave="maybeHideSearch" class="uip-flex uip-gap-xs uip-flex-center">
-          <span class="uip-icon">search</span>
+          <AppIcon icon="search" class="uip-icon" />
           <input class="uip-input uip-blank-input uip-text-s" type="text" @blur="maybeHideSearch" v-model="search" :placeholder="strings.searchStyles" autofocus />
         </div>
       </Transition>
 
       <div @click="addNewStyle" class="uip-flex uip-flex-center uip-flex-middle uip-padding-xxs uip-link-default hover:uip-background-muted uip-border-rounder">
-        <span class="uip-icon">add</span>
+        <AppIcon icon="add" class="uip-icon" />
       </div>
     </div>
 
@@ -305,12 +305,12 @@ export default {
       <div class="uip-padding-xs uip-flex uip-flex-column uip-text-weight-normal uip-text-s">
         <a class="uip-link-default uip-flex uip-gap-m uip-flex-between uip-flex-center hover:uip-background-muted uip-border-round uip-padding-xxs" @click.prevent="editColor">
           <span class="">{{ strings.edit }}</span>
-          <span class="uip-icon">edit</span>
+          <AppIcon icon="edit" class="uip-icon" />
         </a>
 
         <a class="uip-link-default uip-flex uip-gap-m uip-flex-between uip-flex-center hover:uip-background-muted uip-border-round uip-padding-xxs" @click.prevent="duplicateColor">
           <span class="">{{ strings.duplicate }}</span>
-          <span class="uip-icon">content_copy</span>
+          <AppIcon icon="content_copy" class="uip-icon" />
         </a>
 
         <div class="uip-border-top uip-margin-top-xs uip-margin-bottom-xs"></div>
@@ -324,7 +324,7 @@ export default {
           :class="{ 'uip-link-disabled': canDeleteVar }"
         >
           <span class="">{{ strings.delete }}</span>
-          <span class="uip-icon">delete</span>
+          <AppIcon icon="delete" class="uip-icon" />
         </a>
       </div>
     </contextmenu>

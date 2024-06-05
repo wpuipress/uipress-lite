@@ -367,14 +367,14 @@ export default {
     <!--Color vars-->
     <div class="uip-flex uip-gap-xxs uip-flex-center uip-link-default" @click="ui.tabs.color = !ui.tabs.color">
       <div class="uip-flex uip-flex-center uip-flex-middle uip-padding-xxs uip-link-muted hover:uip-background-muted uip-border-rounder">
-        <span v-if="!ui.tabs.color" class="uip-icon">chevron_right</span>
-        <span v-if="ui.tabs.color" class="uip-icon">expand_more</span>
+        <AppIcon v-if="!ui.tabs.color" icon="chevron_right" class="uip-icon" />
+        <AppIcon v-if="ui.tabs.color" icon="expand_more" class="uip-icon" />
       </div>
 
       <div class="uip-text-emphasis uip-text-bold uip-text-s uip-flex-grow">{{ ui.strings.colours }}</div>
 
       <div @click.prevent.stop="$refs.newcolourdrop.show($event)" class="uip-flex uip-flex-center uip-flex-middle uip-padding-xxs uip-link-default hover:uip-background-muted uip-border-rounder">
-        <span class="uip-icon">add</span>
+        <AppIcon icon="add" class="uip-icon" />
       </div>
     </div>
 
@@ -399,7 +399,7 @@ export default {
                   <div class="uip-text-emphasis uip-text-bold uip-text-s">{{ ui.strings.editStyle }}</div>
 
                   <div @click="$refs['coloreditor-' + index][0].close()" class="uip-flex uip-flex-center uip-flex-middle uip-padding-xxs uip-link-muted hover:uip-background-muted uip-border-rounder">
-                    <span class="uip-icon">close</span>
+                    <AppIcon icon="close" class="uip-icon" />
                   </div>
                 </div>
 
@@ -424,14 +424,14 @@ export default {
     <!--Units vars-->
     <div class="uip-flex uip-gap-xxs uip-flex-center uip-link-default" @click="ui.tabs.units = !ui.tabs.units">
       <div class="uip-flex uip-flex-center uip-flex-middle uip-padding-xxs uip-link-muted hover:uip-background-muted uip-border-rounder">
-        <span v-if="!ui.tabs.units" class="uip-icon">chevron_right</span>
-        <span v-if="ui.tabs.units" class="uip-icon">expand_more</span>
+        <AppIcon v-if="!ui.tabs.units" icon="chevron_right" class="uip-icon" />
+        <AppIcon v-if="ui.tabs.units" icon="expand_more" class="uip-icon" />
       </div>
 
       <div class="uip-text-emphasis uip-text-bold uip-text-s uip-flex-grow">{{ ui.strings.units }}</div>
 
       <div @click.prevent.stop="$refs.newunitdrop.show($event)" class="uip-flex uip-flex-center uip-flex-middle uip-padding-xxs uip-link-default hover:uip-background-muted uip-border-rounder">
-        <span class="uip-icon">add</span>
+        <AppIcon icon="add" class="uip-icon" />
       </div>
     </div>
 
@@ -454,7 +454,7 @@ export default {
                   <div class="uip-text-emphasis uip-text-bold uip-text-s">{{ ui.strings.editUnit }}</div>
 
                   <div @click="$refs['uniteditor-' + index][0].close()" class="uip-flex uip-flex-center uip-flex-middle uip-padding-xxs uip-link-muted hover:uip-background-muted uip-border-rounder">
-                    <span class="uip-icon">close</span>
+                    <AppIcon icon="close" class="uip-icon" />
                   </div>
                 </div>
 
@@ -506,14 +506,14 @@ export default {
     <!--Font vars-->
     <div class="uip-flex uip-gap-xxs uip-flex-center uip-link-default" @click="ui.tabs.font = !ui.tabs.font">
       <div class="uip-flex uip-flex-center uip-flex-middle uip-padding-xxs uip-link-muted hover:uip-background-muted uip-border-rounder">
-        <span v-if="!ui.tabs.font" class="uip-icon">chevron_right</span>
-        <span v-if="ui.tabs.font" class="uip-icon">expand_more</span>
+        <AppIcon v-if="!ui.tabs.font" icon="chevron_right" class="uip-icon" />
+        <AppIcon v-if="ui.tabs.font" icon="expand_more" class="uip-icon" />
       </div>
 
       <div class="uip-text-emphasis uip-text-bold uip-text-s uip-flex-grow">{{ ui.strings.text }}</div>
 
       <div @click.prevent.stop="$refs.newtextdrop.show($event)" class="uip-flex uip-flex-center uip-flex-middle uip-padding-xxs uip-link-default hover:uip-background-muted uip-border-rounder">
-        <span class="uip-icon">add</span>
+        <AppIcon icon="add" class="uip-icon" />
       </div>
     </div>
 
@@ -536,7 +536,7 @@ export default {
                   <div class="uip-text-emphasis uip-text-bold uip-text-s">{{ ui.strings.editText }}</div>
 
                   <div @click="$refs['fonteditor-' + index][0].close()" class="uip-flex uip-flex-center uip-flex-middle uip-padding-xxs uip-link-muted hover:uip-background-muted uip-border-rounder">
-                    <span class="uip-icon">close</span>
+                    <AppIcon icon="close" class="uip-icon" />
                   </div>
                 </div>
 
@@ -587,7 +587,7 @@ export default {
           <div class="uip-text-emphasis uip-text-bold uip-text-s">{{ ui.strings.newStyle }}</div>
 
           <div @click="$refs.newcolourdrop.close()" class="uip-flex uip-flex-center uip-flex-middle uip-padding-xxs uip-link-muted hover:uip-background-muted uip-border-rounder">
-            <span class="uip-icon">close</span>
+            <AppIcon icon="close" class="uip-icon" />
           </div>
         </div>
 
@@ -609,7 +609,7 @@ export default {
           <div class="uip-text-emphasis uip-text-bold uip-text-s">{{ ui.strings.newUnit }}</div>
 
           <div @click="$refs.newunitdrop.close()" class="uip-flex uip-flex-center uip-flex-middle uip-padding-xxs uip-link-muted hover:uip-background-muted uip-border-rounder">
-            <span class="uip-icon">close</span>
+            <AppIcon icon="close" class="uip-icon" />
           </div>
         </div>
 
@@ -652,7 +652,7 @@ export default {
           <div class="uip-text-emphasis uip-text-bold uip-text-s">{{ ui.strings.newTextVariable }}</div>
 
           <div @click="$refs.newtextdrop.close()" class="uip-flex uip-flex-center uip-flex-middle uip-padding-xxs uip-link-muted hover:uip-background-muted uip-border-rounder">
-            <span class="uip-icon">close</span>
+            <AppIcon icon="close" class="uip-icon" />
           </div>
         </div>
 

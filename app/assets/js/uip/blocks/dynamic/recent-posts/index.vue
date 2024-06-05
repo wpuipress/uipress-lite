@@ -157,7 +157,7 @@ export default {
               <div class="uip-text-bold uip-post-title uip-link-default uip-cursor-pointer" @click="updateAppPage(item.link)">{{ item.name }}</div>
               <div class="uip-text-xs uip-background-primary-wash uip-border-round uip-padding-xxxs uip-post-type-label">{{ item.type }}</div>
               <div class="uip-flex uip-gap-xxs uip-flex-center" v-if="item.hover">
-                <div @click="updateAppPage(item.editLink)" :href="item.editLink" class="uip-icon uip-cursor-pointer uip-link-muted">edit_document</div>
+                <AppIcon @click="updateAppPage(item.editLink)" :href="item.editLink" icon="edit_document" class="uip-icon uip-cursor-pointer uip-link-muted" />
                 <a :href="item.link" target="_BLANK" class="uip-icon uip-cursor-pointer uip-link-muted uip-no-underline">open_in_new</a>
               </div>
             </div>

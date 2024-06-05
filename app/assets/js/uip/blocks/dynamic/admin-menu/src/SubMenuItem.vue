@@ -193,7 +193,7 @@ export default {
 
         <!-- Named seperator-->
         <div v-else class="uip-margin-bottom-s uip-margin-top-s uip-flex uip-flex-row uip-gap-xxs uip-menu-separator" :class="returnItemClasses(sub)">
-          <span v-if="sub.custom.icon && sub.custom.icon != 'uipblank'" class="uip-icon">{{ sub.custom.icon }}</span>
+          <AppIcon v-if="sub.custom.icon && sub.custom.icon != 'uipblank'" :icon="sub.custom.icon" class="uip-icon" />
           <span>{{ sub.custom.name }}</span>
         </div>
       </template>

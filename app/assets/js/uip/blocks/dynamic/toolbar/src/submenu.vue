@@ -28,7 +28,7 @@ const submenu = {
             class="uip-link-default uip-no-underline uip-toolbar-sub-item uip-flex uip-flex-center uip-flex-between uip-gap-s uip-flex-grow uip-padding-xxs uip-border-rounder hover:uip-background-muted"
           >
             <span v-html="sub.title"></span>
-            <span v-if="itemHasSubmenu(sub.submenu)" class="uip-icon">chevron_right</span>
+            <AppIcon v-if="itemHasSubmenu(sub.submenu)" icon="chevron_right" class="uip-icon" />
           </a>
         </template>
 

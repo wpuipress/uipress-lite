@@ -98,7 +98,7 @@ export default {
           <div class="uip-notification" :class="returnClass(notification.status)">
             <div class="uip-flex uip-gap-s uip-flex-center">
               <div class="uip-border-rounder uip-notification-status uip-flex uip-flex-middle uip-padding-xxxs uip-flex-center">
-                <span class="uip-text-inverse uip-text-center uip-icon"> {{ returnIcon(notification.status) }} </span>
+                <AppIcon :icon="returnIcon(notification.status)" class="uip-text-inverse uip-text-center uip-icon" />
               </div>
 
               <div class="uip-flex-grow uip-column-gap-xs">
@@ -111,7 +111,7 @@ export default {
               </div>
 
               <div v-if="notification.dismissable" class="uip-link-muted uip-background-default uip-padding-xxs uip-border-rounder" @click="remove(notification.uid)">
-                <span class="uip-icon">close</span>
+                <AppIcon icon="close" class="uip-icon" />
               </div>
             </div>
           </div>

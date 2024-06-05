@@ -184,7 +184,6 @@ class BackEnd
     AdminMenu::capture();
 
     add_action("admin_enqueue_scripts", ["UipressLite\Classes\Scripts\UipScripts", "add_translations"]);
-    add_action("admin_enqueue_scripts", ["UipressLite\Classes\Scripts\UipScripts", "add_icons"]);
     add_filter("admin_xml_ns", ["UipressLite\Classes\Pages\BackEnd", "add_dark_mode"]);
     add_action("admin_bar_init", ["UipressLite\Classes\Scripts\UipScripts", "remove_admin_bar_style"]);
     add_action("admin_enqueue_scripts", ["UipressLite\Classes\Scripts\UipScripts", "add_uipress_styles"]);

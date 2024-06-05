@@ -34,7 +34,6 @@ export default {
   mounted() {
     this.loading = false;
     this.getSettings();
-    console.log("hellooooooo");
   },
   watch: {
     "uiTemplate.globalSettings": {
@@ -313,7 +312,7 @@ export default {
         <div v-if="loading" class="uip-w-100p uip-flex uip-flex-middle uip-flex-center uip-padding-s"><loading-chart></loading-chart></div>
 
         <div v-if="!loading" class="uip-border-rounder uip-flex uip-flex-center uip-gap-xs uip-background-muted uip-padding-xs">
-          <div class="uip-icon uip-icon-l uip-text-muted">search</div>
+          <AppIcon icon="search" class="uip-icon uip-icon-l uip-text-muted" />
           <input class="uip-blank-input uip-flex-grow" type="text" v-model="search" :placeholder="ui.strings.searchSettings" />
         </div>
 
@@ -328,7 +327,7 @@ export default {
                   <div class="uip-flex uip-flex-column uip-row-gap-xs uip-flex-start">
                     <div class="uip-flex uip-gap-xxxs uip-flex-center">
                       <div class="uip-text-bold uip-text-muted">{{ group.label }}</div>
-                      <div class="uip-icon uip-text-muted">chevron_right</div>
+                      <AppIcon icon="chevron_right" class="uip-icon uip-text-muted" />
                       <div class="uip-text-bold">{{ option.label }}</div>
                     </div>
                     <div v-if="option.help" class="uip-text-s uip-text-muted">{{ option.help }}</div>
@@ -451,7 +450,7 @@ export default {
             <a class="uip-hidden" ref="exporter"></a>
 
             <label class="uip-button-default">
-              <div class="uip-icon">upload</div>
+              <AppIcon icon="upload" class="uip-icon" />
               <input hidden accept=".json" type="file" single="" id="uip-import-layout" @change="importSettings($event)" />
             </label>
           </div>

@@ -529,12 +529,12 @@ export function renderKeyShortCut(keys) {
     } else if (key == "Shift") {
       format += '<span class="uip-shift-icon uip-text-muted"></span>';
     } else if (key == "Control") {
-      format += '<span class="uip-icon uip-text-muted">keyboard_control_key</span>';
+      format += '<AppIcon class="uip-icon uip-text-muted" icon="keyboard_control_key"/>';
     } else if (key == "Backspace") {
-      format += '<span class="uip-icon uip-text-muted">backspace</span>';
+      format += '<AppIcon class="uip-icon uip-text-muted" icon="backspace"/>';
     } else if (shortcutKeys.includes(key)) {
       let keyicon = shortcutKeysIcons.find((x) => x.key == key);
-      format += `<span class="uip-icon uip-text-muted">${keyicon.icon}</span>`;
+      format += `<AppIcon class="uip-icon uip-text-muted" icon="${keyicon.icon}"/>`;
     } else {
       format += `<span class="uip-text-muted uip-text-uppercase" style="line-height: 16px;font-size: 11px;">${key}</span>`;
     }

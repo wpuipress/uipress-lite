@@ -230,7 +230,7 @@ export default {
       </div>
 
       <button v-if="hasEyeDropper" @click="startColorPicker" class="uip-button-default uip-flex uip-flex-center uip-padding-xxs">
-        <span class="uip-icon">colorize</span>
+        <AppIcon icon="colorize" class="uip-icon" />
       </button>
     </div>
 

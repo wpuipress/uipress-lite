@@ -605,7 +605,7 @@ export default {
       <!-- Search Box -->
       <div class="uip-flex uip-flex-column uip-row-gap-xs">
         <div class="uip-flex uip-search-block uip-padding-xxs uip-border-rounder uip-flex uip-gap-xxs uip-flex-center uip-background-muted">
-          <span class="uip-icon uip-text-muted uip-icon uip-icon-medium">search</span>
+          <AppIcon icon="search" class="uip-icon uip-text-muted uip-icon uip-icon-medium" />
           <input class="uip-blank-input uip-flex-grow uip-text-s" type="search" :placeholder="strings.searchData" autofocus v-model="ui.dynamicData.search" />
         </div>
       </div>
@@ -622,7 +622,7 @@ export default {
               :id="formatNameAsID(data.name)"
             >
               <span class="uip-text-muted uip-text-s">{{ cat.label }}</span>
-              <span class="uip-icon uip-text-muted uip-text-s">chevron_right</span>
+              <AppIcon icon="chevron_right" class="uip-icon uip-text-muted uip-text-s" />
               <span class="uip-link-default">{{ data.label }}</span>
             </div>
           </template>

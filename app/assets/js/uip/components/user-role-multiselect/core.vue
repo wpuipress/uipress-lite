@@ -1,5 +1,5 @@
 <script>
-import { __ } from '@wordpress/i18n';
+import { __ } from "@wordpress/i18n";
 import { defineAsyncComponent } from "vue";
 export default {
   props: {
@@ -263,7 +263,7 @@ export default {
     ></toggle-switch>
 
     <div class="uip-flex uip-background-muted uip-border-rounder uip-padding-xxs uip-flex-center">
-      <span class="uip-icon uip-text-muted uip-margin-right-xs">search</span>
+      <AppIcon icon="search" class="uip-icon uip-text-muted uip-margin-right-xs" />
       <input class="uip-blank-input uip-flex-grow uip-text-s" type="search" :placeholder="strings.search" v-model="thisSearchInput" autofocus />
     </div>
 
@@ -302,8 +302,12 @@ export default {
     </div>
 
     <div class="uip-flex uip-gap-xs" v-if="activeTab == 'users' && totalUsers > formattedUsers.length">
-      <button class="uip-button-default uip-icon uip-nav-button uip-padding-xxs" :class="{ 'uip-disabled': page == 1 }" @click="pageBack()">chevron_left</button>
-      <button class="uip-button-default uip-icon uip-nav-button uip-padding-xxs" @click="pageForward()">chevron_right</button>
+      <button class="uip-button-default uip-icon uip-nav-button uip-padding-xxs" :class="{ 'uip-disabled': page == 1 }" @click="pageBack()">
+        <AppIcon icon="chevron_left" />
+      </button>
+      <button class="uip-button-default uip-icon uip-nav-button uip-padding-xxs" @click="pageForward()">
+        <AppIcon icon="chevron_right" />
+      </button>
     </div>
   </div>
 </template>

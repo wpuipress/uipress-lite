@@ -1,5 +1,5 @@
 <script>
-import { __ } from '@wordpress/i18n';
+import { __ } from "@wordpress/i18n";
 export default {
   props: {
     returnData: Function,
@@ -142,7 +142,7 @@ export default {
       <div class="uip-text-muted uip-flex uip-gap-xxs uip-flex-center">
         <span class="uip-text-s">{{ strings.siteOptionName }}</span>
         <uip-tooltip :message="strings.siteOptionDescription" class="uip-inline-flex">
-          <span class="uip-icon uip-border-circle uip-background-grey uip-cursor-pointer" style="font-size: 12px">question_mark</span>
+          <AppIcon icon="question_mark" class="uip-icon uip-border-circle uip-background-grey uip-cursor-pointer" style="font-size: 12px" />
         </uip-tooltip>
       </div>
 
@@ -177,7 +177,7 @@ export default {
         <div class="uip-text-muted uip-margin-bottom-xs uip-flex uip-gap-xs uip-flex-center">
           <span class="uip-text-s">{{ strings.emailTemplate }}</span>
           <uip-tooltip :message="strings.templateDescription">
-            <span class="uip-icon uip-border-circle uip-background-grey uip-cursor-pointer" style="font-size: 12px">question_mark</span>
+            <AppIcon icon="question_mark" class="uip-icon uip-border-circle uip-background-grey uip-cursor-pointer" style="font-size: 12px" />
           </uip-tooltip>
         </div>
         <div class="uip-margin-bottom-xs">

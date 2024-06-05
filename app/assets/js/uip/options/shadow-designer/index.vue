@@ -1,5 +1,5 @@
 <script>
-import { __ } from '@wordpress/i18n';
+import { __ } from "@wordpress/i18n";
 import { defineAsyncComponent, nextTick } from "vue";
 import colorBox from "@/js/uip/components/color-box/index.vue";
 
@@ -186,9 +186,9 @@ export default {
         <input type="number" min="0" class="uip-input uip-remove-steps uip-background-remove uip-padding-xxxs uip-flex-grow" style="width: 30px" v-model="shadowOptions.horizDistance.value" />
 
         <div class="uip-padding-xxs uip-border-rounder uip-background-muted uip-flex uip-gap-xxs uip-no-text-select">
-          <div class="uip-link-muted uip-icon uip-text-l" @click="shadowOptions.horizDistance.value = parseInt(shadowOptions.horizDistance.value) - 1">remove</div>
+          <AppIcon icon="remove" class="uip-link-muted uip-icon uip-text-l" @click="shadowOptions.horizDistance.value = parseInt(shadowOptions.horizDistance.value) - 1" />
           <div class="uip-border-right"></div>
-          <div class="uip-link-muted uip-icon uip-text-l" @click="shadowOptions.horizDistance.value = parseInt(shadowOptions.horizDistance.value) + 1">add</div>
+          <AppIcon icon="add" class="uip-link-muted uip-icon uip-text-l" @click="shadowOptions.horizDistance.value = parseInt(shadowOptions.horizDistance.value) + 1" />
         </div>
       </div>
     </div>
@@ -201,9 +201,9 @@ export default {
         <input type="number" min="0" class="uip-input uip-remove-steps uip-background-remove uip-padding-xxxs uip-flex-grow" style="width: 30px" v-model="shadowOptions.verticalDistance.value" />
 
         <div class="uip-padding-xxs uip-border-rounder uip-background-muted uip-flex uip-gap-xxs uip-no-text-select">
-          <div class="uip-link-muted uip-icon uip-text-l" @click="shadowOptions.verticalDistance.value = parseInt(shadowOptions.verticalDistance.value) - 1">remove</div>
+          <AppIcon icon="remove" class="uip-link-muted uip-icon uip-text-l" @click="shadowOptions.verticalDistance.value = parseInt(shadowOptions.verticalDistance.value) - 1" />
           <div class="uip-border-right"></div>
-          <div class="uip-link-muted uip-icon uip-text-l" @click="shadowOptions.verticalDistance.value = parseInt(shadowOptions.verticalDistance.value) + 1">add</div>
+          <AppIcon icon="add" class="uip-link-muted uip-icon uip-text-l" @click="shadowOptions.verticalDistance.value = parseInt(shadowOptions.verticalDistance.value) + 1" />
         </div>
       </div>
     </div>
@@ -218,9 +218,9 @@ export default {
         <input type="number" min="0" class="uip-input uip-remove-steps uip-background-remove uip-padding-xxxs uip-flex-grow" style="width: 30px" v-model="shadowOptions.blur.value" />
 
         <div class="uip-padding-xxs uip-border-rounder uip-background-muted uip-flex uip-gap-xxs uip-no-text-select">
-          <div class="uip-link-muted uip-icon uip-text-l" @click="shadowOptions.blur.value = parseInt(shadowOptions.blur.value) - 1">remove</div>
+          <AppIcon icon="remove" class="uip-link-muted uip-icon uip-text-l" @click="shadowOptions.blur.value = parseInt(shadowOptions.blur.value) - 1" />
           <div class="uip-border-right"></div>
-          <div class="uip-link-muted uip-icon uip-text-l" @click="shadowOptions.blur.value = parseInt(shadowOptions.blur.value) + 1">add</div>
+          <AppIcon icon="add" class="uip-link-muted uip-icon uip-text-l" @click="shadowOptions.blur.value = parseInt(shadowOptions.blur.value) + 1" />
         </div>
       </div>
     </div>

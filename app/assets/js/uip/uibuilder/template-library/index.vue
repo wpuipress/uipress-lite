@@ -10,6 +10,8 @@ import { nextTick } from "vue";
 import screenOverlay from "./screenOverlay.vue";
 import Confirm from "@/js/uip/components/confirm/index.vue";
 
+import { VueDraggableNext } from "vue-draggable-next";
+
 export default {
   inject: ["uiTemplate"],
   components: { screenOverlay, Confirm },
@@ -356,15 +358,15 @@ export default {
       <screenOverlay class="uip-w-100p">
         <template v-slot:trigger>
           <div class="uip-flex uip-gap-s uip-padding-xxs hover:uip-background-muted uip-border-rounder uip-flex-center">
-            <div class="uip-icon uip-text-xl uip-background-muted uip-border-rounder uip-padding-xxs">space_dashboard</div>
+            <AppIcon icon="space_dashboard" class="uip-icon uip-text-xl uip-background-muted uip-border-rounder uip-padding-xxs" />
             <div class="uip-text-emphasis uip-flex-grow">{{ strings.uiTemplates }}</div>
 
-            <div class="uip-icon uip-text-l">chevron_right</div>
+            <AppIcon icon="chevron_right" class="uip-icon uip-text-l" />
           </div>
         </template>
 
         <template v-slot:content>
-          <uip-draggable
+          <VueDraggableNext
             :list="returnThemes"
             class="uip-padding-m uip-flex uip-flex-column uip-row-gap-m"
             handle=".uip-block-drag"
@@ -383,7 +385,7 @@ export default {
                   ></div>
 
                   <div class="uip-flex uip-gap-xs uip-flex-center">
-                    <div class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-icon" @click="theme.showInfo = !theme.showInfo">lightbulb</div>
+                    <AppIcon icon="lightbulb" class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-icon" @click="theme.showInfo = !theme.showInfo" />
                     <div class="uip-flex-grow uip-text-bold">{{ theme.name }}</div>
 
                     <div v-if="theme.images.length > 1" class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-icon uip-text-l" @click="navImagesBackward(theme)">
@@ -393,7 +395,7 @@ export default {
                       chevron_right
                     </div>
 
-                    <div class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-icon uip-text-l" @click="importThis(theme, true)">download</div>
+                    <AppIcon icon="download" class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-icon uip-text-l" @click="importThis(theme, true)" />
                   </div>
 
                   <template v-if="theme.showInfo">
@@ -403,7 +405,7 @@ export default {
 
                     <div class="uip-flex uip-flex-gap-xs uip-flex-between">
                       <div class="uip-text-xs uip-background-primary-wash uip-border-rounder uip-padding-left-xxxs uip-padding-right-xxxs uip-flex uip-flex-row uip-gap-xxs uip-flex-center">
-                        <span class="uip-icon">file_download</span>
+                        <AppIcon icon="file_download" class="uip-icon" />
                         <span>{{ theme.downloads }}</span>
                       </div>
 
@@ -415,7 +417,7 @@ export default {
                 </div>
               </div>
             </template>
-          </uip-draggable>
+          </VueDraggableNext>
         </template>
       </screenOverlay>
 
@@ -423,15 +425,15 @@ export default {
       <screenOverlay class="uip-w-100p">
         <template v-slot:trigger>
           <div class="uip-flex uip-gap-s uip-padding-xxs hover:uip-background-muted uip-border-rounder uip-flex-center">
-            <div class="uip-icon uip-text-xl uip-background-muted uip-border-rounder uip-padding-xxs">article</div>
+            <AppIcon icon="article" class="uip-icon uip-text-xl uip-background-muted uip-border-rounder uip-padding-xxs" />
             <div class="uip-text-emphasis uip-flex-grow">{{ strings.pages }}</div>
 
-            <div class="uip-icon uip-text-l">chevron_right</div>
+            <AppIcon icon="chevron_right" class="uip-icon uip-text-l" />
           </div>
         </template>
 
         <template v-slot:content>
-          <uip-draggable
+          <VueDraggableNext
             :list="returnPages"
             class="uip-padding-m uip-flex uip-flex-column uip-row-gap-m"
             handle=".uip-block-drag"
@@ -450,7 +452,7 @@ export default {
                   ></div>
 
                   <div class="uip-flex uip-gap-xs uip-flex-center">
-                    <div class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-icon" @click="theme.showInfo = !theme.showInfo">lightbulb</div>
+                    <AppIcon icon="lightbulb" class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-icon" @click="theme.showInfo = !theme.showInfo" />
                     <div class="uip-flex-grow uip-text-bold">{{ theme.name }}</div>
 
                     <div v-if="theme.images.length > 1" class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-icon uip-text-l" @click="navImagesBackward(theme)">
@@ -460,7 +462,7 @@ export default {
                       chevron_right
                     </div>
 
-                    <div class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-icon uip-text-l" @click="importThis(theme, true)">download</div>
+                    <AppIcon icon="download" class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-icon uip-text-l" @click="importThis(theme, true)" />
                   </div>
 
                   <template v-if="theme.showInfo">
@@ -470,7 +472,7 @@ export default {
 
                     <div class="uip-flex uip-flex-gap-xs uip-flex-between">
                       <div class="uip-text-xs uip-background-primary-wash uip-border-rounder uip-padding-left-xxxs uip-padding-right-xxxs uip-flex uip-flex-row uip-gap-xxs uip-flex-center">
-                        <span class="uip-icon">file_download</span>
+                        <AppIcon icon="file_download" class="uip-icon" />
                         <span>{{ theme.downloads }}</span>
                       </div>
 
@@ -482,7 +484,7 @@ export default {
                 </div>
               </div>
             </template>
-          </uip-draggable>
+          </VueDraggableNext>
         </template>
       </screenOverlay>
 
@@ -490,15 +492,15 @@ export default {
       <screenOverlay class="uip-w-100p">
         <template v-slot:trigger>
           <div class="uip-flex uip-gap-s uip-padding-xxs hover:uip-background-muted uip-border-rounder uip-flex-center">
-            <div class="uip-icon uip-text-xl uip-background-muted uip-border-rounder uip-padding-xxs">calendar_view_day</div>
+            <AppIcon icon="calendar_view_day" class="uip-icon uip-text-xl uip-background-muted uip-border-rounder uip-padding-xxs" />
             <div class="uip-text-emphasis uip-flex-grow">{{ strings.sections }}</div>
 
-            <div class="uip-icon uip-text-l">chevron_right</div>
+            <AppIcon icon="chevron_right" class="uip-icon uip-text-l" />
           </div>
         </template>
 
         <template v-slot:content>
-          <uip-draggable
+          <VueDraggableNext
             :list="returnSections"
             class="uip-padding-m uip-flex uip-flex-column uip-row-gap-m"
             handle=".uip-block-drag"
@@ -517,7 +519,7 @@ export default {
                   ></div>
 
                   <div class="uip-flex uip-gap-xs uip-flex-center">
-                    <div class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-icon" @click="theme.showInfo = !theme.showInfo">lightbulb</div>
+                    <AppIcon icon="lightbulb" class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-icon" @click="theme.showInfo = !theme.showInfo" />
                     <div class="uip-flex-grow uip-text-bold">{{ theme.name }}</div>
 
                     <div v-if="theme.images.length > 1" class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-icon uip-text-l" @click="navImagesBackward(theme)">
@@ -527,7 +529,7 @@ export default {
                       chevron_right
                     </div>
 
-                    <div class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-icon uip-text-l" @click="importThis(theme)">download</div>
+                    <AppIcon icon="download" class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-icon uip-text-l" @click="importThis(theme)" />
                   </div>
 
                   <template v-if="theme.showInfo">
@@ -537,7 +539,7 @@ export default {
 
                     <div class="uip-flex uip-flex-gap-xs uip-flex-between">
                       <div class="uip-text-xs uip-background-primary-wash uip-border-rounder uip-padding-left-xxxs uip-padding-right-xxxs uip-flex uip-flex-row uip-gap-xxs uip-flex-center">
-                        <span class="uip-icon">file_download</span>
+                        <AppIcon icon="file_download" class="uip-icon" />
                         <span>{{ theme.downloads }}</span>
                       </div>
 
@@ -549,7 +551,7 @@ export default {
                 </div>
               </div>
             </template>
-          </uip-draggable>
+          </VueDraggableNext>
         </template>
       </screenOverlay>
 
@@ -559,17 +561,17 @@ export default {
       <screenOverlay class="uip-w-100p">
         <template v-slot:trigger>
           <div class="uip-flex uip-gap-s uip-padding-xxs hover:uip-background-muted uip-border-rounder uip-flex-center">
-            <div class="uip-icon uip-text-xl uip-background-muted uip-border-rounder uip-padding-xxs">texture</div>
+            <AppIcon icon="texture" class="uip-icon uip-text-xl uip-background-muted uip-border-rounder uip-padding-xxs" />
             <div class="uip-text-emphasis uip-flex-grow">{{ strings.patterns }}</div>
 
-            <div class="uip-icon uip-text-l">chevron_right</div>
+            <AppIcon icon="chevron_right" class="uip-icon uip-text-l" />
           </div>
         </template>
 
         <template v-slot:content>
           <p v-if="uiTemplate.patterns.length < 1" class="uip-padding-m uip-text-muted uip-text-center">No patterns created yet</p>
 
-          <uip-draggable
+          <VueDraggableNext
             :list="uiTemplate.patterns"
             class="uip-padding-s uip-flex uip-flex-column uip-row-gap-s"
             handle=".uip-block-drag"
@@ -582,13 +584,18 @@ export default {
             <template v-for="(theme, index) in uiTemplate.patterns" :key="theme.id" :index="index">
               <div class="uip-flex uip-flex-column uip-block-drag uip-row-gap-xs">
                 <div class="uip-flex uip-gap-xs uip-flex-center hover:uip-background-grey uip-padding-xxs uip-border-rounder uip-cursor-pointer" @dblclick="importThisPattern(theme)">
-                  <div class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-icon uip-text-l">{{ returnIcon(theme) }}</div>
+                  <AppIcon :icon="returnIcon(theme)" class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-icon uip-text-l" />
                   <div class="uip-flex-grow uip-text-bold">{{ theme.name }}</div>
 
-                  <div v-if="!theme.editing" class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-icon" @click="theme.editing = true">edit</div>
-                  <div v-if="theme.editing" class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-icon uip-text-green" @click="theme.editing = false">done</div>
+                  <AppIcon v-if="!theme.editing" icon="edit" class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-icon" @click="theme.editing = true" />
+                  <AppIcon
+                    v-if="theme.editing"
+                    icon="done"
+                    class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-icon uip-text-green"
+                    @click="theme.editing = false"
+                  />
 
-                  <div class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-icon" @click="deleteThisItem(theme.id)">delete</div>
+                  <AppIcon icon="delete" class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-icon" @click="deleteThisItem(theme.id)" />
                 </div>
 
                 <div v-if="theme.editing" class="uip-grid-col-1-3 uip-padding-s uip-padding-right-remove">
@@ -641,7 +648,7 @@ export default {
                 </div>
               </div>
             </template>
-          </uip-draggable>
+          </VueDraggableNext>
         </template>
       </screenOverlay>
     </div>

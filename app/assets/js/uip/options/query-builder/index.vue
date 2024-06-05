@@ -1,5 +1,5 @@
 <script>
-import { __ } from '@wordpress/i18n';
+import { __ } from "@wordpress/i18n";
 import { defineAsyncComponent, nextTick } from "vue";
 
 import PostTypeSelect from "@/js/uip/components/post-type-select/core.vue";
@@ -130,74 +130,71 @@ export default {
       return this.returnBlockQueryType + " | " + this.returnBlockQueryPerPage;
     },
   },
-  template: `
+};
+</script>
 
+<template>
+  <div class="uip-grid-col-1-3">
+    <!--Enabled / disabled -->
+    <div class="uip-text-muted uip-flex uip-flex-center uip-text-s uip-text-s">
+      <span>{{ strings.query }}</span>
+    </div>
+    <toggle-switch
+      :options="enabledDisabled"
+      :activeValue="returnQueryVal"
+      :returnValue="
+        (d) => {
+          block.query.enabled = d;
+        }
+      "
+    ></toggle-switch>
 
-    <div class="uip-grid-col-1-3">
+    <!--Spacer-->
+    <div></div>
 
-      <!--Enabled / disabled -->
-      <div class="uip-text-muted uip-flex uip-flex-center uip-text-s uip-text-s"><span>{{strings.query}}</span></div>
-      <toggle-switch :options="enabledDisabled" :activeValue="returnQueryVal" :returnValue="(d)=>{ block.query.enabled = d}"></toggle-switch>
-
-      <!--Spacer-->
-      <div></div>
-
-
-      <dropdown v-if="returnQueryVal" pos="left center"
-      ref="queryBuilder"
-      :snapX="['#uip-block-settings']"
-      class="uip-w-100p">
-
-        <template #trigger>
-
-          <div class="uip-background-muted uip-border-rounder uip-padding-xxs uip-flex uip-flex-center uip-gap-xs uip-cursor-pointer">
-
-            <div class="uip-background-primary uip-text-inverse uip-border-round uip-padding-xxxs">
-              <span class="uip-icon">all_inclusive</span>
-            </div>
-
-
-            <div class="uip-no-wrap uip-flex uip-gap-xxs uip-flex-grow uip-flex-center">
-
-              <span class="uip-text-muted" key="add">{{returnQueryPreviewText}}</span>
-
-            </div>
-
-            <a @click.prevent.stop="block.query.settings = {}"
-            class="uip-link-muted uip-padding-xxxs uip-border-rounder uip-text-s hover:uip-background-muted uip-icon">close</a>
-
+    <dropdown v-if="returnQueryVal" pos="left center" ref="queryBuilder" :snapX="['#uip-block-settings']" class="uip-w-100p">
+      <template #trigger>
+        <div class="uip-background-muted uip-border-rounder uip-padding-xxs uip-flex uip-flex-center uip-gap-xs uip-cursor-pointer">
+          <div class="uip-background-primary uip-text-inverse uip-border-round uip-padding-xxxs">
+            <AppIcon icon="all_inclusive" class="uip-icon" />
           </div>
 
-        </template>
+          <div class="uip-no-wrap uip-flex uip-gap-xxs uip-flex-grow uip-flex-center">
+            <span class="uip-text-muted" key="add">{{ returnQueryPreviewText }}</span>
+          </div>
 
-        <template #content>
+          <a @click.prevent.stop="block.query.settings = {}" class="uip-link-muted uip-padding-xxxs uip-border-rounder uip-text-s hover:uip-background-muted uip-icon">close</a>
+        </div>
+      </template>
 
-          <div class="uip-padding-s uip-w-260">
-
-            <ScreenControl :startScreen="queryFillScreen" :homeScreen="queryFillScreen.component" :closer="$refs.queryBuilder.close" :showNavigation="true">
-
-              <template #componenthandler="{ processScreen, currentScreen, goBack }">
-                <KeepAlive>
-                  <component @tab-change="(d)=>{fillTab = d}" @request-screen="(d)=>{processScreen(d)}" @go-back="goBack()"
+      <template #content>
+        <div class="uip-padding-s uip-w-260">
+          <ScreenControl :startScreen="queryFillScreen" :homeScreen="queryFillScreen.component" :closer="$refs.queryBuilder.close" :showNavigation="true">
+            <template #componenthandler="{ processScreen, currentScreen, goBack }">
+              <KeepAlive>
+                <component
+                  @tab-change="
+                    (d) => {
+                      fillTab = d;
+                    }
+                  "
+                  @request-screen="
+                    (d) => {
+                      processScreen(d);
+                    }
+                  "
+                  @go-back="goBack()"
                   :returnData="currentScreen.returnData"
                   :value="currentScreen.value"
                   :args="currentScreen.args"
                   v-bind="currentScreen.attributes"
-                  :is="currentScreen.component"/>
-                </KeepAlive>
-              </template>
-
-            </ScreenControl>
-
-          </div>
-
-        </template>
-
-
-      </dropdown>
-    </div>
-
-
-  `,
-};
-</script>
+                  :is="currentScreen.component"
+                />
+              </KeepAlive>
+            </template>
+          </ScreenControl>
+        </div>
+      </template>
+    </dropdown>
+  </div>
+</template>

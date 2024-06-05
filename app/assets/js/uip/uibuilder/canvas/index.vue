@@ -729,7 +729,7 @@ export default {
                     <template v-if="ui.viewDevice == 'tablet'">{{ ui.strings.tablet }}</template>
                     <template v-if="ui.viewDevice == 'phone'">{{ ui.strings.mobile }}</template>
                   </div>
-                  <div class="uip-icon uip-text-l">expand_more</div>
+                  <AppIcon icon="expand_more" class="uip-icon uip-text-l" />
                 </div>
               </template>
 
@@ -744,7 +744,7 @@ export default {
                   >
                     <div class="">{{ ui.strings.desktop }}</div>
                     <div class="uip-flex uip-flex-center uip-text-muted uip-gap-xxxs">
-                      <span class="uip-icon" style="line-height: 0">desktop_windows</span>
+                      <AppIcon icon="desktop_windows" class="uip-icon" style="line-height: 0" />
                     </div>
                   </div>
 
@@ -757,7 +757,7 @@ export default {
                   >
                     <div class="">{{ ui.strings.tablet }}</div>
                     <div class="uip-flex uip-flex-center uip-text-muted uip-gap-xxxs">
-                      <span class="uip-icon">tablet_mac</span>
+                      <AppIcon icon="tablet_mac" class="uip-icon" />
                     </div>
                   </div>
 
@@ -770,7 +770,7 @@ export default {
                   >
                     <div class="">{{ ui.strings.mobile }}</div>
                     <div class="uip-flex uip-flex-center uip-text-muted uip-gap-xxxs">
-                      <span class="uip-icon">smartphone</span>
+                      <AppIcon icon="smartphone" class="uip-icon" />
                     </div>
                   </div>
                 </div>
@@ -810,7 +810,7 @@ export default {
               :id="'block-frame-title-' + block.uid"
               :class="uiTemplate.isPreview ? 'uip-opacity-0' : ''"
             >
-              <div :title="ui.strings.preview" class="uip-icon uip-border-rounder" style="">crop_free</div>
+              <AppIcon :title="ui.strings.preview" icon="crop_free" class="uip-icon uip-border-rounder" style="" />
               <div class="uip-text-muted uip-text-s uip-flex-grow uip-no-wrap uip-overflow-hidden uip-text-ellipsis">{{ block.name }} {{ ui.strings.frame }}</div>
             </div>
 
@@ -847,7 +847,7 @@ export default {
           <template v-slot:trigger>
             <div class="uip-background-muted uip-padding-xxs uip-border-rounder uip-flex uip-gap-s uip-flex-between uip-link-default uip-flex-center">
               <div class="">{{ returnHumanZoom }}</div>
-              <div class="uip-icon uip-text-l">expand_less</div>
+              <AppIcon icon="expand_less" class="uip-icon uip-text-l" />
             </div>
           </template>
 
@@ -860,7 +860,7 @@ export default {
                 <div class="uip-no-wrap">{{ ui.strings.zoomOut }}</div>
                 <div class="uip-flex uip-flex-center uip-text-muted uip-gap-xxxs">
                   <span class="uip-command-icon"></span>
-                  <span class="uip-icon" style="line-height: 0">remove</span>
+                  <AppIcon icon="remove" class="uip-icon" style="line-height: 0" />
                 </div>
               </div>
 
@@ -871,7 +871,7 @@ export default {
                 <div class="uip-no-wrap">{{ ui.strings.zoomIn }}</div>
                 <div class="uip-flex uip-flex-center uip-text-muted uip-gap-xxxs">
                   <span class="uip-command-icon"></span>
-                  <span class="uip-icon" style="line-height: 0">add</span>
+                  <AppIcon icon="add" class="uip-icon" style="line-height: 0" />
                 </div>
               </div>
 
@@ -882,7 +882,7 @@ export default {
                 <div class="uip-no-wrap">{{ ui.strings.zoom100 }}</div>
                 <div class="uip-flex uip-flex-center uip-text-muted uip-gap-xxxs">
                   <span class="uip-command-icon"></span>
-                  <span class="uip-icon" style="line-height: 0">exposure_zero</span>
+                  <AppIcon icon="exposure_zero" class="uip-icon" style="line-height: 0" />
                 </div>
               </div>
             </div>
@@ -891,31 +891,28 @@ export default {
 
         <div class="uip-margin-left-xs uip-margin-right-xs uip-h-20"></div>
 
-        <div
+        <AppIcon
           :title="ui.strings.recenter"
           class="hover:uip-background-muted uip-padding-xxxs uip-border-round uip-flex uip-flex-center uip-icon uip-link-default uip-text-xl uip-ratio-1-1 uip-line-height-1 uip-icon-medium"
           @click="setCanvasPosition()"
-        >
-          center_focus_strong
-        </div>
+          icon="center_focus_strong"
+        />
 
-        <div
+        <AppIcon
           :title="ui.strings.showGridLines"
           class="hover:uip-background-muted uip-padding-xxxs uip-border-round uip-flex uip-flex-center uip-icon uip-link-default uip-text-xl uip-ratio-1-1 uip-line-height-1 uip-icon-medium"
           @click="toggleDisplay()"
           :class="{ 'uip-background-grey uip-text-emphasis': uiTemplate.display != 'preview' }"
-        >
-          grid_3x3
-        </div>
+          icon="grid_3x3"
+        />
 
         <!-- Dark mode -->
-        <div
+        <AppIcon
           :title="ui.strings.darkMode"
           class="hover:uip-background-muted uip-padding-xxxs uip-border-round uip-flex uip-flex-center uip-icon uip-link-default uip-text-xl uip-ratio-1-1 uip-line-height-1 uip-icon-medium"
           @click="toggleDarkMode()"
-        >
-          {{ returnThemeIcon }}
-        </div>
+          :icon="returnThemeIcon"
+        />
       </div>
     </div>
 

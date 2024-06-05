@@ -43,10 +43,6 @@ class AdminPage
       self::add_menu_pages($templates);
     };
 
-    // Triggers icon load
-    if (!self::$isFramedPage) {
-      add_action("admin_enqueue_scripts", ["UipressLite\Classes\Scripts\UipScripts", "add_icons"]);
-    }
     add_action("admin_menu", $handler, 1);
     add_action("admin_footer", ["UipressLite\Classes\Pages\AdminPage", "add_wp_menu_icons"]);
   }
@@ -84,7 +80,6 @@ class AdminPage
       add_action("admin_print_scripts-{$hook_suffix}", ["UipressLite\Classes\Pages\AdminPage", "add_hooks"]);
       add_action("admin_print_scripts-{$hook_suffix}", ["UipressLite\Classes\Scripts\UipScripts", "add_translations"]);
       add_action("admin_print_scripts-{$hook_suffix}", ["UipressLite\Classes\Scripts\UipScripts", "add_uipress_styles"]);
-      add_action("admin_print_scripts-{$hook_suffix}", ["UipressLite\Classes\Scripts\UipScripts", "add_icons"]);
     }
   }
 

@@ -435,7 +435,7 @@ export default {
         <dropdown :hover="true" :pos="returnDropdownPosition" :disableTeleport="true" v-if="ifHidden(key)" :id="'wp-admin-bar-' + item.id" :class="item.meta.class">
           <template v-slot:trigger>
             <a :href="formatHREF(item.href)" @click="updatePage(item, $event)" class="uip-link-default uip-no-underline uip-toolbar-top-item uip-flex uip-gap-xs uip-flex-center">
-              <div class="uip-icon uip-toolbar-top-item-icon uip-text-l" v-if="customIcon(item.id)">{{ customIcon(item.id) }}</div>
+              <AppIcon :icon="customIcon(item.id)" class="uip-icon uip-toolbar-top-item-icon uip-text-l" v-if="customIcon(item.id)" />
 
               <component v-if="customIcon(item.id)" is="style" scoped> #{{ "wp-admin-bar-" + item.id }} .ab-icon{display:none} </component>
 
@@ -459,7 +459,7 @@ export default {
                           class="uip-link-default uip-no-underline uip-toolbar-sub-item uip-flex uip-flex-center uip-flex-between uip-gap-s uip-flex-grow uip-padding-xxs uip-border-rounder hover:uip-background-muted"
                         >
                           <span v-html="sub.title"></span>
-                          <span v-if="sub.submenu" class="uip-icon">chevron_right</span>
+                          <AppIcon v-if="sub.submenu" icon="chevron_right" class="uip-icon" />
                         </a>
                       </template>
                       <template v-slot:content v-if="sub.submenu">

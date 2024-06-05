@@ -142,7 +142,7 @@ export default {
     @click="followLink($event)"
     ref="newTab"
   >
-    <span class="uip-icon" v-if="returnIcon">{{ returnIcon }}</span>
+    <AppIcon :icon="returnIcon" class="uip-icon" v-if="returnIcon" />
     <span class="uip-flex-grow" v-if="returnText != ''">{{ returnText }}</span>
   </a>
 </template>

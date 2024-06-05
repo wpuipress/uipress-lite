@@ -110,7 +110,7 @@ export default {
       <!-- title -->
       <div class="uip-flex uip-flex-between uip-flex-center">
         <div class="uip-text-bold uip-text-emphasis">{{ strings.saveAsPattern }}</div>
-        <div class="uip-icon uip-link-muted uip-padding-xxs uip-border-round hover:uip-background-muted" @click="$refs.saveaspattern.close()">close</div>
+        <AppIcon icon="close" class="uip-icon uip-link-muted uip-padding-xxs uip-border-round hover:uip-background-muted" @click="$refs.saveaspattern.close()" />
       </div>
 
       <div class="uip-grid-col-1-3 uip-padding-left-s">

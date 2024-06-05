@@ -1,5 +1,5 @@
 <script>
-import { __ } from '@wordpress/i18n';
+import { __ } from "@wordpress/i18n";
 import { nextTick } from "vue";
 
 export default {
@@ -73,7 +73,7 @@ export default {
       <div class="uip-flex uip-gap-xs uip-flex-start uip-flex-no-wrap">
         <h2 class="uip-margin-remove uip-flex-grow">{{ title }}</h2>
         <div @click="cancel()" class="uip-padding-xxs uip-border-rounder hover:uip-background-muted uip-cursor-pointer">
-          <span class="uip-icon uip-link-muted">close</span>
+          <AppIcon icon="close" class="uip-icon uip-link-muted" />
         </div>
       </div>
 
@@ -89,7 +89,7 @@ export default {
 
         <button class="uip-button-primary uip-flex uip-gap-s uip-flex-center" @click="confirm">
           <span>{{ okButton }}</span>
-          <span class="uip-icon uip-text-muted uip-dark-mode">keyboard_return</span>
+          <AppIcon icon="keyboard_return" class="uip-icon uip-text-muted uip-dark-mode" />
         </button>
       </div>
     </div>

@@ -153,7 +153,7 @@ export default {
           <div class="uip-w-6 uip-ratio-1-1 uip-border-circle uip-background-secondary"></div>
         </div>
 
-        <a class="uip-link-muted uip-icon">{{ returnVisibilityIcon }}</a>
+        <AppIcon class="uip-link-muted uip-icon" :icon="returnVisibilityIcon" />
       </div>
     </div>
 
@@ -177,7 +177,7 @@ export default {
               {{ returnCurrentPresetName }}
             </div>
 
-            <div v-if="returnCurrentPresetName" @click.prevent.stop="removePreset()" class="uip-icon">close</div>
+            <AppIcon v-if="returnCurrentPresetName" @click.prevent.stop="removePreset()" icon="close" class="uip-icon" />
           </div>
         </template>
 

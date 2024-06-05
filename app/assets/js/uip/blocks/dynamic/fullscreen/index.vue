@@ -64,7 +64,7 @@ export default {
 
 <template>
   <button class="uip-button-default uip-flex uip-gap-xxs uip-flex-center" :class="returnClasses" @click="openFullScreen()">
-    <span class="uip-icon" v-if="returnIcon">{{ returnIcon }}</span>
+    <AppIcon :icon="returnIcon" class="uip-icon" v-if="returnIcon" />
     <span class="uip-flex-grow" v-if="returnText != ''">{{ returnText }}</span>
   </button>
 </template>

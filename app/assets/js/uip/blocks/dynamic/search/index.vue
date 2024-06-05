@@ -154,7 +154,7 @@ export default {
 <template>
   <div class="uip-flex uip-flex-column">
     <div class="uip-flex uip-padding-xxs uip-border uip-search-block uip-border-round uip-flex-center uip-margin-bottom-s uip-position-relative">
-      <span class="uip-icon uip-text-muted uip-margin-right-xs">search</span>
+      <AppIcon icon="search" class="uip-icon uip-text-muted uip-margin-right-xs" />
       <input class="uip-blank-input uip-flex-grow uip-text-s" type="search" :placeholder="strings.searchPlaceHolder" v-model="searchString" autofocus />
 
       <div class="uip-position-absolute uip-left-0 uip-bottom-0 uip-w-100p" v-if="searching">
@@ -182,8 +182,8 @@ export default {
           <template v-for="item in results">
             <div class="uip-flex uip-flex-row uip-gap-s uip-flex-center" @mouseover="item.hover = true" @mouseleave="item.hover = false">
               <div v-if="item.icon == 'article' || !item.icon" class="uip-border uip-border-round uip-padding-xxs">
-                <div v-if="item.icon == 'article'" class="uip-icon">article</div>
-                <div v-if="!item.icon" class="uip-icon">collections</div>
+                <AppIcon v-if="item.icon == 'article'" icon="article" class="uip-icon" />
+                <AppIcon v-if="!item.icon" icon="collections" class="uip-icon" />
               </div>
 
               <div v-else class="uip-border uip-border-round uip-w-25 uip-ratio-1-1 uip-background-cover" :style="'background-image: url(' + item.icon + ')'"></div>
@@ -206,13 +206,13 @@ export default {
               <div class="uip-flex-grow uip-flex uip-flex-right">
                 <dropdown pos="bottom right">
                   <template v-slot:trigger>
-                    <div class="uip-icon uip-link-muted uip-text-l">more_vert</div>
+                    <AppIcon icon="more_vert" class="uip-icon uip-link-muted uip-text-l" />
                   </template>
 
                   <template v-slot:content>
                     <div class="uip-flex uip-flex-column uip-row-gap-xxs uip-padding-xxs">
                       <a :href="item.editLink" class="uip-link-muted hover:uip-background-muted uip-border-round uip-padding-xxxs uip-flex uip-flex-row uip-gap-xs uip-flex-center uip-no-underline">
-                        <div class="uip-icon uip-text-l">edit</div>
+                        <AppIcon icon="edit" class="uip-icon uip-text-l" />
                         <div class="uip-no-wrap">{{ strings.edit + " " + item.type }}</div>
                       </a>
 
@@ -221,7 +221,7 @@ export default {
                         class="uip-link-muted hover:uip-background-muted uip-border-round uip-padding-xxxs uip-flex uip-flex-row uip-gap-xs uip-flex-center uip-no-underline"
                         @click="updateAppPage(item.link)"
                       >
-                        <div class="uip-icon uip-text-l">visibility</div>
+                        <AppIcon icon="visibility" class="uip-icon uip-text-l" />
                         <div class="uip-no-wrap">{{ strings.view + " " + item.type }}</div>
                       </a>
                     </div>

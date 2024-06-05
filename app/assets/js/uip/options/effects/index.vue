@@ -1,5 +1,5 @@
 <script>
-import { __ } from '@wordpress/i18n';
+import { __ } from "@wordpress/i18n";
 import BlendModes from "@/js/uip/data/mix_blend_modes.js";
 import TransitionTypes from "@/js/uip/data/css_transitions.js";
 import CursorTypes from "@/js/uip/data/cursor_types.js";
@@ -139,7 +139,7 @@ export default {
         <dropdown pos="left center" class="uip-flex uip-flex-grow uip-w-100p" ref="transformDrop" :snapX="['#uip-block-settings', '#uip-template-settings', '#uip-global-settings']">
           <template #trigger>
             <button class="uip-button-default uip-border-rounder uip-padding-xxs uip-link-muted uip-w-100p uip-flex uip-gap-xxs uip-flex-center uip-flex-middle">
-              <span class="uip-icon">add</span>
+              <AppIcon icon="add" class="uip-icon" />
               <span v-if="options.transform.translateX.value">{{ options.transform.translateX.value }},</span>
               <span v-if="options.transform.translateY.value">{{ options.transform.translateY.value }},</span>
               <span v-if="options.transform.scaleX">{{ options.transform.scaleX }},</span>
@@ -156,7 +156,7 @@ export default {
               <div class="uip-flex uip-flex-between uip-flex-center">
                 <div class="uip-text-emphasis uip-text-bold uip-text-s">{{ strings.transform }}</div>
                 <div @click.prevent.stop="$refs.transformDrop.close()" class="uip-flex uip-flex-center uip-flex-middle uip-padding-xxs uip-link-muted hover:uip-background-muted uip-border-rounder">
-                  <span class="uip-icon">close</span>
+                  <AppIcon icon="close" class="uip-icon" />
                 </div>
               </div>
 
@@ -293,7 +293,7 @@ export default {
         <dropdown pos="left center" class="uip-flex uip-flex-grow uip-w-100p" ref="filtersDrop" :snapX="['#uip-block-settings', '#uip-template-settings', '#uip-global-settings']">
           <template #trigger>
             <button class="uip-button-default uip-border-rounder uip-padding-xxs uip-link-muted uip-w-100p uip-flex uip-gap-xxs uip-flex-center uip-flex-middle">
-              <span class="uip-icon">add</span>
+              <AppIcon icon="add" class="uip-icon" />
               <span v-if="options.filters.mixBlendMode">{{ options.filters.mixBlendMode }},</span>
               <span v-if="options.filters.grayscale">{{ options.filters.grayscale }},</span>
               <span v-if="options.filters.blur">{{ options.filters.blur }}px,</span>
@@ -308,7 +308,7 @@ export default {
               <div class="uip-flex uip-flex-between uip-flex-center">
                 <div class="uip-text-emphasis uip-text-bold uip-text-s">{{ strings.filters }}</div>
                 <div @click.prevent.stop="$refs.filtersDrop.close()" class="uip-flex uip-flex-center uip-flex-middle uip-padding-xxs uip-link-muted hover:uip-background-muted uip-border-rounder">
-                  <span class="uip-icon">close</span>
+                  <AppIcon icon="close" class="uip-icon" />
                 </div>
               </div>
 

@@ -1,5 +1,5 @@
 <script>
-import { __ } from '@wordpress/i18n';
+import { __ } from "@wordpress/i18n";
 export default {
   props: {
     returnData: Function,
@@ -128,7 +128,7 @@ export default {
           "
         >
           <template v-slot:trigger>
-            <div class="uip-icon uip-text-l uip-padding-xxxs uip-background-muted uip-border-rounder">{{ returnIconPreview(item.id) }}</div>
+            <AppIcon :icon="returnIconPreview(item.id)" class="uip-icon uip-text-l uip-padding-xxxs uip-background-muted uip-border-rounder" />
           </template>
         </inline-icon-select>
 

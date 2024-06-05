@@ -3,6 +3,7 @@ import { __ } from "@wordpress/i18n";
 import { nextTick } from "vue";
 
 import BlockList from "@/js/uip/uibuilder/block-list/index.vue";
+import { VueDraggableNext } from "vue-draggable-next";
 
 export default {
   name: "Layer",
@@ -112,16 +113,16 @@ export default {
         <span v-if="open">expand_more</span>
       </div>
 
-      <div class="uip-cursor-pointer uip-icon uip-icon-small-emphasis">{{ block.icon }}</div>
+      <AppIcon :icon="block.icon" class="uip-cursor-pointer uip-icon uip-icon-small-emphasis" />
 
       <div class="uip-cursor-pointer uip-flex-grow uip-text-s uip-no-wrap uip-flex-center uip-flex-between uip-flex">
         <span>{{ block.name }}</span>
-        <span :title="queryLoopEnabled" v-if="hasNestedPath(block, ['query', 'enabled'])" class="uip-cursor-pointer uip-icon uip-icon-small-emphasis uip-text-l">all_inclusive</span>
+        <AppIcon :title="queryLoopEnabled" v-if="hasNestedPath(block, ['query', 'enabled'])" icon="all_inclusive" class="uip-cursor-pointer uip-icon uip-icon-small-emphasis uip-text-l" />
       </div>
     </div>
 
     <div v-if="open && block.content" class="uip-margin-left-xs uip-padding-xs uip-padding-right-remove uip-flex uip-flex-column uip-gap-xs">
-      <uip-draggable
+      <VueDraggableNext
         :class="{ 'uip-min-h-30': !block.content.length }"
         class="uip-flex uip-flex-column uip-row-gap-xxs uip-w-100p uip-template-layers"
         :group="{ name: 'uip-layer-blocks', pull: true, put: true }"
@@ -133,7 +134,7 @@ export default {
         <template v-for="(element, index) in block.content" :key="element.uid">
           <Layer :block="element" :items="block.content" />
         </template>
-      </uip-draggable>
+      </VueDraggableNext>
 
       <!--Block selector-->
       <dropdown width="260" pos="right center" ref="blockSelector" class="uip-w-100p uip-flex uip-flex-center uip-flex-middle uip-flex-row uip-padding-right-xs">
@@ -145,7 +146,7 @@ export default {
             <div class="uip-flex uip-flex-between uip-flex-center">
               <div class="uip-text-emphasis uip-text-bold uip-text-s">{{ strings.blocks }}</div>
               <div @click="$refs.blockSelector.close()" class="uip-flex uip-flex-center uip-flex-middle uip-padding-xxs uip-link-muted hover:uip-background-muted uip-border-rounder">
-                <span class="uip-icon">close</span>
+                <AppIcon icon="close" class="uip-icon" />
               </div>
             </div>
 

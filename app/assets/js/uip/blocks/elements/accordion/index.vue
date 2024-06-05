@@ -32,7 +32,7 @@ export default {
   <accordion :openOnTick="false">
     <template v-slot:title>
       <div class="uip-flex-grow uip-flex uip-gap-xxs uip-flex-center">
-        <div class="uip-icon" v-if="block.settings.block.options.iconSelect.value.value">{{ block.settings.block.options.iconSelect.value.value }}</div>
+        <AppIcon :icon="block.settings.block.options.iconSelect.value.value" class="uip-icon" v-if="block.settings.block.options.iconSelect.value.value" />
         <div class="uip-">{{ returnText }}</div>
       </div>
     </template>

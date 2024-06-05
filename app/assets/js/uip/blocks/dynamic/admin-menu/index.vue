@@ -969,7 +969,7 @@ export default {
         <div v-else-if="!sepHasCustomName(item) && !itemHiden(item)" class="uip-margin-bottom-s uip-menu-separator" :class="returnItemClasses(item)"></div>
 
         <div v-else-if="!itemHiden(item)" class="uip-margin-bottom-xs uip-margin-top-xs uip-flex uip-flex-row uip-gap-xxs uip-menu-separator" :class="returnItemClasses(item)">
-          <span v-if="item.custom.icon && item.custom.icon != 'uipblank'" class="uip-icon">{{ item.custom.icon }}</span>
+          <AppIcon v-if="item.custom.icon && item.custom.icon != 'uipblank'" :icon="item.custom.icon" class="uip-icon" />
           <span>{{ item.custom.name }}</span>
         </div>
       </template>
@@ -992,7 +992,7 @@ export default {
         <div v-else-if="!sepHasCustomName(item) && !itemHiden(item)" class="uip-margin-bottom-s uip-menu-separator" :class="returnItemClasses(item)"></div>
 
         <div v-else-if="!itemHiden(item)" class="uip-margin-bottom-xs uip-margin-top-xs uip-flex uip-flex-row uip-gap-xxs uip-menu-separator" :class="returnItemClasses(item)">
-          <span v-if="item.custom.icon && item.custom.icon != 'uipblank'" class="uip-icon">{{ item.custom.icon }}</span>
+          <AppIcon v-if="item.custom.icon && item.custom.icon != 'uipblank'" :icon="item.custom.icon" class="uip-icon" />
           <span>{{ item.custom.name }}</span>
         </div>
       </template>

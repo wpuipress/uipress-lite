@@ -256,7 +256,7 @@ export default {
           class="uip-flex uip-gap-xxs uip-flex-center uip-flex-row uip-flex-center uip-text-bold uip-text-l uip-sub-menu-header uip-link-default uip-margin-bottom-s uip-gap-xxs"
           @click="goBack"
         >
-          <div class="uip-icon">chevron_left</div>
+          <AppIcon :icon="chevron_left" class="uip-icon" />
           <div class="uip-flex-grow" v-html="parentItemName"></div>
         </a>
 
@@ -267,7 +267,7 @@ export default {
           <div v-else-if="!sepHasCustomName(item)" class="uip-margin-bottom-s uip-menu-separator" :class="returnItemClasses(item)"></div>
 
           <div v-else class="uip-margin-bottom-xs uip-margin-top-xs uip-flex uip-flex-row uip-gap-xxs uip-menu-separator" :class="returnItemClasses(item)">
-            <span v-if="item.custom.icon && item.custom.icon != 'uipblank'" class="uip-icon">{{ item.custom.icon }}</span>
+            <AppIcon v-if="item.custom.icon && item.custom.icon != 'uipblank'" :icon="item.custom.icon" class="uip-icon" />
             <span>{{ item.custom.name }}</span>
           </div>
         </template>

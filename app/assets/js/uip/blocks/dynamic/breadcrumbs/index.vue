@@ -61,7 +61,7 @@ export default {
   <div class="uip-flex uip-gap-xxxs uip-flex-center">
     <template v-for="(item, index) in breadCrumbs">
       <div @click="updateAppPage(item.url)" class="uip-link-default uip-crumb" v-html="item.name"></div>
-      <div class="uip-icon uip-crumb-icon uip-text-muted" v-if="index < breadCrumbs.length - 1">{{ returnIcon }}</div>
+      <AppIcon :icon="returnIcon" class="uip-icon uip-crumb-icon uip-text-muted" v-if="index < breadCrumbs.length - 1" />
     </template>
   </div>
 </template>

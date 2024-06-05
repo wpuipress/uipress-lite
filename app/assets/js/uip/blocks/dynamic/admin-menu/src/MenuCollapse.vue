@@ -30,8 +30,8 @@ export default {
 
 <template>
   <div class="uip-flex uip-flex-row uip-gap-xs uip-flex-center uip-link-muted uip-margin-top-s uip-menu-collapse" @click="toggleCollapse()">
-    <div v-if="isCollapsed" class="uip-icon uip-text-">arrow_forward_ios</div>
-    <div v-if="!isCollapsed" class="uip-icon uip-text-">arrow_back_ios</div>
+    <AppIcon v-if="isCollapsed" icon="arrow_forward_ios" class="uip-icon uip-text-" />
+    <AppIcon v-if="!isCollapsed" icon="arrow_back_ios" class="uip-icon uip-text-" />
     <div v-if="!isCollapsed">{{ strings.collapseMenu }}</div>
   </div>
 </template>

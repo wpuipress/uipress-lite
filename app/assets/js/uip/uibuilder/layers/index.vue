@@ -5,6 +5,8 @@ import { nextTick } from "vue";
 import Layer from "./Layer.vue";
 import BlockList from "@/js/uip/uibuilder/block-list/index.vue";
 
+import { VueDraggableNext } from "vue-draggable-next";
+
 export default {
   name: "layersRecursive",
   props: {
@@ -92,7 +94,7 @@ export default {
 </script>
 
 <template>
-  <uip-draggable
+  <VueDraggableNext
     class="uip-flex uip-flex-column uip-row-gap-xxs uip-w-100p uip-template-layers"
     :group="{ name: 'uip-layer-blocks', pull: true, put: true }"
     :list="items"
@@ -103,7 +105,7 @@ export default {
     <template v-for="(element, index) in items" :key="element.uid">
       <Layer :block="element" :items="items" />
     </template>
-  </uip-draggable>
+  </VueDraggableNext>
 
   <!--Block selector-->
   <dropdown pos="right center" ref="blockSelector" class="uip-w-100p uip-flex uip-flex-center uip-flex-middle uip-flex-row">
@@ -115,7 +117,7 @@ export default {
         <div class="uip-flex uip-flex-between uip-flex-center">
           <div class="uip-text-emphasis uip-text-bold uip-text-s">{{ strings.blocks }}</div>
           <div @click="$refs.blockSelector.close()" class="uip-flex uip-flex-center uip-flex-middle uip-padding-xxs uip-link-muted hover:uip-background-muted uip-border-rounder">
-            <span class="uip-icon">close</span>
+            <AppIcon icon="close" class="uip-icon" />
           </div>
         </div>
 

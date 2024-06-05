@@ -1,5 +1,5 @@
 <script>
-import { __ } from '@wordpress/i18n';
+import { __ } from "@wordpress/i18n";
 export default {
   props: {
     returnData: Function,
@@ -103,7 +103,7 @@ export default {
     <div class="uip-grid-col-1-3">
       <div class="uip-text-muted uip-flex uip-flex-center">
         <div class="uip-flex uip-gap-xs uip-flex-center uip-text-s">
-          <div class="uip-icon uip-icon-medium">smartphone</div>
+          <AppIcon icon="smartphone" class="uip-icon uip-icon-medium" />
           <div class="">{{ strings.mobile }}</div>
         </div>
       </div>
@@ -125,7 +125,7 @@ export default {
     <div class="uip-grid-col-1-3">
       <div class="uip-text-muted uip-flex uip-flex-center">
         <div class="uip-flex uip-gap-xs uip-flex-center uip-text-s">
-          <div class="uip-icon uip-icon-medium">tablet</div>
+          <AppIcon icon="tablet" class="uip-icon uip-icon-medium" />
           <div class="">{{ strings.tablet }}</div>
         </div>
       </div>
@@ -147,7 +147,7 @@ export default {
     <div class="uip-grid-col-1-3">
       <div class="uip-text-muted uip-flex uip-flex-center">
         <div class="uip-flex uip-gap-xs uip-flex-center uip-text-s">
-          <div class="uip-icon uip-icon-medium">desktop_windows</div>
+          <AppIcon icon="desktop_windows" class="uip-icon uip-icon-medium" />
           <div class="">{{ strings.desktop }}</div>
         </div>
       </div>

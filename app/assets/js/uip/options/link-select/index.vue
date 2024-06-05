@@ -1,5 +1,5 @@
 <script>
-import { __ } from '@wordpress/i18n';
+import { __ } from "@wordpress/i18n";
 export default {
   props: {
     returnData: Function,
@@ -261,12 +261,11 @@ export default {
       <dropdown pos="left center" ref="linkselect" :snapX="['#uip-block-settings', '#uip-template-settings', '#uip-global-settings']">
         <template #trigger>
           <div class="uip-flex uip-flex-row">
-            <span
+            <AppIcon
               class="uip-border-rounder uip-text-l uip-flex uip-icon uip-padding-xxxs uip-text-center uip-link-default uip-background-muted"
               :class="{ 'uip-background-primary uip-text-inverse': link.dynamic }"
-            >
-              link
-            </span>
+              icon="link"
+            />
           </div>
         </template>
 
@@ -275,7 +274,7 @@ export default {
             <div class="uip-flex uip-flex-between uip-flex-center">
               <div class="uip-text-emphasis uip-text-bold uip-text-s">{{ strings.linkSelect }}</div>
               <div @click.prevent.stop="$refs.linkselect.close()" class="uip-flex uip-flex-center uip-flex-middle uip-padding-xxs uip-link-muted hover:uip-background-muted uip-border-rounder">
-                <span class="uip-icon">close</span>
+                <AppIcon icon="close" class="uip-icon" />
               </div>
             </div>
 
@@ -352,7 +351,7 @@ export default {
                       @click="removeDynamicItem()"
                       class="uip-padding-xxs uip-border-round uip-background-muted hover:uip-background-grey uip-cursor-pointer uip-flex uip-flex-middle uip-flex-center"
                     >
-                      <span class="uip-icon">delete</span>
+                      <AppIcon icon="delete" class="uip-icon" />
                     </span>
                     <span
                       v-else

@@ -1,6 +1,6 @@
 <script>
 import axios from "axios";
-import { __ } from '@wordpress/i18n';
+import { __ } from "@wordpress/i18n";
 
 import { defineAsyncComponent } from "vue";
 
@@ -394,7 +394,7 @@ export default {
         :class="{ 'uip-background-primary-wash': validDrop, 'uip-background-muted': !validDrop }"
         class="uip-background-muted uip-border uip-border-rounder uip-padding-m uip-flex uip-flex-middle uip-flex-center uip-transition-all uip-link-muted"
       >
-        <span class="uip-icon uip-text-xl">file_upload</span>
+        <AppIcon icon="file_upload" class="uip-icon uip-text-xl" />
         <input hidden accept="image/*" type="file" multiple id="uip-import-layout" @change="uploadImages($event)" />
       </label>
     </div>
@@ -402,7 +402,7 @@ export default {
     <div v-else-if="activeTab == 'unsplash'" class="uip-flex uip-flex-column uip-row-gap-s uip-flex-grow uip-max-h-100p uip-overflow-hidden">
       <div class="uip-background-muted uip-border-rounder uip-padding-xs uip-flex uip-flex-gap-s uip-flex-center">
         <input class="uip-blank-input uip-flex-grow uip-text-s" type="text" v-model="search" @input="maybeGetMedia(true)" :placeholder="strings.search" />
-        <span class="uip-icon uip-text-muted uip-text-s">search</span>
+        <AppIcon icon="search" class="uip-icon uip-text-muted uip-text-s" />
       </div>
 
       <div v-if="media.length < 1 && search != '' && activeTab == 'library'" class="uip-text-muted">
@@ -435,7 +435,7 @@ export default {
 
               <div class="uip-position-absolute uip-padding-xs" v-if="photo.id == selected.id">
                 <div class="uip-border-circle uip-padding-xxxs uip-background-primary uip-active-outline uip-text-xs">
-                  <span class="uip-icon uip-text-inverse">done</span>
+                  <AppIcon icon="done" class="uip-icon uip-text-inverse" />
                 </div>
               </div>
 
@@ -459,7 +459,7 @@ export default {
 
               <div class="uip-position-absolute uip-padding-xs" v-if="photo.id == selected.id">
                 <div class="uip-border-circle uip-padding-xxxs uip-background-primary uip-active-outline uip-text-xs">
-                  <span class="uip-icon uip-text-inverse">done</span>
+                  <AppIcon icon="done" class="uip-icon uip-text-inverse" />
                 </div>
               </div>
 
@@ -483,7 +483,7 @@ export default {
 
               <div class="uip-position-absolute uip-padding-xs" v-if="photo.id == selected.id">
                 <div class="uip-border-circle uip-padding-xxxs uip-background-primary uip-active-outline uip-text-xs">
-                  <span class="uip-icon uip-text-inverse">done</span>
+                  <AppIcon icon="done" class="uip-icon uip-text-inverse" />
                 </div>
               </div>
 
@@ -497,7 +497,7 @@ export default {
     <div v-else-if="activeTab == 'library'" class="uip-flex uip-flex-column uip-row-gap-s uip-flex-grow uip-max-h-100p uip-overflow-hidden">
       <div class="uip-background-muted uip-border-rounder uip-padding-xs uip-flex uip-flex-gap-s uip-flex-center">
         <input class="uip-blank-input uip-flex-grow" type="text" v-model="search" @input="getMedia(true)" :placeholder="strings.search" />
-        <span class="uip-icon uip-text-muted uip-text-s">search</span>
+        <AppIcon icon="search" class="uip-icon uip-text-muted uip-text-s" />
       </div>
 
       <div v-if="media.length < 1 && search != ''" class="uip-text-muted">
@@ -526,7 +526,7 @@ export default {
 
               <div class="uip-position-absolute uip-padding-xs" v-if="photo.id == selected.id">
                 <div class="uip-border-circle uip-padding-xxxs uip-background-primary uip-active-outline uip-text-xs">
-                  <span class="uip-icon uip-text-inverse">done</span>
+                  <AppIcon icon="done" class="uip-icon uip-text-inverse" />
                 </div>
               </div>
 
@@ -550,7 +550,7 @@ export default {
 
               <div class="uip-position-absolute uip-padding-xs" v-if="photo.id == selected.id">
                 <div class="uip-border-circle uip-padding-xxxs uip-background-primary uip-active-outline uip-text-xs">
-                  <span class="uip-icon uip-text-inverse uip-text-s">done</span>
+                  <AppIcon icon="done" class="uip-icon uip-text-inverse uip-text-s" />
                 </div>
               </div>
 
@@ -574,7 +574,7 @@ export default {
 
               <div class="uip-position-absolute uip-padding-xs" v-if="photo.id == selected.id">
                 <div class="uip-border-circle uip-padding-xxxs uip-background-primary uip-active-outline uip-text-xs">
-                  <span class="uip-icon uip-text-inverse">done</span>
+                  <AppIcon icon="done" class="uip-icon uip-text-inverse" />
                 </div>
               </div>
 

@@ -250,13 +250,4 @@ const injectAppPlugins = (plugins) => {
   }
 };
 
-const mountApp = async () => {
-  // Import blocks
-  //await injectAppBlocks(AllBlocks);
-  // Import plugins
-  //await injectAppPlugins(AllPlugins);
-  // Mount app
-  app.mount("#uip-ui-builder");
-};
-
-mountApp();
+app.mount("#uip-ui-builder");

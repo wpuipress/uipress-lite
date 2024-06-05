@@ -70,7 +70,7 @@ export default {
           <div class="uip-text-emphasis uip-text-bold uip-text-s">{{ strings.iconSelect }}</div>
 
           <div @click="$refs.iconselect.close()" class="uip-flex uip-flex-center uip-flex-middle uip-padding-xxs uip-link-muted hover:uip-background-muted uip-border-rounder">
-            <span class="uip-icon">close</span>
+            <AppIcon icon="close" class="uip-icon" />
           </div>
         </div>
 

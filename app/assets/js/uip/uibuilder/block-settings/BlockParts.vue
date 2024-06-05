@@ -116,7 +116,7 @@ export default {
         <div class="">
           <span class="uip-text-muted">{{ strings.blockPart }}:</span> {{ returnActivePart }}
         </div>
-        <div class="uip-icon">expand_more</div>
+        <AppIcon icon="expand_more" class="uip-icon" />
       </div>
     </template>
 
@@ -126,7 +126,7 @@ export default {
           <div class="uip-text-emphasis uip-text-bold uip-text-s">{{ strings.blockParts }}</div>
 
           <div @click="$refs.blockPartSwitcher.close()" class="uip-flex uip-flex-center uip-flex-middle uip-padding-xxs uip-link-muted hover:uip-background-muted uip-border-rounder">
-            <span class="uip-icon">close</span>
+            <AppIcon icon="close" class="uip-icon" />
           </div>
         </div>
 
@@ -150,7 +150,7 @@ export default {
                 <span class="uip-text-muted uip-text-s">{{ blockPart.class }}</span>
               </div>
 
-              <span class="uip-icon">{{ blockPart.icon }}</span>
+              <AppIcon :icon="blockPart.icon" class="uip-icon" />
             </a>
           </template>
         </div>

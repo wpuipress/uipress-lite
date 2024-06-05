@@ -1,36 +1,32 @@
 import { defineAsyncComponent } from "vue";
 
 //Option components
-import { VueDraggableNext } from "vue-draggable-next";
-import UIbuilderInlineImageSelect from "@/js/uip/options/inline-image-select/index.vue";
-import UIbuilderBackgroundPosition from "@/js/uip/options/background-position/index.vue";
-import UIbuilderSwitch from "@/js/uip/options/switch-select/index.vue";
-import UIbuilderValueUnits from "@/js/uip/options/value-units/index.vue";
-import UIbuilderUnits from "@/js/uip/options/units/index.vue";
-import UIbuilderColorSelect from "@/js/uip/options/color-select/index.vue";
-import UIbuilderInput from "@/js/uip/options/input/index.vue";
-import UIbuilderTextarea from "@/js/uip/options/textarea/index.vue";
-import UIbuilderNumber from "@/js/uip/options/number/index.vue";
-import UIbuilderPostTypes from "@/js/uip/options/post-types/index.vue";
-import UIbuilderParagraphInput from "@/js/uip/options/paragraph-input/index.vue";
-import UIbuilderDynamicInput from "@/js/uip/options/dynamic-input/index.vue";
-import UIbuilderIconSelect from "@/js/uip/options/icon-select/index.vue";
-import UIbuilderInlineIconSelect from "@/js/uip/options/inline-icon-select/index.vue";
-import UIbuilderChoiceSelect from "@/js/uip/options/choice-select/index.vue";
-import UIbuilderDefaultSelect from "@/js/uip/options/default-select/index.vue";
-import UIbuilderLinkSelect from "@/js/uip/options/link-select/index.vue";
-import UIbuilderTabBuilder from "@/js/uip/options/tab-builder/index.vue";
-import UIbuilderHiddenToolbarItems from "@/js/uip/options/hidden-toolbar-items-select/index.vue";
-import UIbuilderEditToolbarItems from "@/js/uip/options/edit-toolbar-items/index.vue";
+import InlineImageSelect from "@/js/uip/options/inline-image-select/index.vue";
+import BackgroundPosition from "@/js/uip/options/background-position/index.vue";
+import Switch from "@/js/uip/options/switch-select/index.vue";
+import ValueUnits from "@/js/uip/options/value-units/index.vue";
+import Units from "@/js/uip/options/units/index.vue";
+import ColorSelect from "@/js/uip/options/color-select/index.vue";
+import Input from "@/js/uip/options/input/index.vue";
+import Textarea from "@/js/uip/options/textarea/index.vue";
+import Number from "@/js/uip/options/number/index.vue";
+import PostTypes from "@/js/uip/options/post-types/index.vue";
+import ParagraphInput from "@/js/uip/options/paragraph-input/index.vue";
+import DynamicInput from "@/js/uip/options/dynamic-input/index.vue";
+import IconSelect from "@/js/uip/options/icon-select/index.vue";
+import InlineIconSelect from "@/js/uip/options/inline-icon-select/index.vue";
+import ChoiceSelect from "@/js/uip/options/choice-select/index.vue";
+import DefaultSelect from "@/js/uip/options/default-select/index.vue";
+import LinkSelect from "@/js/uip/options/link-select/index.vue";
+import TabBuilder from "@/js/uip/options/tab-builder/index.vue";
+import HiddenToolbarItems from "@/js/uip/options/hidden-toolbar-items-select/index.vue";
+import EditToolbarItems from "@/js/uip/options/edit-toolbar-items/index.vue";
 import MultiSelectOption from "@/js/uip/options/multi-select/index.vue";
-import UIbuilderSubmitAction from "@/js/uip/options/submit-action/index.vue";
-import UIbuilderSelectOptionBuilder from "@/js/uip/options/select-option-builder/index.vue";
-import UIbuilderArrayList from "@/js/uip/options/array-list/index.vue";
-import UIbuilderSelectPostTypes from "@/js/uip/options/select-post-types/index.vue";
-import UIbuilderEffects from "@/js/uip/options/effects/index.vue";
-
-// Async code editor as it's heavy
-const UIbuilderCodeEditor = defineAsyncComponent(() => import(`@/js/uip/options/code-editor/index.vue`));
+import SubmitAction from "@/js/uip/options/submit-action/index.vue";
+import SelectOptionBuilder from "@/js/uip/options/select-option-builder/index.vue";
+import ArrayList from "@/js/uip/options/array-list/index.vue";
+import SelectPostTypes from "@/js/uip/options/select-post-types/index.vue";
+import Effects from "@/js/uip/options/effects/index.vue";
 
 /**
  * Imports components globally
@@ -39,32 +35,30 @@ const UIbuilderCodeEditor = defineAsyncComponent(() => import(`@/js/uip/options/
  */
 export const registerBuilderComponents = (app) => {
   //OPTION MODS
-  app.component("background-position", UIbuilderBackgroundPosition);
-  app.component("switch-select", UIbuilderSwitch);
-  app.component("value-units", UIbuilderValueUnits);
-  app.component("units-select", UIbuilderUnits);
-  app.component("color-select", UIbuilderColorSelect);
-  app.component("uip-input", UIbuilderInput);
-  app.component("uip-textarea", UIbuilderTextarea);
-  app.component("post-types", UIbuilderPostTypes);
-  app.component("uip-number", UIbuilderNumber);
-  app.component("uip-paragraph-input", UIbuilderParagraphInput);
-  app.component("uip-dynamic-input", UIbuilderDynamicInput);
-  app.component("icon-select", UIbuilderIconSelect);
-  app.component("inline-icon-select", UIbuilderInlineIconSelect);
-  app.component("choice-select", UIbuilderChoiceSelect);
-  app.component("default-select", UIbuilderDefaultSelect);
-  app.component("hiden-toolbar-items-select", UIbuilderHiddenToolbarItems);
-  app.component("edit-toolbar-items", UIbuilderEditToolbarItems);
+  app.component("background-position", BackgroundPosition);
+  app.component("switch-select", Switch);
+  app.component("value-units", ValueUnits);
+  app.component("units-select", Units);
+  app.component("color-select", ColorSelect);
+  app.component("uip-input", Input);
+  app.component("uip-textarea", Textarea);
+  app.component("post-types", PostTypes);
+  app.component("uip-number", Number);
+  app.component("uip-paragraph-input", ParagraphInput);
+  app.component("uip-dynamic-input", DynamicInput);
+  app.component("icon-select", IconSelect);
+  app.component("inline-icon-select", InlineIconSelect);
+  app.component("choice-select", ChoiceSelect);
+  app.component("default-select", DefaultSelect);
+  app.component("hiden-toolbar-items-select", HiddenToolbarItems);
+  app.component("edit-toolbar-items", EditToolbarItems);
   app.component("multi-select-option", MultiSelectOption);
-  app.component("code-editor", UIbuilderCodeEditor);
-  app.component("submit-actions", UIbuilderSubmitAction);
-  app.component("link-select", UIbuilderLinkSelect);
-  app.component("tab-builder", UIbuilderTabBuilder);
-  app.component("select-option-builder", UIbuilderSelectOptionBuilder);
-  app.component("array-list", UIbuilderArrayList);
-  app.component("uip-select-post-types", UIbuilderSelectPostTypes);
-  app.component("inline-image-select", UIbuilderInlineImageSelect);
-  app.component("uip-effects", UIbuilderEffects);
-  app.component("uip-draggable", VueDraggableNext);
+  app.component("submit-actions", SubmitAction);
+  app.component("link-select", LinkSelect);
+  app.component("tab-builder", TabBuilder);
+  app.component("select-option-builder", SelectOptionBuilder);
+  app.component("array-list", ArrayList);
+  app.component("uip-select-post-types", SelectPostTypes);
+  app.component("inline-image-select", InlineImageSelect);
+  app.component("uip-effects", Effects);
 };

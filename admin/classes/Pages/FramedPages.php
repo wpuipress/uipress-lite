@@ -31,7 +31,6 @@ class FramedPages
   {
     add_action("admin_enqueue_scripts", ["UipressLite\Classes\Scripts\UipScripts", "add_uipress_styles"]);
     add_action("admin_enqueue_scripts", ["UipressLite\Classes\Scripts\UipScripts", "add_frame_styles"]);
-    add_action("admin_enqueue_scripts", ["UipressLite\Classes\Scripts\UipScripts", "add_icons"]);
     add_action("wp_enqueue_scripts", ["UipressLite\Classes\Scripts\UipScripts", "add_frame_styles"]);
 
     add_action("admin_xml_ns", ["UipressLite\Classes\Pages\FramedPages", "html_attributes"]);

@@ -43,7 +43,7 @@ export default {
       <div class="uip-flex uip-gap-xxs uip-flex-center uip-cursor-pointer uip-flex-between uip-flex-grow" @click="toggleVisibility()">
         <span class="uip-text-bold uip-text-emphasis">{{ title }}</span>
 
-        <a class="uip-link-muted uip-icon">{{ returnVisibilityIcon }}</a>
+        <AppIcon class="uip-link-muted uip-icon" :icon="returnVisibilityIcon" />
       </div>
     </div>
 

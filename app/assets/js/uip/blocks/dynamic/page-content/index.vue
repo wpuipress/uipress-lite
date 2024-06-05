@@ -894,8 +894,8 @@ export default {
         class="uip-border-box uip-background-muted uip-text-muted uip-padding-xxxs uip-link-muted hover:uip-background-grey uip-flex uip-flex-column uip-flex-middle uip-fade-in uip-shadow-small uip-border-round"
         style="pointer-events: all"
       >
-        <span v-if="isFullScreen()" class="uip-icon uip-text-l uip-slide-in-right uip-line-height-1">fullscreen_exit</span>
-        <span v-if="!isFullScreen()" class="uip-icon uip-text-l uip-line-height-1">fullscreen</span>
+        <AppIcon v-if="isFullScreen()" icon="fullscreen_exit" class="uip-icon uip-text-l uip-slide-in-right uip-line-height-1" />
+        <AppIcon v-if="!isFullScreen()" icon="fullscreen" class="uip-icon uip-text-l uip-line-height-1" />
       </div>
     </div>
 
@@ -914,8 +914,8 @@ export default {
           class="uip-border-box uip-background-muted uip-text-muted uip-padding-xxxs uip-link-muted hover:uip-background-grey uip-flex uip-flex-column uip-flex-middle uip-fade-in uip-shadow-small uip-border-round"
           style="pointer-events: all"
         >
-          <span v-if="isFullScreen()" class="uip-icon uip-text-l uip-slide-in-right uip-line-height-1">fullscreen_exit</span>
-          <span v-if="!isFullScreen()" class="uip-icon uip-text-l uip-line-height-1">fullscreen</span>
+          <AppIcon v-if="isFullScreen()" icon="fullscreen_exit" class="uip-icon uip-text-l uip-slide-in-right uip-line-height-1" />
+          <AppIcon v-if="!isFullScreen()" icon="fullscreen" class="uip-icon uip-text-l uip-line-height-1" />
         </div>
       </div>
     </template>

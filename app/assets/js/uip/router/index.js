@@ -7,63 +7,53 @@ import { __ } from "@wordpress/i18n";
  * @since 3.0.0
  */
 
-import BuilderSettings from "@/js/uip/uibuilder/builder-settings/index.vue";
-import TemplateTable from "@/js/uip/uibuilder/template-table/index.vue";
-import SetupWizard from "@/js/uip/uibuilder/setup-wizard/index.vue";
-import GlobalExport from "@/js/uip/uibuilder/global-export/index.vue";
-import GlobalImport from "@/js/uip/uibuilder/global-import/index.vue";
-import SiteSync from "@/js/uip/uibuilder/site-sync/index.vue";
-import SiteSettings from "@/js/uip/uibuilder/site-settings/index.vue";
-import Framework from "@/js/uip/uibuilder/framework/index.vue";
-import Errorlog from "@/js/uip/tools/error-log/index.vue";
-
 const routes = [
   {
     path: "/",
     name: "List View",
-    component: defineComponent(TemplateTable),
+    component: () => import("@/js/uip/uibuilder/template-table/index.vue"),
     children: [
       {
         name: "Setup wizard",
         path: "/setupwizard/",
-        component: SetupWizard,
+        component: () => import("@/js/uip/uibuilder/setup-wizard/index.vue"),
       },
       {
         name: "Global export",
         path: "/globalexport/",
-        component: GlobalExport,
+        component: () => import("@/js/uip/uibuilder/global-export/index.vue"),
       },
       {
         name: "Global import",
         path: "/globalimport/",
-        component: GlobalImport,
+        component: () => import("@/js/uip/uibuilder/global-import/index.vue"),
       },
       {
         name: "Site sync",
         path: "/sitesync/",
-        component: SiteSync,
+        component: () => import("@/js/uip/uibuilder/site-sync/index.vue"),
       },
       {
         name: "Site settings",
         path: "/site-settings/",
-        component: SiteSettings,
+        component: () => import("@/js/uip/uibuilder/site-settings/index.vue"),
       },
       {
         name: "Error log",
         path: "/errorlog/",
-        component: Errorlog,
+        component: () => import("@/js/uip/tools/error-log/index.vue"),
       },
     ],
   },
   {
     path: "/uibuilder/:templateID/",
     name: "Builder",
-    component: Framework,
+    component: () => import("@/js/uip/uibuilder/framework/index.vue"),
     children: [
       {
         name: "templateSettings",
         path: "settings/template",
-        component: BuilderSettings,
+        component: () => import("@/js/uip/uibuilder/builder-settings/index.vue"),
       },
     ],
   },

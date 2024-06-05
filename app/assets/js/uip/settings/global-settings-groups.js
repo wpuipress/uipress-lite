@@ -1,5 +1,5 @@
 ///IMPORT TRANSLATIONS
-import { __ } from '@wordpress/i18n';
+import { __ } from "@wordpress/i18n";
 
 /**
  * Processes global groups, associates settings with them, and returns a reversed version of the groups.
@@ -289,7 +289,7 @@ export const globalSettings = [
     order: 8,
   },
   {
-    component: "code-editor",
+    component: "CodeEditor",
     group: "login",
     uniqueKey: "panelHTML",
     label: __("Custom HTML", "uipress-lite"),
@@ -302,7 +302,7 @@ export const globalSettings = [
     },
   },
   {
-    component: "code-editor",
+    component: "CodeEditor",
     group: "login",
     uniqueKey: "loginCSS",
     label: __("Custom CSS", "uipress-lite"),
@@ -427,7 +427,7 @@ export const globalSettings = [
 
   //Advanced
   {
-    component: "code-editor",
+    component: "CodeEditor",
     args: { asText: true },
     group: "advanced",
     uniqueKey: "htmlHead",

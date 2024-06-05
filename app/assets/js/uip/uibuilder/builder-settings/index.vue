@@ -545,7 +545,7 @@ export default {
                 <div class="uip-flex uip-flex-center uip-flex uip-gap-xs">
                   <span class="uip-text-muted uip-text-s">{{ option.label }}</span>
                   <uip-tooltip v-if="option.help" :message="option.help">
-                    <span class="uip-icon uip-border-circle uip-background-grey uip-cursor-pointer" style="font-size: 12px">question_mark</span>
+                    <AppIcon icon="question_mark" class="uip-icon uip-border-circle uip-background-grey uip-cursor-pointer" style="font-size: 12px" />
                   </uip-tooltip>
                 </div>
 

@@ -1,5 +1,6 @@
 <script>
-import { __ } from '@wordpress/i18n';
+import { __ } from "@wordpress/i18n";
+import { VueDraggableNext } from "vue-draggable-next";
 export default {
   props: {
     returnData: Function,
@@ -66,7 +67,7 @@ export default {
 
 <template>
   <div class="uip-flex uip-flex-column uip-row-gap-xs uip-w-100p">
-    <uip-draggable
+    <VueDraggableNext
       v-if="tabs.length"
       class="uip-flex uip-flex-column uip-row-gap-xs uip-w-100p"
       :group="{ name: 'tabs', pull: false, put: false }"
@@ -78,17 +79,17 @@ export default {
     >
       <template v-for="(element, index) in tabs" :key="index" :index="index">
         <div class="uip-flex uip-gap-xxs uip-flex-center">
-          <div class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-cursor-drag">drag_indicator</div>
+          <AppIcon icon="drag_indicator" class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-cursor-drag" />
 
           <input type="text" v-model="element.name" class="uip-input-small uip-flex-grow" />
 
-          <div @click="deleteTab(index)" class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted">close</div>
+          <AppIcon @click="deleteTab(index)" icon="close" class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted" />
         </div>
       </template>
-    </uip-draggable>
+    </VueDraggableNext>
 
     <div @click="newTab()" class="uip-padding-xxs uip-border-rounder uip-background-muted hover:uip-background-grey uip-cursor-pointer uip-flex uip-flex-middle uip-flex-center uip-gap-xs">
-      <span class="uip-icon">add</span>
+      <AppIcon icon="add" class="uip-icon" />
     </div>
   </div>
 </template>

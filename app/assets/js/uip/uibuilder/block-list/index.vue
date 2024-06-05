@@ -7,6 +7,7 @@ import { __ } from "@wordpress/i18n";
 import { nextTick } from "vue";
 
 import ToggleSection from "./ToggleSection.vue";
+import { VueDraggableNext } from "vue-draggable-next";
 
 export default {
   components: {
@@ -221,12 +222,12 @@ export default {
 <template>
   <div class="uip-flex uip-flex-column uip-row-gap-s">
     <div class="uip-flex uip-padding-xxs uip-search-block uip-border-rounder uip-padding-xxs uip-background-muted">
-      <span class="uip-icon uip-text-muted uip-margin-right-xs uip-text-l uip-icon uip-icon-medium">search</span>
+      <AppIcon icon="search" class="uip-icon uip-text-muted uip-margin-right-xs uip-text-l uip-icon uip-icon-medium" />
       <input class="uip-blank-input uip-flex-grow uip-text-s" type="search" :placeholder="strings.seachBlocks" autofocus="" v-model="search" />
     </div>
 
     <!--Searching-->
-    <uip-draggable
+    <VueDraggableNext
       v-if="search != ''"
       :list="sortedBlocks"
       class="uip-flex uip-flex-column uip-row-gap-xs uip-padding-left-xs"
@@ -243,20 +244,20 @@ export default {
           <div @click="insertAtPos(element)" class="uip-border-rounder uip-link-default hover:uip-background-muted uip-cursor-pointer uip-block-drag uip-no-text-select">
             <div class="uip-flex uip-gap-xxs uip-flex-center">
               <div class="uip-icon uip-text-l uip-padding-xxs uip-background-muted uip-border-rounder uip-text-emphasis uip-margin-right-xs">
-                <span>{{ element.icon }}</span>
+                <AppIcon :icon="element.icon" />
               </div>
               <div class="uip-text-center uip-text-s uip-text-muted">{{ returnGroupLabel(element.group) }}</div>
-              <div class="uip-icon uip-text-muted">chevron_right</div>
+              <AppIcon icon="chevron_right" class="uip-icon uip-text-muted" />
               <div class="uip-text-s">{{ element.name }}</div>
             </div>
           </div>
         </div>
       </template>
-    </uip-draggable>
+    </VueDraggableNext>
 
     <template v-if="search == ''" v-for="cat in returnCats">
       <ToggleSection :title="cat.name" :startOpen="true">
-        <uip-draggable
+        <VueDraggableNext
           v-if="cat.blocks.length"
           :list="cat.blocks"
           class="uip-flex uip-flex-column uip-row-gap-xs uip-padding-left-xs"
@@ -272,7 +273,7 @@ export default {
             <div v-if="element.component" @click="insertAtPos(element)" class="uip-border-rounder uip-link-default hover:uip-background-muted uip-cursor-pointer uip-block-drag uip-no-text-select">
               <div class="uip-flex uip-gap-xxs uip-flex-center">
                 <div class="uip-icon uip-text-l uip-padding-xxs uip-background-muted uip-border-rounder uip-text-emphasis uip-margin-right-xs">
-                  <span>{{ element.metadata.icon }}</span>
+                  <AppIcon :icon="element.metadata.icon" />
                 </div>
                 <div class="uip-text-s">{{ element.metadata.name }}</div>
               </div>
@@ -286,7 +287,7 @@ export default {
             >
               <div class="uip-flex uip-gap-xxs uip-flex-center">
                 <div class="uip-icon uip-icon-medium uip-text-l uip-padding-xxs uip-background-green-wash uip-border-rounder uip-margin-right-xs">
-                  <span>redeem</span>
+                  <AppIcon icon="redeem" />
                 </div>
                 <div class="uip-text-s uip-flex-grow">{{ element.metadata.name }}</div>
 
@@ -297,12 +298,12 @@ export default {
                   class="uip-link-muted uip-flex uip-gap-xxxs uip-no-underline uip-flex-center uip-padding-right-xxs uip-fade-in"
                 >
                   <span class="uip-text-s">{{ strings.upgrade }}</span>
-                  <span class="uip-icon">chevron_right</span>
+                  <AppIcon icon="chevron_right" class="uip-icon" />
                 </a>
               </div>
             </div>
           </template>
-        </uip-draggable>
+        </VueDraggableNext>
       </ToggleSection>
     </template>
   </div>

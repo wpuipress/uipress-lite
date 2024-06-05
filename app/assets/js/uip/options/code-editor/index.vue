@@ -1,13 +1,16 @@
 <script>
-import { __ } from '@wordpress/i18n';
+import { __ } from "@wordpress/i18n";
 import { defineAsyncComponent, nextTick } from "vue";
-import "@/js/libs/ace-editor.min.js";
-import "@/js/libs/ace-editor-css.min.js";
-import "@/js/libs/ace-editor-javascript.min.js";
-import "@/js/libs/ace-editor-html.min.js";
-import "@/js/libs/ace-theme-dracular.min.js";
-import "@/js/libs/ace-editor-beautify.min.js";
-import "@/js/libs/ace-theme-xcode.min.js";
+// Import ace
+import ace from "ace-builds";
+// Ace modes
+import "ace-builds/src-noconflict/mode-javascript";
+import "ace-builds/src-noconflict/mode-css";
+import "ace-builds/src-noconflict/mode-html";
+// Ace themes
+import "ace-builds/src-noconflict/theme-xcode";
+// Import the beautify extension
+import "ace-builds/src-noconflict/ext-beautify";
 
 export default {
   props: {
@@ -182,19 +185,21 @@ export default {
     </component>
 
     <button class="uip-button-default uip-border-rounder uip-padding-xxs uip-w-100p uip-flex uip-gap-xs uip-flex-center uip-text-left" @click="showModal">
-      <div class="uip-background-primary uip-text-inverse uip-border-round uip-padding-xxxs"><span class="uip-icon">code</span></div>
+      <div icon="code" class="uip-background-primary uip-border-round uip-padding-xxxs">
+        <AppIcon icon="code" class="uip-text-inverse" />
+      </div>
 
       <span v-if="!returnCode" class="uip-text-s uip-link-muted uip-flex-grow">{{ strings.add }}...</span>
       <span v-else class="uip-text-s uip-flex-grow">{{ strings.editCode }}</span>
 
-      <a @click.prevent.stop="clearCode" v-if="returnCode" class="uip-no-underline uip-border-rounder uip-padding-xxxs uip-link-muted uip-text-s"><span class="uip-icon">close</span></a>
+      <a @click.prevent.stop="clearCode" v-if="returnCode" class="uip-no-underline uip-border-rounder uip-padding-xxxs uip-link-muted uip-text-s"><AppIcon icon="close" class="uip-icon" /></a>
     </button>
 
     <Modal ref="codemodal">
       <div class="uip-padding-m uip-w-600 uip-flex uip-flex-column uip-row-gap-m">
         <div class="uip-flex uip-flex-between uip-flex-center">
           <span class="uip-text-bold">{{ strings.codeEditor }}</span>
-          <span class="uip-icon uip-link-muted hover:uip-background-muted uip-padding-xxs uip-border-rounder" @click="$refs.codemodal.close()">close</span>
+          <AppIcon icon="close" class="uip-icon uip-link-muted hover:uip-background-muted uip-padding-xxs uip-border-rounder" @click="$refs.codemodal.close()" />
         </div>
 
         <div class="uip-max-h-500 uip-min-h-400" style="overflow: scroll">

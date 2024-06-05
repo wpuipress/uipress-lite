@@ -95,7 +95,7 @@ export default {
 
 <template>
   <div class="uip-flex uip-menu-search uip-border-round uip-margin-bottom-s uip-flex-center uip-menu-search">
-    <span class="uip-icon uip-text-muted uip-margin-right-xs uip-icon">search</span>
+    <AppIcon icon="search" class="uip-icon uip-text-muted uip-margin-right-xs uip-icon" />
     <input @keydown="watchForArrows" ref="menusearcher" class="uip-blank-input uip-flex-grow uip-text-s" type="search" :placeholder="strings.search" v-model="menuSearch" />
   </div>
 
@@ -110,7 +110,7 @@ export default {
         :data-id="index"
       >
         <span class="uip-text-muted" v-if="item.parent">{{ item.parent }}</span>
-        <span class="uip-icon" v-if="item.parent">chevron_right</span>
+        <AppIcon icon="chevron_right" class="uip-icon" v-if="item.parent" />
         <span v-html="returnName(item)"></span>
       </a>
     </template>

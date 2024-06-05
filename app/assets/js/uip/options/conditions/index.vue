@@ -340,7 +340,7 @@ export default {
             <div class="uip-flex uip-flex-between uip-flex-center">
               <div class="uip-text-emphasis uip-text-bold uip-text-s">{{ strings.editCondition }}</div>
               <div @click="$refs['condition' + index][0].close()" class="uip-flex uip-flex-center uip-flex-middle uip-padding-xxs uip-link-muted hover:uip-background-muted uip-border-rounder">
-                <span class="uip-icon">close</span>
+                <AppIcon icon="close" class="uip-icon" />
               </div>
             </div>
 
@@ -426,7 +426,7 @@ export default {
       @click="addCondition()"
       class="uip-padding-xxs uip-border-rounder uip-background-muted hover:uip-background-grey uip-cursor-pointer uip-flex uip-flex-middle uip-flex-center uip-gap-xs uip-flex-grow"
     >
-      <span class="uip-icon">add</span>
+      <AppIcon icon="add" class="uip-icon" />
     </div>
   </div>
 </template>

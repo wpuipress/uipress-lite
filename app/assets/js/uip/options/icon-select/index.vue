@@ -83,7 +83,7 @@ export default {
     <template #trigger>
       <div class="uip-background-muted uip-border-rounder uip-padding-xxs uip-flex uip-flex-center uip-gap-xs uip-cursor-pointer">
         <div class="uip-background-primary uip-text-inverse uip-border-round uip-padding-xxxs">
-          <span class="uip-icon">{{ returnIcon }}</span>
+          <AppIcon :icon="returnIcon" class="uip-icon" />
         </div>
 
         <div v-if="!icon.value" class="uip-text-muted uip-flex-grow">{{ strings.add }}...</div>
@@ -91,7 +91,7 @@ export default {
         <div v-else class="uip-no-wrap uip-text-ellipsis uip-overflow-hidden uip-w-80 uip-flex-grow">{{ icon.value }}</div>
 
         <a @click.stop.prevent="icon.value = ''" v-if="icon.value" class="uip-no-underline uip-border-rounder uip-padding-xxxs uip-link-muted uip-text-s">
-          <span class="uip-icon">close</span>
+          <AppIcon icon="close" class="uip-icon" />
         </a>
       </div>
     </template>
@@ -102,7 +102,7 @@ export default {
           <div class="uip-text-emphasis uip-text-bold uip-text-s">{{ strings.iconSelect }}</div>
 
           <div @click="$refs.iconselect.close()" class="uip-flex uip-flex-center uip-flex-middle uip-padding-xxs uip-link-muted hover:uip-background-muted uip-border-rounder">
-            <span class="uip-icon">close</span>
+            <AppIcon icon="close" class="uip-icon" />
           </div>
         </div>
 

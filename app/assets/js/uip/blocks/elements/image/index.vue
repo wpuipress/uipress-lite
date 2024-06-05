@@ -78,6 +78,6 @@ export default {
 <template>
   <img v-if="!error" ref="imageblock" :src="returnImg" @error="replaceWithDefault()" />
   <div v-else class="uip-flex uip-flex-center uip-flex-middle uip-border uip-background-muted uip-w-200 uip-padding-s uip-ratio-16-10">
-    <span class="uip-icon uip-text-xl uip-text-muted">image</span>
+    <AppIcon icon="image" class="uip-icon uip-text-xl uip-text-muted" />
   </div>
 </template>

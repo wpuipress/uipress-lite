@@ -142,7 +142,7 @@ export default {
   <dropdown ref="dropdown" :pos="returnDropPosition" :shortCut="getShortcutValue" :disableTeleport="true" :hover="returnOpenHover">
     <template #trigger>
       <button class="uip-button uip-button-default uip-flex uip-gap-xxs uip-flex-center uip-drop-trigger" :class="returnClasses">
-        <span class="uip-icon" v-if="returnIcon">{{ returnIcon }}</span>
+        <AppIcon :icon="returnIcon" class="uip-icon" v-if="returnIcon" />
         <span class="uip-flex-grow" v-if="returnText != ''">{{ returnText }}</span>
 
         <!-- Shortcut display -->

@@ -1,5 +1,5 @@
 <script>
-import { __ } from '@wordpress/i18n';
+import { __ } from "@wordpress/i18n";
 export default {
   props: {},
   data() {
@@ -144,7 +144,7 @@ export default {
                 @click="order = 'desc'"
               >
                 <div class="">{{ strings.newestFirst }}</div>
-                <div v-if="order == 'desc'" class="uip-icon uip-text-l">done</div>
+                <AppIcon v-if="order == 'desc'" icon="done" class="uip-icon uip-text-l" />
               </div>
 
               <div
@@ -153,14 +153,14 @@ export default {
                 @click="order = 'asc'"
               >
                 <div class="">{{ strings.oldestFirst }}</div>
-                <div v-if="order == 'asc'" class="uip-icon uip-text-l">done</div>
+                <AppIcon v-if="order == 'asc'" icon="done" class="uip-icon uip-text-l" />
               </div>
             </div>
           </template>
         </dropdown>
 
         <div class="uip-flex uip-padding-xxs uip-border-round uip-flex-grow uip-background-muted uip-border-rounder uip-flex-center">
-          <span class="uip-icon uip-text-muted">search</span>
+          <AppIcon icon="search" class="uip-icon uip-text-muted" />
           <input class="uip-blank-input uip-flex-grow uip-text-s" type="search" :placeholder="strings.searchErrors" v-model="search" autofocus="" />
         </div>
 

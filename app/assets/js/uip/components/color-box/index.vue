@@ -1,5 +1,5 @@
 <script>
-import { __ } from '@wordpress/i18n';
+import { __ } from "@wordpress/i18n";
 
 export default {
   props: {
@@ -28,7 +28,7 @@ export default {
     <div v-else class="uip-no-wrap uip-text-ellipsis uip-overflow-hidden uip-w-80 uip-flex-grow">{{ text }}</div>
 
     <a v-if="remove && text" @click.stop.prevent="remove()" class="uip-no-underline uip-border-rounder uip-padding-xxxs uip-link-muted uip-text-s">
-      <span class="uip-icon">close</span>
+      <AppIcon icon="close" class="uip-icon" />
     </a>
   </div>
 </template>

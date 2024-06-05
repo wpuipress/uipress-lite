@@ -175,7 +175,7 @@ export default {
     <!--NEW TODO -->
     <div class="uip-flex uip-flex-row uip-gap-xs">
       <div class="uip-flex uip-padding-xxs uip-border uip-search-block uip-border-round uip-flex-center uip-flex-grow">
-        <span class="uip-icon uip-text-muted uip-margin-right-xs uip-text-l uip-icon uip-icon-medium">check_box</span>
+        <AppIcon icon="check_box" class="uip-icon uip-text-muted uip-margin-right-xs uip-text-l uip-icon uip-icon-medium" />
         <input class="uip-blank-input uip-flex-grow uip-text-s" type="text" :placeholder="strings.whatwouldyoulike" v-model="newToDo.name" />
       </div>
       <button @click="addNewToDo()" class="uip-button-default uip-text-s uip-padding-xs uip-add-todo">{{ strings.newToDo }}</button>
@@ -217,12 +217,12 @@ export default {
           <div class="uip-w-50 uip-flex uip-flex-right uip-padding-xxs uip-flex-middle">
             <dropdown pos="left center">
               <template v-slot:trigger>
-                <div class="uip-icon uip-link-muted uip-icon-muted uip-text-l uip-icon-medium">more_vert</div>
+                <AppIcon icon="more_vert" class="uip-icon uip-link-muted uip-icon-muted uip-text-l uip-icon-medium" />
               </template>
               <template v-slot:content>
                 <div class="uip-padding-xxs uip-flex uip-flex-row uip-gap-xxs">
-                  <div class="uip-icon uip-link-danger uip-icon-muted uip-text-l" @click="deleteItem(index)">delete</div>
-                  <div class="uip-icon uip-link-muted uip-icon-muted uip-text-l" @click="duplicateItem(item)">content_copy</div>
+                  <AppIcon icon="delete" class="uip-icon uip-link-danger uip-icon-muted uip-text-l" @click="deleteItem(index)" />
+                  <AppIcon icon="content_copy" class="uip-icon uip-link-muted uip-icon-muted uip-text-l" @click="duplicateItem(item)" />
                 </div>
               </template>
             </dropdown>

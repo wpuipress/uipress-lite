@@ -62,7 +62,7 @@ export default {
       <div class="uip-flex uip-gap-xs uip-flex-start uip-flex-no-wrap uip-max-h-100p">
         <h2 class="uip-margin-remove uip-flex-grow">{{ strings.mediaLibrary }}</h2>
         <div @click="cancel()" class="uip-padding-xxs uip-border-rounder hover:uip-background-muted uip-cursor-pointer">
-          <span class="uip-icon uip-link-muted">close</span>
+          <AppIcon icon="close" class="uip-icon uip-link-muted" />
         </div>
       </div>
 

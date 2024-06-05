@@ -182,7 +182,7 @@ export default {
         :class="{ 'uip-background-primary-wash': validDrop, 'uip-background-muted': !validDrop }"
         class="uip-background-muted uip-border uip-border-rounder uip-padding-m uip-flex uip-flex-middle uip-flex-center uip-transition-all uip-link-muted"
       >
-        <div class="uip-icon uip-text-xl">file_upload</div>
+        <AppIcon icon="file_upload" class="uip-icon uip-text-xl" />
         <input hidden accept=".json" type="file" single="" id="uip-import-layout" @change="importEverything($event)" />
       </label>
     </div>

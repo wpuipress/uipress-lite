@@ -1,5 +1,5 @@
 <script>
-import { __ } from '@wordpress/i18n';
+import { __ } from "@wordpress/i18n";
 import { nextTick } from "vue";
 export default {
   props: {
@@ -146,7 +146,7 @@ export default {
                   @click="removeDynamicItem()"
                   class="uip-padding-xxs uip-border-round uip-background-muted hover:uip-background-grey uip-cursor-pointer uip-flex uip-flex-middle uip-flex-center"
                 >
-                  <span class="uip-icon">delete</span>
+                  <AppIcon icon="delete" class="uip-icon" />
                 </span>
                 <span
                   v-else

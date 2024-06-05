@@ -12,17 +12,6 @@ use UipressLite\Classes\App\AppOptions;
 class UipScripts
 {
   /**
-   * Enqueues uipress icons
-   *
-   * @return void
-   */
-  public static function add_icons()
-  {
-    wp_register_style("uip-app-icons", uip_plugin_url . "assets/css/uip-icons.css", [], uip_plugin_version);
-    wp_enqueue_style("uip-app-icons");
-  }
-
-  /**
    * Loads translations script
    *
    * @return void

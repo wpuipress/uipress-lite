@@ -1,6 +1,6 @@
 <script>
 import { __ } from "@wordpress/i18n";
-import { nextTick } from "vue";
+import { nextTick, defineAsyncComponent } from "vue";
 
 import StylePresets from "./StylePresets.vue";
 import BlockParts from "./BlockParts.vue";
@@ -25,6 +25,7 @@ export default {
     BlockParts: BlockParts,
     StylePresets: StylePresets,
     ToggleSection: ToggleSection,
+    CodeEditor: defineAsyncComponent(() => import("@/js/uip/options/code-editor/index.vue")),
   },
   data() {
     return {
@@ -344,7 +345,7 @@ export default {
           <div class="uip-text-bold uip-blank-input uip-text-l uip-text-emphasis">{{ returnBlockRealName }}</div>
         </div>
 
-        <a class="uip-link-muted hover:uip-background-muted uip-border-rounder uip-icon uip-padding-xxs" @click="close()">close</a>
+        <AppIcon class="uip-link-muted hover:uip-background-muted uip-border-rounder uip-icon uip-padding-xxs" @click="close()" icon="close" />
       </div>
       <!-- End block settings header -->
 
@@ -366,7 +367,7 @@ export default {
             </div>
             <div class="uip-flex uip-flex-center uip-background-muted uip-border-rounder uip-padding-xxxs uip-padding-left-xs uip-padding-right-xxs uip-overflow-hidden">
               <div class="uip-blank-input uip-text-s uip-flex-grow uip-overflow-hidden uip-text-ellipsis uip-no-wrap">{{ block.uid }}</div>
-              <span class="uip-icon uip-link-muted" @click="copyToClipboard(block.uid)">content_copy</span>
+              <AppIcon icon="content_copy" class="uip-icon uip-link-muted" @click="copyToClipboard(block.uid)" />
             </div>
 
             <div class="uip-text-muted uip-flex uip-flex-center uip-text-s uip-max-h-30">
@@ -514,7 +515,7 @@ export default {
         <ToggleSection :title="strings.code" :startOpen="true">
           <div class="uip-grid-col-1-3">
             <div class="uip-text-muted uip-flex uip-flex-center uip-text-s"><span>css</span></div>
-            <code-editor
+            <CodeEditor
               :args="{ language: 'css' }"
               :value="returnAdvancedValue('css')"
               :returnData="
@@ -525,7 +526,7 @@ export default {
             />
 
             <div class="uip-text-muted uip-flex uip-flex-center uip-text-s"><span>Javscript</span></div>
-            <code-editor
+            <CodeEditor
               :args="{ language: 'javascript' }"
               :value="returnAdvancedValue('js')"
               :returnData="

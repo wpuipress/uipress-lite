@@ -117,14 +117,14 @@ export default {
         <div v-if="title" class="uip-flex uip-flex-between uip-modal-title uip-margin-bottom-s">
           <div class="uip-text-bold uip-text-l">{{ title }}</div>
           <div @click="close()" class="hover:uip-background-grey uip-padding-xxs uip-border-round uip-cursor-pointer">
-            <div class="uip-icon uip-text-l">close</div>
+            <AppIcon icon="close" class="uip-icon uip-text-l" />
           </div>
         </div>
 
         <div v-else class="uip-flex uip-flex-between uip-modal-title uip-position-relative">
           <div class="uip-position-absolute uip-right-0 uip-top-0 uip-padding-xs">
             <div @click="close()" class="hover:uip-background-grey uip-padding-xxs uip-border-round uip-cursor-pointer">
-              <div class="uip-icon uip-text-l">close</div>
+              <AppIcon icon="close" class="uip-icon uip-text-l" />
             </div>
           </div>
         </div>

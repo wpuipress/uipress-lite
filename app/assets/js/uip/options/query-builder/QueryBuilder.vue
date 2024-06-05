@@ -1,5 +1,5 @@
 <script>
-import { __ } from '@wordpress/i18n';
+import { __ } from "@wordpress/i18n";
 import { defineAsyncComponent, nextTick } from "vue";
 
 import PostTypeSelect from "@/js/uip/components/post-type-select/core.vue";
@@ -534,9 +534,9 @@ export default {
             <input type="number" min="1" class="uip-input uip-input-small uip-remove-steps uip-background-remove uip-padding-xxxs uip-flex-grow" style="width: 30px" v-model="options.perPage" />
 
             <div class="uip-padding-xxs uip-border-rounder uip-background-muted uip-flex uip-gap-xxs uip-no-text-select uip-flex-center">
-              <div class="uip-link-muted uip-icon" @click="options.perPage = parseInt(options.perPage) - 1">remove</div>
+              <AppIcon icon="remove" class="uip-link-muted uip-icon" @click="options.perPage = parseInt(options.perPage) - 1" />
               <div class="uip-border-right uip-h-12"></div>
-              <div class="uip-link-muted uip-icon" @click="options.perPage = parseInt(options.perPage) + 1">add</div>
+              <AppIcon icon="add" class="uip-link-muted uip-icon" @click="options.perPage = parseInt(options.perPage) + 1" />
             </div>
           </div>
         </div>
@@ -551,9 +551,9 @@ export default {
             <input type="number" min="0" class="uip-input uip-input-small uip-remove-steps uip-background-remove uip-padding-xxxs uip-flex-grow" style="width: 30px" v-model="options.offset" />
 
             <div class="uip-padding-xxs uip-border-rounder uip-background-muted uip-flex uip-gap-xxs uip-no-text-select uip-flex-center">
-              <div class="uip-link-muted uip-icon" @click="options.offset = parseInt(options.offset) - 1">remove</div>
+              <AppIcon icon="remove" class="uip-link-muted uip-icon" @click="options.offset = parseInt(options.offset) - 1" />
               <div class="uip-border-right uip-h-12"></div>
-              <div class="uip-link-muted uip-icon" @click="options.offset = parseInt(options.offset) + 1">add</div>
+              <AppIcon icon="add" class="uip-link-muted uip-icon" @click="options.offset = parseInt(options.offset) + 1" />
             </div>
           </div>
         </div>

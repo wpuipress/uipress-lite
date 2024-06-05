@@ -100,7 +100,6 @@ class uip_ui_builder extends uip_app
     // Stop processing if 'uip_stop_plugin' is true
     defined("uip_stop_plugin") && uip_stop_plugin ? exit() : true;
     $hook_suffix = add_action("admin_menu", [$this, "add_ui_builder_to_menu"]);
-    add_action("admin_print_scripts-{$hook_suffix}", ["UipressLite\Classes\Scripts\UipScripts", "add_icons"]);
 
     $builderName = uip_plugin_shortname . "-ui-builder";
     $page = isset($_GET["page"]) ? $_GET["page"] : false;
@@ -148,7 +147,6 @@ class uip_ui_builder extends uip_app
   public function add_scripts_and_styles()
   {
     UipScripts::add_translations();
-    UipScripts::add_icons();
     UipScripts::add_uipress_styles();
   }
 
