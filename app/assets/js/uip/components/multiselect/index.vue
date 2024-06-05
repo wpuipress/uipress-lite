@@ -1,6 +1,6 @@
 <script>
 import { defineAsyncComponent } from "vue";
-const { __, _x, _n, _nx } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
 import core from "./core.vue";
 import preview from "./preview.vue";

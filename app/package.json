@@ -11,9 +11,11 @@
     "build-dev-preview": "vite build --mode development --watch"
   },
   "dependencies": {
+    "@wordpress/i18n": "^5.0.0",
     "axios": "^1.7.2",
     "chart.js": "^4.4.3",
     "vue": "^3.4.21",
+    "vue-draggable-next": "^2.2.1",
     "vue-router": "^4.3.2"
   },
   "devDependencies": {

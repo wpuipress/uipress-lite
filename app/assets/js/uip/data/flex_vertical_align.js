@@ -1,3 +1,4 @@
+import { __ } from "@wordpress/i18n";
 export default {
   "flex-start": {
     value: "flex-start",

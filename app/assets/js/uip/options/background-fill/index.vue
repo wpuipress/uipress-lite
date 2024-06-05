@@ -1,11 +1,12 @@
 <script>
-const { __, _x, _n, _nx } = wp.i18n;
+import { __ } from "@wordpress/i18n";
 import { defineAsyncComponent, nextTick } from "vue";
+
+import ColorPicker from "@/js/uip/components/color-picker/index.vue";
+import GradientPicker from "@/js/uip/components/gradient-picker/index.vue";
+
 export default {
-  components: {
-    ColorPicker: defineAsyncComponent(() => import("@/js/uip/components/color-picker/index.vue")),
-    GradientPicker: defineAsyncComponent(() => import("@/js/uip/components/gradient-picker/index.vue")),
-  },
+  components: { ColorPicker, GradientPicker },
 
   props: {
     returnData: Function,

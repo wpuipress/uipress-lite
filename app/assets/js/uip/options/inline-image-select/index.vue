@@ -1,11 +1,12 @@
 <script>
-const { __, _x, _n, _nx } = wp.i18n;
-import { defineAsyncComponent, nextTick } from "vue";
+import { __ } from "@wordpress/i18n";
+import { nextTick } from "vue";
+
+import imageSelect from "@/js/uip/components/image-select/index.vue";
+import colorBox from "@/js/uip/components/color-box/index.vue";
+
 export default {
-  components: {
-    imageSelect: defineAsyncComponent(() => import("@/js/uip/components/image-select/index.vue")),
-    colorBox: defineAsyncComponent(() => import("@/js/uip/components/color-box/index.vue")),
-  },
+  components: { imageSelect, colorBox },
   props: {
     returnData: Function,
     value: Object,

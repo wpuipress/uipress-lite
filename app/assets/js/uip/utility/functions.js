@@ -1,4 +1,4 @@
-const { __, _x, _n, _nx } = wp.i18n;
+import { __ } from "@wordpress/i18n";
 /**
  * Checks if a nested object exists. if not, it creates each step
  *
@@ -196,7 +196,6 @@ export async function sendServerRequest(url, data) {
 
   // Throw error if failed
   if (!response.ok) {
-    errorMessage(errorMessage);
     return { error: true, message: errorMessage };
   }
 
@@ -204,7 +203,6 @@ export async function sendServerRequest(url, data) {
   const parsedData = uipParseJson(responseData);
 
   if (!parsedData) {
-    errorMessage(errorMessage);
     return { error: true, message: errorMessage };
   }
 

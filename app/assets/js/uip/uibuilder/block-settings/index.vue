@@ -1,20 +1,26 @@
 <script>
-const { __, _x, _n, _nx } = wp.i18n;
-import { defineAsyncComponent, nextTick } from "vue";
+import { __ } from "@wordpress/i18n";
+import { nextTick } from "vue";
 
 import StylePresets from "./StylePresets.vue";
 import BlockParts from "./BlockParts.vue";
 import ToggleSection from "./ToggleSection.vue";
 import BlockStyleHandler from "./BlockStyleHandler.vue";
 
+import QueryBuilder from "@/js/uip/options/query-builder/index.vue";
+import Interactions from "@/js/uip/options/interactions/index.vue";
+import responsiveControls from "@/js/uip/options/responsive/index.vue";
+import Classes from "@/js/uip/options/classes/index.vue";
+import Conditions from "@/js/uip/options/conditions/index.vue";
+
 export default {
   inject: ["uiTemplate"],
   components: {
-    QueryBuilder: defineAsyncComponent(() => import("@/js/uip/options/query-builder/index.vue")),
-    Interactions: defineAsyncComponent(() => import("@/js/uip/options/interactions/index.vue")),
-    responsiveControls: defineAsyncComponent(() => import("@/js/uip/options/responsive/index.vue")),
-    Classes: defineAsyncComponent(() => import("@/js/uip/options/classes/index.vue")),
-    Conditions: defineAsyncComponent(() => import("@/js/uip/options/conditions/index.vue")),
+    QueryBuilder,
+    Interactions,
+    responsiveControls,
+    Classes,
+    Conditions,
     BlockStyleHandler: BlockStyleHandler,
     BlockParts: BlockParts,
     StylePresets: StylePresets,
@@ -120,13 +126,12 @@ export default {
       const allBlocks = this.uipApp.data.blocks;
 
       // Find the originally registered block's enabled settings
-      const masterblockIndex = allBlocks.findIndex((block) => block.moduleName === blockModule);
+      const masterBlock = allBlocks.find((block) => block.metadata.moduleName === blockModule);
 
       // No block settings so bail
-      if (masterblockIndex < 0) return [];
-      const masterBlock = allBlocks[masterblockIndex];
+      if (!masterBlock) return [];
 
-      const allBlockSettings = masterBlock.optionsEnabled;
+      const allBlockSettings = masterBlock.metadata.optionsEnabled;
       const blockOptionsIndex = allBlockSettings.findIndex((option) => option.name === "block");
 
       // No block specific settings so bail

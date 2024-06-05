@@ -1,10 +1,11 @@
 <script>
-const { __, _x, _n, _nx } = wp.i18n;
+import { __ } from "@wordpress/i18n";
 import { defineAsyncComponent, nextTick } from "vue";
+
+import virtualList from "@/js/uip/components/virtual-list/index.vue";
+
 export default {
-  components: {
-    virtualList: defineAsyncComponent(() => import("@/js/uip/components/virtual-list/index.vue")),
-  },
+  components: { virtualList },
   props: {
     value: String,
     returnData: Function,

@@ -103,9 +103,13 @@ export default {
       // No settings in the block so no css
       if (!this.isObject(blockSettings)) return [];
 
-      const blockInfo = allBlocks.find((block) => block.moduleName === moduleName);
+      let blockInfo = allBlocks.find((block) => block.metadata.moduleName === moduleName);
 
-      if (!blockInfo || !blockInfo.optionsEnabled) return [];
+      if (!blockInfo) return [];
+
+      blockInfo = blockInfo.metadata;
+
+      if (!blockInfo.optionsEnabled) return [];
 
       const keysToRemove = new Set(["advanced", "block"]);
       const registeredBlockSettings = blockInfo.optionsEnabled.filter((option) => !keysToRemove.has(option.name));

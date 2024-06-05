@@ -1,10 +1,11 @@
 <script>
-const { __, _x, _n, _nx } = wp.i18n;
-import { defineAsyncComponent, nextTick } from "vue";
+import { __ } from "@wordpress/i18n";
+import { nextTick } from "vue";
+
+import Variables from "@/js/uip/uibuilder/variables/index.vue";
+
 export default {
-  components: {
-    Variables: defineAsyncComponent(() => import("@/js/uip/uibuilder/variables/index.vue")),
-  },
+  components: { Variables },
   props: {
     args: Object,
     triggerClass: String, // Allows custom classes to be set on the trigger container

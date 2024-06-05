@@ -1,22 +1,23 @@
+import { __ } from "@wordpress/i18n";
 export default {
-  'flex-start': {
-    value: 'flex-start',
-    tip: __('Start', 'uipress-lite'),
-    icon: 'align_vertical_top',
+  "flex-start": {
+    value: "flex-start",
+    tip: __("Start", "uipress-lite"),
+    icon: "align_vertical_top",
   },
   center: {
-    value: 'center',
-    tip: __('Center', 'uipress-lite'),
-    icon: 'align_vertical_center',
+    value: "center",
+    tip: __("Center", "uipress-lite"),
+    icon: "align_vertical_center",
   },
   end: {
-    value: 'end',
-    tip: __('End', 'uipress-lite'),
-    icon: 'align_vertical_bottom',
+    value: "end",
+    tip: __("End", "uipress-lite"),
+    icon: "align_vertical_bottom",
   },
   stretch: {
-    value: 'stretch',
-    tip: __('Stretch', 'uipress-lite'),
-    icon: 'expand',
+    value: "stretch",
+    tip: __("Stretch", "uipress-lite"),
+    icon: "expand",
   },
 };

@@ -1,10 +1,14 @@
 <script>
-import { defineAsyncComponent, nextTick } from "vue";
-const { __, _x, _n, _nx } = wp.i18n;
+import { nextTick } from "vue";
+import { __ } from "@wordpress/i18n";
+
+import BlockSettings from "@/js/uip/uibuilder/block-settings/index.vue";
+import Confirm from "@/js/uip/components/confirm/index.vue";
+
 export default {
   components: {
-    BlockSettings: defineAsyncComponent(() => import("@/js/uip/uibuilder/block-settings/index.vue")),
-    Confirm: defineAsyncComponent(() => import("@/js/uip/components/confirm/index.vue")),
+    BlockSettings,
+    Confirm,
   },
   inject: ["uiTemplate"],
   data() {

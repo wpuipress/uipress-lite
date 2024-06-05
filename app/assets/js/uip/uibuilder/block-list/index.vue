@@ -3,8 +3,8 @@
  * Builds the main ui builder shell
  * @since 3.0.0
  */
-const { __, _x, _n, _nx } = wp.i18n;
-import { defineAsyncComponent, nextTick } from "vue";
+import { __ } from "@wordpress/i18n";
+import { nextTick } from "vue";
 
 import ToggleSection from "./ToggleSection.vue";
 
@@ -37,7 +37,7 @@ export default {
      */
     sortedBlocks() {
       let blocks = this.removeOldBlocks();
-      return blocks.sort((a, b) => a.name.localeCompare(b.name));
+      return blocks.sort((a, b) => a.metadata.name.localeCompare(b.metadata.name));
     },
 
     /**
@@ -49,7 +49,9 @@ export default {
       const excludedModules = ["responsive-grid", "uip-admin-menu", "uip-user-meta-block"];
 
       return Object.entries(this.returnGroups).map(([catKey, catValue]) => {
-        const sortedBlocks = this.uipApp.data.blocks.filter((block) => block.group === catKey && !excludedModules.includes(block.moduleName)).sort((a, b) => a.name.localeCompare(b.name));
+        const sortedBlocks = this.uipApp.data.blocks
+          .filter((block) => block.metadata.group === catKey && !excludedModules.includes(block.metadata.moduleName))
+          .sort((a, b) => a.metadata.name.localeCompare(b.metadata.name));
 
         return {
           name: catValue.label,
@@ -267,16 +269,12 @@ export default {
           itemKey="name"
         >
           <template v-for="(element, index) in cat.blocks" :key="element.name" :index="index">
-            <div
-              v-if="componentExists(element)"
-              @click="insertAtPos(element)"
-              class="uip-border-rounder uip-link-default hover:uip-background-muted uip-cursor-pointer uip-block-drag uip-no-text-select"
-            >
+            <div v-if="element.component" @click="insertAtPos(element)" class="uip-border-rounder uip-link-default hover:uip-background-muted uip-cursor-pointer uip-block-drag uip-no-text-select">
               <div class="uip-flex uip-gap-xxs uip-flex-center">
                 <div class="uip-icon uip-text-l uip-padding-xxs uip-background-muted uip-border-rounder uip-text-emphasis uip-margin-right-xs">
-                  <span>{{ element.icon }}</span>
+                  <span>{{ element.metadata.icon }}</span>
                 </div>
-                <div class="uip-text-s">{{ element.name }}</div>
+                <div class="uip-text-s">{{ element.metadata.name }}</div>
               </div>
             </div>
 
@@ -290,7 +288,7 @@ export default {
                 <div class="uip-icon uip-icon-medium uip-text-l uip-padding-xxs uip-background-green-wash uip-border-rounder uip-margin-right-xs">
                   <span>redeem</span>
                 </div>
-                <div class="uip-text-s uip-flex-grow">{{ element.name }}</div>
+                <div class="uip-text-s uip-flex-grow">{{ element.metadata.name }}</div>
 
                 <a
                   v-show="element.hover"

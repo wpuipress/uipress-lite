@@ -3,17 +3,26 @@
  * Builds the main ui builder shell
  * @since 3.0.0
  */
-const { __, _x, _n, _nx } = wp.i18n;
-import { defineAsyncComponent, nextTick } from "vue";
+import { __ } from "@wordpress/i18n";
+import { nextTick } from "vue";
+
+import layersPanels from "@/js/uip/uibuilder/layers/index.vue";
+import blockcontextmenu from "@/js/uip/uibuilder/block-contextmenu/index.vue";
+import ToolBar from "@/js/uip/uibuilder/toolbar/index.vue";
+import Canvas from "@/js/uip/uibuilder/canvas/index.vue";
+import BlockList from "@/js/uip/uibuilder/block-list/index.vue";
+import TemplateLibrary from "@/js/uip/uibuilder/template-library/index.vue";
+import DynamicData from "@/js/uip/uibuilder/dynamic-data-watcher/index.vue";
+
 export default {
   components: {
-    layersPanels: defineAsyncComponent(() => import("@/js/uip/uibuilder/layers/index.vue")),
-    blockcontextmenu: defineAsyncComponent(() => import("@/js/uip/uibuilder/block-contextmenu/index.vue")),
-    ToolBar: defineAsyncComponent(() => import("@/js/uip/uibuilder/toolbar/index.vue")),
-    Canvas: defineAsyncComponent(() => import("@/js/uip/uibuilder/canvas/index.vue")),
-    BlockList: defineAsyncComponent(() => import("@/js/uip/uibuilder/block-list/index.vue")),
-    TemplateLibrary: defineAsyncComponent(() => import("@/js/uip/uibuilder/template-library/index.vue")),
-    DynamicData: defineAsyncComponent(() => import("@/js/uip/uibuilder/dynamic-data-watcher/index.vue")),
+    layersPanels,
+    blockcontextmenu,
+    ToolBar,
+    Canvas,
+    BlockList,
+    TemplateLibrary,
+    DynamicData,
   },
 
   data() {

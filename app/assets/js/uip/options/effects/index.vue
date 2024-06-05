@@ -1,5 +1,5 @@
 <script>
-const { __, _x, _n, _nx } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 import BlendModes from "@/js/uip/data/mix_blend_modes.js";
 import TransitionTypes from "@/js/uip/data/css_transitions.js";
 import CursorTypes from "@/js/uip/data/cursor_types.js";

@@ -1,10 +1,9 @@
 <script>
-import { defineAsyncComponent } from "vue";
 import { validDateTemplate } from "@/js/uip/utility/functions.js";
+
+import SaveAsPattern from "@/js/uip/uibuilder/save-as-pattern/index.vue";
 export default {
-  components: {
-    SaveAsPattern: defineAsyncComponent(() => import("@/js/uip/uibuilder/save-as-pattern/index.vue")),
-  },
+  components: { SaveAsPattern },
   inject: ["uiTemplate"],
   data() {
     return {

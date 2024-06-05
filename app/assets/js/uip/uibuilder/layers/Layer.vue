@@ -1,16 +1,16 @@
 <script>
-const { __, _x, _n, _nx } = wp.i18n;
-import { defineAsyncComponent, nextTick } from "vue";
+import { __ } from "@wordpress/i18n";
+import { nextTick } from "vue";
 
-const Layer = {
+import BlockList from "@/js/uip/uibuilder/block-list/index.vue";
+
+export default {
   name: "Layer",
-  components: {
-    BlockList: defineAsyncComponent(() => import("@/js/uip/uibuilder/block-list/index.vue")),
-  },
+  components: { BlockList },
   props: {
-    block: Object,
-    returnData: Function,
-    items: Array,
+    block: { type: Object, default: {} },
+    returnData: { type: Function },
+    items: { type: Array, default: [] },
   },
   data() {
     return {

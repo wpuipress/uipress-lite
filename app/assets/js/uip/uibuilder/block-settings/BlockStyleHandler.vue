@@ -1,6 +1,15 @@
 <script>
-const { __, _x, _n, _nx } = wp.i18n;
-import { defineAsyncComponent, nextTick } from "vue";
+import { __ } from "@wordpress/i18n";
+import { nextTick } from "vue";
+
+import flexLayout from "@/js/uip/options/flex-layout/index.vue";
+import Dimensions from "@/js/uip/options/dimensions/index.vue";
+import Styles from "@/js/uip/options/styles/index.vue";
+import Spacing from "@/js/uip/options/spacing/index.vue";
+import TextFormat from "@/js/uip/options/text-format/index.vue";
+import PositionDesigner from "@/js/uip/options/position-designer/index.vue";
+import EffectsDesigner from "@/js/uip/options/effects/index.vue";
+
 /**
  * Builds the block styles list and handles style changes
  *
@@ -10,13 +19,13 @@ export default {
   emits: ["update"],
 
   components: {
-    flexLayout: defineAsyncComponent(() => import("@/js/uip/options/flex-layout/index.vue")),
-    Dimensions: defineAsyncComponent(() => import("@/js/uip/options/dimensions/index.vue")),
-    Styles: defineAsyncComponent(() => import("@/js/uip/options/styles/index.vue")),
-    Spacing: defineAsyncComponent(() => import("@/js/uip/options/spacing/index.vue")),
-    TextFormat: defineAsyncComponent(() => import("@/js/uip/options/text-format/index.vue")),
-    PositionDesigner: defineAsyncComponent(() => import("@/js/uip/options/position-designer/index.vue")),
-    EffectsDesigner: defineAsyncComponent(() => import("@/js/uip/options/effects/index.vue")),
+    flexLayout,
+    Dimensions,
+    Styles,
+    Spacing,
+    TextFormat,
+    PositionDesigner,
+    EffectsDesigner,
   },
   props: {
     styleSettings: Object,

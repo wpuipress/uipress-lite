@@ -3,8 +3,8 @@
  * Builds the main ui builder shell
  * @since 3.0.0
  */
-const { __, _x, _n, _nx } = wp.i18n;
-import { defineAsyncComponent, nextTick } from "vue";
+import { __ } from "@wordpress/i18n";
+import { nextTick } from "vue";
 
 // Comps
 import globalVariables from "@/js/uip/uibuilder/variables/index.vue";

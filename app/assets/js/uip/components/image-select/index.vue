@@ -1,10 +1,11 @@
 <script>
-const { __, _x, _n, _nx } = wp.i18n;
+import { __ } from "@wordpress/i18n";
 import { defineAsyncComponent, nextTick } from "vue";
+
+import mediaLibrary from "@/js/uip/components/media-library/index.vue";
+
 export default {
-  components: {
-    mediaLibrary: defineAsyncComponent(() => import("@/js/uip/components/media-library/index.vue")),
-  },
+  components: { mediaLibrary },
   props: {
     returnData: Function,
     value: Object,

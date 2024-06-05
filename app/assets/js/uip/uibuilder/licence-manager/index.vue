@@ -3,8 +3,8 @@
  * Builds the licence manager
  * @since 3.3.095
  */
-const { __, _x, _n, _nx } = wp.i18n;
-import { defineAsyncComponent, nextTick } from "vue";
+import { __ } from "@wordpress/i18n";
+import { nextTick } from "vue";
 export default {
   data() {
     return {

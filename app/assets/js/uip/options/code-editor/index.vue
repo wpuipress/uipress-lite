@@ -1,5 +1,5 @@
 <script>
-const { __, _x, _n, _nx } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 import { defineAsyncComponent, nextTick } from "vue";
 import "@/js/libs/ace-editor.min.js";
 import "@/js/libs/ace-editor-css.min.js";

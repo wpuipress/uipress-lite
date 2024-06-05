@@ -3,7 +3,7 @@
  *
  * @since 3.2.13
  */
-const { __, _x, _n, _nx } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 import { createApp, getCurrentInstance, defineComponent, defineAsyncComponent, reactive } from "vue";
 import { VueDraggableNext } from "./../libs/VueDraggableNext.js";
 const pluginVersion = import.meta.url.split("?ver=")[1];

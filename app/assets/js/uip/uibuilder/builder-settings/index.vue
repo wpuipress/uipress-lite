@@ -3,11 +3,10 @@
  * Builds the main ui builder shell
  * @since 3.0.0
  */
-import { defineAsyncComponent } from "vue";
 import ToggleSection from "./ToggleSection.vue";
 import globalVariables from "@/js/uip/uibuilder/variables/index.vue";
 
-const { __, _x, _n, _nx } = wp.i18n;
+import { __ } from "@wordpress/i18n";
 
 export default {
   components: { globalVariables, ToggleSection },

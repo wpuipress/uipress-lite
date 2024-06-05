@@ -1,12 +1,11 @@
 <script>
 import axios from "axios";
-const { __, _x, _n, _nx } = wp.i18n;
+import { __ } from "@wordpress/i18n";
 import { defineAsyncComponent } from "vue";
 import MediaLibrary from "./MediaLibrary.vue";
 
 export default {
   components: {
-    Modal: defineAsyncComponent(() => import("@/js/uip/components/basic-modal/index.vue")),
     MediaLibrary: MediaLibrary,
   },
 

@@ -1,6 +1,6 @@
 <script>
-const { __, _x, _n, _nx } = wp.i18n;
-import { defineAsyncComponent, nextTick } from "vue";
+import { __ } from "@wordpress/i18n";
+import { nextTick } from "vue";
 
 // Import comps
 import Confirm from "@/js/uip/components/confirm/index.vue";

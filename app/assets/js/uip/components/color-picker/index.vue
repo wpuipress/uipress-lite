@@ -1,11 +1,11 @@
 <script>
 import { defineAsyncComponent } from "vue";
 
+import colorSelect from "@/js/libs/colorpicker.js";
+import styleManager from "@/js/uip/components/style-manager/index.vue";
+
 export default {
-  components: {
-    colorSelect: defineAsyncComponent(() => import("@/js/libs/colorpicker.js")),
-    styleManager: defineAsyncComponent(() => import("@/js/uip/components/style-manager/index.vue")),
-  },
+  components: { colorSelect, styleManager },
 
   props: {
     value: String,

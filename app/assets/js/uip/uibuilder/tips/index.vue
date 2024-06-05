@@ -1,5 +1,6 @@
 <script>
-import { defineAsyncComponent, nextTick } from "vue";
+import { nextTick } from "vue";
+import { __ } from "@wordpress/i18n";
 export default {
   data() {
     return {

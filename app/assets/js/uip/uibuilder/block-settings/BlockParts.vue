@@ -1,6 +1,6 @@
 <script>
-const { __, _x, _n, _nx } = wp.i18n;
-import { defineAsyncComponent, nextTick } from "vue";
+import { __ } from "@wordpress/i18n";
+import { nextTick } from "vue";
 
 /**
  * Handles block parts switch
@@ -79,9 +79,8 @@ export default {
     returnBlockParts() {
       const blockName = this.block.moduleName;
       const allBlocks = this.uipApp.data.blocks;
-      const blockIndex = allBlocks.findIndex((block) => block.moduleName == blockName);
-      const blockInfo = allBlocks[blockIndex];
-      const blockSettings = [...blockInfo.optionsEnabled];
+      const blockInfo = allBlocks.find((block) => block.metadata.moduleName == blockName);
+      const blockSettings = [...blockInfo.metadata.optionsEnabled];
 
       const keysToRemove = ["advanced", "style", "block"];
 

@@ -1,11 +1,11 @@
 <script>
-const { __, _x, _n, _nx } = wp.i18n;
+import { __ } from "@wordpress/i18n";
 import { defineAsyncComponent } from "vue";
 
+import colorSelect from "@/js/libs/colorpicker.js";
+
 export default {
-  components: {
-    colorSelect: defineAsyncComponent(() => import("@/js/libs/colorpicker.js")),
-  },
+  components: { colorSelect },
   props: {
     currentColor: String,
     returnData: Function,

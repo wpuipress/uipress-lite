@@ -1,7 +1,8 @@
 <script>
-const { __, _x, _n, _nx } = wp.i18n;
-import { defineAsyncComponent, nextTick } from "vue";
+import { __ } from "@wordpress/i18n";
+import { nextTick } from "vue";
 
+import Confirm from "@/js/uip/components/confirm/index.vue";
 /**
  * Presets list
  *
@@ -9,9 +10,7 @@ import { defineAsyncComponent, nextTick } from "vue";
  */
 export default {
   emits: ["update", "go-back"],
-  components: {
-    Confirm: defineAsyncComponent(() => import("@/js/uip/components/confirm/index.vue")),
-  },
+  components: { Confirm },
 
   props: {
     preset: [String, Boolean],

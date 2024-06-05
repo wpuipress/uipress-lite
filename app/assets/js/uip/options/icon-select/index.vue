@@ -1,10 +1,11 @@
 <script>
-const { __, _x, _n, _nx } = wp.i18n;
+import { __ } from "@wordpress/i18n";
 import { defineAsyncComponent } from "vue";
+
+import IconPicker from "@/js/uip/components/icon-picker/index.vue";
+
 export default {
-  components: {
-    IconPicker: defineAsyncComponent(() => import("@/js/uip/components/icon-picker/index.vue")),
-  },
+  components: { IconPicker },
   props: {
     returnData: Function,
     value: Object,

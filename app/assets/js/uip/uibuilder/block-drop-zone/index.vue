@@ -1,12 +1,10 @@
 <script>
 import { nextTick } from "vue";
-import blockRender from "@/js/uip/uibuilder/block-render/index.vue";
+import BlockRender from "@/js/uip/uibuilder/block-render/index.vue";
 
-const { __ } = wp.i18n;
+import { __ } from "@wordpress/i18n";
 export default {
-  components: {
-    BlockRender: blockRender,
-  },
+  components: { BlockRender },
   props: {
     content: {
       default: [],

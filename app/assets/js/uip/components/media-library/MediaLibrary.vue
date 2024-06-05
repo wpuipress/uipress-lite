@@ -1,6 +1,6 @@
 <script>
 import axios from "axios";
-const { __, _x, _n, _nx } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
 import { defineAsyncComponent } from "vue";
 

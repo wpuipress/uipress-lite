@@ -5,7 +5,7 @@ import BlockStyles from "@/js/uip/uibuilder/block-styles/index.vue";
 import BlockConditions from "@/js/uip/uibuilder/block-conditions/index.vue";
 import BlockInteractions from "@/js/uip/uibuilder/block-interactions/index.vue";
 
-const { __ } = wp.i18n;
+import { __ } from "@wordpress/i18n";
 
 export default {
   inject: ["uiTemplate"],
@@ -553,6 +553,7 @@ export default {
     const hasBlockQuery = this.hasBlockQuery;
     const blockLink = this.ifBlockHasLink;
     const isProduction = this.isProduction;
+    const moduleName = this.block.moduleName;
 
     // Bail if block is not visible for viewport
     const isHidden = this.isHiddenForViewport;
@@ -564,7 +565,7 @@ export default {
     if (blockLink) nodes.push(h(Teleport, { to: "body" }, h("a", { ref: "blocklink", class: "uip-hidden" })));
 
     // Build the main block args
-    const blockTemplate = this.$root._.appContext.components[this.block.moduleName];
+    const blockTemplate = this.uipApp.data.blocks.find((item) => item.metadata.moduleName == moduleName);
 
     // Doesn't exist so it's like a pro component
     if (!blockTemplate) {
@@ -575,11 +576,11 @@ export default {
 
     const blockREF = ref(null);
     const args = { ...this.returnParams, ...this.returnWatchers(this.block), ...{ ref: blockREF } };
-    const coreBlockNode = h(blockTemplate, args);
+    const coreBlockNode = h(blockTemplate.component, args);
 
     // If has block query
     if (hasBlockQuery) {
-      const queryNodes = this.renderQuery(blockTemplate);
+      const queryNodes = this.renderQuery(blockTemplate.component);
       const searchNodes = this.renderSearch();
       const pagination = this.renderPagination();
 

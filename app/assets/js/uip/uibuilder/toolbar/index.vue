@@ -3,13 +3,14 @@
  * Builds the main ui builder shell
  * @since 3.0.0
  */
-const { __, _x, _n, _nx } = wp.i18n;
-import { defineAsyncComponent, nextTick } from "vue";
+import { __ } from "@wordpress/i18n";
+import { nextTick } from "vue";
 import { validDateTemplate } from "@/js/uip/utility/functions.js";
+
+import templateHistory from "@/js/uip/uibuilder/history/index.vue";
+
 export default {
-  components: {
-    templateHistory: defineAsyncComponent(() => import("@/js/uip/uibuilder/history/index.vue")),
-  },
+  components: { templateHistory },
   inject: ["uiTemplate"],
   data() {
     return {

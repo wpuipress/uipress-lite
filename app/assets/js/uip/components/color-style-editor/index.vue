@@ -1,10 +1,10 @@
 <script>
 import { defineAsyncComponent } from "vue";
 
+import colorPicker from "@/js/uip/components/color-picker/index.vue";
+
 export default {
-  components: {
-    colorPicker: defineAsyncComponent(() => import("@/js/uip/components/color-picker/index.vue")),
-  },
+  components: { colorPicker },
 
   props: {
     value: Object,

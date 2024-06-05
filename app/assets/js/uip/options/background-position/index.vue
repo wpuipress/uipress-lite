@@ -1,8 +1,8 @@
 <script>
-const { __, _x, _n, _nx } = wp.i18n;
-import BackgroundPositions from "@/js/uip/data/background_positions.min.js";
-import BackgroundRepeat from "@/js/uip/data/background_repeat.min.js";
-import BackgroundSize from "@/js/uip/data/background_size.min.js";
+import { __ } from "@wordpress/i18n";
+import BackgroundPositions from "@/js/uip/data/background_positions.js";
+import BackgroundRepeat from "@/js/uip/data/background_repeat.js";
+import BackgroundSize from "@/js/uip/data/background_size.js";
 
 export default {
   props: {

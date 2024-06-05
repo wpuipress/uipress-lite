@@ -1,13 +1,13 @@
 <script>
-const { __, _x, _n, _nx } = wp.i18n;
+import { __ } from "@wordpress/i18n";
 import { defineAsyncComponent, nextTick } from "vue";
-import BorderPositions from "@/js/uip/data/border_positions.min.js";
-import BorderTypes from "@/js/uip/data/border_types.min.js";
+import BorderPositions from "@/js/uip/data/border_positions.js";
+import BorderTypes from "@/js/uip/data/border_types.js";
+
+import colorBox from "@/js/uip/components/color-box/index.vue";
 
 export default {
-  components: {
-    colorBox: defineAsyncComponent(() => import("@/js/uip/components/color-box/index.vue")),
-  },
+  components: { colorBox },
   props: {
     returnData: Function,
     value: Object,

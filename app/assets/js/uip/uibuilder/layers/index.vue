@@ -1,8 +1,9 @@
 <script>
-const { __, _x, _n, _nx } = wp.i18n;
-import { defineAsyncComponent, nextTick } from "vue";
+import { __ } from "@wordpress/i18n";
+import { nextTick } from "vue";
 
 import Layer from "./Layer.vue";
+import BlockList from "@/js/uip/uibuilder/block-list/index.vue";
 
 export default {
   name: "layersRecursive",
@@ -10,12 +11,10 @@ export default {
     content: Array,
     returnData: Function,
   },
-  components: {
-    BlockList: defineAsyncComponent(() => import("@/js/uip/uibuilder/block-list/index.vue")),
-    Layer: Layer,
-  },
+  components: { BlockList, Layer },
   data() {
     return {
+      rendered: false,
       items: this.content,
       queryLoopEnabled: __("Block is using query loop", "uipress-lite"),
       drag: false,
@@ -32,6 +31,9 @@ export default {
       },
       deep: true,
     },
+  },
+  mounted() {
+    console.log(this.content);
   },
   methods: {
     /**

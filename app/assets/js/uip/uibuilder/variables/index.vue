@@ -1,11 +1,11 @@
 <script>
-const { __, _x, _n, _nx } = wp.i18n;
-import { defineAsyncComponent } from "vue";
-import Fonts from "@/js/uip/data/fonts.min.js";
+import { __ } from "@wordpress/i18n";
+import Fonts from "@/js/uip/data/fonts.js";
+
+import colourManager from "@/js/uip/components/color-style-editor/index.vue";
+
 export default {
-  components: {
-    colourManager: defineAsyncComponent(() => import("@/js/uip/components/color-style-editor/index.vue")),
-  },
+  components: { colourManager },
   props: {},
   data() {
     return {

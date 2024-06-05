@@ -1,10 +1,12 @@
 <script>
-const { __, _x, _n, _nx } = wp.i18n;
-import { defineAsyncComponent, nextTick } from "vue";
+import { __ } from "@wordpress/i18n";
+import { nextTick } from "vue";
 
 import EditPreset from "./EditPreset.vue";
 import NewPreset from "./NewPreset.vue";
 import PresetList from "./PresetList.vue";
+
+import screenControl from "@/js/uip/components/screen-control/index.vue";
 
 /**
  * Handles style presets switch
@@ -15,10 +17,10 @@ export default {
   emits: ["update"],
 
   components: {
-    screenControl: defineAsyncComponent(() => import("@/js/uip/components/screen-control/index.vue")),
-    PresetList: PresetList,
-    NewPreset: NewPreset,
-    EditPreset: EditPreset,
+    screenControl,
+    PresetList,
+    NewPreset,
+    EditPreset,
   },
   props: {
     block: Object,
