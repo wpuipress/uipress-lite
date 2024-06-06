@@ -11,7 +11,7 @@ const routes = [
   {
     path: "/",
     name: "List View",
-    component: () => import("@/js/uip/uibuilder/template-table/index.vue"),
+    component: () => import("@/js/uip/pages/home/index.vue"),
     children: [
       {
         name: "Setup wizard",
@@ -33,11 +33,7 @@ const routes = [
         path: "/sitesync/",
         component: () => import("@/js/uip/uibuilder/site-sync/index.vue"),
       },
-      {
-        name: "Site settings",
-        path: "/site-settings/",
-        component: () => import("@/js/uip/uibuilder/site-settings/index.vue"),
-      },
+
       {
         name: "Error log",
         path: "/errorlog/",
@@ -46,8 +42,13 @@ const routes = [
     ],
   },
   {
+    name: "Site settings",
+    path: "/site-settings/",
+    component: () => import("@/js/uip/pages/site-settings/index.vue"),
+  },
+  {
     path: "/uibuilder/:templateID/",
-    name: "Builder",
+    name: "uibuilder",
     component: () => import("@/js/uip/uibuilder/framework/index.vue"),
     children: [
       {

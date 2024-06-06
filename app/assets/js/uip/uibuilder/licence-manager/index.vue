@@ -22,6 +22,7 @@ export default {
         licenceActive: __("Licence active", "uipress-lite"),
         removeKey: __("Remove", "uipress-lite"),
         removingKey: __("Removing key", "uipress-lite"),
+        help: __("If you have a valid uipress pro key, add it here.", "uipress-lite"),
       },
     };
   },
@@ -173,8 +174,11 @@ export default {
 <template>
   <div v-if="loading" class="uip-w-100p uip-flex uip-flex-middle uip-flex-center uip-padding-s"><loading-chart></loading-chart></div>
 
-  <div v-else class="uip-grid-col-1-3">
-    <div class="uip-text-muted uip-padding-xs uip-max-w-200">{{ strings.licence }}</div>
+  <div v-else class="uip-grid-col-4-6" style="grid-gap: var(--uip-margin-m)">
+    <div class="uip-flex uip-flex-column uip-gap-xxs">
+      <span class="uip-text-emphasis">{{ strings.licence }}</span>
+      <div class="uip-text-muted">{{ strings.help }}</div>
+    </div>
 
     <form v-if="!activated" class="uip-flex uip-gap-xs uip-flex-no-wrap" autocomplete="off" @submit.prevent="validateLicenceKey">
       <input class="uip-input-small uip-w-100p" type="password" v-model="userKey" placeholder="xxxx-xxxx-xxxx-xxxx" />
@@ -182,7 +186,7 @@ export default {
       <input type="submit" class="uip-button-primary uip-text-s" :value="strings.activate" />
     </form>
 
-    <div v-else class="uip-flex uip-gap-xs uip-flex-no-wrap">
+    <div v-else class="uip-flex uip-gap-xs uip-flex-no-wrap uip-flex-start">
       <div class="uip-background-green-wash uip-text-green uip-text-bold uip-border-rounder uip-text-s uip-padding-xs uip-flex uip-flex-column uip-row-gap-xs uip-flex-grow uip-text-center">
         {{ strings.licenceActive }}
       </div>

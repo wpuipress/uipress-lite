@@ -69,7 +69,7 @@ export const globalSettingsGroups = {
     icon: "login",
   },
   postsPages: {
-    label: __("Posts and pages", "uipress-lite"),
+    label: __("Posts", "uipress-lite"),
     name: "postsPages",
     icon: "article",
   },

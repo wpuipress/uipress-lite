@@ -9,15 +9,17 @@ import { nextTick } from "vue";
 // Comps
 import globalVariables from "@/js/uip/uibuilder/variables/index.vue";
 import LicenceManager from "@/js/uip/uibuilder/licence-manager/index.vue";
+import Tabs from "@/js/uip/components/tabs/index.vue";
 
 export default {
-  components: { globalVariables, LicenceManager },
+  components: { globalVariables, LicenceManager, Tabs },
   data() {
     return {
       loading: false,
       globalSettings: {},
       search: "",
       render: true,
+      activeTab: "general",
       ui: {
         strings: {
           siteSettings: __("Site settings", "uipress-lite"),
@@ -61,6 +63,26 @@ export default {
       let activePlugins = this.uipApp.data.options.activePlugins;
       activePlugins = this.isObject(activePlugins) ? Object.values(activePlugins) : activePlugins;
       return activePlugins.includes("uipress-pro/uipress-pro.php");
+    },
+
+    /**
+     * Returns tabs from settings
+     *
+     * @since 3.3.095
+     */
+    returnTabs() {
+      let options = {};
+
+      for (let key in this.uipApp.data.globalGroupOptions) {
+        options[key] = {
+          label: this.uipApp.data.globalGroupOptions[key].label,
+          value: key,
+        };
+      }
+
+      console.log(options);
+
+      return options;
     },
   },
   methods: {
@@ -300,166 +322,80 @@ export default {
 </script>
 
 <template>
-  <uip-floating-panel ref="panel" closeRoute="/" id="uip-global-settings">
-    <!-- Site settings -->
-    <div class="uip-flex uip-w-100p uip-h-100p">
-      <div class="uip-flex uip-flex-column uip-w-100p uip-max-h-100p uip-flex-no-wrap uip-row-gap-m uip-padding-m">
-        <div class="uip-flex uip-flex-between uip-flex-center">
-          <div class="uip-text-l uip-text-emphasis">{{ ui.strings.siteSettings }}</div>
-          <a @click="$refs.panel.close()" class="uip-link-muted hover:uip-background-muted uip-border-rounder uip-icon uip-padding-xxs">close</a>
-        </div>
+  <!-- Site settings -->
+  <div class="uip-flex uip-flex-column uip-w-100p uip-max-h-100p uip-flex-no-wrap uip-row-gap-m">
+    <div v-if="loading" class="uip-w-100p uip-flex uip-flex-middle uip-flex-center uip-padding-s"><loading-chart></loading-chart></div>
 
-        <div v-if="loading" class="uip-w-100p uip-flex uip-flex-middle uip-flex-center uip-padding-s"><loading-chart></loading-chart></div>
+    <div v-if="!loading" class="uip-flex uip-flex-between uip-flex-center">
+      <div class="uip-text-l uip-text-emphasis">{{ ui.strings.siteSettings }}</div>
+      <div class="uip-flex uip-gap-xs">
+        <button class="uip-button-default" @click="exportSettings()">
+          <AppIcon class="uip-icon" icon="download" />
+        </button>
+        <a class="uip-hidden" ref="exporter"></a>
 
-        <div v-if="!loading" class="uip-border-rounder uip-flex uip-flex-center uip-gap-xs uip-background-muted uip-padding-xs">
-          <AppIcon icon="search" class="uip-icon uip-icon-l uip-text-muted" />
-          <input class="uip-blank-input uip-flex-grow" type="text" v-model="search" :placeholder="ui.strings.searchSettings" />
-        </div>
+        <label class="uip-button-default">
+          <AppIcon icon="upload" class="uip-icon" />
+          <input hidden accept=".json" type="file" single="" id="uip-import-layout" @change="importSettings($event)" />
+        </label>
 
-        <div v-if="!loading" class="uip-flex-grow uip-flex uip-flex-column uip-row-gap-s" style="overflow: auto">
-          <!--Searching Dynamic settings -->
-          <div v-if="search != ''" class="uip-padding-xs uip-flex uip-flex-column uip-row-gap-m">
-            <template v-for="group in uipApp.data.globalGroupOptions">
-              <!--Loop through group settings -->
-
-              <template v-for="option in group.settings">
-                <template v-if="conditionalShowGroup(option) && inSearch(option)">
-                  <div class="uip-flex uip-flex-column uip-row-gap-xs uip-flex-start">
-                    <div class="uip-flex uip-gap-xxxs uip-flex-center">
-                      <div class="uip-text-bold uip-text-muted">{{ group.label }}</div>
-                      <AppIcon icon="chevron_right" class="uip-icon uip-text-muted" />
-                      <div class="uip-text-bold">{{ option.label }}</div>
-                    </div>
-                    <div v-if="option.help" class="uip-text-s uip-text-muted">{{ option.help }}</div>
-
-                    <a
-                      href="https://uipress.co?utm_source=uipressupgrade&utm_medium=referral"
-                      target="_BLANK"
-                      v-if="option.proOption"
-                      class="uip-padding-xxs uip-border-round uip-background-green-wash uip-text-s uip-link-default uip-no-underline"
-                    >
-                      {{ ui.strings.proOption }}
-                    </a>
-
-                    <component
-                      v-else
-                      :is="option.component"
-                      :value="returnTemplateOption(group.name, option)"
-                      :args="option.args"
-                      :returnData="
-                        function (data) {
-                          saveTemplateOption(group.name, option.uniqueKey, data);
-                        }
-                      "
-                      class="uip-inline-flex"
-                    ></component>
-                  </div>
-                </template>
-              </template>
-            </template>
-          </div>
-
-          <template v-if="proPluginActivated">
-            <accordion v-if="!search" :openOnTick="false" :startOpen="true">
-              <template #title>
-                <div class="uip-flex-grow uip-flex uip-gap-xxs uip-flex-center uip-text-bold">
-                  <div class="">{{ ui.strings.licence }}</div>
-                </div>
-              </template>
-
-              <template #content>
-                <LicenceManager />
-              </template>
-            </accordion>
-
-            <div class="uip-border-top"></div>
-          </template>
-
-          <!-- Dynamic settings -->
-          <template v-if="!search" v-for="(group, index) in uipApp.data.globalGroupOptions">
-            <accordion :openOnTick="false" v-if="conditionalShowGroup(group)">
-              <template v-slot:title>
-                <div class="uip-flex-grow uip-flex uip-gap-xxs uip-flex-center uip-text-bold">
-                  <div class="">{{ group.label }}</div>
-                </div>
-              </template>
-              <template v-slot:content>
-                <div class="uip-padding-xs uip-padding-left-m uip-flex uip-flex-column uip-row-gap-s">
-                  <!--Loop through group settings -->
-
-                  <template v-for="option in group.settings" v-if="render">
-                    <div v-if="conditionalShowGroup(option)" class="uip-grid-col-4-6">
-                      <div class="uip-flex uip-flex-center uip-gap-xs uip-h-30">
-                        <div class="uip-text-muted uip-flex uip-flex-center uip-flex uip-gap-xs uip-position-relative">
-                          <dropdown v-if="option.help" pos="left center" :openOnHover="true" class="uip-flex-no-shrink uip-position-absolute uip-left--32" :hover="true">
-                            <template class="uip-flex-no-shrink" v-slot:trigger>
-                              <div
-                                class="uip-link-muted hover:uip-background-grey uip-text-center uip-border-round uip-background-muted uip-text-bold uip-text-xs uip-w-16 uip-ratio-1-1 uip-text-s uip-flex-no-shrink"
-                              >
-                                i
-                              </div>
-                            </template>
-                            <template v-slot:content>
-                              <div class="uip-text-s uip-padding-xs uip-max-w-200">{{ option.help }}</div>
-                            </template>
-                          </dropdown>
-
-                          <span>{{ option.label }}</span>
-                        </div>
-                      </div>
-
-                      <div class="uip-w-100p">
-                        <a
-                          href="https://uipress.co?utm_source=uipressupgrade&utm_medium=referral"
-                          target="_BLANK"
-                          v-if="option.proOption"
-                          class="uip-padding-xxs uip-border-round uip-background-green-wash uip-text-s uip-link-default uip-no-underline uip-w-100p uip-text-center uip-flex"
-                        >
-                          {{ ui.strings.proOption }}
-                        </a>
-                        <component
-                          v-else
-                          :is="option.component"
-                          :value="returnTemplateOption(group.name, option)"
-                          :args="option.args"
-                          :returnData="
-                            function (data) {
-                              saveTemplateOption(group.name, option.uniqueKey, data);
-                            }
-                          "
-                        ></component>
-                      </div>
-                    </div>
-                  </template>
-
-                  <template v-if="group.name == 'theme'">
-                    <globalVariables />
-                  </template>
-                  <!--End loop through group settings -->
-                </div>
-              </template>
-            </accordion>
-            <div class="uip-border-top" v-if="conditionalShowGroup(group)"></div>
-          </template>
-          <!-- End dynamic settings -->
-        </div>
-
-        <div v-if="!loading" class="uip-flex uip-flex-between">
-          <div class="uip-flex uip-gap-xs">
-            <button class="uip-button-default uip-icon" @click="exportSettings()">download</button>
-            <a class="uip-hidden" ref="exporter"></a>
-
-            <label class="uip-button-default">
-              <AppIcon icon="upload" class="uip-icon" />
-              <input hidden accept=".json" type="file" single="" id="uip-import-layout" @change="importSettings($event)" />
-            </label>
-          </div>
-
-          <button class="uip-button-primary" @click="saveSettings()">{{ ui.strings.saveSettings }}</button>
-        </div>
+        <button class="uip-button-primary" @click="saveSettings()">{{ ui.strings.saveSettings }}</button>
       </div>
     </div>
 
-    <!-- site settings -->
-  </uip-floating-panel>
+    <Tabs v-if="!loading" :options="returnTabs" v-model="activeTab" class="uip-margin-bottom-s" />
+
+    <div v-if="!loading" class="uip-flex-grow uip-flex uip-flex-column uip-row-gap-s uip-padding-left-xs uip-padding-right-xs" style="overflow: auto">
+      <!-- Dynamic settings -->
+
+      <div class="uip-flex uip-flex-column uip-row-gap-m">
+        <!--Loop through group settings -->
+
+        <!-- Licence manager -->
+        <template v-if="proPluginActivated && activeTab == 'general'">
+          <LicenceManager />
+          <div class="uip-border-top"></div>
+        </template>
+
+        <template v-for="option in uipApp.data.globalGroupOptions[activeTab].settings" v-if="render">
+          <div v-if="conditionalShowGroup(option)" class="uip-grid-col-4-6" style="grid-gap: var(--uip-margin-m)">
+            <div class="uip-flex uip-flex-column uip-gap-xxs">
+              <span class="uip-text-emphasis">{{ option.label }}</span>
+              <div class="uip-text-muted">{{ option.help }}</div>
+            </div>
+
+            <div class="uip-w-100p">
+              <a
+                href="https://uipress.co?utm_source=uipressupgrade&utm_medium=referral"
+                target="_BLANK"
+                v-if="option.proOption"
+                class="uip-padding-xxs uip-border-round uip-background-green-wash uip-text-s uip-link-default uip-no-underline uip-w-100p uip-text-center uip-flex"
+              >
+                {{ ui.strings.proOption }}
+              </a>
+              <component
+                v-else
+                :is="option.component"
+                :value="returnTemplateOption(uipApp.data.globalGroupOptions[activeTab].name, option)"
+                :args="option.args"
+                :returnData="
+                  (data) => {
+                    saveTemplateOption(uipApp.data.globalGroupOptions[activeTab].name, option.uniqueKey, data);
+                  }
+                "
+              ></component>
+            </div>
+          </div>
+
+          <div class="uip-border-top"></div>
+        </template>
+
+        <template v-if="activeTab == 'theme'">
+          <globalVariables />
+        </template>
+        <!--End loop through group settings -->
+      </div>
+      <!-- End dynamic settings -->
+    </div>
+  </div>
 </template>

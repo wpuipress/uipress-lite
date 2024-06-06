@@ -58,10 +58,7 @@ export default {
     <div @click="toggleOpen()" class="uip-flex uip-cursor-pointer uip-flex-middle uip-flex-center uip-flex-between uip-accordion-title uip-gap-s" :class="returnClasses">
       <slot name="title"></slot>
 
-      <div v-if="hasFooterSlot" class="uip-ratio-1-1 uip-icon uip-padding-xxxs uip-accordion-trigger uip-icon-medium uip-text-l uip-line-height-1" type="button">
-        <span v-if="!open">add</span>
-        <span v-if="open">remove</span>
-      </div>
+      <AppIcon v-if="hasFooterSlot" class="uip-ratio-1-1 uip-icon uip-padding-xxxs uip-accordion-trigger uip-icon-medium uip-text-l uip-line-height-1" :icon="open ? 'remove' : 'add'" />
     </div>
 
     <div v-if="open && hasFooterSlot" class="uip-padding-s uip-padding-right-remove uip-scale-in-top-right" :class="padding ? '' : 'uip-padding-left-remove'">

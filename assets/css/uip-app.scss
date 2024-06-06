@@ -17,11 +17,11 @@ html {
   --uip-color-accent-lighter: rgba(79, 70, 106, 0.55);
   --uip-color-accent-darker: rgb(91, 64, 171);
   //Colors green
-  --uip-color-green: #007a4c;
+  --uip-color-green: rgb(22, 163, 74);
   --uip-color-green-lighter: rgba(50, 210, 150, 0.21);
   --uip-color-green-darker: #005d3a;
   //Colors orange
-  --uip-color-orange: #ca7900;
+  --uip-color-orange: rgb(234, 88, 12);
   --uip-color-orange-lighter: rgba(250, 160, 90, 0.21);
   --uip-color-orange-darker: #9e4b0c;
   //Colors red
@@ -1706,7 +1706,10 @@ input[type="range"] {
   border-radius: var(--uip-border-radius-large);
 }
 .uip-border-round-left {
-  border-radius: var(--uip-border-radius) 0 0 var(--uip-border-radius);
+  border-radius: var(--uip-border-radius-large) 0 0 var(--uip-border-radius-large);
+}
+.uip-border-round-right {
+  border-radius: 0 var(--uip-border-radius-large) var(--uip-border-radius-large) 0;
 }
 .uip-border-round-top {
   border-radius: var(--uip-border-radius) var(--uip-border-radius) 0 0;
@@ -1773,6 +1776,9 @@ input[type="range"] {
 }
 .uip-border-green {
   border-color: var(--uip-color-green);
+}
+.uip-border-orange {
+  border-color: var(--uip-color-orange);
 }
 .uip-border-dashed {
   outline: 1px dashed rgb(12, 92, 239, 0.54);
@@ -3644,6 +3650,17 @@ body.macos .uip-alt-icon {
     min-width: 700px;
     max-width: 700px;
     min-height: 60px;
+  }
+}
+
+.uip-row-hover {
+  td {
+    transition: all 0.2s ease-in-out;
+  }
+  &:hover {
+    td {
+      background-color: var(--uip-color-base-1);
+    }
   }
 }
 
