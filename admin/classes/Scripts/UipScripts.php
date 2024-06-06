@@ -18,7 +18,7 @@ class UipScripts
    */
   public static function add_translations()
   {
-    wp_enqueue_script("uip-translations", uip_plugin_url . "assets/js/uip/uip-translations.min.js", ["wp-i18n"], uip_plugin_version);
+    wp_enqueue_script("uip-translations", uip_plugin_url . "assets/js/uip-translations.js", ["wp-i18n"], uip_plugin_version);
     wp_set_script_translations("uip-translations", "uipress-lite", uip_plugin_path . "/languages/");
   }
 

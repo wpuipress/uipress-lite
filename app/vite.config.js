@@ -7,7 +7,7 @@ export default defineConfig({
   plugins: [vue()],
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./assets"),
+      "@": path.resolve(__dirname, "./src"),
     },
   },
   define: {
@@ -21,9 +21,8 @@ export default defineConfig({
     rollupOptions: {
       input: {
         // Specify the entry point you want to build
-        builder: "assets/js/uip/uiBuilder.js",
-        //builder: "assets/js/uip/test.js",
-        //app: "assets/js/uip/uipApp.js",
+        builder: "src/uiBuilder.js",
+        app: "src/uipApp.js",
       },
       output: {
         // Specify the desired output file name

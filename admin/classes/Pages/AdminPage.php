@@ -91,6 +91,8 @@ class AdminPage
    */
   public static function add_wp_menu_icons()
   {
+    $iconPath = uip_plugin_url . "assets/icons/";
+
     $variableFormatter = "
       let menuItems = document.getElementsByClassName('wp-menu-image');
       if(menuItems[0]){
@@ -99,11 +101,10 @@ class AdminPage
             for (let classItem of classList){
               if(classItem.includes('dashicons-uip-icon-')){
                 let icon = classItem.replace('dashicons-uip-icon-', '');
-                item.classList.remove(classItem);
-                item.classList.add('uip-icon');
-                item.classList.add('uip-icon-medium');
                 if(icon == 'uipblank'){icon = 'favorite'};
-                item.innerHTML = '<span style=\"display: flex;align-items: center;justify-items: center;height: 100%;justify-content: center;\">' + icon + '</span>';
+                let iconPath = '{$iconPath}' + icon + '.svg';
+                item.classList.remove(classItem);
+                item.innerHTML = '<span class=\"uip-background-icon\" style=\"display: flex;align-items: center;justify-items: center;height: 100%;justify-content: center;margin-left:auto;margin-right:auto;mask:url(' + iconPath + ') center center / contain no-repeat\"></span>';
               }
             }
         }

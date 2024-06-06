@@ -514,11 +514,11 @@ class AdminMenu
     $wpicon = isset($menu_item[6]) ? $menu_item[6] : "";
 
     if (isset($menu_item["icon"]) && $menu_item["icon"] != "") {
-      return "<span class='uip-icon uip-icon-medium'>collections</span>";
+      return "collections";
     }
 
     if (isset($icons[$wpicon])) {
-      return "<span class='uip-icon uip-icon-medium'>{$icons[$wpicon]}</span>";
+      return $icons[$wpicon];
     }
 
     if (!$theicon) {
@@ -526,7 +526,7 @@ class AdminMenu
         //ICON IS CUSTOM ADMIN PAGE ICON
         $strippedIcon = str_replace("dashicons-uip-icon-", "", $wpicon);
 
-        return "<span class='uip-icon uip-icon-medium'>{$strippedIcon}</span>";
+        return $strippedIcon;
       } elseif (strpos($wpicon, "http") !== false || strpos($wpicon, "data:") !== false) {
         ///ICON IS IMAGE
         return "<img src='{$wpicon}' class='uip-icon-image uip-border-round uip-w-16 uip-ratio-1-1 uip-filter-contrast'>";

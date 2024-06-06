@@ -609,17 +609,6 @@ body:not(.block-editor-page) {
   }
 }
 
-.sorting-indicator:before {
-  left: 0;
-  content: "expand_less" !important;
-  font-family: "Material Symbols Rounded";
-}
-.sorting-indicator.desc:before {
-  left: 0;
-  content: "expand_more" !important;
-  font-family: "Material Symbols Rounded";
-}
-
 .tablenav.top {
   margin: 0;
 }
@@ -752,14 +741,6 @@ body {
     color: var(--uip-text-color-emphasis);
   }
 }
-#screen-meta-links .show-settings:after {
-  content: "expand_more";
-  font-family: "Material Symbols Rounded";
-}
-#screen-meta-links .screen-meta-active:after {
-  content: "expand_less";
-  font-family: "Material Symbols Rounded";
-}
 
 /**
 * POST BOXES / METABOXES
@@ -890,10 +871,6 @@ div.updated {
   background-color: var(--uip-color-base-1);
   border-radius: var(--uip-border-radius-large);
   color: var(--uip-text-color-base);
-  .notice-dismiss:before {
-    content: "cancel";
-    font-family: "Material Symbols Rounded";
-  }
 }
 
 .notice.updated,
@@ -911,12 +888,6 @@ div.updated,
 
 .notice.update-message {
   background-color: var(--uip-color-primary-lighter);
-}
-
-.update-message p:before {
-  content: "update";
-  font-family: "Material Symbols Rounded";
-  white-space: nowrap;
 }
 
 /**
@@ -941,14 +912,6 @@ div.updated,
 }
 .view-switch a.current:before {
   color: var(--uip-color-primary);
-}
-.view-switch .view-list:before {
-  content: "format_list_bulleted";
-  font-family: "Material Symbols Rounded";
-}
-.view-switch .view-grid:before {
-  content: "grid_view";
-  font-family: "Material Symbols Rounded";
 }
 .edit-attachment-frame .attachment-info {
   background-color: var(--uip-color-base-1);
