@@ -210,6 +210,23 @@ export async function sendServerRequest(url, data) {
 }
 
 /**
+ * Formats a date string
+ */
+export const formatDateString = (dateString) => {
+  if (!dateString) return "";
+  const date = new Date(dateString);
+  const options = {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour12: true, // Adjust based on locale preference, can be omitted
+  };
+
+  // Automatically uses the user's locale preferences
+  return new Intl.DateTimeFormat(undefined, options).format(date);
+};
+
+/**
  * Parses data and converts specific true false values to Boolean
  *
  * @since 3.0.0

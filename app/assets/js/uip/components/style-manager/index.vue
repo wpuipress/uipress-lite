@@ -2,7 +2,7 @@
 import { __ } from "@wordpress/i18n";
 import { defineAsyncComponent } from "vue";
 
-import colorSelect from "@/js/libs/colorpicker.js";
+import colorSelect from "@/js/uip/utility/colorpicker.js";
 
 export default {
   components: { colorSelect },

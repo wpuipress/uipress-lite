@@ -9,6 +9,16 @@ export default {
   data() {
     return {
       darkToggle: this.returnSetting,
+      options: {
+        false: {
+          value: false,
+          icon: "light_mode",
+        },
+        true: {
+          value: true,
+          icon: "dark_mode",
+        },
+      },
     };
   },
   watch: {
@@ -99,8 +109,14 @@ export default {
 </script>
 
 <template>
-  <label class="uip-dark-switch uip-overflow-hidden">
-    <input type="checkbox" v-model="uipApp.data.userPrefs.darkTheme" />
-    <span class="uip-slider"></span>
-  </label>
+  <toggle-switch
+    :options="options"
+    :activeValue="uipApp.data.userPrefs.darkTheme"
+    :dontAccentActive="true"
+    :returnValue="
+      (data) => {
+        uipApp.data.userPrefs.darkTheme = data;
+      }
+    "
+  />
 </template>

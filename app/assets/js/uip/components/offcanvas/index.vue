@@ -202,7 +202,9 @@ export default {
           :style="style"
         >
           <div class="uip-position-absolute uip-top-0 uip-padding-s uip-right-0 uip-z-index-1">
-            <AppIcon @click="closeOffcanvas()" icon=" close " class="uip-icon uip-padding-xxs uip-border-round hover:uip-background-grey uip-cursor-pointer uip-link-muted uip-text-l" />
+            <div @click="closeOffcanvas()" class="uip-padding-xxs uip-border-round hover:uip-background-grey uip-cursor-pointer uip-link-muted uip-text-l">
+              <AppIcon icon="close" />
+            </div>
           </div>
 
           <div class="uip-position-relative uip-h-100p uip-flex uip-w-100p uip-flex uip-max-h-100p">

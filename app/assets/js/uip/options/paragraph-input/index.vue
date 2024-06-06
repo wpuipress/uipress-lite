@@ -1,5 +1,5 @@
 <script>
-import * as QuillEditor from "@/js/libs/quill.min.js";
+import Quill from "quill";
 export default {
   props: {
     returnData: Function,

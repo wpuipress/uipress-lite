@@ -5,6 +5,7 @@ use UipressLite\Classes\Pages\FramedPages;
 use UipressLite\Classes\Pages\FrontEnd;
 use UipressLite\Classes\Pages\BackEnd;
 use UipressLite\Classes\Pages\AdminPage;
+use UipressLite\Classes\Rest\ErrorLog;
 
 // Exit if accessed directly
 !defined("ABSPATH") ? exit() : "";
@@ -24,6 +25,9 @@ class uip_app
   public function run()
   {
     $this->add_hooks();
+
+    // Start the error log rest endpoint
+    new ErrorLog();
   }
 
   /**

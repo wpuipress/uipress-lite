@@ -1,6 +1,5 @@
 <script>
 import { __ } from "@wordpress/i18n";
-import { VueDraggableNext } from "vue-draggable-next";
 export default {
   props: {
     returnData: Function,

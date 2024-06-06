@@ -10,8 +10,6 @@ import { nextTick } from "vue";
 import screenOverlay from "./screenOverlay.vue";
 import Confirm from "@/js/uip/components/confirm/index.vue";
 
-import { VueDraggableNext } from "vue-draggable-next";
-
 export default {
   inject: ["uiTemplate"],
   components: { screenOverlay, Confirm },

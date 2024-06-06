@@ -321,7 +321,9 @@ export default {
             <div class="uip-text-bold uip-blank-input uip-text-l uip-text-emphasis">{{ ui.strings.templateSettings }}</div>
           </div>
 
-          <a class="uip-link-muted hover:uip-background-muted uip-border-rounder uip-icon uip-padding-xxs" @click="goBack()">close</a>
+          <a class="uip-link-muted hover:uip-background-muted uip-border-rounder uip-padding-xxs" @click="goBack()">
+            <AppIcon icon="close" />
+          </a>
         </div>
       </div>
       <!-- End block settings header -->

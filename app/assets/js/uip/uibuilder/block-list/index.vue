@@ -7,7 +7,6 @@ import { __ } from "@wordpress/i18n";
 import { nextTick } from "vue";
 
 import ToggleSection from "./ToggleSection.vue";
-import { VueDraggableNext } from "vue-draggable-next";
 
 export default {
   components: {
@@ -95,7 +94,7 @@ export default {
      * @since 3.2.13
      */
     clone(block) {
-      let item = JSON.parse(JSON.stringify(block));
+      let item = JSON.parse(JSON.stringify(block.metadata));
       item.tooltip = {};
       item.settings = {};
 
@@ -123,10 +122,11 @@ export default {
       const allBlocks = this.uipApp.data.blocks;
 
       // Find the originally registered block's enabled settings
-      const masterblockIndex = allBlocks.findIndex((block) => block.moduleName === blockModule);
+      let masterBlock = allBlocks.find((block) => block.metadata.moduleName === blockModule);
       // No block settings so bail
-      if (masterblockIndex < 0) return;
-      const masterBlock = allBlocks[masterblockIndex];
+      if (!masterBlock) return;
+
+      masterBlock = masterBlock.metadata;
 
       const allBlockSettings = masterBlock.optionsEnabled;
       const blockOptionsIndex = allBlockSettings.findIndex((option) => option.name === "block");

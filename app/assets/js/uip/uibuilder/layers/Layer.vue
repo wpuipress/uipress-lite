@@ -3,7 +3,6 @@ import { __ } from "@wordpress/i18n";
 import { nextTick } from "vue";
 
 import BlockList from "@/js/uip/uibuilder/block-list/index.vue";
-import { VueDraggableNext } from "vue-draggable-next";
 
 export default {
   name: "Layer",

@@ -1,7 +1,7 @@
 <script>
 import { defineAsyncComponent } from "vue";
 
-import colorSelect from "@/js/libs/colorpicker.js";
+import colorSelect from "@/js/uip/utility/colorpicker.js";
 import styleManager from "@/js/uip/components/style-manager/index.vue";
 
 export default {

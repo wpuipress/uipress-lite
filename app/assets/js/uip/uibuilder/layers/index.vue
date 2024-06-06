@@ -5,8 +5,6 @@ import { nextTick } from "vue";
 import Layer from "./Layer.vue";
 import BlockList from "@/js/uip/uibuilder/block-list/index.vue";
 
-import { VueDraggableNext } from "vue-draggable-next";
-
 export default {
   name: "layersRecursive",
   props: {

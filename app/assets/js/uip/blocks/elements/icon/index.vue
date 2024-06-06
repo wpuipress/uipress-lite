@@ -18,17 +18,15 @@ export default {
      */
     returnIcon() {
       let icon = this.get_block_option(this.block, "block", "iconSelect");
-      if (!icon) return "";
+      if (!icon) return "favorite";
       if (!this.isObject(icon)) return icon;
       if (icon.value) return icon.value;
-      return "";
+      return "favorite";
     },
   },
 };
 </script>
 
 <template>
-  <div class="uip-icon">
-    {{ returnIcon }}
-  </div>
+  <AppIcon :icon="returnIcon" />
 </template>

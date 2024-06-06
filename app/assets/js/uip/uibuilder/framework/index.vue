@@ -268,11 +268,11 @@ export default {
      * @since 3.2.13
      */
     async addCanvas() {
-      const containerBlock = this.uipApp.data.blocks.filter((obj) => {
-        return obj.moduleName == "uip-container";
-      });
+      const containerBlock = this.uipApp.data.blocks.find((obj) => obj.metadata.moduleName == "uip-container");
 
-      let copiedConatiner = JSON.parse(JSON.stringify(containerBlock[0]));
+      if (!containerBlock) return;
+
+      let copiedConatiner = JSON.parse(JSON.stringify(containerBlock.metadata));
 
       delete copiedConatiner.path;
       delete copiedConatiner.args;

@@ -33,18 +33,17 @@ const routes = [
         path: "/sitesync/",
         component: () => import("@/js/uip/uibuilder/site-sync/index.vue"),
       },
-
-      {
-        name: "Error log",
-        path: "/errorlog/",
-        component: () => import("@/js/uip/tools/error-log/index.vue"),
-      },
     ],
   },
   {
     name: "Site settings",
     path: "/site-settings/",
     component: () => import("@/js/uip/pages/site-settings/index.vue"),
+  },
+  {
+    name: "Error log",
+    path: "/error-log",
+    component: () => import("@/js/uip/pages/error-log/index.vue"),
   },
   {
     path: "/uibuilder/:templateID/",

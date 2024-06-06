@@ -2,7 +2,6 @@
 use UipressLite\Classes\Utils\Ajax;
 use UipressLite\Classes\Utils\Sanitize;
 use UipressLite\Classes\App\UipOptions;
-use UipressLite\Classes\Utils\ErrorLog;
 use UipressLite\Classes\ImportExport\Import;
 use UipressLite\Classes\ImportExport\Export;
 use UipressLite\Classes\App\BlockQuery;
@@ -40,7 +39,6 @@ class uip_ajax
       "uip_save_form_as_user_option",
       "uip_pre_populate_form_data",
       "uip_create_frame_switch",
-      "uip_get_php_errors",
       "uip_get_sync_options",
       "uip_refresh_sync_key",
       "uip_save_sync_options",
@@ -538,50 +536,6 @@ class uip_ajax
     $returndata["updated"] = $updated;
     $returndata["status"] = get_post_status($templateID);
     $returndata["success"] = true;
-    wp_send_json($returndata);
-  }
-
-  /**
-   * Gets php errors for error log component
-   *
-   * @since 3.0.92
-   */
-  public function uip_get_php_errors()
-  {
-    // Check security nonce and 'DOING_AJAX' global
-    Ajax::check_referer();
-
-    $perPage = sanitize_text_field($_POST["perPage"]);
-    $order = sanitize_text_field($_POST["order"]);
-    $search = sanitize_text_field($_POST["search"]);
-    $page = sanitize_text_field($_POST["page"]);
-
-    $logdir = ini_get("error_log");
-
-    // Unable to find error log so bail
-    if (!$logdir) {
-      $returndata["error"] = true;
-      $returndata["message"] = __("Unable to locate error log", "uipress-lite");
-      $returndata["description"] = __("No error log path set in your PHP ini file", "uipress-lite");
-      wp_send_json($returndata);
-    }
-
-    // Unable to find error log file so bail
-    if (!file_exists($logdir)) {
-      $returndata["error"] = true;
-      $returndata["message"] = __("Log file does not exist or is empty", "uipress-lite");
-      $returndata["description"] = __("Either the PHP error log path is incorrect or you don't have any errors yet. Path: ", "uipress-lite") . $logdir;
-      wp_send_json($returndata);
-    }
-
-    // Get all errors
-    $errorResponse = ErrorLog::get($logdir, $perPage, $order, $search, $page);
-
-    $returndata["success"] = true;
-    $returndata["message"] = __("Errros fetched", "uipress-lite");
-    $returndata["errors"] = $errorResponse["errors"];
-    $returndata["totalFound"] = $errorResponse["totalFound"];
-    $returndata["totalPages"] = $errorResponse["totalPages"];
     wp_send_json($returndata);
   }
 

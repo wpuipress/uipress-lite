@@ -258,14 +258,14 @@ defineExpose({
       <tfoot>
         <tr>
           <td :colspan="columns.length + 1">
-            <div v-if="pagination && data.length && pagination.pages > 1" class="flex flex-row gap-6 place-content-between items-center uip-padding-xs w-full">
+            <div v-if="pagination && data.length && pagination.pages > 1" class="uip-padding-top-s uip-flex uip-flex-row uip-gap-m uip-flex-between uip-flex-center uip-padding-xs uip-w-100p">
               <span class="uip-text-muted">{{ pagination.per_page }} of {{ pagination.total }}</span>
-              <div class="flex gap-3 items-center">
+              <div class="uip-flex uip-gap-s uip-flex-center">
                 <span class="uip-text-muted">{{ pagination.page }} of {{ pagination.pages }}</span>
-                <button :disabled="pagination.page === 1" @click="emit('previous')" type="transparent">
+                <button :disabled="pagination.page === 1" @click="emit('previous')" class="uip-button-default">
                   <AppIcon icon="chevron_left" />
                 </button>
-                <button @click="emit('next')" :disabled="pagination.page === pagination.pages" type="transparent">
+                <button @click="emit('next')" :disabled="pagination.page === pagination.pages" class="uip-button-default">
                   <AppIcon icon="chevron_right" />
                 </button>
               </div>
