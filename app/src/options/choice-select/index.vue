@@ -1,4 +1,5 @@
 <script>
+import { __ } from "@wordpress/i18n";
 export default {
   props: {
     returnData: Function,

@@ -15,7 +15,7 @@ export default {
         updated: null,
         id: null,
       },
-      loading: true,
+      loading: false,
       updateAvailable: false,
       windowWidth: window.innerWidth,
     };
@@ -255,27 +255,7 @@ export default {
 
   <component is="style"> .v-enter-active, .v-leave-active {transition: opacity 0.6s ease;} .v-enter-from, .v-leave-to {opacity: 0;} </component>
 
-  <TransitionGroup>
-    <div
-      v-if="isLoading"
-      class="uip-background-default uip-body-font uip-h-viewport uip-max-h-viewport uip-flex uip-flex-center uip-flex-middle uip-position-fixed uip-z-index-9"
-      style="min-height: 100vh; max-height: 100vh; min-width: 100vw; max-width: 100vw"
-    >
-      <loading-chart></loading-chart>
-    </div>
-
-    <uip-content-area
-      v-else
-      :content="template.content"
-      :class="returnResponsiveClass"
-      :returnData="
-        function (data) {
-          template.content = data;
-        }
-      "
-    >
-    </uip-content-area>
-  </TransitionGroup>
+  <uip-content-area :content="template.content" :class="returnResponsiveClass" />
 
   <!--Import plugins -->
   <template v-for="plugin in uipApp.data.plugins">

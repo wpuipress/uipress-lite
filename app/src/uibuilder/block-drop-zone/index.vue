@@ -16,7 +16,7 @@ export default {
   data() {
     return {
       items: [],
-      rendered: true,
+      rendered: false,
       randomClass: this.createUID(),
     };
   },
@@ -33,6 +33,9 @@ export default {
       immediate: true,
       deep: true,
     },
+  },
+  mounted() {
+    this.rendered = true;
   },
   computed: {
     /**
@@ -87,6 +90,7 @@ export default {
       return { name: "uip-blocks", pull: true, put: true, revertClone: false };
     },
   },
+
   methods: {
     /**
      * Forces a ui re-render

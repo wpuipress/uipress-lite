@@ -22,10 +22,34 @@ const isUiBuilderRoute = computed(() => {
       <div class="uip-w-240 uip-flex-no-grow uip-padding-s uip-border-right" style="flex-shrink: 0"><AppMenu /></div>
 
       <div class="uip-flex uip-flex-grow uip-padding-s">
-        <RouterView />
+        <RouterView v-slot="{ Component }">
+          <template v-if="Component">
+            <Transition mode="out-in">
+              <Suspense>
+                <!-- main content -->
+                <component :is="Component"></component>
+
+                <!-- loading state -->
+                <template #fallback> Loading... </template>
+              </Suspense>
+            </Transition>
+          </template>
+        </RouterView>
       </div>
     </div>
 
-    <RouterView v-else />
+    <RouterView v-else v-slot="{ Component }">
+      <template v-if="Component">
+        <Transition mode="out-in">
+          <Suspense>
+            <!-- main content -->
+            <component :is="Component"></component>
+
+            <!-- loading state -->
+            <template #fallback> Loading... </template>
+          </Suspense>
+        </Transition>
+      </template>
+    </RouterView>
   </div>
 </template>

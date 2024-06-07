@@ -57,9 +57,11 @@ export default {
       immediate: true,
     },
   },
+  created() {},
   mounted() {
     this.mountProductionFunctions();
     this.mountMainWatchers();
+    this.setStartPage();
     this.mounted = true;
     if (this.$refs.modernloader) this.$refs.modernloader.start();
   },
@@ -161,6 +163,54 @@ export default {
     },
   },
   methods: {
+    /**
+     * Set's start page
+     *
+     * @since 3.3.4
+     */
+    setStartPage() {
+      if (this.uiTemplate.display == "prod") {
+        this.ingestCurrentPage();
+      } else {
+        this.$refs.contentframe.setAttribute("src", this.returnStartPage);
+      }
+    },
+
+    /**
+     * Ingests and modifies current page and injects
+     *
+     * @since 3.3.4
+     */
+    ingestCurrentPage() {
+      const outerHTML = document.documentElement.outerHTML;
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(outerHTML, "text/html");
+
+      // Update attributes
+      doc.documentElement.removeAttribute("uip-core-app");
+      doc.documentElement.setAttribute("uip-framed-page", "true");
+
+      // Remove uip app
+      const uipscript = doc.querySelector("#uip-app-js");
+      const uipApp = doc.querySelector("#uip-ui-app");
+      if (uipscript) uipscript.remove();
+      if (uipApp) uipApp.remove();
+
+      // Set global attributes
+      const { contentTheme, helpTab, screenOptions, pluginNotices } = this.uiTemplate.globalSettings;
+      doc.documentElement.setAttribute("uip-admin-theme", `${contentTheme}`);
+      doc.documentElement.setAttribute("uip-hide-screen-options", `${!screenOptions}`);
+      doc.documentElement.setAttribute("uip-hide-help-tab", `${!helpTab}`);
+      doc.documentElement.setAttribute("uip-hide-notices", `${!pluginNotices}`);
+
+      const iframeDoc = this.$refs.contentframe?.contentDocument || this.$refs.contentframe?.contentWindow?.document;
+
+      // Write new doc to iframe
+      iframeDoc.open();
+      iframeDoc.write(doc.documentElement.outerHTML);
+      iframeDoc.close();
+    },
+
     /**
      * Returns public methods available to the interactions API
      *
@@ -875,7 +925,6 @@ export default {
     <ModLoader v-if="!loaderHidden" ref="modernloader" color="repeating-linear-gradient(to right,var(--uip-color-accent) 0%,var(--uip-color-accent-darker) 100%)" />
 
     <iframe
-      :src="returnStartPage"
       ref="contentframe"
       @load="handleIframeLoad"
       style="transition: opacity 0.3s ease-in-out"

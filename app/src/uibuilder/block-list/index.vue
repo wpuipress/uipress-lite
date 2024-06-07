@@ -226,6 +226,8 @@ export default {
       <input class="uip-blank-input uip-flex-grow uip-text-s" type="search" :placeholder="strings.seachBlocks" autofocus="" v-model="search" />
     </div>
 
+    <uip-block-modal :block="{}" />
+
     <!--Searching-->
     <VueDraggableNext
       v-if="search != ''"

@@ -5,6 +5,7 @@ import path from "path";
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [vue()],
+  base: "/wp-content/plugins/uipress-lite/app/dist/",
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
@@ -25,6 +26,11 @@ export default defineConfig({
         app: "src/uipApp.js",
       },
       output: {
+        manualChunks: {
+          // Specify manual chunk configuration
+          //vendor: ["vue", "vue-router"],
+          // ...
+        },
         // Specify the desired output file name
         // You can use [name] to dynamically insert the name of the input file
         // For example, if the input file is 'custom-entry.js', the output will be 'custom-entry.js'

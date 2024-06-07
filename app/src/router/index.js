@@ -11,29 +11,29 @@ const routes = [
   {
     path: "/",
     name: "List View",
-    component: () => import("@/pages/home/index.vue"),
+    component: () => import("../pages/home/index.vue"),
   },
   {
     name: "Site settings",
     path: "/site-settings/",
-    component: () => import("@/pages/site-settings/index.vue"),
+    component: () => import("../pages/site-settings/index.vue"),
   },
   {
     name: "import-export",
     path: "/import-export/",
     //component: () => import("@/uibuilder/global-export/index.vue"),
-    component: () => import("@/pages/import-export/index.vue"),
+    component: () => import("../pages/import-export/index.vue"),
   },
   {
     name: "remote-sync",
     path: "/remote-sync/",
     //component: () => import("@/uibuilder/global-export/index.vue"),
-    component: () => import("@/pages/site-sync/index.vue"),
+    component: () => import("../pages/site-sync/index.vue"),
   },
   {
     name: "Error log",
     path: "/error-log",
-    component: () => import("@/pages/error-log/index.vue"),
+    component: () => import("../pages/error-log/index.vue"),
   },
   {
     path: "/uibuilder/:templateID/",

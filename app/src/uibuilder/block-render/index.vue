@@ -1,5 +1,5 @@
 <script>
-import { nextTick, h, Teleport, ref } from "vue";
+import { nextTick, h, Teleport, ref, defineComponent } from "vue";
 
 import BlockStyles from "@/uibuilder/block-styles/index.vue";
 import BlockConditions from "@/uibuilder/block-conditions/index.vue";
@@ -535,7 +535,17 @@ export default {
 
       return [h("div", { class: "uip-flex uip-w-100p uip-flex-between uip-flex-center uip-pagination-controls" }, totalFoundNode, paginationWrapper)];
     },
+
+    /**
+     * Get's the component instance
+     *
+     * @since 3.2.13
+     */
+    getComponentInstance(componentName) {
+      return this.$root?._?.appContext?.components?.[componentName];
+    },
   },
+
   /**
    * Renders block, styles and scripts and applies watchers
    *
@@ -576,11 +586,13 @@ export default {
 
     const blockREF = ref(null);
     const args = { ...this.returnParams, ...this.returnWatchers(this.block), ...{ ref: blockREF } };
-    const coreBlockNode = h(blockTemplate.component, args);
+    const blockComponent = blockTemplate.component;
+
+    const coreBlockNode = h(blockComponent, args);
 
     // If has block query
     if (hasBlockQuery) {
-      const queryNodes = this.renderQuery(blockTemplate.component);
+      const queryNodes = this.renderQuery(blockComponent);
       const searchNodes = this.renderSearch();
       const pagination = this.renderPagination();
 

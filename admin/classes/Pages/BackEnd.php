@@ -70,6 +70,37 @@ class BackEnd
 
     self::output_template($templates[0]);
     self::add_hooks();
+
+    //add_action("admin_enqueue_scripts", ["UipressLite\Classes\Pages\BackEnd", "remove_scripts"], 100);
+  }
+
+  /**
+   * Removes all non-standard scripts
+   */
+  public static function remove_scripts()
+  {
+    $defaultScripts = []; // Add any default scripts you want to keep
+
+    // Remove all standard admin scripts
+    global $wp_scripts;
+    if (isset($wp_scripts->queue)) {
+      foreach ($wp_scripts->queue as $handle) {
+        // Don't dequeue core scripts
+        if (in_array($handle, $defaultScripts)) {
+          continue;
+        }
+
+        // Don't dequeue specific scripts
+        if (strpos($handle, "uip") !== false) {
+          continue;
+        }
+
+        error_log($handle);
+
+        wp_dequeue_script($handle);
+        wp_deregister_script($handle);
+      }
+    }
   }
 
   /**
@@ -240,9 +271,7 @@ class BackEnd
       wp_print_inline_script_tag($variableFormatter, ["id" => "uip-ui-template"]);
 
       $app = '
-      <div class="uip-position-absolute uip-w-100vw uip-h-100p uip-background-default uip-top-0 uip-user-frame" id="uip-app-container" style="display:block !important">
-        <div id="uip-ui-app" class="uip-flex uip-h-100vh uip-body-font">
-        </div>
+      <div class="uip-position-absolute uip-w-100vw uip-h-100p uip-background-default uip-top-0 uip-user-frame uip-body-font uip-teleport uip-flex" id="uip-ui-app" style="display:block !important">
       </div>
       ';
 
