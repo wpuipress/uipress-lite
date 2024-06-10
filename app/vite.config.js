@@ -9,6 +9,7 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
+      vue: "vue/dist/vue.esm-bundler.js",
     },
   },
   define: {
@@ -26,6 +27,9 @@ export default defineConfig({
         app: "src/uipApp.js",
       },
       output: {
+        globals: {
+          vue: "Vue",
+        },
         manualChunks: {
           // Specify manual chunk configuration
           //vendor: ["vue", "vue-router"],

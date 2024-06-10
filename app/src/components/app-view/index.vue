@@ -258,8 +258,8 @@ export default {
   <uip-content-area :content="template.content" :class="returnResponsiveClass" />
 
   <!--Import plugins -->
-  <template v-for="plugin in uipApp.data.plugins">
-    <component v-if="componentExists(plugin.component) && plugin.loadInApp" :is="plugin.component"> </component>
+  <template v-for="plugin in uipGlobalPlugins">
+    <component :is="plugin" />
   </template>
   <!-- end plugin import -->
 </template>

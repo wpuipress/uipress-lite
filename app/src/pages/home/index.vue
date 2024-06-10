@@ -255,6 +255,10 @@ const handleLinkAction = (link) => {
   templateContextMenu.value.close();
 };
 
+if (window.parent) {
+  window.parent.postMessage({ eventName: "uip_exit_fullscreen" }, "*");
+}
+
 getTemplates();
 enqueueAdminBarStyles();
 </script>

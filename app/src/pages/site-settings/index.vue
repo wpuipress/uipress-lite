@@ -4,7 +4,7 @@
  * @since 3.0.0
  */
 import { __ } from "@wordpress/i18n";
-import { nextTick } from "vue";
+import { nextTick, defineAsyncComponent } from "vue";
 
 // Comps
 import globalVariables from "@/uibuilder/variables/index.vue";
@@ -12,7 +12,7 @@ import LicenceManager from "@/uibuilder/licence-manager/index.vue";
 import Tabs from "@/components/tabs/index.vue";
 
 export default {
-  components: { globalVariables, LicenceManager, Tabs },
+  components: { globalVariables, LicenceManager, Tabs, CodeEditor: defineAsyncComponent(() => import("@/options/code-editor/index.vue")) },
   data() {
     return {
       loading: false,
@@ -33,7 +33,7 @@ export default {
     };
   },
 
-  mounted() {
+  created() {
     this.loading = false;
     this.getSettings();
   },
@@ -324,9 +324,7 @@ export default {
 <template>
   <!-- Site settings -->
   <div class="uip-flex uip-flex-column uip-w-100p uip-max-h-100p uip-flex-no-wrap uip-row-gap-m uip-padding-top-s">
-    <div v-if="loading" class="uip-w-100p uip-flex uip-flex-middle uip-flex-center uip-padding-s"><loading-chart></loading-chart></div>
-
-    <div v-if="!loading" class="uip-flex uip-flex-between uip-flex-center">
+    <div class="uip-flex uip-flex-between uip-flex-center">
       <div class="uip-text-l uip-text-emphasis">{{ ui.strings.siteSettings }}</div>
       <div class="uip-flex uip-gap-xs">
         <button class="uip-button-default" @click="exportSettings()">

@@ -16,6 +16,8 @@ import FloatingPanel from "@/components/floating-panel/index.vue";
 import Modal from "@/components/basic-modal/index.vue";
 import AppIcon from "@/components/icons/index.vue";
 import ContextMenu from "@/components/contextmenu/index.vue";
+import MediaLibrary from "@/components/media-library/MediaLibrary.vue";
+import { VueDraggableNext } from "vue-draggable-next";
 
 // Async charts as it's heavy
 const ChartComp = defineAsyncComponent(() => import("@/components/chart/index.vue"));
@@ -44,4 +46,9 @@ export const registerGlobalComponents = (app) => {
   app.component("Modal", Modal);
   app.component("AppIcon", AppIcon);
   app.component("contextmenu", ContextMenu);
+  app.component("uipMediaLibrary", MediaLibrary);
+  app.component("VueDraggableNext", VueDraggableNext);
+
+  // Make some components available to pro components
+  app.config.globalProperties.globalComponents = { AppIcon, VueDraggableNext };
 };

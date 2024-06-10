@@ -83,12 +83,12 @@ export default {
     >
       <template v-for="(element, index) in options" :key="index" :index="index">
         <div class="uip-flex uip-gap-xxs uip-w-100p">
-          <button class="uip-button-default uip-border-rounder uip-icon uip-padding-xxs uip-link-muted uip-cursor-drag">drag_indicator</button>
+          <button class="uip-button-default uip-border-rounder uip-padding-xxs uip-link-muted uip-cursor-drag"><AppIcon icon="drag_indicator" /></button>
 
           <input type="text" :placeholder="strings.label" v-model="element.label" :key="index" class="uip-input-small uip-flex-shrink uip-w-70" />
           <input type="text" :placeholder="strings.value" v-model="element.name" :key="index" class="uip-input-small uip-flex-grow uip-w-70" />
 
-          <button @click="deleteOption(index)" class="uip-button-default uip-border-rounder uip-icon uip-padding-xxs uip-link-muted">close</button>
+          <button @click="deleteOption(index)" class="uip-button-default uip-border-rounder uip-padding-xxs uip-link-muted"><AppIcon icon="close" /></button>
         </div>
       </template>
     </VueDraggableNext>

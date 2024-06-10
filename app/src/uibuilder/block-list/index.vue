@@ -242,15 +242,15 @@ export default {
       itemKey="name"
     >
       <template v-for="(element, index) in sortedBlocks" :key="element.name" :index="index">
-        <div v-show="componentExists(element) && inSearch(element)" class="uip-block-item" :block-name="element.name">
+        <div v-show="element.component && inSearch(element.metadata)" class="uip-block-item" :block-name="element.metadata.name">
           <div @click="insertAtPos(element)" class="uip-border-rounder uip-link-default hover:uip-background-muted uip-cursor-pointer uip-block-drag uip-no-text-select">
             <div class="uip-flex uip-gap-xxs uip-flex-center">
-              <div class="uip-icon uip-text-l uip-padding-xxs uip-background-muted uip-border-rounder uip-text-emphasis uip-margin-right-xs">
-                <AppIcon :icon="element.icon" />
+              <div class="uip-icon uip-text-l uip-padding-xxs uip-background-secondary uip-border-rounder uip-text-inverse uip-margin-right-xs">
+                <AppIcon :icon="element.metadata.icon" />
               </div>
-              <div class="uip-text-center uip-text-s uip-text-muted">{{ returnGroupLabel(element.group) }}</div>
+              <div class="uip-text-center uip-text-s uip-text-muted">{{ returnGroupLabel(element.metadata.group) }}</div>
               <AppIcon icon="chevron_right" class="uip-icon uip-text-muted" />
-              <div class="uip-text-s">{{ element.name }}</div>
+              <div class="uip-text-s">{{ element.metadata.name }}</div>
             </div>
           </div>
         </div>
@@ -274,7 +274,7 @@ export default {
           <template v-for="(element, index) in cat.blocks" :key="element.name" :index="index">
             <div v-if="element.component" @click="insertAtPos(element)" class="uip-border-rounder uip-link-default hover:uip-background-muted uip-cursor-pointer uip-block-drag uip-no-text-select">
               <div class="uip-flex uip-gap-xxs uip-flex-center">
-                <div class="uip-icon uip-text-l uip-padding-xxs uip-background-muted uip-border-rounder uip-text-emphasis uip-margin-right-xs">
+                <div class="uip-icon uip-text-l uip-padding-xxs uip-background-secondary uip-border-rounder uip-text-inverse uip-margin-right-xs">
                   <AppIcon :icon="element.metadata.icon" />
                 </div>
                 <div class="uip-text-s">{{ element.metadata.name }}</div>

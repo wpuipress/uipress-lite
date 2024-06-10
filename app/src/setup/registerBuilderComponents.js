@@ -27,7 +27,6 @@ import SelectOptionBuilder from "@/options/select-option-builder/index.vue";
 import ArrayList from "@/options/array-list/index.vue";
 import SelectPostTypes from "@/options/select-post-types/index.vue";
 import Effects from "@/options/effects/index.vue";
-import { VueDraggableNext } from "vue-draggable-next";
 
 /**
  * Imports components globally
@@ -62,5 +61,4 @@ export const registerBuilderComponents = (app) => {
   app.component("uip-select-post-types", SelectPostTypes);
   app.component("inline-image-select", InlineImageSelect);
   app.component("uip-effects", Effects);
-  app.component("VueDraggableNext", VueDraggableNext);
 };

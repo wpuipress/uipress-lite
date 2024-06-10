@@ -2,11 +2,10 @@
 import { __ } from "@wordpress/i18n";
 import { deleteRemotePost } from "@/utility/functions.js";
 import { defineAsyncComponent, nextTick } from "vue";
+import Confirm from "@/components/confirm/index.vue";
 
 export default {
-  components: {
-    Confirm: defineAsyncComponent(() => import("@/components/confirm/index.vue")),
-  },
+  components: { Confirm },
   props: {
     display: String,
     name: String,

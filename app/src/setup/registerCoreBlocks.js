@@ -122,23 +122,5 @@ export const registerCoreBlocks = () => {
     WooTables,
   ];
 
-  const proBlocks = wp.hooks.applyFilters("uipress.app.blocks.register");
-
-  console.log(proBlocks);
-
-  if (proBlocks && Array.isArray(proBlocks) && 1 == 2) {
-    for (let block of proBlocks) {
-      let key = block.metadata.moduleName;
-      const existingIndex = allBlocks.findIndex((item) => item.metadata.moduleName == key);
-
-      // We found the placeholder so replace it with the new block
-      if (existingIndex >= 0) {
-        allBlocks.splice(existingIndex, 1, block);
-      } else {
-        allBlocks.push(block);
-      }
-    }
-  }
-
   return allBlocks;
 };

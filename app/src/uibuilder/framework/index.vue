@@ -448,8 +448,8 @@ export default {
   </div>
 
   <!--Import plugins -->
-  <template v-for="plugin in uipApp.data.plugins" v-if="layoutFetched">
-    <component v-if="componentExists(plugin.component) && plugin.loadInApp" :is="plugin.component"></component>
+  <template v-for="plugin in uipGlobalPlugins" v-if="layoutFetched">
+    <component :is="plugin" />
   </template>
   <!-- end plugin import -->
 
