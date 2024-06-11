@@ -179,7 +179,7 @@ class AdminPage
    */
   public static function add_hooks()
   {
-    do_action("uipress/uibuilder/start");
+    do_action("uipress/app/start");
 
     return;
     // If the app is running then the this page will be loaded in a frame

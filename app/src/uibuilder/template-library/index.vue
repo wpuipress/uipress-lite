@@ -454,10 +454,10 @@ export default {
                     <div class="uip-flex-grow uip-text-bold">{{ theme.name }}</div>
 
                     <div v-if="theme.images.length > 1" class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-icon uip-text-l" @click="navImagesBackward(theme)">
-                      chevron_left
+                      <AppIcon icon="chevron_left" />
                     </div>
                     <div v-if="theme.images.length > 1" class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-icon uip-text-l" @click="navImagesForward(theme)">
-                      chevron_right
+                      <AppIcon icon="chevron_right" />
                     </div>
 
                     <AppIcon icon="download" class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-icon uip-text-l" @click="importThis(theme, true)" />
@@ -521,10 +521,10 @@ export default {
                     <div class="uip-flex-grow uip-text-bold">{{ theme.name }}</div>
 
                     <div v-if="theme.images.length > 1" class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-icon uip-text-l" @click="navImagesBackward(theme)">
-                      chevron_left
+                      <AppIcon icon="chevron_left" />
                     </div>
                     <div v-if="theme.images.length > 1" class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-icon uip-text-l" @click="navImagesForward(theme)">
-                      chevron_right
+                      <AppIcon icon="chevron_right" />
                     </div>
 
                     <AppIcon icon="download" class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-icon uip-text-l" @click="importThis(theme)" />

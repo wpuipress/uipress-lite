@@ -88,7 +88,7 @@ class uip_app
   private function start_apps()
   {
     // Triggers pro actions for builder
-    do_action("uipress/uibuilder/start");
+    do_action("uipress/app/start");
 
     FrontEnd::start();
     BackEnd::start();
