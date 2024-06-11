@@ -1,5 +1,5 @@
 <script>
-import { __ } from "@wordpress/i18n";
+const { __ } = wp.i18n;
 import Fonts from "@/data/fonts.js";
 
 import colourManager from "@/components/color-style-editor/index.vue";
@@ -413,10 +413,13 @@ export default {
             v-if="!item.user && customSet(item)"
             :title="ui.strings.revertStyle"
             class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-text-s"
-            >format_color_reset</a
           >
+            <AppIcon icon="format_color_reset" />
+          </a>
 
-          <a v-if="item.user" @click="deleteVar(item)" :title="ui.strings.deleteVariable" class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-text-s">delete</a>
+          <a v-if="item.user" @click="deleteVar(item)" :title="ui.strings.deleteVariable" class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-text-s"
+            ><AppIcon icon="delete"
+          /></a>
         </div>
       </template>
     </div>
@@ -495,10 +498,13 @@ export default {
             v-if="!item.user && customSet(item)"
             :title="ui.strings.revertStyle"
             class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-text-s"
-            >format_color_reset</a
           >
+            <AppIcon icon="format_color_reset" />
+          </a>
 
-          <a v-if="item.user" @click="deleteVar(item)" :title="ui.strings.deleteVariable" class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-text-s">delete</a>
+          <a v-if="item.user" @click="deleteVar(item)" :title="ui.strings.deleteVariable" class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-text-s">
+            <AppIcon icon="delete" />
+          </a>
         </div>
       </template>
     </div>
@@ -572,10 +578,13 @@ export default {
             v-if="!item.user && customSet(item)"
             :title="ui.strings.revertStyle"
             class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-text-s"
-            >format_color_reset</a
           >
+            <AppIcon icon="format_color_reset" />
+          </a>
 
-          <a v-if="item.user" @click="deleteVar(item)" :title="ui.strings.deleteVariable" class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-text-s">delete</a>
+          <a v-if="item.user" @click="deleteVar(item)" :title="ui.strings.deleteVariable" class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-text-s">
+            <AppIcon icon="delete" />
+          </a>
         </div>
       </template>
     </div>

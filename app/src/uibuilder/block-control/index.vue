@@ -1,6 +1,6 @@
 <script>
 import { nextTick } from "vue";
-import { __ } from "@wordpress/i18n";
+const { __ } = wp.i18n;
 
 import BlockSettings from "@/uibuilder/block-settings/index.vue";
 import Confirm from "@/components/confirm/index.vue";

@@ -1,5 +1,5 @@
 <script>
-import { __ } from "@wordpress/i18n";
+const { __ } = wp.i18n;
 import { nextTick } from "vue";
 
 import flexLayout from "@/options/flex-layout/index.vue";
@@ -282,7 +282,9 @@ export default {
           >
             <span>{{ item.label }}</span>
 
-            <a v-if="itemHasPseudo(item.value)" @click.prevent.stop="clearPseudo(item.value)" class="uip-link-muted uip-icon uip-link-muted">close</a>
+            <a v-if="itemHasPseudo(item.value)" @click.prevent.stop="clearPseudo(item.value)" class="uip-link-muted uip-icon uip-link-muted">
+              <AppIcon icon="close" />
+            </a>
           </a>
         </template>
       </div>

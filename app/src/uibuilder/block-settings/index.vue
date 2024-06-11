@@ -1,5 +1,5 @@
 <script>
-import { __ } from "@wordpress/i18n";
+const { __ } = wp.i18n;
 import { nextTick, defineAsyncComponent } from "vue";
 
 import StylePresets from "./StylePresets.vue";

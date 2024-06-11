@@ -1,6 +1,6 @@
 <script>
 import { defineAsyncComponent } from "vue";
-
+const { __ } = wp.i18n;
 import colorPicker from "@/components/color-picker/index.vue";
 
 export default {

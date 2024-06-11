@@ -1,4 +1,4 @@
-import { __ } from "@wordpress/i18n";
+const { __ } = wp.i18n;
 /**
  * Checks if a nested object exists. if not, it creates each step
  *

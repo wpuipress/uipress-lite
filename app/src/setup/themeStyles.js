@@ -1,5 +1,5 @@
 ///IMPORT TRANSLATIONS
-import { __ } from '@wordpress/i18n';
+const { __ } = wp.i18n;
 const list = {
   '--uip-color-primary': {
     label: __('Primary color', 'uipress-lite'),

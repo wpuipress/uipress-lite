@@ -1,6 +1,6 @@
 import { defineComponent } from "vue";
 import { createWebHashHistory, createRouter } from "vue-router";
-import { __ } from "@wordpress/i18n";
+const { __ } = wp.i18n;
 
 /**
  * Defines and create ui builder routes

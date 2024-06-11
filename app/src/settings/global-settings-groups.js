@@ -1,5 +1,5 @@
 ///IMPORT TRANSLATIONS
-import { __ } from "@wordpress/i18n";
+const { __ } = wp.i18n;
 
 /**
  * Processes global groups, associates settings with them, and returns a reversed version of the groups.

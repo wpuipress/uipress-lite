@@ -1,5 +1,5 @@
 <script>
-import { __ } from '@wordpress/i18n';
+const { __ } = wp.i18n;
 import FlexDistribution from "@/data/flex_distribution.js";
 import FlexAlignContent from "@/data/flex_align_content.js";
 import FlexVerticalAlign from "@/data/flex_vertical_align.js";

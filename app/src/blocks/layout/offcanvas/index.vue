@@ -1,5 +1,5 @@
 <script>
-import { __ } from "@wordpress/i18n";
+const { __ } = wp.i18n;
 import { renderKeyShortCut } from "@/utility/functions.js";
 export default {
   props: {

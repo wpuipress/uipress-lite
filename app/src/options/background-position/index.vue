@@ -1,5 +1,5 @@
 <script>
-import { __ } from "@wordpress/i18n";
+const { __ } = wp.i18n;
 import BackgroundPositions from "@/data/background_positions.js";
 import BackgroundRepeat from "@/data/background_repeat.js";
 import BackgroundSize from "@/data/background_size.js";

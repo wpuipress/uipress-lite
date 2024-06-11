@@ -1,5 +1,5 @@
 <script>
-import { __ } from "@wordpress/i18n";
+const { __ } = wp.i18n;
 import { defineAsyncComponent } from "vue";
 
 import IconPicker from "@/components/icon-picker/index.vue";

@@ -1,7 +1,7 @@
 <script setup>
 // Import from vue
 import { ref, computed, defineExpose, defineEmits, watch } from "vue";
-import { __ } from "@wordpress/i18n";
+const { __ } = wp.i18n;
 
 // Import comps
 import TableLoader from "@/components/table-loader/index.vue";
@@ -164,7 +164,7 @@ defineExpose({
 	 *
 	 * Handler for data when in table mode
 	 -->
-    <table v-if="mode === 'list' && (!onlyMode || onlyMode === 'list')" class="uip-w-100p uip-border-collapse">
+    <table v-if="mode === 'list' && (!onlyMode || onlyMode === 'list')" class="uip-w-100p uip-border-collapse uip-text-m">
       <thead>
         <tr class="uip-text-left">
           <th v-if="!hideSelect" class="uip-text-muted w-1 uip-padding-s uip-border-top uip-border-bottom uip-w-30">

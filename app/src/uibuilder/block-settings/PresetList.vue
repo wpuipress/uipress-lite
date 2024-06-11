@@ -1,5 +1,5 @@
 <script>
-import { __ } from "@wordpress/i18n";
+const { __ } = wp.i18n;
 import { nextTick } from "vue";
 /**
  * Presets list
@@ -112,7 +112,7 @@ export default {
         <input class="uip-blank-input uip-text-s" type="text" v-model="search" :placeholder="strings.searchPresets" />
       </div>
 
-      <a @click="requestNewPreset" class="uip-link-muted uip-background-muted uip-border-rounder uip-icon uip-padding-xxs">add</a>
+      <a @click="requestNewPreset" class="uip-link-muted uip-background-muted uip-border-rounder uip-icon uip-padding-xxs"><AppIcon icon="add" /></a>
     </div>
 
     <div class="uip-text-s" v-if="!Object.keys(returnPresets).length">{{ strings.noPresets }}</div>

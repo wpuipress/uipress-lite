@@ -1,5 +1,5 @@
 <script>
-import { __ } from "@wordpress/i18n";
+const { __ } = wp.i18n;
 import { nextTick } from "vue";
 export default {
   data: function () {
@@ -599,7 +599,9 @@ export default {
       <!-- Header -->
       <div class="uip-flex uip-flex-between uip-flex-center uip-min-w-200">
         <div class="uip-text-emphasis uip-text-bold uip-text-s">{{ strings.dynamicData }}</div>
-        <a class="uip-link-muted hover:uip-background-muted uip-icon uip-border-rounder uip-padding-xxxs uip-link-muted" @click="closeDynamicData()">close</a>
+        <a class="uip-link-muted hover:uip-background-muted uip-icon uip-border-rounder uip-padding-xxxs uip-link-muted" @click="closeDynamicData()">
+          <AppIcon icon="close" />
+        </a>
       </div>
 
       <!-- Search Box -->

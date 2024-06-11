@@ -3,7 +3,7 @@
  * Builds the main ui builder shell
  * @since 3.0.0
  */
-import { __ } from "@wordpress/i18n";
+const { __ } = wp.i18n;
 import { nextTick } from "vue";
 import { validDateTemplate } from "@/utility/functions.js";
 

@@ -1,5 +1,5 @@
 <script>
-import { __ } from "@wordpress/i18n";
+const { __ } = wp.i18n;
 import { maybeForceReload, stripUIPparams } from "@/utility/functions.js";
 import { nextTick } from "vue";
 import Loader from "@/components/loader/loader.js";
@@ -14,7 +14,7 @@ export default {
   data() {
     return {
       frame: false,
-      loading: true,
+      loading: false,
       fullScreen: false,
       breadCrumbs: [],
       startPage: this.returnAdminPage,
@@ -25,6 +25,7 @@ export default {
       mounted: false,
       updatingBrowserWindow: false,
       loadingtimeout: false,
+      entryLoad: false,
     };
   },
   inject: ["uiTemplate"],
@@ -59,11 +60,10 @@ export default {
   },
   created() {},
   mounted() {
+    this.setStartPage();
     this.mountProductionFunctions();
     this.mountMainWatchers();
-    this.setStartPage();
     this.mounted = true;
-    if (this.$refs.modernloader) this.$refs.modernloader.start();
   },
   beforeUnmount() {
     this.removeWatchers();
@@ -176,6 +176,7 @@ export default {
         this.ingestCurrentPage();
       } else {
         this.$refs.contentframe.setAttribute("src", this.returnStartPage);
+        this.entryLoad = true;
       }
     },
 
@@ -217,6 +218,10 @@ export default {
 
       const adminPageApp = document.querySelector("#uip-admin-page");
       if (adminPageApp) adminPageApp.remove();
+
+      nextTick(() => {
+        this.entryLoad = true;
+      });
     },
 
     /**
@@ -262,6 +267,7 @@ export default {
       document.addEventListener("uipress/app/breadcrumbs/update", this.handleBreadCrumbChange, { once: false });
       document.addEventListener("uipress/app/window/fullscreen", this.toggleFullScreen);
       document.addEventListener("uip_update_frame_url", this.handleURLchangeRequest, { once: false });
+
       this.iframeURLChange(this.$refs.contentframe, this.handleFrameURLChange);
     },
 
@@ -286,6 +292,8 @@ export default {
      * @since [your_version]
      */
     handleFrameURLChange(newURL) {
+      if (!this.entryLoad) return;
+
       const frame = this.$refs.contentframe;
 
       // Begin loading indication
@@ -787,16 +795,20 @@ export default {
     injectStyles() {
       const frame = this.$refs.contentframe;
 
-      // Only inject custom CSS in production mode
+      // Only inject custom CSS in dev mode
       if (this.uiTemplate.display === "prod") {
         return;
       }
 
       const styles = this.uipApp.data.themeStyles;
-      const styleArea = frame.contentWindow.document.querySelector("#uip-theme-styles");
+      let styleArea = frame.contentWindow.document.querySelector("#uip-theme-styles");
 
-      // If style area doesn't exist, abort the function
-      if (!styleArea) return;
+      // If style area doesn't exist, create it
+      if (!styleArea) {
+        styleArea = frame.contentWindow.document.createElement("style");
+        styleArea.setAttribute("id", "uip-theme-styles");
+        styleArea.contentWindow.document.body.appendChild(styleArea);
+      }
 
       let lightStyle = 'html[data-theme="light"]{';
 
@@ -859,6 +871,8 @@ export default {
           //window.location.href = lastDispatched;
           return;
         }
+        // Don't fire load event if first load
+        if (!lastDispatched) return;
 
         if (!this.compareURLsWithoutHash(newHref, lastDispatched)) {
           callback(newHref);

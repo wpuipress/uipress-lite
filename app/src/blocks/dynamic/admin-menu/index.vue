@@ -1,6 +1,6 @@
 <script>
 import Confirm from "@/components/confirm/index.vue";
-import { __ } from "@wordpress/i18n";
+const { __ } = wp.i18n;
 
 import MenuCollapse from "./src/MenuCollapse.vue";
 import MenuSearch from "./src/MenuSearch.vue";

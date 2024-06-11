@@ -75,6 +75,8 @@ class uip_app
     else {
       $this->start_apps();
     }
+
+    add_action("admin_footer", ["UipressLite\Classes\Scripts\UipScripts", "output_user_styles"], 0);
   }
 
   /**

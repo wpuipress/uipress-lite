@@ -1,5 +1,5 @@
 <script>
-import { __ } from "@wordpress/i18n";
+const { __ } = wp.i18n;
 import { defineAsyncComponent, nextTick } from "vue";
 
 import colorBox from "@/components/color-box/index.vue";
@@ -644,7 +644,7 @@ export default {
           </div>
         </template>
 
-        <button class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-line-height-1" @click="pushNewBorder()">add</button>
+        <button class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-line-height-1" @click="pushNewBorder()"><AppIcon icon="add" /></button>
       </div>
     </div>
 
@@ -700,7 +700,7 @@ export default {
           </div>
         </template>
 
-        <button class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-line-height-1" @click="pushNewShadow()">add</button>
+        <button class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-line-height-1" @click="pushNewShadow()"><AppIcon icon="add" /></button>
       </div>
     </div>
 

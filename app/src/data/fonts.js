@@ -1,4 +1,4 @@
-import { __ } from "@wordpress/i18n";
+const { __ } = wp.i18n;
 export default [
   {
     value: "Arial, Helvetica, sans-serif",
@@ -43,10 +43,6 @@ export default [
   {
     value: "Brush Script MT, cursive",
     label: __("Brush Script MT", "uipress-lite"),
-  },
-  {
-    value: "Material Symbols Rounded",
-    label: __("UiPress icons", "uipress-lite"),
   },
   {
     value: "inherit",

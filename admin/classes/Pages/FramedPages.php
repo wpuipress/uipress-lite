@@ -35,7 +35,6 @@ class FramedPages
 
     add_action("admin_xml_ns", ["UipressLite\Classes\Pages\FramedPages", "html_attributes"]);
     add_action("admin_bar_init", ["UipressLite\Classes\Scripts\UipScripts", "remove_admin_bar_style"]);
-    add_action("admin_footer", ["UipressLite\Classes\Scripts\UipScripts", "output_user_styles"], 0);
     add_filter("admin_body_class", ["UipressLite\Classes\Pages\FramedPages", "push_body_class"]);
     add_action("admin_head-profile.php", ["UipressLite\Classes\Pages\FramedPages", "remove_admin_color_scheme"]);
 

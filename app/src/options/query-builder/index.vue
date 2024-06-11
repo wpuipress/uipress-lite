@@ -1,5 +1,5 @@
 <script>
-import { __ } from "@wordpress/i18n";
+const { __ } = wp.i18n;
 import { defineAsyncComponent, nextTick } from "vue";
 
 import PostTypeSelect from "@/components/post-type-select/core.vue";
@@ -163,7 +163,7 @@ export default {
             <span class="uip-text-muted" key="add">{{ returnQueryPreviewText }}</span>
           </div>
 
-          <a @click.prevent.stop="block.query.settings = {}" class="uip-link-muted uip-padding-xxxs uip-border-rounder uip-text-s hover:uip-background-muted uip-icon">close</a>
+          <a @click.prevent.stop="block.query.settings = {}" class="uip-link-muted uip-padding-xxxs uip-border-rounder uip-text-s hover:uip-background-muted uip-icon"><AppIcon icon="close" /></a>
         </div>
       </template>
 

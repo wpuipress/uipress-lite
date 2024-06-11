@@ -3,7 +3,7 @@
  * Builds the licence manager
  * @since 3.3.095
  */
-import { __ } from "@wordpress/i18n";
+const { __ } = wp.i18n;
 import { nextTick } from "vue";
 export default {
   data() {

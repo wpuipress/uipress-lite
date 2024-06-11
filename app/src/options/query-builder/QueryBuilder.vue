@@ -1,5 +1,5 @@
 <script>
-import { __ } from "@wordpress/i18n";
+const { __ } = wp.i18n;
 import { defineAsyncComponent, nextTick } from "vue";
 
 import PostTypeSelect from "@/components/post-type-select/core.vue";
@@ -579,12 +579,14 @@ export default {
                   <span>{{ meta.key }}</span>
                   <span v-if="meta.type && meta.key" class="uip-text-muted">|</span>
 
-                  <a @click.prevent.stop="options.metaQuery.splice(index, 1)" class="uip-link-muted uip-icon uip-border-rounder uip-padding-xxs uip-link-muted"> close </a>
+                  <a @click.prevent.stop="options.metaQuery.splice(index, 1)" class="uip-link-muted uip-icon uip-border-rounder uip-padding-xxs uip-link-muted"> <AppIcon icon="close" /> </a>
                 </div>
               </div>
             </template>
 
-            <button class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-w-100p uip-text-s" @click="addNewMeta()">add</button>
+            <button class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-w-100p uip-text-s" @click="addNewMeta()">
+              <AppIcon icon="add" />
+            </button>
           </div>
         </div>
 
@@ -629,12 +631,14 @@ export default {
                     <span class="uip-text-muted">{{ tax.taxonomy }}</span>
                   </div>
 
-                  <a @click.prevent.stop="options.taxQuery.splice(index, 1)" class="uip-link-muted uip-icon uip-border-rounder uip-padding-xxs uip-link-muted"> close </a>
+                  <a @click.prevent.stop="options.taxQuery.splice(index, 1)" class="uip-link-muted uip-icon uip-border-rounder uip-padding-xxs uip-link-muted"> <AppIcon icon="close" /> </a>
                 </div>
               </div>
             </template>
 
-            <button class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-w-100p uip-text-s" @click="addNewTax()">add</button>
+            <button class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-w-100p uip-text-s" @click="addNewTax()">
+              <AppIcon icon="add" />
+            </button>
           </div>
         </div>
 

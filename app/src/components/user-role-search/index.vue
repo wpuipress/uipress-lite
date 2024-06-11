@@ -1,5 +1,5 @@
 <script>
-import { __ } from "@wordpress/i18n";
+const { __ } = wp.i18n;
 
 export default {
   props: {
@@ -107,7 +107,7 @@ export default {
 <template>
   <dropdown pos="left center" :snapX="['#uip-block-settings', '#uip-template-settings', '#uip-global-settings']" ref="userDropdown">
     <template v-slot:trigger>
-      <button class="uip-button-default uip-border-rounder uip-icon uip-padding-xxs uip-link-muted">search</button>
+      <button class="uip-button-default uip-border-rounder uip-icon uip-padding-xxs uip-link-muted"><AppIcon icon="search" /></button>
     </template>
 
     <template v-slot:content>

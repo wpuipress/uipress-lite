@@ -1,5 +1,5 @@
 <script>
-import { __ } from '@wordpress/i18n';
+const { __ } = wp.i18n;
 import { defineAsyncComponent } from "vue";
 
 export default {
@@ -125,7 +125,7 @@ export default {
         class="uip-padding-xs uip-padding-top-xxxs uip-padding-bottom-xxxs uip-background-highlight uip-border-rounder uip-border uip-flex uip-gap-xxs uip-flex-center uip-link-default uip-text-s"
       >
         <span class="uip-text-emphasis">{{ selectedOptions[0] }}</span>
-        <a @click.prevent.stop="removeByIndex(0)" class="uip-link-muted uip-no-underline uip-icon">close</a>
+        <a @click.prevent.stop="removeByIndex(0)" class="uip-link-muted uip-no-underline uip-icon"><AppIcon icon="close" /></a>
       </div>
 
       <!-- Multiple selected -->
@@ -138,11 +138,11 @@ export default {
         <span class="uip-text-emphasis uip-max-w-60 uip-overflow-hidden uip-no-wrap uip-text-ellipsis">{{ selectedOptions[0] }}</span>
         <span class="uip-text-muted uip-text-s" v-if="selectedOptions.length < 3"> + {{ selectedOptions.length - 1 }} {{ strings.other }}</span>
         <span class="uip-text-muted uip-text-s" v-if="selectedOptions.length > 2"> + {{ selectedOptions.length - 1 }} {{ strings.others }}</span>
-        <a @click.prevent.stop="selectedOptions.length = 0" class="uip-link-muted uip-no-underline uip-icon">close</a>
+        <a @click.prevent.stop="selectedOptions.length = 0" class="uip-link-muted uip-no-underline uip-icon"><AppIcon icon="close" /></a>
       </div>
 
       <div class="uip-flex-grow uip-flex uip-flex-right">
-        <a class="uip-link-muted uip-no-underline uip-icon">expand_more</a>
+        <a class="uip-link-muted uip-no-underline uip-icon"><AppIcon icon="expand_more" /></a>
       </div>
     </div>
 
@@ -158,7 +158,7 @@ export default {
               class="uip-padding-xxs uip-padding-top-xxxs uip-padding-bottom-xxxs uip-background-muted uip-border-rounder uip-border uip-flex uip-gap-xxs uip-flex-center uip-link-default uip-text-xs"
             >
               <span class="uip-text-emphasis">{{ item }}</span>
-              <a @click.prevent.stop="removeByIndex(index)" class="uip-link-muted uip-no-underline uip-icon">close</a>
+              <a @click.prevent.stop="removeByIndex(index)" class="uip-link-muted uip-no-underline uip-icon"><AppIcon icon="close" /></a>
             </div>
           </template>
         </TransitionGroup>

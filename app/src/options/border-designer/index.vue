@@ -1,5 +1,5 @@
 <script>
-import { __ } from "@wordpress/i18n";
+const { __ } = wp.i18n;
 import { defineAsyncComponent, nextTick } from "vue";
 import BorderPositions from "@/data/border_positions.js";
 import BorderTypes from "@/data/border_types.js";

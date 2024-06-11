@@ -1,4 +1,5 @@
 <script>
+const { __ } = wp.i18n;
 import { nextTick, defineAsyncComponent } from "vue";
 export default {
   inject: ["uiTemplate"],
@@ -325,7 +326,7 @@ export default {
                 {{ returnActionNiceName(element.action) }}
               </div>
 
-              <button class="uip-button-default uip-border-rounder uip-icon uip-padding-xxs uip-link-muted" @click="removeinteraction(index)">close</button>
+              <button class="uip-button-default uip-border-rounder uip-icon uip-padding-xxs uip-link-muted" @click="removeinteraction(index)"><AppIcon icon="close" /></button>
             </div>
           </div>
         </template>

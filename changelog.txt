@@ -1,9 +1,13 @@
 == Changelog ==
 
-= 3.3.102 =
-* Release Date * May 2024*
+= 3.4.0 =
+* Release Date 11 June 2024*
 
 * Fixed potential error from undefined index in menu items
+* Removed icon font and replaced with SVGS
+* Refactored, compiled and split all JS into chunks
+* Huge speed improvements accross the whole plugin
+* Stability fixes and other bug fixes
 
 = 3.3.101 =
 * Release Date 20 May 2024*

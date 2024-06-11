@@ -5,7 +5,7 @@ import BlockStyles from "@/uibuilder/block-styles/index.vue";
 import BlockConditions from "@/uibuilder/block-conditions/index.vue";
 import BlockInteractions from "@/uibuilder/block-interactions/index.vue";
 
-import { __ } from "@wordpress/i18n";
+const { __ } = wp.i18n;
 
 export default {
   inject: ["uiTemplate"],

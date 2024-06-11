@@ -6,7 +6,7 @@
 import ToggleSection from "./ToggleSection.vue";
 import globalVariables from "@/uibuilder/variables/index.vue";
 
-import { __ } from "@wordpress/i18n";
+const { __ } = wp.i18n;
 
 export default {
   components: { globalVariables, ToggleSection },

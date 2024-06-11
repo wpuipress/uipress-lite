@@ -1,4 +1,4 @@
-import { __ } from "@wordpress/i18n";
+const { __ } = wp.i18n;
 import { createApp } from "vue";
 import { registerGlobalComponents } from "@/setup/registerGlobalComponents.js";
 import { buildDataStore } from "@/setup/buildDataStore.js";

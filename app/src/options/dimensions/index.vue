@@ -1,5 +1,5 @@
 <script>
-import { __ } from '@wordpress/i18n';
+const { __ } = wp.i18n;
 import { nextTick } from "vue";
 export default {
   emits: ["update"],
@@ -349,7 +349,7 @@ export default {
 
       <dropdown pos="bottom left" width="uip-flex uip-w-100p">
         <template v-slot:trigger>
-          <button class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-w-100p">add</button>
+          <button class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-w-100p"><AppIcon icon="add" /></button>
         </template>
         <template v-slot:content>
           <div class="uip-padding-xs uip-flex uip-flex-column">

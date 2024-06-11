@@ -1,5 +1,5 @@
 <script>
-import { __ } from "@wordpress/i18n";
+const { __ } = wp.i18n;
 import { deleteRemotePost } from "@/utility/functions.js";
 import { defineAsyncComponent, nextTick } from "vue";
 import Confirm from "@/components/confirm/index.vue";
@@ -357,7 +357,7 @@ export default {
                         <div class="uip-text-bold uip-post-title uip-link-default uip-cursor-pointer" @click="updateAppPage(item.editLink)">{{ item.name }}</div>
                         <div class="uip-flex uip-gap-xxs uip-flex-center" v-if="item.hover">
                           <AppIcon @click="updateAppPage(item.editLink)" :href="item.editLink" icon="edit_document" class="uip-icon uip-cursor-pointer uip-link-default" />
-                          <a :href="item.link" target="_BLANK" class="uip-icon uip-cursor-pointer uip-link-default uip-no-underline">open_in_new</a>
+                          <a :href="item.link" target="_BLANK" class="uip-icon uip-cursor-pointer uip-link-default uip-no-underline"><AppIcon icon="open_in_new" /></a>
                         </div>
                       </div>
                       <div class="uip-text-s uip-post-meta uip-flex uip-flex-row uip-gap-xxxs">
@@ -423,8 +423,8 @@ export default {
     <div class="uip-flex uip-flex-between uip-flex-center">
       <div class="uip-padding-xxs uip-post-count">{{ totalFound }} {{ strings.results }}</div>
       <div class="uip-flex uip-gap-xs uip-padding-xs" v-if="totalPages > 1">
-        <button @click="goBack" class="uip-button-default uip-icon uip-nav-button">chevron_left</button>
-        <button @click="goForward" v-if="page < totalPages" class="uip-button-default uip-icon uip-nav-button">chevron_right</button>
+        <button @click="goBack" class="uip-button-default uip-icon uip-nav-button"><AppIcon icon="chevron_left" /></button>
+        <button @click="goForward" v-if="page < totalPages" class="uip-button-default uip-icon uip-nav-button"><AppIcon icon="chevron_right" /></button>
       </div>
     </div>
 

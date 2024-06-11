@@ -1,4 +1,4 @@
-html[uip-theme-basic='true'] {
+html[uip-theme-basic="true"] {
   --uip-menu-background: #222;
   --uip-menu-highlight: #444;
   --uip-toolbar-background: var(--uip-menu-background);
@@ -55,7 +55,7 @@ html[uip-theme-basic='true'] {
   }
   //Logo
   #adminmenu::before {
-    content: '';
+    content: "";
     width: 100%;
     height: 30px;
     position: relative;
@@ -112,7 +112,7 @@ html[uip-theme-basic='true'] {
     background-color: var(--uip-color-red);
   }
   #adminmenu .wp-submenu::before {
-    content: '';
+    content: "";
     background: var(--uip-menu-background);
     width: 12px;
     height: 12px;
@@ -123,79 +123,9 @@ html[uip-theme-basic='true'] {
     rotate: 45deg;
   }
 
-  //Icons
-  .dashicons-dashboard:before {
-    content: 'dashboard';
-    font-family: 'Material Symbols Rounded';
-  }
-  .dashicons-admin-post:before {
-    content: 'push_pin';
-    font-family: 'Material Symbols Rounded';
-  }
-  .dashicons-admin-page:before {
-    content: 'article';
-    font-family: 'Material Symbols Rounded';
-  }
-  .dashicons-admin-media:before {
-    content: 'photo_library';
-    font-family: 'Material Symbols Rounded';
-  }
-  .dashicons-admin-comments:before {
-    content: 'comment';
-    font-family: 'Material Symbols Rounded';
-  }
-  .dashicons-email:before {
-    content: 'mail';
-    font-family: 'Material Symbols Rounded';
-  }
-  .dashicons-admin-appearance:before {
-    content: 'palette';
-    font-family: 'Material Symbols Rounded';
-  }
-  .dashicons-admin-plugins:before {
-    content: 'extension';
-    font-family: 'Material Symbols Rounded';
-  }
-  .dashicons-admin-users:before {
-    content: 'group';
-    font-family: 'Material Symbols Rounded';
-  }
-  .dashicons-admin-tools:before {
-    content: 'tools_wrench';
-    font-family: 'Material Symbols Rounded';
-  }
-  .dashicons-admin-settings:before {
-    content: 'tune';
-    font-family: 'Material Symbols Rounded';
-  }
-  //Toolbar icons
-  .wp-admin #wpadminbar #wp-admin-bar-site-name > .ab-item:before {
-    content: 'home';
-    font-family: 'Material Symbols Rounded';
-  }
-  #wpadminbar #wp-admin-bar-updates .ab-icon:before {
-    content: 'refresh';
-    font-family: 'Material Symbols Rounded';
-  }
-  #wpadminbar #wp-admin-bar-comments .ab-icon:before {
-    content: 'chat_bubble';
-    font-family: 'Material Symbols Rounded';
-  }
-  #wpadminbar #wp-admin-bar-comments .ab-icon:before {
-    content: 'chat_bubble';
-    font-family: 'Material Symbols Rounded';
-  }
-  #wpadminbar #wp-admin-bar-new-content .ab-icon:before {
-    content: 'add_circle';
-    font-family: 'Material Symbols Rounded';
-  }
   //Collapse button
   #collapse-menu {
     margin-top: auto;
-  }
-  #collapse-button .collapse-button-icon:after {
-    content: 'chevron_left';
-    font-family: 'Material Symbols Rounded' !important;
   }
   #collapse-button:hover,
   #collapse-button:focus {
@@ -273,7 +203,7 @@ html[uip-theme-basic='true'] {
     background: var(--uip-menu-background);
   }
   #wpadminbar .ab-top-menu > .menupop > .ab-sub-wrapper::before {
-    content: '';
+    content: "";
     background: var(--uip-menu-background);
     width: 10px;
     height: 10px;

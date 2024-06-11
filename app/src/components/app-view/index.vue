@@ -237,11 +237,11 @@ export default {
   <Notify />
 
   <component is="style" scoped id="mycustomstyles">
-    #uip-ui-app{
+    html, #uip-admin-page, #uip-ui-interface {
     <template v-for="(item, index) in returnThemeStyles">
       <template v-if="item.value && item.value != 'uipblank'">{{ index }}:{{ item.value }};</template>
     </template>
-    } [data-theme="dark"] #uip-ui-app, .uip-dark-mode #uip-ui-app, .uip-dark-mode#uip-ui-app, #uip-ui-app .uip-dark-mode {
+    } [data-theme="dark"], .uip-dark-mode, #uip-admin-page, #uip-ui-interface, #uip-admin-page .uip-dark-mode, #uip-ui-interface .uip-dark-mode {
     <template v-for="(item, index) in returnThemeStyles">
       <template v-if="item.darkValue && item.darkValue != 'uipblank'"> {{ index }}:{{ item.darkValue }};</template>
     </template>

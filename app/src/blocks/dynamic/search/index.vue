@@ -1,5 +1,5 @@
 <script>
-import { __ } from "@wordpress/i18n";
+const { __ } = wp.i18n;
 export default {
   props: {
     display: String,
@@ -174,7 +174,7 @@ export default {
           </template>
 
           <div class="uip-flex-grow uip-flex uip-flex-right uip-padding-xxs">
-            <button class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted" @click="searchString = ''">close</button>
+            <button class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted" @click="searchString = ''"><AppIcon icon="close" /></button>
           </div>
         </div>
 
@@ -237,8 +237,8 @@ export default {
         <div class="uip-flex uip-flex-between uip-gap-xxs uip-flex-center" v-if="searchString != ''">
           <div class="uip-padding-xs uip-padding-left-remove uip-text-muted">{{ totalFound }} {{ strings.found }}</div>
           <div class="uip-flex uip-gap-xs uip-padding-xs" v-if="totalPages > 1">
-            <button @click="goBack" class="uip-button-default uip-icon uip-search-nav-button">chevron_left</button>
-            <button @click="goForward" v-if="page < totalPages" class="uip-button-default uip-icon uip-search-nav-button">chevron_right</button>
+            <button @click="goBack" class="uip-button-default uip-icon uip-search-nav-button"><AppIcon icon="chevron_left" /></button>
+            <button @click="goForward" v-if="page < totalPages" class="uip-button-default uip-icon uip-search-nav-button"><AppIcon icon="chevron_right" /></button>
           </div>
         </div>
       </div>

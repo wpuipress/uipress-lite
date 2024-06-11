@@ -1,5 +1,5 @@
 ///IMPORT TRANSLATIONS
-import { __ } from "@wordpress/i18n";
+const { __ } = wp.i18n;
 ///Groups
 export const templategroups = {
   //Primary

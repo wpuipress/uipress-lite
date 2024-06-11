@@ -1,5 +1,5 @@
 <script>
-import { __ } from "@wordpress/i18n";
+const { __ } = wp.i18n;
 export default {
   props: {
     display: String,
@@ -158,7 +158,7 @@ export default {
               <div class="uip-text-xs uip-background-primary-wash uip-border-round uip-padding-xxxs uip-post-type-label">{{ item.type }}</div>
               <div class="uip-flex uip-gap-xxs uip-flex-center" v-if="item.hover">
                 <AppIcon @click="updateAppPage(item.editLink)" :href="item.editLink" icon="edit_document" class="uip-icon uip-cursor-pointer uip-link-muted" />
-                <a :href="item.link" target="_BLANK" class="uip-icon uip-cursor-pointer uip-link-muted uip-no-underline">open_in_new</a>
+                <a :href="item.link" target="_BLANK" class="uip-icon uip-cursor-pointer uip-link-muted uip-no-underline"><AppIcon icon="open_in_new" /></a>
               </div>
             </div>
             <div class="uip-text-s uip-post-meta uip-flex uip-flex-row uip-gap-xxxs">
@@ -174,8 +174,8 @@ export default {
       </div>
     </div>
     <div class="uip-flex uip-gap-xs" v-if="totalPages > 1">
-      <button @click="goBack" class="uip-button-default uip-icon uip-nav-button">chevron_left</button>
-      <button @click="goForward" v-if="page < totalPages" class="uip-button-default uip-icon uip-nav-button">chevron_right</button>
+      <button @click="goBack" class="uip-button-default uip-icon uip-nav-button"><AppIcon icon="chevron_left" /></button>
+      <button @click="goForward" v-if="page < totalPages" class="uip-button-default uip-icon uip-nav-button"><AppIcon icon="chevron_right" /></button>
     </div>
   </div>
 </template>

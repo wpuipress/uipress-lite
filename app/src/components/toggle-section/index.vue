@@ -47,7 +47,7 @@ export default {
       <div class="uip-flex uip-gap-xxs uip-flex-center uip-cursor-pointer uip-flex-between uip-flex-grow" @click="toggleVisibility()">
         <span class="uip-text-bold uip-text-emphasis" v-html="title"></span>
 
-        <a class="uip-link-default uip-icon">{{ returnVisibilityIcon }}</a>
+        <a class="uip-link-default uip-icon"><AppIcon :icon="returnVisibilityIcon" /></a>
       </div>
     </div>
 

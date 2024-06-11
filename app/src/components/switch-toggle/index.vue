@@ -1,5 +1,5 @@
 <script>
-import { __ } from "@wordpress/i18n";
+const { __ } = wp.i18n;
 import { nextTick } from "vue";
 export default {
   // Define component properties
@@ -130,8 +130,8 @@ export default {
 
       let width = 100 / Object.keys(this.enabledOptions).length;
       let left = width * index;
-      this.bgStyle.width = `calc(${width}% - 6px)`;
-      this.bgStyle[key] = `calc(${left}% + 2px)`;
+      this.bgStyle.width = `calc(${width}% - 2px)`;
+      this.bgStyle[key] = `calc(${left}% + 1px)`;
     },
 
     /**
@@ -187,7 +187,7 @@ export default {
 
 <template>
   <div class="uip-position-relative uip-background-muted uip-border-rounder uip-flex uip-flex-wrap uip-w-100p uip-h-27" style="border-radius: calc(var(--uip-border-radius-large) + 2px)">
-    <div v-if="showBack" class="uip-position-absolute uip-top-2 uip-bottom-2 uip-transition-all uip-background-highlight uip-border uip-border-rounder" :style="bgStyle"></div>
+    <div v-if="showBack" class="uip-position-absolute uip-top-1 uip-bottom-1 uip-transition-all uip-background-highlight uip-border uip-border-rounder" :style="bgStyle"></div>
 
     <template v-for="(item, index) in enabledOptions">
       <a

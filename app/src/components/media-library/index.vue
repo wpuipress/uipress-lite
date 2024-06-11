@@ -1,6 +1,6 @@
 <script>
 import axios from "axios";
-import { __ } from "@wordpress/i18n";
+const { __ } = wp.i18n;
 import { defineAsyncComponent } from "vue";
 import MediaLibrary from "./MediaLibrary.vue";
 

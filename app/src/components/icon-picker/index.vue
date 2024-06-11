@@ -1,5 +1,5 @@
 <script>
-import { __ } from "@wordpress/i18n";
+const { __ } = wp.i18n;
 import { defineAsyncComponent, nextTick } from "vue";
 
 import virtualList from "@/components/virtual-list/index.vue";

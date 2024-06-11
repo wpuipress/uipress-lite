@@ -1,6 +1,6 @@
 <script>
 import { validDateTemplate } from "@/utility/functions.js";
-import { __ } from "@wordpress/i18n";
+const { __ } = wp.i18n;
 import SaveAsPattern from "@/uibuilder/save-as-pattern/index.vue";
 export default {
   components: { SaveAsPattern },

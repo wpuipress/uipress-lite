@@ -1,5 +1,5 @@
 <script>
-import { __ } from "@wordpress/i18n";
+const { __ } = wp.i18n;
 
 export default {
   props: {
@@ -282,7 +282,7 @@ export default {
       <template v-for="(item, index) in selected">
         <div class="uip-padding-left-xs uip-padding-right-xs uip-background-muted uip-border-rounder hover:uip-background-grey uip-flex uip-gap-xxs uip-flex-center uip-text-s">
           <span class="">{{ item }}</span>
-          <a class="uip-link-muted uip-no-underline uip-icon" @click="removeSelected(index)">close</a>
+          <a class="uip-link-muted uip-no-underline uip-icon" @click="removeSelected(index)"><AppIcon icon="close" /></a>
         </div>
       </template>
     </div>
