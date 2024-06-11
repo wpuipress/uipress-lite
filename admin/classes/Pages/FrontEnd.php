@@ -130,7 +130,7 @@ class FrontEnd
       wp_print_inline_script_tag($variableFormatter, ["id" => "uip-admin-frontend"]);
 
       $app = "<style>#wpadminbar{display:none !important;}</style>
-      <div id='uip-ui-app' class='uip-flex uip-w-100p uip-text-normal' style='font-size:13px'>
+      <div id='uip-admin-page' class='uip-flex uip-w-100p uip-text-normal' style='font-size:13px'>
       </div>";
 
       echo wp_kses_post($app);
@@ -141,6 +141,21 @@ class FrontEnd
 
     // Output template after admin bar render
     add_action("wp_after_admin_bar_render", $outputter, 0);
-    add_action("wp_footer", ["UipressLite\Classes\Scripts\UipScripts", "add_uip_app"]);
+    add_action("wp_footer", ["UipressLite\Classes\Scripts\UipScripts", "add_uip_app"], 2);
+    add_action("wp_footer", ["UipressLite\Classes\Pages\FrontEnd", "load_uip_script"], 3);
+  }
+
+  /**
+   * Loads the main script for the build
+   *
+   * @return void
+   */
+  public static function load_uip_script()
+  {
+    wp_print_script_tag([
+      "id" => "uip-adminpage-js",
+      "src" => uip_plugin_url . "app/dist/uipadminpage.build.js?ver=" . uip_plugin_version,
+      "type" => "module",
+    ]);
   }
 }

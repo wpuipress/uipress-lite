@@ -54,8 +54,6 @@ const getTemplates = async (suppressLoading) => {
 
   const response = await sendServerRequest(uip_ajax.ajax_url, formData);
 
-  console.log(response);
-
   // Finish loading
   loading.value = false;
 

@@ -24,15 +24,13 @@ const isUiBuilderRoute = computed(() => {
       <div class="uip-flex uip-flex-grow uip-padding-s">
         <RouterView v-slot="{ Component }">
           <template v-if="Component">
-            <Transition mode="out-in">
-              <Suspense>
-                <!-- main content -->
-                <component :is="Component"></component>
+            <Suspense>
+              <!-- main content -->
+              <component :is="Component"></component>
 
-                <!-- loading state -->
-                <template #fallback> Loading... </template>
-              </Suspense>
-            </Transition>
+              <!-- loading state -->
+              <template #fallback> Loading... </template>
+            </Suspense>
           </template>
         </RouterView>
       </div>

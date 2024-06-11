@@ -6,7 +6,8 @@ import { registerBuilderComponents } from "@/setup/registerBuilderComponents.js"
 import { buildDataStore } from "@/setup/buildDataStore.js";
 import { registerGlobalProperties } from "@/setup/registerGlobalProperties.js";
 import { registerDynamicBlocks } from "@/setup/registerDynamicBlocks.js";
-
+import { registerDynamicPlugins } from "@/setup/registerDynamicPlugins.js";
+import { registerDynamicComponents } from "@/setup/registerDynamicComponents.js";
 /* Import comps */
 import BaseApp from "@/pages/wrapper/index.vue";
 
@@ -20,20 +21,7 @@ registerBuilderComponents(app);
 registerGlobalProperties(app);
 buildDataStore(app, "builder");
 registerDynamicBlocks(app);
-
-const DynamicPlugins = wp.hooks.applyFilters("uipress.plugins.register");
-if (Array.isArray(DynamicPlugins)) {
-  app.config.globalProperties.uipGlobalPlugins = DynamicPlugins;
-}
-
-const DynamicComponents = wp.hooks.applyFilters("uipress.components.register");
-if (Array.isArray(DynamicComponents)) {
-  /* Loops new blocks */
-  for (let component of DynamicComponents) {
-    /* Delete the render function to remove any vue instance context */
-    delete component.component.render;
-    app.component(component.name, component.component);
-  }
-}
+registerDynamicPlugins(app);
+registerDynamicComponents(app);
 
 app.mount("#uip-ui-builder");

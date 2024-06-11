@@ -74,7 +74,7 @@ export default {
 
 <template>
   <Modal ref="tips">
-    <div ref="cheese" class="uip-flex uip-flex-column uip-row-gap-s uip-w-400 uip-padding-m">
+    <div class="uip-flex uip-flex-column uip-row-gap-s uip-w-400 uip-padding-m">
       <div class="uip-flex uip-flex-column uip-row-gap-s">
         <img :src="tips.allTips[tips.currentTip].img" :alt="tips.allTips[tips.currentTip].title" class="uip-w-100p uip-border-rounder uip-fade-in" />
         <div class="uip-text-emphasis uip-text-l uip-fade-in">{{ tips.allTips[tips.currentTip].title }}</div>

@@ -134,8 +134,7 @@ class uip_ui_builder extends uip_app
       return;
     }
 
-    add_options_page(__("uiBuilder", "uipress-lite"), "uiBuilder", "uip_manage_ui", uip_plugin_shortname . "-ui-builder", [$this, "build_uibuilder_page"]);
-    add_options_page(__("uiSettings", "uipress-lite"), "uiSettings", "uip_manage_ui", uip_plugin_shortname . "-ui-builder#/site-settings", [$this, "build_uibuilder_page"]);
+    add_options_page("uipress", "uipress", "uip_manage_ui", uip_plugin_shortname . "-ui-builder", [$this, "build_uibuilder_page"]);
   }
 
   /**

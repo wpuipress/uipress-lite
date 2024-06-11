@@ -179,18 +179,16 @@ class AdminPage
    */
   public static function add_hooks()
   {
-    // Triggers pro actions for admin pages
-    if (self::$isFramedPage) {
-      do_action("uipress/uibuilder/start");
-    }
+    do_action("uipress/uibuilder/start");
 
+    return;
     // If the app is running then the this page will be loaded in a frame
     if (defined("uip_app_running") && uip_app_running) {
       return;
     }
 
-    ToolBar::capture();
-    AdminMenu::capture();
+    //ToolBar::capture();
+    //AdminMenu::capture();
   }
 
   /**
@@ -201,11 +199,6 @@ class AdminPage
    */
   private static function output_template($template, $multisite = false)
   {
-    // If the app is running then the this page will be loaded in a frame
-    if (defined("uip_app_running") && uip_app_running) {
-      return;
-    }
-
     // Switch to main blog before queries are made
     if ($multisite) {
       switch_to_blog(get_main_site_id());
@@ -231,11 +224,11 @@ class AdminPage
 
     // Output template
     $variableFormatter = "var uipUserTemplate = {$templateString}; var uipMasterMenu = {menu:[]}";
-    wp_print_inline_script_tag($variableFormatter, ["id" => "uip-admin-page"]);
+    wp_print_inline_script_tag($variableFormatter, ["id" => "uip-admin-page-data"]);
 
     $app = "
       <style>#wpcontent{padding-left: 0;}#wpbody-content{padding-bottom:0px;}@media screen and (max-width: 782px) {.auto-fold #wpcontent { padding: 0 !important;}}</style>
-      <div id='uip-ui-app' class='uip-flex uip-w-100p uip-h-viewport uip-text-normal'></div>
+      <div id='uip-admin-page' class='uip-flex uip-w-100p uip-h-viewport uip-text-normal'></div>
       ";
 
     echo wp_kses_post($app);
@@ -243,5 +236,20 @@ class AdminPage
     // Trigger pro actions
     do_action("uip_import_pro_front");
     add_action("admin_footer", ["UipressLite\Classes\Scripts\UipScripts", "add_uip_app"], 2);
+    add_action("admin_footer", ["UipressLite\Classes\Pages\AdminPage", "load_uip_script"], 3);
+  }
+
+  /**
+   * Loads the main script for the build
+   *
+   * @return void
+   */
+  public static function load_uip_script()
+  {
+    wp_print_script_tag([
+      "id" => "uip-adminpage-js",
+      "src" => uip_plugin_url . "app/dist/uipadminpage.build.js?ver=" . uip_plugin_version,
+      "type" => "module",
+    ]);
   }
 }

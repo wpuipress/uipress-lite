@@ -261,11 +261,12 @@ export default {
       <dropdown pos="left center" ref="linkselect" :snapX="['#uip-block-settings', '#uip-template-settings', '#uip-global-settings']">
         <template #trigger>
           <div class="uip-flex uip-flex-row">
-            <AppIcon
+            <div
               class="uip-border-rounder uip-text-l uip-flex uip-icon uip-padding-xxxs uip-text-center uip-link-default uip-background-muted"
               :class="{ 'uip-background-primary uip-text-inverse': link.dynamic }"
-              icon="link"
-            />
+            >
+              <AppIcon icon="link" />
+            </div>
           </div>
         </template>
 

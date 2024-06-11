@@ -108,8 +108,7 @@ export default {
     >
       <!--Chevs -->
       <div v-if="block.content" class="uip-ratio-1-1 uip-icon uip-line-height-1 uip-cursor-pointer uip-flex uip-flex-center" @click.prevent.stop="open = !open">
-        <span v-if="!open">chevron_right</span>
-        <span v-if="open">expand_more</span>
+        <AppIcon :icon="open ? 'expand_more' : 'chevron_right'" />
       </div>
 
       <AppIcon :icon="block.icon" class="uip-cursor-pointer uip-icon uip-icon-small-emphasis" />

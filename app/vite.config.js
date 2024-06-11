@@ -23,8 +23,9 @@ export default defineConfig({
     rollupOptions: {
       input: {
         // Specify the entry point you want to build
-        builder: "src/uiBuilder.js",
-        app: "src/uipApp.js",
+        builder: "src/apps/uip-builder.js",
+        uipinterface: "src/apps/uip-interface.js",
+        uipadminpage: "src/apps/uip-admin-page.js",
       },
       output: {
         globals: {

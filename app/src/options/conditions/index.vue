@@ -1,4 +1,5 @@
 <script>
+import { __ } from "@wordpress/i18n";
 import { nextTick } from "vue";
 export default {
   props: {
@@ -332,7 +333,7 @@ export default {
               {{ element.type }} {{ returnAllOperators[element.operator].shortHand }} {{ element.value }}
             </div>
 
-            <button class="uip-button-default uip-border-rounder uip-icon uip-padding-xxs uip-link-muted" @click="removeCondition(index)">close</button>
+            <button class="uip-button-default uip-border-rounder uip-padding-xxs uip-link-muted" @click="removeCondition(index)"><AppIcon icon="close" /></button>
           </div>
         </template>
         <template v-slot:content>
@@ -340,7 +341,7 @@ export default {
             <div class="uip-flex uip-flex-between uip-flex-center">
               <div class="uip-text-emphasis uip-text-bold uip-text-s">{{ strings.editCondition }}</div>
               <div @click="$refs['condition' + index][0].close()" class="uip-flex uip-flex-center uip-flex-middle uip-padding-xxs uip-link-muted hover:uip-background-muted uip-border-rounder">
-                <AppIcon icon="close" class="uip-icon" />
+                <AppIcon icon="close" />
               </div>
             </div>
 
@@ -426,7 +427,7 @@ export default {
       @click="addCondition()"
       class="uip-padding-xxs uip-border-rounder uip-background-muted hover:uip-background-grey uip-cursor-pointer uip-flex uip-flex-middle uip-flex-center uip-gap-xs uip-flex-grow"
     >
-      <AppIcon icon="add" class="uip-icon" />
+      <AppIcon icon="add" />
     </div>
   </div>
 </template>

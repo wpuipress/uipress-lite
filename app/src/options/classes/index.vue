@@ -240,7 +240,9 @@ export default {
     <div class="uip-flex uip-gap-xxs uip-w-100p uip-flex-wrap uip-flex-center">
       <dropdown pos="left center" :snapX="['#uip-block-settings', '#uip-template-settings', '#uip-global-settings']" ref="classDrop">
         <template v-slot:trigger>
-          <AppIcon icon="search" class="uip-button-default uip-border-rounder uip-icon uip-padding-xxs uip-link-muted" />
+          <div class="uip-button-default uip-border-rounder uip-padding-xxs uip-link-muted">
+            <AppIcon icon="search" />
+          </div>
         </template>
 
         <template v-slot:content>

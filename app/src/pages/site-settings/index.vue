@@ -11,8 +11,10 @@ import globalVariables from "@/uibuilder/variables/index.vue";
 import LicenceManager from "@/uibuilder/licence-manager/index.vue";
 import Tabs from "@/components/tabs/index.vue";
 
+const CodeEditor = defineAsyncComponent(() => import("@/options/code-editor/index.vue"));
+
 export default {
-  components: { globalVariables, LicenceManager, Tabs, CodeEditor: defineAsyncComponent(() => import("@/options/code-editor/index.vue")) },
+  components: { globalVariables, LicenceManager, Tabs, CodeEditor },
   data() {
     return {
       loading: false,
@@ -34,7 +36,6 @@ export default {
   },
 
   created() {
-    this.loading = false;
     this.getSettings();
   },
   watch: {
@@ -341,9 +342,9 @@ export default {
       </div>
     </div>
 
-    <Tabs v-if="!loading" :options="returnTabs" v-model="activeTab" class="uip-margin-bottom-s" />
+    <Tabs :options="returnTabs" v-model="activeTab" class="uip-margin-bottom-s" />
 
-    <div v-if="!loading" class="uip-flex-grow uip-flex uip-flex-column uip-row-gap-s uip-padding-left-xs uip-padding-right-xs" style="overflow: auto">
+    <div class="uip-flex-grow uip-flex uip-flex-column uip-row-gap-s uip-padding-left-xs uip-padding-right-xs" style="overflow: auto">
       <!-- Dynamic settings -->
 
       <div class="uip-flex uip-flex-column uip-row-gap-m">
@@ -355,7 +356,7 @@ export default {
           <div class="uip-border-top"></div>
         </template>
 
-        <template v-for="option in uipApp.data.globalGroupOptions[activeTab].settings" v-if="render">
+        <template v-for="option in uipApp.data.globalGroupOptions[activeTab].settings">
           <div v-if="conditionalShowGroup(option)" class="uip-grid-col-4-6" style="grid-gap: var(--uip-margin-m)">
             <div class="uip-flex uip-flex-column uip-gap-xxs">
               <span class="uip-text-emphasis">{{ option.label }}</span>

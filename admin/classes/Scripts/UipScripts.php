@@ -146,12 +146,6 @@ class UipScripts
       var ajaxData = ajaxHolder.getAttribute('uip_ajax');
       var uip_ajax = JSON.parse(ajaxData, (k, v) => (v === 'uiptrue' ? true : v === 'uipfalse' ? false : v === 'uipblank' ? '' : v));";
     wp_print_inline_script_tag($variableFormatter, ["id" => "uip-format-vars"]);
-
-    wp_print_script_tag([
-      "id" => "uip-app-js",
-      "src" => uip_plugin_url . "app/dist/app.build.js?ver=" . uip_plugin_version,
-      "type" => "module",
-    ]);
   }
 
   /**

@@ -268,10 +268,10 @@ class BackEnd
     $outputter = function () use ($templateString) {
       // Output template
       $variableFormatter = "var uipUserTemplate = {$templateString}; var uipMasterMenu = {menu:[]}";
-      wp_print_inline_script_tag($variableFormatter, ["id" => "uip-ui-template"]);
+      wp_print_inline_script_tag($variableFormatter, ["id" => "uip-interface-template"]);
 
       $app = '
-      <div class="uip-position-absolute uip-w-100vw uip-h-100p uip-background-default uip-top-0 uip-user-frame uip-body-font uip-teleport uip-flex" id="uip-ui-app" style="display:block !important">
+      <div class="uip-position-absolute uip-w-100vw uip-h-100p uip-background-default uip-top-0 uip-user-frame uip-body-font uip-teleport uip-flex" id="uip-ui-interface" style="display:block !important">
       </div>
       ';
 
@@ -289,5 +289,20 @@ class BackEnd
     // Output template after admin bar render
     add_action("admin_footer", $outputter, 1);
     add_action("admin_footer", ["UipressLite\Classes\Scripts\UipScripts", "add_uip_app"], 2);
+    add_action("admin_footer", ["UipressLite\Classes\Pages\BackEnd", "load_uip_script"], 3);
+  }
+
+  /**
+   * Loads the main script for the build
+   *
+   * @return void
+   */
+  public static function load_uip_script()
+  {
+    wp_print_script_tag([
+      "id" => "uip-interface-js",
+      "src" => uip_plugin_url . "app/dist/uipinterface.build.js?ver=" . uip_plugin_version,
+      "type" => "module",
+    ]);
   }
 }

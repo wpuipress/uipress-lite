@@ -191,10 +191,12 @@ export default {
       doc.documentElement.setAttribute("uip-framed-page", "true");
 
       // Remove uip app
-      const uipscript = doc.querySelector("#uip-app-js");
-      const uipApp = doc.querySelector("#uip-ui-app");
+      const uipscript = doc.querySelector("#uip-interface-js");
+      const uipApp = doc.querySelector("#uip-ui-interface");
+      const template = doc.querySelector("#uip-interface-template");
       if (uipscript) uipscript.remove();
       if (uipApp) uipApp.remove();
+      if (template) template.remove();
 
       // Set global attributes
       const { contentTheme, helpTab, screenOptions, pluginNotices } = this.uiTemplate.globalSettings;
