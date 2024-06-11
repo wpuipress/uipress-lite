@@ -137,14 +137,14 @@ export default {
       <!--Block selector-->
       <dropdown width="260" pos="right center" ref="blockSelector" class="uip-w-100p uip-flex uip-flex-center uip-flex-middle uip-flex-row uip-padding-right-xs">
         <template v-slot:trigger>
-          <button class="uip-button-default uip-icon uip-w-100p uip-text-s uip-padding-xxs">add</button>
+          <button class="uip-button-default uip-icon uip-w-100p uip-text-s uip-padding-xxs"><AppIcon icon="add" style="margin-left: auto; margin-right: auto" /></button>
         </template>
         <template v-slot:content>
           <div class="uip-padding-s uip-max-w-300 uip-w-300 uip-max-h-500 uip-flex uip-flex-column uip-gap-s" style="overflow: auto">
             <div class="uip-flex uip-flex-between uip-flex-center">
               <div class="uip-text-emphasis uip-text-bold uip-text-s">{{ strings.blocks }}</div>
               <div @click="$refs.blockSelector.close()" class="uip-flex uip-flex-center uip-flex-middle uip-padding-xxs uip-link-muted hover:uip-background-muted uip-border-rounder">
-                <AppIcon icon="close" class="uip-icon" />
+                <AppIcon icon="close" />
               </div>
             </div>
 

@@ -68,6 +68,9 @@ export default {
   beforeUnmount() {
     this.removeWatchers();
   },
+  unmounted() {
+    this.removeWatchers();
+  },
   computed: {
     /**
      * Returns a default start page for the iframe
@@ -211,6 +214,9 @@ export default {
       iframeDoc.open();
       iframeDoc.write(doc.documentElement.outerHTML);
       iframeDoc.close();
+
+      const adminPageApp = document.querySelector("#uip-admin-page");
+      if (adminPageApp) adminPageApp.remove();
     },
 
     /**
@@ -430,6 +436,7 @@ export default {
      */
     handleURLchangeRequest(event) {
       let url = event.detail.url;
+
       this.loading = true;
 
       // Set a timeout to stop endless loading bar if plugin doesn't trigger an iframe load
