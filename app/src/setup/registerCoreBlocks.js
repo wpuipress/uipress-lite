@@ -2,6 +2,7 @@ import { defineAsyncComponent } from "vue";
 
 // Import layout blocks
 import Container from "@/blocks/layout/container/index.js";
+import ResponsiveGrid from "@/blocks/layout/responsive-grid-old/index.js";
 import Dropdown from "@/blocks/layout/dropdown/index.js";
 import OffCanvas from "@/blocks/layout/offcanvas/index.js";
 import Modal from "@/blocks/layout/modal/index.js";
@@ -13,7 +14,9 @@ import GoogleAnalyticsTables from "@/blocks/analytics/uip-google-analytics-table
 import GoogleAnalyticsRealtime from "@/blocks/analytics/uip-google-realtime/index.js";
 
 // Import Dynamic blocks
-import AminMenu from "@/blocks/dynamic/admin-menu/index.js";
+import AdminMenu from "@/blocks/dynamic/admin-menu/index.js";
+import AdminMenuOld from "@/blocks/dynamic/admin-menu-old/index.js";
+
 import AiChat from "@/blocks/dynamic/ai-chat/index.js";
 import BreadCrumbs from "@/blocks/dynamic/breadcrumbs/index.js";
 import PageContent from "@/blocks/dynamic/page-content/index.js";
@@ -68,6 +71,7 @@ import WooTables from "@/blocks/storeanalytics/wc-tables/index.js";
 export const registerCoreBlocks = () => {
   let allBlocks = [
     Container,
+    ResponsiveGrid,
     Dropdown,
     OffCanvas,
     Modal,
@@ -75,7 +79,8 @@ export const registerCoreBlocks = () => {
     GoogleAnalyticsMap,
     GoogleAnalyticsTables,
     GoogleAnalyticsRealtime,
-    AminMenu,
+    AdminMenu,
+    AdminMenuOld,
     AiChat,
     BreadCrumbs,
     PageContent,

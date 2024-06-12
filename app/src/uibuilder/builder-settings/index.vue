@@ -1,15 +1,12 @@
 <script>
-/**
- * Builds the main ui builder shell
- * @since 3.0.0
- */
+import { defineAsyncComponent } from "vue";
 import ToggleSection from "./ToggleSection.vue";
 import globalVariables from "@/uibuilder/variables/index.vue";
 
 const { __ } = wp.i18n;
 
 export default {
-  components: { globalVariables, ToggleSection },
+  components: { globalVariables, ToggleSection, CodeEditor: defineAsyncComponent(() => import("@/options/code-editor/index.vue")) },
   data() {
     return {
       loading: true,

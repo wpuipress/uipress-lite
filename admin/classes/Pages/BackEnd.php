@@ -271,7 +271,7 @@ class BackEnd
       wp_print_inline_script_tag($variableFormatter, ["id" => "uip-interface-template"]);
 
       $app = '
-      <div class="uip-position-absolute uip-w-100vw uip-h-100p uip-background-default uip-top-0 uip-user-frame uip-body-font uip-teleport uip-flex" id="uip-ui-interface" style="display:block !important">
+      <div class="uip-position-absolute uip-w-100vw uip-h-100p uip-background-default uip-top-0 uip-user-frame uip-body-font uip-teleport uip-flex" id="uip-ui-interface">
       </div>
       ';
 

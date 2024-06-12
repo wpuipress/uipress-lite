@@ -97,7 +97,7 @@ const openTemplate = (evt, index) => {
 /**
  * Returns translatable status
  */
-const returnFormattedStatus = () => {
+const returnFormattedStatus = (status) => {
   if (status == "publish") return __("Published", "uipress-lite");
   return __("Draft", "uipress-lite");
 };
@@ -282,9 +282,21 @@ enqueueAdminBarStyles();
       </button>
     </template>
 
+    <!-- Empty slot-->
+    <template v-slot:empty>
+      <div class="uip-flex uip-flex-column uip-gap-s uip-padding-l uip-flex-center">
+        <AppIcon icon="folder_open" style="font-size: 60px" />
+        <div class="uip-text-bold uip-text-xl uip-text-emphasis">{{ __("No templates yet", "uipress-lite") }}</div>
+        <div class="uip-text-muted">{{ __("When you create new templates they will show up here.", "uipress-lite") }}</div>
+        <button class="uip-button-primary uip-flex uip-flex-row uip-gap-xxs uip-flex-center uip-text-s" @click="createNewUI('ui-template')">
+          {{ __("New template", "uipress-lite") }}
+        </button>
+      </div>
+    </template>
+
     <!-- Name-->
     <template v-slot:row-name="{ row }">
-      <div class="inline-flex">
+      <div class="inline-flex uip-text-emphasis">
         {{ row.name }}
       </div>
     </template>
@@ -301,7 +313,7 @@ enqueueAdminBarStyles();
 
     <!-- Type-->
     <template v-slot:row-type="{ row }">
-      <div class="uip-inline-flex uip-text-s uip-padding-left-xxs uip-padding-right-xxs uip-border uip-border-round uip-background-muted">
+      <div class="uip-inline-flex uip-text-s uip-padding-left-xxs uip-padding-right-xxs uip-border uip-border-round uip-background-muted uip-text-normal">
         {{ row.type }}
       </div>
     </template>

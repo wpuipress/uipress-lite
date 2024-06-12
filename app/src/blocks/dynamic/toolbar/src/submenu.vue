@@ -2,7 +2,7 @@
 const { __ } = wp.i18n;
 import { nextTick } from "vue";
 
-const submenu = {
+export default {
   name: "SubMenu",
   props: {
     submenu: Object,
