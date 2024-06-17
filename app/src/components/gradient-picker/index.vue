@@ -1,4 +1,5 @@
 <script>
+const { __ } = wp.i18n;
 import { defineAsyncComponent } from "vue";
 import { parseGradient } from "@/utility/gradient-parser.js";
 

@@ -240,18 +240,18 @@ export default {
         <div class="uip-flex uip-flex-row uip-gap-xxxs uip-flex-right">
           <div class="uip-flex uip-flex-row uip-padding-xxxs uip-background-muted uip-border-round">
             <div
-              class="uip-icon uip-icon-m uip-text-xl uip-link-muted uip-border-round"
+              class="uip-icon-m uip-text-xl uip-link-muted uip-border-round"
               @click="borderOptions.radius.value.sync = true"
               :class="{ 'uip-background-default uip-text-emphasis': borderOptions.radius.value.sync }"
             >
-              crop_square
+              <AppIcon icon="crop_square" />
             </div>
             <div
-              class="uip-icon uip-icon-m uip-text-xl uip-link-muted uip-border-round"
+              class="uip-icon-m uip-text-xl uip-link-muted uip-border-round"
               @click="borderOptions.radius.value.sync = false"
               :class="{ 'uip-background-default uip-text-emphasis': !borderOptions.radius.value.sync }"
             >
-              crop_free
+              <AppIcon icon="crop_free" />
             </div>
           </div>
 

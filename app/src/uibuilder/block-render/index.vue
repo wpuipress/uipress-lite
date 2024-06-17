@@ -169,7 +169,10 @@ export default {
         const matchDynamic = match[0];
         const matchValue = match[1];
         if (matchValue in this.uipApp.data.dynamicOptions) {
-          blockString = blockString.replace(matchDynamic, this.uipApp.data.dynamicOptions[matchValue].value);
+          /* Format the value first */
+          const formattedValue = this.decodeHtml(this.uipApp.data.dynamicOptions[matchValue].value);
+          /* Replace value in block */
+          blockString = blockString.replace(matchDynamic, formattedValue);
         }
       }
 
@@ -235,6 +238,28 @@ export default {
      */
     handleWindowResize() {
       this.windowWidth = window.innerWidth;
+    },
+
+    /**
+     * Decodes special chars from string
+     *
+     * @since 3.2.13
+     */
+    decodeHtml(str) {
+      if (typeof str !== "string" || !str) return str;
+
+      const map = {
+        "&amp;": "&",
+        "&lt;": "<",
+        "&gt;": ">",
+        "&quot;": '"',
+        "&#039;": "'",
+      };
+      const formatted = str.replace(/&amp;|&lt;|&gt;|&quot;|&#039;/g, (m) => {
+        return map[m];
+      });
+
+      return JSON.stringify(formatted).slice(1, -1);
     },
     /**
      * Runs the main block query
