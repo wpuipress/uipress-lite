@@ -174,19 +174,22 @@ class uip_ui_builder extends uip_app
 
     $dataScript = [
       "id" => "uip-app-data",
-      "uip_ajax" => json_encode([
-        "ajax_url" => admin_url("admin-ajax.php"),
-        "security" => wp_create_nonce("uip-security-nonce"),
-        "rest_url" => get_rest_url(),
-        "rest_headers" => [
-          "Content-Type" => "application/json",
-          "X-WP-Nonce" => wp_create_nonce("wp_rest"),
+      "uip_ajax" => json_encode(
+        [
+          "ajax_url" => admin_url("admin-ajax.php"),
+          "security" => wp_create_nonce("uip-security-nonce"),
+          "rest_url" => get_rest_url(),
+          "rest_headers" => [
+            "Content-Type" => "application/json",
+            "X-WP-Nonce" => wp_create_nonce("wp_rest"),
+          ],
+          "uipAppData" => [
+            "options" => Sanitize::clean_input_with_code($appOptions),
+            "userPrefs" => Sanitize::clean_input_with_code($userPrefs),
+          ],
         ],
-        "uipAppData" => [
-          "options" => Sanitize::clean_input_with_code($appOptions),
-          "userPrefs" => Sanitize::clean_input_with_code($userPrefs),
-        ],
-      ]),
+        JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP
+      ),
     ];
 
     wp_print_script_tag($dataScript);

@@ -202,6 +202,22 @@ export default {
       if (uipApp) uipApp.remove();
       if (template) template.remove();
 
+      // Update scripts
+      const scripts = doc.querySelectorAll("script[data-uip-type]");
+      if (scripts) {
+        for (let script of scripts) {
+          const originalType = script.getAttribute("data-uip-type");
+
+          if (originalType === "empty") {
+            script.removeAttribute("type");
+          } else {
+            script.setAttribute("type", originalType);
+          }
+
+          script.removeAttribute("data-uip-type");
+        }
+      }
+
       // Set global attributes
       const { contentTheme, helpTab, screenOptions, pluginNotices } = this.uiTemplate.globalSettings;
       doc.documentElement.setAttribute("uip-admin-theme", `${contentTheme}`);

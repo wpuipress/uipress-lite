@@ -593,6 +593,7 @@ class UiTemplates
     self::maybe_remove_elementor_args();
 
     $query = new \WP_Query($args);
+
     $foundTemplates = $query->get_posts();
 
     if ($multiSiteActive) {

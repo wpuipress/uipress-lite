@@ -4,6 +4,11 @@
     top: 0;
     width: 100%;
   }
+
+  #woocommerce_dashboard_status .wc_status_list li {
+    height: fit-content;
+  }
+
   .woocommerce-layout__header,
   .woocommerce-layout__header .woocommerce-layout__header-heading {
     background: var(--uip-color-base-1);

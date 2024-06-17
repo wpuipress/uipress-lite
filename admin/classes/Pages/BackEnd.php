@@ -72,6 +72,43 @@ class BackEnd
     self::add_hooks();
 
     //add_action("admin_enqueue_scripts", ["UipressLite\Classes\Pages\BackEnd", "remove_scripts"], 100);
+    add_action("script_loader_tag", ["UipressLite\Classes\Pages\BackEnd", "add_type_attribute_to_admin_scripts"], 10, 3);
+  }
+
+  /**
+   * Adds the 'type="text/plain"' attribute to script tags in the WordPress admin area,
+   * excluding specific script handles, and preserves the original type attribute in a
+   * custom 'data-uip-type' attribute.
+   *
+   * @param string $tag   The HTML script tag.
+   * @param string $handle The script handle.
+   * @param string $src   The script source URL.
+   *
+   * @return string The modified script tag.
+   */
+  public static function add_type_attribute_to_admin_scripts($tag, $handle, $src)
+  {
+    $skipTags = ["wp-i18n"];
+
+    if (is_admin() && !in_array($handle, $skipTags, true)) {
+      // Check if the script tag already has a type attribute
+      if (strpos($tag, "type=") !== false) {
+        // Extract the original type attribute value
+        if (preg_match('/type=[\'"]?([^\'" >]+)/', $tag, $matches)) {
+          $original_type = $matches[1];
+          // Add the original type to the data-uip-type attribute
+          $tag = str_replace("<script", '<script data-uip-type="' . htmlspecialchars($original_type, ENT_QUOTES, "UTF-8") . '"', $tag);
+          // Replace the existing type attribute with text/plain
+          $tag = str_replace("type='{$original_type}'", "type='text/plain'", $tag);
+          $tag = str_replace('type="' . $original_type . '"', 'type="text/plain"', $tag);
+        }
+      } else {
+        // Add the type and data-uip-type attributes if they don't exist
+        $tag = str_replace("<script", '<script type="text/plain" data-uip-type="empty"', $tag);
+      }
+    }
+
+    return $tag;
   }
 
   /**

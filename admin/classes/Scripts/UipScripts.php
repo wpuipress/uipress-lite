@@ -127,16 +127,19 @@ class UipScripts
 
     $scriptData = [
       "id" => "uip-app-data",
-      "uip_ajax" => json_encode([
-        "ajax_url" => $ajaxURL,
-        "security" => $nonce,
-        "uipAppData" => $options,
-        "rest_url" => get_rest_url(),
-        "rest_headers" => [
-          "Content-Type" => "application/json",
-          "X-WP-Nonce" => wp_create_nonce("wp_rest"),
+      "uip_ajax" => json_encode(
+        [
+          "ajax_url" => $ajaxURL,
+          "security" => $nonce,
+          "uipAppData" => $options,
+          "rest_url" => get_rest_url(),
+          "rest_headers" => [
+            "Content-Type" => "application/json",
+            "X-WP-Nonce" => wp_create_nonce("wp_rest"),
+          ],
         ],
-      ]),
+        JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP
+      ),
     ];
     wp_print_script_tag($scriptData);
 

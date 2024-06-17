@@ -43,6 +43,8 @@ export default {
       for (const key in this.toolbar) {
         const item = this.toolbar[key];
 
+        if (!item) continue;
+
         formattedData.push({
           name: item.id,
           label: this.removeHTMLTags(item.id),
@@ -83,6 +85,8 @@ export default {
      * @returns {string} - String without HTML tags.
      */
     removeHTMLTags(str) {
+      if (!str) return "";
+      if (typeof str !== "string") return "";
       return str.replace(/<[^>]*>?/gm, "");
     },
   },

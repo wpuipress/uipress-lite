@@ -1,7 +1,7 @@
 {
   "name": "app",
   "private": true,
-  "version": "3.3.102",
+  "version": "3.4.02",
   "type": "module",
   "scripts": {
     "dev": "vite",
