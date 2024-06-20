@@ -30,6 +30,7 @@ export default {
         width: null,
         left: null,
         right: null,
+        height: "100%",
       },
     };
   },
@@ -179,27 +180,22 @@ export default {
      * @since 3.2.13
      */
     returnActiveClass(item) {
-      return item.value === this.optionValue ? "uip-link-default uip-text-emphasis" : "uip-link-muted uip-opacity-70";
+      return item.value === this.optionValue ? "text-zinc-900" : "text-zinc-400 dark:text-zinc-400 hover:text-inherit";
     },
   },
 };
 </script>
 
 <template>
-  <div class="uip-position-relative uip-background-muted uip-border-rounder uip-flex uip-flex-wrap uip-w-100p uip-h-27" style="border-radius: calc(var(--uip-border-radius-large) + 2px)">
-    <div v-if="showBack" class="uip-position-absolute uip-top-1 uip-bottom-1 uip-transition-all uip-background-highlight uip-border uip-border-rounder" :style="bgStyle"></div>
+  <div class="relative rounded-lg flex text-sm w-full bg-zinc-100">
+    <div v-if="showBack" class="absolute rounded-lg transition-all bg-white border border-zinc-200 b-1 uip-border-rounder z-1" :style="bgStyle"></div>
 
     <template v-for="(item, index) in enabledOptions">
-      <a
-        type="button"
-        :title="returnTip(item)"
-        class="uip-no-wrap uip-z-index-1 uip-padding-xxs uip-padding-left-xs uip-padding-right-xs uip-text-center uip-cursor-pointer uip-border-box uip-flex uip-gap-xs uip-flex-center uip-flex-middle"
-        :style="returnItemStyle"
-        :class="returnActiveClass(item)"
-        @click="returnData(item.value)"
-      >
-        <AppIcon :icon="item.icon" class="uip-icon" v-if="item.icon" :class="{ 'uip-text-l': !small }" />
-        <span class="" v-if="item.label">{{ item.label }}</span>
+      <a type="button" class="z-[2] px-2 py-[4px] text-center cursor-pointer select-none" :style="returnItemStyle" :class="returnActiveClass(item)" @click="returnData(item.value)">
+        <div v-if="item.label" class="whitespace-nowrap">{{ item.label }}</div>
+        <div v-if="item.icon" class="flex flex-row place-content-center">
+          <AppIcon :icon="item.icon" class="text-lg" />
+        </div>
       </a>
     </template>
   </div>

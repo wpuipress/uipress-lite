@@ -30,7 +30,7 @@ const returnButtonStyles = computed(() => {
 
 <template>
   <button :type="buttontype" class="transition-all rounded-lg w-auto cursor-pointer relative group whitespace-nowrap" :class="returnButtonStyles" v-bind="attrs">
-    <div class="transition-opacity group-disabled:opacity-60" :class="isLoading ? 'opacity-0' : 'opacity-100'">
+    <div class="transition-opacity group-disabled:opacity-60 flex flex-row gap-3 items-center" :class="isLoading ? 'opacity-0' : 'opacity-100'">
       <slot />
     </div>
     <div v-if="hasLoader" class="absolute left-[50%] top-[50%] translate-y-[-50%] translate-x-[-50%] transition-opacity" :class="!isLoading ? 'opacity-0' : 'opacity-100'">

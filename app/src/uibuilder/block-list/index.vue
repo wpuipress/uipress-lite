@@ -6,12 +6,11 @@
 const { __ } = wp.i18n;
 import { nextTick } from "vue";
 
-import ToggleSection from "./ToggleSection.vue";
+import BlockToggleSection from "@/components/toggle-section/index.vue";
+import AppInput from "@/components/text-input/index.vue";
 
 export default {
-  components: {
-    ToggleSection: ToggleSection,
-  },
+  components: { BlockToggleSection, AppInput },
   props: {
     mode: String,
     insertArea: Array,
@@ -220,13 +219,10 @@ export default {
 </script>
 
 <template>
-  <div class="uip-flex uip-flex-column uip-row-gap-s">
-    <div class="uip-flex uip-padding-xxs uip-search-block uip-border-rounder uip-padding-xxs uip-background-muted">
-      <AppIcon icon="search" class="uip-icon uip-text-muted uip-margin-right-xs uip-text-l uip-icon uip-icon-medium" />
-      <input class="uip-blank-input uip-flex-grow uip-text-s" type="search" :placeholder="strings.seachBlocks" autofocus="" v-model="search" />
-    </div>
+  <div class="flex flex-col gap-8">
+    <!--Block search-->
 
-    <uip-block-modal :block="{}" />
+    <AppInput v-model="search" :placeholder="strings.seachBlocks" icon="search" />
 
     <!--Searching-->
     <VueDraggableNext
@@ -258,11 +254,11 @@ export default {
     </VueDraggableNext>
 
     <template v-if="search == ''" v-for="cat in returnCats">
-      <ToggleSection :title="cat.name" :startOpen="true">
+      <BlockToggleSection :title="cat.name" :startOpen="true">
         <VueDraggableNext
           v-if="cat.blocks.length"
           :list="cat.blocks"
-          class="uip-flex uip-flex-column uip-row-gap-xs uip-padding-left-xs"
+          class="flex flex-col gap-1 pl-3"
           handle=".uip-block-drag"
           :group="{ name: 'uip-blocks', pull: 'clone', put: false, revertClone: true }"
           animation="300"
@@ -272,41 +268,34 @@ export default {
           itemKey="name"
         >
           <template v-for="(element, index) in cat.blocks" :key="element.name" :index="index">
-            <div v-if="element.component" @click="insertAtPos(element)" class="uip-border-rounder uip-link-default hover:uip-background-muted uip-cursor-pointer uip-block-drag uip-no-text-select">
-              <div class="uip-flex uip-gap-xxs uip-flex-center">
-                <div class="uip-icon uip-text-l uip-padding-xxs uip-background-secondary uip-border-rounder uip-text-inverse uip-margin-right-xs">
-                  <AppIcon :icon="element.metadata.icon" />
-                </div>
-                <div class="uip-text-s">{{ element.metadata.name }}</div>
+            <!-- Block exists-->
+
+            <div v-if="element.component" @click="insertAtPos(element)" class="flex flex-row gap-2 items-center p-1 cursor-pointer hover:bg-zinc-100 rounded-lg uip-block-drag">
+              <div class="p-1 rounded-lg bg-indigo-600">
+                <AppIcon :icon="element.metadata.icon" class="text-white" />
               </div>
+              <div class="select-none">{{ element.metadata.name }}</div>
             </div>
 
-            <div
-              v-else
-              @mouseenter="element.hover = true"
-              @mouseleave="element.hover = false"
-              class="uip-border-rounder uip-link-default hover:uip-background-muted uip-cursor-pointer uip-block-drag uip-no-text-select"
-            >
-              <div class="uip-flex uip-gap-xxs uip-flex-center">
-                <div class="uip-icon uip-icon-medium uip-text-l uip-padding-xxs uip-background-green-wash uip-border-rounder uip-margin-right-xs">
-                  <AppIcon icon="redeem" />
-                </div>
-                <div class="uip-text-s uip-flex-grow">{{ element.metadata.name }}</div>
-
-                <a
-                  v-show="element.hover"
-                  href="https://uipress.co?utm_source=uipressupgrade&utm_medium=referral"
-                  target="_BLANK"
-                  class="uip-link-muted uip-flex uip-gap-xxxs uip-no-underline uip-flex-center uip-padding-right-xxs uip-fade-in"
-                >
-                  <span class="uip-text-s">{{ strings.upgrade }}</span>
-                  <AppIcon icon="chevron_right" class="uip-icon" />
-                </a>
+            <div v-else @mouseenter="element.hover = true" @mouseleave="element.hover = false" class="flex flex-row gap-2 items-center p-1 cursor-pointer hover:bg-zinc-100 rounded-lg">
+              <div class="p-1 rounded-lg bg-purple-600">
+                <AppIcon icon="redeem" class="text-white" />
               </div>
+              <div class="grow select-none">{{ element.metadata.name }}</div>
+
+              <a
+                v-show="element.hover"
+                href="https://uipress.co?utm_source=uipressupgrade&utm_medium=referral"
+                target="_BLANK"
+                class="uip-link-muted uip-flex uip-gap-xxxs uip-no-underline uip-flex-center uip-padding-right-xxs uip-fade-in"
+              >
+                <span class="">{{ strings.upgrade }}</span>
+                <AppIcon icon="chevron_right" />
+              </a>
             </div>
           </template>
         </VueDraggableNext>
-      </ToggleSection>
+      </BlockToggleSection>
     </template>
   </div>
 </template>

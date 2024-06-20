@@ -41,18 +41,13 @@ export default {
 </script>
 
 <template>
-  <div class="uip-flex uip-flex-column uip-row-gap-s">
+  <div class="flex flex-col gap-2">
     <!-- Title -->
-    <div class="uip-flex uip-gap-s uip-flex-center uip-flex-between">
-      <div class="uip-flex uip-gap-xxs uip-flex-center uip-cursor-pointer uip-flex-between uip-flex-grow" @click="toggleVisibility()">
-        <span class="uip-text-bold uip-text-emphasis" v-html="title"></span>
-
-        <a class="uip-link-default uip-icon"><AppIcon :icon="returnVisibilityIcon" /></a>
-      </div>
+    <div class="flex gap-2 items-center place-content-between cursor-pointer w-full" @click="toggleVisibility()">
+      <span class="font-semibold text-zinc-900">{{ title }}</span>
+      <AppIcon :icon="returnVisibilityIcon" class="text-zinc-400" />
     </div>
 
-    <div v-if="open" class="uip-padding-left-s">
-      <slot></slot>
-    </div>
+    <slot v-if="open"></slot>
   </div>
 </template>

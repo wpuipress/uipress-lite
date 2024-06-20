@@ -365,85 +365,69 @@ export default {
   <component is="style"> .v-enter-active, .v-leave-active {transition: opacity 0.6s ease;} .v-enter-from, .v-leave-to {opacity: 0;} </component>
 
   <Transition>
-    <div
-      v-if="!layoutFetched"
-      class="uip-background-default uip-body-font uip-h-viewport uip-max-h-viewport uip-flex uip-flex-center uip-flex-middle uip-position-fixed uip-z-index-9"
-      style="min-height: 100vh; max-height: 100vh; min-width: 100vw; max-width: 100vw"
-    >
+    <!-- Loading placeholder -->
+    <div v-if="!layoutFetched" class="bg-white h-screen max-h-screen w-screen flex items-center place-content-center fixed z-[9]">
       <loading-chart />
     </div>
-  </Transition>
 
-  <div
-    v-if="layoutFetched"
-    class="uip-background-default uip-body-font uip-h-viewport uip-max-h-viewport uip-flex uip-text-normal uip-app-frame uip-border-box uip-builder-frame uip-flex uip-flex-column uip-w-100p"
-  >
-    <!--Dynamic data watcher-->
-    <DynamicData />
+    <div v-else class="bg-white h-screen max-h-screen w-screen flex uip-builder-frame flex-col">
+      <!--Dynamic data watcher-->
+      <DynamicData />
 
-    <!--Builder Toolbar-->
-    <ToolBar />
+      <!--Builder Toolbar-->
+      <ToolBar />
 
-    <div class="uip-flex uip-h-100p uip-flex-grow uip-overflow-hidden uip-position-relative" style="max-width: 100vw">
-      <!--Left panel -->
-      <div class="uip-overflow-auto uip-border-right uip-app-frame uip-flex-no-shrink uip-w-300 uip-max-h-100p uip-background-default uip-z-index-1" :style="returnLeftPanelStyle">
-        <div class="uip-flex uip-flex-column uip-h-100p uip-max-h-100p">
-          <div class="uip-padding-s uip-border-box">
-            <toggle-switch
-              :options="switchOptions"
-              :activeValue="ui.sideBar.activeTab"
-              :dontAccentActive="true"
-              :returnValue="
-                (data) => {
-                  ui.sideBar.activeTab = data;
-                }
-              "
-            ></toggle-switch>
-          </div>
+      <div class="flex h-full grow overflow-hidden relative max-w-screen">
+        <!--Left panel -->
+        <div class="overflow-auto border-r border-zinc-200 shrink-0 w-[300px] max-h-full z-[1] flex flex-col gap-4 p-4 bg-white" :style="returnLeftPanelStyle">
+          <!-- Switch between tabs -->
+          <toggle-switch
+            :options="switchOptions"
+            :activeValue="ui.sideBar.activeTab"
+            :dontAccentActive="true"
+            :returnValue="
+              (data) => {
+                ui.sideBar.activeTab = data;
+              }
+            "
+          />
 
-          <div class="uip-padding-left-s uip-padding-right-s uip-flex">
-            <div class="uip-border-bottom uip-w-100p"></div>
-          </div>
+          <div class="border-t border-zinc-200"></div>
 
           <!-- OUTPUT SETTINGS OR BLOCKS -->
-          <div class="uip-flex-grow uip-overflow-auto uip-padding-s uip-scrollbar">
+          <div class="grow overflow-auto">
             <TemplateLibrary v-if="ui.sideBar.activeTab == 'library'" />
 
             <BlockList v-if="ui.sideBar.activeTab == 'blocks'" />
 
             <!--LAYERS-->
-            <template v-if="ui.sideBar.activeTab == 'layers'">
-              <div class="uip-flex uip-flex-column uip-row-gap-xs">
-                <layersPanels
-                  :content="template.content"
-                  :returnData="
-                    (data) => {
-                      template.content = data;
-                    }
-                  "
-                />
-              </div>
-
-              <!-- End right click -->
-            </template>
+            <layersPanels
+              v-if="ui.sideBar.activeTab == 'layers'"
+              :content="template.content"
+              :returnData="
+                (data) => {
+                  template.content = data;
+                }
+              "
+            />
 
             <!--END LAYERS-->
           </div>
         </div>
-      </div>
-      <!--End Layers panel -->
+        <!--End Layers panel -->
 
-      <!-- Main canvas -->
-      <div class="uip-flex-grow uip-canvas-background uip-overflow-hidden">
-        <Canvas />
-      </div>
-      <!--End canvas-->
+        <!-- Main canvas -->
+        <div class="grow bg-zinc-100 overflow-hidden">
+          <Canvas />
+        </div>
+        <!--End canvas-->
 
-      <!--Right bar -->
-      <RouterView :key="$route.path" v-show="!template.isPreview" />
-      <!-- End right bar -->
+        <!--Right bar -->
+        <RouterView :key="$route.path" v-show="!template.isPreview" />
+        <!-- End right bar -->
+      </div>
     </div>
-  </div>
+  </Transition>
 
   <!--Import plugins -->
   <template v-for="plugin in uipGlobalPlugins" v-if="layoutFetched">

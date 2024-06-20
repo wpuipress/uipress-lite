@@ -8,9 +8,13 @@ import { nextTick } from "vue";
 import { validDateTemplate } from "@/utility/functions.js";
 
 import templateHistory from "@/uibuilder/history/index.vue";
+import AppButton from "@/components/app-button/index.vue";
+import StatusTag from "@/components/status-tag/index.vue";
+import AppSelect from "@/components/select/index.vue";
+import Menulist from "@/components/menu-list/index.vue";
 
 export default {
-  components: { templateHistory },
+  components: { templateHistory, AppButton, StatusTag, AppSelect, Menulist },
   inject: ["uiTemplate"],
   data() {
     return {
@@ -66,8 +70,88 @@ export default {
           label: __("Preview", "uipress-lite"),
         },
       ],
+      templateTypes: [
+        {
+          value: "ui-template",
+          label: __("User interface", "uipress-lite"),
+        },
+        {
+          value: "ui-admin-page",
+          label: __("Admin page", "uipress-lite"),
+        },
+        {
+          value: "ui-front-template",
+          label: __("Frontend toolbar", "uipress-lite"),
+        },
+      ],
+      menuLinks: [
+        {
+          name: __("Back to templates", "uipress-lite"),
+          url: "/",
+          icon: "chevron_left",
+        },
+        {
+          name: __("Site settings", "uipress-lite"),
+          url: "/site-settings",
+          icon: "tune",
+        },
+        {
+          type: "divider",
+        },
+        {
+          name: __("New template", "uipress-lite"),
+          icon: "add",
+          type: "action",
+          action: () => {
+            this.createNewUI();
+            this.$refs.logomenu.close();
+          },
+        },
+        {
+          name: __("Template settings", "uipress-lite"),
+          url: this.returnSettingsLink,
+          icon: "settings",
+        },
+        {
+          name: __("Import template", "uipress-lite"),
+          icon: "file_upload",
+          type: "action",
+          action: () => {
+            this.$refs.template_upload.click();
+            this.$refs.logomenu.close();
+          },
+        },
+        {
+          name: __("Export template", "uipress-lite"),
+          icon: "file_download",
+          type: "action",
+          action: () => {
+            this.exportTemplate("template");
+            this.$refs.logomenu.close();
+          },
+        },
+        {
+          type: "divider",
+        },
+        {
+          name: __("Documentation", "uipress-lite"),
+          url: "https://docs.uipress.co/",
+          icon: "bookmarks",
+          external: true,
+        },
+        {
+          name: __("Tip's and updates", "uipress-lite"),
+          icon: "tips_and_updates",
+          type: "action",
+          action: () => {
+            this.uipApp.tipsAndTricks.show();
+            this.$refs.logomenu.close();
+          },
+        },
+      ],
     };
   },
+
   watch: {
     "uipApp.data.templateDarkMode": {
       handler(newValue, oldValue) {
@@ -167,6 +251,8 @@ export default {
      * @since 3.2.13
      */
     async saveTemplate() {
+      this.saving = true;
+
       const templateObject = {
         globalSettings: JSON.parse(JSON.stringify(this.uiTemplate.globalSettings)),
         content: this.uiTemplate.content,
@@ -183,10 +269,11 @@ export default {
       formData.append("template", template);
 
       const response = await this.sendServerRequest(uip_ajax.ajax_url, formData);
+      this.saving = false;
 
       if (response.error) {
         this.uipApp.notifications.notify(__("Unable to save template", "uipress-lite"), response.message, "", "error", true);
-        this.saving = false;
+
         return false;
       }
 
@@ -195,7 +282,6 @@ export default {
 
         this.uipApp.notifications.notify(__("Template saved", "uipress-lite"), "", "success", true);
         this.unsavedChanges = false;
-        this.saving = false;
         return true;
       }
     },
@@ -351,176 +437,73 @@ export default {
 
 <template>
   <!--PREVIEW TOOLBAR -->
-  <div
-    id="uip-ui-preview-toolbar"
-    class="uip-flex uip-padding-s uip-gap-xs uip-flex-center uip-flex-between uip-background-default uip-border-bottom uip-flex-wrap uip-position-relative"
-    style="z-index: 2"
-  >
-    <div class="uip-flex uip-flex-center uip-app-frame">
-      <div class="uip-flex uip-gap-s uip-flex-center">
-        <dropdown pos="bottom left" ref="logomenu">
-          <template v-slot:trigger>
-            <div class="uip-flex uip-gap-xs uip-flex-center uip-link-default uip-border-rounder uip-background-muted uip-padding-xs uip-padding-top-xxs uip-padding-bottom-xxs">
-              <div class="uip-logo uip-w-18 uip-ratio-1-1"></div>
-              <AppIcon icon="expand_more" class="uip-icon uip-text-l uip-text-muted" />
-            </div>
-          </template>
-          <template v-slot:content>
-            <div class="uip-max-h-600 uip-overflow-auto uip-flex uip-flex-column">
-              <div class="uip-padding-xs uip-flex uip-flex-column uip-row-gap-xxxs">
-                <router-link to="/" class="uip-link-default uip-no-underline uip-flex uip-flex-center uip-gap-m uip-padding-xxs uip-border-round hover:uip-background-muted">
-                  <div class="uip-flex-grow">{{ ui.strings.backToList }}</div>
-                  <AppIcon icon="chevron_left" class="uip-icon uip-text-l uip-text-muted" />
-                </router-link>
+  <div id="uip-ui-preview-toolbar" class="relative flex flex-row items-center p-3 border-b border-zinc-200 z-[2]">
+    <!-- Left actions -->
+    <div class="flex flex-row items-center gap-3 grow">
+      <dropdown pos="bottom left" ref="logomenu">
+        <template v-slot:trigger>
+          <!-- Logo -->
+          <div class="p-2 rounded-lg bg-white shadow-md self-start flex flex-row items-center gap-2 cursor-pointer hover:bg-zinc-50">
+            <div class="uip-logo w-5 aspect-square"></div>
+            <AppIcon icon="unfold" class="text-xl text-zinc-400" />
+          </div>
+        </template>
+        <template v-slot:content>
+          <div>
+            <Menulist :links="menuLinks" class="py-3 px-2" />
+            <input hidden accept=".json" type="file" single="" ref="template_upload" id="uip-import-layout" @change="importTemplate($event, 'template')" />
+            <a ref="templateexport" href="" style="display: none"></a>
+          </div>
+        </template>
+      </dropdown>
 
-                <router-link
-                  @click="$refs.logomenu.close()"
-                  to="/site-settings"
-                  class="uip-link-default uip-no-underline uip-flex uip-flex-center uip-gap-m uip-padding-xxs uip-border-round hover:uip-background-muted"
-                >
-                  <div class="uip-flex-grow">{{ ui.strings.siteSettings }}</div>
-                  <AppIcon icon="tune" class="uip-icon uip-text-l uip-text-muted" />
-                </router-link>
-
-                <div class="uip-border-top uip-margin-top-xxs uip-margin-bottom-xxs"></div>
-
-                <a
-                  @click="
-                    () => {
-                      createNewUI();
-                      $refs.logomenu.close();
-                    }
-                  "
-                  class="uip-link-default uip-no-underline uip-flex uip-flex-center uip-gap-m uip-padding-xxs uip-border-round hover:uip-background-muted"
-                >
-                  <div class="uip-flex-grow">{{ ui.strings.newTemplate }}</div>
-                  <AppIcon icon="add" class="uip-icon uip-text-l uip-text-muted" />
-                </a>
-
-                <router-link
-                  @click="$refs.logomenu.close()"
-                  :to="returnSettingsLink"
-                  class="uip-link-default uip-no-underline uip-flex uip-flex-center uip-gap-m uip-padding-xxs uip-border-round hover:uip-background-muted"
-                >
-                  <div class="uip-flex-grow">{{ ui.strings.templateSettings }}</div>
-                  <AppIcon icon="settings" class="uip-icon uip-text-l uip-text-muted" />
-                </router-link>
-
-                <label class="uip-link-default uip-no-underline uip-flex uip-flex-center uip-gap-m uip-padding-xxs uip-border-round hover:uip-background-muted">
-                  <div class="uip-flex-grow">{{ ui.strings.import }}</div>
-                  <AppIcon icon="file_upload" class="uip-icon uip-text-l uip-text-muted" />
-                  <input hidden accept=".json" type="file" single="" id="uip-import-layout" @change="importTemplate($event, 'template')" />
-                </label>
-
-                <a
-                  @click="
-                    () => {
-                      exportTemplate('template');
-                      $refs.logomenu.close();
-                    }
-                  "
-                  class="uip-link-default uip-no-underline uip-flex uip-flex-center uip-gap-m uip-padding-xxs uip-border-round hover:uip-background-muted"
-                >
-                  <div class="uip-flex-grow">{{ ui.strings.export }}</div>
-                  <AppIcon icon="file_download" class="uip-icon uip-text-l uip-text-muted" />
-                  <a ref="templateexport" href="" style="display: none"></a>
-                </a>
-
-                <div class="uip-border-top uip-margin-top-xxs uip-margin-bottom-xxs"></div>
-
-                <a
-                  @click="$refs.logomenu.close()"
-                  class="uip-link-default uip-no-underline uip-flex uip-flex-center uip-gap-m uip-padding-xxs uip-border-round hover:uip-background-muted"
-                  href="https://uipress.co/docs/#/"
-                  target="_BLANK"
-                >
-                  <div class="uip-flex-grow">{{ ui.strings.docs }}</div>
-                  <AppIcon icon="open_in_new" class="uip-icon uip-text-l uip-text-muted" />
-                </a>
-
-                <div
-                  @click="
-                    () => {
-                      uipApp.tipsAndTricks.show();
-                      $refs.logomenu.close();
-                    }
-                  "
-                  class="uip-link-default uip-no-underline uip-flex uip-flex-center uip-gap-m uip-padding-xxs uip-border-round hover:uip-background-muted"
-                >
-                  <div class="uip-flex-grow">{{ ui.strings.tips }}</div>
-                  <AppIcon icon="tips_and_updates" class="uip-icon uip-text-l uip-text-muted" />
-                </div>
-              </div>
-            </div>
-          </template>
-        </dropdown>
-
-        <!-- History -->
-        <templateHistory />
-      </div>
+      <!-- History -->
+      <templateHistory />
     </div>
 
     <!--Middle actions -->
-    <div class="uip-flex uip-gap-xxs uip-flex-center">
-      <div class="uip-flex uip-flex-center uip-gap-s">
-        <span
-          class="uip-text-bold uip-blank-input uip-text-right"
-          contenteditable
-          @input="
-            (event) => {
-              uiTemplate.globalSettings.name = event.target.innerText;
-            }
-          "
-        >
-          {{ uiTemplate.globalSettings.name }}
-        </span>
-
-        <router-link :to="returnSettingsLink" v-if="uiTemplate.globalSettings.status" class="uip-border-rounder uip-background-green-wash uip-padding-xxs uip-no-underline uip-link-default">{{
-          ui.strings.active
-        }}</router-link>
-
-        <router-link :to="returnSettingsLink" v-if="!uiTemplate.globalSettings.status" class="uip-border-rounder uip-background-orange-wash uip-padding-xxs uip-no-underline uip-link-default">{{
-          ui.strings.draft
-        }}</router-link>
-
-        <select class="uip-input uip-input-small uip-border-rounder" v-model="uiTemplate.globalSettings.type">
-          <option value="ui-template">{{ ui.strings.userInterface }}</option>
-          <option value="ui-admin-page">{{ ui.strings.adminPage }}</option>
-          <option value="ui-front-template">{{ ui.strings.toolBar }}</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="uip-flex uip-gap-xs">
-      <div
-        @click="
-          uiTemplate.isPreview = !uiTemplate.isPreview;
-          uipApp.blockSettings.close();
+    <div class="flex flex-row items-center gap-3 justify-center grow">
+      <span
+        class=""
+        contenteditable
+        @input="
+          (event) => {
+            uiTemplate.globalSettings.name = event.target.innerText;
+          }
         "
-        :title="ui.strings.preview"
-        class="uip-border-rounder uip-flex uip-gap-xxs uip-flex-center uip-padding-xxs"
-        :class="uiTemplate.isPreview ? 'uip-button-primary uip-text-inverse' : 'uip-button-default'"
       >
-        <AppIcon icon="play_arrow" class="uip-icon uip-text-xl" />
-      </div>
+        {{ uiTemplate.globalSettings.name }}
+      </span>
 
-      <router-link :to="returnSettingsLink" class="uip-button-default uip-no-underline uip-flex uip-gap-xxs uip-flex-center uip-text-s">
-        <AppIcon icon="settings" class="uip-icon uip-text-l" />
-        <div class="">{{ ui.strings.settings }}</div>
+      <router-link :to="returnSettingsLink">
+        <StatusTag :status="uiTemplate.globalSettings.status ? 'success' : 'warning'" :text="uiTemplate.globalSettings.status ? ui.strings.active : ui.strings.draft" />
       </router-link>
 
-      <button @click="saveTemplate()" class="uip-button-primary uip-flex uip-flex-center uip-flex-middle uip-position-relative uip-text-s" type="button">
-        <span :style="returnLoadStyle" class="uip-flex uip-flex-center uip-flex-middle uip-gap-xs">
-          <span>{{ ui.strings.saveTemplate }}</span>
-          <span class="uip-padding-left-xxxs uip-padding-right-xxxs uip-border uip-border-round uip-text-s uip-flex uip-flex-center uip-flex-row" data-theme="dark">
-            <span class="uip-command-icon uip-text-muted"></span>
-            <span class="uip-text-muted">S</span>
-          </span>
-        </span>
-        <div class="uip-position-absolute uip-left-0 uip-right-0" v-if="saving">
-          <span class="uip-load-spinner"></span>
-        </div>
-      </button>
+      <AppSelect :options="templateTypes" class="text-sm" v-model="uiTemplate.globalSettings.type" />
+    </div>
+
+    <div class="flex flex-row items-center gap-2 grow justify-end">
+      <AppButton
+        :type="uiTemplate.isPreview ? 'primary' : 'default'"
+        @click="
+          () => {
+            uiTemplate.isPreview = !uiTemplate.isPreview;
+            uipApp.blockSettings.close();
+          }
+        "
+        :title="ui.strings.preview"
+      >
+        <AppIcon icon="play_arrow" class="text-xl" />
+      </AppButton>
+
+      <router-link :to="returnSettingsLink" class="">
+        <AppButton type="default" class="text-sm">
+          <AppIcon icon="settings" class="text-lg" />
+          <div class="">{{ ui.strings.settings }}</div>
+        </AppButton>
+      </router-link>
+
+      <AppButton type="primary" @click="saveTemplate()" class="text-sm" :loading="saving">{{ ui.strings.saveTemplate }} </AppButton>
     </div>
   </div>
 </template>
