@@ -1,10 +1,11 @@
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
+import tailwindcss from "tailwindcss";
 import path from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [vue()],
+  plugins: [vue(), tailwindcss()],
   base: "/wp-content/plugins/uipress-lite/app/dist/",
   resolve: {
     alias: {
@@ -51,6 +52,12 @@ export default defineConfig({
         entryFileNames: "[name].build.js",
         // Optionally specify the output directory (default is 'dist')
         dir: "dist/",
+        assetFileNames: ({ name }) => {
+          if (/\.css$/.test(name)) {
+            //Custom pattern for CSS files
+            return "assets/styles/[name][extname]";
+          }
+        },
       },
     },
   },

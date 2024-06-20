@@ -4,7 +4,7 @@ Tags: admin theme, custom dashboard, google analytics, woocommerce analytics, wh
 Requires at least: 6.0
 Requires PHP: 7.4
 Tested up to: 6.5.2
-Stable tag: 3.4.02
+Stable tag: 3.4.05
 License: GPLv2 or later
 
 Effortless custom WordPress admin dashboards.
@@ -55,7 +55,19 @@ Upload the UiPress plugin to your blog, activate it, and then navigate to the ui
 
 == Changelog ==
 
-= 3.4.02 =
+= 3.4.05 =
+* Release Date 19 June 2024*
+
+* Fixed issue with script loadings that could cause cors issues in frame
+
+= 3.4.04 =
+* Release Date 18 June 2024*
+
+* Fixed issue with elementor not loading when accessed directly
+* Fixed issue with dark mode
+* Fixed issue that could cause a blank screen
+
+= 3.4.03 =
 * Release Date 17 June 2024*
 
 * Fixed issues with some pages not correctly rendering when dynamic loading is disabled

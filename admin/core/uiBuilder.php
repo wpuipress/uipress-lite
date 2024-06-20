@@ -147,6 +147,9 @@ class uip_ui_builder extends uip_app
   {
     UipScripts::add_translations();
     UipScripts::add_uipress_styles();
+
+    //wp_register_style("uip-builder-styles", uip_plugin_url . "app/dist/assets/styles/style.css", [], uip_plugin_version);
+    //wp_enqueue_style("uip-builder-styles");
   }
 
   /**

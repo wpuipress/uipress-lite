@@ -48,7 +48,7 @@ export default {
         // Loading is true so set a timeout to prevent endless load
         if (newValue) {
           const stopLoader = () => (this.loading = false);
-          this.loadingtimeout = setTimeout(stopLoader, 6000);
+          this.loadingtimeout = setTimeout(stopLoader, 3000);
 
           if (this.$refs.modernloader) this.$refs.modernloader.start();
         } else {
@@ -58,9 +58,7 @@ export default {
       immediate: true,
     },
   },
-  created() {},
   mounted() {
-    this.setStartPage();
     this.mountProductionFunctions();
     this.mountMainWatchers();
     this.mounted = true;
@@ -72,6 +70,9 @@ export default {
     this.removeWatchers();
   },
   computed: {
+    returnRawHtml() {
+      return rawHTML.value;
+    },
     /**
      * Returns a default start page for the iframe
      *
@@ -172,12 +173,35 @@ export default {
      * @since 3.3.4
      */
     setStartPage() {
-      if (this.uiTemplate.display == "prod") {
+      if (this.uiTemplate.display != "prod") {
         this.ingestCurrentPage();
+        //this.fetchCurrentPage();
       } else {
         this.$refs.contentframe.setAttribute("src", this.returnStartPage);
-        this.entryLoad = true;
       }
+    },
+
+    /**
+     * Ingests and modifies current page and injects
+     *
+     * @since 3.3.4
+     */
+    async fetchCurrentPage() {
+      // Try to fetch the url
+      const response = await fetch(window.location.href, { headers: { "uipress-fetch": "true" } });
+
+      // Couldn't fetch page, likely cors
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      // Parse the HTML text as a document
+      const html = await response.text();
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, "text/html");
+      this.rawHtml = doc.documentElement.outerHTML;
+
+      console.log("inline");
     },
 
     /**
@@ -969,6 +993,7 @@ export default {
       style="transition: opacity 0.3s ease-in-out"
       class="uip-page-content-frame uip-background-default uip-scrollbar uip-w-100p uip-flex-grow"
       :class="{ 'uip-no-select': uiTemplate.display != 'prod' && !uiTemplate.isPreview }"
+      :src="returnStartPage"
     ></iframe>
 
     <div

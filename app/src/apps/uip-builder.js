@@ -11,6 +11,9 @@ import { registerDynamicComponents } from "@/setup/registerDynamicComponents.js"
 /* Import comps */
 import BaseApp from "@/pages/wrapper/index.vue";
 
+// Import css
+import "../index.css";
+
 // Only build app if we are not running inside main app
 if (!document.querySelector("#uip-ui-interface")) {
   /* Build app */

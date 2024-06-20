@@ -29,6 +29,11 @@ class BackEnd
    */
   public static function actions()
   {
+    // Template is missing required blocks so exit
+    if (!self::should_uipress_run()) {
+      return;
+    }
+
     // Reset transient
     $user_id = get_current_user_id();
     $transient_name = "uip_template_active_" . $user_id;
@@ -70,9 +75,22 @@ class BackEnd
 
     self::output_template($templates[0]);
     self::add_hooks();
-
     //add_action("admin_enqueue_scripts", ["UipressLite\Classes\Pages\BackEnd", "remove_scripts"], 100);
-    add_action("script_loader_tag", ["UipressLite\Classes\Pages\BackEnd", "add_type_attribute_to_admin_scripts"], 10, 3);
+    //add_action("script_loader_tag", ["UipressLite\Classes\Pages\BackEnd", "add_type_attribute_to_admin_scripts"], 10, 3);
+  }
+
+  /**
+   * Checks for specific pages and disables uipress
+   *
+   * @return boolean
+   */
+  public static function should_uipress_run()
+  {
+    if (isset($_GET["action"]) && $_GET["action"] == "elementor") {
+      return false;
+    }
+
+    return true;
   }
 
   /**
@@ -88,9 +106,22 @@ class BackEnd
    */
   public static function add_type_attribute_to_admin_scripts($tag, $handle, $src)
   {
-    $skipTags = ["wp-i18n"];
+    $skipTags = [
+      "wp-i18n",
+      "uip-translations",
+      "common",
+      "hoverintent-js",
+      "admin-bar",
+      "jquery-ui-core",
+      "jquery-ui-menu",
+      "jquery-ui-autocomplete",
+      "tags-suggest",
+      "inline-edit-post",
+      "heartbeat",
+      "svg-painter",
+    ];
 
-    if (is_admin() && !in_array($handle, $skipTags, true)) {
+    if (is_admin() && !in_array($handle, $skipTags, true) && strpos($handle, "wp-") !== 0) {
       // Check if the script tag already has a type attribute
       if (strpos($tag, "type=") !== false) {
         // Extract the original type attribute value
