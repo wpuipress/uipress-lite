@@ -4,9 +4,11 @@ import { nextTick, defineAsyncComponent } from "vue";
 export default {
   inject: ["uiTemplate"],
 
+  components: {
+    CodeEditor: defineAsyncComponent(() => import("@/options/code-editor/index.vue")),
+  },
   props: {
     block: Object,
-    CodeEditor: defineAsyncComponent(() => import("@/options/code-editor/index.vue")),
   },
 
   data() {

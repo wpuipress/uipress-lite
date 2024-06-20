@@ -1,7 +1,7 @@
 {
   "name": "app",
   "private": true,
-  "version": "3.4.05",
+  "version": "3.4.06",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -16,7 +16,8 @@
     "quill": "^2.0.2",
     "vue": "^3.4.21",
     "vue-draggable-next": "^2.2.1",
-    "vue-router": "^4.3.3"
+    "vue-router": "^4.3.3",
+    "vue-shadow-dom": "^4.2.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.4",

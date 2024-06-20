@@ -26,6 +26,7 @@ export default {
     StylePresets: StylePresets,
     ToggleSection: ToggleSection,
     CodeEditor: defineAsyncComponent(() => import("@/options/code-editor/index.vue")),
+    "code-editor": defineAsyncComponent(() => import("@/options/code-editor/index.vue")),
   },
   data() {
     return {
@@ -174,7 +175,7 @@ export default {
      * @param {String} name - the name of the component
      */
     componentExists(name) {
-      if (this.$root._.appContext.components[name]) {
+      if (this.$root._.appContext.components[name] || name == "code-editor") {
         return true;
       } else {
         return false;
@@ -463,9 +464,7 @@ export default {
                     :returnData="(data) => handleBlockSettingUpdate(option, data)"
                   />
 
-                  <div v-else class="uip-padding-xxs uip-border-rounder uip-background-green-wash uip-text-s">
-                    {{ strings.proOption }}
-                  </div>
+                  <div v-else class="uip-padding-xxs uip-border-rounder uip-background-green-wash uip-text-s">{{ strings.proOption }}</div>
                 </div>
               </div>
             </template>

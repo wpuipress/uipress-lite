@@ -1,5 +1,11 @@
 == Changelog ==
 
+= 3.4.06 =
+* Release Date 19 June 2024*
+
+* Fixed issue code editor not showing for HTML block / iframe etc
+* Fixed issue code editor not showing for interactions
+
 = 3.4.05 =
 * Release Date 19 June 2024*
 
@@ -16,7 +22,7 @@
 * Release Date 17 June 2024*
 
 * Fixed issues with some pages not correctly rendering when dynamic loading is disabled
-* Fixed issue with special synbols in site data that could cause uipress to fail to load
+* Fixed issue with special symbols in site data that could cause uipress to fail to load
 * Fixed issue with toolbar items select in builder
 * Fixed icon issue with border designer
 * Fixed issue with gradient designer
