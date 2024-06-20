@@ -16,10 +16,17 @@ const isUiBuilderRoute = computed(() => {
 
 const setStyles = () => {
   const appStyleNode = document.querySelector("#uip-app-css");
+  const tailwindStylesNode = document.querySelector("#uip-builder-styles-css");
   const appStyles = appStyleNode.sheet;
+  const tailwindStyles = tailwindStylesNode.sheet;
 
   // Iterate over the rules in the existing stylesheet
   for (const rule of [...appStyles.cssRules].reverse()) {
+    adoptedStyleSheets.value.insertRule(rule.cssText);
+  }
+
+  // Iterate over the rules in the existing stylesheet
+  for (const rule of [...tailwindStyles.cssRules].reverse()) {
     adoptedStyleSheets.value.insertRule(rule.cssText);
   }
 };
