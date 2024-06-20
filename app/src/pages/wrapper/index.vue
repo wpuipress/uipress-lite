@@ -35,15 +35,19 @@ setStyles();
 </script>
 
 <template>
-  <ShadowRoot tag="section" :adopted-style-sheets="[adoptedStyleSheets]" id="uip-editor">
-    <div class="uip-flex-column uip-flex uip-h-100p uip-w-100p" style="min-height: 100dvh">
+  <ShadowRoot tag="section" :adopted-style-sheets="[adoptedStyleSheets]" id="uip-shadow-editor">
+    <div class="flex flex-col h-full w-full min-h-screen text-zinc-600" :class="isUiBuilderRoute ? 'fixed top-0 left-0 right-0 bottom-0 z-[1] w-screen' : ''">
       <Notify />
       <Tips />
 
-      <div class="uip-flex uip-flex-row uip-background-default uip-flex-grow uip-h-100p" v-if="!isUiBuilderRoute">
-        <div class="uip-w-240 uip-flex-no-grow uip-padding-s uip-border-right" style="flex-shrink: 0"><AppMenu /></div>
+      <Teleport v-if="isUiBuilderRoute" to="body">
+        <component is="style"> #wpcontent{margin:0 !important;} #wpadminbar{display:none !important;} html.wp-toolbar{padding-top:0;} #adminmenumain{display:none} </component>
+      </Teleport>
 
-        <div class="uip-flex uip-flex-grow uip-padding-s">
+      <div class="flex flex-row bg-white grow h-full" v-if="!isUiBuilderRoute">
+        <div class="w-[260px] shrink-0 p-6 border-r border-zinc-200" style="flex-shrink: 0"><AppMenu /></div>
+
+        <div class="flex grow p-6">
           <RouterView v-slot="{ Component }">
             <template v-if="Component">
               <Suspense>

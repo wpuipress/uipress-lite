@@ -333,13 +333,18 @@ export default {
       const postQuery = this.returnPostQuery;
       let nodes = [];
 
+      /* Choose teleport destination, if editing we need to teleport to the shadow root */
+      const appshadowRootHost = document.querySelector("#uip-shadow-editor");
+      const appShadowRoot = appshadowRootHost ? appshadowRootHost.shadowRoot : "body";
+      const teleportDestination = this.uiTemplate.display == "prod" ? "body" : appShadowRoot;
+
       // If query is not an array then exit
       if (!Array.isArray(postQuery)) return nodes;
       // Loop items in query and create nodes
       for (let item of postQuery) {
         const queriedBlock = this.formatQueryDynamicMatches(item.ID);
         const queryBlockStyle = this.returnQueryBlockStyles(queriedBlock, item.ID);
-        const queryStyleNode = h(Teleport, { to: "body" }, h("style", { scoped: "" }, queryBlockStyle));
+        const queryStyleNode = h(Teleport, { to: teleportDestination }, h("style", { scoped: "" }, queryBlockStyle));
         const args = { ...this.returnQueryParams(queriedBlock, item.ID), ...this.returnWatchers(queriedBlock) };
         const blocknode = h(blockTemplate, args);
         nodes.push(queryStyleNode, blocknode);
@@ -594,10 +599,15 @@ export default {
     const isHidden = this.isHiddenForViewport;
     if (isHidden) return nodes;
 
+    /* Choose teleport destination, if editing we need to teleport to the shadow root */
+    const appshadowRootHost = document.querySelector("#uip-shadow-editor");
+    const appShadowRoot = appshadowRootHost ? appshadowRootHost.shadowRoot : "body";
+    const teleportDestination = this.uiTemplate.display == "prod" ? "body" : appShadowRoot;
+
     // Push the style tag if block has styles
-    if (styles) nodes.push(h(Teleport, { to: "body" }, h("style", { scoped: "" }, styles)));
-    if (scripts) nodes.push(h(Teleport, { to: "body" }, h("script", {}, scripts)));
-    if (blockLink) nodes.push(h(Teleport, { to: "body" }, h("a", { ref: "blocklink", class: "uip-hidden" })));
+    if (styles) nodes.push(h(Teleport, { to: teleportDestination }, h("style", { scoped: "" }, styles)));
+    if (scripts) nodes.push(h(Teleport, { to: teleportDestination }, h("script", {}, scripts)));
+    if (blockLink) nodes.push(h(Teleport, { to: teleportDestination }, h("a", { ref: "blocklink", class: "uip-hidden" })));
 
     // Build the main block args
     const blockTemplate = this.uipApp.data.blocks.find((item) => item.metadata.moduleName == moduleName);

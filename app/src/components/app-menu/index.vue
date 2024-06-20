@@ -43,10 +43,10 @@ const links = [
 </script>
 
 <template>
-  <div class="uip-flex uip-flex-column uip-gap-xs">
+  <div class="flex flex-col gap-2">
     <!-- Logo -->
-    <div class="uip-padding-xs uip-border-rounder uip-background-default uip-shadow uip-margin-bottom-s uip-self-flex-start">
-      <div class="uip-logo uip-w-16 uip-ratio-1-1"></div>
+    <div class="p-2 rounded-lg bg-white shadow-md mb-4 self-start">
+      <div class="uip-logo w-5 aspect-square"></div>
     </div>
 
     <!-- Links -->
@@ -54,10 +54,10 @@ const links = [
       <RouterLink
         v-if="link.type != 'divider' && !link.external"
         :to="link.url"
-        class="uip-flex uip-flex-row uip-flex-center uip-gap-s uip-padding-xxs uip-padding-left-s uip-padding-right-s uip-link-default uip-no-underline uip-border-rounder hover:uip-background-muted"
-        active-class="uip-background-muted uip-text-emphasis"
+        class="flex flex-row gap-4 py-1 px-4 rounded-lg hover:bg-zinc-100 items-center hover:text-zinc-900 transition-all"
+        active-class="bg-zinc-100 text-zinc-900"
       >
-        <AppIcon :icon="link.icon" class="uip-text-l" />
+        <AppIcon :icon="link.icon" class="text-lg" />
         <span>{{ link.name }}</span>
       </RouterLink>
 
@@ -65,14 +65,14 @@ const links = [
         v-else-if="link.type != 'divider' && link.external"
         :href="link.url"
         target="_BLANK"
-        class="uip-flex uip-flex-row uip-flex-center uip-gap-s uip-padding-xxs uip-padding-left-s uip-padding-right-s uip-link-default uip-no-underline uip-border-rounder hover:uip-background-muted"
-        active-class="uip-background-muted uip-text-emphasis"
+        class="flex flex-row gap-4 py-1 px-4 rounded-lg hover:bg-zinc-100 items-center hover:text-zinc-900 transition-all"
+        active-class="bg-zinc-100 text-zinc-900"
       >
-        <AppIcon :icon="link.icon" class="uip-text-l" />
+        <AppIcon :icon="link.icon" class="text-lg" />
         <span>{{ link.name }}</span>
       </a>
 
-      <div v-else class="uip-border-top uip-margin-top-xxs uip-margin-bottom-xxs"></div>
+      <div v-else class="border-t border-zinc-200 my-2"></div>
     </template>
   </div>
 </template>

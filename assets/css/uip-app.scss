@@ -3483,18 +3483,6 @@ body.uip-full-screen {
   outline-offset: -1px;
 }
 
-@keyframes pulse {
-  0% {
-    box-shadow: 0 0 0 0 rgba(12, 92, 239, 0.6);
-  }
-  70% {
-    box-shadow: 0 0 0 10px rgba(12, 92, 239, 0);
-  }
-  100% {
-    box-shadow: 0 0 0 0 rgba(12, 92, 239, 0);
-  }
-}
-
 .uip-fullscreen-mode {
   position: fixed;
   top: 0;

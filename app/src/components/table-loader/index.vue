@@ -7,9 +7,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <tr v-for="index in rows" class="animate-pulse" :key="`loader-${index}`">
-    <td v-for="colindex in columns" class="uip-padding-xs" :class="colindex === 2 ? 'uip-w-500p' : ''">
-      <div class="uip-h-32 uip-background-muted uip-border-rounder"></div>
-    </td>
+  <tr v-for="index in rows" class="" :key="`loader-${index}`">
+    <td v-for="colindex in columns" class="px-3 py-3" :class="colindex === 2 ? 'w-1/2' : ''"><div class="h-11 bg-slate-100 rounded-xl animate-pulse"></div></td>
   </tr>
 </template>

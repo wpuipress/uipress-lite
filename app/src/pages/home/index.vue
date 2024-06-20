@@ -6,6 +6,8 @@ import { useRouter } from "vue-router";
 // Comps
 import AppTable from "@/components/table/index.vue";
 import Confirm from "@/components/confirm/index.vue";
+import StatusTag from "@/components/status-tag/index.vue";
+import AppButton from "@/components/app-button/index.vue";
 
 // Import funcs
 import { sendServerRequest } from "@/utility/functions.js";
@@ -121,40 +123,6 @@ const handleRightClick = (evt, index) => {
 };
 
 /**
- * Re-ads default toolbar styling
- *
- * @since 3.2.0
- */
-const enqueueAdminBarStyles = () => {
-  let styleblock = document.querySelector('link[href*="load-styles.php?"]');
-  if (!styleblock) return;
-
-  // Stylesheet already has admin styles enqueued
-  if (styleblock.href.includes("admin-bar,")) return;
-
-  const newLink = styleblock.href.replace("admin-menu,", "admin-menu,admin-bar,");
-  const link = document.createElement("link");
-  link.href = newLink;
-  link.setAttribute("rel", "stylesheet");
-
-  // Event listener function
-  const onLoad = () => {
-    styleblock.remove();
-    link.removeEventListener("load", onLoad); // Remove the event listener
-  };
-
-  const head = document.head;
-  if (head.firstChild) {
-    head.insertBefore(link, head.firstChild);
-  } else {
-    head.appendChild(link);
-  }
-
-  // Add the event listener
-  link.addEventListener("load", onLoad);
-};
-
-/**
  * Duplicates a template
  *
  * @param {Number} id - template id to duplicate
@@ -258,7 +226,6 @@ if (window.parent) {
 }
 
 getTemplates();
-enqueueAdminBarStyles();
 </script>
 
 <template>
@@ -272,62 +239,53 @@ enqueueAdminBarStyles();
     :rowClick="openTemplate"
     :rowRightClick="handleRightClick"
     :hideSelect="true"
+    class="w-full"
   >
     <!-- Right actions -->
 
     <template v-slot:right-actions>
-      <!-- New template -->
-      <button class="uip-button-primary uip-flex uip-flex-row uip-gap-xxs uip-flex-center uip-text-s" @click="createNewUI('ui-template')">
-        {{ __("New template", "uipress-lite") }}
-      </button>
+      <AppButton type="primary" @click="createNewUI('ui-template')" class="text-sm">{{ __("New template", "uipress-lite") }}</AppButton>
     </template>
 
     <!-- Empty slot-->
     <template v-slot:empty>
-      <div class="uip-flex uip-flex-column uip-gap-s uip-padding-l uip-flex-center">
+      <div class="flex flex-col gap-4 p-12 items-center">
         <AppIcon icon="folder_open" style="font-size: 60px" />
-        <div class="uip-text-bold uip-text-xl uip-text-emphasis">{{ __("No templates yet", "uipress-lite") }}</div>
-        <div class="uip-text-muted">{{ __("When you create new templates they will show up here.", "uipress-lite") }}</div>
-        <button class="uip-button-primary uip-flex uip-flex-row uip-gap-xxs uip-flex-center uip-text-s" @click="createNewUI('ui-template')">
-          {{ __("New template", "uipress-lite") }}
-        </button>
+        <div class="font-bold text-xl text-zinc-900">{{ __("No templates yet", "uipress-lite") }}</div>
+        <div class="text-zinc-400">{{ __("When you create new templates they will show up here.", "uipress-lite") }}</div>
+        <AppButton type="primary" @click="createNewUI('ui-template')">{{ __("New template", "uipress-lite") }}</AppButton>
       </div>
     </template>
 
     <!-- Name-->
     <template v-slot:row-name="{ row }">
-      <div class="inline-flex uip-text-emphasis">
+      <div class="text-zinc-900">
         {{ row.name }}
       </div>
     </template>
 
     <!-- Satus-->
     <template v-slot:row-status="{ row }">
-      <div
-        class="uip-inline-flex uip-text-s uip-padding-left-xxs uip-padding-right-xxs uip-border uip-border-round"
-        :class="row.status === 'publish' ? 'uip-border-green uip-text-green' : 'uip-border-orange uip-text-orange'"
-      >
-        {{ returnFormattedStatus(row.status) }}
-      </div>
+      <StatusTag :status="row.status === 'publish' ? 'success' : 'warning'" :text="returnFormattedStatus(row.status)" />
     </template>
 
     <!-- Type-->
     <template v-slot:row-type="{ row }">
-      <div class="uip-inline-flex uip-text-s uip-padding-left-xxs uip-padding-right-xxs uip-border uip-border-round uip-background-muted uip-text-normal">
+      <div class="inline-flex text-s px-2 py-1 border border-zinc-200 rounded-md text-sm bg-zinc-50">
         {{ row.type }}
       </div>
     </template>
 
     <!-- Modified-->
     <template v-slot:row-modified="{ row }">
-      <div class="inline-flex uip-text-muted">
+      <div class="inline-flex text-zinc-500 text-sm">
         {{ row.modified }}
       </div>
     </template>
 
     <!-- Actions -->
     <template v-slot:row-actions="{ row }">
-      <div class="inline-flex uip-text-muted">
+      <AppButton type="transparent">
         <AppIcon
           icon="more_horiz"
           @click.stop.prevent="
@@ -337,32 +295,28 @@ enqueueAdminBarStyles();
             }
           "
         />
-      </div>
+      </AppButton>
     </template>
   </AppTable>
 
   <contextmenu ref="templateContextMenu">
-    <div class="uip-padding-xs uip-flex uip-flex-column uip-text-weight-normal">
+    <div class="p-3 flex flex-col">
       <template v-for="link in templateLinks">
-        <div v-if="link.type == 'divider'" class="uip-border-top uip-margin-top-xs uip-margin-bottom-xs"></div>
+        <div v-if="link.type == 'divider'" class="border-t border-zinc-200 my-2"></div>
 
-        <RouterLink
-          v-else-if="link.type == 'link'"
-          :to="link.url"
-          class="uip-link-muted uip-flex uip-flex-center uip-flex-between uip-gap-m uip-padding-xxs hover:uip-background-muted uip-border-rounder uip-no-underline"
-        >
-          <span class="">{{ link.name }}</span>
-          <AppIcon :icon="link.icon" class="uip-icon" />
+        <RouterLink v-else-if="link.type == 'link'" :to="link.url" class="flex flex-row gap-6 py-1 px-2 rounded-lg hover:bg-zinc-100 items-center hover:text-zinc-900 transition-all">
+          <span class="grow">{{ link.name }}</span>
+          <AppIcon :icon="link.icon" />
         </RouterLink>
 
         <a
           v-else
           @click="handleLinkAction(link)"
-          class="uip-flex uip-flex-center uip-flex-between uip-gap-m uip-padding-xxs hover:uip-background-muted uip-border-rounder uip-no-underline"
-          :class="link.danger ? 'uip-link-danger' : 'uip-link-muted'"
+          class="flex flex-row gap-6 py-1 px-2 rounded-lg hover:bg-zinc-100 items-center hover:text-zinc-900 transition-all"
+          :class="link.danger ? 'text-red-500 hover:text-red-700' : ''"
         >
-          <span class="">{{ link.name }}</span>
-          <AppIcon :icon="link.icon" class="uip-icon" />
+          <span class="grow">{{ link.name }}</span>
+          <AppIcon :icon="link.icon" />
         </a>
       </template>
     </div>

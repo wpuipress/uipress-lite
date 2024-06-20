@@ -39,13 +39,14 @@ watch(
 );
 
 const returnTdClass = (data, index) => {
-  let classes = props.hideSelect && index === 0 ? ["uip-border-round-left"] : [];
+  let classes = props.hideSelect && index === 0 ? ["rounded-tl-xl", "rounded-bl-xl"] : [];
   if (index == props.columns.length - 1) {
-    classes.push("uip-border-round-right");
+    classes.push("rounded-tr-xl");
+    classes.push("rounded-br-xl");
   }
 
   if (props.hasBorders) {
-    classes = ["uip-border-bottom", ""];
+    classes = ["border-b", "border-slate-200"];
   }
 
   return classes.join(" ");
@@ -125,52 +126,96 @@ defineExpose({
 </script>
 
 <template>
-  <div class="uip-flex uip-flex-column uip-gap-m uip-w-100p">
-    <div class="uip-flex uip-flex-row gauip-padding-xs uip-flex-center uip-w-100p">
+  <div class="flex flex-col gap-6 w-full">
+    <div class="flex flex-row gap-4 items-center w-full">
       <!-- 
-	  * Search 
-	  *
-	  * Main search input for data
-	  -->
-      <div class="uip-flex-grow">
-        <div class="uip-position-relative uip-w-100p" style="max-width: 400px">
-          <AppIcon icon="search" class="uip-text-muted uip-position-absolute uip-text-l uip-top-50p uip-translateY--50p" style="left: 8px"></AppIcon>
+    * Search 
+    *
+    * Main search input for data
+    -->
+      <div class="flex-grow">
+        <div class="relative w-1/3">
+          <AppIcon icon="search" class="text-slate-400 absolute left-4 top-1/2 translate-y-[-50%] text-lg"></AppIcon>
           <input
             v-model="pagination.search"
             @keyup.enter="emit('search')"
             type="text"
-            class="uip-input"
-            style="background: transparent; padding-left: 36px; padding-right: 36px; width: 100%; border: none"
-            :placeholder="__('Search...', 'uipress-lite')"
+            class="py-2 px-0 pl-16 bg-transparent border border-transparent w-full items-center transition-all outline-none focus:outline-none"
+            placeholder="Search..."
           />
           <Transition>
-            <AppIcon v-if="pagination.search" icon="return" class="uip-text-muted uip-position-absolute uip-text-l uip-top-50p uip-translateY--50p" style="right: 8px" />
+            <AppIcon v-if="pagination.search" icon="return" class="text-slate-400 absolute right-2 top-1/2 translate-y-[-50%] text-lg"></AppIcon>
           </Transition>
         </div>
       </div>
 
       <!-- 
-	  * Right actions 
-	  *
-	  * Provides the slot for extra filters etc
-	  -->
-      <div class="uip-flex uip-gap-xs uip-flex-center">
+    * Right actions 
+    *
+    * Provides the slot for extra filters etc
+    -->
+      <div class="flex gap-3 items-center">
         <slot name="right-actions"></slot>
       </div>
     </div>
 
     <!-- 
-	 * Table section
-	 *
-	 * Handler for data when in table mode
-	 -->
-    <table v-if="mode === 'list' && (!onlyMode || onlyMode === 'list')" class="uip-w-100p uip-border-collapse uip-text-m">
+  * Grid mode
+  *
+  * Main loop for data in group mode
+  -->
+    <div
+      v-if="mode === 'grid' && (!onlyMode || onlyMode === 'grid')"
+      @dragenter.prevent="emit('griddragenter', $event)"
+      @dragover.prevent
+      @dragleave="emit('griddragleave', $event)"
+      @drop.prevent="emit('griddrop', $event)"
+      class="flex-col flex gap-3 @container/grid"
+    >
+      <div
+        ref="gridHolder"
+        class="grid gap-10 h-auto @4xl/grid:grid-cols-12 @3xl/grid:grid-cols-8 @xl/grid:grid-cols-6 @lg/grid:grid-cols-4 @md/grid:grid-cols-4 @sm/grid:grid-cols-2"
+        style="grid-auto-rows: calc(100vw / 12"
+      >
+        <GridLoader v-if="fetching" v-for="count in pagination.per_page" />
+        <TransitionGroup v-else>
+          <template v-for="(row, index) in data" :index="index">
+            <slot :name="'grid-template'" :row="row" :index="index" />
+          </template>
+        </TransitionGroup>
+      </div>
+
+      <!-- 
+    * Section: Empty data 
+    *
+    * Provides the slot for when there is no data
+    -->
+      <div class="animate-fadeIn">
+        <slot v-if="!data.length && !pagination.search.length && !fetching" name="empty"></slot>
+      </div>
+
+      <!-- 
+    * Empty query data 
+    *
+    * Shows message when nothing found for search term
+    -->
+      <div v-if="!data.length && pagination.search.length && !fetching" class="animate-fadeIn">
+        <EmptyTable title="Nothing found" :description="`Nothing found for search term '${pagination.search}'`" />
+      </div>
+    </div>
+
+    <!-- 
+   * Table section
+   *
+   * Handler for data when in table mode
+   -->
+    <table v-if="mode === 'list' && (!onlyMode || onlyMode === 'list')" class="table-auto w-full border-separate border-spacing-0">
       <thead>
-        <tr class="uip-text-left">
-          <th v-if="!hideSelect" class="uip-text-muted w-1 uip-padding-s uip-border-top uip-border-bottom uip-w-30">
-            <input type="checkbox" class="uip-checkbox" @click="toggleAllSelection" />
+        <tr class="text-left font-medium">
+          <th v-if="!hideSelect" class="font-normal text-slate-400 w-1 p-4 border-t border-b border-slate-200/80">
+            <uiCheckbox @updated="toggleSelection" />
           </th>
-          <th v-for="(column, index) in columns" :key="column.key" class="uip-text-muted uip-padding-s uip-border-top uip-border-bottom uip-text-weight-normal" :style="returnColumnWidth(column)">
+          <th v-for="(column, index) in columns" :key="column.key" class="font-normal text-slate-400 p-4 border-t border-b border-slate-200 text-sm" :style="returnColumnWidth(column)">
             <!-- Use scoped slot for custom cell rendering -->
             <slot :name="'head-' + column.key" :column="column">
               {{ column.label }}
@@ -180,30 +225,27 @@ defineExpose({
       </thead>
 
       <!-- 
-	   * Table body
-	   *
-	   * Handles table body data
-	   -->
+     * Table body
+     *
+     * Handles table body data
+     -->
       <tbody v-if="fetching">
-        <tr v-if="!hasBorders">
-          <td :colspan="columns.length"><div class="uip-h-10"></div></td>
-        </tr>
         <TableLoader :columns="columns.length" :rows="10" />
       </tbody>
       <TransitionGroup tag="tbody" name="tableitem" v-else :css="false">
         <!-- 
-		* Empty data
-		*
-		* Provides slot for empty data
-		-->
+    * Empty data
+    *
+    * Provides slot for empty data
+    -->
         <tr v-if="!data.length && !pagination.search.length && !fetching" key="emptydata">
           <td :colspan="columns.length"><slot name="empty"></slot></td>
         </tr>
         <!-- 
-		* Empty query data
-		*
-		* Shows nothing found message for when there is a search term
-		-->
+    * Empty query data
+    *
+    * Shows nothing found message for when there is a search term
+    -->
         <tr v-if="!data.length && pagination.search.length && !fetching" key="emptyquery">
           <td :colspan="columns.length">
             <EmptyTable title="Nothing found" :description="`Nothing found for search term: '${pagination.search}'`" />
@@ -211,39 +253,31 @@ defineExpose({
         </tr>
 
         <!-- 
-		* Spacer
-		*
-		* Provides empty space
-		-->
+    * Spacer
+    *
+    * Provides empty space
+    -->
         <tr v-if="!hasBorders">
-          <td :colspan="columns.length"><div class="uip-h-10"></div></td>
+          <td :colspan="columns.length"><div class="h-4"></div></td>
         </tr>
 
         <!-- 
-		* Loop
-		*
-		* Main data loop for table body
-		-->
+        * Loop
+        *
+        * Main data loop for table body
+        -->
         <tr
           v-for="(row, index) in data"
           :key="row.id ? row.id : index"
           :style="`transition-delay:${returnTransitionDelay(index)}`"
           @contextmenu="handleRightClick($event, index)"
           @click="handleClick($event, index)"
-          class="uip-row-hover"
+          class="group"
         >
-          <td
-            v-if="!hideSelect"
-            class="uip-padding-left-s uip-padding-right-s uip-padding-top-xs uip-padding-bottom-xs group-hover:bg-slate-50 transition-all uip-cursor-pointer uip-border-round-left uip-w-30"
-          >
-            <input type="checkbox" class="uip-checkbox" :checked="selected.includes(row.id) ? true : false" @change="toggleSelected(d, row)" />
+          <td v-if="!hideSelect" class="px-4 py-3 group-hover:bg-slate-50 transition-all cursor-pointer rounded-tl-xl rounded-bl-xl w-1">
+            <uiCheckbox :value="selected.includes(row.id) ? true : false" @updated="(d) => toggleSelected(d, row)" />
           </td>
-          <td
-            class="uip-padding-left-s uip-padding-right-s uip-padding-top-xs uip-padding-bottom-xs group-hover:bg-slate-50 transition-all uip-cursor-pointer"
-            v-for="(column, colindex) in columns"
-            :key="column.key"
-            :class="returnTdClass(column, colindex)"
-          >
+          <td class="px-4 py-3 group-hover:bg-slate-50 transition-all cursor-pointer" v-for="(column, colindex) in columns" :key="column.key" :class="returnTdClass(column, colindex)">
             <!-- Use scoped slot for custom cell rendering -->
             <slot :name="'row-' + column.key" :row="row" :index="index" />
           </td>
@@ -251,23 +285,23 @@ defineExpose({
       </TransitionGroup>
 
       <!-- 
-	  * Main pagination
-	  *
-	  * Pagination for tables with more than one page
-	  -->
+    * Main pagination
+    *
+    * Pagination for tables with more than one page
+    -->
       <tfoot>
         <tr>
           <td :colspan="columns.length + 1">
-            <div v-if="pagination && data.length && pagination.pages > 1" class="uip-padding-top-s uip-flex uip-flex-row uip-gap-m uip-flex-between uip-flex-center uip-padding-xs uip-w-100p">
-              <span class="uip-text-muted">{{ pagination.per_page }} of {{ pagination.total }}</span>
-              <div class="uip-flex uip-gap-s uip-flex-center">
-                <span class="uip-text-muted">{{ pagination.page }} of {{ pagination.pages }}</span>
-                <button :disabled="pagination.page === 1" @click="emit('previous')" class="uip-button-default">
+            <div v-if="pagination && data.length && pagination.pages > 1" class="flex flex-row gap-6 place-content-between items-center p-4 w-full">
+              <span class="text-slate-400 text-sm">{{ pagination.per_page }} of {{ pagination.total }}</span>
+              <div class="flex gap-3 items-center">
+                <span class="text-slate-400 text-sm">{{ pagination.page }} of {{ pagination.pages }}</span>
+                <uiButton :disabled="pagination.page === 1" @click="emit('previous')" type="transparent">
                   <AppIcon icon="chevron_left" />
-                </button>
-                <button @click="emit('next')" :disabled="pagination.page === pagination.pages" class="uip-button-default">
+                </uiButton>
+                <uiButton @click="emit('next')" :disabled="pagination.page === pagination.pages" type="transparent">
                   <AppIcon icon="chevron_right" />
-                </button>
+                </uiButton>
               </div>
             </div>
           </td>

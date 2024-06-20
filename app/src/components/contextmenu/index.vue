@@ -151,14 +151,7 @@ export default {
 
 <template>
   <teleport to="body" :disabled="disableTeleport">
-    <div
-      v-if="isVisible"
-      ref="contextmenu"
-      style="border-radius: calc(var(--uip-border-radius-large) + var(--uip-padding-xs))"
-      :style="returnPosition()"
-      @click.prevent.stop
-      class="uip-background-default uip-flex uip-flex-column uip-text-normal uip-position-fixed uip-modal-body uip-z-index-99 uip-shadow uip-fade-in uip-body-font"
-    >
+    <div v-if="isVisible" ref="contextmenu" :style="returnPosition()" @click.prevent.stop class="bg-white flex flex-column fixed uip-modal-body z-[99] shadow-md rounded-lg">
       <slot></slot>
     </div>
   </teleport>

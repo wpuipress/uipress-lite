@@ -18,7 +18,6 @@ export default {
     };
   },
   async mounted() {
-    this.dequeueAdminBarStyles();
     this.importToolBar();
 
     await nextTick();
@@ -97,38 +96,6 @@ export default {
         this.updateQM();
         this.updateFromDom();
       }, 300);
-    },
-
-    /**
-     * Removes default toolbar styling
-     *
-     * @since 3.2.0
-     */
-    dequeueAdminBarStyles() {
-      let styleblock = document.querySelector('link[href*="load-styles.php?"]');
-      if (!styleblock) return (this.rendered = true);
-
-      const newLink = styleblock.href.replace("admin-bar,", ",");
-      const link = document.createElement("link");
-      link.href = newLink;
-      link.setAttribute("rel", "stylesheet");
-
-      // Event listener function
-      const onLoad = () => {
-        styleblock.remove();
-        link.removeEventListener("load", onLoad); // Remove the event listener
-        this.rendered = true;
-      };
-
-      const head = document.head;
-      if (head.firstChild) {
-        head.insertBefore(link, head.firstChild);
-      } else {
-        head.appendChild(link);
-      }
-
-      // Add the event listener
-      link.addEventListener("load", onLoad);
     },
 
     /**
