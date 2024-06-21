@@ -5,11 +5,13 @@
  */
 const { __ } = wp.i18n;
 import { nextTick } from "vue";
-import BlockControl from "@/uibuilder/block-control/index.vue";
+import blockControl from "@/uibuilder/block-control/index.vue";
+import AppButton from "@/components/app-button/index.vue";
 
 export default {
   components: {
-    blockControl: BlockControl,
+    blockControl,
+    AppButton,
   },
   inject: ["uiTemplate"],
   data() {
@@ -28,6 +30,11 @@ export default {
       scrollDebounce: null,
       scrollTimeout: false,
       zoomTimeout: false,
+      canvasPosition: {
+        left: "20px",
+        top: "300px",
+        "transform-origin": "left top",
+      },
       ui: {
         zoom: 0.9,
         zoomoptions: false,
@@ -130,10 +137,7 @@ export default {
      */
     "ui.zoom": {
       async handler(newValue, oldValue) {
-        if (!this.mounted) return;
-
         let zoom = this.ui.zoom;
-        this.$refs.framewrap.style.transform = `scale(${this.ui.zoom})`;
 
         clearTimeout(this.zoomTimeout);
         this.zoomTimeout = setTimeout(() => {
@@ -173,11 +177,20 @@ export default {
   },
   async mounted() {
     // Mount watchers
-    this.initiateCanvas();
-    this.mountWatchers();
+    //this.initiateCanvas();
+    //this.mountWatchers();
+    //await this.$nextTick();
+    //this.mounted = true;
 
+    window.addEventListener("keydown", this.watchShortCuts);
+
+    /* Set zoom */
+    let zoom = parseFloat(this.uipApp.data.userPrefs.builderPrefersZoom);
+    if (typeof zoom !== "undefined" && !isNaN(zoom)) this.ui.zoom = zoom;
+
+    /* Set canvas position */
     await this.$nextTick();
-    this.mounted = true;
+    this.setCanvasPosition();
   },
   computed: {
     /**
@@ -188,36 +201,7 @@ export default {
     returnHumanZoom() {
       return parseInt(this.ui.zoom * 100) + "%";
     },
-    /**
-     * Returns the current block
-     *
-     * @since 3.2
-     */
-    returnActiveBlockUID() {
-      return this.activeBlockID;
-    },
-    /**
-     * Returns the all uiTemplates
-     *
-     * @since 3.2
-     */
-    returnAllUiTemplates() {
-      let self = this;
-      if (self.allUiTemplates.length < 1) {
-        let formData = new FormData();
-        formData.append("action", "uip_get_ui_templates");
-        formData.append("security", uip_ajax.security);
-        formData.append("page", 1);
-        formData.append("search", "");
 
-        self.sendServerRequest(uip_ajax.ajax_url, formData).then((response) => {
-          this.allUiTemplates = response.templates;
-          return this.allUiTemplates;
-        });
-      } else {
-        return this.allUiTemplates;
-      }
-    },
     /**
      * Returns custom javascript for the template
      *
@@ -271,17 +255,6 @@ export default {
       const origin = this.uipApp.isRTL ? "bottom right" : "bottom left";
       return `scale:${calc};transform-origin:${origin};width:${width}%`;
     },
-    /**
-     * Returns the current color theme
-     *
-     * @since 3.2
-     */
-    returnColorMode() {
-      if (this.uipApp.data.userPrefs.darkTheme) return "dark";
-      if (this.uipApp.data.templateDarkMode) return "dark";
-
-      return "light";
-    },
 
     /**
      * Returns current theme icon
@@ -294,42 +267,27 @@ export default {
       }
       return "dark_mode";
     },
+
+    /**
+     * Returnscurrent position
+     *
+     * @since 3.2.0
+     */
+    returnCanvasPosition() {
+      return { ...this.canvasPosition, transform: `scale(${this.ui.zoom})` };
+    },
   },
   methods: {
     /**
-     * Sets up properties for canvas
+     * Removes active block on outside click
      *
      * @since 3.2.13
      */
-    async initiateCanvas() {
-      // Add class to body for shortcuts
-      if (this.detectOperatingSystem() == "Mac") {
-        document.body.classList.add("macos");
-      }
+    maybeRemoveActiveBlock() {
+      // We are probably dragging
+      if (this.uipApp.scrolling) return;
 
-      //Set zoom level from prefs
-      let zoom = parseFloat(this.uipApp.data.userPrefs.builderPrefersZoom);
-      if (typeof zoom !== "undefined" && !isNaN(zoom)) this.ui.zoom = zoom;
-      this.$refs.framewrap.style.transform = `scale(${this.ui.zoom})`;
-
-      await nextTick();
-
-      this.firstRender = true;
-      this.activeBlockID = this.$route.params.uid;
-
-      await nextTick();
-      await this.setCanvasPosition();
-
-      this.loading = false;
-    },
-    /**
-     * Mounts container watchers
-     *
-     * @since 3.2.13
-     */
-    mountWatchers() {
-      this.$refs.previewCanvas.addEventListener("wheel", this.scrollCanvas);
-      window.addEventListener("keydown", this.watchShortCuts);
+      this.uipApp.blockControl.removeActive();
     },
 
     /**
@@ -405,8 +363,8 @@ export default {
      */
     async fitCanvas() {
       this.uipApp.scrolling = true;
-      const container = this.$refs.previewCanvas;
-      const canvas = this.$refs.templatebody;
+      const container = this.$refs.canvasWrap;
+      const canvas = this.$refs.maincanvas;
 
       // Calculate the unscaled width of the canvas
       const elementActualWidth = canvas.offsetWidth;
@@ -419,6 +377,7 @@ export default {
       // Set the combined scale to the element
       this.ui.zoom = scaleFactor; // Multiply with existing scale to get combined scale
       await nextTick();
+      this.setCanvasPosition();
       this.uipApp.scrolling = false;
     },
 
@@ -461,35 +420,34 @@ export default {
         currentLeft += e.deltaX;
       }
 
-      // Apply the new top and left values to the absolute div
-      canvas.style.top = `${currentTop}px`;
-      canvas.style.left = `${currentLeft}px`;
+      // Apply styles to div
+      this.canvasPosition.top = `${currentTop}px`;
+      this.canvasPosition.left = `${currentLeft}px`;
     },
     /**
      * Centres canvas position
      *
      * @since 3.2.13
      */
-    async setCanvasPosition() {
+    setCanvasPosition() {
       // Get dimensions of the container
-      const containerWidth = this.$refs.previewCanvas.offsetWidth;
-      const containerHeight = this.$refs.previewCanvas.offsetHeight;
+      const containerWidth = this.$refs.canvasWrap.offsetWidth;
+      const containerHeight = this.$refs.canvasWrap.offsetHeight;
 
       // Get dimensions of the div
-      const divWidth = this.$refs.templatebody.offsetWidth;
-      const divHeight = this.$refs.templatebody.offsetHeight;
+      const divWidth = this.$refs.maincanvas.offsetWidth * this.ui.zoom;
+      const divHeight = this.$refs.maincanvas.offsetHeight * this.ui.zoom;
 
       // Calculate centred position for the div
       const centeredX = (containerWidth - divWidth) / 2;
       const centeredY = (containerHeight - divHeight) / 2;
 
+      // Get left of container
+      const rect = this.$refs.canvasWrap.getBoundingClientRect();
+
       // Apply styles to div
-      this.$refs.framewrap.style.top = `${centeredY}px`;
-      this.$refs.framewrap.style.left = `${centeredX}px`;
-
-      await this.$nextTick();
-
-      return true;
+      this.canvasPosition.top = `${centeredY}px`;
+      this.canvasPosition.left = `${centeredX + rect.left}px`;
     },
     /**
      * Handles changes to the viewport
@@ -555,13 +513,22 @@ export default {
       // Mousedown
       let pos = { top: 0, left: 0, x: 0, y: 0 };
       let canvas = this.$refs.framewrap;
-      let container = this.$refs.previewCanvas;
+      let maincanvas = this.$refs.maincanvas;
+      let frameCanvases = this.$refs.framecanvases;
+      let container = this.$refs.canvasWrap;
+
+      //this.uipApp.scrolling = true;
 
       // Right click so bail
       if (e.button === 2) return;
 
       // Make sure we are not dragging on a block area
-      if (canvas.contains(e.target)) return;
+      if (maincanvas.contains(e.target)) return;
+
+      /* Loop all sub canvases and check event location */
+      for (let framecan of frameCanvases) {
+        if (framecan.contains(e.target)) return;
+      }
 
       // Prevent
       e.preventDefault();
@@ -575,16 +542,42 @@ export default {
 
       pos = { left: currentLeft, top: currentTop, x: e.clientX, y: e.clientY };
 
+      // Dragging state and threshold check
+      let hasExceededThreshold = false;
+      const dragThreshold = 10;
+
       const mouseMoveHandler = (e) => {
         // How far the mouse has been moved
         const dx = e.clientX - pos.x;
         const dy = e.clientY - pos.y;
-        // Scroll the element
-        canvas.style.top = `${pos.top + dy}px`;
-        canvas.style.left = `${pos.left + dx}px`;
+
+        if (!hasExceededThreshold) {
+          if (Math.abs(dx) > dragThreshold || Math.abs(dy) > dragThreshold) {
+            hasExceededThreshold = true;
+
+            // Update the canvas scroll state
+            this.uipApp.scrolling = true;
+
+            // Change the cursor and prevent user from selecting the text
+            container.style.cursor = "grabbing";
+            container.style.userSelect = "none";
+          }
+        }
+
+        if (hasExceededThreshold) {
+          // Scroll the element
+          this.canvasPosition.top = `${pos.top + dy}px`;
+          this.canvasPosition.left = `${pos.left + dx}px`;
+        }
       };
 
       const mouseUpHandler = (e) => {
+        // Set timeout so as to avoid triggering click handler on canvas container
+        setTimeout(() => {
+          // Update the canvas scroll state
+          this.uipApp.scrolling = false;
+        }, 100);
+
         // Reset cursor
         container.style.cursor = "default";
         container.style.removeProperty("user-select");
@@ -595,18 +588,6 @@ export default {
 
       document.addEventListener("mousemove", mouseMoveHandler);
       document.addEventListener("mouseup", mouseUpHandler);
-    },
-    /**
-     * Toggles view mode
-     *
-     * @since 3.2.0
-     */
-    toggleDisplay() {
-      if (this.uiTemplate.display == "preview") {
-        this.uiTemplate.display = "builder";
-      } else {
-        this.uiTemplate.display = "preview";
-      }
     },
 
     /**
@@ -640,49 +621,17 @@ export default {
         }
       }
     },
-
-    /**
-     * Format user styles for save
-     *
-     * @since 3.2.0
-     */
-    formatStyles() {
-      let styles = this.uipApp.data.themeStyles;
-      let formatted = {};
-      for (let key in styles) {
-        if (styles[key].value) {
-          if (!formatted[styles[key].name]) {
-            formatted[styles[key].name] = {};
-          }
-          formatted[styles[key].name].value = styles[key].value;
-        }
-        if (styles[key].darkValue) {
-          if (!formatted[styles[key].name]) {
-            formatted[styles[key].name] = {};
-          }
-          formatted[styles[key].name].darkValue = styles[key].darkValue;
-        }
-        if (styles[key].user) {
-          formatted[styles[key].name].user = styles[key].user;
-          formatted[styles[key].name].label = styles[key].label;
-          formatted[styles[key].name].name = styles[key].name;
-          formatted[styles[key].name].type = styles[key].type;
-        }
-      }
-
-      return formatted;
-    },
   },
 };
 </script>
 
 <template>
   <component is="style" scoped>
-    .user-style-area{
+    :root{
     <template v-for="item in uipApp.data.themeStyles">
       <template v-if="item.value">{{ item.name }}:{{ item.value }};</template>
     </template>
-    } [data-theme="dark"] .user-style-area, .uip-dark-mode .user-style-area, .uip-dark-mode.user-style-area, .user-style-area .uip-dark-mode {
+    } [data-theme="dark"], .uip-dark-mode {
     <template v-for="item in uipApp.data.themeStyles">
       <template v-if="item.darkValue"> {{ item.name }}:{{ item.darkValue }};</template>
     </template>
@@ -693,230 +642,86 @@ export default {
     {{ returnTemplateJS }}
   </component>
 
-  <div ref="previewcontainer" class="uip-h-100p uip-w-100p uip-flex uip-flex-column uip-max-h-100p uip-overflow-hidden">
-    <!--preview area -->
+  <div
+    class="grow h-full max-h-full max-w-full flex flex-col overflow-hidden bg-zinc-100 relative"
+    ref="canvasWrap"
+    @click="maybeRemoveActiveBlock"
+    @wheel="scrollCanvas"
+    @mousedown="handleCanvasDrag($event)"
+  >
+    <!-- Style container for editor -->
+    <div id="uip-style-container"></div>
 
-    <div
-      id="uip-preview-canvas"
-      ref="previewCanvas"
-      class="uip-flex-grow uip-flex-grow uip-flex-middle uip-overflow-hidden uip-max-w-100p uip-max-h-100p uip-w-100p uip-border-box"
-      :data-theme="returnColorMode"
-      @click="uipApp.blockControl.removeActive()"
-      @mousedown="handleCanvasDrag($event)"
-    >
-      <div ref="framewrap" class="uip-flex uip-gap-l uip-flex-start uip-w-auto uip-position-absolute" id="uip-frame-wrap">
-        <!--Primary template -->
-        <div class="uip-flex uip-flex-column">
-          <div
-            class="uip-background-muted uip-border uip-flex uip-gap-xs uip-flex-center uip-padding-xxs uip-padding-left-xs uip-margin-bottom-s"
-            :style="returnScale"
-            style="border-radius: calc(var(--uip-border-radius) + var(--uip-padding-xxs))"
-            :class="uiTemplate.isPreview ? 'uip-opacity-0' : ''"
-          >
-            <div class="uip-text-muted uip-flex-grow uip-text-s">{{ uiTemplate.globalSettings.name }}</div>
+    <!--
+    --
+    -- Main canvas
+    --
+    -->
+    <!-- Wrap containers -->
+    <div class="grid grid-flow-col auto-cols-max w-max gap-16 fixed" :style="returnCanvasPosition" ref="framewrap">
+      <!-- Main Canvas -->
+      <div class="aspect-video w-[1600px] bg-white border border-zinc-200 rounded-lg canvas flex shadow-lg grow-0 shrink-0" ref="maincanvas">
+        <uip-content-area :content="uiTemplate.content" :returnData="(data) => (uiTemplate.content = data)" class="user-style-area rounded-lg" />
+      </div>
 
-            <!--Device switcher-->
-
-            <dropdown pos="bottom right">
-              <template v-slot:trigger>
-                <div
-                  class="uip-padding-left-xs uip-padding-right-xs uip-border-rounder uip-flex uip-gap-xs uip-flex-between uip-link-muted uip-flex-center uip-text-s"
-                  style=""
-                  @click="deviceSwitcherOpen = !deviceSwitcherOpen"
-                >
-                  <div class="">
-                    <template v-if="ui.viewDevice == 'desktop'">{{ ui.strings.desktop }}</template>
-                    <template v-if="ui.viewDevice == 'tablet'">{{ ui.strings.tablet }}</template>
-                    <template v-if="ui.viewDevice == 'phone'">{{ ui.strings.mobile }}</template>
-                  </div>
-                  <AppIcon icon="expand_more" class="uip-icon uip-text-l" />
-                </div>
-              </template>
-
-              <template v-slot:content>
-                <div class="uip-padding-xs">
-                  <div
-                    class="uip-flex uip-flex-row uip-flex-center uip-gap-xs uip-padding-xxs hover:uip-background-muted uip-border-rounder uip-gap-l uip-flex-between uip-link-default"
-                    @click="
-                      ui.viewDevice = 'desktop';
-                      deviceSwitcherOpen = false;
-                    "
-                  >
-                    <div class="">{{ ui.strings.desktop }}</div>
-                    <div class="uip-flex uip-flex-center uip-text-muted uip-gap-xxxs">
-                      <AppIcon icon="desktop_windows" class="uip-icon" style="line-height: 0" />
-                    </div>
-                  </div>
-
-                  <div
-                    class="uip-flex uip-flex-row uip-flex-center uip-gap-xs uip-padding-xxs hover:uip-background-muted uip-border-rounder uip-gap-l uip-flex-between uip-link-default"
-                    @click="
-                      ui.viewDevice = 'tablet';
-                      deviceSwitcherOpen = false;
-                    "
-                  >
-                    <div class="">{{ ui.strings.tablet }}</div>
-                    <div class="uip-flex uip-flex-center uip-text-muted uip-gap-xxxs">
-                      <AppIcon icon="tablet_mac" class="uip-icon" />
-                    </div>
-                  </div>
-
-                  <div
-                    class="uip-flex uip-flex-row uip-flex-center uip-gap-xs uip-padding-xxs hover:uip-background-muted uip-border-rounder uip-gap-l uip-flex-between uip-link-default"
-                    @click="
-                      ui.viewDevice = 'phone';
-                      deviceSwitcherOpen = false;
-                    "
-                  >
-                    <div class="">{{ ui.strings.mobile }}</div>
-                    <div class="uip-flex uip-flex-center uip-text-muted uip-gap-xxxs">
-                      <AppIcon icon="smartphone" class="uip-icon" />
-                    </div>
-                  </div>
-                </div>
-              </template>
-            </dropdown>
-          </div>
-
-          <div class="uip-position-relative" :class="uiTemplate.globalSettings.type" style="transform: translate(0, 0)">
-            <div id="uip-preview-content" class="uip-flex uip-flex-column uip-text-normal uip-desktop-view uip-position-relative uip-block-canvas">
-              <!--PAGE BODY-->
-              <div ref="templatebody" id="uip-template-body" class="uip-flex uip-flex-grow uip-text-normal uip-body-font uip-background-default uip-border-round uip-border">
-                <!--MAIN DROP AREA-->
-                <uip-content-area
-                  :content="uiTemplate.content"
-                  :returnData="
-                    function (data) {
-                      uiTemplate.content = data;
-                    }
-                  "
-                  class="user-style-area"
-                ></uip-content-area>
-                <!--END OF MAIN DROP AREA-->
-              </div>
-            </div>
-          </div>
+      <!--Loop block frames-->
+      <div v-for="block in getBlockFrames" class="relative grow-0 shrink-0 h-full w-max" v-if="!uiTemplate.isPreview" ref="framecanvases">
+        <div class="absolute pl-2 py-8 -translate-y-full">{{ block.name }} {{ ui.strings.frame }}</div>
+        <div class="flex grow bg-white border border-zinc-200 rounded-lg shadow-lg min-w-[200px]">
+          <uip-content-area :content="block.content" :returnData="(data) => (block.content = data)" class="user-style-area w-full grow rounded-lg" />
         </div>
-        <!--End primary template-->
-
-        <!--Output frames-->
-
-        <template v-for="block in getBlockFrames">
-          <div class="uip-flex uip-flex-column" :id="'block-frame-wrap-' + block.uid" :class="uiTemplate.isPreview ? 'uip-opacity-0' : ''">
-            <div
-              class="uip-background-muted uip-border uip-flex uip-gap-xs uip-flex-center uip-padding-xxs uip-margin-bottom-s"
-              :style="returnScale"
-              style="border-radius: calc(var(--uip-border-radius) + var(--uip-padding-xxs))"
-              :id="'block-frame-title-' + block.uid"
-              :class="uiTemplate.isPreview ? 'uip-opacity-0' : ''"
-            >
-              <AppIcon :title="ui.strings.preview" icon="crop_free" class="uip-icon uip-border-rounder" style="" />
-              <div class="uip-text-muted uip-text-s uip-flex-grow uip-no-wrap uip-overflow-hidden uip-text-ellipsis">{{ block.name }} {{ ui.strings.frame }}</div>
-            </div>
-
-            <!--Frame content-->
-            <div class="uip-position-relative uip-frame-content">
-              <div
-                class="uip-text-normal uip-body-font uip-background-default uip-border-round uip-border uip-min-h-300 uip-min-w-200 uip-overflow-visible uip-block-canvas uip-flex uip-flex-column"
-                :id="'block-frame-' + block.uid"
-              >
-                <!--BLOCK MAIN DROP AREA-->
-                <uip-content-area
-                  :content="block.content"
-                  :returnData="
-                    function (data) {
-                      block.content = data;
-                    }
-                  "
-                  class="user-style-area uip-w-100p uip-flex-grow"
-                />
-                <!--END OF MAIN DROP AREA-->
-              </div>
-            </div>
-          </div>
-        </template>
-
-        <!--Endframes-->
       </div>
     </div>
-    <!--end of preview area -->
+    <!--
+    --
+    --
+    -- Toolbar
+    -- 
+    -->
+    <div class="fixed bottom-[32px] left-1/2 -translate-x-1/2 z-[1]" style="bottom: 32px">
+      <div class="flex items-center p-2 bg-white shadow-lg border border-zinc-200 rounded-xl">
+        <!-- Zoom Options -->
+        <div class="px-2 text-sm text-zinc-400">{{ returnHumanZoom }}</div>
 
-    <div class="uip-position-fixed uip-bottom-0 uip-left-50p uip-translateX--50p uip-z-index-1" style="bottom: 32px">
-      <div class="uip-flex uip-flex-center uip-padding-xs uip-background-default uip-shadow uip-border" style="border-radius: calc(var(--uip-border-radius-large) + var(--uip-padding-xs))">
-        <dropdown pos="top left">
-          <template v-slot:trigger>
-            <div class="uip-background-muted uip-padding-xxs uip-border-rounder uip-flex uip-gap-s uip-flex-between uip-link-default uip-flex-center">
-              <div class="">{{ returnHumanZoom }}</div>
-              <AppIcon icon="expand_less" class="uip-icon uip-text-l" />
-            </div>
-          </template>
+        <AppButton type="transparent" :title="ui.strings.zoomOut" @click="zoom(-0.1)">
+          <AppIcon class="text-xl" icon="zoom_out" />
+        </AppButton>
 
-          <template v-slot:content>
-            <div class="uip-padding-xs uip-flex uip-flex-column uip-text-s">
-              <div
-                class="uip-flex uip-flex-row uip-flex-center uip-gap-xs uip-padding-xxs hover:uip-background-muted uip-border-rounder uip-gap-l uip-flex-between uip-link-default"
-                @click="zoom(-0.1)"
-              >
-                <div class="uip-no-wrap">{{ ui.strings.zoomOut }}</div>
-                <div class="uip-flex uip-flex-center uip-text-muted uip-gap-xxxs">
-                  <span class="uip-command-icon"></span>
-                  <AppIcon icon="remove" class="uip-icon" style="line-height: 0" />
-                </div>
-              </div>
+        <AppButton type="transparent" :title="ui.strings.zoomIn" @click="zoom(0.1)">
+          <AppIcon class="text-xl" icon="zoom_in" />
+        </AppButton>
 
-              <div
-                class="uip-flex uip-flex-row uip-flex-center uip-gap-xs uip-padding-xxs hover:uip-background-muted uip-border-rounder uip-gap-l uip-flex-between uip-link-default"
-                @click="zoom(0.1)"
-              >
-                <div class="uip-no-wrap">{{ ui.strings.zoomIn }}</div>
-                <div class="uip-flex uip-flex-center uip-text-muted uip-gap-xxxs">
-                  <span class="uip-command-icon"></span>
-                  <AppIcon icon="add" class="uip-icon" style="line-height: 0" />
-                </div>
-              </div>
+        <AppButton type="transparent" :title="ui.strings.zoom100" @click="fitCanvas()">
+          <AppIcon class="text-xl" icon="fit_screen" />
+        </AppButton>
 
-              <div
-                class="uip-flex uip-flex-row uip-flex-center uip-gap-xs uip-padding-xxs hover:uip-background-muted uip-border-rounder uip-gap-l uip-flex-between uip-link-default"
-                @click="fitCanvas()"
-              >
-                <div class="uip-no-wrap">{{ ui.strings.zoom100 }}</div>
-                <div class="uip-flex uip-flex-center uip-text-muted uip-gap-xxxs">
-                  <span class="uip-command-icon"></span>
-                  <AppIcon icon="exposure_zero" class="uip-icon" style="line-height: 0" />
-                </div>
-              </div>
-            </div>
-          </template>
-        </dropdown>
+        <div class="border-l border-zinc-200 h-6 mx-2"></div>
 
-        <div class="uip-margin-left-xs uip-margin-right-xs uip-h-20"></div>
+        <!-- Canvas Options -->
+        <AppButton type="transparent" :title="ui.strings.recenter" @click="setCanvasPosition()">
+          <AppIcon class="text-xl" icon="center_focus_strong" />
+        </AppButton>
 
-        <AppIcon
-          :title="ui.strings.recenter"
-          class="hover:uip-background-muted uip-padding-xxxs uip-border-round uip-flex uip-flex-center uip-icon uip-link-default uip-text-xl uip-ratio-1-1 uip-line-height-1 uip-icon-medium"
-          @click="setCanvasPosition()"
-          icon="center_focus_strong"
-        />
+        <AppButton type="transparent" :title="ui.strings.darkMode" @click="toggleDarkMode()">
+          <AppIcon class="text-xl" :icon="returnThemeIcon" />
+        </AppButton>
 
-        <AppIcon
-          :title="ui.strings.showGridLines"
-          class="hover:uip-background-muted uip-padding-xxxs uip-border-round uip-flex uip-flex-center uip-icon uip-link-default uip-text-xl uip-ratio-1-1 uip-line-height-1 uip-icon-medium"
-          @click="toggleDisplay()"
-          :class="{ 'uip-background-grey uip-text-emphasis': uiTemplate.display != 'preview' }"
-          icon="grid_3x3"
-        />
+        <div class="border-l border-zinc-200 h-6 mx-2"></div>
 
-        <!-- Dark mode -->
-        <AppIcon
-          :title="ui.strings.darkMode"
-          class="hover:uip-background-muted uip-padding-xxxs uip-border-round uip-flex uip-flex-center uip-icon uip-link-default uip-text-xl uip-ratio-1-1 uip-line-height-1 uip-icon-medium"
-          @click="toggleDarkMode()"
-          :icon="returnThemeIcon"
-        />
+        <!-- Responsive options -->
+        <AppButton type="transparent" :title="ui.strings.desktop" @click="ui.viewDevice = 'desktop'">
+          <AppIcon class="text-xl" icon="desktop" :class="ui.viewDevice == 'desktop' ? 'text-indigo-700' : ''" />
+        </AppButton>
+
+        <AppButton type="transparent" :title="ui.strings.tablet" @click="ui.viewDevice = 'tablet'">
+          <AppIcon class="text-xl" icon="tablet" :class="ui.viewDevice == 'tablet' ? 'text-indigo-700' : ''" />
+        </AppButton>
+
+        <AppButton type="transparent" :title="ui.strings.mobile" @click="ui.viewDevice = 'phone'">
+          <AppIcon class="text-xl" icon="phone" :class="ui.viewDevice == 'phone' ? 'text-indigo-700' : ''" />
+        </AppButton>
       </div>
     </div>
-
-    <!-- End right click -->
   </div>
 
   <blockControl />

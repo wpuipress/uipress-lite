@@ -6,13 +6,14 @@
 const { __ } = wp.i18n;
 import { deleteRemotePost } from "@/utility/functions.js";
 import { nextTick } from "vue";
+import AppButton from "@/components/app-button/index.vue";
 
 import screenOverlay from "./screenOverlay.vue";
 import Confirm from "@/components/confirm/index.vue";
 
 export default {
   inject: ["uiTemplate"],
-  components: { screenOverlay, Confirm },
+  components: { screenOverlay, Confirm, AppButton },
   data() {
     return {
       loading: true,
@@ -22,6 +23,7 @@ export default {
       imageIndex: 0,
       imageHover: false,
       draggingBlock: false,
+      activeCategory: false,
       strings: {
         missingMessage: __("This block no longer exists", "uipress-lite"),
         templateLibrary: __("Template library", "uipress-lite"),
@@ -46,6 +48,7 @@ export default {
         savePattern: __("Save pattern", "uipress-lite"),
         description: __("Description", "uipress-lite"),
         patternIcon: __("Icon", "uipress-lite"),
+        allTemplates: __("All templates", "uipress-lite"),
       },
       patternTypes: {
         layout: { name: "layout", label: __("Layout", "uipress-lite") },
@@ -64,6 +67,26 @@ export default {
           selected: true,
         },
       },
+      categories: [
+        {
+          label: __("UI templates", "uipress-lite"),
+          type: "Layout",
+          icon: "space_dashboard",
+          color: "bg-indigo-600",
+        },
+        {
+          label: __("Pages", "uipress-lite"),
+          type: "Admin Page",
+          icon: "article",
+          color: "bg-purple-600",
+        },
+        {
+          label: __("Sections", "uipress-lite"),
+          type: "Section",
+          icon: "calendar_view_day",
+          color: "bg-sky-600",
+        },
+      ],
     };
   },
   watch: {
@@ -89,28 +112,8 @@ export default {
      * @returns {Array} - Array of themes of type "Layout".
      * @since 3.2.13
      */
-    returnThemes() {
-      return this.themes.filter((obj) => obj.type === "Layout");
-    },
-
-    /**
-     * Returns an array of themes filtered by type "Admin Page".
-     *
-     * @returns {Array} - Array of themes of type "Admin Page".
-     * @since 3.2.13
-     */
-    returnPages() {
-      return this.themes.filter((obj) => obj.type === "Admin Page");
-    },
-
-    /**
-     * Returns an array of themes filtered by type "Section".
-     *
-     * @returns {Array} - Array of themes of type "Section".
-     * @since 3.2.13
-     */
-    returnSections() {
-      return this.themes.filter((obj) => obj.type === "Section");
+    returnActiveCategoryItems() {
+      return this.themes.filter((obj) => obj.type === this.activeCategory.type);
     },
 
     /**
@@ -348,307 +351,78 @@ export default {
 </script>
 
 <template>
-  <div class="uip-background-default uip-flex uip-flex-column uip-border-box uip-max-h-100p">
-    <div v-if="loading" class="uip-padding-m uip-flex uip-flex-center uip-flex-middle"><loading-chart></loading-chart></div>
-
-    <div v-else class="uip-flex uip-flex-column uip-h-100p uip-max-h-100p uip-row-gap-xs">
-      <!--Ui templates-->
-      <screenOverlay class="uip-w-100p">
-        <template v-slot:trigger>
-          <div class="uip-flex uip-gap-s uip-padding-xxs hover:uip-background-muted uip-border-rounder uip-flex-center">
-            <AppIcon icon="space_dashboard" class="uip-icon uip-text-xl uip-background-muted uip-border-rounder uip-padding-xxs" />
-            <div class="uip-text-emphasis uip-flex-grow">{{ strings.uiTemplates }}</div>
-
-            <AppIcon icon="chevron_right" class="uip-icon uip-text-l" />
+  <div class="max-h-full">
+    <div class="flex flex-col gap-3">
+      <!-- Loop categories -->
+      <template v-for="category in categories" v-if="!activeCategory">
+        <div class="flex flex-row gap-2 items-center p-1 cursor-pointer hover:bg-zinc-100 rounded-lg uip-block-drag text-zinc-400 hover:text-zinc-900" @click="activeCategory = category">
+          <div class="p-1 rounded-lg" :class="category.color">
+            <AppIcon :icon="category.icon" class="text-white" />
           </div>
-        </template>
+          <div class="select-none grow">{{ category.label }}</div>
+          <AppIcon icon="chevron_right" />
+        </div>
+      </template>
 
-        <template v-slot:content>
-          <VueDraggableNext
-            :list="returnThemes"
-            class="uip-padding-m uip-flex uip-flex-column uip-row-gap-m"
-            handle=".uip-block-drag"
-            :group="{ name: 'uip-blocks', pull: 'clone', put: false, revertClone: true }"
-            animation="300"
-            :sort="false"
-            :clone="clone"
-            itemKey="name"
-          >
-            <template v-for="(theme, index) in returnThemes" :key="theme.ID" :index="index">
-              <div class="uip-cursor-pointer">
-                <div class="uip-flex uip-flex-column uip-row-gap-xs">
+      <div v-else class="flex flex-col gap-8">
+        <div class="flex flex-row gap-2 items-center hover:text-zinc-900 cursor-pointer" @click="activeCategory = null">
+          <AppIcon icon="chevron_left" />
+          <div>{{ strings.allTemplates }}</div>
+        </div>
+
+        <!-- Loop active category -->
+        <VueDraggableNext
+          :list="returnActiveCategoryItems"
+          class="flex flex-col gap-8"
+          handle=".uip-block-drag"
+          :group="{ name: 'uip-blocks', pull: 'clone', put: false, revertClone: true }"
+          animation="300"
+          :sort="false"
+          :clone="clone"
+          itemKey="name"
+        >
+          <template v-for="(theme, index) in returnActiveCategoryItems" :key="theme.ID" :index="index">
+            <div class="cursor-pointer">
+              <div class="flex flex-col gap-3">
+                <div class="w-full pl-7 pt-7 bg-indigo-600 rounded-lg">
                   <div
-                    class="uip-w-100p uip-border-rounder uip-ratio-16-10 uip-block-drag uip-background-grey uip-background-no-repeat uip-background-center uip-background-cover"
+                    class="w-full rounded-tl-lg aspect-video uip-block-drag bg-zinc-200 bg-no-repeat bg-center bg-cover"
                     :style="'background-image:url(' + theme.images[returnThemeIndex(theme)] + ');'"
                   ></div>
+                </div>
 
-                  <div class="uip-flex uip-gap-xs uip-flex-center">
-                    <AppIcon icon="lightbulb" class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-icon" @click="theme.showInfo = !theme.showInfo" />
-                    <div class="uip-flex-grow uip-text-bold">{{ theme.name }}</div>
+                <div class="flex gap-2 items-center">
+                  <AppButton type="transparent" @click="theme.showInfo = !theme.showInfo"> <AppIcon icon="lightbulb" /></AppButton>
+                  <div class="grow font-semiboldd">{{ theme.name }}</div>
 
-                    <div v-if="theme.images.length > 1" class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-icon uip-text-l" @click="navImagesBackward(theme)">
-                      <AppIcon icon="chevron_left" />
-                    </div>
-                    <div v-if="theme.images.length > 1" class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-icon uip-text-l" @click="navImagesForward(theme)">
-                      <AppIcon icon="chevron_right" />
-                    </div>
+                  <AppButton type="transparent" v-if="theme.images.length > 1" @click="navImagesBackward(theme)"> <AppIcon icon="chevron_left" /></AppButton>
 
-                    <AppIcon icon="download" class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-icon uip-text-l" @click="importThis(theme, true)" />
+                  <AppButton type="transparent" v-if="theme.images.length > 1" @click="navImagesForward(theme)"> <AppIcon icon="chevron_right" /></AppButton>
+
+                  <AppButton type="transparent" v-if="theme.images.length > 1" @click="importThis(theme, true)"> <AppIcon icon="download" /></AppButton>
+                </div>
+
+                <template v-if="theme.showInfo">
+                  <div class="text-zinc-400 text-sm">
+                    {{ theme.description }}
                   </div>
 
-                  <template v-if="theme.showInfo">
-                    <div class="uip-text-muted" style="line-height: 1.6">
-                      {{ theme.description }}
+                  <div class="flex flex-row gap-3 place-content-between">
+                    <div class="text-xs bg-indigo-100 rounded px-2 py-1 flex flex-row gap-1 items-center">
+                      <AppIcon icon="file_download" />
+                      <span>{{ theme.downloads }}</span>
                     </div>
 
-                    <div class="uip-flex uip-flex-gap-xs uip-flex-between">
-                      <div class="uip-text-xs uip-background-primary-wash uip-border-rounder uip-padding-left-xxxs uip-padding-right-xxxs uip-flex uip-flex-row uip-gap-xxs uip-flex-center">
-                        <AppIcon icon="file_download" class="uip-icon" />
-                        <span>{{ theme.downloads }}</span>
-                      </div>
-
-                      <div class="uip-text-muted uip-text-s">
-                        {{ strings.createdBy }} <a href="https://uipress.co" class="uip-link-default">{{ theme.created_by }}</a>
-                      </div>
+                    <div class="text-zinc-400 text-sm">
+                      {{ strings.createdBy }} <a href="https://uipress.co" class="text-zinc-600 hover:text-zinc-900">{{ theme.created_by }}</a>
                     </div>
-                  </template>
-                </div>
+                  </div>
+                </template>
               </div>
-            </template>
-          </VueDraggableNext>
-        </template>
-      </screenOverlay>
-
-      <!--Ui Pages-->
-      <screenOverlay class="uip-w-100p">
-        <template v-slot:trigger>
-          <div class="uip-flex uip-gap-s uip-padding-xxs hover:uip-background-muted uip-border-rounder uip-flex-center">
-            <AppIcon icon="article" class="uip-icon uip-text-xl uip-background-muted uip-border-rounder uip-padding-xxs" />
-            <div class="uip-text-emphasis uip-flex-grow">{{ strings.pages }}</div>
-
-            <AppIcon icon="chevron_right" class="uip-icon uip-text-l" />
-          </div>
-        </template>
-
-        <template v-slot:content>
-          <VueDraggableNext
-            :list="returnPages"
-            class="uip-padding-m uip-flex uip-flex-column uip-row-gap-m"
-            handle=".uip-block-drag"
-            :group="{ name: 'uip-blocks', pull: 'clone', put: false, revertClone: true }"
-            animation="300"
-            :sort="false"
-            :clone="clone"
-            itemKey="name"
-          >
-            <template v-for="(theme, index) in returnPages" :key="theme.ID" :index="index">
-              <div class="uip-cursor-pointer">
-                <div class="uip-flex uip-flex-column uip-row-gap-xs">
-                  <div
-                    class="uip-w-100p uip-border-rounder uip-ratio-16-10 uip-block-drag uip-background-grey uip-background-no-repeat uip-background-center uip-background-cover"
-                    :style="'background-image:url(' + theme.images[returnThemeIndex(theme)] + ');'"
-                  ></div>
-
-                  <div class="uip-flex uip-gap-xs uip-flex-center">
-                    <AppIcon icon="lightbulb" class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-icon" @click="theme.showInfo = !theme.showInfo" />
-                    <div class="uip-flex-grow uip-text-bold">{{ theme.name }}</div>
-
-                    <div v-if="theme.images.length > 1" class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-icon uip-text-l" @click="navImagesBackward(theme)">
-                      <AppIcon icon="chevron_left" />
-                    </div>
-                    <div v-if="theme.images.length > 1" class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-icon uip-text-l" @click="navImagesForward(theme)">
-                      <AppIcon icon="chevron_right" />
-                    </div>
-
-                    <AppIcon icon="download" class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-icon uip-text-l" @click="importThis(theme, true)" />
-                  </div>
-
-                  <template v-if="theme.showInfo">
-                    <div class="uip-text-muted" style="line-height: 1.6">
-                      {{ theme.description }}
-                    </div>
-
-                    <div class="uip-flex uip-flex-gap-xs uip-flex-between">
-                      <div class="uip-text-xs uip-background-primary-wash uip-border-rounder uip-padding-left-xxxs uip-padding-right-xxxs uip-flex uip-flex-row uip-gap-xxs uip-flex-center">
-                        <AppIcon icon="file_download" class="uip-icon" />
-                        <span>{{ theme.downloads }}</span>
-                      </div>
-
-                      <div class="uip-text-muted uip-text-s">
-                        {{ strings.createdBy }} <a href="https://uipress.co" class="uip-link-default">{{ theme.created_by }}</a>
-                      </div>
-                    </div>
-                  </template>
-                </div>
-              </div>
-            </template>
-          </VueDraggableNext>
-        </template>
-      </screenOverlay>
-
-      <!--sections-->
-      <screenOverlay class="uip-w-100p">
-        <template v-slot:trigger>
-          <div class="uip-flex uip-gap-s uip-padding-xxs hover:uip-background-muted uip-border-rounder uip-flex-center">
-            <AppIcon icon="calendar_view_day" class="uip-icon uip-text-xl uip-background-muted uip-border-rounder uip-padding-xxs" />
-            <div class="uip-text-emphasis uip-flex-grow">{{ strings.sections }}</div>
-
-            <AppIcon icon="chevron_right" class="uip-icon uip-text-l" />
-          </div>
-        </template>
-
-        <template v-slot:content>
-          <VueDraggableNext
-            :list="returnSections"
-            class="uip-padding-m uip-flex uip-flex-column uip-row-gap-m"
-            handle=".uip-block-drag"
-            :group="{ name: 'uip-blocks', pull: 'clone', put: false, revertClone: true }"
-            animation="300"
-            :sort="false"
-            :clone="clone"
-            itemKey="name"
-          >
-            <template v-for="(theme, index) in returnSections" :key="theme.ID" :index="index">
-              <div class="uip-cursor-pointer">
-                <div class="uip-flex uip-flex-column uip-row-gap-xs">
-                  <div
-                    class="uip-w-100p uip-border-rounder uip-ratio-16-10 uip-block-drag uip-background-grey uip-background-no-repeat uip-background-center"
-                    :style="'background-image:url(' + theme.images[returnThemeIndex(theme)] + ');background-size:90%;'"
-                  ></div>
-
-                  <div class="uip-flex uip-gap-xs uip-flex-center">
-                    <AppIcon icon="lightbulb" class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-icon" @click="theme.showInfo = !theme.showInfo" />
-                    <div class="uip-flex-grow uip-text-bold">{{ theme.name }}</div>
-
-                    <div v-if="theme.images.length > 1" class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-icon uip-text-l" @click="navImagesBackward(theme)">
-                      <AppIcon icon="chevron_left" />
-                    </div>
-                    <div v-if="theme.images.length > 1" class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-icon uip-text-l" @click="navImagesForward(theme)">
-                      <AppIcon icon="chevron_right" />
-                    </div>
-
-                    <AppIcon icon="download" class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-icon uip-text-l" @click="importThis(theme)" />
-                  </div>
-
-                  <template v-if="theme.showInfo">
-                    <div class="uip-text-muted" style="line-height: 1.6">
-                      {{ theme.description }}
-                    </div>
-
-                    <div class="uip-flex uip-flex-gap-xs uip-flex-between">
-                      <div class="uip-text-xs uip-background-primary-wash uip-border-rounder uip-padding-left-xxxs uip-padding-right-xxxs uip-flex uip-flex-row uip-gap-xxs uip-flex-center">
-                        <AppIcon icon="file_download" class="uip-icon" />
-                        <span>{{ theme.downloads }}</span>
-                      </div>
-
-                      <div class="uip-text-muted uip-text-s">
-                        {{ strings.createdBy }} <a href="https://uipress.co" class="uip-link-default">{{ theme.created_by }}</a>
-                      </div>
-                    </div>
-                  </template>
-                </div>
-              </div>
-            </template>
-          </VueDraggableNext>
-        </template>
-      </screenOverlay>
-
-      <div class="uip-border-top uip-margin-top-s uip-margin-bottom-s"></div>
-
-      <!--Patterns-->
-      <screenOverlay class="uip-w-100p">
-        <template v-slot:trigger>
-          <div class="uip-flex uip-gap-s uip-padding-xxs hover:uip-background-muted uip-border-rounder uip-flex-center">
-            <AppIcon icon="texture" class="uip-icon uip-text-xl uip-background-muted uip-border-rounder uip-padding-xxs" />
-            <div class="uip-text-emphasis uip-flex-grow">{{ strings.patterns }}</div>
-
-            <AppIcon icon="chevron_right" class="uip-icon uip-text-l" />
-          </div>
-        </template>
-
-        <template v-slot:content>
-          <p v-if="uiTemplate.patterns.length < 1" class="uip-padding-m uip-text-muted uip-text-center">No patterns created yet</p>
-
-          <VueDraggableNext
-            :list="uiTemplate.patterns"
-            class="uip-padding-s uip-flex uip-flex-column uip-row-gap-s"
-            handle=".uip-block-drag"
-            :group="{ name: 'uip-blocks', pull: 'clone', put: false, revertClone: true }"
-            animation="300"
-            :sort="false"
-            :clone="clonePattern"
-            itemKey="name"
-          >
-            <template v-for="(theme, index) in uiTemplate.patterns" :key="theme.id" :index="index">
-              <div class="uip-flex uip-flex-column uip-block-drag uip-row-gap-xs">
-                <div class="uip-flex uip-gap-xs uip-flex-center hover:uip-background-grey uip-padding-xxs uip-border-rounder uip-cursor-pointer" @dblclick="importThisPattern(theme)">
-                  <AppIcon :icon="returnIcon(theme)" class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-icon uip-text-l" />
-                  <div class="uip-flex-grow uip-text-bold">{{ theme.name }}</div>
-
-                  <AppIcon v-if="!theme.editing" icon="edit" class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-icon" @click="theme.editing = true" />
-                  <AppIcon
-                    v-if="theme.editing"
-                    icon="done"
-                    class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-icon uip-text-green"
-                    @click="theme.editing = false"
-                  />
-
-                  <AppIcon icon="delete" class="uip-button-default uip-icon uip-border-rounder uip-padding-xxs uip-link-muted uip-icon" @click="deleteThisItem(theme.id)" />
-                </div>
-
-                <div v-if="theme.editing" class="uip-grid-col-1-3 uip-padding-s uip-padding-right-remove">
-                  <!--Name -->
-                  <div class="uip-flex uip-flex-center">
-                    <div class="uip-text-s uip-text-muted">{{ strings.patternTitle }}</div>
-                  </div>
-                  <div class="uip-flex uip-flex-center">
-                    <input class="uip-input uip-input-small uip-w-100p" type="text" v-model="theme.name" />
-                  </div>
-
-                  <!--Icon-->
-                  <div class="uip-flex uip-flex-center">
-                    <div class="uip-text-s uip-text-muted">{{ strings.patternIcon }}</div>
-                  </div>
-                  <div class="uip-flex uip-flex-center">
-                    <icon-select
-                      :value="{ value: theme.icon }"
-                      :returnData="
-                        function (data) {
-                          theme.icon = data.value;
-                        }
-                      "
-                    />
-                  </div>
-
-                  <!--Description-->
-                  <div class="uip-flex uip-flex-center">
-                    <div class="uip-text-s uip-text-muted">{{ strings.description }}</div>
-                  </div>
-                  <div class="uip-flex uip-flex-center">
-                    <textarea class="uip-input uip-w-100p" rows="4" v-model="theme.description"></textarea>
-                  </div>
-
-                  <!--Description-->
-                  <div class="uip-flex uip-flex-center">
-                    <div class="uip-text-s uip-text-muted">{{ strings.patternType }}</div>
-                  </div>
-                  <div class="uip-flex uip-flex-center">
-                    <toggle-switch
-                      :options="patternTypes"
-                      :activeValue="theme.type"
-                      :returnValue="
-                        function (data) {
-                          theme.type = data;
-                        }
-                      "
-                    ></toggle-switch>
-                  </div>
-                </div>
-              </div>
-            </template>
-          </VueDraggableNext>
-        </template>
-      </screenOverlay>
+            </div>
+          </template>
+        </VueDraggableNext>
+      </div>
     </div>
 
     <Confirm ref="confirm" />

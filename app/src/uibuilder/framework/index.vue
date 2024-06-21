@@ -379,7 +379,7 @@ export default {
 
       <div class="flex h-full grow overflow-hidden relative max-w-screen">
         <!--Left panel -->
-        <div class="overflow-auto border-r border-zinc-200 shrink-0 w-[300px] max-h-full z-[1] flex flex-col gap-4 p-4 bg-white" :style="returnLeftPanelStyle">
+        <div class="overflow-auto border-r border-zinc-200 shrink-0 w-[300px] max-h-full z-[1] flex flex-col gap-6 p-4 bg-white" :style="returnLeftPanelStyle">
           <!-- Switch between tabs -->
           <toggle-switch
             :options="switchOptions"
@@ -391,8 +391,6 @@ export default {
               }
             "
           />
-
-          <div class="border-t border-zinc-200"></div>
 
           <!-- OUTPUT SETTINGS OR BLOCKS -->
           <div class="grow overflow-auto">
@@ -417,9 +415,7 @@ export default {
         <!--End Layers panel -->
 
         <!-- Main canvas -->
-        <div class="grow bg-zinc-100 overflow-hidden">
-          <Canvas />
-        </div>
+        <Canvas />
         <!--End canvas-->
 
         <!--Right bar -->

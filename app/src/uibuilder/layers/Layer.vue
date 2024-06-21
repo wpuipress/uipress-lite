@@ -2,11 +2,11 @@
 const { __ } = wp.i18n;
 import { nextTick } from "vue";
 
-import BlockList from "@/uibuilder/block-list/index.vue";
+import BlockInserter from "./block-inserter.vue";
 
 export default {
   name: "Layer",
-  components: { BlockList },
+  components: { BlockInserter },
   props: {
     block: { type: Object, default: {} },
     returnData: { type: Function },
@@ -50,20 +50,20 @@ export default {
      * @since 3.2.13
      */
     buildClasses() {
-      let classes = "uip-border-rounder uip-padding-xxs";
+      let classes = "rounded-lg p-2";
       const isActive = this.isActive;
 
       // Add classes based on active state
       if (isActive) {
-        classes += " uip-text-emphasis uip-background-secondary uip-text-bold uip-text-inverse ";
+        classes += " bg-indigo-600 text-white font-semibold";
       } else {
-        classes += " uip-link-default uip-margin-right-xs";
+        classes += " hover:text-zinc-800 mr-2";
       }
 
       // Add hover class in a block control context if the element is not active
       if (this.uipApp.blockControl && !isActive) {
         if (this.uipApp.blockControl.returnHoveredBlockUID === this.block.uid) {
-          classes += " uip-background-primary-wash uip-text-emphasis";
+          classes += " bg-indigo-100 text-zinc-900";
         }
       }
 
@@ -94,9 +94,9 @@ export default {
 </script>
 
 <template>
-  <div class="uip-border-rounder" :class="{ 'uip-background-primary-wash': isActive }">
+  <div class="rounded-lg" :class="{ 'bg-indigo-100': isActive }">
     <div
-      class="uip-flex ui-flex-middle uip-flex-center uip-gap-xxs"
+      class="flex items-center gap-2"
       :class="buildClasses"
       @click="
         openSettings();
@@ -107,22 +107,23 @@ export default {
       @contextmenu.prevent.stop="uipApp.blockcontextmenu.show({ event: $event, list: items, index: index, block: block })"
     >
       <!--Chevs -->
-      <div v-if="block.content" class="uip-ratio-1-1 uip-icon uip-line-height-1 uip-cursor-pointer uip-flex uip-flex-center" @click.prevent.stop="open = !open">
+      <div v-if="block.content" class="aspect-square cursor-pointer flex items-center" @click.prevent.stop="open = !open">
         <AppIcon :icon="open ? 'expand_more' : 'chevron_right'" />
       </div>
 
-      <AppIcon :icon="block.icon" class="uip-cursor-pointer uip-icon uip-icon-small-emphasis" />
+      <AppIcon :icon="block.icon" class="cursor-pointer" />
 
-      <div class="uip-cursor-pointer uip-flex-grow uip-text-s uip-no-wrap uip-flex-center uip-flex-between uip-flex">
+      <div class="cursor-pointer grow text-sm flex-nowrap items-center place-content-between flex">
         <span>{{ block.name }}</span>
-        <AppIcon :title="queryLoopEnabled" v-if="hasNestedPath(block, ['query', 'enabled'])" icon="all_inclusive" class="uip-cursor-pointer uip-icon uip-icon-small-emphasis uip-text-l" />
+        <AppIcon :title="queryLoopEnabled" v-if="hasNestedPath(block, ['query', 'enabled'])" icon="all_inclusive" class="cursor-pointer text-lg" />
       </div>
     </div>
 
-    <div v-if="open && block.content" class="uip-margin-left-xs uip-padding-xs uip-padding-right-remove uip-flex uip-flex-column uip-gap-xs">
+    <div v-if="open && block.content" class="ml-3 p-2 flex flex-col gap-2">
+      <!-- Loop children -->
       <VueDraggableNext
-        :class="{ 'uip-min-h-30': !block.content.length }"
-        class="uip-flex uip-flex-column uip-row-gap-xxs uip-w-100p uip-template-layers"
+        :class="{ 'min-h-[30px]': !block.content.length }"
+        class="flex flex-col gap-1 w-full uip-template-layers"
         :group="{ name: 'uip-layer-blocks', pull: true, put: true }"
         :list="block.content"
         ghost-class="uip-block-ghost"
@@ -134,25 +135,8 @@ export default {
         </template>
       </VueDraggableNext>
 
-      <!--Block selector-->
-      <dropdown width="260" pos="right center" ref="blockSelector" class="uip-w-100p uip-flex uip-flex-center uip-flex-middle uip-flex-row uip-padding-right-xs">
-        <template v-slot:trigger>
-          <button class="uip-button-default uip-icon uip-w-100p uip-text-s uip-padding-xxs"><AppIcon icon="add" style="margin-left: auto; margin-right: auto" /></button>
-        </template>
-        <template v-slot:content>
-          <div class="uip-padding-s uip-max-w-300 uip-w-300 uip-max-h-500 uip-flex uip-flex-column uip-gap-s" style="overflow: auto">
-            <div class="uip-flex uip-flex-between uip-flex-center">
-              <div class="uip-text-emphasis uip-text-bold uip-text-s">{{ strings.blocks }}</div>
-              <div @click="$refs.blockSelector.close()" class="uip-flex uip-flex-center uip-flex-middle uip-padding-xxs uip-link-muted hover:uip-background-muted uip-border-rounder">
-                <AppIcon icon="close" />
-              </div>
-            </div>
-
-            <BlockList mode="click" :insertArea="block.content" @item-added="$refs.blockSelector.close()" />
-          </div>
-        </template>
-      </dropdown>
-      <!--End block selector-->
+      <!-- Push block inserter -->
+      <BlockInserter v-if="isActive" :block="block" />
     </div>
   </div>
 </template>

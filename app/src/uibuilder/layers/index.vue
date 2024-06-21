@@ -3,7 +3,7 @@ const { __ } = wp.i18n;
 import { nextTick } from "vue";
 
 import Layer from "./Layer.vue";
-import BlockList from "@/uibuilder/block-list/index.vue";
+import BlockInserter from "./block-inserter.vue";
 
 export default {
   name: "layersRecursive",
@@ -11,7 +11,7 @@ export default {
     content: Array,
     returnData: Function,
   },
-  components: { BlockList, Layer },
+  components: { BlockInserter, Layer },
   data() {
     return {
       rendered: false,
@@ -92,36 +92,23 @@ export default {
 </script>
 
 <template>
-  <VueDraggableNext
-    class="uip-flex uip-flex-column uip-row-gap-xxs uip-w-100p uip-template-layers"
-    :group="{ name: 'uip-layer-blocks', pull: true, put: true }"
-    :list="items"
-    ghost-class="uip-block-ghost"
-    animation="300"
-    :sort="true"
-  >
-    <template v-for="(element, index) in items" :key="element.uid">
-      <Layer :block="element" :items="items" />
-    </template>
-  </VueDraggableNext>
+  <div class="flex flex-col gap-2">
+    <VueDraggableNext
+      class="flex flex-col gap-1 w-full uip-template-layers"
+      :group="{ name: 'uip-layer-blocks', pull: true, put: true }"
+      :list="items"
+      ghost-class="uip-block-ghost"
+      animation="300"
+      :sort="true"
+    >
+      <template v-for="(element, index) in items" :key="element.uid">
+        <Layer :block="element" :items="items" />
+      </template>
+    </VueDraggableNext>
 
-  <!--Block selector-->
-  <dropdown pos="right center" ref="blockSelector" class="uip-w-100p uip-flex uip-flex-center uip-flex-middle uip-flex-row">
-    <template v-slot:trigger>
-      <button class="uip-button-default uip-icon uip-w-100p uip-text-s uip-padding-xxs"><AppIcon icon="add" style="margin-left: auto; margin-right: auto" /></button>
-    </template>
-    <template v-slot:content>
-      <div class="uip-padding-s uip-max-w-300 uip-w-300 uip-max-h-500 uip-flex uip-flex-column uip-gap-s" style="overflow: auto">
-        <div class="uip-flex uip-flex-between uip-flex-center">
-          <div class="uip-text-emphasis uip-text-bold uip-text-s">{{ strings.blocks }}</div>
-          <div @click="$refs.blockSelector.close()" class="uip-flex uip-flex-center uip-flex-middle uip-padding-xxs uip-link-muted hover:uip-background-muted uip-border-rounder">
-            <AppIcon icon="close" />
-          </div>
-        </div>
+    <!--Block selector-->
+    <BlockInserter :block="{ content: items }" />
+  </div>
 
-        <BlockList mode="click" :insertArea="items" @item-added="$refs.blockSelector.close()" />
-      </div>
-    </template>
-  </dropdown>
   <!--End block selector-->
 </template>
