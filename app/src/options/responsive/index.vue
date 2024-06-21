@@ -98,71 +98,26 @@ export default {
 </script>
 
 <template>
-  <div class="uip-flex uip-flex-column uip-row-gap-xs">
+  <div class="grid grid-cols-3 gap-2">
     <!--Mobile-->
-    <div class="uip-grid-col-1-3">
-      <div class="uip-text-muted uip-flex uip-flex-center">
-        <div class="uip-flex uip-gap-xs uip-flex-center uip-text-s">
-          <AppIcon icon="smartphone" class="uip-icon uip-icon-medium" />
-          <div class="">{{ strings.mobile }}</div>
-        </div>
-      </div>
-
-      <div class="uip-position-relative">
-        <toggle-switch
-          :options="options"
-          :activeValue="option.mobile"
-          :returnValue="
-            function (data) {
-              option.mobile = data;
-            }
-          "
-        ></toggle-switch>
-      </div>
+    <div class="flex flex-row gap-1 items-center text-zinc-400 text-sm">
+      <div class="">{{ strings.mobile }}</div>
     </div>
+
+    <toggle-switch :options="options" :activeValue="option.mobile" :returnValue="(data) => (option.mobile = data)" class="col-span-2" />
 
     <!--Tablet-->
-    <div class="uip-grid-col-1-3">
-      <div class="uip-text-muted uip-flex uip-flex-center">
-        <div class="uip-flex uip-gap-xs uip-flex-center uip-text-s">
-          <AppIcon icon="tablet" class="uip-icon uip-icon-medium" />
-          <div class="">{{ strings.tablet }}</div>
-        </div>
-      </div>
-
-      <div class="uip-position-relative">
-        <toggle-switch
-          :options="options"
-          :activeValue="option.tablet"
-          :returnValue="
-            function (data) {
-              option.tablet = data;
-            }
-          "
-        ></toggle-switch>
-      </div>
+    <div class="flex flex-row gap-1 items-center text-zinc-400 text-sm">
+      <div class="">{{ strings.tablet }}</div>
     </div>
+
+    <toggle-switch :options="options" :activeValue="option.tablet" :returnValue="(data) => (option.tablet = data)" class="col-span-2" />
 
     <!--Desktop-->
-    <div class="uip-grid-col-1-3">
-      <div class="uip-text-muted uip-flex uip-flex-center">
-        <div class="uip-flex uip-gap-xs uip-flex-center uip-text-s">
-          <AppIcon icon="desktop_windows" class="uip-icon uip-icon-medium" />
-          <div class="">{{ strings.desktop }}</div>
-        </div>
-      </div>
-
-      <div class="uip-position-relative">
-        <toggle-switch
-          :options="options"
-          :activeValue="option.desktop"
-          :returnValue="
-            function (data) {
-              option.desktop = data;
-            }
-          "
-        ></toggle-switch>
-      </div>
+    <div class="flex flex-row gap-1 items-center text-zinc-400 text-sm">
+      <div class="">{{ strings.desktop }}</div>
     </div>
+
+    <toggle-switch :options="options" :activeValue="option.desktop" :returnValue="(data) => (option.desktop = data)" class="col-span-2" />
   </div>
 </template>

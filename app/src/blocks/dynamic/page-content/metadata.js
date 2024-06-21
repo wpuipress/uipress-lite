@@ -20,7 +20,6 @@ export const metadata = {
       options: [
         { option: "choiceSelect", componentName: "choice-select", args: { type: "enabledDisabled" }, uniqueKey: "disableFullScreen", label: __("Fullscreen", "uipress-lite") },
         { option: "choiceSelect", componentName: "choice-select", args: { type: "hideShow" }, uniqueKey: "hideLoader", label: __("Loading bar", "uipress-lite") },
-        { option: "startPage", componentName: "link-select", args: { hideLinkType: true }, uniqueKey: "loginRedirect", label: __("Login redirect", "uipress-lite") },
       ],
     },
 

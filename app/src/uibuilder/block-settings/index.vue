@@ -383,7 +383,7 @@ export default {
       </ToggleSection>
       <!-- End general settings -->
 
-      <div class="uip-border-top"></div>
+      <div class="border-t border-zinc-200"></div>
 
       <!-- Query loop  -->
       <ToggleSection :title="strings.queryLoop">
@@ -398,7 +398,7 @@ export default {
       </ToggleSection>
       <!-- End query -->
 
-      <div class="uip-border-top"></div>
+      <div class="border-t border-zinc-200"></div>
 
       <!-- Interactions  -->
       <ToggleSection :title="strings.interactions" :startOpen="maybeShowInteractionPanel">
@@ -413,40 +413,34 @@ export default {
       </ToggleSection>
       <!-- End query -->
 
-      <div class="uip-border-top"></div>
+      <div class="border-t border-zinc-200"></div>
 
       <!-- Responsive  -->
       <ToggleSection :title="strings.hiddenOnDevice">
-        <responsiveControls
-          :value="block.responsive"
-          :returnData="
-            (e) => {
-              block.responsive = e;
-            }
-          "
-        />
+        <responsiveControls class="pl-4 pt-4" :value="block.responsive" :returnData="(e) => (block.responsive = e)" />
       </ToggleSection>
       <!-- End Responsive -->
 
-      <div class="uip-border-top" v-if="returnBlockOptions.length"></div>
+      <div class="border-t border-zinc-200" v-if="returnBlockOptions.length"></div>
 
       <!-- Block options  -->
       <ToggleSection :title="strings.options" :startOpen="true" v-if="returnBlockOptions.length">
-        <div class="uip-flex uip-flex-column uip-row-gap-xs">
+        <div class="flex flex-col gap-3 pl-4 pt-4">
           <template v-for="option in returnBlockOptions">
-            <div :class="optionFullWidth(option) ? 'uip-flex uip-flex-column uip-row-gap-xxs' : 'uip-grid-col-1-3'">
-              <div v-if="!optionFullWidth(option)" class="uip-text-muted uip-flex uip-flex-center uip-text-s uip-h-30 uip-gap-xs uip-position-relative">
+            <div :class="optionFullWidth(option) ? 'flex flex-col gap-2' : 'grid grid-cols-3'">
+              <!-- Non full width option -->
+              <div v-if="!optionFullWidth(option)" class="text-zinc-400 flex items-center text-sm h-[30px] gap-3 relative">
                 <dropdown pos="left center" :openOnHover="true" :snapX="['#uip-block-settings']" :hover="true">
-                  <template class="uip-flex-no-shrink" v-slot:trigger>
-                    <span :class="option.help ? 'uip-text-underline' : ''">{{ option.label }}</span>
+                  <template class="shrink-0" v-slot:trigger>
+                    <span :class="option.help ? 'text-underline' : ''">{{ option.label }}</span>
                   </template>
                   <template v-if="option.help" v-slot:content>
-                    <div class="uip-text-s uip-padding-xs uip-max-w-200">{{ option.help }}</div>
+                    <div class="text-sm padding-3 max-w-[200px]">{{ option.help }}</div>
                   </template>
                 </dropdown>
               </div>
 
-              <div class="uip-flex uip-flex-center uip-w-100p">
+              <div class="flex items-center w-full col-span-2">
                 <component
                   v-if="componentExists(option.componentName) && isAvailable(option)"
                   :is="option.componentName"
@@ -455,7 +449,7 @@ export default {
                   :returnData="(data) => handleBlockSettingUpdate(option, data)"
                 />
 
-                <div v-else class="uip-padding-xxs uip-border-rounder uip-background-green-wash uip-text-s">{{ strings.proOption }}</div>
+                <div v-else class="p-2 rounded-lg bg-green-100 text-sm">{{ strings.proOption }}</div>
               </div>
             </div>
           </template>
