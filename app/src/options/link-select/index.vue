@@ -1,6 +1,9 @@
 <script>
 const { __ } = wp.i18n;
+import AppInput from "@/components/text-input/index.vue";
+import AppButton from "@/components/app-button/index.vue";
 export default {
+  components: { AppInput, AppButton },
   props: {
     returnData: Function,
     value: Object,
@@ -256,27 +259,18 @@ export default {
 </script>
 
 <template>
-  <div class="uip-w-100p uip-flex uip-flex-column uip-row-gap-xs">
-    <div class="uip-flex uip-gap-xxs">
+  <div class="w-full flex flex-col gap-3">
+    <div class="flex gap-2 items-center">
       <dropdown pos="left center" ref="linkselect" :snapX="['#uip-block-settings', '#uip-template-settings', '#uip-global-settings']">
         <template #trigger>
-          <div class="uip-flex uip-flex-row">
-            <div
-              class="uip-border-rounder uip-text-l uip-flex uip-icon uip-padding-xxxs uip-text-center uip-link-default uip-background-muted"
-              :class="{ 'uip-background-primary uip-text-inverse': link.dynamic }"
-            >
-              <AppIcon icon="link" />
-            </div>
-          </div>
+          <AppButton type="default"><AppIcon icon="link" /></AppButton>
         </template>
 
         <template #content>
-          <div class="uip-flex uip-flex-column uip-row-gap-s uip-padding-s uip-w-240">
-            <div class="uip-flex uip-flex-between uip-flex-center">
-              <div class="uip-text-emphasis uip-text-bold uip-text-s">{{ strings.linkSelect }}</div>
-              <div @click.prevent.stop="$refs.linkselect.close()" class="uip-flex uip-flex-center uip-flex-middle uip-padding-xxs uip-link-muted hover:uip-background-muted uip-border-rounder">
-                <AppIcon icon="close" class="uip-icon" />
-              </div>
+          <div class="flex flex-col gap-4 p-4 w-[240px]">
+            <div class="flex place-content-between items-center">
+              <div class="text-zinc-900 font-semibold text-sm">{{ strings.linkSelect }}</div>
+              <AppButton type="transparent" @click.prevent.stop="$refs.linkselect.close()"><AppIcon icon="close" /></AppButton>
             </div>
 
             <toggle-switch
@@ -290,27 +284,19 @@ export default {
             ></toggle-switch>
 
             <template v-if="activeValue == 'admin'">
-              <input type="text" class="uip-input-small uip-w-100p" v-model="searchString" :placeholder="strings.searchLinks" />
+              <AppInput v-model="searchString" type="text" class="grow" :placeholder="strings.searchLinks" icon="search" />
 
-              <div class="uip-flex uip-flex-column uip-max-h-200" style="overflow: auto">
+              <div class="flex flex-col max-h-[200px]" style="overflow: auto">
                 <template v-for="(menu, index) in adminMenu">
-                  <div
-                    v-if="menu[0] != '' && inSearch(menu)"
-                    class="uip-border-round hover:uip-background-muted uip-border-round uip-padding-xxs uip-flex uip-cursor-pointer uip-w-100p uip-flex uip-flex-column uip-flex-no-wrap"
-                    @click="chooseLink(menu[2])"
-                  >
-                    <div class="uip-text-s uip-text-bold" v-html="menu[0]"></div>
-                    <div class="uip-text-s uip-text-muted uip-no-wrap uip-overflow-hidden uip-text-ellipsis uip-max-w-100p">{{ menu[2] }}</div>
+                  <div v-if="menu[0] != '' && inSearch(menu)" class="rounded-lg hover:bg-zinc-100 p-2 flex cursor-pointer w-full flex flex-col flex-nowrap" @click="chooseLink(menu[2])">
+                    <div class="text-sm font-semibold" v-html="menu[0]"></div>
+                    <div class="text-sm text-zinc-400 whitespace-nowrap overflow-hidden text-ellipsis max-w-full">{{ menu[2] }}</div>
                   </div>
 
                   <template v-if="menu.submenu" v-for="sub in menu.submenu">
-                    <div
-                      v-if="sub[0] != '' && inSearch(sub)"
-                      class="uip-border-round hover:uip-background-muted uip-border-round uip-padding-xxs uip-flex uip-cursor-pointer uip-w-100p uip-flex uip-flex-column uip-flex-no-wrap"
-                      @click="chooseLink(sub[2])"
-                    >
-                      <div class="uip-text-s uip-text-bold" v-html="sub[0]"></div>
-                      <div class="uip-text-s uip-text-muted uip-no-wrap uip-overflow-hidden uip-text-ellipsis uip-max-w-100p">{{ sub[2] }}</div>
+                    <div v-if="sub[0] != '' && inSearch(sub)" class="rounded-lg hover:bg-zinc-100 p-2 flex cursor-pointer w-full flex flex-col flex-nowrap" @click="chooseLink(sub[2])">
+                      <div class="text-sm font-semibold" v-html="sub[0]"></div>
+                      <div class="text-sm text-zinc-400 whitespace-nowrap overflow-hidden text-ellipsis max-w-full">{{ sub[2] }}</div>
                     </div>
                   </template>
                 </template>
@@ -318,61 +304,28 @@ export default {
             </template>
 
             <template v-if="activeValue == 'content'">
-              <input type="text" class="uip-input-small uip-w-100p" v-model="fetchSearchString" :placeholder="strings.searchPages" />
+              <AppInput v-model="fetchSearchString" type="text" class="grow" :placeholder="strings.searchPages" icon="search" />
 
-              <div class="uip-flex uip-flex-column uip-max-h-200" style="overflow: auto">
+              <div class="flex flex-col max-h-[200px]" style="overflow: auto">
                 <template v-for="post in getPosts">
-                  <div class="uip-border-round hover:uip-background-muted uip-border-round uip-padding-xxs uip-flex uip-cursor-pointer" @click="chooseLink(post.link)">
+                  <div class="rounded-lg hover:bg-zinc-100 p-2 flex cursor-pointer" @click="chooseLink(post.link)">
                     <div class="">
-                      <div class="uip-text-s uip-text-bold">{{ post.name }}</div>
-                      <div class="uip-text-s uip-text-muted">{{ post.link }}</div>
+                      <div class="text-sm font-semibold">{{ post.name }}</div>
+                      <div class="text-sm text-zinc-400">{{ post.link }}</div>
                     </div>
                   </div>
                 </template>
-                <div v-if="posts.length < 1 && fetchSearchString != ''" class="uip-text-muted uip-text-s uip-padding-xxs">{{ strings.noneFound }}</div>
-              </div>
-            </template>
-
-            <template v-if="activeValue == 'dynamic' && link.dynamic">
-              <div class="uip-flex uip-flex-column uip-row-gap-xxxs uip-w-250 uip-max-h-200 uip-scrollbar uip-overflow-auto">
-                <template v-for="dynamic in dynamics">
-                  <div
-                    v-if="dynamic.type == 'link'"
-                    class="uip-border-round hover:uip-background-muted uip-border-round uip-padding-xxs uip-flex uip-flex-between uip-flex-center uip-flex-middle uip-cursor-pointer"
-                    :class="{ 'uip-background-primary-wash': link.dynamicKey == dynamic.key }"
-                  >
-                    <div class="">
-                      <div class="uip-text-s uip-text-bold">{{ dynamic.label }}</div>
-                      <div class="uip-text-xs uip-text-muted uip-flex uip-flex-center uip-gap-s">
-                        <span class="uip-no-wrap uip-overflow-hidden uip-text-ellipsis uip-max-w-150">{{ dynamic.value }}</span>
-                      </div>
-                    </div>
-                    <span
-                      v-if="link.dynamicKey == dynamic.key"
-                      @click="removeDynamicItem()"
-                      class="uip-padding-xxs uip-border-round uip-background-muted hover:uip-background-grey uip-cursor-pointer uip-flex uip-flex-middle uip-flex-center"
-                    >
-                      <AppIcon icon="delete" class="uip-icon" />
-                    </span>
-                    <span
-                      v-else
-                      @click="chooseItem(dynamic)"
-                      class="uip-padding-xxs uip-border-round uip-background-muted hover:uip-background-grey uip-cursor-pointer uip-flex uip-flex-middle uip-flex-center"
-                    >
-                      {{ strings.select }}
-                    </span>
-                  </div>
-                </template>
+                <div v-if="posts.length < 1 && fetchSearchString != ''" class="text-zinc-400 text-sm p-2">{{ strings.noneFound }}</div>
               </div>
             </template>
           </div>
         </template>
       </dropdown>
 
-      <input type="text" class="uip-input-small uip-flex-grow" v-model="link.value" />
+      <AppInput v-model="link.value" type="text" class="grow" />
     </div>
 
-    <div class="uip-flex uip-flex-column uip-row-gap-xxxs" v-if="!hideLinkType && link.value != ''">
+    <div class="flex flex-col gap-3" v-if="!hideLinkType && link.value != ''">
       <toggle-switch
         :options="linkModes"
         :activeValue="link.newTab"

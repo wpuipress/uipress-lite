@@ -4,7 +4,7 @@ import { nextTick, defineAsyncComponent } from "vue";
 
 import StylePresets from "./StylePresets.vue";
 import BlockParts from "./BlockParts.vue";
-import ToggleSection from "./ToggleSection.vue";
+import ToggleSection from "@/components/toggle-section/index.vue";
 import BlockStyleHandler from "./BlockStyleHandler.vue";
 
 import QueryBuilder from "@/options/query-builder/index.vue";
@@ -12,6 +12,8 @@ import Interactions from "@/options/interactions/index.vue";
 import responsiveControls from "@/options/responsive/index.vue";
 import Classes from "@/options/classes/index.vue";
 import Conditions from "@/options/conditions/index.vue";
+import AppButton from "@/components/app-button/index.vue";
+import AppInput from "@/components/text-input/index.vue";
 
 export default {
   inject: ["uiTemplate"],
@@ -25,6 +27,8 @@ export default {
     BlockParts: BlockParts,
     StylePresets: StylePresets,
     ToggleSection: ToggleSection,
+    AppButton,
+    AppInput,
     CodeEditor: defineAsyncComponent(() => import("@/options/code-editor/index.vue")),
     "code-editor": defineAsyncComponent(() => import("@/options/code-editor/index.vue")),
   },
@@ -333,284 +337,270 @@ export default {
 </script>
 
 <template>
-  <div
-    v-if="showSettings"
-    id="uip-block-settings"
-    class="uip-position-fixed uip-top-80 uip-right-16 uip-bottom-16 uip-background-default uip-w-320 uip-flex uip-flex-column uip-row-gap-s uip-fade-in uip-shadow"
-    style="border-radius: calc(var(--uip-border-radius-large) + var(--uip-padding-xs)); z-index: 2; overflow: auto"
-  >
-    <div class="uip-flex uip-flex-column uip-gap-s uip-padding-s">
-      <!-- Block settings header -->
-      <div class="uip-flex uip-flex-between uip-flex-center">
-        <div class="uip-flex uip-flex-column">
-          <div class="uip-text-bold uip-blank-input uip-text-l uip-text-emphasis">{{ returnBlockRealName }}</div>
+  <div v-if="showSettings" id="uip-block-settings" class="fixed top-[72px] right-6 bottom-6 bg-white w-[320px] flex flex-col gap-6 shadow-lg z-[2] overflow-auto rounded-xl border border-zinc-200 p-6">
+    <!-- Block settings header -->
+    <div class="flex place-content-between items-center">
+      <div class="font-semibold text-lg text-zinc-900">{{ returnBlockRealName }}</div>
+
+      <AppButton type="transparent" @click="close()">
+        <AppIcon icon="close" />
+      </AppButton>
+    </div>
+    <!-- End block settings header -->
+
+    <!-- Toggle active tab -->
+    <toggle-switch :options="optionsSections" :activeValue="section" :returnValue="handleActiveTabChange" class="uip-margin-bottom-xxs" />
+
+    <!-- Settings Tab -->
+    <div v-if="section == 'settings'" class="flex flex-col gap-6">
+      <!-- General settings -->
+      <ToggleSection :title="strings.general" :startOpen="true">
+        <div class="grid grid-cols-3 pl-4 pt-4 gap-2">
+          <div class="text-zinc-400 text-sm flex flex-col place-content-center">
+            <span>{{ strings.name }}</span>
+          </div>
+
+          <AppInput v-model="block.name" type="text" class="col-span-2" />
+
+          <div class="text-zinc-400 text-sm flex flex-col place-content-center">
+            <span>{{ strings.blockID }}</span>
+          </div>
+
+          <AppInput v-model="block.uid" type="text" class="col-span-2" :disabled="true" :copy="true" />
+
+          <div class="uip-text-muted uip-flex uip-flex-center uip-text-s uip-max-h-30">
+            <span>{{ strings.link }}</span>
+          </div>
+
+          <link-select class="col-span-2" :value="block.linkTo" :returnData="(d) => (block.linkTo = d)" />
+
+          <div class="uip-text-muted uip-flex uip-flex-center uip-text-s uip-max-h-30">
+            <span>{{ strings.tooltip }}</span>
+          </div>
+
+          <AppInput v-model="block.tooltip.message" type="text" class="col-span-2" />
         </div>
+      </ToggleSection>
+      <!-- End general settings -->
 
-        <AppIcon class="uip-link-muted hover:uip-background-muted uip-border-rounder uip-icon uip-padding-xxs" @click="close()" icon="close" />
-      </div>
-      <!-- End block settings header -->
+      <div class="uip-border-top"></div>
 
-      <!-- Toggle active tab -->
-      <toggle-switch :options="optionsSections" :activeValue="section" :returnValue="handleActiveTabChange" class="uip-margin-bottom-xxs" />
+      <!-- Query loop  -->
+      <ToggleSection :title="strings.queryLoop">
+        <QueryBuilder v-if="uiTemplate.proActivated" :block="block" :value="returnBlockQuerySettings" />
 
-      <!-- Settings Tab -->
-      <div v-if="section == 'settings'" class="uip-flex uip-flex-column uip-gap-s">
-        <!-- General settings -->
-        <ToggleSection :title="strings.general" :startOpen="true">
-          <div class="uip-grid-col-1-3">
-            <div class="uip-text-muted uip-flex uip-flex-center uip-text-s">
-              <span>{{ strings.name }}</span>
-            </div>
-            <input class="uip-input uip-input-small" type="text" v-model="block.name" />
-
-            <div class="uip-text-muted uip-flex uip-flex-center uip-text-s">
-              <span>{{ strings.blockID }}</span>
-            </div>
-            <div class="uip-flex uip-flex-center uip-background-muted uip-border-rounder uip-padding-xxxs uip-padding-left-xs uip-padding-right-xxs uip-overflow-hidden">
-              <div class="uip-blank-input uip-text-s uip-flex-grow uip-overflow-hidden uip-text-ellipsis uip-no-wrap">{{ block.uid }}</div>
-              <AppIcon icon="content_copy" class="uip-icon uip-link-muted" @click="copyToClipboard(block.uid)" />
-            </div>
-
-            <div class="uip-text-muted uip-flex uip-flex-center uip-text-s uip-max-h-30">
-              <span>{{ strings.link }}</span>
-            </div>
-            <link-select
-              :value="block.linkTo"
-              :returnData="
-                (d) => {
-                  block.linkTo = d;
-                }
-              "
-            />
-
-            <!--Tooltip text -->
-            <div class="uip-text-muted uip-flex uip-flex-center uip-text-s">
-              <span>{{ strings.tooltip }}</span>
-            </div>
-            <input type="text" v-model="block.tooltip.message" class="uip-input uip-input-small" />
+        <div class="uip-grid-col-1-3" v-else>
+          <div class="uip-text-muted uip-flex uip-flex-center uip-text-s">
+            <span>{{ strings.queryLoop }}</span>
           </div>
-        </ToggleSection>
-        <!-- End general settings -->
+          <div class="uip-padding-xxs uip-border-rounder uip-background-green-wash uip-text-s">{{ strings.proOption }}</div>
+        </div>
+      </ToggleSection>
+      <!-- End query -->
 
-        <div class="uip-border-top"></div>
+      <div class="uip-border-top"></div>
 
-        <!-- Query loop  -->
-        <ToggleSection :title="strings.queryLoop">
-          <QueryBuilder v-if="uiTemplate.proActivated" :block="block" :value="returnBlockQuerySettings" />
+      <!-- Interactions  -->
+      <ToggleSection :title="strings.interactions" :startOpen="maybeShowInteractionPanel">
+        <Interactions v-if="uiTemplate.proActivated" :block="block" />
 
-          <div class="uip-grid-col-1-3" v-else>
-            <div class="uip-text-muted uip-flex uip-flex-center uip-text-s">
-              <span>{{ strings.queryLoop }}</span>
-            </div>
-            <div class="uip-padding-xxs uip-border-rounder uip-background-green-wash uip-text-s">{{ strings.proOption }}</div>
+        <div class="uip-grid-col-1-3" v-else>
+          <div class="uip-text-muted uip-flex uip-flex-center uip-text-s">
+            <span>{{ strings.queryLoop }}</span>
           </div>
-        </ToggleSection>
-        <!-- End query -->
+          <div class="uip-padding-xxs uip-border-rounder uip-background-green-wash uip-text-s">{{ strings.proOption }}</div>
+        </div>
+      </ToggleSection>
+      <!-- End query -->
 
-        <div class="uip-border-top"></div>
+      <div class="uip-border-top"></div>
 
-        <!-- Interactions  -->
-        <ToggleSection :title="strings.interactions" :startOpen="maybeShowInteractionPanel">
-          <Interactions v-if="uiTemplate.proActivated" :block="block" />
-
-          <div class="uip-grid-col-1-3" v-else>
-            <div class="uip-text-muted uip-flex uip-flex-center uip-text-s">
-              <span>{{ strings.queryLoop }}</span>
-            </div>
-            <div class="uip-padding-xxs uip-border-rounder uip-background-green-wash uip-text-s">{{ strings.proOption }}</div>
-          </div>
-        </ToggleSection>
-        <!-- End query -->
-
-        <div class="uip-border-top"></div>
-
-        <!-- Responsive  -->
-        <ToggleSection :title="strings.hiddenOnDevice">
-          <responsiveControls
-            :value="block.responsive"
-            :returnData="
-              (e) => {
-                block.responsive = e;
-              }
-            "
-          />
-        </ToggleSection>
-        <!-- End Responsive -->
-
-        <div class="uip-border-top" v-if="returnBlockOptions.length"></div>
-
-        <!-- Block options  -->
-        <ToggleSection :title="strings.options" :startOpen="true" v-if="returnBlockOptions.length">
-          <div class="uip-flex uip-flex-column uip-row-gap-xs">
-            <template v-for="option in returnBlockOptions">
-              <div :class="optionFullWidth(option) ? 'uip-flex uip-flex-column uip-row-gap-xxs' : 'uip-grid-col-1-3'">
-                <div v-if="!optionFullWidth(option)" class="uip-text-muted uip-flex uip-flex-center uip-text-s uip-h-30 uip-gap-xs uip-position-relative">
-                  <dropdown pos="left center" :openOnHover="true" :snapX="['#uip-block-settings']" :hover="true">
-                    <template class="uip-flex-no-shrink" v-slot:trigger>
-                      <span :class="option.help ? 'uip-text-underline' : ''">{{ option.label }}</span>
-                    </template>
-                    <template v-if="option.help" v-slot:content>
-                      <div class="uip-text-s uip-padding-xs uip-max-w-200">{{ option.help }}</div>
-                    </template>
-                  </dropdown>
-                </div>
-
-                <div class="uip-flex uip-flex-center uip-w-100p">
-                  <component
-                    v-if="componentExists(option.componentName) && isAvailable(option)"
-                    :is="option.componentName"
-                    v-bind="option"
-                    :value="returnBlockSettingValue(option)"
-                    :returnData="(data) => handleBlockSettingUpdate(option, data)"
-                  />
-
-                  <div v-else class="uip-padding-xxs uip-border-rounder uip-background-green-wash uip-text-s">{{ strings.proOption }}</div>
-                </div>
-              </div>
-            </template>
-          </div>
-        </ToggleSection>
-        <!-- End block options -->
-      </div>
-      <!-- End setting tab -->
-
-      <!-- Advanced Tab -->
-      <div v-if="section == 'advanced'" class="uip-flex uip-flex-column uip-gap-s">
-        <!-- Classes  -->
-        <ToggleSection :title="strings.classes" :startOpen="true">
-          <div class="uip-grid-col-1-3">
-            <div class="uip-text-muted uip-flex uip-flex-center uip-text-s uip-padding-top-xxs uip-flex-start">
-              <span>{{ strings.classes }}</span>
-            </div>
-            <Classes
-              :value="returnAdvancedValue('classes')"
-              :returnData="
-                (d) => {
-                  handleBlockAdavancedUpdate('classes', d);
-                }
-              "
-            />
-          </div>
-        </ToggleSection>
-
-        <!-- Conditions  -->
-        <ToggleSection :title="strings.conditions" :startOpen="true">
-          <div class="uip-grid-col-1-3">
-            <div class="uip-text-muted uip-flex uip-flex-center uip-text-s uip-padding-top-xxs uip-flex-start">
-              <span>{{ strings.conditions }}</span>
-            </div>
-            <Conditions
-              :value="returnAdvancedValue('conditions')"
-              :returnData="
-                (d) => {
-                  handleBlockAdavancedUpdate('conditions', d);
-                }
-              "
-            />
-          </div>
-        </ToggleSection>
-
-        <!-- Code  -->
-        <ToggleSection :title="strings.code" :startOpen="true">
-          <div class="uip-grid-col-1-3">
-            <div class="uip-text-muted uip-flex uip-flex-center uip-text-s"><span>css</span></div>
-            <CodeEditor
-              :args="{ language: 'css' }"
-              :value="returnAdvancedValue('css')"
-              :returnData="
-                (d) => {
-                  handleBlockAdavancedUpdate('css', d);
-                }
-              "
-            />
-
-            <div class="uip-text-muted uip-flex uip-flex-center uip-text-s"><span>Javscript</span></div>
-            <CodeEditor
-              :args="{ language: 'javascript' }"
-              :value="returnAdvancedValue('js')"
-              :returnData="
-                (d) => {
-                  handleBlockAdavancedUpdate('js', d);
-                }
-              "
-            />
-          </div>
-        </ToggleSection>
-      </div>
-      <!-- Advanced tab-->
-
-      <!-- Styles tab -->
-      <div v-if="section == 'style'" class="uip-flex uip-flex-column uip-gap-s">
-        <BlockParts
-          :block="block"
-          :activePart="activePart"
-          @update="
-            (d) => {
-              activePart = d;
+      <!-- Responsive  -->
+      <ToggleSection :title="strings.hiddenOnDevice">
+        <responsiveControls
+          :value="block.responsive"
+          :returnData="
+            (e) => {
+              block.responsive = e;
             }
           "
         />
+      </ToggleSection>
+      <!-- End Responsive -->
 
-        <!-- Presets -->
-        <StylePresets :activePart="activePart" :block="block" />
+      <div class="uip-border-top" v-if="returnBlockOptions.length"></div>
 
-        <div class="uip-border-top"></div>
+      <!-- Block options  -->
+      <ToggleSection :title="strings.options" :startOpen="true" v-if="returnBlockOptions.length">
+        <div class="uip-flex uip-flex-column uip-row-gap-xs">
+          <template v-for="option in returnBlockOptions">
+            <div :class="optionFullWidth(option) ? 'uip-flex uip-flex-column uip-row-gap-xxs' : 'uip-grid-col-1-3'">
+              <div v-if="!optionFullWidth(option)" class="uip-text-muted uip-flex uip-flex-center uip-text-s uip-h-30 uip-gap-xs uip-position-relative">
+                <dropdown pos="left center" :openOnHover="true" :snapX="['#uip-block-settings']" :hover="true">
+                  <template class="uip-flex-no-shrink" v-slot:trigger>
+                    <span :class="option.help ? 'uip-text-underline' : ''">{{ option.label }}</span>
+                  </template>
+                  <template v-if="option.help" v-slot:content>
+                    <div class="uip-text-s uip-padding-xs uip-max-w-200">{{ option.help }}</div>
+                  </template>
+                </dropdown>
+              </div>
 
-        <!-- Layout -->
-        <BlockStyleHandler :startOpen="!!block.content" :styleSettings="returnBlockStylePart('flexLayout')" component="flexLayout" styleName="flexLayout" :title="strings.layout" />
+              <div class="uip-flex uip-flex-center uip-w-100p">
+                <component
+                  v-if="componentExists(option.componentName) && isAvailable(option)"
+                  :is="option.componentName"
+                  v-bind="option"
+                  :value="returnBlockSettingValue(option)"
+                  :returnData="(data) => handleBlockSettingUpdate(option, data)"
+                />
 
-        <div class="uip-border-top"></div>
+                <div v-else class="uip-padding-xxs uip-border-rounder uip-background-green-wash uip-text-s">{{ strings.proOption }}</div>
+              </div>
+            </div>
+          </template>
+        </div>
+      </ToggleSection>
+      <!-- End block options -->
+    </div>
+    <!-- End setting tab -->
 
-        <!-- Dimensions -->
-        <BlockStyleHandler :startOpen="true" styleName="dimensions" :styleSettings="returnBlockStylePart('dimensions')" component="Dimensions" :title="strings.size" />
-
-        <div class="uip-border-top"></div>
-
-        <!-- Styles -->
-        <BlockStyleHandler :startOpen="true" styleName="styles" :styleSettings="returnBlockStylePart('styles')" component="Styles" :title="strings.style" />
-
-        <div class="uip-border-top"></div>
-
-        <!-- Spacing -->
-        <BlockStyleHandler :startOpen="true" styleName="spacing" :styleSettings="returnBlockStylePart('spacing')" component="Spacing" :title="strings.spacing" />
-
-        <div class="uip-border-top"></div>
-
-        <!-- Text -->
-        <BlockStyleHandler styleName="textFormat" :styleSettings="returnBlockStylePart('textFormat')" component="TextFormat" :title="strings.text" />
-
-        <div class="uip-border-top"></div>
-
-        <!-- Before / after  -->
-        <ToggleSection :title="strings.content">
-          <div class="uip-grid-col-1-3">
-            <div class="uip-text-muted uip-flex uip-flex-center uip-text-s"><span>::before</span></div>
-            <uip-input
-              :value="returnBlockPseudo('beforeContent')"
-              :returnData="
-                (data) => {
-                  handleBlockPseudoChange(data, 'beforeContent');
-                }
-              "
-            />
-
-            <div class="uip-text-muted uip-flex uip-flex-center uip-text-s"><span>::after</span></div>
-            <uip-input :value="returnBlockPseudo('afterContent')" :returnData="(data) => handleBlockPseudoChange(data, 'afterContent')" />
+    <!-- Advanced Tab -->
+    <div v-if="section == 'advanced'" class="uip-flex uip-flex-column uip-gap-s">
+      <!-- Classes  -->
+      <ToggleSection :title="strings.classes" :startOpen="true">
+        <div class="uip-grid-col-1-3">
+          <div class="uip-text-muted uip-flex uip-flex-center uip-text-s uip-padding-top-xxs uip-flex-start">
+            <span>{{ strings.classes }}</span>
           </div>
-        </ToggleSection>
+          <Classes
+            :value="returnAdvancedValue('classes')"
+            :returnData="
+              (d) => {
+                handleBlockAdavancedUpdate('classes', d);
+              }
+            "
+          />
+        </div>
+      </ToggleSection>
 
-        <div class="uip-border-top"></div>
+      <!-- Conditions  -->
+      <ToggleSection :title="strings.conditions" :startOpen="true">
+        <div class="uip-grid-col-1-3">
+          <div class="uip-text-muted uip-flex uip-flex-center uip-text-s uip-padding-top-xxs uip-flex-start">
+            <span>{{ strings.conditions }}</span>
+          </div>
+          <Conditions
+            :value="returnAdvancedValue('conditions')"
+            :returnData="
+              (d) => {
+                handleBlockAdavancedUpdate('conditions', d);
+              }
+            "
+          />
+        </div>
+      </ToggleSection>
 
-        <!-- Position -->
-        <BlockStyleHandler styleName="positionDesigner" :styleSettings="returnBlockStylePart('positionDesigner')" component="PositionDesigner" :title="strings.position" />
+      <!-- Code  -->
+      <ToggleSection :title="strings.code" :startOpen="true">
+        <div class="uip-grid-col-1-3">
+          <div class="uip-text-muted uip-flex uip-flex-center uip-text-s"><span>css</span></div>
+          <CodeEditor
+            :args="{ language: 'css' }"
+            :value="returnAdvancedValue('css')"
+            :returnData="
+              (d) => {
+                handleBlockAdavancedUpdate('css', d);
+              }
+            "
+          />
 
-        <div class="uip-border-top"></div>
+          <div class="uip-text-muted uip-flex uip-flex-center uip-text-s"><span>Javscript</span></div>
+          <CodeEditor
+            :args="{ language: 'javascript' }"
+            :value="returnAdvancedValue('js')"
+            :returnData="
+              (d) => {
+                handleBlockAdavancedUpdate('js', d);
+              }
+            "
+          />
+        </div>
+      </ToggleSection>
+    </div>
+    <!-- Advanced tab-->
 
-        <!-- Effects -->
-        <BlockStyleHandler styleName="effectsDesigner" :styleSettings="returnBlockStylePart('effectsDesigner')" component="EffectsDesigner" :title="strings.effects" />
+    <!-- Styles tab -->
+    <div v-if="section == 'style'" class="uip-flex uip-flex-column uip-gap-s">
+      <BlockParts
+        :block="block"
+        :activePart="activePart"
+        @update="
+          (d) => {
+            activePart = d;
+          }
+        "
+      />
 
-        <div class="uip-border-top"></div>
-      </div>
+      <!-- Presets -->
+      <StylePresets :activePart="activePart" :block="block" />
+
+      <div class="uip-border-top"></div>
+
+      <!-- Layout -->
+      <BlockStyleHandler :startOpen="!!block.content" :styleSettings="returnBlockStylePart('flexLayout')" component="flexLayout" styleName="flexLayout" :title="strings.layout" />
+
+      <div class="uip-border-top"></div>
+
+      <!-- Dimensions -->
+      <BlockStyleHandler :startOpen="true" styleName="dimensions" :styleSettings="returnBlockStylePart('dimensions')" component="Dimensions" :title="strings.size" />
+
+      <div class="uip-border-top"></div>
+
+      <!-- Styles -->
+      <BlockStyleHandler :startOpen="true" styleName="styles" :styleSettings="returnBlockStylePart('styles')" component="Styles" :title="strings.style" />
+
+      <div class="uip-border-top"></div>
+
+      <!-- Spacing -->
+      <BlockStyleHandler :startOpen="true" styleName="spacing" :styleSettings="returnBlockStylePart('spacing')" component="Spacing" :title="strings.spacing" />
+
+      <div class="uip-border-top"></div>
+
+      <!-- Text -->
+      <BlockStyleHandler styleName="textFormat" :styleSettings="returnBlockStylePart('textFormat')" component="TextFormat" :title="strings.text" />
+
+      <div class="uip-border-top"></div>
+
+      <!-- Before / after  -->
+      <ToggleSection :title="strings.content">
+        <div class="uip-grid-col-1-3">
+          <div class="uip-text-muted uip-flex uip-flex-center uip-text-s"><span>::before</span></div>
+          <uip-input
+            :value="returnBlockPseudo('beforeContent')"
+            :returnData="
+              (data) => {
+                handleBlockPseudoChange(data, 'beforeContent');
+              }
+            "
+          />
+
+          <div class="uip-text-muted uip-flex uip-flex-center uip-text-s"><span>::after</span></div>
+          <uip-input :value="returnBlockPseudo('afterContent')" :returnData="(data) => handleBlockPseudoChange(data, 'afterContent')" />
+        </div>
+      </ToggleSection>
+
+      <div class="uip-border-top"></div>
+
+      <!-- Position -->
+      <BlockStyleHandler styleName="positionDesigner" :styleSettings="returnBlockStylePart('positionDesigner')" component="PositionDesigner" :title="strings.position" />
+
+      <div class="uip-border-top"></div>
+
+      <!-- Effects -->
+      <BlockStyleHandler styleName="effectsDesigner" :styleSettings="returnBlockStylePart('effectsDesigner')" component="EffectsDesigner" :title="strings.effects" />
+
+      <div class="uip-border-top"></div>
     </div>
   </div>
 </template>

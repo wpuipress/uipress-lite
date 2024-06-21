@@ -43,7 +43,13 @@ export default {
   mounted() {
     this.mountShortcut();
   },
-
+  computed: {
+    returnTeleportDestination() {
+      /* Choose teleport destination, if editing we need to teleport to the shadow root */
+      const appshadowRootHost = document.querySelector("#uip-shadow-editor");
+      return appshadowRootHost ? appshadowRootHost.shadowRoot : "body";
+    },
+  },
   methods: {
     /**
      * Removes components shortcuts
@@ -220,10 +226,13 @@ export default {
       const windowHeight = window.innerHeight || document.documentElement.clientHeight;
       const windowWidth = window.innerWidth || document.documentElement.clientWidth;
 
+      let appshadowRootHost = document.querySelector("#uip-shadow-editor");
+      appshadowRootHost = appshadowRootHost ? appshadowRootHost.shadowRoot : document;
+
       // Loop through snaps and update the trigger position
       if (this.snapX && Array.isArray(this.snapX)) {
         for (let selector of this.snapX) {
-          let snap = document.querySelector(selector);
+          let snap = appshadowRootHost.querySelector(selector);
           if (!snap) continue;
           let temprect = snap.getBoundingClientRect();
           triggerRect.left = temprect.left;
@@ -306,14 +315,14 @@ export default {
   <div ref="droptrigger" @mouseenter="maybeOpen" @mouseover="clearCloseTimeout()" @mouseleave="maybeClose" @click="show($event)">
     <slot name="trigger" />
 
-    <teleport to="body" :disabled="disableTeleport">
+    <teleport :to="returnTeleportDestination" :disabled="disableTeleport">
       <div
         v-if="modelOpen && $slots.content"
         @mouseleave="maybeClose"
         @mouseover="clearCloseTimeout()"
         @click.stop
         ref="uipdrop"
-        class="uip-z-index-9 uip-position-fixed uip-shadow uip-background-default uip-border-rounder uip-body-font uip-dropdown-container"
+        class="z-[9] fixed shadow-lg bg-white rounded-lg border border-zinc-200 uip-dropdown-container"
         style="border-radius: calc(var(--uip-border-radius-large) + var(--uip-padding-xxs))"
         :style="position"
       >

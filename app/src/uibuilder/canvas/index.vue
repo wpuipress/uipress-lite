@@ -97,7 +97,13 @@ export default {
      */
     "ui.viewDevice": {
       handler(newValue, oldValue) {
-        this.handleViewPortChange();
+        if (newValue == "desktop") this.uiTemplate.windowWidth = "1000";
+        if (newValue == "tablet") this.uiTemplate.windowWidth = "699";
+        if (newValue == "phone") this.uiTemplate.windowWidth = "600";
+
+        nextTick(() => {
+          this.setCanvasPosition();
+        });
       },
       deep: true,
     },
@@ -276,6 +282,17 @@ export default {
     returnCanvasPosition() {
       return { ...this.canvasPosition, transform: `scale(${this.ui.zoom})` };
     },
+
+    /**
+     * Return viewport class
+     */
+    returnViewPortClass() {
+      const newValue = this.ui.viewDevice;
+
+      if (newValue == "desktop") return "uip-desktop-view w-aspect-video w-[1600px] max-w-[1600px]";
+      if (newValue == "tablet") return "uip-tablet-view w-[699px] max-w-[699px] aspect-[16/10]";
+      if (newValue == "tablet") return "uip-phone-view w-[600px] max-w-[600px] aspect-[16/9]";
+    },
   },
   methods: {
     /**
@@ -449,46 +466,7 @@ export default {
       this.canvasPosition.top = `${centeredY}px`;
       this.canvasPosition.left = `${centeredX + rect.left}px`;
     },
-    /**
-     * Handles changes to the viewport
-     *
-     * @since 3.0.0
-     */
-    handleViewPortChange() {
-      const newValue = this.ui.viewDevice;
-      if (newValue == "desktop") {
-        this.uiTemplate.windowWidth = "1000";
-        let frame = document.getElementById("uip-preview-content");
-        if (frame) {
-          frame.classList.add("uip-desktop-view");
-          frame.classList.remove("uip-tablet-view");
-          frame.classList.remove("uip-phone-view");
-        }
-      }
-      if (newValue == "tablet") {
-        this.uiTemplate.windowWidth = "699";
-        let frame = document.getElementById("uip-preview-content");
-        if (frame) {
-          frame.classList.add("uip-tablet-view");
-          frame.classList.remove("uip-desktop-view");
-          frame.classList.remove("uip-phone-view");
-        }
-      }
-      if (newValue == "phone") {
-        this.uiTemplate.windowWidth = "600";
-        let frame = document.getElementById("uip-preview-content");
-        if (frame) {
-          frame.classList.add("uip-phone-view");
-          frame.classList.remove("uip-tablet-view");
-          frame.classList.remove("uip-desktop-view");
-        }
-      }
-      let previewwidthChange = new CustomEvent("uipress/builder/preview/change", { detail: { windowWidth: this.uiTemplate.windowWidth } });
-      document.dispatchEvent(previewwidthChange);
-      requestAnimationFrame(() => {
-        this.setCanvasPosition();
-      });
-    },
+
     /**
      * Detects whether we are on a mac or windows
      *
@@ -660,7 +638,7 @@ export default {
     <!-- Wrap containers -->
     <div class="grid grid-flow-col auto-cols-max w-max gap-16 fixed" :style="returnCanvasPosition" ref="framewrap">
       <!-- Main Canvas -->
-      <div class="aspect-video w-[1600px] bg-white border border-zinc-200 rounded-lg canvas flex shadow-lg grow-0 shrink-0" ref="maincanvas">
+      <div class="bg-white border border-zinc-200 rounded-lg canvas flex shadow-lg grow-0 shrink-0" :class="returnViewPortClass" ref="maincanvas">
         <uip-content-area :content="uiTemplate.content" :returnData="(data) => (uiTemplate.content = data)" class="user-style-area rounded-lg" />
       </div>
 

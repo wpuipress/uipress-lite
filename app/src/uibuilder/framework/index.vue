@@ -165,19 +165,6 @@ export default {
     returnTemplateData() {
       return this.template;
     },
-
-    /**
-     * Returns left panel style depending on preview / builder mode
-     *
-     * @since 3.2.13
-     */
-    returnLeftPanelStyle() {
-      if (this.template.isPreview) {
-        return "transform:scale(0,1);max-width:0%;transition: all 0.2s ease-in-out;transform-origin: left;";
-      } else {
-        return "max-width:100%;transition:all 0.2s ease-in-out;transform-origin: left;";
-      }
-    },
   },
   methods: {
     /**
@@ -379,7 +366,7 @@ export default {
 
       <div class="flex h-full grow overflow-hidden relative max-w-screen">
         <!--Left panel -->
-        <div class="overflow-auto border-r border-zinc-200 shrink-0 w-[300px] max-h-full z-[1] flex flex-col gap-6 p-4 bg-white" :style="returnLeftPanelStyle">
+        <div class="overflow-auto border-r border-zinc-200 shrink-0 w-[300px] max-h-full z-[1] flex flex-col gap-6 p-4 bg-white" v-if="!template.isPreview">
           <!-- Switch between tabs -->
           <toggle-switch
             :options="switchOptions"
