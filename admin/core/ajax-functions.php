@@ -442,7 +442,7 @@ class uip_ajax
         "Authorization" => "Bearer {$key}",
         "Content-Type" => "application/json",
       ],
-      "body" => json_encode([
+      "body" => wp_json_encode([
         "messages" => $messages,
         "model" => $model,
       ]),
@@ -844,7 +844,7 @@ class uip_ajax
       $temp = [];
 
       $modified = get_the_modified_date("U", $item->ID);
-      $humandate = human_time_diff($modified, strtotime(date("Y-D-M"))) . " " . __("ago", "uipress-lite");
+      $humandate = human_time_diff($modified, strtotime(gmdate("Y-D-M"))) . " " . __("ago", "uipress-lite");
       $author_id = get_post_field("post_author", $item->ID);
       $user = get_user_by("id", $author_id);
       $username = $user->user_login;
@@ -1046,7 +1046,7 @@ class uip_ajax
       $temp = [];
 
       $modified = get_the_modified_date("U", $item->ID);
-      $humandate = human_time_diff($modified, strtotime(date("Y-D-M"))) . " " . __("ago", "uipress-lite");
+      $humandate = human_time_diff($modified, strtotime(gmdate("Y-D-M"))) . " " . __("ago", "uipress-lite");
       $author_id = get_post_field("post_author", $item->ID);
       $user = get_user_by("id", $author_id);
       $username = $user->user_login;
@@ -1206,7 +1206,7 @@ class uip_ajax
       $temp = [];
 
       $modified = get_the_modified_date("U", $item->ID);
-      $humandate = human_time_diff($modified, strtotime(date("Y-D-M"))) . " " . __("ago", "uipress-lite");
+      $humandate = human_time_diff($modified, strtotime(gmdate("Y-D-M"))) . " " . __("ago", "uipress-lite");
       $author_id = get_post_field("post_author", $item->ID);
       $user = get_user_by("id", $author_id);
       $username = $user->user_login;

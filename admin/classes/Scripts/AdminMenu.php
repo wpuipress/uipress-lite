@@ -163,8 +163,8 @@ class AdminMenu
     $outputter = function () use ($menu) {
       //$menu = Sanitize::clean_input_with_code($menu);
 
-      $menuString = json_encode($menu);
-      $menuString = $menuString ?? json_encode([["menu" => []]]);
+      $menuString = wp_json_encode($menu);
+      $menuString = $menuString ?? wp_json_encode([["menu" => []]]);
 
       // Output menu
       wp_print_inline_script_tag("", ["id" => "uip-admin-menu", "data-menu" => $menuString]);

@@ -127,7 +127,7 @@ class UipScripts
 
     $scriptData = [
       "id" => "uip-app-data",
-      "uip_ajax" => json_encode(
+      "uip_ajax" => wp_json_encode(
         [
           "ajax_url" => $ajaxURL,
           "security" => $nonce,

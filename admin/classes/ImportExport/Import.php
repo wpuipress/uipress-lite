@@ -47,7 +47,7 @@ class Import
       return $returndata;
     }
 
-    $url = $path . "?key=" . $key . "&sync_options=" . json_encode($types);
+    $url = $path . "?key=" . $key . "&sync_options=" . wp_json_encode($types);
 
     $response = wp_remote_get($url);
 

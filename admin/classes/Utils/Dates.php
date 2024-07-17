@@ -1,7 +1,7 @@
 <?php
 namespace UipressLite\Classes\Utils;
 
-!defined('ABSPATH') ? exit() : '';
+!defined("ABSPATH") ? exit() : "";
 
 class Dates
 {
@@ -14,7 +14,7 @@ class Dates
    */
   public static function getHumanDate(int $postId): string
   {
-    $modified = get_the_modified_date('U', $postId);
-    return human_time_diff($modified, strtotime(date('Y-D-M'))) . ' ' . __('ago', 'uipress-lite');
+    $modified = get_the_modified_date("U", $postId);
+    return human_time_diff($modified, strtotime(gmdate("Y-D-M"))) . " " . __("ago", "uipress-lite");
   }
 }

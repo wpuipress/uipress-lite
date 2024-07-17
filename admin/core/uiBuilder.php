@@ -102,7 +102,7 @@ class uip_ui_builder extends uip_app
     $hook_suffix = add_action("admin_menu", [$this, "add_ui_builder_to_menu"]);
 
     $builderName = uip_plugin_shortname . "-ui-builder";
-    $page = isset($_GET["page"]) ? $_GET["page"] : false;
+    $page = isset($_GET["page"]) ? sanitize_text_field($_GET["page"]) : false;
     $onBuilderPage = $page == $builderName ? true : false;
 
     // Exit if not on builder page
@@ -177,7 +177,7 @@ class uip_ui_builder extends uip_app
 
     $dataScript = [
       "id" => "uip-app-data",
-      "uip_ajax" => json_encode(
+      "uip_ajax" => wp_json_encode(
         [
           "ajax_url" => admin_url("admin-ajax.php"),
           "security" => wp_create_nonce("uip-security-nonce"),
@@ -383,7 +383,7 @@ class uip_ui_builder extends uip_app
     $options = $options ? $options : new stdClass();
 
     $returndata["success"] = true;
-    $returndata["options"] = json_decode(html_entity_decode(json_encode($options)));
+    $returndata["options"] = json_decode(html_entity_decode(wp_json_encode($options)));
 
     wp_send_json($returndata);
   }
@@ -478,7 +478,7 @@ class uip_ui_builder extends uip_app
 
     $styles = UipOptions::get("theme-styles");
     $styles = is_object($styles) ? $styles : new stdClass();
-    $styles = json_decode(html_entity_decode(json_encode($styles)));
+    $styles = json_decode(html_entity_decode(wp_json_encode($styles)));
 
     //Return data to app
     $returndata = [];
@@ -504,7 +504,7 @@ class uip_ui_builder extends uip_app
 
     $styles = UipOptions::get("theme-styles");
     $styles = is_object($styles) ? $styles : new stdClass();
-    $styles = json_decode(html_entity_decode(json_encode($styles)));
+    $styles = json_decode(html_entity_decode(wp_json_encode($styles)));
 
     //Return data to app
     $returndata = [];
@@ -588,8 +588,17 @@ class uip_ui_builder extends uip_app
     // Check security nonce and 'DOING_AJAX' global
     Ajax::check_referer();
 
-    $templateID = sanitize_text_field($_POST["id"]);
-    $newPost = Posts::duplicate($templateID);
+    // Sanitize and validate the ID
+    $templateID = absint($_POST["id"]);
+
+    // Ensure the ID is not zero after sanitization
+    if ($templateID > 0) {
+      $newPost = Posts::duplicate($templateID);
+    } else {
+      $returndata["error"] = true;
+      $returndata["message"] = __("Unable to duplicate template", "uipress-lite");
+      wp_send_json($returndata);
+    }
 
     if (!$newPost) {
       $returndata["error"] = true;

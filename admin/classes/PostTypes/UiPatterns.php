@@ -131,7 +131,7 @@ class UiPatterns
   public static function new($name, $pattern, $type, $des, $icon)
   {
     // No pattern so return
-    $decodePattern = json_decode(json_encode($pattern));
+    $decodePattern = json_decode(wp_json_encode($pattern));
     if (!is_object($decodePattern)) {
       return false;
     }

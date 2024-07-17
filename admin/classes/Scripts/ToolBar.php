@@ -76,8 +76,8 @@ class ToolBar
     // Create anonymous function so we can use the captured menu at runtime
     $outputter = function () use ($toolbar) {
       $toolbar = Sanitize::clean_input_with_code($toolbar);
-      $toolbarString = json_encode($toolbar);
-      $toolbarString = $toolbarString ?? json_encode([]);
+      $toolbarString = wp_json_encode($toolbar);
+      $toolbarString = $toolbarString ?? wp_json_encode([]);
 
       wp_print_inline_script_tag('', ['id' => 'uip-admin-toolbar', 'data-toolbar' => $toolbarString]);
     };

@@ -214,7 +214,7 @@ class AdminPage
     $templateObject["updated"] = get_the_modified_date("U", $template->ID);
 
     $templateString = Sanitize::clean_input_with_code($templateObject);
-    $templateString = json_encode($templateString);
+    $templateString = wp_json_encode($templateString);
     $templateString = html_entity_decode($templateString);
 
     // Switch back to current blog

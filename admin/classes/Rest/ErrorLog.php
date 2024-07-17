@@ -138,7 +138,7 @@ class ErrorLog
 
         $messageLower = strtolower($error["message"]);
         $fileLower = strtolower($error["file"]);
-        $traceLower = strtolower(json_encode($error["stackTrace"]));
+        $traceLower = strtolower(wp_json_encode($error["stackTrace"]));
 
         if (strpos($messageLower, $searchLower) !== false || strpos($fileLower, $searchLower) !== false || strpos($traceLower, $searchLower) !== false) {
           $filteredErrors[] = $error;
@@ -162,7 +162,7 @@ class ErrorLog
   }
 
   /**
-   * Parses the given error log file
+   * Parses the given error log file using WP_Filesystem
    *
    * @since 3.2.13
    * @param string $logFilePath The file path of the error log
@@ -170,19 +170,39 @@ class ErrorLog
    */
   private static function parse($logFilePath)
   {
+    // Ensure that the WordPress filesystem abstraction is loaded
+    require_once ABSPATH . "wp-admin/includes/file.php";
+
+    // Initialize the WP_Filesystem
+    global $wp_filesystem;
+    if (!WP_Filesystem()) {
+      yield [];
+      return;
+    }
+
+    // Check if the file exists and is readable
+    if (!$wp_filesystem->exists($logFilePath) || !$wp_filesystem->is_readable($logFilePath)) {
+      yield [];
+      return;
+    }
+
     $parsedLogs = [];
-    $logFileHandle = fopen($logFilePath, "rb");
     $key = -1;
     $date_format = get_option("date_format");
     $time_format = get_option("time_format");
 
-    while (!feof($logFileHandle)) {
-      $currentLine = str_replace(PHP_EOL, "", fgets($logFileHandle));
+    // Read the file content line by line
+    $lines = $wp_filesystem->get_contents_array($logFilePath);
+    if ($lines === false) {
+      yield [];
+      return;
+    }
 
+    foreach ($lines as $currentLine) {
+      $currentLine = str_replace(PHP_EOL, "", $currentLine);
       if (!isset($currentLine[0])) {
         continue;
       }
-
       // Normal error log line starts with the date & time in []
       if ("[" === $currentLine[0] && !preg_match("/Stack trace/", $currentLine) && !preg_match("/.*PHP.*[0-9]\. /", $currentLine)) {
         $key += 1;
@@ -192,14 +212,12 @@ class ErrorLog
           preg_match("~^\[(.*?)\]~", $currentLine, $dateArr);
           $currentLine = str_replace($dateArr[0], "", $currentLine);
           $currentLine = trim($currentLine);
-
-          $errorDate = date($date_format, strtotime($dateArr[1]));
-          $errorTime = date($time_format, strtotime($dateArr[1]));
+          $errorDate = gmdate($date_format, strtotime($dateArr[1]));
+          $errorTime = gmdate($time_format, strtotime($dateArr[1]));
         } catch (\Exception $e) {
           $errorDate = "unknown date";
           $errorTime = "unknown time";
         }
-
         // Get the type of the error
         $errorTypes = [
           "PHP Warning" => "WARNING",
@@ -208,7 +226,6 @@ class ErrorLog
           "PHP Parse error" => "SYNTAX",
           "PHP Exception" => "EXCEPTION",
         ];
-
         $errorType = "MESSAGE";
         foreach ($errorTypes as $prefix => $type) {
           if (false !== strpos($currentLine, $prefix)) {
@@ -218,26 +235,21 @@ class ErrorLog
             break;
           }
         }
-
         if (preg_match("/on line (\d+)/", $currentLine, $matches)) {
           $errorLine = (int) $matches[1];
           $currentLine = str_replace(" on line " . $matches[1], "", $currentLine);
         } else {
           $errorLine = 0;
         }
-
         $errorFile = explode(" in /", $currentLine);
-
         if (isset($errorFile[1])) {
           $errorFile = "/" . trim($errorFile[1]);
         } else {
           $errorFile = "";
         }
         $currentLine = str_replace(" in " . $errorFile, "", $currentLine);
-
         // The message of the error
         $errorMessage = trim($currentLine);
-
         $parsedLogs[] = [
           "date" => $errorDate,
           "time" => $errorTime,

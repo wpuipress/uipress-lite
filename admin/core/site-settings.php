@@ -61,7 +61,7 @@ class uip_site_settings
 
     // Define settings object globally
     $this->uip_site_settings_object = $options["site-settings"];
-    define("uip_site_settings", json_encode($options["site-settings"]));
+    define("uip_site_settings", wp_json_encode($options["site-settings"]));
 
     //Post and page table actions
     $this->post_table_actions();
@@ -138,7 +138,7 @@ class uip_site_settings
       $formatted[] = $trimmed;
     }
 
-    $fullscreenJSON = json_encode($formatted);
+    $fullscreenJSON = wp_json_encode($formatted);
     add_action("admin_head", function () use ($fullscreenJSON) {
       $variableFormatter = "const UIPFullscreenUserPages = {$fullscreenJSON};";
       wp_print_inline_script_tag($variableFormatter, ["id" => "uip-dynamic"]);
@@ -185,7 +185,7 @@ class uip_site_settings
       }
     }
 
-    $disbaledJSON = json_encode($formatted);
+    $disbaledJSON = wp_json_encode($formatted);
     add_action("admin_head", function () use ($disbaledJSON) {
       $variableFormatter = "const UIPdisableUserPages = {$disbaledJSON};";
       wp_print_inline_script_tag($variableFormatter, ["id" => "uip-dynamic"]);

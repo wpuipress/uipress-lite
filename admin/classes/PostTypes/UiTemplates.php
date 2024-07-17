@@ -210,8 +210,8 @@ class UiTemplates
     $type = get_post_meta($templateID, "uip-template-type", true);
 
     return [
-      "template" => json_decode(html_entity_decode(json_encode($template))),
-      "settings" => json_decode(html_entity_decode(json_encode($settings))),
+      "template" => json_decode(html_entity_decode(wp_json_encode($template))),
+      "settings" => json_decode(html_entity_decode(wp_json_encode($settings))),
       "type" => $type,
     ];
   }

@@ -120,7 +120,7 @@ class FrontEnd
     }
 
     $templateString = Sanitize::clean_input_with_code($templateObject);
-    $templateString = json_encode($templateString);
+    $templateString = wp_json_encode($templateString);
     $templateString = html_entity_decode($templateString);
 
     // Create anonymous function so we can use the template string at runtime

@@ -1,10 +1,10 @@
 === UiPress lite | Effortless custom dashboards, admin themes and pages ===
 Contributors: uipress
-Tags: admin theme, custom dashboard, google analytics, woocommerce analytics, white label, user management, role editor, order kanban, admin pages, page builder, ui press
+Tags: admin theme, custom dashboard, google analytics, woocommerce analytics, white label
 Requires at least: 6.0
 Requires PHP: 7.4
-Tested up to: 6.5.2
-Stable tag: 3.4.06
+Tested up to: 6.6
+Stable tag: 3.4.07
 License: GPLv2 or later
 
 Effortless custom WordPress admin dashboards.
@@ -54,6 +54,14 @@ Upload the UiPress plugin to your blog, activate it, and then navigate to the ui
 1, 2, 3: You're done!
 
 == Changelog ==
+
+= 3.4.07 =
+* Release Date 17 July 2024*
+
+* Security patch on duplicate template function that could allow sql injection
+* Changed all date functions to gmdate
+* Changed all json_encode functions to wp_json_encode
+* Updated error log parsing to use WP_Filesystem 
 
 = 3.4.06 =
 * Release Date 19 June 2024*

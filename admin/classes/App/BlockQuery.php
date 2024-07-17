@@ -182,7 +182,7 @@ class BlockQuery
         return $item->post_title;
       }
       if ($dynamic == "post_date") {
-        return date(get_option("date_format", strtotime($replacer)));
+        return gmdate(get_option("date_format", strtotime($replacer)));
       }
       if ($dynamic == "post_author") {
         return get_user_by("id", $replacer)->user_login;
@@ -191,13 +191,13 @@ class BlockQuery
         return apply_filters("the_content", get_the_content(null, null, $item->ID));
       }
       if ($dynamic == "user_registered") {
-        return date(get_option("date_format", strtotime($replacer)));
+        return gmdate(get_option("date_format", strtotime($replacer)));
       }
       if ($dynamic == "last_updated") {
-        return date(get_option("date_format", strtotime($replacer)));
+        return gmdate(get_option("date_format", strtotime($replacer)));
       }
       if ($dynamic == "registered") {
-        return date(get_option("date_format", strtotime($replacer)));
+        return gmdate(get_option("date_format", strtotime($replacer)));
       }
     } else {
       $replacer = "";

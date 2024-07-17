@@ -1,5 +1,13 @@
 == Changelog ==
 
+= 3.4.07 =
+* Release Date 17 July 2024*
+
+* Security patch on duplicate template function that could allow sql injection
+* Changed all date functions to gmdate
+* Changed all json_encode functions to wp_json_encode
+* Updated error log parsing to use WP_Filesystem 
+
 = 3.4.06 =
 * Release Date 19 June 2024*
 

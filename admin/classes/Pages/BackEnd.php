@@ -86,7 +86,7 @@ class BackEnd
    */
   public static function should_uipress_run()
   {
-    if (isset($_GET["action"]) && $_GET["action"] == "elementor") {
+    if (isset($_GET["action"]) && sanitize_text_field($_GET["action"]) == "elementor") {
       return false;
     }
 
@@ -238,7 +238,7 @@ class BackEnd
     }
 
     $templateContent = UiTemplates::get_content($template->ID);
-    $templateAsString = json_encode($templateContent);
+    $templateAsString = wp_json_encode($templateContent);
 
     // Switch back to main blog if multisite
     if ($multiSiteActive) {
@@ -329,7 +329,7 @@ class BackEnd
     $templateObject["updated"] = get_the_modified_date("U", $template->ID);
 
     $templateString = Sanitize::clean_input_with_code($templateObject);
-    $templateString = json_encode($templateString);
+    $templateString = wp_json_encode($templateString);
     $templateString = html_entity_decode($templateString);
 
     // Create anonymous function so we can use the template string at runtime
