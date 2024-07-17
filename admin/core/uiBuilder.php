@@ -588,8 +588,17 @@ class uip_ui_builder extends uip_app
     // Check security nonce and 'DOING_AJAX' global
     Ajax::check_referer();
 
-    $templateID = sanitize_text_field($_POST["id"]);
-    $newPost = Posts::duplicate($templateID);
+    // Sanitize and validate the ID
+    $templateID = absint($_POST["id"]);
+
+    // Ensure the ID is not zero after sanitisation
+    if ($templateID > 0) {
+      $newPost = Posts::duplicate($templateID);
+    } else {
+      $returndata["error"] = true;
+      $returndata["message"] = __("Unable to duplicate template", "uipress-lite");
+      wp_send_json($returndata);
+    }
 
     if (!$newPost) {
       $returndata["error"] = true;

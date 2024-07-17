@@ -51,7 +51,6 @@ export const metadata = {
           label: __("Icon position", "uipress-lite"),
           value: { value: "left" },
         },
-        { option: "onClickCode", componentName: "CodeEditor", args: { language: "javascript" }, requiresUpgrade: true, label: __("JS on click", "uipress-lite") },
       ],
     },
     {
