@@ -10,6 +10,28 @@ function getPluginVersion(pluginFile) {
   return versionMatch ? versionMatch[1].trim() : "unknown";
 }
 
+// Function to remove .DS_Store files recursively
+function removeDSStoreFiles(dir) {
+  const files = glob.sync("**/.DS_Store", { cwd: dir, dot: true });
+  files.forEach((file) => {
+    const filePath = path.join(dir, file);
+    fs.removeSync(filePath);
+    console.log(`Removed: ${filePath}`);
+  });
+}
+
+// Function to remove directories recursively
+function removeDirectories(dir, dirsToRemove) {
+  dirsToRemove.forEach((dirName) => {
+    const dirs = glob.sync(`**/${dirName}`, { cwd: dir, dot: true });
+    dirs.forEach((subDir) => {
+      const fullPath = path.join(dir, subDir);
+      fs.removeSync(fullPath);
+      console.log(`Removed directory: ${fullPath}`);
+    });
+  });
+}
+
 // Function to remove specified files and clean up directories
 function cleanupFiles(dir, filesToRemove, dirsToClean) {
   // Remove specified files
@@ -33,6 +55,12 @@ function cleanupFiles(dir, filesToRemove, dirsToClean) {
       });
     }
   });
+
+  // Remove .DS_Store files
+  removeDSStoreFiles(dir);
+
+  // Remove .git and .nova directories
+  removeDirectories(dir, [".git", ".nova"]);
 }
 
 // Function to create zip file
@@ -40,17 +68,20 @@ function createZipFile(sourceDir, outputFile, excludeFiles) {
   return new Promise((resolve, reject) => {
     const output = fs.createWriteStream(outputFile);
     const archive = archiver("zip", { zlib: { level: 9 } });
-
     output.on("close", () => resolve());
     archive.on("error", (err) => reject(err));
-
     archive.pipe(output);
 
-    archive.glob("**/*", {
-      cwd: sourceDir,
-      ignore: [".DS_Store", ...excludeFiles],
-      dot: true,
-    });
+    // Add files to the archive with 'uipress-lite' as the root directory
+    archive.glob(
+      "**/*",
+      {
+        cwd: sourceDir,
+        ignore: [".DS_Store", ".git/**", ".nova/**", ...excludeFiles],
+        dot: true,
+      },
+      { prefix: "uipress-lite" }
+    );
 
     archive.finalize();
   });
@@ -64,7 +95,12 @@ async function packagePlugin(pluginDir, pluginFile, scriptName) {
 
     // Define staging directory
     const stagingDir = path.resolve(pluginDir, "..", "..", "..", "..", "staging");
-    const uncompressedDir = path.join(stagingDir, `${pluginName}-${version}`);
+    const uncompressedDir = path.join(stagingDir, pluginName);
+
+    // Remove existing uncompressed directory if it exists
+    if (fs.existsSync(uncompressedDir)) {
+      fs.removeSync(uncompressedDir);
+    }
 
     // Create uncompressed version in staging directory
     console.log("Creating uncompressed version...");
@@ -72,7 +108,7 @@ async function packagePlugin(pluginDir, pluginFile, scriptName) {
 
     // Clean up files in the uncompressed version
     console.log("Cleaning up files...");
-    cleanupFiles(uncompressedDir, [".gitignore", ".DS_Store"], [{ dir: "app", except: ["dist"] }]);
+    cleanupFiles(uncompressedDir, [".gitignore"], [{ dir: "app", except: ["dist"] }]);
 
     // Create zip file
     const zipFileName = `${pluginName}-${version}.zip`;
@@ -89,8 +125,8 @@ async function packagePlugin(pluginDir, pluginFile, scriptName) {
 }
 
 // Usage
-const pluginDirectory = "./my-plugin"; // Replace with your plugin directory
-const mainPluginFile = "my-plugin.php"; // Replace with your main plugin file name
+const pluginDirectory = "../uipress-lite"; // Replace with your plugin directory
+const mainPluginFile = "uipress-lite.php"; // Replace with your main plugin file name
 const packagingScriptName = "package-plugin.js"; // The name of this script file
 
 packagePlugin(pluginDirectory, mainPluginFile, packagingScriptName);

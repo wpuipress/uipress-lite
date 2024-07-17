@@ -349,7 +349,9 @@ class uip_site_settings
         } ?>
     }
     </style>
-    <?php print ob_get_clean();
+    <?php
+    $safe_css = ob_get_clean();
+    echo wp_kses($safe_css, ["style" => ["id" => []]]);
   }
 
   /**
@@ -504,7 +506,9 @@ class uip_site_settings
     }
     <?php echo htmlspecialchars_decode(esc_html($css)); ?>
     </style>
-    <?php print ob_get_clean();
+    <?php
+    $safe_css = ob_get_clean();
+    echo wp_kses($safe_css, ["style" => ["id" => []]]);
   }
 
   /**
@@ -789,7 +793,8 @@ class uip_site_settings
     $style = "[uip-admin-theme='true'] td.plugin-title strong::after{content:'{$active}'}";
     $style .= "[uip-admin-theme='true'] tbody tr.inactive td.plugin-title strong::after {content:'{$inactive}'}";
 
-    echo "<style>" . Sanitize::clean_input_with_code($style) . "</style>";
+    $safe_css = "<style>" . Sanitize::clean_input_with_code($style) . "</style>";
+    echo wp_kses($safe_css, ["style" => ["id" => []]]);
   }
 
   /**
@@ -802,7 +807,8 @@ class uip_site_settings
     $style = "table.wp-list-table thead{position:sticky;top:32px;background-color:white;z-index:2;}";
     $style .= "[uip-framed-page='true'] table.wp-list-table thead{top:0px;background:var(--uip-color-base-0);}";
 
-    echo "<style id='iamcool'>" . Sanitize::clean_input_with_code($style) . "</style>";
+    $safe_css = "<style>" . Sanitize::clean_input_with_code($style) . "</style>";
+    echo wp_kses($safe_css, ["style" => ["id" => []]]);
   }
 
   /**
