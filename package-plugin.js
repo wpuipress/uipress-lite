@@ -33,7 +33,7 @@ function removeDirectories(dir, dirsToRemove) {
 }
 
 // Function to remove specified files and clean up directories
-function cleanupFiles(dir, filesToRemove, dirsToClean) {
+function cleanupFiles(dir, filesToRemove, dirsToClean, scriptName) {
   // Remove specified files
   filesToRemove.forEach((file) => {
     const filePath = path.join(dir, file);
@@ -42,6 +42,13 @@ function cleanupFiles(dir, filesToRemove, dirsToClean) {
       console.log(`Removed: ${filePath}`);
     }
   });
+
+  // Remove the packaging script
+  const scriptPath = path.join(dir, scriptName);
+  if (fs.existsSync(scriptPath)) {
+    fs.removeSync(scriptPath);
+    console.log(`Removed packaging script: ${scriptPath}`);
+  }
 
   // Clean up specified directories
   dirsToClean.forEach(({ dir: subDir, except }) => {
@@ -108,7 +115,7 @@ async function packagePlugin(pluginDir, pluginFile, scriptName) {
 
     // Clean up files in the uncompressed version
     console.log("Cleaning up files...");
-    cleanupFiles(uncompressedDir, [".gitignore"], [{ dir: "app", except: ["dist"] }]);
+    cleanupFiles(uncompressedDir, [".gitignore"], [{ dir: "app", except: ["dist"] }], scriptName);
 
     // Create zip file
     const zipFileName = `${pluginName}-${version}.zip`;
