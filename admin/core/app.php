@@ -90,6 +90,8 @@ class uip_app
     // Triggers pro actions for builder
     do_action("uipress/app/start");
 
+    return;
+
     FrontEnd::start();
     BackEnd::start();
     AdminPage::start(false);

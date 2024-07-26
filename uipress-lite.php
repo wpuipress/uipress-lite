@@ -9,6 +9,8 @@ Text Domain: uipress-lite
 Domain Path: /languages/
 */
 
+use UipressLite\Classes\Templates\UipInterface;
+
 // If this file is called directly, abort.
 !defined("ABSPATH") ? exit() : "";
 
@@ -19,7 +21,5 @@ define("uip_plugin_shortname", "uip");
 define("uip_plugin_path", plugin_dir_path(__FILE__));
 
 require uip_plugin_path . "admin/vendor/autoload.php";
-require uip_plugin_path . "admin/uipress-compiler.php";
 
-$uipress = new uipress_compiler();
-$uipress->run();
+new UipInterface();
