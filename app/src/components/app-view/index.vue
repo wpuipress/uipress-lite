@@ -1,11 +1,18 @@
 <script>
 import Notify from "@/components/notify/index.vue";
-import { nextTick } from "vue";
+import { nextTick, ref } from "vue";
+import { lmnFetch } from "@/assets/js/functions/lmnFetch.js";
+import { ShadowRoot } from "vue-shadow-dom";
+
+// Setup store
+import { useAppStore } from "@/store/app/app.js";
+
 export default {
-  components: { Notify },
+  components: { Notify, ShadowRoot },
   props: {},
   data() {
     return {
+      appStore: useAppStore(),
       template: {
         display: "prod",
         notifications: [],
@@ -15,7 +22,8 @@ export default {
         updated: null,
         id: null,
       },
-      loading: false,
+      adoptedStyleSheets: new CSSStyleSheet(),
+      loading: true,
       updateAvailable: false,
       windowWidth: window.innerWidth,
     };
@@ -51,7 +59,7 @@ export default {
      * @since 3.2.13
      */
     returnTemplateJS() {
-      if (typeof this.template.globalSettings.options === "undefined") return;
+      if (typeof this.template?.globalSettings?.options === "undefined") return;
       return this.hasNestedPath(this.template, "globalSettings", "options", "advanced", "js");
     },
 
@@ -61,7 +69,7 @@ export default {
      * @since 3.2.13
      */
     returnTemplateCSS() {
-      if (typeof this.template.globalSettings.options === "undefined") return;
+      if (typeof this.template?.globalSettings?.options === "undefined") return;
       return this.hasNestedPath(this.template, "globalSettings", "options", "advanced", "css");
     },
 
@@ -93,13 +101,73 @@ export default {
      * @since 3.2.13
      */
     initiateApp() {
-      this.template.settings = this.uipParseJson(JSON.stringify(uipUserTemplate.settings));
-      this.template.content = this.uipParseJson(JSON.stringify(uipUserTemplate.content));
-      this.template.globalSettings = this.uipParseJson(JSON.stringify(uipUserTemplate.settings));
+      //this.template.settings = this.uipParseJson(JSON.stringify(uipUserTemplate.settings));
+      //this.template.content = this.uipParseJson(JSON.stringify(uipUserTemplate.content));
+      //this.template.globalSettings = this.uipParseJson(JSON.stringify(uipUserTemplate.settings));
       this.template.updated = this.uipParseJson(uipUserTemplate.updated);
-      this.template.id = uipUserTemplate.id;
+      //this.template.id = uipUserTemplate.id;
+
+      this.setStyles();
+      this.fetchTemplate();
+      //this.loading = false;
+    },
+    /**
+     * Injects styles into shadow root
+     */
+    setStyles() {
+      let appStyleNode = document.querySelector("#uip-app-css");
+
+      const appStyles = appStyleNode.sheet;
+      for (const rule of appStyles.cssRules) {
+        this.adoptedStyleSheets.insertRule(rule.cssText);
+      }
+
+      //appStyleNode.remove();
+    },
+
+    async fetchTemplate() {
+      const args = { endpoint: "wp/v2/uip-ui-template", params: { per_page: 100, status: "publish", context: "edit" } };
+      const response = await lmnFetch(args);
+
+      console.log("templates", response);
+
+      const templates = response.data;
+
+      if (!templates.length) {
+        // abort
+      } else {
+        this.checkForActiveTemplate(templates);
+      }
+    },
+
+    checkForActiveTemplate(templates) {
+      for (let template of templates) {
+        const appliesToRoles = template.uipress.forRoles;
+
+        // Ensure role matches
+        for (let role of this.appStore.state.userRoles) {
+          if (appliesToRoles.includes(role)) {
+            this.updateActiveTemplate(template);
+            return;
+          }
+        }
+      }
+    },
+
+    updateActiveTemplate(template) {
+      console.log("found", template);
+
+      this.appStore.updateState("teleportPoint", this.$refs.teleportPoint);
+
+      this.template.settings = this.uipParseJson(JSON.stringify(template.uipress.settings));
+      this.template.content = this.uipParseJson(JSON.stringify(template.uipress.template));
+      this.template.globalSettings = this.uipParseJson(JSON.stringify(template.uipress.settings));
+      //this.template.updated = this.uipParseJson(uipUserTemplate.updated);
+      this.template.id = template.id;
+
       this.loading = false;
     },
+
     /**
      * mounts app events listeners
      *
@@ -111,7 +179,7 @@ export default {
       document.addEventListener("uipress/app/darkmode/toggle", this.toggleDarkMode, { once: false });
 
       // Check if it's a ui template and watch for updates
-      if (this.template.globalSettings.type != "ui-template") return;
+      if (this.template?.globalSettings?.type != "ui-template") return;
       setInterval(this.checkForUpdates, 60000);
     },
 
@@ -234,32 +302,41 @@ export default {
 </script>
 
 <template>
-  <Notify />
+  <ShadowRoot tag="div" :adopted-style-sheets="[adoptedStyleSheets]" ref="shadowMount">
+    <div class="uip-w-100vw uip-h-100p uip-background-default uip-top-0 uip-user-frame uip-body-font uip-teleport uip-flex">
+      <Notify />
 
-  <component is="style" scoped id="mycustomstyles">
-    html, #uip-admin-page, #uip-ui-interface {
-    <template v-for="(item, index) in returnThemeStyles">
-      <template v-if="item.value && item.value != 'uipblank'">{{ index }}:{{ item.value }};</template>
-    </template>
-    } [data-theme="dark"], .uip-dark-mode, #uip-admin-page .uip-dark-mode, #uip-ui-interface .uip-dark-mode {
-    <template v-for="(item, index) in returnThemeStyles">
-      <template v-if="item.darkValue && item.darkValue != 'uipblank'"> {{ index }}:{{ item.darkValue }};</template>
-    </template>
-    }
-    {{ returnTemplateCSS }}
-  </component>
+      <component is="style" scoped id="mycustomstyles">
+        html, #uip-admin-page, #uip-ui-interface {
+        <template v-for="(item, index) in returnThemeStyles">
+          <template v-if="item.value && item.value != 'uipblank'">{{ index }}:{{ item.value }};</template>
+        </template>
+        } [data-theme="dark"], .uip-dark-mode, #uip-admin-page .uip-dark-mode, #uip-ui-interface .uip-dark-mode {
+        <template v-for="(item, index) in returnThemeStyles">
+          <template v-if="item.darkValue && item.darkValue != 'uipblank'"> {{ index }}:{{ item.darkValue }};</template>
+        </template>
+        }
+        {{ returnTemplateCSS }}
+      </component>
 
-  <component is="script" scoped>
-    {{ returnTemplateJS }}
-  </component>
+      <component is="script" scoped>
+        {{ returnTemplateJS }}
+      </component>
 
-  <component is="style"> .v-enter-active, .v-leave-active {transition: opacity 0.6s ease;} .v-enter-from, .v-leave-to {opacity: 0;} </component>
+      <component is="style"> .v-enter-active, .v-leave-active {transition: opacity 0.6s ease;} .v-enter-from, .v-leave-to {opacity: 0;} </component>
 
-  <uip-content-area :content="template.content" :class="returnResponsiveClass" />
+      <Transition>
+        <uip-content-area :content="template.content" :class="returnResponsiveClass" v-if="!isLoading" />
 
-  <!--Import plugins -->
-  <template v-for="plugin in uipGlobalPlugins">
-    <component :is="plugin" />
-  </template>
-  <!-- end plugin import -->
+        <div v-else class="" style="text-align: center; padding: 60px; position: absolute; top: 0; bottom: 0; left: 0; right: 0">Loading....</div>
+      </Transition>
+
+      <!--Import plugins -->
+      <template v-for="plugin in uipGlobalPlugins">
+        <component :is="plugin" />
+      </template>
+      <!-- end plugin import -->
+      <div ref="teleportPoint"></div>
+    </div>
+  </ShadowRoot>
 </template>

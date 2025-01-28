@@ -71,7 +71,7 @@ class uip_site_settings
 
     // jQuery Migrate
     add_action("wp_default_scripts", [$this, "dequeue_jquery_migrate"]);
-    add_action("admin_bar_menu", [$this, "uip_logo_actions"]);
+    add_action("admin_bar_menu", [$this, "uip_logo_actions"], 0);
     add_action("login_init", [$this, "login_actions"]);
 
     //Check for user page disables: uipDisabledFor
@@ -658,10 +658,12 @@ class uip_site_settings
    */
   public function uip_logo_actions($admin_bar)
   {
-    if (isset($this->uip_site_settings_object->whiteLabel->hideWelcomeMessage)) {
+    // This stopped working in a recent wordpress update and there is no longer a visible way of hiding the 'howdy' message
+    if (isset($this->uip_site_settings_object->whiteLabel->hideWelcomeMessage) && 1 == 2) {
       $message = $this->uip_site_settings_object->whiteLabel->hideWelcomeMessage;
       if ($message == "uiptrue") {
         $my_account = $admin_bar->get_node("my-account");
+        error_log(json_encode($admin_bar->get_nodes()));
         $parts = explode(",", $my_account->title);
         $current = $parts[0] . ",";
         $greeting = str_replace($current, "", $my_account->title);
@@ -671,7 +673,7 @@ class uip_site_settings
         ]);
       }
     }
-    if (isset($this->uip_site_settings_object->whiteLabel->welcomeMessage)) {
+    if (isset($this->uip_site_settings_object->whiteLabel->welcomeMessage) && 1 == 2) {
       $message = $this->uip_site_settings_object->whiteLabel->welcomeMessage;
       if ($message != "" && $message != "uipblank") {
         $my_account = $admin_bar->get_node("my-account");

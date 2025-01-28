@@ -824,6 +824,8 @@ class uip_ajax
 
     if (!is_array($postTypes) || empty($postTypes)) {
       $types = "post";
+    } else {
+      $types = $postTypes;
     }
 
     if ($filter && $filter != "" && $filter != "all") {

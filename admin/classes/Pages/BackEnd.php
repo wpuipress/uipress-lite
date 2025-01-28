@@ -343,7 +343,7 @@ class BackEnd
       </div>
       ';
 
-      echo wp_kses_post($app);
+      //echo wp_kses_post($app);
 
       // Trigger pro actions
       do_action("uip_import_pro_front");

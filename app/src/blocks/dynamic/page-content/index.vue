@@ -26,6 +26,14 @@ export default {
       updatingBrowserWindow: false,
       loadingtimeout: false,
       entryLoad: false,
+      bodyPosition: {
+        top: "0px",
+        left: "0px",
+        width: "0px",
+        height: "0px",
+      },
+      resizeObserver: null,
+      intersectionObserver: null,
     };
   },
   inject: ["uiTemplate"],
@@ -59,9 +67,38 @@ export default {
     },
   },
   mounted() {
-    this.mountProductionFunctions();
-    this.mountMainWatchers();
+    //this.mountProductionFunctions();
+    //this.mountMainWatchers();
     this.mounted = true;
+    this.moveBodyContents();
+
+    this.initializeObservers();
+    window.addEventListener("scroll", this.handleScroll, { passive: true });
+
+    // Add mutation observer for DOM changes
+    this.mutationObserver = new MutationObserver(() => {
+      requestAnimationFrame(this.updatePosition);
+    });
+
+    this.mutationObserver.observe(document.body, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+    });
+  },
+
+  beforeDestroy() {
+    // Cleanup observers
+    if (this.resizeObserver) {
+      this.resizeObserver.disconnect();
+    }
+    if (this.intersectionObserver) {
+      this.intersectionObserver.disconnect();
+    }
+    if (this.mutationObserver) {
+      this.mutationObserver.disconnect();
+    }
+    window.removeEventListener("scroll", this.handleScroll);
   },
   beforeUnmount() {
     this.removeWatchers();
@@ -70,6 +107,15 @@ export default {
     this.removeWatchers();
   },
   computed: {
+    returnBodyPosition() {
+      return {
+        top: this.bodyPosition.top,
+        left: this.bodyPosition.left,
+        width: this.bodyPosition.width,
+        height: this.bodyPosition.height,
+      };
+    },
+
     returnRawHtml() {
       return rawHTML.value;
     },
@@ -167,6 +213,65 @@ export default {
     },
   },
   methods: {
+    updatePosition() {
+      if (!this.$refs.bodyWrap) return;
+
+      const rect = this.$refs.bodyWrap.getBoundingClientRect();
+      this.bodyPosition = {
+        top: `${rect.top}px`,
+        left: `${rect.left}px`,
+        width: `${rect.width}px`,
+        height: `${rect.height}px`,
+      };
+    },
+
+    initializeObservers() {
+      if (!this.$refs.bodyWrap) return;
+
+      // Set up resize observer
+      this.resizeObserver = new ResizeObserver(() => {
+        requestAnimationFrame(this.updatePosition);
+      });
+      this.resizeObserver.observe(this.$refs.bodyWrap);
+      this.resizeObserver.observe(document.documentElement);
+
+      // Set up intersection observer
+      this.intersectionObserver = new IntersectionObserver(
+        () => {
+          requestAnimationFrame(this.updatePosition);
+        },
+        {
+          threshold: [0, 1],
+        }
+      );
+      this.intersectionObserver.observe(this.$refs.bodyWrap);
+
+      // Initial position update
+      this.updatePosition();
+    },
+
+    handleScroll() {
+      requestAnimationFrame(this.updatePosition);
+    },
+
+    moveBodyContents() {
+      // Get all child nodes of the body
+      const bodyChildren = Array.from(document.body.children);
+
+      // Iterate through each child
+      bodyChildren.forEach((child) => {
+        // Skip the targetNode itself if it's a direct child of body
+        if (child === this.$refs.bodyHolder) return;
+
+        // Skip the excluded element if an ID was provided
+        if (child.id === "uip-ui-interface") return;
+
+        console.log(child.id);
+
+        // Move the child to the target node
+        this.$refs.bodyHolder.appendChild(child);
+      });
+    },
     /**
      * Set's start page
      *
@@ -977,7 +1082,14 @@ export default {
 </script>
 
 <template>
+  <div v-if="1 == 1" class="uip-flex uip-flex-column uip-overflow-hidden uip-content-frame uip-overflow-hidden uip-position-relative absolute" :class="returnClasses" tabindex="1" ref="bodyWrap">
+    <Teleport to="body">
+      <div class="" ref="bodyHolder" style="z-index: 99999999; position: fixed; overflow: auto; scroll-behavior: smooth" id="uipress-body" :style="returnBodyPosition"></div>
+    </Teleport>
+  </div>
+
   <div
+    v-else
     ref="frameContainer"
     class="uip-flex uip-flex-column uip-overflow-hidden uip-content-frame uip-overflow-hidden uip-position-relative"
     :class="returnClasses"

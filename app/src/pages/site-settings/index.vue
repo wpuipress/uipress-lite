@@ -362,6 +362,7 @@ export default {
             </div>
 
             <div class="uip-w-100p">
+              {{ option.uniqueKey }}
               <a
                 href="https://uipress.co?utm_source=uipressupgrade&utm_medium=referral"
                 target="_BLANK"
@@ -370,6 +371,7 @@ export default {
               >
                 {{ ui.strings.proOption }}
               </a>
+
               <component
                 v-else
                 :is="option.component"

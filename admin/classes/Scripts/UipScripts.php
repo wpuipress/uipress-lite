@@ -125,17 +125,29 @@ class UipScripts
       "themeStyles" => Sanitize::clean_input_with_code($styles),
     ];
 
+    $rest_base = get_rest_url();
+    $rest_nonce = wp_create_nonce("wp_rest");
+
+    // Get the current user object
+    $current_user = wp_get_current_user();
+    $first_name = $current_user->first_name;
+    $roles = (array) $current_user->roles;
+
     $scriptData = [
       "id" => "uip-app-data",
+      "rest-base" => $rest_base,
+      "rest-nonce" => $rest_nonce,
+      "user-roles" => esc_attr(json_encode($roles)),
       "uip_ajax" => wp_json_encode(
         [
           "ajax_url" => $ajaxURL,
           "security" => $nonce,
           "uipAppData" => $options,
-          "rest_url" => get_rest_url(),
+          "rest_url" => $rest_base,
+          "rest_nonce" => $rest_nonce,
           "rest_headers" => [
             "Content-Type" => "application/json",
-            "X-WP-Nonce" => wp_create_nonce("wp_rest"),
+            "X-WP-Nonce" => $rest_nonce,
           ],
         ],
         JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP

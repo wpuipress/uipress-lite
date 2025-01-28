@@ -17,6 +17,7 @@ class UiTemplates
   {
     $postTypeArgs = self::return_post_type_args();
     register_post_type("uip-ui-template", $postTypeArgs);
+    self::uip_register_template_meta_fields();
   }
 
   /**
@@ -52,11 +53,104 @@ class UiTemplates
       "query_var" => false,
       "has_archive" => false,
       "hierarchical" => false,
-      "supports" => ["title"],
+      "supports" => ["title", "custom-fields"],
       "show_in_rest" => true,
     ];
 
     return $args;
+  }
+
+  /**
+   * Registers custom REST field for uip-ui-template post type
+   *
+   * @return void
+   */
+  public static function uip_register_template_meta_fields()
+  {
+    register_rest_field("uip-ui-template", "uipress", [
+      "get_callback" => function ($post) {
+        return [
+          "template" => get_post_meta($post["id"], "uip-ui-template", true),
+          "settings" => get_post_meta($post["id"], "uip-template-settings", true),
+          "type" => get_post_meta($post["id"], "uip-template-type", true),
+          "forRoles" => get_post_meta($post["id"], "uip-template-for-roles", true),
+          "forUsers" => get_post_meta($post["id"], "uip-template-for-users", true),
+          "excludesRoles" => get_post_meta($post["id"], "uip-template-excludes-roles", true),
+          "excludesUsers" => get_post_meta($post["id"], "uip-template-excludes-users", true),
+          "subsites" => get_post_meta($post["id"], "uip-template-subsites", true),
+        ];
+      },
+      "update_callback" => function ($value, $post) {
+        if (!current_user_can("edit_posts")) {
+          return false;
+        }
+
+        if (isset($value["template"])) {
+          update_post_meta($post->ID, "uip-ui-template", $value["template"]);
+        }
+        if (isset($value["settings"])) {
+          update_post_meta($post->ID, "uip-template-settings", $value["settings"]);
+        }
+        if (isset($value["type"])) {
+          update_post_meta($post->ID, "uip-template-type", $value["type"]);
+        }
+        if (isset($value["forRoles"])) {
+          update_post_meta($post->ID, "uip-template-for-roles", $value["forRoles"]);
+        }
+        if (isset($value["forUsers"])) {
+          update_post_meta($post->ID, "uip-template-for-users", $value["forUsers"]);
+        }
+        if (isset($value["excludesRoles"])) {
+          update_post_meta($post->ID, "uip-template-excludes-roles", $value["excludesRoles"]);
+        }
+        if (isset($value["excludesUsers"])) {
+          update_post_meta($post->ID, "uip-template-excludes-users", $value["excludesUsers"]);
+        }
+        if (isset($value["subsites"])) {
+          update_post_meta($post->ID, "uip-template-subsites", $value["subsites"]);
+        }
+
+        return true;
+      },
+      "schema" => [
+        "description" => __("UIPress template data", "uipress-lite"),
+        "type" => "object",
+        "properties" => [
+          "template" => [
+            "type" => "object",
+            "description" => "UI Template Data",
+          ],
+          "settings" => [
+            "type" => "object",
+            "description" => "Template Settings",
+          ],
+          "type" => [
+            "type" => "string",
+            "description" => "Template Type",
+          ],
+          "forRoles" => [
+            "type" => "array",
+            "description" => "Roles With Access",
+          ],
+          "forUsers" => [
+            "type" => "array",
+            "description" => "Users With Access",
+          ],
+          "excludesRoles" => [
+            "type" => "array",
+            "description" => "Excluded Roles",
+          ],
+          "excludesUsers" => [
+            "type" => "array",
+            "description" => "Excluded Users",
+          ],
+          "subsites" => [
+            "type" => "boolean",
+            "description" => "Subsite Settings",
+          ],
+        ],
+      ],
+    ]);
   }
 
   /**

@@ -5,6 +5,9 @@ import BlockStyles from "@/uibuilder/block-styles/index.vue";
 import BlockConditions from "@/uibuilder/block-conditions/index.vue";
 import BlockInteractions from "@/uibuilder/block-interactions/index.vue";
 
+// Setup store
+import { useAppStore } from "@/store/app/app.js";
+
 const { __ } = wp.i18n;
 
 export default {
@@ -17,6 +20,7 @@ export default {
   },
   data() {
     return {
+      appStore: useAppStore(),
       query: {},
       strings: {
         proOptionUnlock: __("This is a pro option. Upgrade to unlock", "uipress-lite"),
@@ -339,7 +343,7 @@ export default {
       for (let item of postQuery) {
         const queriedBlock = this.formatQueryDynamicMatches(item.ID);
         const queryBlockStyle = this.returnQueryBlockStyles(queriedBlock, item.ID);
-        const queryStyleNode = h(Teleport, { to: "body" }, h("style", { scoped: "" }, queryBlockStyle));
+        const queryStyleNode = h(Teleport, { to: appStore.state.teleportPoint }, h("style", { scoped: "" }, queryBlockStyle));
         const args = { ...this.returnQueryParams(queriedBlock, item.ID), ...this.returnWatchers(queriedBlock) };
         const blocknode = h(blockTemplate, args);
         nodes.push(queryStyleNode, blocknode);
@@ -595,9 +599,9 @@ export default {
     if (isHidden) return nodes;
 
     // Push the style tag if block has styles
-    if (styles) nodes.push(h(Teleport, { to: "body" }, h("style", { scoped: "" }, styles)));
-    if (scripts) nodes.push(h(Teleport, { to: "body" }, h("script", {}, scripts)));
-    if (blockLink) nodes.push(h(Teleport, { to: "body" }, h("a", { ref: "blocklink", class: "uip-hidden" })));
+    if (styles) nodes.push(h(Teleport, { to: this.appStore.state.teleportPoint }, h("style", { scoped: "" }, styles)));
+    if (scripts) nodes.push(h(Teleport, { to: this.appStore.state.teleportPoint }, h("script", {}, scripts)));
+    if (blockLink) nodes.push(h(Teleport, { to: this.appStore.state.teleportPoint }, h("a", { ref: "blocklink", class: "uip-hidden" })));
 
     // Build the main block args
     const blockTemplate = this.uipApp.data.blocks.find((item) => item.metadata.moduleName == moduleName);

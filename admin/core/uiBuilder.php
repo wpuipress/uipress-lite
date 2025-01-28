@@ -43,6 +43,7 @@ class uip_ui_builder extends uip_app
   {
     add_action("plugins_loaded", [$this, "add_ui_builder_actions"], 2);
     add_action("init", [$this, "create_builder_post_types"]);
+    add_action("rest_init", [$this, "create_builder_post_types"]);
     add_filter("kses_allowed_protocols", [$this, "allow_data_in_kses"]);
   }
 
