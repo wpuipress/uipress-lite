@@ -1,163 +1,83 @@
-<script>
-export default {
-  props: {
-    maybeFollowLink: Function,
-    item: Object,
-    collapsed: Boolean,
-    block: Object,
-  },
-  data() {
-    return {};
-  },
-  computed: {
-    /**
-     * Gets menu style. Returns style or 'dynamic' if not set
-     *
-     * @since 3.2.13
-     */
-    subMenuStyle() {
-      if (this.collapsed) return "hover";
+<script setup>
+import { computed, defineProps, defineModel } from "vue";
+import { get_block_option, isObject, hasNestedPath } from "@/utility/functions.js";
 
-      let style = this.get_block_option(this.block, "block", "subMenuStyle");
-      if (!this.isObject(style)) return "dynamic";
-      if (style.value) return style.value;
-      return "dynamic";
-    },
+const link = defineModel();
 
-    /**
-     * Returns custom submenu icon. Returns false on failure
-     *
-     * @since 3.2.13
-     */
-    subMenuCustomIcon() {
-      let icon = this.get_block_option(this.block, "block", "subMenuIcon");
-      if (!this.isObject(icon)) return false;
-      if (icon.value) return icon.value;
-      return false;
-    },
+const props = defineProps({
+  maybeFollowLink: Function,
+  collapsed: Boolean,
+  block: Object,
+});
 
-    /**
-     * Returns whether the menu has icons for current state
-     *
-     * @returns {boolean} - whether to hide icons
-     * @since 3.2.13
-     */
-    hideIcons() {
-      // Don't hide icons if we are collapsed
-      if (this.collapsed) return false;
+// Computed properties
+const subMenuStyle = computed(() => {
+  if (props.collapsed) return "hover";
 
-      const icons = this.hasNestedPath(this.block, ["settings", "block", "options", "hideIcons", "value"]);
-      if (this.isObject(icons)) return icons.value;
-      return icons;
-    },
+  let style = get_block_option(props.block, "block", "subMenuStyle");
+  if (!isObject(style)) return "dynamic";
+  if (style.value) return style.value;
+  return "dynamic";
+});
 
-    /**
-     * Returns whether the menu item is hidden
-     *
-     * @returns {boolean} - whether to hide item
-     * @since 3.2.13
-     */
-    itemHiden() {
-      return this.hasNestedPath(this.item, "custom", "hidden");
-    },
+const subMenuCustomIcon = computed(() => {
+  let icon = get_block_option(props.block, "block", "subMenuIcon");
+  if (!isObject(icon)) return false;
+  if (icon.value) return icon.value;
+  return false;
+});
 
-    /**
-     * Returns the item name
-     *
-     * @since 3.2.13
-     */
-    returnName() {
-      return this.hasNestedPath(this.item, "custom", "name") ? this.item.custom.name : this.item.name;
-    },
+const hideIcons = computed(() => {
+  if (props.collapsed) return false;
 
-    /**
-     * Returns the item name
-     *
-     * @since 3.2.13
-     */
-    returnName() {
-      return this.hasNestedPath(this.item, "custom", "name") ? this.item.custom.name : this.item.name;
-    },
+  const icons = hasNestedPath(props.block, ["settings", "block", "options", "hideIcons", "value"]);
+  if (isObject(icons)) return icons.value;
+  return icons;
+});
 
-    /**
-     * Returns the item icon
-     *
-     * @since 3.2.13
-     */
-    returnIcon() {
-      return this.hasNestedPath(this.item, "custom", "icon") ? this.item.custom.icon : this.item.icon;
-    },
+const itemHiden = computed(() => {
+  return hasNestedPath(link.value, "custom", "hidden");
+});
 
-    /**
-     * Returns items custom classes
-     *
-     * @since 3.3.09
-     */
-    returnItemClasses() {
-      return this.hasNestedPath(this.item, "custom", "classes") ? this.item.custom.classes : "";
-    },
+const returnName = computed(() => {
+  return hasNestedPath(link.value, "custom", "name") ? link.value.custom.name : link.value.name;
+});
 
-    /**
-     * Returns items custom href
-     *
-     * @since 3.3.09
-     */
-    returnItemHref() {
-      return this.hasNestedPath(this.item, "custom", "url") ? this.item.custom.url : this.item.url;
-    },
+const returnIcon = computed(() => {
+  return hasNestedPath(link.value, "custom", "icon") ? link.value.custom.icon : link.value.icon;
+});
 
-    /**
-     * Returns items custom href
-     *
-     * @since 3.3.09
-     */
-    returnItemTarget() {
-      return this.hasNestedPath(this.item, "custom", "newTab") ? "_BLANK" : "_SELF";
-    },
-  },
-  methods: {
-    /**
-     * Utility function to catch uipblank in icon names
-     *
-     * @param {String} icon - the icon to check
-     */
-    returnTopIcon(icon) {
-      const status = icon ? icon.includes("uipblank") : false;
-      if (status) return icon.replace("uipblank", "favorite");
-      return icon;
-    },
+const returnItemClasses = computed(() => {
+  return hasNestedPath(link.value, "custom", "classes") ? link.value.custom.classes : "";
+});
 
-    /**
-     * Returns the appropriate sub menu icon indicator for the given item
-     *
-     * @param {Object} item - top level menu item
-     * @since 3.2.13
-     */
-    returnSubIcon(item) {
-      // has custom icon so return that
-      if (this.subMenuCustomIcon) return this.subMenuCustomIcon;
+const returnItemHref = computed(() => {
+  return hasNestedPath(link.value, "custom", "url") ? link.value.custom.url : link.value.url;
+});
 
-      // If dynamic menu always return chevron right
-      if (this.subMenuStyle == "dynamic") return "chevron_right";
+const returnItemTarget = computed(() => {
+  return hasNestedPath(link.value, "custom", "newTab") ? "_BLANK" : "_SELF";
+});
 
-      // If hover menu always return chevron right
-      if (this.subMenuStyle == "hover") return "chevron_right";
+// Methods
+const returnTopIcon = (icon) => {
+  const status = icon ? icon.includes("uipblank") : false;
+  if (status) return icon.replace("uipblank", "favorite");
+  return icon;
+};
 
-      // If item is open / active then return the open icon
-      if (item.open || item.active) return "expand_more";
-      return "chevron_left";
-    },
+const returnSubIcon = (item) => {
+  if (subMenuCustomIcon.value) return subMenuCustomIcon.value;
 
-    /**
-     * Checks whether the icon is a plain text icon or html
-     *
-     * @param {string} item
-     * @since 3.4
-     */
-    isBasicIcon(str) {
-      return /^[a-zA-Z0-9_]+$/.test(str);
-    },
-  },
+  if (subMenuStyle.value == "dynamic") return "chevron_right";
+  if (subMenuStyle.value == "hover") return "chevron_right";
+
+  if (item.open || item.active) return "expand_more";
+  return "chevron_left";
+};
+
+const isBasicIcon = (str) => {
+  return /^[a-zA-Z0-9_]+$/.test(str);
 };
 </script>
 
@@ -166,25 +86,42 @@ export default {
     v-if="!itemHiden"
     :target="returnItemTarget"
     :href="returnItemHref"
-    @click="maybeFollowLink($event, item, true)"
     class="uip-no-underline uip-link-default uip-top-level-item"
     :class="returnItemClasses"
-    :active="item.active ? true : false"
+    :active="link.active ? true : false"
+    :id="link.id"
   >
-    <div v-if="!hideIcons && returnIcon && !isBasicIcon(returnTopIcon(returnIcon))" v-html="returnTopIcon(returnIcon)" class="uip-flex uip-flex-center uip-menu-icon uip-icon uip-icon-medium"></div>
+    <template v-if="!hideIcons">
+      <div
+        v-if="!link.settings?.icon"
+        class="icon uip-menu-icon uip-icon"
+        style="width: 1.2em; height: 1.2em; background-size: contain; background-position: center; background-repeat: no-repeat; filter: contrast(0.5)"
+        :class="link.imageClasses"
+        :style="link.iconStyles"
+      ></div>
 
-    <AppIcon v-else-if="!hideIcons && returnIcon && isBasicIcon(returnTopIcon(returnIcon))" class="uip-flex-center uip-menu-icon uip-icon" :icon="returnTopIcon(returnIcon)" />
+      <AppIcon v-else :icon="link.settings.icon" class="icon uip-menu-icon uip-icon" />
+    </template>
+
+    <template v-if="1 == 3">
+      <div v-if="!hideIcons && returnIcon && !isBasicIcon(returnTopIcon(returnIcon))" v-html="returnTopIcon(returnIcon)" class="uip-flex uip-flex-center uip-menu-icon uip-icon uip-icon-medium"></div>
+
+      <AppIcon v-else-if="!hideIcons && returnIcon && isBasicIcon(returnTopIcon(returnIcon))" class="uip-flex-center uip-menu-icon uip-icon" :icon="returnTopIcon(returnIcon)" />
+    </template>
 
     <div v-if="!collapsed" class="uip-flex-grow uip-flex uip-gap-xs uip-flex-center">
       <div class="uip-line-height-1" v-html="returnName"></div>
       <div
-        v-if="item.notifications && item.notifications > 0"
+        v-if="link.notifications && link.notifications > 0"
         class="uip-border-round uip-h-14 uip-ratio-1-1 uip-background-secondary uip-text-inverse uip-text-xxs uip-text-bold uip-flex uip-flex-center uip-flex-middle uip-menu-notification"
       >
-        <span>{{ item.notifications }}</span>
+        <span>{{ link.notifications }}</span>
       </div>
     </div>
 
-    <AppIcon v-if="item.submenu && item.submenu.length > 0 && !collapsed" class="uip-icon uip-link-muted" :icon="returnSubIcon(item)" />
+    <div class="uip-position-relative">
+      <AppIcon v-if="link.submenu && link.submenu.length > 0 && !collapsed" class="uip-icon uip-link-muted" :icon="returnSubIcon(link)" />
+      <div class="uip-position-absolute" @click.prevent="link.open = !link.open" style="left: -6px; top: -6px; width: calc(100% + 12px); height: calc(100% + 12px)"></div>
+    </div>
   </a>
 </template>

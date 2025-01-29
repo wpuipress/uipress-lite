@@ -100,21 +100,21 @@ export default {
      *
      * @since 3.2.13
      */
-    initiateApp() {
+    async initiateApp() {
       //this.template.settings = this.uipParseJson(JSON.stringify(uipUserTemplate.settings));
       //this.template.content = this.uipParseJson(JSON.stringify(uipUserTemplate.content));
       //this.template.globalSettings = this.uipParseJson(JSON.stringify(uipUserTemplate.settings));
-      this.template.updated = this.uipParseJson(uipUserTemplate.updated);
+      //this.template.updated = this.uipParseJson(uipUserTemplate.updated);
       //this.template.id = uipUserTemplate.id;
 
-      this.setStyles();
+      await this.setStyles();
       this.fetchTemplate();
       //this.loading = false;
     },
     /**
      * Injects styles into shadow root
      */
-    setStyles() {
+    async setStyles() {
       let appStyleNode = document.querySelector("#uip-app-css");
 
       const appStyles = appStyleNode.sheet;
@@ -126,6 +126,9 @@ export default {
     },
 
     async fetchTemplate() {
+      const cachedTemplate = this.getCachedTemplate();
+      if (cachedTemplate) return this.updateActiveTemplate(cachedTemplate);
+
       const args = { endpoint: "wp/v2/uip-ui-template", params: { per_page: 100, status: "publish", context: "edit" } };
       const response = await lmnFetch(args);
 
@@ -148,14 +151,66 @@ export default {
         for (let role of this.appStore.state.userRoles) {
           if (appliesToRoles.includes(role)) {
             this.updateActiveTemplate(template);
+            this.cacheActiveTemplate(template);
             return;
           }
         }
+
+        this.destroyApp();
+      }
+    },
+
+    /**
+     * Retrieves and validates cached template
+     * @returns {Object|null} The cached template if valid, null otherwise
+     */
+    getCachedTemplate() {
+      try {
+        const cachedData = localStorage.getItem("uipress_templates");
+
+        if (!cachedData) {
+          return null;
+        }
+
+        const { template, cacheKey } = JSON.parse(cachedData);
+
+        // Check if cache is less than 3 hours old
+        if (this.appStore.state.cacheKey == cacheKey) {
+          return template;
+        } else {
+          // Cache is expired, remove it
+          localStorage.removeItem("uipress_templates");
+          return null;
+        }
+      } catch (error) {
+        console.error("Failed to retrieve cached template:", error);
+        return null;
+      }
+    },
+
+    /**
+     * Caches the active template with a timestamp
+     * @param {Object} template - The template to cache
+     */
+    cacheActiveTemplate(template) {
+      const cacheData = {
+        template: template,
+        cacheKey: this.appStore.state.cacheKey,
+      };
+
+      try {
+        localStorage.setItem("uipress_templates", JSON.stringify(cacheData));
+        return true;
+      } catch (error) {
+        console.error("Failed to cache template:", error);
+        return false;
       }
     },
 
     updateActiveTemplate(template) {
       console.log("found", template);
+
+      document.body.style.opacity = 1;
 
       this.appStore.updateState("teleportPoint", this.$refs.teleportPoint);
 
@@ -166,6 +221,15 @@ export default {
       this.template.id = template.id;
 
       this.loading = false;
+    },
+
+    destroyApp() {
+      document.body.style.opacity = 1;
+      const appInterface = document.querySelector("#uip-ui-interface");
+      const styles = document.querySelector("#uip-app-css");
+
+      if (appInterface) appInterface.remove();
+      if (styles) styles.remove();
     },
 
     /**
@@ -303,7 +367,7 @@ export default {
 
 <template>
   <ShadowRoot tag="div" :adopted-style-sheets="[adoptedStyleSheets]" ref="shadowMount">
-    <div class="uip-w-100vw uip-h-100p uip-background-default uip-top-0 uip-user-frame uip-body-font uip-teleport uip-flex">
+    <div class="uip-w-100vw uip-h-100p uip-background-default uip-top-0 uip-user-frame uip-body-font uip-teleport uip-flex overflow-hidden">
       <Notify />
 
       <component is="style" scoped id="mycustomstyles">
@@ -325,11 +389,9 @@ export default {
 
       <component is="style"> .v-enter-active, .v-leave-active {transition: opacity 0.6s ease;} .v-enter-from, .v-leave-to {opacity: 0;} </component>
 
-      <Transition>
-        <uip-content-area :content="template.content" :class="returnResponsiveClass" v-if="!isLoading" />
+      <uip-content-area :content="template.content" :class="returnResponsiveClass" v-if="!isLoading" />
 
-        <div v-else class="" style="text-align: center; padding: 60px; position: absolute; top: 0; bottom: 0; left: 0; right: 0">Loading....</div>
-      </Transition>
+      <div v-else class="" style="text-align: center; padding: 60px; position: absolute; top: 0; bottom: 0; left: 0; right: 0">Loading....</div>
 
       <!--Import plugins -->
       <template v-for="plugin in uipGlobalPlugins">

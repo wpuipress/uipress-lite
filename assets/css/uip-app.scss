@@ -175,14 +175,6 @@ html[uip-core-app="true"] {
     background: var(--uip-color-base-0);
     font-size: 13px;
   }
-  padding: 0;
-  #adminmenumain,
-  #wpfooter {
-    display: none;
-  }
-  p {
-    margin: 0;
-  }
 }
 #uip-ui-builder {
   p {
@@ -3752,12 +3744,16 @@ html[uip-framed-page="true"] {
 //LINK HELPER CLASSES
 @import "modules/uip-frame.scss";
 
-[uip-admin-theme="true"] {
+:root {
   --wp-admin-theme-color: var(--uip-color-primary);
   --wp-admin-theme-color-darker-10: var(--uip-color-primary-darker);
   --wp-admin-theme-color-darker-20: var(--uip-color-primary-darker);
+}
+
+[uip-core-app="true"] {
   @import "modules/uip-theme.scss";
 }
+
 @import "modules/compatability.scss";
 //Import dark specific styles
 html[data-theme="dark"] {

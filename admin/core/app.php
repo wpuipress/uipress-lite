@@ -60,21 +60,7 @@ class uip_app
     // White list uiPress scripts / styles with other plugins
     UipScripts::whitelist_plugins();
 
-    // Checks if we are on a iframe page and if so start framed page actions and exit
-    $user_id = get_current_user_id();
-    //$activeTransient = get_transient("uip_template_active_" . $user_id);
-
-    $isIframe = isset($_SERVER["HTTP_SEC_FETCH_DEST"]) && strtolower($_SERVER["HTTP_SEC_FETCH_DEST"]) === "iframe";
-
-    // We are loading within the frame
-    if ($isIframe) {
-      FramedPages::start();
-      AdminPage::start(true);
-    }
-    // Outside the frame
-    else {
-      $this->start_apps();
-    }
+    $this->start_apps();
 
     add_action("admin_footer", ["UipressLite\Classes\Scripts\UipScripts", "output_user_styles"], 0);
   }

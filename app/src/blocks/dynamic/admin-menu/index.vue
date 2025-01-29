@@ -1,6 +1,10 @@
 <script>
+import { processMenu } from "./src/processMenu.js";
 import Confirm from "@/components/confirm/index.vue";
 const { __ } = wp.i18n;
+
+// Setup store
+import { useAppStore } from "@/store/app/app.js";
 
 import MenuCollapse from "./src/MenuCollapse.vue";
 import MenuSearch from "./src/MenuSearch.vue";
@@ -24,11 +28,13 @@ export default {
   },
   data() {
     return {
+      appStore: useAppStore(),
       menu: [],
       activeMenu: false,
       rendered: true,
       workingMenu: [],
       watchMenu: [],
+      iconClasses: [],
       activeLink: "",
       breadCrumbs: [{ name: __("Home", "uipress-lite"), url: this.uipApp.data.dynamicOptions.viewadmin.value }],
       searching: false,
@@ -102,13 +108,87 @@ export default {
     },
   },
   created() {
-    this.setMenu();
-    this.buildMenu();
+    //this.setMenu();
+    //this.buildMenu();
+
+    this.generateMenu();
   },
   mounted() {
     this.mountEventListeners();
   },
   computed: {
+    returnDashIconClasses() {
+      return (
+        this.returnIconOverrides +
+        this.iconClasses
+          .map((item) => {
+            if (item.before) {
+              if (item.before.includes("url(")) {
+                item.backGroundImage = item.before;
+                item.before = "";
+              }
+            }
+
+            return `
+        ${item.class}:before {
+          content: '${item.before || ""}';
+          height: 1.2em;
+          width: 1.2em;
+          min-height: 1.2em;
+          min-width: 1.2em;
+          color: currentColor;
+          font-size: 1.2em;
+          background-size: contain;
+          background-repeat: no-repeat;
+          background-position: center center;
+          ${item.font ? `font-family: '${item.font}' !important;` : ""}
+          ${item.backGroundImage ? `background-image: ${item.backGroundImage} !important;` : ""}
+          ${item.backGroundImage ? `filter: contrast(0.3);` : ""}
+        }
+        `;
+          })
+          .join("\n")
+      );
+    },
+    returnIconOverrides() {
+      const overrides = [
+        ["dashboard", "dashboard"],
+        ["admin-post", "keep"],
+        ["admin-media", "photo_library"],
+        ["admin-page", "description"],
+        ["admin-comments", "forum"],
+        ["admin-appearance", "palette"],
+        ["admin-plugins", "extension"],
+        ["admin-users", "group"],
+        ["admin-tools", "build"],
+        ["admin-settings", "tune"],
+        ["archive", "inventory"],
+        ["chart-bar", "equalizer"],
+      ];
+
+      const base = this.appStore.state.pluginBase;
+
+      return overrides
+        .map(
+          ([dashicon, icon]) => `
+      .dashicons-${dashicon}:before {
+      content: '';
+      height: 1.2em;
+      width: 1.2em;
+      min-height: 1.2em;
+      min-width: 1.2em;
+      background-color: currentColor;
+      -webkit-mask: url(${base}assets/icons/${icon}.svg) no-repeat center;
+      -webkit-mask-size: contain;
+      mask: url(${base}assets/icons/${icon}.svg) no-repeat center;
+      mask-size: contain;
+      font-size: 1.2em;
+      display: inline-block;
+      }
+    `
+        )
+        .join("");
+    },
     /**
      * Returns whether the block has has static menu enabled
      *
@@ -238,6 +318,14 @@ export default {
     document.removeEventListener("uipress/blocks/adminmenu/togglecollapse", this.handleMenuCollapse, { once: false });
   },
   methods: {
+    async generateMenu() {
+      const menuNode = document.querySelector("#adminmenumain");
+      const { processedMenu, dashIcons } = await processMenu(menuNode);
+      this.workingMenu = processedMenu;
+      this.iconClasses = dashIcons;
+      this.rendered = true;
+      console.log(processedMenu);
+    },
     /**
      * Sets menu from settings object
      *
@@ -943,6 +1031,7 @@ export default {
 
   <div v-else-if="rendered" class="uip-admin-menu uip-text-normal" :class="returnClasses">
     <Confirm ref="confirm" />
+    <component is="style" id="toaster">{{ returnDashIconClasses }}</component>
 
     <MenuSearch
       v-if="hasMenuSearch && !collapsed"
@@ -957,9 +1046,9 @@ export default {
 
     <!--INLINE DROP MENU-->
     <template v-if="subMenuStyle == 'inline' && !searching">
-      <template v-for="item in workingMenu">
+      <template v-for="(item, index) in workingMenu">
         <div v-if="item.type != 'sep' && !itemHiden(item)" class="uip-flex uip-flex-column uip-row-gap-xs">
-          <TopLevelItem :item="item" :maybeFollowLink="maybeFollowLink" :collapsed="collapsed" :block="block" />
+          <TopLevelItem v-model="workingMenu[index]" :maybeFollowLink="maybeFollowLink" :collapsed="collapsed" :block="block" />
 
           <Transition name="slide-down">
             <SubMenuItem :subMenuStyle="subMenuStyle" v-if="itemHasOpenSubMenu(item)" :item="item" :maybeFollowLink="maybeFollowLink" :collapsed="collapsed" :block="block" />
@@ -981,7 +1070,7 @@ export default {
       <template v-for="item in workingMenu">
         <dropdown v-if="item.type != 'sep' && !itemHiden(item)" :pos="returnDropdownPosition" class="uip-flex uip-flex-column uip-row-gap-xs" :hover="true" :disableTeleport="true">
           <template v-slot:trigger>
-            <TopLevelItem :item="item" :maybeFollowLink="maybeFollowLink" :collapsed="collapsed" :block="block" />
+            <TopLevelItem v-model="workingMenu[item]" :maybeFollowLink="maybeFollowLink" :collapsed="collapsed" :block="block" />
           </template>
 
           <template v-if="item.submenu && item.submenu.length > 0" v-slot:content>

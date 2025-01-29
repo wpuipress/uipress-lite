@@ -621,22 +621,22 @@ body:not(.block-editor-page) {
 */
 body:not(.block-editor-page) {
   #wpcontent {
-    input[type="color"]:not(.uip-input),
-    input[type="date"]:not(.uip-input),
-    input[type="datetime-local"]:not(.uip-input),
-    input[type="datetime"]:not(.uip-input),
-    input[type="email"]:not(.uip-input),
-    input[type="month"]:not(.uip-input),
-    input[type="number"]:not(.uip-input),
-    input[type="password"]:not(.uip-input),
-    input[type="search"]:not(.uip-input),
-    input[type="tel"]:not(.uip-input),
-    input[type="text"]:not(.uip-input),
-    input[type="time"]:not(.uip-input),
-    input[type="url"]:not(.uip-input),
-    input[type="week"]:not(.uip-input),
-    select:not(.uip-input),
-    textarea:not(.uip-input) {
+    input[type="color"],
+    input[type="date"],
+    input[type="datetime-local"],
+    input[type="datetime"],
+    input[type="email"],
+    input[type="month"],
+    input[type="number"],
+    input[type="password"],
+    input[type="search"],
+    input[type="tel"],
+    input[type="text"],
+    input[type="time"],
+    input[type="url"],
+    input[type="week"],
+    select,
+    textarea {
       border: var(--uip-border-width) solid var(--uip-color-base-1);
       background-color: var(--uip-color-base-1);
       color: var(--uip-text-color-base);
@@ -651,7 +651,7 @@ body:not(.block-editor-page) {
         opacity: 0.6;
       }
     }
-    select:not(.uip-input) {
+    select {
       min-height: 27px;
       height: auto;
       -webkit-appearance: none;

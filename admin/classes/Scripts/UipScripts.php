@@ -127,17 +127,28 @@ class UipScripts
 
     $rest_base = get_rest_url();
     $rest_nonce = wp_create_nonce("wp_rest");
+    $base_url = plugins_url("uipress-lite/");
 
     // Get the current user object
     $current_user = wp_get_current_user();
     $first_name = $current_user->first_name;
     $roles = (array) $current_user->roles;
 
+    // Cache key
+    $cache_key = get_option("uipress-cache-key", false);
+
+    if ($cache_key === false) {
+      $cache_key = bin2hex(random_bytes(6));
+      update_option("uipress-cache-key", $cache_key);
+    }
+
     $scriptData = [
       "id" => "uip-app-data",
-      "rest-base" => $rest_base,
-      "rest-nonce" => $rest_nonce,
+      "rest-base" => esc_url($rest_base),
+      "rest-nonce" => esc_attr($rest_nonce),
       "user-roles" => esc_attr(json_encode($roles)),
+      "cache-key" => esc_attr($cache_key),
+      "plugin-base" => esc_url($base_url),
       "uip_ajax" => wp_json_encode(
         [
           "ajax_url" => $ajaxURL,

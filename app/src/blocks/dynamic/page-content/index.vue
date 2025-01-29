@@ -258,6 +258,18 @@ export default {
       // Get all child nodes of the body
       const bodyChildren = Array.from(document.body.children);
 
+      const hidden = ["#wpfooter", "#adminmenumain", "#wpadminbar"];
+
+      // Hide unnesecary items
+      for (let hiderid of hidden) {
+        const item = document.body.querySelector(hiderid);
+        if (item) item.style.display = "none";
+      }
+
+      // Update margins
+      const contentWrap = document.body.querySelector("#wpcontent");
+      if (contentWrap) contentWrap.style.margin = 0;
+
       // Iterate through each child
       bodyChildren.forEach((child) => {
         // Skip the targetNode itself if it's a direct child of body
@@ -1082,9 +1094,14 @@ export default {
 </script>
 
 <template>
-  <div v-if="1 == 1" class="uip-flex uip-flex-column uip-overflow-hidden uip-content-frame uip-overflow-hidden uip-position-relative absolute" :class="returnClasses" tabindex="1" ref="bodyWrap">
+  <div
+    v-if="uiTemplate.display == 'prod'"
+    class="uip-flex uip-flex-column uip-overflow-hidden uip-content-frame uip-overflow-hidden uip-position-relative absolute wp-core-ui"
+    :class="returnClasses"
+    ref="bodyWrap"
+  >
     <Teleport to="body">
-      <div class="" ref="bodyHolder" style="z-index: 99999999; position: fixed; overflow: auto; scroll-behavior: smooth" id="uipress-body" :style="returnBodyPosition"></div>
+      <div class="" ref="bodyHolder" style="position: fixed; overflow: auto; scroll-behavior: smooth" id="uipress-body" :style="returnBodyPosition"></div>
     </Teleport>
   </div>
 
