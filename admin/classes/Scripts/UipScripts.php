@@ -128,6 +128,7 @@ class UipScripts
     $rest_base = get_rest_url();
     $rest_nonce = wp_create_nonce("wp_rest");
     $base_url = plugins_url("uipress-lite/");
+    $admin_url = get_admin_url();
 
     // Get the current user object
     $current_user = wp_get_current_user();
@@ -149,6 +150,7 @@ class UipScripts
       "user-roles" => esc_attr(json_encode($roles)),
       "cache-key" => esc_attr($cache_key),
       "plugin-base" => esc_url($base_url),
+      "admin-url" => esc_url($admin_url),
       "uip_ajax" => wp_json_encode(
         [
           "ajax_url" => $ajaxURL,

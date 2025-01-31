@@ -324,7 +324,6 @@ export default {
       this.workingMenu = processedMenu;
       this.iconClasses = dashIcons;
       this.rendered = true;
-      console.log(processedMenu);
     },
     /**
      * Sets menu from settings object
@@ -390,8 +389,8 @@ export default {
      * @since 3.2.13
      */
     mountEventListeners() {
-      document.addEventListener("uipress/app/page/change", this.updateActiveLink, { once: false });
-      document.addEventListener("uipress/app/page/load/finish", this.updateMenuFromFrame, { once: false });
+      //document.addEventListener("uipress/app/page/change", this.updateActiveLink, { once: false });
+      //document.addEventListener("uipress/app/page/load/finish", this.updateMenuFromFrame, { once: false });
       document.addEventListener("uipress/blocks/adminmenu/togglecollapse", this.handleMenuCollapse, { once: false });
     },
 
@@ -544,7 +543,6 @@ export default {
       menuItems.forEach(processMenuItems);
 
       //console.log(stackedMenuItems);
-      console.log(this.uipApp.data.adminMenu.menu);
 
       // First time setting the menu so need to compare
       if (!this.watchMenu.length) return (this.watchMenu = stackedMenuItems);
@@ -574,8 +572,6 @@ export default {
         console.log("aborted all items already exist");
         return;
       }
-
-      console.log(itemsExist);
 
       if (itemsExist.length) {
         newItems = this.removeObjectsByUID(newItems, itemsExist);
@@ -890,6 +886,10 @@ export default {
      * @since 3.2.13
      */
     maybeFollowLink(evt, item, topLevel) {
+      if (this.uiTemplate.display == "prod") {
+        return;
+      }
+
       // If modifier keys allow the event to happen naturally
       if (evt.ctrlKey || evt.shiftKey || evt.metaKey || evt.button == 1) return;
 

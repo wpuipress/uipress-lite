@@ -3754,6 +3754,15 @@ html[uip-framed-page="true"] {
   @import "modules/uip-theme.scss";
 }
 
+[uip-framed-page="true"] {
+  #adminmenumain,
+  #wpadminbar,
+  #wpfooter {
+    display: none;
+  }
+}
+
+@import "modules/wp-toolbar.scss";
 @import "modules/compatability.scss";
 //Import dark specific styles
 html[data-theme="dark"] {

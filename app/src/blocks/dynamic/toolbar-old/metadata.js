@@ -173,21 +173,21 @@ export const metadata = {
       label: __("Toolbar item", "uipress-lite"),
       icon: "title",
       styleType: "style",
-      class: ".uip-admin-toolbar > li > a",
+      class: ".uip-toolbar-top-item",
     },
     {
       name: "topLevelIcons",
       label: __("Toolbar icons", "uipress-lite"),
       icon: "favorite",
       styleType: "style",
-      class: ".ab-icon",
+      class: ".uip-toolbar-top-item-icon",
     },
     {
       name: "submenu",
       label: __("Submenu", "uipress-lite"),
       icon: "menu",
       styleType: "style",
-      class: ".ab-sub-wrapper ul",
+      class: ".uip-toolbar-submenu",
       presets: {
         flexLayout: {
           direction: "column",
@@ -211,10 +211,10 @@ export const metadata = {
     },
     {
       name: "subLevelItemStyle",
-      label: __("Submenu item", "uipress-lite"),
+      label: __("Submenu items", "uipress-lite"),
       icon: "menu",
       styleType: "style",
-      class: ".ab-sub-wrapper .ab-item",
+      class: ".uip-toolbar-sub-item",
     },
   ],
 };

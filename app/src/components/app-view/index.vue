@@ -132,8 +132,6 @@ export default {
       const args = { endpoint: "wp/v2/uip-ui-template", params: { per_page: 100, status: "publish", context: "edit" } };
       const response = await lmnFetch(args);
 
-      console.log("templates", response);
-
       const templates = response.data;
 
       if (!templates.length) {
@@ -208,9 +206,8 @@ export default {
     },
 
     updateActiveTemplate(template) {
-      console.log("found", template);
-
       document.body.style.opacity = 1;
+      document.documentElement.style.overflow = "hidden";
 
       this.appStore.updateState("teleportPoint", this.$refs.teleportPoint);
 
@@ -225,6 +222,7 @@ export default {
 
     destroyApp() {
       document.body.style.opacity = 1;
+      document.documentElement.style.overflow = "auto";
       const appInterface = document.querySelector("#uip-ui-interface");
       const styles = document.querySelector("#uip-app-css");
 
@@ -366,7 +364,7 @@ export default {
 </script>
 
 <template>
-  <ShadowRoot tag="div" :adopted-style-sheets="[adoptedStyleSheets]" ref="shadowMount">
+  <ShadowRoot tag="div" :adopted-style-sheets="[adoptedStyleSheets]" ref="shadowMount" id="uipress-shadow-root">
     <div class="uip-w-100vw uip-h-100p uip-background-default uip-top-0 uip-user-frame uip-body-font uip-teleport uip-flex overflow-hidden">
       <Notify />
 

@@ -174,7 +174,6 @@ export default {
       if (!children || !children.length) return this.startRowHeight;
       const firstChild = children[0];
       const height = firstChild.getBoundingClientRect().height;
-      console.log(height);
       return height;
     },
   },

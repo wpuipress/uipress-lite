@@ -188,9 +188,6 @@ export default {
       const currentTime = this.timeStringToMinutes(this.currentLocalTime);
       const conditionTime = this.timeStringToMinutes(condition.value);
 
-      console.log(this.currentLocalTime);
-      console.log(condition.value);
-
       if (condition.operator === "is" && this.currentLocalTime === condition.value) {
         conditionMet = true;
       } else if (condition.operator === "isnot" && this.currentLocalTime !== condition.value) {

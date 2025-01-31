@@ -60,9 +60,26 @@ class uip_app
     // White list uiPress scripts / styles with other plugins
     UipScripts::whitelist_plugins();
 
+    // Check if we are in the builder / iframe
+    if (self::is_framed_page()) {
+      FramedPages::start();
+      AdminPage::start(true);
+      return;
+    }
+
     $this->start_apps();
 
     add_action("admin_footer", ["UipressLite\Classes\Scripts\UipScripts", "output_user_styles"], 0);
+  }
+
+  /**
+   * Checks if we are in a framed page
+   *
+   * @return boolean
+   */
+  private static function is_framed_page()
+  {
+    return isset($_SERVER["HTTP_SEC_FETCH_DEST"]) && strtolower($_SERVER["HTTP_SEC_FETCH_DEST"]) === "iframe";
   }
 
   /**

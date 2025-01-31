@@ -67,10 +67,14 @@ export default {
     },
   },
   mounted() {
-    //this.mountProductionFunctions();
-    //this.mountMainWatchers();
-    this.mounted = true;
-    this.moveBodyContents();
+    // Use iframe logic if in builder
+    if (this.uiTemplate.display != "prod") {
+      this.mountProductionFunctions();
+      this.mountMainWatchers();
+    } else {
+      this.mounted = true;
+      this.moveBodyContents();
+    }
 
     this.initializeObservers();
     window.addEventListener("scroll", this.handleScroll, { passive: true });

@@ -1,494 +1,340 @@
-<script>
-const { __ } = wp.i18n;
-import { nextTick } from "vue";
+<script setup>
+import { ref, computed, watchEffect, onMounted, inject } from "vue";
 
-import SubMenu from "./src/submenu.vue";
+// Internal deps
+import { inSearch, isObject } from "@/utility/functions.js";
 
-export default {
-  components: { SubMenu },
-  props: {
-    display: String,
-    name: String,
-    block: Object,
-  },
-  data() {
-    return {
-      toolbar: {},
-      rendered: false,
-    };
-  },
-  async mounted() {
-    this.dequeueAdminBarStyles();
-    this.importToolBar();
+// Internal deps
+import Loader from "./src/loader.vue";
 
-    await nextTick();
-    this.updateFromDom();
-  },
-  beforeUnmount() {
-    document.removeEventListener("uipress/app/page/load/finish", this.handlePagechange);
-  },
-  computed: {
-    /**
-     * Returns list of hidden toolbar items
-     *
-     * @since 3.2.12
-     */
-    getHidden() {
-      let hidden = this.get_block_option(this.block, "block", "hiddenToolbarItems");
-      return Array.isArray(hidden) ? hidden : [];
-    },
+const loading = ref(true);
+const menu = ref([]);
+const search = ref("");
+const toolbarnode = ref(null);
+const uiTemplate = inject("uiTemplate");
 
-    /**
-     * Returns toolbar object
-     *
-     * @since 3.2.13
-     */
-    returnToolbar() {
-      return this.toolbar;
-    },
+// get app store
+import { useAppStore } from "@/store/app/app.js";
+const appStore = useAppStore();
 
-    /**
-     * Returns dropdown position
-     *
-     * @since 3.2.12
-     */
-    returnDropdownPosition() {
-      let position = this.get_block_option(this.block, "block", "dropdownPosition");
-      position = this.isObject(position) ? position.value : false;
-      position = position ? position : "bottom left";
-      position = position.includes(" ") ? position : "bottom left";
-      return position;
-    },
+const returnMenuItems = computed(() => {
+  return menu.value.filter((item) => inSearch(search.value, item.name, item.url));
+});
 
-    /**
-     * Returns submenu items position
-     *
-     * @since 3.2.13
-     */
-    returnSubDropdownPosition() {
-      let position = this.get_block_option(this.block, "block", "subDropdownPosition");
-      position = this.isObject(position) ? position.value : false;
-      position = position ? position : "right top";
-      position = position.includes(" ") ? position : "right top";
-      return position;
-    },
-  },
-  methods: {
-    /**
-     * Imports the toolbar and mounts page change listener
-     *
-     * @since 3.2.13
-     */
-    importToolBar() {
-      this.toolbar = JSON.parse(JSON.stringify(this.uipApp.data.toolbar));
-      document.addEventListener("uipress/app/page/load/finish", this.handlePagechange);
-    },
+/**
+ * Parses menu from the dom
+ */
+const setToolbar = async (menuNode, clone) => {
+  loading.value = true;
+  const ignoreItems = [
+    "wp-admin-bar-site-name",
+    "wp-admin-bar-menu-toggle",
+    "wp-admin-bar-app-logo",
+    "wp-admin-bar-my-account",
+    "wp-admin-bar-wp-logo",
+    "wp-admin-bar-search",
+    "wp-admin-bar-woocommerce-site-visibility-badge",
+  ];
 
-    /**
-     * Handles page event
-     *
-     * @param {Object} evt - page change event
-     * @since 3.2.13
-     */
-    async handlePagechange(evt) {
-      this.updateToolBarFromFrame();
-      // Wait a short period for QM to update it's self before fetching results
-      setTimeout(() => {
-        this.updateQM();
-        this.updateFromDom();
-      }, 300);
-    },
+  // There is no menu node so bail
+  if (!menuNode) return (loading.value = false);
 
-    /**
-     * Removes default toolbar styling
-     *
-     * @since 3.2.0
-     */
-    dequeueAdminBarStyles() {
-      let styleblock = document.querySelector('link[href*="load-styles.php?"]');
-      if (!styleblock) return (this.rendered = true);
+  const rootItems = menuNode.querySelectorAll("#wp-admin-bar-root-default > li");
+  const secondaryItems = menuNode.querySelectorAll("#wp-admin-bar-top-secondary > li");
 
-      const newLink = styleblock.href.replace("admin-bar,", ",");
-      const link = document.createElement("link");
-      link.href = newLink;
-      link.setAttribute("rel", "stylesheet");
+  const topLevelItems = [...rootItems, ...secondaryItems];
+  const menuHolder = [];
 
-      // Event listener function
-      const onLoad = () => {
-        styleblock.remove();
-        link.removeEventListener("load", onLoad); // Remove the event listener
-        this.rendered = true;
-      };
+  for (let item of topLevelItems) {
+    /* Get id and check against list of not needed items */
+    const id = item.getAttribute("id");
+    if (ignoreItems.includes(id)) continue;
 
-      const head = document.head;
-      if (head.firstChild) {
-        head.insertBefore(link, head.firstChild);
-      } else {
-        head.appendChild(link);
+    const linkNode = item.querySelector(":scope > .ab-item");
+    const screenReader = item.querySelector(":scope > .ab-item > .screen-reader-text");
+    const label = item.querySelector(":scope > .ab-item > .ab-label");
+    const icon = item.querySelector(":scope > .ab-item > .ab-icon");
+    const svglogo = item.querySelector(":scope > .ab-item .svg");
+
+    // Probably a separator
+    if (!linkNode) continue;
+
+    const url = linkNode.getAttribute("href");
+    const target = linkNode.getAttribute("target");
+    const screenReaderName = screenReader ? screenReader.innerText : "";
+
+    let iconStyle;
+    if (svglogo) {
+      iconStyle = svglogo.getAttribute("style");
+    }
+
+    let before;
+
+    // Override for customise icon as it uses a different format
+    if (icon) {
+      const computedLinkStyles = window.getComputedStyle(icon, "::before");
+      if (computedLinkStyles) {
+        const { content, fontFamily } = computedLinkStyles;
+        before = { content, fontFamily };
       }
+      const computedIconStyles = window.getComputedStyle(icon);
+      const backGroundImage = computedIconStyles["background-image"] ? computedIconStyles["background-image"] : false;
 
-      // Add the event listener
-      link.addEventListener("load", onLoad);
-    },
-
-    /**
-     * Updates toolbar list from frame toolbar
-     *
-     * @returns {Promise}
-     * @since 3.2.13
-     */
-    async updateFromDom() {
-      // Determine the content frame.
-      const frameElement = document.querySelector(".uip-page-content-frame");
-      const contentFrame = frameElement ? frameElement.contentWindow.document : document;
-
-      const toolbarItems = contentFrame.getElementById("wp-admin-bar-root-default");
-      const secondaryToolbarItems = contentFrame.getElementById("wp-admin-bar-top-secondary");
-
-      // If there are no toolbar items, exit early.
-      if (!toolbarItems) return;
-
-      const primaryItems = Array.from(toolbarItems.children);
-      const secondaryItems = Array.from(secondaryToolbarItems.children);
-
-      const allItems = [...primaryItems, ...secondaryItems];
-
-      const adminURL = this.uipApp.data.options.adminURL;
-      const homeURL = this.uipApp.data.options.domain;
-      const adminPath = adminURL.replace(homeURL, "");
-
-      allItems.forEach((item) => {
-        let itemId = item.getAttribute("id");
-
-        itemId = itemId.replace("wp-admin-bar-", "");
-
-        // Continue if certain conditions aren't met.
-        if (!this.toolbar) return;
-        if (!itemId || this.toolbar[itemId] || ["site-name", "menu-toggle", "app-logo", "my-account"].includes(itemId)) return;
-
-        const newItem = this.createToolbarItem(item, adminPath, adminURL);
-        if (newItem) this.toolbar[itemId] = newItem;
-      });
-    },
-
-    /**
-     * Creates a new toolbar item
-     *
-     * @param {DomObject} item
-     * @param {String} adminPath
-     * @param {String} adminURL
-     */
-    createToolbarItem(item, adminPath, adminURL) {
-      let itemId = item.getAttribute("id");
-      itemId = itemId.replace("wp-admin-bar-", "");
-
-      const link = item.querySelector("a.ab-item");
-      if (!link) return false;
-      let href = link.getAttribute("href") || "";
-
-      if (href.startsWith(adminPath)) {
-        href = href ? href.replace(adminPath, adminURL) : "";
+      if (backGroundImage && backGroundImage != "none") {
+        // Inline the style
+        icon.style["background-image"] = backGroundImage;
+        icon.classList.add("svg");
       }
+    }
 
-      const newItem = {
-        id: itemId,
-        group: "",
-        meta: [],
-        parent: "",
-        submenu: {},
-        title: link.innerHTML || "",
-        href: href || "",
-      };
+    // Handle naming
+    let strippedName;
+    if (label) {
+      strippedName = label.innerText;
+    } else {
+      let name = linkNode.innerHTML;
+      const nameParts = name.split("<");
+      strippedName = nameParts[0] !== "" ? nameParts[0] : screenReaderName;
+    }
 
-      const subItems = Array.from(item.querySelectorAll(".ab-sub-wrapper .ab-submenu > *"));
+    const submenu = processSubmenu(item);
 
-      const processSubs = (subItem) => {
-        let subItemId = subItem.getAttribute("id");
-        subItemId = subItemId ? subItemId.replace("wp-admin-bar-", "") : "";
-        if (subItemId) {
-          const subItemObject = this.createToolbarItem(subItem, adminPath, adminURL);
-          newItem.submenu[subItemId] = subItemObject;
-        }
-      };
+    // Push to menu
+    menuHolder.push({ url, target, name: strippedName, id, submenu, screenReaderName, iconStyle, before });
 
-      subItems.forEach(processSubs);
+    if (clone) {
+      const cloned = item.cloneNode(true);
+      toolbarnode.value.appendChild(cloned);
+      console.log("all cloned");
+    } else {
+      console.log("nothing was moved");
+      toolbarnode.value.appendChild(item);
+    }
+  }
 
-      return newItem;
-    },
+  menu.value = [...menuHolder];
 
-    /**
-     * Update Query Monitor details in the toolbar based on the content frame.
-     *
-     * @since 3.2.13
-     */
-    async updateQM() {
-      // Check if query monitor is active
-      if (!this.toolbar["query-monitor"]) return;
-      await nextTick();
-
-      const contentFrameElement = document.querySelector(".uip-page-content-frame");
-      if (!contentFrameElement) return;
-
-      const qmElement = contentFrameElement.contentWindow.document.querySelector("#wp-admin-bar-query-monitor");
-      if (!qmElement) return;
-
-      this.updateQMToolbarTitle(qmElement);
-      this.updateQMSubItems(qmElement);
-    },
-
-    /**
-     * Update the title for the Query Monitor toolbar item based on the QM element status.
-     *
-     * @param {HTMLElement} qmElement - The QM element to check.
-     * @since 3.2.13
-     */
-    updateQMToolbarTitle(qmElement) {
-      const labelElement = qmElement.querySelector(".ab-item");
-      const title = labelElement ? labelElement.innerHTML : this.toolbar["query-monitor"].title;
-      this.toolbar["query-monitor"].title = title;
-      this.toolbar["query-monitor"].frameLink = true;
-
-      if (qmElement.classList.contains("qm-warning")) {
-        this.appendToolbarStatusIndicator("red");
-      }
-
-      const alertClasses = ["qm-alert", "qm-notice", "qm-deprecated", "qm-strict", "qm-expensive"];
-      if (alertClasses.some((cls) => qmElement.classList.contains(cls))) {
-        this.appendToolbarStatusIndicator("orange");
-      }
-    },
-
-    /**
-     * Append a status indicator to the Query Monitor toolbar title.
-     *
-     * @param {string} color - Color of the indicator (e.g., 'red' or 'orange').
-     * @since 3.2.13
-     */
-    appendToolbarStatusIndicator(color) {
-      this.toolbar["query-monitor"].title += `<span class="uip-display-inline-block uip-border-circle uip-w-8 uip-ratio-1-1 uip-background-${color} uip-margin-left-xxs"></span>`;
-    },
-
-    /**
-     * Update subitems for the Query Monitor toolbar item based on the QM element.
-     *
-     * @param {HTMLElement} qmElement - The QM element containing subitems.
-     * @since 3.2.13
-     */
-    updateQMSubItems(qmElement) {
-      const subItems = qmElement.querySelectorAll("#wp-admin-bar-query-monitor-default > li");
-      const newSubItems = {};
-
-      subItems.forEach((subItem) => {
-        const originalId = subItem.getAttribute("id");
-        const itemId = originalId.replace("wp-admin-bar-query-monitor-", "");
-        const link = subItem.querySelector("a");
-
-        newSubItems[itemId] = {
-          group: "",
-          href: link.getAttribute("href"),
-          id: originalId,
-          meta: [],
-          parent: "query-monitor",
-          submenu: {},
-          title: link.textContent,
-          frameLink: true,
-        };
-      });
-
-      this.toolbar["query-monitor"].submenu = newSubItems;
-    },
-
-    /**
-     * Updates the toolbar from the content inside an iframe.
-     *
-     * @since 3.2.13
-     */
-    updateToolBarFromFrame() {
-      const frame = document.querySelector(".uip-page-content-frame");
-
-      // Ensure the frame exists and it has the required toolbar data.
-      if (frame) {
-        const toolbarScript = frame.contentWindow.document.querySelector("#uip-admin-toolbar");
-        const toolbar = toolbarScript ? this.uipParseJson(toolbarScript.getAttribute("data-toolbar")) : false;
-        if (!toolbar) return;
-
-        // If the toolbar is not an array, clone it to the current component.
-        if (!Array.isArray(toolbar)) {
-          this.toolbar = { ...toolbar };
-        }
-      }
-    },
-
-    /**
-     * Determines if a given UID is hidden.
-     *
-     * @param {string} uid - The unique identifier to check.
-     * @returns {boolean} - Returns `false` if hidden, otherwise `true`.
-     * @since 3.2.13
-     */
-    ifHidden(uid) {
-      return !this.getHidden.includes(uid);
-    },
-
-    /**
-     * Retrieves a custom icon for a given ID.
-     *
-     * @param {string} id - The ID for which to retrieve the icon.
-     * @returns {string|false} - Returns the custom icon if it exists, otherwise `false`.
-     * @since 3.2.13
-     */
-    customIcon(id) {
-      const icons = this.get_block_option(this.block, "block", "editToolbarItems");
-
-      if (this.isObject(icons) && Object.hasOwn(icons, id) && icons[id].icon) {
-        return icons[id].icon;
-      }
-
-      return false;
-    },
-
-    /**
-     * Retrieves a custom title for a given ID.
-     *
-     * @param {string} id - The ID for which to retrieve the title.
-     * @returns {string|false} - Returns the custom title if it exists, otherwise `false`.
-     * @since 3.2.13
-     */
-    customTitle(id) {
-      const titles = this.get_block_option(this.block, "block", "editToolbarItems");
-
-      if (this.isObject(titles) && Object.hasOwn(titles, id) && titles[id].title) {
-        return titles[id].title;
-      }
-
-      return false;
-    },
-
-    /**
-     * Navigates to a specified page or triggers an event based on conditions.
-     *
-     * @param {Object} item - The item containing navigation details.
-     * @param {Event} evt - The event that triggered the navigation.
-     * @param {boolean} [forceReload=false] - If `true`, forces the page to reload.
-     * @since 3.2.13
-     */
-    updatePage(item, evt, forceReload = false) {
-      if (evt.ctrlKey || evt.shiftKey || evt.metaKey || evt.button === 1) {
-        return;
-      }
-
-      evt.preventDefault();
-
-      if (item.frameLink) {
-        const contentFrame = document.querySelector(".uip-page-content-frame");
-
-        if (contentFrame) {
-          const originalLink = contentFrame.contentWindow.document.querySelector(`#${item.id} a`);
-          if (originalLink) originalLink.click();
-        }
-
-        return;
-      }
-
-      this.updateAppPage(this.formatHREF(item.href), forceReload);
-    },
-
-    /**
-     * Formats a given link to make it suitable for navigation.
-     *
-     * @param {string} link - The original link to be formatted.
-     * @returns {string} - Returns the formatted link.
-     * @since 3.2.13
-     */
-    formatHREF(link) {
-      const { adminURL, domain: homeURL } = this.uipApp.data.options;
-      const adminPath = adminURL.replace(homeURL, "");
-
-      if (link && link.startsWith(adminPath)) {
-        return link.replace(adminPath, adminURL);
-      }
-
-      return link;
-    },
-
-    /**
-     * Checks if a given submenu exists and has items
-     *
-     * @param {mixed} submenu - the submenu to check
-     * @since 3.2.13
-     */
-    itemHasSubmenu(submenu) {
-      if (!this.isObject(submenu)) return false;
-      if (Object.keys(submenu).length > 0) return true;
-    },
-  },
+  // Finish loading
+  loading.value = false;
 };
+
+const processSubmenu = (linknode) => {
+  const submenuitems = linknode.querySelectorAll(":scope > .ab-sub-wrapper > .ab-submenu > li");
+
+  // No submenu items so bail
+  if (!submenuitems) return;
+
+  let submenu = [];
+
+  for (let li of submenuitems) {
+    const sublink = li.querySelector(":scope > .ab-item");
+
+    // No sub link
+    if (!sublink) continue;
+
+    const url = sublink.getAttribute("href");
+    const target = sublink.getAttribute("target");
+
+    // Handle naming
+    let strippedName = sublink.innerText;
+    const subsubmenu = processSubmenu(li);
+
+    submenu.push({ name: strippedName, url, target, submenu: subsubmenu });
+  }
+
+  return submenu;
+};
+
+/**
+ * Extracts a number from a given html string
+ *
+ * @param {node} html
+ *
+ * @return {number|null} number on success, null on failure
+ * @since 3.2.13
+ */
+function extractNumberFromHtml(node) {
+  if (!node || typeof DOMParser === "undefined") {
+    return null;
+  }
+
+  const nodes = node.getElementsByTagName("*"); // get all elements
+
+  for (let node of nodes) {
+    const nodeValue = node.textContent.trim();
+    if (!isNaN(nodeValue)) {
+      return parseInt(nodeValue, 10);
+    }
+  }
+
+  return null;
+}
+
+const returnIconOverrides = computed(() => {
+  let style = "";
+
+  const overrides = [
+    ["wp-admin-bar-comments", "chat"],
+    ["wp-admin-bar-updates", "update"],
+    ["wp-admin-bar-new-content", "library_add"],
+    ["wp-admin-bar-customize", "palette"],
+  ];
+
+  const base = appStore.state.pluginBase;
+
+  for (let override of overrides) {
+    const iconurl = `${base}assets/icons/${override[1]}.svg`;
+
+    style += `
+    #${override[0]} .ab-icon::before{
+    content: '';
+    height:1.2rem;
+    width:1.2rem;
+    min-height:1.2rem;
+    min-width:1.2rem;
+    background-color:currentColor;
+    -webkit-mask: url(${iconurl}) no-repeat center;
+    -webkit-mask-size: contain;
+    mask: url(${iconurl}) no-repeat center;
+    mask-size: contain;
+    line-height: 1rem;
+        display: block;
+    }`;
+  }
+
+  style += `
+  #wp-admin-bar-customize, #wp-admin-bar-edit{
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  #wp-admin-bar-customize::before, #wp-admin-bar-edit::before{
+    content: '';
+    height:1.2rem;
+    width:1.2rem;
+    min-height:1.2rem;
+    min-width:1.2rem;
+    background-color:currentColor;
+    -webkit-mask: url(${base}assets/icons/palette.svg) no-repeat center;
+    -webkit-mask-size: contain;
+    mask: url(${base}assets/icons/palette.svg) no-repeat center;
+    mask-size: contain;
+    line-height: 1rem;
+    display: block;
+    color: rgb(var(--uix-base-500) / var(--tw-text-opacity));
+  }
+  #wp-admin-bar-edit::before{
+    -webkit-mask: url(${base}assets/icons/edit.svg) no-repeat center;
+    mask: url(${base}assets/icons/edit.svg) no-repeat center;
+  }`;
+
+  return style;
+});
+
+const maybeReturnBeforeStyle = (menuitem) => {
+  let styles = "";
+  /* Before content */
+  if (isObject(menuitem.before)) {
+    styles += `content: ${menuitem.before.content};`;
+    styles += `font-family: ${menuitem.before.fontFamily};`;
+    styles += "width: 1.2rem;";
+    styles += "min-width: 1.2rem;";
+  } else {
+    styles += "width: 0rem;";
+    styles += "min-width: 0rem;";
+  }
+
+  if (menuitem.iconStyle) styles += menuitem.iconStyle;
+
+  return `
+  #${menuitem.id} .ab-icon::before{
+    content: '';
+    ${styles}
+    height:1.2rem;
+    min-height:1.2rem;
+    font-size: 1.2rem;
+    line-height: 1.2rem;
+    filter: contrast(0.1);
+    background-repeat: no-repeat;
+    background-size: contain;
+  }`;
+};
+
+/**
+ * Returns menu style
+ */
+const menuStyle = computed(() => {
+  return getBlockOption("subMenuStyle", props.block) || "inline";
+});
+
+const initiate = () => {
+  setTimeout(() => {
+    const menuNode = document.querySelector("#wpadminbar");
+    setToolbar(menuNode);
+  }, 500);
+};
+
+//const menuNode = document.querySelector("#wpadminbar");
+//setToolbar(menuNode);
+//onMounted(initiate);
+
+const stop = watchEffect(async () => {
+  return;
+  if (!toolbarnode.value) return;
+
+  if (uiTemplate.display == "prod") {
+    return;
+  }
+
+  console.log("multiple times");
+
+  const menuNode = document.querySelector("#wpadminbar");
+
+  setToolbar(menuNode, true);
+
+  // Run slightly later to allow for other scripts to update toolbar items
+  setTimeout(() => {
+    // Don't move the actual nodes on the builder page as they are needed for the builder
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get("page") === "uip-ui-builder") {
+      stop();
+      return;
+    }
+
+    console.log("this never ran");
+    toolbarnode.value.replaceChildren();
+    setToolbar(menuNode);
+  }, 500);
+
+  stop();
+});
+
+if (uiTemplate.display == "prod") {
+  //wp.hooks.addFilter("uipress.app.toolbar.get", () => ({ ...current, ...themeStyles }));
+}
+
+onMounted(() => {
+  setTimeout(() => {
+    if (uiTemplate.display == "prod") {
+      return;
+    }
+    const menuNode = document.querySelector("#wpadminbar");
+
+    setToolbar(menuNode, true);
+  }, 1000);
+});
+
+//getNodesFromCache();
 </script>
 
 <template>
-  <div id="wpadminbar" style="display: block !important" class="uip-text-normal" v-if="rendered">
-    <component is="style"> .uip-admin-toolbar #wpadminbar {all:unset} .uip-admin-toolbar #wpadminbar .ab-icon {font-size:18px; filter: contrast(0.6);} </component>
-
-    <div class="uip-admin-toolbar uip-flex">
-      <template v-for="(item, key) in returnToolbar">
-        <!--FIRST DROP -->
-        <dropdown :hover="true" :pos="returnDropdownPosition" :disableTeleport="true" v-if="ifHidden(key)" :id="'wp-admin-bar-' + item.id" :class="item.meta.class">
-          <template v-slot:trigger>
-            <a :href="formatHREF(item.href)" @click="updatePage(item, $event)" class="uip-link-default uip-no-underline uip-toolbar-top-item uip-flex uip-gap-xs uip-flex-center">
-              <AppIcon :icon="customIcon(item.id)" class="uip-icon uip-toolbar-top-item-icon uip-text-l" v-if="customIcon(item.id)" />
-
-              <component v-if="customIcon(item.id)" is="style" scoped> #{{ "wp-admin-bar-" + item.id }} .ab-icon{display:none} </component>
-
-              <div class="uip-line-height-1 uip-flex uip-gap-xxs" v-if="customTitle(item.id)">{{ customTitle(item.id) }}</div>
-              <div class="uip-line-height-1 uip-flex uip-gap-xxs uip-flex-center" v-if="!customTitle(item.id)" v-html="item.title"></div>
-            </a>
-          </template>
-
-          <template v-slot:content v-if="itemHasSubmenu(item.submenu)">
-            <!-- NETWORK ADMIN TOOLBAR -->
-            <div v-if="item.id == 'my-sites'" class="uip-toolbar-submenu uip-min-w-200 uip-padding-xs uip-max-h-500" style="overflow: auto">
-              <template v-for="subsection in item.submenu">
-                <div class="uip-padding-xxs uip-flex uip-flex-column uip-row-gap-xxs uip-min-w-130">
-                  <template v-for="sub in subsection.submenu">
-                    <!--SECOND DROP -->
-                    <dropdown :hover="true" :pos="returnSubDropdownPosition" :disableTeleport="true">
-                      <template v-slot:trigger>
-                        <a
-                          :href="formatHREF(sub.href)"
-                          @click="updatePage(sub, $event, true)"
-                          class="uip-link-default uip-no-underline uip-toolbar-sub-item uip-flex uip-flex-center uip-flex-between uip-gap-s uip-flex-grow uip-padding-xxs uip-border-rounder hover:uip-background-muted"
-                        >
-                          <span v-html="sub.title"></span>
-                          <AppIcon v-if="sub.submenu" icon="chevron_right" class="uip-icon" />
-                        </a>
-                      </template>
-                      <template v-slot:content v-if="sub.submenu">
-                        <div class="uip-toolbar-submenu uip-min-w-200 uip-padding-xs">
-                          <template v-for="subsub in sub.submenu">
-                            <a
-                              :href="formatHREF(subsub.href)"
-                              @click="updatePage(subsub, $event, true)"
-                              class="uip-link-default uip-no-underline uip-toolbar-sub-item uip-flex uip-flex-center uip-flex-between uip-gap-s uip-flex-grow uip-padding-xxs uip-border-rounder hover:uip-background-muted"
-                              v-html="subsub.title"
-                            ></a>
-                          </template>
-                        </div>
-                      </template>
-                    </dropdown>
-                    <!--END SECOND DROP -->
-                  </template>
-                </div>
-                <div v-if="subsection.id == 'my-sites-super-admin'" class="uip-border-bottom"></div>
-                \
-              </template>
-            </div>
-            <!-- END NETWORK ADMIN TOOLBAR -->
-
-            <SubMenu v-else :updatePage="updatePage" :formatHREF="formatHREF" :itemHasSubmenu="itemHasSubmenu" :submenu="item.submenu" :dropPos="returnSubDropdownPosition" />
-          </template>
-        </dropdown>
-        <!--END FIRST DROP -->
+  <div class="cheese">
+    <ul class="uip-admin-toolbar uip-flex" ref="toolbarnode" id="wpadminbar" style="list-style: none"></ul>
+    <component is="style"> {{ returnIconOverrides }}</component>
+    <component is="style">
+      <template v-for="item in returnMenuItems">
+        {{ maybeReturnBeforeStyle(item) }}
       </template>
-    </div>
+    </component>
   </div>
 </template>

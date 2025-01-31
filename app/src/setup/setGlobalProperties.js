@@ -10,6 +10,7 @@ export const setGlobalProperties = (appStore) => {
   const restNonce = scriptTag.getAttribute("rest-nonce");
   const cacheKey = scriptTag.getAttribute("cache-key");
   const pluginBase = scriptTag.getAttribute("plugin-base");
+  const adminUrl = scriptTag.getAttribute("admin-url");
   let roles = scriptTag.getAttribute("user-roles");
 
   roles = JSON.parse(roles);
@@ -20,5 +21,6 @@ export const setGlobalProperties = (appStore) => {
   appStore.updateState("userRoles", roles);
   appStore.updateState("cacheKey", cacheKey);
   appStore.updateState("pluginBase", pluginBase);
+  appStore.updateState("adminUrl", adminUrl);
   appStore.updateState("teleportPoint", "body");
 };

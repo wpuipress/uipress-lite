@@ -64,8 +64,6 @@ const getErrors = async (suppressLoading) => {
   pagination.value.total = response.headers.get("X-WP-Total");
   pagination.value.pages = response.headers.get("X-WP-TotalPages");
 
-  console.log(responseData);
-
   errors.value = responseData;
 };
 

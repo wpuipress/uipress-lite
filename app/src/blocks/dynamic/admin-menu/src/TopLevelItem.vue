@@ -90,6 +90,7 @@ const isBasicIcon = (str) => {
     :class="returnItemClasses"
     :active="link.active ? true : false"
     :id="link.id"
+    @click="maybeFollowLink"
   >
     <template v-if="!hideIcons">
       <div
@@ -103,13 +104,7 @@ const isBasicIcon = (str) => {
       <AppIcon v-else :icon="link.settings.icon" class="icon uip-menu-icon uip-icon" />
     </template>
 
-    <template v-if="1 == 3">
-      <div v-if="!hideIcons && returnIcon && !isBasicIcon(returnTopIcon(returnIcon))" v-html="returnTopIcon(returnIcon)" class="uip-flex uip-flex-center uip-menu-icon uip-icon uip-icon-medium"></div>
-
-      <AppIcon v-else-if="!hideIcons && returnIcon && isBasicIcon(returnTopIcon(returnIcon))" class="uip-flex-center uip-menu-icon uip-icon" :icon="returnTopIcon(returnIcon)" />
-    </template>
-
-    <div v-if="!collapsed" class="uip-flex-grow uip-flex uip-gap-xs uip-flex-center">
+    <div v-if="!collapsed" class="uip-flex uip-gap-xs uip-flex-center">
       <div class="uip-line-height-1" v-html="returnName"></div>
       <div
         v-if="link.notifications && link.notifications > 0"
@@ -119,8 +114,8 @@ const isBasicIcon = (str) => {
       </div>
     </div>
 
-    <div class="uip-position-relative">
-      <AppIcon v-if="link.submenu && link.submenu.length > 0 && !collapsed" class="uip-icon uip-link-muted" :icon="returnSubIcon(link)" />
+    <div class="uip-position-relative uip-flex-grow uip-flex-end">
+      <AppIcon v-if="link.submenu && link.submenu.length > 0 && !collapsed" class="uip-icon uip-link-muted" :icon="returnSubIcon(link)" style="margin-left: auto" />
       <div class="uip-position-absolute" @click.prevent="link.open = !link.open" style="left: -6px; top: -6px; width: calc(100% + 12px); height: calc(100% + 12px)"></div>
     </div>
   </a>

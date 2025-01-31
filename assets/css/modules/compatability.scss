@@ -142,16 +142,6 @@ html[uip-framed-page="true"] .form_internal_menu {
   top: 0;
 }
 
-//Toolbar icons
-.uip-admin-toolbar #wpadminbar #wp-admin-bar-new-content .ab-icon:before {
-  font-family: dashicons;
-  content: "\f132";
-}
-.uip-admin-toolbar #wpadminbar #wp-admin-bar-comments .ab-icon:before {
-  font-family: dashicons;
-  content: "\f101";
-}
-
 ////WP WAND
 html[uip-core-app="true"] {
   .wpwand-trigger {

@@ -57,6 +57,9 @@ export default {
     },
   },
   computed: {
+    teleportPoint() {
+      return this.shouldTeleportToHost ? this.appStore.state.teleportPoint : "body";
+    },
     /**
      * Check if block query is enabled
      *
@@ -147,6 +150,12 @@ export default {
     isProduction() {
       if (this.uiTemplate.display == "prod") return true;
       if (this.uiTemplate.isPreview) return true;
+      return false;
+    },
+
+    shouldTeleportToHost() {
+      if (this.uiTemplate.display == "prod") return true;
+      if (this.uiTemplate.isPreview) return false;
       return false;
     },
 
@@ -343,7 +352,7 @@ export default {
       for (let item of postQuery) {
         const queriedBlock = this.formatQueryDynamicMatches(item.ID);
         const queryBlockStyle = this.returnQueryBlockStyles(queriedBlock, item.ID);
-        const queryStyleNode = h(Teleport, { to: appStore.state.teleportPoint }, h("style", { scoped: "" }, queryBlockStyle));
+        const queryStyleNode = h(Teleport, { to: this.teleportPoint }, h("style", { scoped: "" }, queryBlockStyle));
         const args = { ...this.returnQueryParams(queriedBlock, item.ID), ...this.returnWatchers(queriedBlock) };
         const blocknode = h(blockTemplate, args);
         nodes.push(queryStyleNode, blocknode);
@@ -599,9 +608,9 @@ export default {
     if (isHidden) return nodes;
 
     // Push the style tag if block has styles
-    if (styles) nodes.push(h(Teleport, { to: this.appStore.state.teleportPoint }, h("style", { scoped: "" }, styles)));
-    if (scripts) nodes.push(h(Teleport, { to: this.appStore.state.teleportPoint }, h("script", {}, scripts)));
-    if (blockLink) nodes.push(h(Teleport, { to: this.appStore.state.teleportPoint }, h("a", { ref: "blocklink", class: "uip-hidden" })));
+    if (styles) nodes.push(h(Teleport, { to: this.teleportPoint }, h("style", { scoped: "" }, styles)));
+    if (scripts) nodes.push(h(Teleport, { to: this.teleportPoint }, h("script", {}, scripts)));
+    if (blockLink) nodes.push(h(Teleport, { to: this.teleportPoint }, h("a", { ref: "blocklink", class: "uip-hidden" })));
 
     // Build the main block args
     const blockTemplate = this.uipApp.data.blocks.find((item) => item.metadata.moduleName == moduleName);
