@@ -6,6 +6,7 @@ use UipressLite\Classes\App\UserPreferences;
 use UipressLite\Classes\Scripts\ToolBar;
 use UipressLite\Classes\Scripts\AdminMenu;
 use UipressLite\Classes\PostTypes\UiTemplates;
+use UipressLite\Classes\Scripts\UipScripts;
 
 !defined("ABSPATH") ? exit() : "";
 
@@ -204,27 +205,13 @@ class AdminPage
       switch_to_blog(get_main_site_id());
     }
 
-    $templateSettings = UiTemplates::get_settings($template->ID);
-    $templateContent = UiTemplates::get_content($template->ID);
-
     $templateObject = [];
-    $templateObject["settings"] = $templateSettings;
-    $templateObject["content"] = $templateContent;
     $templateObject["id"] = $template->ID;
-    $templateObject["updated"] = get_the_modified_date("U", $template->ID);
-
-    $templateString = Sanitize::clean_input_with_code($templateObject);
-    $templateString = wp_json_encode($templateString);
-    $templateString = html_entity_decode($templateString);
 
     // Switch back to current blog
     if ($multisite) {
       restore_current_blog();
     }
-
-    // Output template
-    $variableFormatter = "var uipUserTemplate = {$templateString}; var uipMasterMenu = {menu:[]}";
-    wp_print_inline_script_tag($variableFormatter, ["id" => "uip-admin-page-data"]);
 
     $app = "
       <style>#wpcontent{padding-left: 0;}#wpbody-content{padding-bottom:0px;}@media screen and (max-width: 782px) {.auto-fold #wpcontent { padding: 0 !important;}}</style>
@@ -235,8 +222,20 @@ class AdminPage
 
     // Trigger pro actions
     do_action("uip_import_pro_front");
-    add_action("admin_footer", ["UipressLite\Classes\Scripts\UipScripts", "add_uip_app"], 2);
-    add_action("admin_footer", ["UipressLite\Classes\Pages\AdminPage", "load_uip_script"], 3);
+    add_action(
+      "admin_footer",
+      function () use ($templateObject) {
+        UipScripts::add_uip_app("ui-admin-page", $templateObject["id"]);
+      },
+      2
+    );
+    add_action(
+      "admin_footer",
+      function () use ($templateObject) {
+        self::load_uip_script($templateObject["id"]);
+      },
+      2
+    );
   }
 
   /**
@@ -244,11 +243,11 @@ class AdminPage
    *
    * @return void
    */
-  public static function load_uip_script()
+  public static function load_uip_script($templateID)
   {
     wp_print_script_tag([
       "id" => "uip-adminpage-js",
-      "src" => uip_plugin_url . "app/dist/uipadminpage.build.js?ver=" . uip_plugin_version,
+      "src" => uip_plugin_url . "app/dist/uipadminpage.build.js?template-id={$templateID}&template-type=ui-admin-page&ver=" . uip_plugin_version,
       "type" => "module",
     ]);
   }

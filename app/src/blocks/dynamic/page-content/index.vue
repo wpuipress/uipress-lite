@@ -215,6 +215,11 @@ export default {
       let url = this.hasNestedPath(this.uipApp.data, "dynamicOptions", "viewadmin", "value");
       return url;
     },
+
+    isUiBuilder() {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get("page") === "uip-ui-builder";
+    },
   },
   methods: {
     updatePosition() {
@@ -281,8 +286,6 @@ export default {
 
         // Skip the excluded element if an ID was provided
         if (child.id === "uip-ui-interface") return;
-
-        console.log(child.id);
 
         // Move the child to the target node
         this.$refs.bodyHolder.appendChild(child);

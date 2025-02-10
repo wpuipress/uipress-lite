@@ -415,6 +415,10 @@ class UiTemplates
    */
   public static function save($templateID, $template)
   {
+    // Update Cache key to invalidate local storage cached templates
+    $cache_key = bin2hex(random_bytes(6));
+    update_option("uipress-cache-key", $cache_key);
+
     // Get template
     $postObject = get_post($templateID);
 

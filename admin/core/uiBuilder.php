@@ -118,8 +118,8 @@ class uip_ui_builder extends uip_app
     AdminMenu::capture();
     ToolBar::capture();
 
-    add_action("admin_enqueue_scripts", [$this, "add_scripts_and_styles"]);
-    add_action("admin_footer", [$this, "add_footer_scripts"], 9);
+    //add_action("admin_enqueue_scripts", [$this, "add_scripts_and_styles"]);
+    //add_action("admin_footer", [$this, "add_footer_scripts"], 9);
   }
 
   /**
@@ -135,7 +135,10 @@ class uip_ui_builder extends uip_app
       return;
     }
 
-    add_options_page("uipress", "uipress", "uip_manage_ui", uip_plugin_shortname . "-ui-builder", [$this, "build_uibuilder_page"]);
+    $hook_suffix = add_options_page("uipress", "uipress", "uip_manage_ui", uip_plugin_shortname . "-ui-builder", [$this, "build_uibuilder_page"]);
+
+    add_action("admin_head-{$hook_suffix}", [$this, "add_scripts_and_styles"]);
+    add_action("admin_footer-{$hook_suffix}", [$this, "add_footer_scripts"]);
   }
 
   /**
@@ -151,6 +154,8 @@ class uip_ui_builder extends uip_app
 
     //wp_register_style("uip-builder-styles", uip_plugin_url . "app/dist/assets/styles/style.css", [], uip_plugin_version);
     //wp_enqueue_style("uip-builder-styles");
+
+    error_log("what is going on");
   }
 
   /**

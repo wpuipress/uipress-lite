@@ -1,4 +1,4 @@
-import { reactive } from "vue";
+import { reactive, provide } from "vue";
 import { isObject, uipParseJson } from "@/utility/functions.js";
 import { registerCoreBlocks } from "@/setup/registerCoreBlocks.js";
 import { registerDynamicData } from "@/setup/registerDynamicData.js";
@@ -6,6 +6,7 @@ import { registerVariables } from "@/setup/registerVariables.js";
 import { registerTemplateGroupOptions } from "@/setup/registerTemplateGroupOptions.js";
 import { registerSiteSettingsGroups } from "@/setup/registerSiteSettingsGroups.js";
 import { registerBlockGroups } from "@/setup/registerBlockGroups.js";
+import { uipApp } from "@/store/app/constants.js";
 
 /**
  * Builds a data store for the app
@@ -29,31 +30,31 @@ export const buildDataStore = (app, mode) => {
   //Check for RTL
   let RTL = document.documentElement.getAttribute("dir") == "rtl" ? true : false;
 
-  app.config.globalProperties.uipApp = reactive({
-    scrolling: false,
-    litePath: uip_ajax.uipAppData.options.pluginURL,
-    isRTL: RTL,
-    data: {
-      plugins: [],
-      blocks: AllBlocks,
-      blockGroups: blockGroups,
+  uipApp.scrolling = false;
+  uipApp.litePath = uip_ajax.uipAppData.options.pluginURL;
+  uipApp.isRTL = RTL;
+  uipApp.data = {
+    plugins: [],
+    blocks: AllBlocks,
+    blockGroups: blockGroups,
 
-      // Import from global
-      options: uip_ajax.uipAppData.options,
-      userPrefs: isObject(uip_ajax.uipAppData.userPrefs) ? uip_ajax.uipAppData.userPrefs : {},
-      adminMenu: uipMasterMenu,
-      toolbar: toolbarScript,
+    // Import from global
+    options: uip_ajax.uipAppData.options,
+    userPrefs: isObject(uip_ajax.uipAppData.userPrefs) ? uip_ajax.uipAppData.userPrefs : {},
+    adminMenu: uipMasterMenu,
+    toolbar: toolbarScript,
 
-      // Import local
-      globalGroupOptions: SiteSettingsGroups,
-      dynamicOptions: AllDynamics,
-      themeStyles: AllThemeStyles,
-      templateGroupOptions: TemplateGroupOptions,
+    // Import local
+    globalGroupOptions: SiteSettingsGroups,
+    dynamicOptions: AllDynamics,
+    themeStyles: AllThemeStyles,
+    templateGroupOptions: TemplateGroupOptions,
 
-      // General
-      templateDarkMode: false,
-      darkMode: false,
-      enviroment: mode,
-    },
-  });
+    // General
+    templateDarkMode: false,
+    darkMode: false,
+    enviroment: mode,
+  };
+
+  app.config.globalProperties.uipApp = uipApp;
 };

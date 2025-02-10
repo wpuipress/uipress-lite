@@ -6,6 +6,7 @@ use UipressLite\Classes\App\UserPreferences;
 use UipressLite\Classes\Scripts\ToolBar;
 use UipressLite\Classes\Scripts\AdminMenu;
 use UipressLite\Classes\PostTypes\UiTemplates;
+use UipressLite\Classes\Scripts\UipScripts;
 
 !defined("ABSPATH") ? exit() : "";
 
@@ -280,8 +281,13 @@ class BackEnd
 
     // Output template after admin bar render
     add_action("admin_footer", $outputter, 1);
-    add_action("admin_enqueue_scripts", ["UipressLite\Classes\Scripts\UipScripts", "add_uip_app"], 2);
+    add_action("admin_enqueue_scripts", ["UipressLite\Classes\Pages\BackEnd", "output_data_attributes"], 2);
     add_action("admin_enqueue_scripts", ["UipressLite\Classes\Pages\BackEnd", "load_uip_script"], 3);
+  }
+
+  public static function output_data_attributes()
+  {
+    UipScripts::add_uip_app("ui-template", null);
   }
 
   /**

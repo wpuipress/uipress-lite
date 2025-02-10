@@ -37,9 +37,5 @@ export const setupApp = (mountPoint) => {
   registerDynamicPlugins(app);
   registerDynamicComponents(app);
 
-  if (mountPoint.classList.contains("uip-teleport")) {
-    document.body.appendChild(mountPoint);
-  }
-
   app.mount(mountPoint);
 };

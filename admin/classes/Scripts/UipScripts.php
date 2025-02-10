@@ -112,7 +112,7 @@ class UipScripts
    * @since 3.0.0
    */
 
-  public static function add_uip_app()
+  public static function add_uip_app($template_type = "ui-template", $template_id)
   {
     $nonce = wp_create_nonce("uip-security-nonce");
     $ajaxURL = admin_url("admin-ajax.php");
@@ -151,6 +151,8 @@ class UipScripts
       "cache-key" => esc_attr($cache_key),
       "plugin-base" => esc_url($base_url),
       "admin-url" => esc_url($admin_url),
+      "template-type" => esc_attr($template_type),
+      "template-id" => esc_attr($template_id),
       "uip_ajax" => wp_json_encode(
         [
           "ajax_url" => $ajaxURL,

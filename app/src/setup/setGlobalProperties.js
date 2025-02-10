@@ -1,3 +1,5 @@
+import { config } from "@/store/app/constants.js";
+
 export const setGlobalProperties = (appStore) => {
   // Get script tag
   const scriptTag = document.querySelector("#uip-app-data");
@@ -9,6 +11,8 @@ export const setGlobalProperties = (appStore) => {
   const restBase = scriptTag.getAttribute("rest-base");
   const restNonce = scriptTag.getAttribute("rest-nonce");
   const cacheKey = scriptTag.getAttribute("cache-key");
+  const templateType = scriptTag.getAttribute("template-type");
+  const templateID = scriptTag.getAttribute("template-id");
   const pluginBase = scriptTag.getAttribute("plugin-base");
   const adminUrl = scriptTag.getAttribute("admin-url");
   let roles = scriptTag.getAttribute("user-roles");
@@ -22,5 +26,7 @@ export const setGlobalProperties = (appStore) => {
   appStore.updateState("cacheKey", cacheKey);
   appStore.updateState("pluginBase", pluginBase);
   appStore.updateState("adminUrl", adminUrl);
+  appStore.updateState("templateType", config.value.templateType || templateType);
+  appStore.updateState("templateID", config.value.templateId || templateID);
   appStore.updateState("teleportPoint", "body");
 };

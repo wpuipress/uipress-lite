@@ -12,6 +12,9 @@ const menu = ref([]);
 const search = ref("");
 const toolbarnode = ref(null);
 const uiTemplate = inject("uiTemplate");
+const hiddenFrame = ref(null);
+const overrideStyles = ref("");
+const overrideHTML = ref("");
 
 // get app store
 import { useAppStore } from "@/store/app/app.js";
@@ -105,9 +108,7 @@ const setToolbar = async (menuNode, clone) => {
     if (clone) {
       const cloned = item.cloneNode(true);
       toolbarnode.value.appendChild(cloned);
-      console.log("all cloned");
     } else {
-      console.log("nothing was moved");
       toolbarnode.value.appendChild(item);
     }
   }
@@ -171,6 +172,8 @@ function extractNumberFromHtml(node) {
 }
 
 const returnIconOverrides = computed(() => {
+  if (overrideStyles.value) return overrideStyles.value;
+
   let style = "";
 
   const overrides = [
@@ -274,62 +277,80 @@ const initiate = () => {
   }, 500);
 };
 
-//const menuNode = document.querySelector("#wpadminbar");
-//setToolbar(menuNode);
-//onMounted(initiate);
-
-const stop = watchEffect(async () => {
+const loadItemsFromIframe = () => {
   return;
-  if (!toolbarnode.value) return;
+  const iframeDoc = hiddenFrame.value.contentDocument || hiddenFrame.value.contentWindow.document;
+  const menuNode = iframeDoc.querySelector("#wpadminbar");
 
-  if (uiTemplate.display == "prod") {
-    return;
-  }
+  console.log(menuNode);
+  toolbarnode.value.replaceChildren();
 
-  console.log("multiple times");
+  setToolbar(menuNode, true);
+};
 
+const maybeReturnInnerHTML = computed(() => {
+  if (!overrideHTML.value) return "";
+
+  console.log(overrideHTML.value.innerHTML);
+
+  return overrideHTML.value.innerHTML;
+});
+
+const buildProductionToolbar = (onlyClone) => {
   const menuNode = document.querySelector("#wpadminbar");
 
   setToolbar(menuNode, true);
 
   // Run slightly later to allow for other scripts to update toolbar items
-  setTimeout(() => {
-    // Don't move the actual nodes on the builder page as they are needed for the builder
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get("page") === "uip-ui-builder") {
-      stop();
-      return;
-    }
+  if (!onlyClone) {
+    setTimeout(() => {
+      toolbarnode.value.replaceChildren();
+      setToolbar(menuNode);
+    }, 500);
+  }
+};
 
-    console.log("this never ran");
-    toolbarnode.value.replaceChildren();
-    setToolbar(menuNode);
-  }, 500);
+//const menuNode = document.querySelector("#wpadminbar");
+//setToolbar(menuNode);
+//onMounted(initiate);
+
+const stop = watchEffect(async () => {
+  if (!toolbarnode.value) return;
+
+  if (uiTemplate.display != "prod") {
+    setTimeout(() => {
+      const data = wp.hooks.applyFilters("uipress.app.toolbar.get");
+
+      if (!data) {
+        buildProductionToolbar(true);
+        return;
+      }
+
+      const { returnIconOverrides: borrowedOverrides, menu: borrowedMenu, toolbarnode } = data;
+      console.log(borrowedOverrides.value);
+      console.log(toolbarnode.value);
+
+      overrideStyles.value = borrowedOverrides.value;
+      overrideHTML.value = toolbarnode.value;
+      menu.value = borrowedMenu.value;
+    }, 1000);
+  } else {
+    buildProductionToolbar();
+  }
 
   stop();
 });
 
 if (uiTemplate.display == "prod") {
-  //wp.hooks.addFilter("uipress.app.toolbar.get", () => ({ ...current, ...themeStyles }));
+  wp.hooks.addFilter("uipress.app.toolbar.get", "uipress", () => {
+    return { returnIconOverrides, toolbarnode, menu };
+  });
 }
-
-onMounted(() => {
-  setTimeout(() => {
-    if (uiTemplate.display == "prod") {
-      return;
-    }
-    const menuNode = document.querySelector("#wpadminbar");
-
-    setToolbar(menuNode, true);
-  }, 1000);
-});
-
-//getNodesFromCache();
 </script>
 
 <template>
-  <div class="cheese">
-    <ul class="uip-admin-toolbar uip-flex" ref="toolbarnode" id="wpadminbar" style="list-style: none"></ul>
+  <div>
+    <ul class="uip-admin-toolbar uip-flex" ref="toolbarnode" :id="uiTemplate.display == 'prod' ? 'wpadminbar' : ''" style="list-style: none" v-html="maybeReturnInnerHTML"></ul>
     <component is="style"> {{ returnIconOverrides }}</component>
     <component is="style">
       <template v-for="item in returnMenuItems">
