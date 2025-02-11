@@ -106,13 +106,25 @@ class UipScripts
     });
   }
 
+  public static function get_cache_key()
+  {
+    // Cache key
+    $cache_key = get_option("uipress-cache-key", false);
+
+    if ($cache_key === false) {
+      $cache_key = bin2hex(random_bytes(6));
+      update_option("uipress-cache-key", $cache_key);
+    }
+
+    return $cache_key;
+  }
+
   /**
    * Loads the main uip app
    *
    * @since 3.0.0
    */
-
-  public static function add_uip_app($template_type = "ui-template", $template_id)
+  public static function add_uip_app($template_type = "ui-template", $template_id = null)
   {
     $nonce = wp_create_nonce("uip-security-nonce");
     $ajaxURL = admin_url("admin-ajax.php");
@@ -136,12 +148,7 @@ class UipScripts
     $roles = (array) $current_user->roles;
 
     // Cache key
-    $cache_key = get_option("uipress-cache-key", false);
-
-    if ($cache_key === false) {
-      $cache_key = bin2hex(random_bytes(6));
-      update_option("uipress-cache-key", $cache_key);
-    }
+    $cache_key = self::get_cache_key();
 
     $scriptData = [
       "id" => "uip-app-data",
@@ -153,6 +160,8 @@ class UipScripts
       "admin-url" => esc_url($admin_url),
       "template-type" => esc_attr($template_type),
       "template-id" => esc_attr($template_id),
+      "user-id" => esc_attr($current_user->ID),
+      "user-name" => esc_attr($current_user->user_name),
       "uip_ajax" => wp_json_encode(
         [
           "ajax_url" => $ajaxURL,
@@ -174,7 +183,7 @@ class UipScripts
     $variableFormatter = "
       var ajaxHolder = document.getElementById('uip-app-data');
       var ajaxData = ajaxHolder.getAttribute('uip_ajax');
-      var uip_ajax = JSON.parse(ajaxData, (k, v) => (v === 'uiptrue' ? true : v === 'uipfalse' ? false : v === 'uipblank' ? '' : v));";
+      const uip_ajax = JSON.parse(ajaxData, (k, v) => (v === 'uiptrue' ? true : v === 'uipfalse' ? false : v === 'uipblank' ? '' : v));";
     wp_print_inline_script_tag($variableFormatter, ["id" => "uip-format-vars"]);
   }
 

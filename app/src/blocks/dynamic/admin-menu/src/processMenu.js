@@ -73,9 +73,15 @@ export const processMenu = async (menuNode) => {
     if (!dashClass && (backGroundImage || content)) dashIconsList.value.push({ class: `#${id} .wp-menu-image`, before: content, font, backGroundImage });
 
     const submenu = processSubmenu(item);
+    let settings = {};
+    for (let subImageClass of classes) {
+      if (!subImageClass.includes("uipress-data-icon-")) continue;
+      const icon_string = subImageClass.replace("uipress-data-icon-", "");
+      settings.icon = icon_string;
+    }
 
     // Push to menu
-    menuHolder.push({ url, target, name: strippedName, notifications, imageClasses: classes, iconStyles, submenu, active, id });
+    menuHolder.push({ url, target, name: strippedName, notifications, imageClasses: classes, iconStyles, submenu, active, id, settings });
   }
 
   return { processedMenu: [...menuHolder], dashIcons: dashIconsList.value };

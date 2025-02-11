@@ -40,6 +40,36 @@ class uip_app
   {
     add_filter("plugin_action_links_uipress-lite/uipress-lite.php", ["UipressLite\Classes\Tables\PluginsTable", "add_builder_link"]);
     add_action("plugins_loaded", [$this, "start_uipress_app"], 1);
+    add_filter("register_post_type_args", [$this, "ensure_rest_for_admin_menus"], 10, 2);
+    add_filter("rest_api_init", [$this, "ensure_rest_fields_for_admin_menus"]);
+  }
+
+  public static function ensure_rest_for_admin_menus($args, $post_type)
+  {
+    if ($post_type === "uip-admin-menu") {
+      $args["show_in_rest"] = true;
+
+      // Optionally configure REST API settings
+      $args["rest_base"] = "uip-admin-menu"; // The base URL in REST API
+      $args["rest_controller_class"] = "WP_REST_Posts_Controller";
+    }
+
+    return $args;
+  }
+
+  public static function ensure_rest_fields_for_admin_menus()
+  {
+    register_rest_field("uip-admin-menu", "uipress", [
+      "get_callback" => function ($post) {
+        return [
+          "settings" => get_post_meta($post["id"], "uip_menu_settings", true),
+          "forRoles" => get_post_meta($post["id"], "uip-menu-for-roles", true),
+          "forUsers" => get_post_meta($post["id"], "uip-menu-for-users", true),
+          "excludesRoles" => get_post_meta($post["id"], "uip-menu-excludes-roles", true),
+          "excludesUsers" => get_post_meta($post["id"], "uip-menu-excludes-users", true),
+        ];
+      },
+    ]);
   }
 
   /**

@@ -181,6 +181,14 @@ html[uip-core-app="true"] {
     margin: 0;
   }
 }
+
+#uip-frontend-toolbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999999;
+}
 /**
 * UTILITY CLASSES
 */
@@ -3717,12 +3725,10 @@ html[uip-core-app="true"] {
 .uip-builder-frame {
   min-height: 100vh;
   max-height: 100vh;
-}
-html[uip-framed-page="true"] {
-  .uip-builder-frame {
-    min-height: 100vh;
-    max-height: 100vh;
-  }
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 99999999;
 }
 
 @keyframes ghost-in {
@@ -3750,7 +3756,7 @@ html[uip-framed-page="true"] {
   --wp-admin-theme-color-darker-20: var(--uip-color-primary-darker);
 }
 
-[uip-core-app="true"] {
+[uip-admin-theme="true"] {
   @import "modules/uip-theme.scss";
 }
 

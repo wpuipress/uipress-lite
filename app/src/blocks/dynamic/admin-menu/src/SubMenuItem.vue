@@ -34,7 +34,7 @@ export default {
      * @since 3.2.13
      */
     sepHasCustomName(item) {
-      return this.hasNestedPath(item, ["custom", "name"]);
+      return this.hasNestedPath(item, ["settings", "name"]);
     },
 
     /**
@@ -79,7 +79,7 @@ export default {
      * @since 3.2.13
      */
     itemHiden(item) {
-      return this.hasNestedPath(item, "custom", "hidden");
+      return this.hasNestedPath(item, "settings", "hidden");
     },
 
     /**
@@ -88,7 +88,7 @@ export default {
      * @since 3.2.13
      */
     returnName(item) {
-      return this.hasNestedPath(item, "custom", "name") ? item.custom.name : item.name;
+      return this.hasNestedPath(item, "settings", "name") ? item.settings.name : item.name;
     },
 
     /**
@@ -97,7 +97,7 @@ export default {
      * @since 3.3.09
      */
     returnItemClasses(item) {
-      return this.hasNestedPath(item, "custom", "classes") ? item.custom.classes : "";
+      return this.hasNestedPath(item, "settings", "classes") ? item.settings.classes : "";
     },
 
     /**
@@ -106,7 +106,7 @@ export default {
      * @since 3.3.09
      */
     returnItemHref(item) {
-      return this.hasNestedPath(item, "custom", "url") ? item.custom.url : item.url;
+      return this.hasNestedPath(item, "settings", "url") ? item.settings.url : item.url;
     },
 
     /**
@@ -115,7 +115,7 @@ export default {
      * @since 3.3.09
      */
     returnItemTarget(item) {
-      return this.hasNestedPath(item, "custom", "newTab") ? "_BLANK" : "_SELF";
+      return this.hasNestedPath(item, "settings", "newTab") ? "_BLANK" : "_SELF";
     },
   },
 };
@@ -193,8 +193,8 @@ export default {
 
         <!-- Named seperator-->
         <div v-else class="uip-margin-bottom-s uip-margin-top-s uip-flex uip-flex-row uip-gap-xxs uip-menu-separator" :class="returnItemClasses(sub)">
-          <AppIcon v-if="sub.custom.icon && sub.custom.icon != 'uipblank'" :icon="sub.custom.icon" class="uip-icon" />
-          <span>{{ sub.custom.name }}</span>
+          <AppIcon v-if="sub.settings.icon && sub.settings.icon != 'uipblank'" :icon="sub.settings.icon" class="uip-icon" />
+          <span>{{ sub.settings.name }}</span>
         </div>
       </template>
     </template>

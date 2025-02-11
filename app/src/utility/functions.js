@@ -247,6 +247,8 @@ export function uipParseJson(data) {
  * @since 3.0.0
  */
 export function updateAppPage(newURL, reloadPage) {
+  return window.location.assign(url);
+
   const absoluteCheck = new RegExp("^(?:[a-z+]+:)?//", "i");
   const adminURL = this.adminURL;
 
@@ -272,6 +274,10 @@ export function updateAppPage(newURL, reloadPage) {
   }
 
   let url = new URL(newURL);
+
+  return window.location.assign(url);
+
+  //// Don't need this anymore
 
   /// Check for cors issues
   if (url.hostname !== window.location.hostname) {

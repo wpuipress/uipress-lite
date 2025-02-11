@@ -36,23 +36,23 @@ const hideIcons = computed(() => {
 });
 
 const itemHiden = computed(() => {
-  return hasNestedPath(link.value, "custom", "hidden");
+  return hasNestedPath(link.value, "settings", "hidden");
 });
 
 const returnName = computed(() => {
-  return hasNestedPath(link.value, "custom", "name") ? link.value.custom.name : link.value.name;
+  return hasNestedPath(link.value, "settings", "name") ? link.value.settings.name : link.value.name;
 });
 
 const returnIcon = computed(() => {
-  return hasNestedPath(link.value, "custom", "icon") ? link.value.custom.icon : link.value.icon;
+  return hasNestedPath(link.value, "settings", "icon") ? link.value.settings.icon : link.value.icon;
 });
 
 const returnItemClasses = computed(() => {
-  return hasNestedPath(link.value, "custom", "classes") ? link.value.custom.classes : "";
+  return hasNestedPath(link.value, "settings", "classes") ? link.value.settings.classes : "";
 });
 
 const returnItemHref = computed(() => {
-  return hasNestedPath(link.value, "custom", "url") ? link.value.custom.url : link.value.url;
+  return hasNestedPath(link.value, "settings", "url") ? link.value?.settings?.url : link.value?.url;
 });
 
 const returnItemTarget = computed(() => {
@@ -90,7 +90,7 @@ const isBasicIcon = (str) => {
     :class="returnItemClasses"
     :active="link.active ? true : false"
     :id="link.id"
-    @click="maybeFollowLink"
+    @click="maybeFollowLink($event, link)"
   >
     <template v-if="!hideIcons">
       <div

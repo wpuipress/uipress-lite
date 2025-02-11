@@ -77,11 +77,16 @@ const fetchTemplate = async () => {
   const templateID = appStore.state.templateID;
 
   if (templateType === "ui-template") {
+    console.log("here?");
     const cachedTemplate = getCachedTemplate();
 
     if (cachedTemplate === "no_templates") return destroyApp();
     if (cachedTemplate) return updateActiveTemplate(cachedTemplate);
 
+    await fetchUserInterface();
+  }
+
+  if (templateType === "ui-front-template") {
     await fetchUserInterface();
   }
 
@@ -161,6 +166,12 @@ const getCachedTemplate = () => {
 };
 
 const cacheActiveTemplate = (templateData) => {
+  // Don't cache front templates
+  const templateType = appStore.state.templateType;
+  if (templateType === "ui-front-template") {
+    return;
+  }
+
   const cacheData = {
     template: templateData,
     cacheKey: appStore.state.cacheKey,
@@ -176,6 +187,12 @@ const cacheActiveTemplate = (templateData) => {
 };
 
 const cacheNoActiveTemplate = () => {
+  // Don't cache front templates
+  const templateType = appStore.state.templateType;
+  if (templateType === "ui-front-template") {
+    return;
+  }
+
   const cacheData = {
     template: "no_templates",
     no_templates: true,
@@ -280,7 +297,15 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <component :is="appStore.state.templateType === 'ui-template' ? ShadowRoot : 'div'" tag="div" :adopted-style-sheets="[adoptedStyleSheets]" ref="shadowMount" id="uipress-shadow-root">
+  <component is="style" v-if="!isLoading">#wpadminbar{opacity:1 !important}</component>
+
+  <component
+    :is="['ui-front-template', 'ui-template'].includes(appStore.state.templateType) ? ShadowRoot : 'div'"
+    tag="div"
+    :adopted-style-sheets="[adoptedStyleSheets]"
+    ref="shadowMount"
+    id="uipress-shadow-root"
+  >
     <div
       class="uip-h-100p uip-background-default uip-user-frame uip-body-font uip-teleport uip-flex overflow-hidden"
       :class="appStore.state.templateType === 'ui-template' ? 'uip-w-vw' : 'uip-w-100p'"

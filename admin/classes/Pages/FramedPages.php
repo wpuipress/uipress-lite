@@ -16,8 +16,8 @@ class FramedPages
   public static function start()
   {
     // Capture toolbar and menu objects
-    AdminMenu::capture();
-    ToolBar::capture();
+    //AdminMenu::capture();
+    //ToolBar::capture();
 
     self::add_hooks();
   }

@@ -1,11 +1,13 @@
 <script>
 import { processMenu } from "./src/processMenu.js";
-import Confirm from "@/components/confirm/index.vue";
+import { lmnFetch } from "@/assets/js/functions/lmnFetch.js";
 const { __ } = wp.i18n;
 
 // Setup store
 import { useAppStore } from "@/store/app/app.js";
 
+// Comps
+import Confirm from "@/components/confirm/index.vue";
 import MenuCollapse from "./src/MenuCollapse.vue";
 import MenuSearch from "./src/MenuSearch.vue";
 import SubMenuItem from "./src/SubMenuItem.vue";
@@ -30,8 +32,11 @@ export default {
     return {
       appStore: useAppStore(),
       menu: [],
+      menus: [],
       activeMenu: false,
+      loading: false,
       rendered: true,
+      ogMenu: [],
       workingMenu: [],
       watchMenu: [],
       iconClasses: [],
@@ -111,7 +116,11 @@ export default {
     //this.setMenu();
     //this.buildMenu();
 
-    this.generateMenu();
+    if (this.uipApp.data.userPrefs.menuCollapsed) {
+      this.collapsed = true;
+    }
+
+    this.getMenuForUser();
   },
   mounted() {
     this.mountEventListeners();
@@ -305,6 +314,25 @@ export default {
       if (this.isObject(icons)) return icons.value;
       return icons;
     },
+
+    flattenedItems() {
+      const flattened = [];
+
+      const flatten = (items) => {
+        items.forEach((item) => {
+          flattened.push(item);
+
+          if (item.submenu && item.submenu.length > 0) {
+            flatten(item.submenu);
+          }
+        });
+      };
+
+      // Assuming this.items is your original nested array
+      flatten(this.ogMenu);
+
+      return flattened;
+    },
   },
 
   /**
@@ -318,12 +346,192 @@ export default {
     document.removeEventListener("uipress/blocks/adminmenu/togglecollapse", this.handleMenuCollapse, { once: false });
   },
   methods: {
+    async getMenuForUser() {
+      // Ensure the original menu has been parsed before moving on
+      await this.generateMenu();
+      setTimeout(this.generateMenu, 1000);
+
+      // Attempt to fetch menu from cache
+      const cachedMenu = this.getMenuFromLocalStorage();
+      if (Array.isArray(cachedMenu)) {
+        this.workingMenu = cachedMenu;
+        //filterMenu();
+        return;
+      } else if (cachedMenu == "no_menus") {
+        return;
+      }
+
+      setTimeout(this.getRemoteMenus, 1);
+    },
+
+    // Function to fetch array from localStorage, return null if expired
+    getMenuFromLocalStorage() {
+      const key = `uipress_menu_${this.appStore.state.userID}`;
+      const item = localStorage.getItem(key);
+
+      if (!item) {
+        return null;
+      }
+
+      const parsedItem = JSON.parse(item);
+      const now = new Date().getTime();
+      const oneHour = 60 * 60 * 1000; // 1 hour in milliseconds
+
+      if (now - parsedItem.timestamp > oneHour) {
+        localStorage.removeItem(key);
+        return null;
+      }
+
+      return parsedItem.value;
+    },
+
+    async getRemoteMenus() {
+      // Ensure the original menu has been parsed before moving on
+      await this.generateMenu();
+
+      this.loading = false;
+
+      const args = { endpoint: "wp/v2/uip-admin-menu", params: { per_page: 100, status: "publish" } };
+      const data = await lmnFetch(args);
+
+      this.loading = false;
+
+      if (!data) {
+        return;
+      }
+
+      this.menus = data.data;
+
+      console.log("remote menus", this.menus);
+
+      this.setActiveMenu();
+    },
+
+    setActiveMenu() {
+      // No custom menus so bail
+      if (!this.menus.length) {
+        //menu.value = [...OGmenu.value];
+        cacheMenu("no_menus");
+        return;
+      }
+
+      for (let remoteMenu of this.menus) {
+        const userRoles = this.appStore.state.userRoles;
+        const includesRoles = remoteMenu.uipress?.forRoles || [];
+        const includesUsers = remoteMenu.uipress?.forUsers || [];
+
+        // Check if user is matched
+        const matchedUser = includesUsers.find((item) => item == this.appStore.state.userID);
+
+        // Check if user role matches
+        let matchedRole = false;
+        for (let role of userRoles) {
+          const match = includesRoles.find((item) => item == role);
+          if (match) {
+            matchedRole = true;
+            break;
+          }
+        }
+
+        const excludedRoles = remoteMenu.uipress?.excludesRoles || [];
+        const excludedUsers = remoteMenu.uipress?.excludesUsers || [];
+
+        // Check if user is excluded
+        const matchedExcludedUser = excludedUsers.find((item) => item == this.appStore.state.userID);
+
+        // Check if user role matches
+        let matchedExcludedRole = false;
+        for (let role of userRoles) {
+          const match = excludedRoles.find((item) => item == role);
+          if (match) {
+            matchedExcludedRole = true;
+            break;
+          }
+        }
+
+        // User is either matched by role or user id and not excluded by role or user id
+        if ((matchedUser || matchedRole) && !matchedExcludedUser && !matchedExcludedRole) {
+          // Update menu
+
+          console.log("matched menu", remoteMenu.uipress.settings.menu);
+          this.refactorMenu(remoteMenu.uipress.settings.menu);
+          //menu.value = [...remoteMenu.uipress.settings.];
+          ///cacheMenu(remoteMenu.meta?.menu_items);
+          //filterMenu();
+          return;
+        }
+      }
+      // Menus applied so set default
+      //menu.value = [...OGmenu.value];
+      //cacheMenu("no_menus");
+    },
+
+    refactorMenu(data) {
+      const topLevel = this.uipParseJson(JSON.stringify(data.menu));
+      const submenu = this.uipParseJson(JSON.stringify(data.submenu));
+      const flattenedMenu = this.flattenedItems;
+
+      const processed = [];
+
+      for (let item of topLevel) {
+        // Remove hidden items
+        if (item.custom.hidden) continue;
+
+        if (item.type == "sep") {
+          processed.push({ ...item, settings: item.custom, submenu: [] });
+          continue;
+        }
+
+        const itemID = item[5];
+
+        const ogItem = flattenedMenu.find((flat) => flat.id == itemID);
+
+        const itemSubmenu = submenu[item[2]] || [];
+        const processedSubMenu = [];
+
+        // Loop sub items
+        for (let subItem of itemSubmenu) {
+          // Remove hidden items
+          if (subItem?.custom?.hidden) continue;
+
+          const subID = `${itemID}-${subItem[2]}`;
+
+          const ogSubItem = flattenedMenu.find((subflat) => subflat.id == subID);
+
+          if (ogSubItem) {
+            processedSubMenu.push({ ...ogSubItem, settings: subItem.custom, submenu: [] });
+          }
+        }
+
+        if (ogItem) {
+          processed.push({ ...ogItem, settings: item.custom, submenu: processedSubMenu });
+        }
+      }
+
+      console.log("custom menu", processed);
+      this.workingMenu = [...processed];
+    },
+
+    /**
+     * Saves the menu into local storage
+     */
+    cacheMenu(menu) {
+      const key = `uixpress_menu_${this.appStore.state.userID}`;
+      const item = {
+        value: menu,
+        timestamp: new Date().getTime(),
+      };
+      localStorage.setItem(key, JSON.stringify(item));
+    },
+
     async generateMenu() {
       const menuNode = document.querySelector("#adminmenumain");
       const { processedMenu, dashIcons } = await processMenu(menuNode);
-      this.workingMenu = processedMenu;
+      this.ogMenu = processedMenu;
       this.iconClasses = dashIcons;
       this.rendered = true;
+
+      console.log(this.workingMenu);
     },
     /**
      * Sets menu from settings object
@@ -1016,12 +1224,13 @@ export default {
 
 <template>
   <DrillDownMenu
-    v-if="subMenuStyle == 'dynamic' && rendered"
+    v-if="subMenuStyle == 'dynamic' && rendered && workingMenu.length"
     :menuItems="workingMenu"
     :maybeFollowLink="maybeFollowLink"
     :collapsed="collapsed"
     :block="block"
     :activeLink="activeLink"
+    :returnDashIconClasses="() => returnDashIconClasses"
     :returnCollapsed="
       (d) => {
         collapsed = d;
@@ -1067,10 +1276,10 @@ export default {
 
     <!--HOVER MENU-->
     <template v-if="subMenuStyle == 'hover' && !searching">
-      <template v-for="item in workingMenu">
+      <template v-for="(item, index) in workingMenu">
         <dropdown v-if="item.type != 'sep' && !itemHiden(item)" :pos="returnDropdownPosition" class="uip-flex uip-flex-column uip-row-gap-xs" :hover="true" :disableTeleport="true">
           <template v-slot:trigger>
-            <TopLevelItem v-model="workingMenu[item]" :maybeFollowLink="maybeFollowLink" :collapsed="collapsed" :block="block" />
+            <TopLevelItem v-model="workingMenu[index]" :maybeFollowLink="maybeFollowLink" :collapsed="collapsed" :block="block" />
           </template>
 
           <template v-if="item.submenu && item.submenu.length > 0" v-slot:content>

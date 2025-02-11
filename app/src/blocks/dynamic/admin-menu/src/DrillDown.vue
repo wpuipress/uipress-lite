@@ -15,6 +15,7 @@ export default {
     menuItems: Array,
     returnCollapsed: Function,
     activeLink: String,
+    returnDashIconClasses: Function,
   },
   watch: {
     isCollapsed: {
@@ -133,6 +134,8 @@ export default {
      */
     initializeMenu() {
       this.currentLevel = this.menuItems;
+      console.log(this.currentLevel);
+      console.log("whattttttt is good", this.menuItems);
     },
 
     /**
@@ -151,8 +154,9 @@ export default {
         evt.preventDefault();
         return;
       }
+
+      console.log("whatttt");
       this.maybeFollowLink(evt, item);
-      evt.preventDefault();
     },
 
     /**
@@ -235,6 +239,8 @@ export default {
 <template>
   <Transition name="translate" mode="out-in">
     <div :key="currentLevel" class="uip-admin-menu uip-text-normal" :class="{ 'uip-menu-collapsed': collapsed }">
+      <component is="style" id="tester">{{ returnDashIconClasses() }}</component>
+
       <MenuSearch
         v-if="showSearchBox"
         key="menusearch"
@@ -261,8 +267,8 @@ export default {
         </a>
 
         <!-- Loop through currentLevel and display each item -->
-        <template v-for="item of currentLevel">
-          <TopLevelItem v-if="item.type != 'sep'" :item="item" :maybeFollowLink="handleLinkClick" :collapsed="isCollapsed" :block="block" />
+        <template v-for="(item, index) of currentLevel">
+          <TopLevelItem v-if="item.type != 'sep'" v-model="currentLevel[index]" :maybeFollowLink="handleLinkClick" :collapsed="isCollapsed" :block="block" />
 
           <div v-else-if="!sepHasCustomName(item)" class="uip-margin-bottom-s uip-menu-separator" :class="returnItemClasses(item)"></div>
 

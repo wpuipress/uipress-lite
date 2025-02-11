@@ -282,7 +282,6 @@ const loadItemsFromIframe = () => {
   const iframeDoc = hiddenFrame.value.contentDocument || hiddenFrame.value.contentWindow.document;
   const menuNode = iframeDoc.querySelector("#wpadminbar");
 
-  console.log(menuNode);
   toolbarnode.value.replaceChildren();
 
   setToolbar(menuNode, true);
@@ -290,8 +289,6 @@ const loadItemsFromIframe = () => {
 
 const maybeReturnInnerHTML = computed(() => {
   if (!overrideHTML.value) return "";
-
-  console.log(overrideHTML.value.innerHTML);
 
   return overrideHTML.value.innerHTML;
 });
@@ -327,8 +324,6 @@ const stop = watchEffect(async () => {
       }
 
       const { returnIconOverrides: borrowedOverrides, menu: borrowedMenu, toolbarnode } = data;
-      console.log(borrowedOverrides.value);
-      console.log(toolbarnode.value);
 
       overrideStyles.value = borrowedOverrides.value;
       overrideHTML.value = toolbarnode.value;

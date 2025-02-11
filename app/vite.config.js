@@ -21,12 +21,14 @@ export default defineConfig({
   build: {
     cleanCssAndJsChunks: true,
     cssCodeSplit: false,
+    sourcemap: true,
     rollupOptions: {
       input: {
         // Specify the entry point you want to build
         builder: "src/apps/uip-builder.js",
         uipinterface: "src/apps/uip-interface.js",
         uipadminpage: "src/apps/uip-admin-page.js",
+        uipfrontend: "src/apps/uip-frontend.js",
       },
       output: {
         globals: {

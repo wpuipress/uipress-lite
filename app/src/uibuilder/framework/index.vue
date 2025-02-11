@@ -374,7 +374,7 @@ export default {
     </div>
   </Transition>
 
-  <component is="style"> #wpcontent{margin:0 !important;} #wpadminbar{display:none !important;} html.wp-toolbar{padding-top:0;} #adminmenumain{display:none} </component>
+  <component is="style"> #wpcontent{margin:0 !important;} #wpadminbar{display:none !important;} html.wp-toolbar{padding-top:0;} #adminmenumain{display:none} #uipress-body {z-index:1} </component>
 
   <div
     v-if="layoutFetched"

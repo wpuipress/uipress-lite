@@ -32,8 +32,24 @@ class AdminPage
    */
   public static function actions()
   {
-    // Get all admin pages applicable to user
-    $templates = UiTemplates::get_template_for_user("ui-admin-page", -1);
+    $user_id = get_current_user_id();
+    $cache_key = UipScripts::get_cache_key();
+    $cache_option_name = "uipress-cached-templates-{$user_id}";
+    $cached_pages = get_option($cache_option_name, false);
+
+    if ($cached_pages && isset($cached_pages["cache_key"]) && $cached_pages["cache_key"] === $cache_key) {
+      $templates = $cached_pages["templates"];
+    } else {
+      $templates = UiTemplates::get_template_for_user("ui-admin-page", -1);
+      $templates = self::process_pages($templates);
+
+      $cache_data = [
+        "cache_key" => $cache_key,
+        "templates" => $templates,
+      ];
+
+      update_option($cache_option_name, $cache_data);
+    }
 
     // No templates so exit
     if (!count($templates)) {
@@ -58,9 +74,7 @@ class AdminPage
    */
   private static function add_menu_pages($templates)
   {
-    $processed = self::process_pages($templates);
-
-    foreach ($processed as $uiPage) {
+    foreach ($templates as $uiPage) {
       $passData = $uiPage["passData"];
       $multisite = $passData->fromMainSite ? true : false;
 
@@ -104,6 +118,7 @@ class AdminPage
                 let icon = classItem.replace('dashicons-uip-icon-', '');
                 if(icon == 'uipblank'){icon = 'favorite'};
                 let iconPath = '{$iconPath}' + icon + '.svg';
+                item.classList.add('uipress-data-icon-' + icon);
                 item.classList.remove(classItem);
                 item.innerHTML = '<span class=\"uip-background-icon\" style=\"display: flex;align-items: center;justify-items: center;height: 100%;justify-content: center;margin-left:auto;margin-right:auto;mask:url(' + iconPath + ') center center / contain no-repeat\"></span>';
               }

@@ -67,6 +67,23 @@ export default {
     },
   },
   mounted() {
+    if (this.uiTemplate.settings) {
+      const { contentTheme, helpTab, pluginNotices, screenOptions } = this.uiTemplate.settings;
+      if (contentTheme !== false) {
+        document.documentElement.setAttribute("uip-admin-theme", true);
+      }
+      if (!helpTab) {
+        document.documentElement.setAttribute("uip-hide-help-tab", true);
+      }
+      if (!pluginNotices) {
+        document.documentElement.setAttribute("uip-hide-notices", true);
+      }
+      if (!screenOptions) {
+        document.documentElement.setAttribute("uip-hide-screen-options", true);
+      }
+    }
+    //helpTab,pluginNotices,screenOptions
+
     // Use iframe logic if in builder
     if (this.uiTemplate.display != "prod") {
       this.mountProductionFunctions();

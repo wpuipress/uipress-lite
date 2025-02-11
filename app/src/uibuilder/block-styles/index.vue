@@ -78,7 +78,7 @@ export default {
         const outerKey = outerKeys.find((item) => item.key === pseudo.key);
         if (outerKey) {
           const spacer = subSelector.startsWith('[data-theme="dark"]') ? `` : ` `;
-          outerStyles += pseudo.style.trim() ? `${outerKey.selector}${spacer}${subSelector} {  ${pseudo.style}  }` : "";
+          outerStyles += pseudo.style.trim() ? `:host-context(${outerKey.selector})${spacer}${subSelector},${outerKey.selector}${spacer}${subSelector} {  ${pseudo.style}  }` : "";
           continue;
         }
 

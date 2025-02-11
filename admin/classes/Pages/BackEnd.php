@@ -241,8 +241,8 @@ class BackEnd
    */
   private static function add_hooks()
   {
-    ToolBar::capture();
-    AdminMenu::capture();
+    //ToolBar::capture();
+    //AdminMenu::capture();
 
     add_action("admin_enqueue_scripts", ["UipressLite\Classes\Scripts\UipScripts", "add_translations"]);
     add_filter("admin_xml_ns", ["UipressLite\Classes\Pages\BackEnd", "add_dark_mode"]);
