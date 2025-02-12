@@ -55,6 +55,12 @@ Upload the UiPress plugin to your blog, activate it, and then navigate to the ui
 
 == Changelog ==
 
+= 3.5.00 =
+* Release Date 12 February 2025*
+
+* Refactored app to move away from iFrames which improves stability, speed and compatibility.
+* Added dynamic caching for menus, admin pages, templates and other areas drastically improving performance and reducing server resources.
+
 = 3.4.07 =
 * Release Date 17 July 2024*
 

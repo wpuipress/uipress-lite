@@ -44,22 +44,6 @@ strong {
   }
 }
 
-.search-box {
-  position: relative;
-  & > input[type="search"] {
-    padding-left: 30px;
-  }
-  &::before {
-    content: "\f179";
-    font-family: "dashicons";
-    color: var(--uip-text-color-muted);
-    left: 8px;
-    top: 50%;
-    transform: translateY(-50%);
-    position: absolute;
-  }
-}
-
 .page-title-action {
   float: right;
   margin-top: var(--uip-margin-xxs) !important;

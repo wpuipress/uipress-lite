@@ -260,9 +260,15 @@ class AdminPage
    */
   public static function load_uip_script($templateID)
   {
+    $script_name = UipScripts::get_base_script_path("uipadminpage");
+
+    if (!$script_name) {
+      return;
+    }
+
     wp_print_script_tag([
       "id" => "uip-adminpage-js",
-      "src" => uip_plugin_url . "app/dist/uipadminpage.build.js?template-id={$templateID}&template-type=ui-admin-page&ver=" . uip_plugin_version,
+      "src" => uip_plugin_url . "app/dist/{$script_name}?template-id={$templateID}&template-type=ui-admin-page",
       "type" => "module",
     ]);
   }

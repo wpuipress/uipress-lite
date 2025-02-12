@@ -37,7 +37,6 @@ export default {
      */
     returnTabs() {
       if (!this.block.content) return [];
-      console.log(this.block.content);
       return this.block.content.map((block) => block.name);
     },
 

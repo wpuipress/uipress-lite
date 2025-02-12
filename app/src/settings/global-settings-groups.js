@@ -16,17 +16,35 @@ export function processGlobalGroups(groups, options) {
   const processedGroups = { ...groups }; // create a copy to avoid mutating the original groups object
 
   for (let [key] of Object.entries(processedGroups)) {
-    const groupSettings = options.filter((option) => option.group === key);
+    const groupSettings = uniqueGroupSettings(options, key);
+
     const seenKeys = new Set(); // a set to ensure uniqueness
     processedGroups[key].settings = processedGroups[key].settings || [];
 
     for (let opt of groupSettings) {
       const uniqueKey = opt.group + opt.uniqueKey;
 
-      if (!seenKeys.has(uniqueKey)) {
-        processedGroups[key].settings.push(opt);
-        seenKeys.add(uniqueKey);
+      const exists = processedGroups[key].settings.find((item) => item.uniqueKey === opt.uniqueKey);
+
+      // Bail if already added
+      if (exists) {
+        continue;
       }
+
+      // Check if there is a pro version that should be added instead
+      const proVersion = options.find((item) => item.uniqueKey === opt.uniqueKey && !item.proOption);
+
+      if (proVersion) {
+        processedGroups[key].settings.push(proVersion);
+      } else {
+        processedGroups[key].settings.push(opt);
+      }
+
+      //else if (!opt.proOption) {
+      //const foundIndex = processedGroups[key].settings.findIndex((item) => item.uniqueKey === opt.uniqueKey);
+
+      //processedGroups[key].settings[foundIndex] = { ...processedGroups[key].settings[foundIndex], ...opt };
+      //}
     }
 
     processedGroups[key].settings.sort((a, b) => a.order - b.order);
@@ -44,6 +62,28 @@ export function processGlobalGroups(groups, options) {
 
   return reverseObject(processedGroups);
 }
+
+const uniqueGroupSettings = (options, key) => {
+  return options
+    .filter((option) => option.group === key)
+    .reduce((acc, current) => {
+      const existingItem = acc.find((item) => item.uniqueKey === current.uniqueKey);
+
+      if (!existingItem) {
+        // If item doesn't exist yet, add it
+        return [...acc, current];
+      }
+
+      // If current item doesn't have proOption but existing one does,
+      // replace the existing item
+      if (!current.proOption && existingItem.proOption) {
+        return acc.map((item) => (item.uniqueKey === current.uniqueKey ? current : item));
+      }
+
+      // Otherwise keep existing item
+      return acc;
+    }, []);
+};
 
 ///Groups
 export const globalSettingsGroups = {
@@ -370,38 +410,6 @@ export const globalSettings = [
     accepts: Boolean,
     proOption: true,
   },
-  {
-    component: "switch-select",
-    args: {
-      asText: true,
-      options: {
-        true: {
-          value: true,
-          label: __("Disabled", "uipress-lite"),
-        },
-        false: {
-          value: false,
-          label: __("Enabled", "uipress-lite"),
-        },
-      },
-    },
-    group: "advanced",
-    uniqueKey: "disableDynamicLoading",
-    label: __("Dynamic loading", "uipress-lite"),
-    help: __("If enabled, dynamic loading on templates will be disabled and every link will be loaded with a page refresh", "uipress-lite"),
-    accepts: Boolean,
-    order: 1,
-  },
-  {
-    component: "switch-select",
-    args: { asText: true },
-    group: "advanced",
-    uniqueKey: "exitFrameFront",
-    label: __("Load frontend outside frame", "uipress-lite"),
-    help: __("If enabled, all page links not inside the wordpress admin will be reloaded outside the frame", "uipress-lite"),
-    accepts: Boolean,
-    order: 1,
-  },
 
   {
     component: "array-list",
@@ -448,17 +456,6 @@ export const globalSettings = [
     uniqueKey: "uipDisabledFor",
     label: __("Disable uipress on pages", "uipress-lite"),
     help: __("Add URLs of pages here that you wish uiPress to be disabled on, separated by a comma. The URL can be an absolute URL, partial path or a query paramater.", "uipress-lite"),
-    accepts: String,
-  },
-
-  //Advanced
-  {
-    component: "uip-textarea",
-    args: { asText: true },
-    group: "advanced",
-    uniqueKey: "uipFullscreenFor",
-    label: __("Enter fullscreen on pages", "uipress-lite"),
-    help: __("Add URLs of pages here that you wish to be fullscreen when using a uiTemplate, separated by a comma. The URL can be an absolute URL, partial path or a query paramater.", "uipress-lite"),
     accepts: String,
   },
 

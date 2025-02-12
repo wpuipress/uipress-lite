@@ -21,6 +21,7 @@ export default {
           themeStyles: __("Theme styles"),
           revertStyle: __("Revert style back to default", "uipress-lite"),
           appliesTo: __("Applies to", "uipress-lite"),
+          applyToEveryone: __("Apply to everyone", "uipress-lite"),
           excludes: __("Excludes", "uipress-lite"),
           templateType: __("Template type", "uipress-lite"),
           uiTemplate: __("User template (admin theme)", "uipress-lite"),
@@ -113,6 +114,8 @@ export default {
     this.loading = false;
     setTimeout(this.mountHandlers, 100);
     this.setDefaults();
+
+    console.log("options", this.uipApp.data.options);
   },
   beforeUnmount() {
     document.removeEventListener("click", this.handleClickEvents);
@@ -383,6 +386,17 @@ export default {
                   "
                 ></toggle-switch>
               </template>
+
+              <!--Applies to-->
+              <div class="uip-text-muted uip-flex uip-flex-center uip-text-s uip-h-30 uip-gap-xs">
+                {{ ui.strings.applyToEveryone }}
+              </div>
+
+              <toggle-switch
+                :activeValue="uiTemplate.globalSettings.applyToEveryone"
+                :dontAccentActive="true"
+                :returnValue="(data) => (uiTemplate.globalSettings.applyToEveryone = data)"
+              ></toggle-switch>
 
               <!--Applies to-->
               <div class="uip-text-muted uip-flex uip-flex-center uip-text-s uip-h-30 uip-gap-xs">

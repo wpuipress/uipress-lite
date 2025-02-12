@@ -130,9 +130,15 @@ class FrontEnd
    */
   public static function load_uip_script()
   {
+    $script_name = UipScripts::get_base_script_path("uipfrontend");
+
+    if (!$script_name) {
+      return;
+    }
+
     wp_print_script_tag([
       "id" => "uip-frontend-js",
-      "src" => uip_plugin_url . "app/dist/uipfrontend.build.js?ver=" . uip_plugin_version,
+      "src" => uip_plugin_url . "app/dist/{$script_name}",
       "type" => "module",
     ]);
   }

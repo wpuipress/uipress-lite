@@ -9,5 +9,6 @@ export const registerSiteSettingsGroups = () => {
 
   let SiteSettingsGroups = wp.hooks.applyFilters("uipress.app.sitesettings.groups.register", {});
   let SiteSettingsOptions = wp.hooks.applyFilters("uipress.app.sitesettings.options.register", []);
+
   return processGlobalGroups(SiteSettingsGroups, SiteSettingsOptions);
 };

@@ -238,6 +238,8 @@ export default {
      */
     getNotifications() {
       const frame = document.querySelector(".uip-page-content-frame");
+
+      if (!frame) return;
       //Frame does not exist so abort
       let notifications;
 

@@ -341,8 +341,6 @@ export default {
       const parser = new DOMParser();
       const doc = parser.parseFromString(html, "text/html");
       this.rawHtml = doc.documentElement.outerHTML;
-
-      console.log("inline");
     },
 
     /**
@@ -1047,8 +1045,6 @@ export default {
         try {
           newHref = iframe.contentWindow.location.href;
         } catch (errr) {
-          //console.log("we caught the error");
-          //console.log(lastDispatched);
           //window.location.href = lastDispatched;
           return;
         }

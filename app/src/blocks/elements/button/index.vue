@@ -94,30 +94,6 @@ export default {
   },
   methods: {
     /**
-     * Follows a buttons link on click
-     *
-     * @param {Object} evt - Click event
-     * @since 3.2.13
-     */
-    followLink(evt) {
-      this.handleUserOnClick();
-      // If modifier clicks or linktype is new tab let the browser handler it
-      if (evt.ctrlKey || evt.shiftKey || evt.metaKey || (evt.button && evt.button == 1) || this.returnLinkType == "newTab") return;
-
-      evt.preventDefault();
-
-      const url = this.getLink;
-      const type = this.returnLinkType;
-
-      if (!url) return;
-
-      // Dynamic link so update frame
-      if (type == "dynamic") return this.updateAppPage(url);
-      // Default link so update browser window
-      if (type == "default") return window.location.replace(url);
-    },
-
-    /**
      * Builds on click code
      *
      * @since 3.2.13
@@ -133,15 +109,7 @@ export default {
 </script>
 
 <template>
-  <a
-    :href="getLink"
-    :target="returnTarget"
-    class="uip-button-default uip-flex uip-gap-xxs uip-flex-center uip-no-underline"
-    tabindex="0"
-    :class="returnClasses"
-    @click="followLink($event)"
-    ref="newTab"
-  >
+  <a :href="getLink" :target="returnTarget" class="uip-button-default uip-flex uip-gap-xxs uip-flex-center uip-no-underline" tabindex="0" :class="returnClasses" ref="newTab">
     <AppIcon :icon="returnIcon" class="uip-icon" v-if="returnIcon" />
     <span class="uip-flex-grow" v-if="returnText != ''">{{ returnText }}</span>
   </a>

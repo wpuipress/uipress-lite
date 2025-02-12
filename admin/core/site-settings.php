@@ -663,7 +663,6 @@ class uip_site_settings
       $message = $this->uip_site_settings_object->whiteLabel->hideWelcomeMessage;
       if ($message == "uiptrue") {
         $my_account = $admin_bar->get_node("my-account");
-        error_log(json_encode($admin_bar->get_nodes()));
         $parts = explode(",", $my_account->title);
         $current = $parts[0] . ",";
         $greeting = str_replace($current, "", $my_account->title);

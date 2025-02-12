@@ -134,8 +134,6 @@ export default {
      */
     initializeMenu() {
       this.currentLevel = this.menuItems;
-      console.log(this.currentLevel);
-      console.log("whattttttt is good", this.menuItems);
     },
 
     /**
@@ -155,7 +153,6 @@ export default {
         return;
       }
 
-      console.log("whatttt");
       this.maybeFollowLink(evt, item);
     },
 

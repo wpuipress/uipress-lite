@@ -32,9 +32,6 @@ export default {
       deep: true,
     },
   },
-  mounted() {
-    console.log(this.content);
-  },
   methods: {
     /**
      * Returns the drag class for the drop area

@@ -334,7 +334,6 @@ export default {
             break;
           // Notification condition
           case "notificationCount":
-            console.log(this.uipApp.data.options.dynamicData);
             tempValue = this.handleNumericalConditionLogic(this.uipApp.data.options.dynamicData.notificationCount.value, condition, true);
             metAnds.push(tempValue);
             break;

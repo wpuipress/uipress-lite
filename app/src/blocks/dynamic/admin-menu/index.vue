@@ -82,21 +82,16 @@ export default {
     },
 
     /**
-     * Watches for changes to static menu status
+     * Watches for changes to static menu id
      *
      * @since 3.3.0
      */
     hasStaticMenuEnabled: {
       handler() {
-        if (!this.hasStaticMenuEnabled) {
-          this.staticMenuEnabled = false;
-          this.setMenu();
-          this.buildMenu();
-        } else if (this.returnStaticMenuID) {
-          this.getStaticMenu();
+        if (!this.hasStaticMenuEnabled && this.uiTemplate.display !== "prod") {
+          this.getMenuForUser();
         }
       },
-      deep: true,
     },
 
     /**
@@ -106,10 +101,10 @@ export default {
      */
     returnStaticMenuID: {
       handler() {
-        if (!this.returnStaticMenuID || !this.hasStaticMenuEnabled) return;
-        this.getStaticMenu();
+        if (!this.returnStaticMenuID || !this.hasStaticMenuEnabled || this.uiTemplate.display == "prod") return;
+
+        this.setMenuFromStatic();
       },
-      immediate: true,
     },
   },
   created() {
@@ -351,6 +346,11 @@ export default {
       await this.generateMenu();
       setTimeout(this.generateMenu, 1000);
 
+      if (this.returnStaticMenuID && this.hasStaticMenuEnabled) {
+        this.setMenuFromStatic();
+        return;
+      }
+
       // Attempt to fetch menu from cache
       const cachedMenu = this.getMenuFromLocalStorage();
       if (Array.isArray(cachedMenu)) {
@@ -358,6 +358,7 @@ export default {
         //filterMenu();
         return;
       } else if (cachedMenu == "no_menus") {
+        this.workingMenu = [...this.ogMenu];
         return;
       }
 
@@ -367,6 +368,15 @@ export default {
     // Function to fetch array from localStorage, return null if expired
     getMenuFromLocalStorage() {
       const key = `uipress_menu_${this.appStore.state.userID}`;
+
+      // Invalidate the cache on menu creator page so it will refresh to any changes
+      const urlParams = new URLSearchParams(window.location.search);
+      const page = urlParams.get("page");
+      if (page === "uip-menu-creator") {
+        localStorage.setItem(key, false);
+        return null;
+      }
+
       const item = localStorage.getItem(key);
 
       if (!item) {
@@ -385,6 +395,29 @@ export default {
       return parsedItem.value;
     },
 
+    async setMenuFromStatic() {
+      // Ensure the original menu has been parsed before moving on
+      await this.generateMenu();
+
+      this.loading = false;
+
+      const args = { endpoint: `wp/v2/uip-admin-menu/${this.returnStaticMenuID}`, params: { status: "any" } };
+      const data = await lmnFetch(args);
+
+      this.loading = false;
+
+      if (!data) {
+        this.workingMenu = [...this.ogMenu];
+        return;
+      }
+
+      const menu_data = data.data?.uipress?.settings?.menu;
+
+      if (menu_data) {
+        this.refactorMenu(menu_data);
+      }
+    },
+
     async getRemoteMenus() {
       // Ensure the original menu has been parsed before moving on
       await this.generateMenu();
@@ -397,12 +430,11 @@ export default {
       this.loading = false;
 
       if (!data) {
+        this.workingMenu = [...this.ogMenu];
         return;
       }
 
       this.menus = data.data;
-
-      console.log("remote menus", this.menus);
 
       this.setActiveMenu();
     },
@@ -410,8 +442,8 @@ export default {
     setActiveMenu() {
       // No custom menus so bail
       if (!this.menus.length) {
-        //menu.value = [...OGmenu.value];
-        cacheMenu("no_menus");
+        this.workingMenu = [...this.ogMenu];
+        this.cacheMenu("no_menus");
         return;
       }
 
@@ -453,17 +485,15 @@ export default {
         if ((matchedUser || matchedRole) && !matchedExcludedUser && !matchedExcludedRole) {
           // Update menu
 
-          console.log("matched menu", remoteMenu.uipress.settings.menu);
           this.refactorMenu(remoteMenu.uipress.settings.menu);
           //menu.value = [...remoteMenu.uipress.settings.];
-          ///cacheMenu(remoteMenu.meta?.menu_items);
           //filterMenu();
           return;
         }
       }
       // Menus applied so set default
-      //menu.value = [...OGmenu.value];
-      //cacheMenu("no_menus");
+      this.workingMenu = [...this.ogMenu];
+      this.cacheMenu("no_menus");
     },
 
     refactorMenu(data) {
@@ -508,15 +538,15 @@ export default {
         }
       }
 
-      console.log("custom menu", processed);
       this.workingMenu = [...processed];
+      this.cacheMenu(processed);
     },
 
     /**
      * Saves the menu into local storage
      */
     cacheMenu(menu) {
-      const key = `uixpress_menu_${this.appStore.state.userID}`;
+      const key = `uipress_menu_${this.appStore.state.userID}`;
       const item = {
         value: menu,
         timestamp: new Date().getTime(),
@@ -530,8 +560,6 @@ export default {
       this.ogMenu = processedMenu;
       this.iconClasses = dashIcons;
       this.rendered = true;
-
-      console.log(this.workingMenu);
     },
     /**
      * Sets menu from settings object
@@ -750,8 +778,6 @@ export default {
       // Loop items
       menuItems.forEach(processMenuItems);
 
-      //console.log(stackedMenuItems);
-
       // First time setting the menu so need to compare
       if (!this.watchMenu.length) return (this.watchMenu = stackedMenuItems);
 
@@ -777,7 +803,6 @@ export default {
       const itemsExist = this.findExistingObjectsByUID(this.uipApp.data.adminMenu.menu, newItems);
 
       if (itemsExist.length === newItems.length) {
-        console.log("aborted all items already exist");
         return;
       }
 
@@ -801,8 +826,6 @@ export default {
       });
 
       if (!confirm) return;
-
-      console.log("added");
 
       // Push items to the menu
       this.pushNewItemsToServerMenu(newItems);
@@ -881,7 +904,6 @@ export default {
       const itemsExist = this.findExistingObjectsByUID(this.uipApp.data.adminMenu.menu, removedItems);
 
       if (!itemsExist.length) {
-        console.log("aborted");
         return;
       }
 
@@ -903,8 +925,6 @@ export default {
       });
 
       if (!confirm) return;
-
-      console.log("removed");
 
       // Push items to the menu
       this.removeItemsFromServerMenu(removedItems);

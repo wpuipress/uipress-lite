@@ -38,11 +38,6 @@ export default {
         },
       },
       linkModes: {
-        dynamic: {
-          value: "dynamic",
-          label: __("Dynamic", "uipress-lite"),
-          placeHolder: __("Dynamic links will load in the available content frame without page refresh. If none exists then it will perform a normal relead."),
-        },
         default: {
           value: "default",
           label: __("Default", "uipress-lite"),

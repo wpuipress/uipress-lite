@@ -148,6 +148,8 @@ class uip_app
    */
   private function should_we_exit()
   {
-    return wp_doing_cron() || wp_doing_ajax() || (defined("REST_REQUEST") && REST_REQUEST);
+    global $pagenow;
+
+    return $pagenow === "customize.php" || $pagenow === "site-editor.php" || wp_doing_cron() || wp_doing_ajax() || (defined("REST_REQUEST") && REST_REQUEST);
   }
 }

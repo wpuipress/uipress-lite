@@ -19,6 +19,7 @@ export default defineConfig({
     },
   },
   build: {
+    manifest: true,
     cleanCssAndJsChunks: true,
     cssCodeSplit: false,
     sourcemap: true,
@@ -51,7 +52,7 @@ export default defineConfig({
         // You can omit this placeholder if you want to use the default module format
         // For example, 'es' for ES module format and 'cjs' for CommonJS module format
 
-        entryFileNames: "[name].build.js",
+        entryFileNames: "[name].build.[hash].js",
         // Optionally specify the output directory (default is 'dist')
         dir: "dist/",
         assetFileNames: ({ name }) => {

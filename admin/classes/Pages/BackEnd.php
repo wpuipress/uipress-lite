@@ -48,7 +48,7 @@ class BackEnd
    */
   public static function should_uipress_run()
   {
-    if (isset($_GET["action"]) && sanitize_text_field($_GET["action"]) == "elementor") {
+    if (defined("uip_app_running") && uip_app_running === false) {
       return false;
     }
 
@@ -124,8 +124,6 @@ class BackEnd
         if (strpos($handle, "uip") !== false) {
           continue;
         }
-
-        error_log($handle);
 
         wp_dequeue_script($handle);
         wp_deregister_script($handle);
@@ -297,9 +295,15 @@ class BackEnd
    */
   public static function load_uip_script()
   {
+    $script_name = UipScripts::get_base_script_path("uipinterface");
+
+    if (!$script_name) {
+      return;
+    }
+
     wp_print_script_tag([
       "id" => "uip-interface-js",
-      "src" => uip_plugin_url . "app/dist/uipinterface.build.js?ver=" . uip_plugin_version,
+      "src" => uip_plugin_url . "app/dist/{$script_name}",
       "type" => "module",
     ]);
 

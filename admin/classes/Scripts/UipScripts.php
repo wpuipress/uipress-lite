@@ -108,12 +108,22 @@ class UipScripts
 
   public static function get_cache_key()
   {
+    $is_multisite = false;
+    if (is_multisite() && is_plugin_active_for_network(uip_plugin_path_name . "/uipress-lite.php") && !is_main_site()) {
+      $mainSiteId = get_main_site_id();
+      switch_to_blog($mainSiteId);
+    }
+
     // Cache key
     $cache_key = get_option("uipress-cache-key", false);
 
     if ($cache_key === false) {
       $cache_key = bin2hex(random_bytes(6));
       update_option("uipress-cache-key", $cache_key);
+    }
+
+    if ($is_multisite) {
+      restore_current_blog();
     }
 
     return $cache_key;
@@ -150,6 +160,17 @@ class UipScripts
     // Cache key
     $cache_key = self::get_cache_key();
 
+    $multiSiteActive = false;
+    if (is_multisite() && is_plugin_active_for_network(uip_plugin_path_name . "/uipress-lite.php") && !is_main_site()) {
+      $mainSiteId = get_main_site_id();
+      switch_to_blog($mainSiteId);
+      $multiSiteActive = true;
+      $rest_base = get_rest_url();
+      $rest_nonce = wp_create_nonce("wp_rest");
+      restore_current_blog();
+      error_log("switched");
+    }
+
     $scriptData = [
       "id" => "uip-app-data",
       "rest-base" => esc_url($rest_base),
@@ -180,10 +201,20 @@ class UipScripts
     wp_print_script_tag($scriptData);
 
     //Check if the main app is running, if it is then we don't need to re-add ajax and required script data
-    $variableFormatter = "
-      var ajaxHolder = document.getElementById('uip-app-data');
-      var ajaxData = ajaxHolder.getAttribute('uip_ajax');
-      const uip_ajax = JSON.parse(ajaxData, (k, v) => (v === 'uiptrue' ? true : v === 'uipfalse' ? false : v === 'uipblank' ? '' : v));";
+    $variableFormatter = '
+      var ajaxHolder = document.getElementById("uip-app-data");
+      var ajaxData = ajaxHolder.getAttribute("uip_ajax");
+      const uip_ajax = JSON.parse(ajaxData, (key, value) => {
+        if (value === "1" || value === "true" || value === 1) return true;
+        if (value === "0" || value === "false" || value === 0) return false;
+        if (typeof value === "string" && !isNaN(value) && value.trim() !== "") {
+          return Number(value);
+        }
+        if (value === "uiptrue") return true;
+        if (value === "uipfalse") return false;
+        if (value === "uipblank") return "";
+        return value;
+      });';
     wp_print_inline_script_tag($variableFormatter, ["id" => "uip-format-vars"]);
   }
 
@@ -253,5 +284,41 @@ class UipScripts
 
     // Output code
     echo Sanitize::clean_input_with_code($allStyles);
+  }
+
+  /**
+   * Get the path of the Vite-built base script.
+   *
+   * This function reads the Vite manifest file and finds the compiled filename
+   * for the 'uixpress.js' entry point. It uses WordPress file reading functions
+   * for better compatibility and security.
+   *
+   * @return string|null The filename of the compiled base script, or null if not found.
+   */
+  public static function get_base_script_path($filename)
+  {
+    $manifest_path = uip_plugin_path . "app/dist/.vite/manifest.json";
+
+    if (!file_exists($manifest_path)) {
+      return null;
+    }
+
+    $manifest_content = file_get_contents($manifest_path);
+    if ($manifest_content === false) {
+      return null;
+    }
+
+    $manifest = json_decode($manifest_content, true);
+    if (!is_array($manifest)) {
+      return null;
+    }
+
+    foreach ($manifest as $key => $value) {
+      if (isset($value["name"]) && $value["name"] === $filename) {
+        return $value["file"];
+      }
+    }
+
+    return null;
   }
 }

@@ -77,7 +77,6 @@ const fetchTemplate = async () => {
   const templateID = appStore.state.templateID;
 
   if (templateType === "ui-template") {
-    console.log("here?");
     const cachedTemplate = getCachedTemplate();
 
     if (cachedTemplate === "no_templates") return destroyApp();
@@ -127,18 +126,64 @@ const fetchUserInterface = async () => {
 
 const checkForActiveTemplate = (templates) => {
   const templateType = appStore.state.templateType;
+  const userRoles = appStore.state.userRoles;
 
   for (let template of templates) {
-    const appliesToRoles = template.uipress.forRoles;
-
+    // Bail if incorrect type
     if (template.uipress.type !== templateType) continue;
 
-    for (let role of appStore.state.userRoles) {
-      if (appliesToRoles.includes(role)) {
-        updateActiveTemplate(template);
-        cacheActiveTemplate(template);
-        return;
+    // Ensures ui templates have a page content available
+    if (templateType == "ui-template") {
+      const templateString = JSON.stringify(template.uipress.template);
+      if (!templateString.includes("uip-content") || !templateString.includes("uip-admin-menu-new")) continue;
+    }
+
+    // Set up roles and users
+    const includesRoles = template.uipress.forRoles || [];
+    const includesUsers = template.uipress.forUsers || [];
+    const excludedRoles = template.uipress.excludesRoles || [];
+    const excludedUsers = template.uipress.excludesUsers || [];
+
+    // Apply to everyone
+    const applyToEveryone = template.uipress?.settings?.applyToEveryone;
+
+    // Check if user is matched
+    const matchedUser = includesUsers.find((item) => item == appStore.state.userID);
+    // Check if user role matches
+    let matchedRole = false;
+    for (let role of userRoles) {
+      const match = includesRoles.find((item) => item == role);
+      if (match) {
+        matchedRole = true;
+        break;
       }
+    }
+
+    // Check if user is excluded
+    const matchedExcludedUser = excludedUsers.find((item) => item == appStore.state.userID);
+    // Check if user role matches
+    let matchedExcludedRole = false;
+    for (let role of userRoles) {
+      const match = excludedRoles.find((item) => item == role);
+      if (match) {
+        matchedExcludedRole = true;
+        break;
+      }
+    }
+
+    if (applyToEveryone === "uiptrue") {
+      // Matched template
+      updateActiveTemplate(template);
+      cacheActiveTemplate(template);
+      return;
+    }
+
+    // User is either matched by role or user id and not excluded by role or user id
+    else if ((matchedUser || matchedRole) && !matchedExcludedUser && !matchedExcludedRole) {
+      // Matched template
+      updateActiveTemplate(template);
+      cacheActiveTemplate(template);
+      return;
     }
   }
 
@@ -231,6 +276,8 @@ const updateActiveTemplate = (templateData) => {
 const destroyApp = () => {
   document.body.style.opacity = 1;
   document.documentElement.style.overflow = "auto";
+  document.documentElement.removeAttribute("uip-core-app");
+  document.documentElement.removeAttribute("uip-admin-theme");
   const appInterface = document.querySelector("#uip-ui-interface");
   if (appInterface) appInterface.remove();
 };
@@ -259,9 +306,7 @@ const toggleDarkMode = () => {
 };
 
 const getNotifications = () => {
-  const frame = document.querySelector(".uip-page-content-frame");
-  const searchDocument = frame ? frame.contentWindow.document : document;
-  const notifications = searchDocument.querySelectorAll(".notice:not(#message):not(.inline):not(.update-message),.wp-analytify-notification");
+  const notifications = document.querySelectorAll(".notice:not(#message):not(.inline):not(.update-message),.wp-analytify-notification");
 
   if (!notifications) return;
 
@@ -284,14 +329,12 @@ const getNotifications = () => {
 // Lifecycle hooks
 onMounted(() => {
   window.addEventListener("resize", handleWindowResize);
-  //document.addEventListener("uipress/app/page/load/finish", getNotifications);
-  //document.addEventListener("uipress/app/darkmode/toggle", toggleDarkMode);
+  getNotifications();
   initiateApp();
 });
 
 onBeforeUnmount(() => {
   window.removeEventListener("resize", handleWindowResize);
-  document.removeEventListener("uipress/app/page/load/finish", getNotifications);
   document.removeEventListener("uipress/app/darkmode/toggle", toggleDarkMode);
 });
 </script>

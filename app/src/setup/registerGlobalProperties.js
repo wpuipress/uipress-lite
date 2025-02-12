@@ -21,8 +21,6 @@ import {
  * @param {vueapp} app
  */
 export const registerGlobalProperties = (app) => {
-  console.log(uip_ajax);
-
   app.config.globalProperties.ensureNestedObject = ensureNestedObject;
   app.config.globalProperties.hasNestedPath = hasNestedPath;
   app.config.globalProperties.prepareJSON = prepareJSON;

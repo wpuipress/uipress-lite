@@ -15,8 +15,8 @@ export const buildDataStore = (app, mode) => {
   const AllBlocks = registerCoreBlocks();
   const AllDynamics = registerDynamicData();
   const AllThemeStyles = registerVariables();
-  const TemplateGroupOptions = registerTemplateGroupOptions();
-  const SiteSettingsGroups = registerSiteSettingsGroups();
+  const TemplateGroupOptions = mode == "builder" ? registerTemplateGroupOptions() : [];
+  const SiteSettingsGroups = mode == "builder" ? registerSiteSettingsGroups() : [];
   const blockGroups = registerBlockGroups();
 
   // Get menu
