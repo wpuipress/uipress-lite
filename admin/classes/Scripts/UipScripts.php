@@ -168,7 +168,6 @@ class UipScripts
       $rest_base = get_rest_url();
       $rest_nonce = wp_create_nonce("wp_rest");
       restore_current_blog();
-      error_log("switched");
     }
 
     $scriptData = [
