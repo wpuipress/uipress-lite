@@ -114,8 +114,6 @@ export default {
     this.loading = false;
     setTimeout(this.mountHandlers, 100);
     this.setDefaults();
-
-    console.log("options", this.uipApp.data.options);
   },
   beforeUnmount() {
     document.removeEventListener("click", this.handleClickEvents);

@@ -1,5 +1,13 @@
 == Changelog ==
 
+= 3.5.01 =
+* Release Date 17 February 2025*
+
+* Fixed issue where custom frontend toolbars could cause style conflicts on front of site.
+* Added fix for uipress templates being unable to find stylesheets (could cause whiteout)
+* Fixed layout issue on media page
+* Fixed issue with roles output that could cause a white out screen
+
 = 3.5.00 =
 * Release Date 12 February 2025*
 

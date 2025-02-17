@@ -15,6 +15,7 @@ export const setGlobalProperties = (appStore) => {
   const templateID = scriptTag.getAttribute("template-id");
   const pluginBase = scriptTag.getAttribute("plugin-base");
   const adminUrl = scriptTag.getAttribute("admin-url");
+  const siteURL = scriptTag.getAttribute("site-url");
   const userID = scriptTag.getAttribute("user-id");
   const username = scriptTag.getAttribute("user-name");
   let roles = scriptTag.getAttribute("user-roles");
@@ -28,6 +29,7 @@ export const setGlobalProperties = (appStore) => {
   appStore.updateState("cacheKey", cacheKey);
   appStore.updateState("pluginBase", pluginBase);
   appStore.updateState("adminUrl", adminUrl);
+  appStore.updateState("siteURL", siteURL);
   appStore.updateState("userID", userID);
   appStore.updateState("username", username);
   appStore.updateState("templateType", config.value.templateType || templateType);

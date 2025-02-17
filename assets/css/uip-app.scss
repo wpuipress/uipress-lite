@@ -3683,7 +3683,7 @@ body.uip-full-screen {
   }
 }
 
-body:not(.block-editor-page) {
+[uip-admin-theme="true"] body:not(.block-editor-page) {
   h1,
   h2,
   h3,

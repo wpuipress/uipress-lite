@@ -43,8 +43,8 @@ class UipScripts
   public static function add_uipress_styles()
   {
     if (is_rtl()) {
-      wp_register_style("uip-app-rtl", uip_plugin_url . "assets/css/uip-app-rtl.css", [], uip_plugin_version);
-      wp_enqueue_style("uip-app-rtl");
+      wp_register_style("uip-app", uip_plugin_url . "assets/css/uip-app-rtl.css", [], uip_plugin_version);
+      wp_enqueue_style("uip-app");
     } else {
       wp_register_style("uip-app", uip_plugin_url . "assets/css/uip-app.css", [], uip_plugin_version);
       wp_enqueue_style("uip-app");
@@ -151,11 +151,13 @@ class UipScripts
     $rest_nonce = wp_create_nonce("wp_rest");
     $base_url = plugins_url("uipress-lite/");
     $admin_url = get_admin_url();
+    $site_url = get_home_url();
 
     // Get the current user object
     $current_user = wp_get_current_user();
     $first_name = $current_user->first_name;
     $roles = (array) $current_user->roles;
+    $roles = array_values($roles);
 
     // Cache key
     $cache_key = self::get_cache_key();
@@ -178,6 +180,7 @@ class UipScripts
       "cache-key" => esc_attr($cache_key),
       "plugin-base" => esc_url($base_url),
       "admin-url" => esc_url($admin_url),
+      "site-url" => esc_url($site_url),
       "template-type" => esc_attr($template_type),
       "template-id" => esc_attr($template_id),
       "user-id" => esc_attr($current_user->ID),

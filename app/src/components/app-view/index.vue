@@ -52,8 +52,30 @@ const returnResponsiveClass = computed(() => {
   return "uip-phone-view";
 });
 
+/**
+ * Injects styles into shadow root
+ */
+const setStyles = () => {
+  let appStyleNode = document.querySelector("#uip-app-css");
+  if (!appStyleNode) {
+    appStyleNode = manuallyAddStyleSheet();
+    // Wait for stylesheet to load
+    appStyleNode.onload = () => {
+      const appStyles = appStyleNode.sheet;
+      for (const rule of appStyles.cssRules) {
+        adoptedStyleSheets.value.insertRule(rule.cssText);
+      }
+    };
+  } else {
+    const appStyles = appStyleNode.sheet;
+    for (const rule of appStyles.cssRules) {
+      adoptedStyleSheets.value.insertRule(rule.cssText);
+    }
+  }
+};
+
 // Methods
-const setStyles = async () => {
+const setStylesOld = async () => {
   let appStyleNode = document.querySelector("#uip-app-css");
   const appStyles = appStyleNode.sheet;
 
@@ -62,6 +84,14 @@ const setStyles = async () => {
   }
 };
 
+const manuallyAddStyleSheet = () => {
+  var link = document.createElement("link");
+  link.rel = "stylesheet";
+  link.href = `${appStore.state.siteURL}/wp-content/plugins/uipress-lite/assets/css/uip-app.css`;
+  document.head.appendChild(link);
+
+  return link;
+};
 const initiateApp = async () => {
   isLoading.value = true;
   await setStyles();

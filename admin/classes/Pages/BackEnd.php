@@ -307,7 +307,7 @@ class BackEnd
       "type" => "module",
     ]);
 
-    $app = "<style id='uipress-body-hider'>body{opacity: 0}</style>";
+    $app = "<style id='uipress-body-hider'>body{opacity: 0}html[uip-core-app=true]{padding-top: 0 !important}</style>";
 
     echo wp_kses_post($app);
   }
