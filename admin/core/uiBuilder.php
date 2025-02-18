@@ -507,6 +507,10 @@ class uip_ui_builder extends uip_app
     // Check security nonce and 'DOING_AJAX' global
     Ajax::check_referer();
 
+    // Update Cache key to invalidate local storage cached templates
+    $cache_key = bin2hex(random_bytes(6));
+    update_option("uipress-cache-key", $cache_key);
+
     $templateIDs = json_decode(stripslashes($_POST["templateids"]));
     $templateIDs = Sanitize::clean_input_with_code($templateIDs);
     $templateIDs = is_array($templateIDs) ? $templateIDs : [$templateIDs];
@@ -571,6 +575,10 @@ class uip_ui_builder extends uip_app
   {
     // Check security nonce and 'DOING_AJAX' global
     Ajax::check_referer();
+
+    // Update Cache key to invalidate local storage cached templates
+    $cache_key = bin2hex(random_bytes(6));
+    update_option("uipress-cache-key", $cache_key);
 
     // Sanitize and validate the ID
     $templateID = absint($_POST["id"]);

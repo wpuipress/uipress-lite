@@ -15,6 +15,12 @@ export const processSubmenu = (linknode) => {
 
   for (let li of submenuitems) {
     const sublink = li.querySelector(":scope > a");
+    const sublink_id = li.querySelector(":scope .uip-id-holder");
+
+    let original_id = "";
+    if (sublink_id) {
+      original_id = sublink_id.textContent.trim();
+    }
 
     // No sub link
     if (!sublink) continue;
@@ -39,7 +45,7 @@ export const processSubmenu = (linknode) => {
     const sub_id = sublink.getAttribute("id");
     const og_node = sublink;
 
-    submenu.push({ name: strippedName, url, target, active, id, notifications, sub_id, og_node });
+    submenu.push({ name: strippedName, url, target, active, id, notifications, sub_id, og_node, original_id });
   }
 
   return submenu;

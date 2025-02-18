@@ -42,6 +42,7 @@ class uip_app
     add_action("plugins_loaded", [$this, "start_uipress_app"], 1);
     add_filter("register_post_type_args", [$this, "ensure_rest_for_admin_menus"], 10, 2);
     add_filter("rest_api_init", [$this, "ensure_rest_fields_for_admin_menus"]);
+    add_action("admin_menu", [$this, "push_menu_ids_to_dom"], 999);
   }
 
   public static function ensure_rest_for_admin_menus($args, $post_type)
@@ -61,8 +62,12 @@ class uip_app
   {
     register_rest_field("uip-admin-menu", "uipress", [
       "get_callback" => function ($post) {
+        $settings = get_post_meta($post["id"], "uip_menu_settings", true);
+        $json_encoded = json_encode($settings);
+        $decoded = html_entity_decode($json_encoded, ENT_QUOTES | ENT_HTML5, "UTF-8");
+
         return [
-          "settings" => get_post_meta($post["id"], "uip_menu_settings", true),
+          "settings" => json_decode($decoded),
           "forRoles" => get_post_meta($post["id"], "uip-menu-for-roles", true),
           "forUsers" => get_post_meta($post["id"], "uip-menu-for-users", true),
           "excludesRoles" => get_post_meta($post["id"], "uip-menu-excludes-roles", true),
@@ -72,6 +77,62 @@ class uip_app
     ]);
   }
 
+  function push_menu_ids_to_dom()
+  {
+    global $menu, $submenu;
+
+    if (is_array($menu)) {
+      foreach ($menu as $priority => $item) {
+        if (!isset($item[5])) {
+          continue;
+        }
+
+        $current_title = $item[0];
+        $id = $item[5];
+        $id_holder = "<span style='display:none' class='uip-id-holder'>{$id}</span>";
+        $menu[$priority][0] = $current_title . $id_holder;
+      }
+    }
+
+    if (!is_array($submenu)) {
+      return;
+    }
+
+    // Loop through each submenu
+    foreach ($submenu as $parent_slug => $menu_items) {
+      foreach ($menu_items as $priority => $menu_item) {
+        $current_title = $submenu[$parent_slug][$priority][0];
+        $id = $submenu[$parent_slug][$priority][2];
+        $id_holder = "<span style='display:none' class='uip-id-holder'>{$id}</span>";
+        $submenu[$parent_slug][$priority][0] = $current_title . $id_holder;
+      }
+    }
+  }
+
+  private static function decode_settings_object($settings)
+  {
+    // If settings is a string (JSON)
+    if (is_string($settings)) {
+      $settings = json_decode($settings, true);
+    }
+
+    // Recursive function to decode all values in the array/object
+    function decode_array_values(&$array)
+    {
+      foreach ($array as &$value) {
+        if (is_array($value)) {
+          decode_array_values($value);
+        } elseif (is_string($value)) {
+          $value = html_entity_decode($value, ENT_QUOTES | ENT_HTML5, "UTF-8");
+        }
+      }
+    }
+
+    // Decode the settings
+    decode_array_values($settings);
+    return $settings;
+  }
+
   /**
    * Adds required actions and filters depending if we are on admin page, login page or uipress framed page
    *
@@ -79,13 +140,13 @@ class uip_app
    */
   public function start_uipress_app()
   {
+    // Define app constants
+    $this->define_constants();
+
     // Checks if the app should be running at all
     if ($this->should_we_exit()) {
       return;
     }
-
-    // Define app constants
-    $this->define_constants();
 
     // White list uiPress scripts / styles with other plugins
     UipScripts::whitelist_plugins();

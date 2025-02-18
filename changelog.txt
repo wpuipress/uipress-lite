@@ -1,5 +1,13 @@
 == Changelog ==
 
+= 3.5.02 =
+* Release Date 18 February 2025*
+
+* Fixed issue where top left menu would not display in the builder when no active template was set
+* Fixed issue where some links became missing from custom admin menus and or links could fail to work
+* Fixed issue that could cause a fatal with undefined constant
+* Fixed issue on multisite where all available roles were not showing in the role select.
+
 = 3.5.01 =
 * Release Date 17 February 2025*
 

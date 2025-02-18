@@ -358,7 +358,7 @@ export default {
   >
     <div class="uip-flex uip-flex-center uip-app-frame">
       <div class="uip-flex uip-gap-s uip-flex-center">
-        <dropdown pos="bottom left" ref="logomenu">
+        <dropdown pos="bottom left" ref="logomenu" :zIndex="99999999">
           <template v-slot:trigger>
             <div class="uip-flex uip-gap-xs uip-flex-center uip-link-default uip-border-rounder uip-background-muted uip-padding-xs uip-padding-top-xxs uip-padding-bottom-xxs">
               <div class="uip-logo uip-w-18 uip-ratio-1-1"></div>

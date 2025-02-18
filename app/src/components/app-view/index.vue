@@ -128,7 +128,7 @@ const fetchAdminPage = async () => {
   const templateID = appStore.state.templateID;
   const args = {
     endpoint: `wp/v2/uip-ui-template/${templateID}`,
-    params: { per_page: 1, status: "publish", context: "edit" },
+    params: { per_page: 1, status: "publish" },
   };
 
   const response = await lmnFetch(args);
@@ -141,7 +141,7 @@ const fetchAdminPage = async () => {
 const fetchUserInterface = async () => {
   const args = {
     endpoint: "wp/v2/uip-ui-template",
-    params: { per_page: 100, status: "publish", context: "edit" },
+    params: { per_page: 100, status: "publish" },
   };
 
   const response = await lmnFetch(args);
@@ -378,6 +378,7 @@ onBeforeUnmount(() => {
     :adopted-style-sheets="[adoptedStyleSheets]"
     ref="shadowMount"
     id="uipress-shadow-root"
+    class="uip-w-100p"
   >
     <div
       class="uip-h-100p uip-background-default uip-user-frame uip-body-font uip-teleport uip-flex overflow-hidden"

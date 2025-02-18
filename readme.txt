@@ -3,8 +3,8 @@ Contributors: uipress
 Tags: admin theme, custom dashboard, google analytics, woocommerce analytics, white label
 Requires at least: 6.0
 Requires PHP: 7.4
-Tested up to: 6.6
-Stable tag: 3.5.01
+Tested up to: 6.7
+Stable tag: 3.5.02
 License: GPLv2 or later
 
 Effortless custom WordPress admin dashboards.
@@ -54,6 +54,14 @@ Upload the UiPress plugin to your blog, activate it, and then navigate to the ui
 1, 2, 3: You're done!
 
 == Changelog ==
+
+= 3.5.02 =
+* Release Date 18 February 2025*
+
+* Fixed issue where top left menu would not display in the builder when no active template was set
+* Fixed issue where some links became missing from custom admin menus and or links could fail to work
+* Fixed issue that could cause a fatal with undefined constant
+* Fixed issue on multisite where all available roles were not showing in the role select.
 
 = 3.5.01 =
 * Release Date 17 February 2025*
@@ -148,17 +156,6 @@ Upload the UiPress plugin to your blog, activate it, and then navigate to the ui
 * Added enhanced block conditions
 * Fixed choice select update method
 * Added new dedicated licence manager to the site settings
-
-= 3.3.094 =
-*Release Date 28 November 2023*
-
-* Fixed issue with toolbars showing on subsites
-* Fixed issue with cap application on install
-* Fixed issue with paragraph input not updating input on block change
-* Fixed issue with adding admin pages as submenus of other admin pages
-* Added style fixes for: Wicked folders, Groundhogg, Gutenburg dark mode panels, Table text colours
-* Fixed input validation on paragraph input
-* Fixed media library blank screen bug
 
 
 For older changelog entries, please see https://uipress.co/uipresschangelog/

@@ -36,6 +36,14 @@ export const processMenu = async (menuNode) => {
     const image = item.querySelector(":scope .wp-menu-image");
     const image_as_icon = image ? image.querySelector(":scope img") : false;
 
+    let original_id = "";
+    if (linkNode) {
+      const sublink_id = linkNode.querySelector(":scope .uip-id-holder");
+      if (sublink_id) {
+        original_id = sublink_id.textContent.trim();
+      }
+    }
+
     // Probably a separator
     if (!linkNode) continue;
 
@@ -81,7 +89,7 @@ export const processMenu = async (menuNode) => {
     }
 
     // Push to menu
-    menuHolder.push({ url, target, name: strippedName, notifications, imageClasses: classes, iconStyles, submenu, active, id, settings });
+    menuHolder.push({ url, target, name: strippedName, notifications, imageClasses: classes, iconStyles, submenu, active, id, settings, original_id });
   }
 
   return { processedMenu: [...menuHolder], dashIcons: dashIconsList.value };

@@ -14,7 +14,7 @@ class AppOptions
    */
   public static function get_options()
   {
-    // gET MIME TYPES
+    // Get mime types
     $all_mimes = get_allowed_mime_types();
     $types = array_diff($all_mimes, []);
     $cleanTypes = [];

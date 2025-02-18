@@ -1,7 +1,7 @@
 <?php
 namespace UipressLite\Classes\Utils;
 
-!defined('ABSPATH') ? exit() : '';
+!defined("ABSPATH") ? exit() : "";
 
 class Users
 {
@@ -34,16 +34,16 @@ class Users
   private static function buildUserQueryArgs($searchterm, $page)
   {
     $args = [
-      'fields' => 'all',
-      'count_total' => true,
-      'number' => 10,
-      'paged' => $page,
+      "fields" => "all",
+      "count_total" => true,
+      "number" => 10,
+      "paged" => $page,
     ];
     if ($searchterm) {
-      $args['search'] = '*' . esc_attr(strtolower($searchterm)) . '*';
+      $args["search"] = "*" . esc_attr(strtolower($searchterm)) . "*";
     }
     if (is_main_site() && is_multisite()) {
-      $args['blog_id'] = 0;
+      $args["blog_id"] = 0;
     }
     return $args;
   }
@@ -64,16 +64,16 @@ class Users
 
     foreach ($usersQuery->get_results() as $user) {
       $formattedUsers[] = [
-        'name' => $user->display_name,
-        'label' => $user->display_name,
-        'type' => 'User',
-        'typeLocal' => __('User', 'uipress-lite'),
-        'icon' => 'person',
-        'id' => $user->ID,
+        "name" => $user->display_name,
+        "label" => $user->display_name,
+        "type" => "User",
+        "typeLocal" => __("User", "uipress-lite"),
+        "icon" => "person",
+        "id" => $user->ID,
       ];
     }
 
-    return ['users' => $formattedUsers, 'total' => $usersQuery->get_total()];
+    return ["users" => $formattedUsers, "total" => $usersQuery->get_total()];
   }
 
   /**
@@ -87,8 +87,8 @@ class Users
    */
   public static function get_roles($searchterm)
   {
-    $searcher = $searchterm ? strtolower($searchterm) : '';
-    $editableRoles = get_editable_roles();
+    $searcher = $searchterm ? strtolower($searchterm) : "";
+    $editableRoles = self::get_all_multisite_roles();
     $formattedRoles = [];
 
     foreach ($editableRoles as $role => $details) {
@@ -96,10 +96,40 @@ class Users
         $formattedRoles[] = self::buildRoleArray($role);
       }
     }
-    if (!$searcher || strpos(strtolower('Super Admin'), $searcher) !== false) {
-      $formattedRoles[] = self::buildRoleArray('Super Admin');
+    if (!$searcher || strpos(strtolower("Super Admin"), $searcher) !== false) {
+      $formattedRoles[] = self::buildRoleArray("Super Admin");
     }
     return $formattedRoles;
+  }
+
+  private static function get_all_multisite_roles()
+  {
+    // Check if multisite is enabled
+    if (!is_multisite()) {
+      return get_editable_roles();
+    }
+
+    $all_roles = [];
+
+    // Get all sites
+    $sites = get_sites(["fields" => "ids"]);
+
+    foreach ($sites as $site_id) {
+      switch_to_blog($site_id);
+
+      // Get roles for current site
+      $roles = get_editable_roles();
+
+      foreach ($roles as $role_key => $role) {
+        if (!isset($all_roles[$role_key])) {
+          $all_roles[$role_key] = $role;
+        }
+      }
+
+      restore_current_blog();
+    }
+
+    return $all_roles;
   }
 
   /**
@@ -114,11 +144,11 @@ class Users
   private static function buildRoleArray($roleName)
   {
     return [
-      'label' => $roleName,
-      'name' => $roleName,
-      'type' => 'Role',
-      'typeLocal' => __('Role', 'uipress-lite'),
-      'icon' => 'badge',
+      "label" => $roleName,
+      "name" => $roleName,
+      "type" => "Role",
+      "typeLocal" => __("Role", "uipress-lite"),
+      "icon" => "badge",
     ];
   }
 }

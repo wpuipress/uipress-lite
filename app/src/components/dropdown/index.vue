@@ -14,6 +14,7 @@ export default {
     shortCut: [Boolean, String, Array],
     hover: Boolean,
     disableTeleport: Boolean,
+    zIndex: { type: Number, default: 9 },
   },
   data() {
     return {
@@ -27,6 +28,7 @@ export default {
         top: "auto",
         bottom: "auto",
         opacity: 0,
+        "z-index": this.zIndex,
       },
     };
   },
@@ -122,6 +124,7 @@ export default {
         top: "auto",
         bottom: "auto",
         opacity: 0,
+        "z-index": this.zIndex,
       };
     },
     /**
@@ -313,7 +316,7 @@ export default {
         @mouseover="clearCloseTimeout()"
         @click.stop
         ref="uipdrop"
-        class="uip-z-index-9 uip-position-fixed uip-shadow uip-background-default uip-border-rounder uip-body-font uip-dropdown-container"
+        class="uip-position-fixed uip-shadow uip-background-default uip-border-rounder uip-body-font uip-dropdown-container"
         style="border-radius: calc(var(--uip-border-radius-large) + var(--uip-padding-xxs))"
         :style="position"
       >

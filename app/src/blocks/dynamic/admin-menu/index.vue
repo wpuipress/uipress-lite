@@ -524,17 +524,31 @@ export default {
           // Remove hidden items
           if (subItem?.custom?.hidden) continue;
 
+          //("menu-settings-options-general.php?page=uip-ui-builder");
+
           const subID = `${itemID}-${subItem[2]}`;
 
           const ogSubItem = flattenedMenu.find((subflat) => subflat.id == subID);
 
           if (ogSubItem) {
             processedSubMenu.push({ ...ogSubItem, settings: subItem.custom, submenu: [] });
+          } else {
+            const potentialMatch = flattenedMenu.find((subflat) => subflat.original_id == subItem[2]);
+
+            if (potentialMatch) {
+              processedSubMenu.push({ ...potentialMatch, settings: subItem.custom, submenu: [] });
+            }
           }
         }
 
         if (ogItem) {
           processed.push({ ...ogItem, settings: item.custom, submenu: processedSubMenu });
+        } else {
+          const potentialMatch = flattenedMenu.find((subflat) => subflat.original_id == item[5]);
+
+          if (potentialMatch) {
+            processed.push({ ...potentialMatch, settings: item.custom, submenu: processedSubMenu });
+          }
         }
       }
 
