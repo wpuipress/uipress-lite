@@ -196,7 +196,7 @@ class uip_app
    */
   private function define_constants()
   {
-    define("uip_plugin_url", plugins_url("uipress-lite/"));
+    //define("uip_plugin_url", plugins_url("uipress-lite/"));
   }
 
   /**

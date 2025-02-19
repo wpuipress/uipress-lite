@@ -12,6 +12,7 @@ use UipressLite\Classes\Scripts\UipScripts;
 
 class BackEnd
 {
+  private static $screen;
   /**
    * Starts actions required to handle back end app
    *
@@ -39,6 +40,18 @@ class BackEnd
     self::add_hooks();
     //add_action("admin_enqueue_scripts", ["UipressLite\Classes\Pages\BackEnd", "remove_scripts"], 100);
     //add_action("script_loader_tag", ["UipressLite\Classes\Pages\BackEnd", "add_type_attribute_to_admin_scripts"], 10, 3);
+  }
+
+  /**
+   * Returns whether we are on a mainwp page
+   *
+   */
+  private static function is_mainwp_page()
+  {
+    // Get screen
+    self::$screen = \get_current_screen();
+    error_log(json_encode(self::$screen));
+    return is_object(self::$screen) && isset(self::$screen->id) && strpos(self::$screen->id, "mainwp") !== false;
   }
 
   /**
@@ -295,6 +308,11 @@ class BackEnd
    */
   public static function load_uip_script()
   {
+    // Don't load on mainwp
+    if (self::is_mainwp_page()) {
+      return;
+    }
+
     $script_name = UipScripts::get_base_script_path("uipinterface");
 
     if (!$script_name) {

@@ -1,4 +1,5 @@
 <script>
+import { nextTick } from "vue";
 import { processMenu } from "./src/processMenu.js";
 import { lmnFetch } from "@/assets/js/functions/lmnFetch.js";
 const { __ } = wp.i18n;
@@ -67,6 +68,7 @@ export default {
       },
       deep: true,
     },
+
     /**
      * Watches for changes to the collapsed value and saves status
      *
@@ -355,7 +357,7 @@ export default {
       const cachedMenu = this.getMenuFromLocalStorage();
       if (Array.isArray(cachedMenu)) {
         this.workingMenu = cachedMenu;
-        //filterMenu();
+        this.setActiveItem();
         return;
       } else if (cachedMenu == "no_menus") {
         this.workingMenu = [...this.ogMenu];
@@ -554,6 +556,36 @@ export default {
 
       this.workingMenu = [...processed];
       this.cacheMenu(processed);
+      this.setActiveItem();
+    },
+
+    async setActiveItem() {
+      await nextTick();
+
+      let activeItem = document.querySelector("#adminmenu a.current") || document.querySelector("#adminmenu .wp-menu-open a") || document.querySelector("#adminmenu a[aria-current='page']");
+      let activeURL = "";
+
+      // Get active items URL
+      if (activeItem) {
+        if (activeItem.tagName && activeItem.tagName.toLowerCase() === "a") {
+          activeURL = activeItem.getAttribute("href");
+        }
+      }
+
+      this.workingMenu = this.workingMenu.map((item) => ({ ...item, active: item.url == activeURL }));
+
+      // Remove sub items that no longer exist
+      for (let toplevel of this.workingMenu) {
+        // Bail if it's a sep
+        if (toplevel.type == "separator" || !Array.isArray(toplevel.submenu)) continue;
+
+        toplevel.submenu = toplevel.submenu.map((item) => ({ ...item, active: activeURL == item.url }));
+        const activeItem = toplevel.submenu.find((item) => item.active);
+
+        if (activeItem) {
+          toplevel.active = true;
+        }
+      }
     },
 
     /**

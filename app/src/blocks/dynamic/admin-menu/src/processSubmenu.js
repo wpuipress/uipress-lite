@@ -17,6 +17,9 @@ export const processSubmenu = (linknode) => {
     const sublink = li.querySelector(":scope > a");
     const sublink_id = li.querySelector(":scope .uip-id-holder");
 
+    // If style is display none we probably shouldn't add it
+    if (li.style.display == "none") continue;
+
     let original_id = "";
     if (sublink_id) {
       original_id = sublink_id.textContent.trim();

@@ -612,6 +612,11 @@ class uip_ajax
     // Check security nonce and 'DOING_AJAX' global
     Ajax::check_referer();
 
+    // Ensure user is logged in
+    if (!is_user_logged_in()) {
+      Ajax::error(__("You must be logged in to submit this form", "uipress-lite"));
+    }
+
     $data = json_decode(stripslashes($_POST["formData"]));
     $data = Sanitize::clean_input_with_code($data);
 
@@ -621,6 +626,9 @@ class uip_ajax
     if (!$optionKey) {
       Ajax::error(__("Config error: No site option name supplied", "uipress-lite"));
     }
+
+    // Force prefix the option key with uip_form_
+    $optionKey = sanitize_key("uip_form_" . $optionKey);
 
     update_site_option($optionKey, $data);
 
@@ -750,6 +758,8 @@ class uip_ajax
         wp_send_json([]);
       }
 
+      // Force prefix the option key with uip_form_
+      $siteOptionName = sanitize_key("uip_form_" . $siteOptionName);
       $sitedata = get_site_option($siteOptionName);
 
       if (is_array($sitedata)) {

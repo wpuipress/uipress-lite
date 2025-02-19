@@ -4,7 +4,7 @@ Tags: admin theme, custom dashboard, google analytics, woocommerce analytics, wh
 Requires at least: 6.0
 Requires PHP: 7.4
 Tested up to: 6.7
-Stable tag: 3.5.02
+Stable tag: 3.5.03
 License: GPLv2 or later
 
 Effortless custom WordPress admin dashboards.
@@ -54,6 +54,15 @@ Upload the UiPress plugin to your blog, activate it, and then navigate to the ui
 1, 2, 3: You're done!
 
 == Changelog ==
+
+= 3.5.03 =
+* Release Date 19 February 2025*
+
+* Ammended form submission data (saving as site option) For data saved as a site option is now prepended with 'uip_form_' to prevent possible security breaches.
+* Fixed toolbar issue with fluentCRM
+* Fixed conflicts with mainwp in the menu and visually issues
+* Fixed a potential issue with content folders when loaded too early could cause a plugin conflict.
+* Fixed issue where when custom menus were active, the active menu item was never set
 
 = 3.5.02 =
 * Release Date 18 February 2025*

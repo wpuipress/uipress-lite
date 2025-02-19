@@ -435,7 +435,7 @@ export default {
       <uip-content-area
         :content="block.content"
         :returnData="
-          function (data) {
+          (data) => {
             block.content = data;
           }
         "
