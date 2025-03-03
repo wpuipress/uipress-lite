@@ -65,7 +65,7 @@ export default {
       let innerStyles = "";
       let outerStyles = "";
       let outerKeys = [
-        { key: ":menu-collapsed", selector: 'html[uip-menu-collapsed="true"]' },
+        { key: ":menu-collapsed", selector: '[uip-menu-collapsed="true"]' },
         { key: "tablet", selector: ".uip-tablet-view" },
         { key: "mobile", selector: ".uip-phone-view" },
       ];
@@ -78,7 +78,7 @@ export default {
         const outerKey = outerKeys.find((item) => item.key === pseudo.key);
         if (outerKey) {
           const spacer = subSelector.startsWith('[data-theme="dark"]') ? `` : ` `;
-          outerStyles += pseudo.style.trim() ? `:host-context(${outerKey.selector})${spacer}${subSelector},${outerKey.selector}${spacer}${subSelector} {  ${pseudo.style}  }` : "";
+          outerStyles += pseudo.style.trim() ? `${outerKey.selector}${spacer}${subSelector} {  ${pseudo.style}  }` : "";
           continue;
         }
 

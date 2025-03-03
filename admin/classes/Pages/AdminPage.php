@@ -32,6 +32,10 @@ class AdminPage
    */
   public static function actions()
   {
+    if (!is_admin() || !is_user_logged_in()) {
+      return;
+    }
+
     $user_id = get_current_user_id();
     $cache_key = UipScripts::get_cache_key();
     $cache_option_name = "uipress-cached-templates-{$user_id}";

@@ -333,7 +333,7 @@ export default {
       let classes = "";
       const advanced = this.get_block_option(block, "advanced", "classes");
       if (postID) classes += ` uip-query-id-${postID}`;
-      return (classes += advanced);
+      return `${classes || ""} ${advanced || ""}`;
     },
 
     /**

@@ -348,3 +348,42 @@ html[dir="rtl"] li#wp-admin-bar-fc_global_search .fc_search_container.fc_show {
   left: 0;
   right: auto;
 }
+
+body:not(.is-fullscreen-mode) .interface-interface-skeleton {
+  left: 0;
+  top: 0;
+  bottom: 0;
+  position: absolute;
+}
+
+.uip-id-holder {
+  display: none !important;
+}
+
+.acf-headerbar-field-editor {
+  top: 0;
+}
+
+[uip-core-app="true"] body.toplevel_page_gf_edit_forms .gforms_edit_form {
+  top: var(--uip-toolbar-height);
+}
+
+[uip-core-app="true"] body.toplevel_page_gf_edit_forms .editor-sidebar {
+  top: calc(var(--uip-toolbar-height) + 64px);
+  bottom: 0;
+  height: calc(100% - (var(--uip-toolbar-height) + 64px));
+}
+
+[uip-core-app="true"] body.toplevel_page_gf_edit_forms .sidebar {
+  max-height: 100%;
+  min-height: 100%;
+  overflow: auto;
+}
+
+[uip-core-app="true"] body.toplevel_page_gf_edit_forms .gform-form-toolbar {
+  width: calc(100% - var(--uip-menu-width));
+}
+
+[uip-core-app="true"] .form_editor_fields_container {
+  max-width: calc(100% - 695px);
+}

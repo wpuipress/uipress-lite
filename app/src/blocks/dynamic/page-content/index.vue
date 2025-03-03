@@ -13,6 +13,8 @@ export default {
   },
   data() {
     return {
+      adminBarHeight: 0,
+      adminMenuWidth: 0,
       frame: false,
       loading: false,
       fullScreen: false,
@@ -91,6 +93,7 @@ export default {
     } else {
       this.mounted = true;
       this.moveBodyContents();
+      document.addEventListener("uipress/app/window/fullscreen", this.toggleFullScreen);
     }
 
     this.initializeObservers();
@@ -129,11 +132,24 @@ export default {
   },
   computed: {
     returnBodyPosition() {
+      if (this.fullScreen) {
+        return {
+          top: 0,
+          left: 0,
+          right: 0,
+          height: 0,
+          width: "100dvw",
+          height: "100dvh",
+          //"z-index": 1,
+        };
+      }
+
       return {
         top: this.bodyPosition.top,
         left: this.bodyPosition.left,
         width: this.bodyPosition.width,
         height: this.bodyPosition.height,
+        //"z-index": 1,
       };
     },
 
@@ -243,6 +259,10 @@ export default {
       if (!this.$refs.bodyWrap) return;
 
       const rect = this.$refs.bodyWrap.getBoundingClientRect();
+
+      this.adminBarHeight = rect.top;
+      this.adminMenuWidth = rect.left;
+
       this.bodyPosition = {
         top: `${rect.top}px`,
         left: `${rect.left}px`,
@@ -283,10 +303,9 @@ export default {
     moveBodyContents() {
       // Get all child nodes of the body
       const bodyChildren = Array.from(document.body.children);
-
       const hidden = ["#wpfooter", "#adminmenumain", "#wpadminbar"];
 
-      // Hide unnesecary items
+      // Hide unnecessary items
       for (let hiderid of hidden) {
         const item = document.body.querySelector(hiderid);
         if (item) item.style.display = "none";
@@ -296,16 +315,13 @@ export default {
       const contentWrap = document.body.querySelector("#wpcontent");
       if (contentWrap) contentWrap.style.margin = 0;
 
-      // Iterate through each child
+      // Move WordPress content to the container (stays in light DOM)
       bodyChildren.forEach((child) => {
-        // Skip the targetNode itself if it's a direct child of body
-        if (child === this.$refs.bodyHolder) return;
+        // Skip the your Vue app elements and the container itself
+        if (child === this.$el || child.id === "uip-ui-interface" || child.id === "uip-teleport-target" || child.id === "wp-content-container") return;
 
-        // Skip the excluded element if an ID was provided
-        if (child.id === "uip-ui-interface") return;
-
-        // Move the child to the target node
-        this.$refs.bodyHolder.appendChild(child);
+        // Move the child to our light DOM container
+        this.$refs.bodyWrap.appendChild(child);
       });
     },
     /**
@@ -913,7 +929,7 @@ export default {
      * @since 3.2.13
      */
     isFullScreen() {
-      const container = this.$refs.frameContainer;
+      const container = this.$refs.frameContainer || document.documentElement;
       return container.classList.contains("uip-fullscreen-mode");
     },
 
@@ -936,8 +952,9 @@ export default {
      * @since 3.2.13
      */
     setFullScreen() {
-      const container = this.$refs.frameContainer;
-      container.classList.add("uip-fullscreen-mode", "uip-scale-in-bottom-right");
+      this.fullScreen = true;
+      const container = this.$refs.frameContainer || document.documentElement;
+      container.classList.add("uip-fullscreen-mode");
       document.addEventListener("keydown", this.handleEscapeFullScreen);
     },
 
@@ -947,8 +964,9 @@ export default {
      * @since 3.2.13
      */
     removeFullScreen() {
-      const container = this.$refs.frameContainer;
-      container.classList.remove("uip-fullscreen-mode", "uip-scale-in-bottom-right");
+      this.fullScreen = false;
+      const container = this.$refs.frameContainer || document.documentElement;
+      container.classList.remove("uip-fullscreen-mode");
       document.removeEventListener("keydown", this.handleEscapeFullScreen);
     },
 
@@ -1114,15 +1132,13 @@ export default {
 </script>
 
 <template>
-  <div
-    v-if="uiTemplate.display == 'prod'"
-    class="uip-flex uip-flex-column uip-overflow-hidden uip-content-frame uip-overflow-hidden uip-position-relative absolute wp-core-ui"
-    :class="returnClasses"
-    ref="bodyWrap"
-  >
-    <Teleport to="body">
-      <div class="" ref="bodyHolder" style="position: fixed; overflow: auto; scroll-behavior: smooth" id="uipress-body" :style="returnBodyPosition"></div>
-    </Teleport>
+  <div v-if="uiTemplate.display == 'prod'" class="uip-body uip-overflow-auto uip-position-relative uip-max-h-100p" ref="bodyWrap">
+    <component is="style">
+      html{
+      {{ `--uip-toolbar-height:${adminBarHeight}px;` }}
+      {{ `--uip-menu-width:${adminMenuWidth}px;` }}
+      } .uip-fullscreen-mode .uip-body { position: fixed; top: 0; left: 0; bottom: 0; width: 100vw; z-index: 9; } .uip-body > #wpwrap { position: absolute; }
+    </component>
   </div>
 
   <div
@@ -1144,6 +1160,8 @@ export default {
       :class="{ 'uip-no-select': uiTemplate.display != 'prod' && !uiTemplate.isPreview }"
       :src="returnStartPage"
     ></iframe>
+
+    <component is="style"> .uip-fullscreen-mode { position: fixed; top: 0; left: 0; bottom: 0; width: 100vw; z-index: 9; } </component>
 
     <div
       @mouseover="cornertickle = true"

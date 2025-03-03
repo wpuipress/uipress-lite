@@ -3494,15 +3494,6 @@ body.uip-full-screen {
   }
 }
 
-.uip-fullscreen-mode {
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  width: 100vw;
-  z-index: 9;
-}
-
 .IroSlider {
   //width: calc(200px - var(--uip-margin-xs) - var(--uip-margin-xs)) !important;
   margin-top: var(--uip-margin-xs) !important;
@@ -3605,9 +3596,6 @@ body.uip-full-screen {
     color: inherit;
     font-size: inherit !important;
     padding: 0;
-    width: auto;
-    height: auto;
-    vertical-align: middle;
   }
 }
 
@@ -3728,7 +3716,7 @@ html[uip-core-app="true"] {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 99999999;
+  z-index: 1;
 }
 
 @keyframes ghost-in {

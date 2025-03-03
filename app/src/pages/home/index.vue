@@ -258,7 +258,7 @@ if (window.parent) {
 }
 
 getTemplates();
-enqueueAdminBarStyles();
+//enqueueAdminBarStyles();
 </script>
 
 <template>

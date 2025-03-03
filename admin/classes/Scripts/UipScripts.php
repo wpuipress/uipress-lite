@@ -49,6 +49,59 @@ class UipScripts
       wp_register_style("uip-app", uip_plugin_url . "assets/css/uip-app.css", [], uip_plugin_version);
       wp_enqueue_style("uip-app");
     }
+
+    self::replace_admin_bar_styles_for_headless();
+    //wp_register_style("uipress-normalize", uip_plugin_url . "app/dist/assets/styles/style.css", [], uip_plugin_version);
+    //wp_enqueue_style("uipress-normalize");
+  }
+
+  /**
+   * Dequeue default admin bar styles and re-enqueue with custom handle
+   * for conditional removal in headless setup
+   */
+  private static function replace_admin_bar_styles_for_headless()
+  {
+    // Only proceed if admin bar is showing
+    if (!is_admin_bar_showing()) {
+      return;
+    }
+
+    // Get the original admin bar style URL
+    global $wp_styles, $wp_version;
+    $original_src = "";
+
+    if (isset($wp_styles->registered["admin-bar"])) {
+      // Store the original source URL
+      $original_src = $wp_styles->registered["admin-bar"]->src;
+      $original_deps = $wp_styles->registered["admin-bar"]->deps;
+      $original_ver = $wp_styles->registered["admin-bar"]->ver;
+
+      // Dequeue the original admin bar styles
+      wp_dequeue_style("admin-bar");
+      wp_deregister_style("admin-bar");
+
+      // Build the admin-bar styles URL
+      $url = admin_url("load-styles.php");
+
+      // Add query parameters
+      $query_params = [
+        "c" => 1,
+        "dir" => is_rtl() ? "rtl" : "ltr",
+        "load" => "admin-bar",
+      ];
+
+      // Combine URL and query parameters
+      $url = add_query_arg($query_params, $url);
+
+      wp_register_style("uipress-admin-bar", $url, [], $wp_version);
+      wp_enqueue_style("uipress-admin-bar");
+
+      // Re-register with custom handle
+      //wp_register_style("uipress-admin-bar", $original_src, $original_deps, $original_ver);
+
+      // Enqueue with the new handle
+      //wp_enqueue_style("uipress-admin-bar");
+    }
   }
 
   /**
@@ -112,6 +165,7 @@ class UipScripts
     if (is_multisite() && is_plugin_active_for_network(uip_plugin_path_name . "/uipress-lite.php") && !is_main_site()) {
       $mainSiteId = get_main_site_id();
       switch_to_blog($mainSiteId);
+      $is_multisite = true;
     }
 
     // Cache key
@@ -174,6 +228,7 @@ class UipScripts
 
     $scriptData = [
       "id" => "uip-app-data",
+      "multisitetest" => esc_attr($multiSiteActive),
       "rest-base" => esc_url($rest_base),
       "rest-nonce" => esc_attr($rest_nonce),
       "user-roles" => esc_attr(json_encode($roles)),
@@ -185,6 +240,7 @@ class UipScripts
       "template-id" => esc_attr($template_id),
       "user-id" => esc_attr($current_user->ID),
       "user-name" => esc_attr($current_user->user_name),
+      "site-id" => esc_attr(get_current_blog_id()),
       "uip_ajax" => wp_json_encode(
         [
           "ajax_url" => $ajaxURL,
@@ -272,12 +328,12 @@ class UipScripts
       if (!isset($value->darkValue) || !$value->darkValue || $value->darkValue == "uipblank") {
         continue;
       }
-      $darkStyles .= "{$key}:{$value->darkValue};";
+      $darkStyles .= "{$key}:{$value->darkValue} !important;";
     }
 
     $allStyles = "
 	html[data-theme='light']{{$lightStyles}}
-	html[data-theme='dark']{{$darkStyles}}
+	[data-theme='dark']{{$darkStyles}}
 	{$userCSS}
 	";
 
@@ -285,7 +341,7 @@ class UipScripts
     $allStyles = " <style id='uip-theme-styles'>{$cleaned}</style>";
 
     // Output code
-    echo Sanitize::clean_input_with_code($allStyles);
+    //echo Sanitize::clean_input_with_code($allStyles);
   }
 
   /**

@@ -49,8 +49,7 @@ class BackEnd
   private static function is_mainwp_page()
   {
     // Get screen
-    self::$screen = \get_current_screen();
-    error_log(json_encode(self::$screen));
+    self::$screen = get_current_screen();
     return is_object(self::$screen) && isset(self::$screen->id) && strpos(self::$screen->id, "mainwp") !== false;
   }
 

@@ -603,7 +603,7 @@ class uip_ajax
   }
 
   /**
-   * Processes data from a form and saves as a site option
+   * DEPRECIATED: Processes data from a form and saves as a site option
    *
    * @since 3.0.0
    */
@@ -617,24 +617,9 @@ class uip_ajax
       Ajax::error(__("You must be logged in to submit this form", "uipress-lite"));
     }
 
-    $data = json_decode(stripslashes($_POST["formData"]));
-    $data = Sanitize::clean_input_with_code($data);
-
-    $optionKey = sanitize_key($_POST["optionKey"]);
-
-    // No key so bail
-    if (!$optionKey) {
-      Ajax::error(__("Config error: No site option name supplied", "uipress-lite"));
-    }
-
-    // Force prefix the option key with uip_form_
-    $optionKey = sanitize_key("uip_form_" . $optionKey);
-
-    update_site_option($optionKey, $data);
-
-    $returndata = [];
-    $returndata["success"] = true;
-    wp_send_json($returndata);
+    // Discontinued feature to ensure security
+    Ajax::error(__("It's no longer possible to save form data as site options. Please contact your site admin.", "uipress-lite"));
+    return;
   }
 
   /**

@@ -101,7 +101,7 @@ const isBasicIcon = (str) => {
         :style="link.iconStyles"
       ></div>
 
-      <AppIcon v-else :icon="link.settings.icon" class="icon uip-menu-icon uip-icon" />
+      <AppIcon v-else :icon="link.settings.icon" class="icon uip-menu-icon uip-icon" style="min-width: 1.2em; min-height: 1.2em" />
     </template>
 
     <div v-if="!collapsed" class="uip-flex uip-gap-xs uip-flex-center">

@@ -14,6 +14,7 @@ export const setGlobalProperties = (appStore) => {
   const templateType = scriptTag.getAttribute("template-type");
   const templateID = scriptTag.getAttribute("template-id");
   const pluginBase = scriptTag.getAttribute("plugin-base");
+  const siteID = scriptTag.getAttribute("site-id");
   const adminUrl = scriptTag.getAttribute("admin-url");
   const siteURL = scriptTag.getAttribute("site-url");
   const userID = scriptTag.getAttribute("user-id");
@@ -32,6 +33,7 @@ export const setGlobalProperties = (appStore) => {
   appStore.updateState("siteURL", siteURL);
   appStore.updateState("userID", userID);
   appStore.updateState("username", username);
+  appStore.updateState("siteID", siteID);
   appStore.updateState("templateType", config.value.templateType || templateType);
   appStore.updateState("templateID", config.value.templateId || templateID);
   appStore.updateState("teleportPoint", "body");

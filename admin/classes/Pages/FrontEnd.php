@@ -105,7 +105,7 @@ class FrontEnd
     $outputter = function () {
       //$app = "<style>#wpadminbar{opacity:0}</style>";
 
-      echo "<style>#wpadminbar{opacity:0;transition:opacity 0.3s ease-in-out}</style>";
+      echo "<style id='uip-front-end-hider'>#wpadminbar{opacity:0;transition:opacity 0.3s ease-in-out}</style>";
 
       // Trigger pro actions
       do_action("uip_import_pro_front");

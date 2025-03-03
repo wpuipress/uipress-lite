@@ -272,7 +272,7 @@ const menuStyle = computed(() => {
 
 const initiate = () => {
   setTimeout(() => {
-    const menuNode = document.querySelector("#wpadminbar");
+    const menuNode = document.querySelector("#wpadminbar:not(.uip-admin-toolbar)");
     setToolbar(menuNode);
   }, 500);
 };
@@ -280,7 +280,7 @@ const initiate = () => {
 const loadItemsFromIframe = () => {
   return;
   const iframeDoc = hiddenFrame.value.contentDocument || hiddenFrame.value.contentWindow.document;
-  const menuNode = iframeDoc.querySelector("#wpadminbar");
+  const menuNode = iframeDoc.querySelector("#wpadminbar:not(.uip-admin-toolbar)");
 
   toolbarnode.value.replaceChildren();
 
@@ -294,7 +294,7 @@ const maybeReturnInnerHTML = computed(() => {
 });
 
 const buildProductionToolbar = (onlyClone) => {
-  const menuNode = document.querySelector("#wpadminbar");
+  const menuNode = document.querySelector("#wpadminbar:not(.uip-admin-toolbar)");
 
   setToolbar(menuNode, true);
 
@@ -351,6 +351,7 @@ if (uiTemplate.display == "prod") {
       <template v-for="item in returnMenuItems">
         {{ maybeReturnBeforeStyle(item) }}
       </template>
+      #wpadminbar #wp-toolbar{display:none !important}
     </component>
   </div>
 </template>

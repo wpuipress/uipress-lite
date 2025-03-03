@@ -56,31 +56,25 @@ const returnResponsiveClass = computed(() => {
  * Injects styles into shadow root
  */
 const setStyles = () => {
-  let appStyleNode = document.querySelector("#uip-app-css");
-  if (!appStyleNode) {
-    appStyleNode = manuallyAddStyleSheet();
-    // Wait for stylesheet to load
-    appStyleNode.onload = () => {
+  try {
+    let appStyleNode = document.querySelector("#uip-app-css");
+    if (!appStyleNode) {
+      appStyleNode = manuallyAddStyleSheet();
+      // Wait for stylesheet to load
+      appStyleNode.onload = () => {
+        const appStyles = appStyleNode.sheet;
+        for (const rule of appStyles.cssRules) {
+          adoptedStyleSheets.value.insertRule(rule.cssText);
+        }
+      };
+    } else {
       const appStyles = appStyleNode.sheet;
       for (const rule of appStyles.cssRules) {
         adoptedStyleSheets.value.insertRule(rule.cssText);
       }
-    };
-  } else {
-    const appStyles = appStyleNode.sheet;
-    for (const rule of appStyles.cssRules) {
-      adoptedStyleSheets.value.insertRule(rule.cssText);
     }
-  }
-};
-
-// Methods
-const setStylesOld = async () => {
-  let appStyleNode = document.querySelector("#uip-app-css");
-  const appStyles = appStyleNode.sheet;
-
-  for (const rule of appStyles.cssRules) {
-    adoptedStyleSheets.value.insertRule(rule.cssText);
+  } catch (err) {
+    destroyApp();
   }
 };
 
@@ -94,7 +88,7 @@ const manuallyAddStyleSheet = () => {
 };
 const initiateApp = async () => {
   isLoading.value = true;
-  await setStyles();
+  //await setStyles();
   await fetchTemplate();
 
   nextTick(() => {
@@ -132,6 +126,12 @@ const fetchAdminPage = async () => {
   };
 
   const response = await lmnFetch(args);
+
+  if (!response) {
+    destroyApp();
+    return;
+  }
+
   const templateData = response.data;
 
   if (!templateData) return;
@@ -145,6 +145,12 @@ const fetchUserInterface = async () => {
   };
 
   const response = await lmnFetch(args);
+
+  if (!response) {
+    destroyApp();
+    return;
+  }
+
   const templates = response.data;
 
   if (!templates.length) {
@@ -223,7 +229,7 @@ const checkForActiveTemplate = (templates) => {
 
 const getCachedTemplate = () => {
   try {
-    const cachedData = localStorage.getItem("uipress_templates");
+    const cachedData = localStorage.getItem(returnCacheKey.value);
     if (!cachedData) return null;
 
     const { template, cacheKey } = JSON.parse(cachedData);
@@ -232,7 +238,7 @@ const getCachedTemplate = () => {
       return template;
     }
 
-    localStorage.removeItem("uipress_templates");
+    localStorage.removeItem(returnCacheKey.value);
     return null;
   } catch (error) {
     console.error("Failed to retrieve cached template:", error);
@@ -253,7 +259,7 @@ const cacheActiveTemplate = (templateData) => {
   };
 
   try {
-    localStorage.setItem("uipress_templates", JSON.stringify(cacheData));
+    localStorage.setItem(returnCacheKey.value, JSON.stringify(cacheData));
     return true;
   } catch (error) {
     console.error("Failed to cache template:", error);
@@ -275,7 +281,7 @@ const cacheNoActiveTemplate = () => {
   };
 
   try {
-    localStorage.setItem("uipress_templates", JSON.stringify(cacheData));
+    localStorage.setItem(returnCacheKey.value, JSON.stringify(cacheData));
     return true;
   } catch (error) {
     console.error("Failed to cache template:", error);
@@ -292,6 +298,11 @@ const updateActiveTemplate = (templateData) => {
   }
 
   appStore.updateState("teleportPoint", teleportPoint.value);
+
+  if (templateType != "ui-admin-page") {
+    const adminBarStyles = document.querySelector("#uipress-admin-bar-css");
+    if (adminBarStyles) adminBarStyles.remove();
+  }
 
   template.value.settings = uipParseJson(JSON.stringify(templateData.uipress.settings));
   template.value.content = uipParseJson(JSON.stringify(templateData.uipress.template));
@@ -310,6 +321,12 @@ const destroyApp = () => {
   document.documentElement.removeAttribute("uip-admin-theme");
   const appInterface = document.querySelector("#uip-ui-interface");
   if (appInterface) appInterface.remove();
+
+  const appFrontInterface = document.querySelector("#uip-frontend-toolbar");
+  if (appFrontInterface) appFrontInterface.remove();
+
+  const appFrontStyles = document.querySelector("#uip-front-end-hider");
+  if (appFrontStyles) appFrontStyles.remove();
 };
 
 const handleWindowResize = () => {
@@ -356,6 +373,10 @@ const getNotifications = () => {
   uipApp.data.dynamicOptions.notificationCount.value = template.value.notifications.length;
 };
 
+const returnCacheKey = computed(() => {
+  return `uipress_templates_${appStore.state.userID}_${appStore.state.siteID}`;
+});
+
 // Lifecycle hooks
 onMounted(() => {
   window.addEventListener("resize", handleWindowResize);
@@ -370,37 +391,27 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <component is="style" v-if="!isLoading">#wpadminbar{opacity:1 !important}</component>
-
-  <component
-    :is="['ui-front-template', 'ui-template'].includes(appStore.state.templateType) ? ShadowRoot : 'div'"
-    tag="div"
-    :adopted-style-sheets="[adoptedStyleSheets]"
-    ref="shadowMount"
-    id="uipress-shadow-root"
-    class="uip-w-100p"
-  >
+  <div is="div" tag="div" :adopted-style-sheets="[adoptedStyleSheets]" ref="shadowMount" id="uipress-shadow-root" class="uip-w-100p uipress-normalize">
     <div
       class="uip-h-100p uip-background-default uip-user-frame uip-body-font uip-teleport uip-flex overflow-hidden"
       :class="appStore.state.templateType === 'ui-template' ? 'uip-w-vw' : 'uip-w-100p'"
     >
       <Notify />
 
-      <component is="style" scoped id="mycustomstyles">
-        html, #uip-admin-page, #uip-ui-interface {
+      <component is="style" v-if="!isLoading">#wpadminbar{opacity:1 !important}</component>
+
+      <component is="style" scoped id="uip-theme-styles">
+        html[data-theme='light'], html {
         <template v-for="(item, index) in returnThemeStyles">
           <template v-if="item.value && item.value != 'uipblank'">{{ index }}:{{ item.value }};</template>
         </template>
-        } [data-theme="dark"], .uip-dark-mode, #uip-admin-page .uip-dark-mode, #uip-ui-interface .uip-dark-mode {
+
+        } html[data-theme="dark"], .uip-dark-mode, #uip-admin-page .uip-dark-mode, #uip-ui-interface .uip-dark-mode {
         <template v-for="(item, index) in returnThemeStyles">
-          <template v-if="item.darkValue && item.darkValue != 'uipblank'"> {{ index }}:{{ item.darkValue }};</template>
+          <template v-if="item.darkValue && item.darkValue != 'uipblank'"> {{ index }}:{{ item.darkValue }} !important;</template>
         </template>
         }
         {{ returnTemplateCSS }}
-      </component>
-
-      <component is="script" scoped>
-        {{ returnTemplateJS }}
       </component>
 
       <component is="style"> .v-enter-active, .v-leave-active {transition: opacity 0.6s ease;} .v-enter-from, .v-leave-to {opacity: 0;} </component>
@@ -419,5 +430,5 @@ onBeforeUnmount(() => {
 
       <div ref="teleportPoint"></div>
     </div>
-  </component>
+  </div>
 </template>

@@ -42,6 +42,20 @@ export default {
       watchMenu: [],
       iconClasses: [],
       activeLink: "",
+      overrides: [
+        ["dashboard", "dashboard"],
+        ["admin-post", "keep"],
+        ["admin-media", "photo_library"],
+        ["admin-page", "description"],
+        ["admin-comments", "forum"],
+        ["admin-appearance", "palette"],
+        ["admin-plugins", "extension"],
+        ["admin-users", "group"],
+        ["admin-tools", "build"],
+        ["admin-settings", "tune"],
+        ["archive", "inventory"],
+        ["chart-bar", "equalizer"],
+      ],
       breadCrumbs: [{ name: __("Home", "uipress-lite"), url: this.uipApp.data.dynamicOptions.viewadmin.value }],
       searching: false,
       staticMenuEnabled: false,
@@ -80,6 +94,13 @@ export default {
         document.documentElement.setAttribute("uip-menu-collapsed", String(status));
         this.uiTemplate.menuCollapsed = status;
         this.saveUserPreference("menuCollapsed", status, false);
+
+        const uipShadowRoot = document.querySelector("#uipress-shadow-root");
+
+        if (uipShadowRoot) {
+          const topLevelApp = uipShadowRoot.shadowRoot.firstElementChild;
+          if (topLevelApp) topLevelApp.setAttribute("uip-menu-collapsed", String(status));
+        }
       },
     },
 
@@ -124,18 +145,20 @@ export default {
   },
   computed: {
     returnDashIconClasses() {
-      return (
-        this.returnIconOverrides +
-        this.iconClasses
-          .map((item) => {
-            if (item.before) {
-              if (item.before.includes("url(")) {
-                item.backGroundImage = item.before;
-                item.before = "";
-              }
+      const iconClasses = this.iconClasses
+        .map((item) => {
+          if (item.before) {
+            if (item.before.includes("url(")) {
+              item.backGroundImage = item.before;
+              item.before = "";
             }
+          }
 
-            return `
+          const shouldSkip = this.overrides.filter((classPair) => `.dashicons-${classPair[0]}` == item.class);
+
+          if (shouldSkip && shouldSkip.length) return;
+
+          return `
         ${item.class}:before {
           content: '${item.before || ""}';
           height: 1.2em;
@@ -152,29 +175,15 @@ export default {
           ${item.backGroundImage ? `filter: contrast(0.3);` : ""}
         }
         `;
-          })
-          .join("\n")
-      );
+        })
+        .join("\n");
+
+      return `${this.returnIconOverrides} ${iconClasses}`;
     },
     returnIconOverrides() {
-      const overrides = [
-        ["dashboard", "dashboard"],
-        ["admin-post", "keep"],
-        ["admin-media", "photo_library"],
-        ["admin-page", "description"],
-        ["admin-comments", "forum"],
-        ["admin-appearance", "palette"],
-        ["admin-plugins", "extension"],
-        ["admin-users", "group"],
-        ["admin-tools", "build"],
-        ["admin-settings", "tune"],
-        ["archive", "inventory"],
-        ["chart-bar", "equalizer"],
-      ];
-
       const base = this.appStore.state.pluginBase;
 
-      return overrides
+      return this.overrides
         .map(
           ([dashicon, icon]) => `
       .dashicons-${dashicon}:before {
@@ -369,7 +378,7 @@ export default {
 
     // Function to fetch array from localStorage, return null if expired
     getMenuFromLocalStorage() {
-      const key = `uipress_menu_${this.appStore.state.userID}`;
+      const key = `uipress_menu_${this.appStore.state.userID}_${this.appStore.state.userID}`;
 
       // Invalidate the cache on menu creator page so it will refresh to any changes
       const urlParams = new URLSearchParams(window.location.search);
@@ -514,7 +523,7 @@ export default {
           continue;
         }
 
-        const itemID = item[5];
+        const itemID = item[5] || item[2];
 
         const ogItem = flattenedMenu.find((flat) => flat.id == itemID);
 
@@ -525,8 +534,6 @@ export default {
         for (let subItem of itemSubmenu) {
           // Remove hidden items
           if (subItem?.custom?.hidden) continue;
-
-          //("menu-settings-options-general.php?page=uip-ui-builder");
 
           const subID = `${itemID}-${subItem[2]}`;
 
@@ -544,12 +551,12 @@ export default {
         }
 
         if (ogItem) {
-          processed.push({ ...ogItem, settings: item.custom, submenu: processedSubMenu });
+          processed.push({ ...item, ...ogItem, name: ogItem.name || item.cleanName, settings: item.custom, submenu: processedSubMenu });
         } else {
-          const potentialMatch = flattenedMenu.find((subflat) => subflat.original_id == item[5]);
+          const potentialMatch = flattenedMenu.find((subflat) => subflat.original_id == itemID);
 
           if (potentialMatch) {
-            processed.push({ ...potentialMatch, settings: item.custom, submenu: processedSubMenu });
+            processed.push({ ...item, ...potentialMatch, name: potentialMatch.name || item.cleanName, settings: item.custom, submenu: processedSubMenu });
           }
         }
       }
@@ -592,7 +599,7 @@ export default {
      * Saves the menu into local storage
      */
     cacheMenu(menu) {
-      const key = `uipress_menu_${this.appStore.state.userID}`;
+      const key = `uipress_menu_${this.appStore.state.userID}_${this.appStore.state.siteID}`;
       const item = {
         value: menu,
         timestamp: new Date().getTime(),
@@ -1306,7 +1313,7 @@ export default {
 
   <div v-else-if="rendered" class="uip-admin-menu uip-text-normal" :class="returnClasses">
     <Confirm ref="confirm" />
-    <component is="style" id="toaster">{{ returnDashIconClasses }}</component>
+    <component is="style">{{ returnDashIconClasses }}</component>
 
     <MenuSearch
       v-if="hasMenuSearch && !collapsed"
