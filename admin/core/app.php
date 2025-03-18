@@ -6,6 +6,7 @@ use UipressLite\Classes\Pages\FrontEnd;
 use UipressLite\Classes\Pages\BackEnd;
 use UipressLite\Classes\Pages\AdminPage;
 use UipressLite\Classes\Rest\ErrorLog;
+use UipressLite\Classes\Rest\MultisiteTemplateHandler;
 
 // Exit if accessed directly
 !defined("ABSPATH") ? exit() : "";
@@ -28,6 +29,7 @@ class uip_app
 
     // Start the error log rest endpoint
     new ErrorLog();
+    new MultisiteTemplateHandler();
   }
 
   /**

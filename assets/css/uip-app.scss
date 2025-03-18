@@ -187,7 +187,7 @@ html[uip-core-app="true"] {
   top: 0;
   left: 0;
   right: 0;
-  z-index: 999999;
+  z-index: 1;
 }
 /**
 * UTILITY CLASSES
@@ -3757,6 +3757,7 @@ html[uip-core-app="true"] {
 }
 
 @import "modules/wp-toolbar.scss";
+
 @import "modules/compatability.scss";
 //Import dark specific styles
 html[data-theme="dark"] {

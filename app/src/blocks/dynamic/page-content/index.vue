@@ -1132,7 +1132,7 @@ export default {
 </script>
 
 <template>
-  <div v-if="uiTemplate.display == 'prod'" class="uip-body uip-overflow-auto uip-position-relative uip-max-h-100p" ref="bodyWrap">
+  <div v-if="uiTemplate.display == 'prod'" class="uip-body uip-overflow-auto uip-position-relative uip-max-h-100p" ref="bodyWrap" style="overflow: auto !important">
     <component is="style">
       html{
       {{ `--uip-toolbar-height:${adminBarHeight}px;` }}

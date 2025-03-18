@@ -387,3 +387,19 @@ body:not(.is-fullscreen-mode) .interface-interface-skeleton {
 [uip-core-app="true"] .form_editor_fields_container {
   max-width: calc(100% - 695px);
 }
+
+[uip-admin-theme="true"] div.mce-toolbar-grp,
+[uip-admin-theme="true"] div.mce-menubar,
+.wp-editor-expand #wp-content-editor-tools {
+  position: relative !important;
+  top: 0 !important;
+}
+
+[uip-admin-theme="true"] div.mce-edit-area {
+  padding-top: 0 !important;
+}
+
+#wpadminbar .menupop li.hover > .ab-sub-wrapper,
+#wpadminbar .menupop li:hover > .ab-sub-wrapper {
+  margin-left: 0 !important;
+}

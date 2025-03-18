@@ -64,6 +64,16 @@ class AppOptions
     $operator = "and"; // 'and' or 'or'
     $taxonomies = get_taxonomies($args, $output, $operator);
 
+    // Get locally activated plugins
+    $active_plugins = get_option("active_plugins");
+
+    // Get network activated plugins (if in multisite)
+    $network_plugins = [];
+    if (is_multisite()) {
+      $network_plugins = get_site_option("active_sitewide_plugins");
+      $network_plugins = array_keys($network_plugins);
+    }
+
     $options["pluginURL"] = uip_plugin_url;
     $options["uipVersion"] = uip_plugin_version;
     $options["adminURL"] = $adminURL;
@@ -77,7 +87,7 @@ class AppOptions
     $options["networkActivated"] = is_plugin_active_for_network(uip_plugin_path_name . "/uipress-lite.php");
     $options["primarySite"] = is_main_site();
     $options["installedPlugins"] = $formattedPlugins;
-    $options["activePlugins"] = get_option("active_plugins");
+    $options["activePlugins"] = array_unique(array_merge($active_plugins, $network_plugins));
     $options["post_statuses"] = $formattedPostStatus;
     $options["block_preset_styles"] = UipOptions::get("block_preset_styles");
     $options["site_name"] = get_bloginfo("name");

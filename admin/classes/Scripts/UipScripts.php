@@ -51,6 +51,7 @@ class UipScripts
     }
 
     self::replace_admin_bar_styles_for_headless();
+
     //wp_register_style("uipress-normalize", uip_plugin_url . "app/dist/assets/styles/style.css", [], uip_plugin_version);
     //wp_enqueue_style("uipress-normalize");
   }
@@ -93,7 +94,7 @@ class UipScripts
       // Combine URL and query parameters
       $url = add_query_arg($query_params, $url);
 
-      wp_register_style("uipress-admin-bar", $url, [], $wp_version);
+      wp_register_style("uipress-admin-bar", $url, ["dashicons"], $wp_version);
       wp_enqueue_style("uipress-admin-bar");
 
       // Re-register with custom handle
@@ -163,8 +164,6 @@ class UipScripts
   {
     $is_multisite = false;
     if (is_multisite() && is_plugin_active_for_network(uip_plugin_path_name . "/uipress-lite.php") && !is_main_site()) {
-      $mainSiteId = get_main_site_id();
-      switch_to_blog($mainSiteId);
       $is_multisite = true;
     }
 
@@ -206,6 +205,7 @@ class UipScripts
     $base_url = plugins_url("uipress-lite/");
     $admin_url = get_admin_url();
     $site_url = get_home_url();
+    $is_admin = is_admin();
 
     // Get the current user object
     $current_user = wp_get_current_user();
@@ -217,13 +217,11 @@ class UipScripts
     $cache_key = self::get_cache_key();
 
     $multiSiteActive = false;
+
     if (is_multisite() && is_plugin_active_for_network(uip_plugin_path_name . "/uipress-lite.php") && !is_main_site()) {
       $mainSiteId = get_main_site_id();
       switch_to_blog($mainSiteId);
       $multiSiteActive = true;
-      $rest_base = get_rest_url();
-      $rest_nonce = wp_create_nonce("wp_rest");
-      restore_current_blog();
     }
 
     $scriptData = [
@@ -236,6 +234,7 @@ class UipScripts
       "plugin-base" => esc_url($base_url),
       "admin-url" => esc_url($admin_url),
       "site-url" => esc_url($site_url),
+      "is-admin" => esc_attr($is_admin),
       "template-type" => esc_attr($template_type),
       "template-id" => esc_attr($template_id),
       "user-id" => esc_attr($current_user->ID),

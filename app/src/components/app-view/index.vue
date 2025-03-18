@@ -88,6 +88,7 @@ const manuallyAddStyleSheet = () => {
 };
 const initiateApp = async () => {
   isLoading.value = true;
+
   //await setStyles();
   await fetchTemplate();
 

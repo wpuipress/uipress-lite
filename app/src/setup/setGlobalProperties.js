@@ -19,6 +19,7 @@ export const setGlobalProperties = (appStore) => {
   const siteURL = scriptTag.getAttribute("site-url");
   const userID = scriptTag.getAttribute("user-id");
   const username = scriptTag.getAttribute("user-name");
+  const isAdmin = scriptTag.getAttribute("is-admin");
   let roles = scriptTag.getAttribute("user-roles");
 
   roles = JSON.parse(roles);
@@ -34,6 +35,7 @@ export const setGlobalProperties = (appStore) => {
   appStore.updateState("userID", userID);
   appStore.updateState("username", username);
   appStore.updateState("siteID", siteID);
+  appStore.updateState("isAdmin", isAdmin == "1" ? true : false);
   appStore.updateState("templateType", config.value.templateType || templateType);
   appStore.updateState("templateID", config.value.templateId || templateID);
   appStore.updateState("teleportPoint", "body");

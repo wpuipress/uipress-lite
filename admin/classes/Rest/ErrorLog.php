@@ -67,6 +67,15 @@ class ErrorLog
   {
     $logdir = ini_get("error_log");
 
+    if (is_wp_error($logdir)) {
+      $error_string = $logdir->get_error_message();
+      // Log file does not exist
+      $returndata["error"] = true;
+      $returndata["message"] = __("Log file does not exist", "uipress-lite");
+      $returndata["description"] = $error_string;
+      return new \WP_Error("log_file_not_found", $returndata["message"], ["status" => 404]);
+    }
+
     // Check if error_log is set to a file path
     if (is_string($logdir) && !empty($logdir)) {
       // Check if the log file exists
