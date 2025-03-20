@@ -1,7 +1,7 @@
 == Changelog ==
 
 = 3.5.07 =
-* Release Date 18 March 2025*
+* Release Date * March 2025*
 
 * Fixed uncaught error on php error log viewer
 * Fixed issue on multisite that could cause blogs to switch to main site for new post links etc and other issues.
