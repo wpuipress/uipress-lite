@@ -215,11 +215,9 @@ class UipScripts
 
     // Cache key
     $cache_key = self::get_cache_key();
-    $multiSiteActive = false;
 
     $scriptData = [
       "id" => "uip-app-data",
-      "multisitetest" => esc_attr($multiSiteActive),
       "rest-base" => esc_url($rest_base),
       "rest-nonce" => esc_attr($rest_nonce),
       "user-roles" => esc_attr(json_encode($roles)),
