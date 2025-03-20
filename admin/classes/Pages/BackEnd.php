@@ -194,56 +194,6 @@ class BackEnd
   }
 
   /**
-   * Checks whether a template has the required blocks to run as a uiTemplate
-   *
-   * @param object $template - the template object
-   *
-   * @return boolean
-   * @since 3.2.13
-   */
-  private static function has_required_blocks($template)
-  {
-    $multiSiteActive = false;
-    if (is_multisite() && is_plugin_active_for_network(uip_plugin_path_name . "/uipress-lite.php") && !is_main_site()) {
-      switch_to_blog(get_main_site_id());
-      $multiSiteActive = true;
-    }
-
-    $templateContent = UiTemplates::get_content($template->ID);
-    $templateAsString = wp_json_encode($templateContent);
-
-    // Switch back to main blog if multisite
-    if ($multiSiteActive) {
-      restore_current_blog();
-    }
-
-    if (strpos($templateAsString, "uip-content") === false || (strpos($templateAsString, "uip-admin-menu") === false && strpos($templateAsString, "uip-content-navigator") === false)) {
-      return false;
-    }
-    return true;
-  }
-
-  /**
-   * Outputs a notice that the template does not contain the required blocks
-   *
-   * @return void
-   * @since 3.2.13
-   */
-  private static function output_missing_template_warning()
-  {
-    add_action("admin_head", function () {
-      $class = "notice notice-warning";
-      $title = __("Unable to load UiPress template", "uipress-lite");
-      $message = __(
-        "Current active template does not contain a page content block or a site navigation block such as an admin menu or content navigator. These are required to use a ui template",
-        "uipress-lite"
-      );
-
-      printf('<div class="%1$s"><h3 style="margin-bottom:5px;margin-top:10px;">%2$s</h3><p>%3$s</p></div>', esc_attr($class), esc_html($title), esc_html($message));
-    });
-  }
-
-  /**
    * Adds hooks for front end templates
    *
    * @return void

@@ -90,17 +90,6 @@ class FrontEnd
    */
   private static function output_template()
   {
-    $multiSiteActive = false;
-    if (is_multisite() && is_plugin_active_for_network(uip_plugin_path_name . "/uipress-lite.php") && !is_main_site()) {
-      switch_to_blog(get_main_site_id());
-      $multiSiteActive = true;
-    }
-
-    // Switch back to current blog
-    if ($multiSiteActive) {
-      restore_current_blog();
-    }
-
     // Create anonymous function so we can use the template string at runtime
     $outputter = function () {
       //$app = "<style>#wpadminbar{opacity:0}</style>";

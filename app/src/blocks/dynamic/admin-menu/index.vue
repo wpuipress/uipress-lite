@@ -541,6 +541,8 @@ export default {
 
           if (ogSubItem) {
             processedSubMenu.push({ ...ogSubItem, settings: subItem.custom, submenu: [] });
+          } else if (subItem.customItem) {
+            processed.push({ ...subItem, name: subItem.custom.name || subItem.cleanName, settings: subItem.custom, submenu: [] });
           } else {
             const potentialMatch = flattenedMenu.find((subflat) => subflat.original_id == subItem[2]);
 
@@ -552,6 +554,8 @@ export default {
 
         if (ogItem) {
           processed.push({ ...item, ...ogItem, name: ogItem.name || item.cleanName, settings: item.custom, submenu: processedSubMenu });
+        } else if (item.customItem) {
+          processed.push({ ...item, name: item.custom.name || item.cleanName, settings: item.custom, submenu: processedSubMenu });
         } else {
           const potentialMatch = flattenedMenu.find((subflat) => subflat.original_id == itemID);
 
@@ -625,51 +629,6 @@ export default {
       // Only set the menu if we are not using a static menu
       if (this.returnStaticMenuID && this.hasStaticMenuEnabled) return;
       this.menu = JSON.parse(JSON.stringify(this.uipApp.data.adminMenu.menu));
-    },
-
-    /**
-     * Fetches a custom static menu
-     *
-     * @returns {Promise}
-     */
-    async getStaticMenu() {
-      await this.$nextTick();
-      if (!this.returnStaticMenuID) return;
-
-      // Ensures it only fetches menu once in production
-      if (this.uiTemplate.display == "prod" && this.staticMenuEnabled) return;
-
-      this.rendered = false;
-
-      const isMultisite = this.uipApp.data.options.multisite && this.uipApp.data.options.networkActivated ? "uiptrue" : false;
-
-      let formData = new FormData();
-      formData.append("action", "uip_get_custom_static_menu");
-      formData.append("security", uip_ajax.security);
-      formData.append("menuid", this.returnStaticMenuID);
-      formData.append("isMultisite", isMultisite);
-
-      const response = await this.sendServerRequest(uip_ajax.ajax_url, formData);
-
-      const fallBack = () => {
-        this.menu = JSON.parse(JSON.stringify(this.uipApp.data.adminMenu.menu));
-        this.buildMenu();
-        this.rendered = true;
-      };
-
-      // Handle error
-      if (response.error) {
-        this.uipApp.notifications.notify(response.message, "", "error", true, false);
-        return fallBack();
-      }
-
-      if (!("data" in response)) return fallBack();
-      if (!Array.isArray(response.data.menu)) return fallBack();
-
-      this.menu = response.data.menu;
-      this.buildMenu();
-      this.staticMenuEnabled = true;
-      this.rendered = true;
     },
 
     /**

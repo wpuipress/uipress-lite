@@ -49,7 +49,6 @@ class uip_ajax
       "uip_send_message_to_gpt",
       "uip_global_export",
       "uip_global_import",
-      "uip_get_custom_static_menu",
       "uip_push_new_custom_menu_items",
       "uip_remove_custom_menu_items",
     ];
@@ -58,83 +57,6 @@ class uip_ajax
     foreach ($function_names as $name) {
       add_action("wp_ajax_{$name}", [$this, $name]);
     }
-  }
-
-  /**
-   * Returns a formatted menu for static menu option
-   *
-   * @since 3.3.0
-   */
-  public function uip_get_custom_static_menu()
-  {
-    // Check security nonce and 'DOING_AJAX' global
-    Ajax::check_referer();
-
-    $menuid = sanitize_text_field($_POST["menuid"]);
-    $isMultisite = sanitize_text_field($_POST["isMultisite"]);
-
-    // No menu id supplied
-    if (!$menuid || $menuid == "") {
-      $message = __("No menu to fetch", "uipress-lite");
-      Ajax::error($message);
-    }
-
-    // Fetch templates from primary multisite installation Multisite
-    if ($isMultisite == "uiptrue") {
-      $mainSiteId = get_main_site_id();
-      switch_to_blog($mainSiteId);
-    }
-
-    // Menu no longer exists
-    if (!get_post_status($menuid)) {
-      $message = __("Menu no longer exists", "uipress-lite");
-      Ajax::error($message);
-    }
-
-    $menuSettings = get_post_meta($menuid, "uip_menu_settings", true);
-
-    $customMenu = Objects::get_nested_property($menuSettings, ["menu", "menu"]);
-    if (!is_array($customMenu)) {
-      $message = __("No valid menu discovered", "uipress-lite");
-      Ajax::error($message);
-    }
-
-    $uip_master_menu = get_transient("uip-master-menu");
-    if (is_array($uip_master_menu)) {
-      $mastermenu = $uip_master_menu;
-    }
-
-    $mastermenu["menu"] = Objects::convertObjectsToArrays($menuSettings->menu->menu);
-    $mastermenu["submenu"] = $menuSettings->menu->submenu;
-    $mastermenu["custom"] = true;
-
-    if (!is_array($uip_master_menu)) {
-      global $menu, $submenu, $self, $parent_file, $submenu_file, $plugin_page, $typenow;
-      // Push unique IDs to the menus
-      $menu = AdminMenu::push_unique_ids($menu);
-      $submenu = AdminMenu::push_submenu_unique_ids($submenu);
-
-      $mergedMenu = array_merge($menu, (array) $submenu);
-
-      // Create menu object
-      $mastermenu["self"] = $self;
-      $mastermenu["parent_file"] = $parent_file;
-      $mastermenu["submenu_file"] = $submenu_file;
-      $mastermenu["plugin_page"] = $plugin_page;
-      $mastermenu["typenow"] = $typenow;
-      $mastermenu["mergedMenu"] = $mergedMenu;
-    }
-
-    do_action("admin_menu");
-
-    if ($isMultisite == "uiptrue") {
-      restore_current_blog();
-    }
-
-    $menu = AdminMenu::format_admin_menu($mastermenu);
-
-    $returnData["data"] = $menu;
-    wp_send_json($returnData);
   }
 
   /**

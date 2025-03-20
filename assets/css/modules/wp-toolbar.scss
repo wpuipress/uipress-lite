@@ -4,7 +4,8 @@
 }
 
 .hover > .ab-sub-wrapper,
-.fs_show.fs_summary_container {
+.fs_show.fs_summary_container,
+.menupop:hover > .ab-sub-wrapper {
   position: absolute;
   display: block;
   z-index: 99999;

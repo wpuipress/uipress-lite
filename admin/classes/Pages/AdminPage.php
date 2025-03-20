@@ -219,18 +219,8 @@ class AdminPage
    */
   private static function output_template($template, $multisite = false)
   {
-    // Switch to main blog before queries are made
-    if ($multisite) {
-      switch_to_blog(get_main_site_id());
-    }
-
     $templateObject = [];
     $templateObject["id"] = $template->ID;
-
-    // Switch back to current blog
-    if ($multisite) {
-      restore_current_blog();
-    }
 
     $app = "
       <style>#wpcontent{padding-left: 0;}#wpbody-content{padding-bottom:0px;}@media screen and (max-width: 782px) {.auto-fold #wpcontent { padding: 0 !important;}}</style>

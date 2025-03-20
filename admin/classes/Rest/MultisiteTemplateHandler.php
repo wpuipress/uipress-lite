@@ -23,6 +23,11 @@ class MultisiteTemplateHandler
   private static $main_site_id = null;
 
   /**
+   * Track main site ID
+   */
+  private static $current_site_id = null;
+
+  /**
    * Constructor - registers hooks
    */
   public function __construct()
@@ -32,11 +37,14 @@ class MultisiteTemplateHandler
       // Store main site ID
       self::$main_site_id = get_main_site_id();
 
+      // Store $current_site_id
+      self::$current_site_id = get_current_blog_id();
+
       // Hook before the query runs for REST requests
       add_filter("rest_pre_dispatch", [$this, "maybe_switch_to_main_site"], 10, 3);
 
       // Hook after the query runs to restore the site
-      add_filter("rest_after_dispatch", [$this, "maybe_restore_current_site"], 10, 3);
+      add_filter("rest_request_after_callbacks", [$this, "maybe_restore_current_site"], 10, 3);
     }
   }
 
@@ -75,7 +83,7 @@ class MultisiteTemplateHandler
   {
     // If we switched to the main site, restore the current site
     if (self::$switched) {
-      restore_current_blog();
+      switch_to_blog(self::$current_site_id);
       self::$switched = false;
     }
 

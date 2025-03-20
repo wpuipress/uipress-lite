@@ -48,6 +48,10 @@ class ErrorLog
 
     $logdir = self::get_log_directory();
 
+    if (is_wp_error($logdir)) {
+      return $logdir;
+    }
+
     $errors = self::prepare_errors($logdir, $per_page, "desc", $search, $page);
 
     // Set the response headers

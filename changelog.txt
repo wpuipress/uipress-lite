@@ -1,5 +1,13 @@
 == Changelog ==
 
+= 3.5.07 =
+* Release Date 18 March 2025*
+
+* Fixed uncaught error on php error log viewer
+* Fixed issue on multisite that could cause blogs to switch to main site for new post links etc and other issues.
+* Fixed issue with custom menus where custom menu items were not being added to the menu
+* Fixed issue where admin toolbar items wouldn't always show on hover
+
 = 3.5.06 =
 * Release Date 18 March 2025*
 
