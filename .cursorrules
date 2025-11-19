@@ -1,0 +1,182 @@
+# Cursor IDE Instructions
+
+## Tech Stack & Preferences
+
+### Frontend
+
+- **Vue.js 3** with Composition API
+- Always use `<script setup>` syntax
+- **Nuxt.js** for full-stack applications (except WordPress plugins)
+- **Tailwind CSS** for styling
+
+### Backend
+
+- **Node.js** for server-side JavaScript
+- **PHP** for WordPress plugins and legacy systems
+
+## Code Standards
+
+### Vue.js Guidelines
+
+- Use `<script setup>` syntax exclusively
+- Leverage Composition API patterns (`ref`, `reactive`, `computed`, `watch`, etc.)
+- Prefer `defineProps` and `defineEmits` for component communication
+- Use TypeScript when possible for better type safety
+- Structure components with clear separation: template, script, style
+- Set javascript functions as consts (eg: const doFunction = () => {})
+
+### Documentation Requirements
+
+- **All new functions must include docblocks**
+- Use JSDoc format for JavaScript/Node.js functions
+- Use PHPDoc format for PHP functions
+- Include parameter types, return types, and brief descriptions
+- Add usage examples for complex functions
+
+### Example Function Documentation
+
+#### JavaScript/Node.js
+
+```javascript
+/**
+ * Fetches user data from the API
+ * @param {string} userId - The unique identifier for the user
+ * @param {Object} options - Configuration options
+ * @param {boolean} options.includeProfile - Whether to include profile data
+ * @returns {Promise<Object>} User data object
+ * @throws {Error} When user is not found
+ * @example
+ * const user = await fetchUserData('123', { includeProfile: true });
+ */
+async function fetchUserData(userId, options = {}) {
+  // Implementation here
+}
+```
+
+#### PHP
+
+```php
+/**
+ * Validates and sanitizes user input data
+ *
+ * @param array $data The input data to validate
+ * @param array $rules Validation rules to apply
+ * @return array Sanitized and validated data
+ * @throws InvalidArgumentException When validation fails
+ * @since 1.0.0
+ * @example
+ * $clean_data = validate_user_input($_POST, ['email' => 'email', 'name' => 'string']);
+ */
+function validate_user_input($data, $rules) {
+    // Implementation here
+}
+```
+
+## Project Structure Preferences
+
+### Nuxt.js Projects
+
+- Follow Nuxt 3 directory structure
+- Use `pages/` for routing
+- Leverage `composables/` for reusable logic
+- Store API routes in `server/api/`
+- Utilize `middleware/` for route protection
+
+## Styling Guidelines
+
+- Use Tailwind utility classes
+- Always use the colour 'slate-x' for neutral backgrounds and borders
+- Design everything with dark mode supporting classes
+- Prefer responsive design patterns
+- Maintain consistent spacing using Tailwind's scale
+- Use semantic color names when defining custom colors
+- Follow mobile-first responsive approach
+
+## General Best Practices
+
+- Write clean, readable code with consistent formatting
+- Use meaningful variable and function names
+- Implement proper error handling
+- Add comments for complex business logic
+- Follow security best practices (sanitization, validation, escaping)
+- Optimize for performance when possible
+- Use modern ES6+ features appropriately
+- Important: When fixing bugs or adding new features, please add the changes or updates to the changelog: changelog.txt
+
+## When Suggesting Code
+
+- Always provide complete, working examples
+- Include imports/requires when necessary
+- Consider accessibility in UI components
+- Suggest performance optimizations when relevant
+- Mention any potential security considerations
+
+## UI Design Language
+
+### Design System: Modern Dark Minimalist
+
+**Core Principles:**
+
+- Dark-first design with zinc color palette (950-300 scale)
+- Content-focused with generous whitespace
+- Subtle, purposeful interactions
+- Professional and premium aesthetic
+- High contrast for accessibility
+
+**Color Palette:**
+
+- Background: `bg-zinc-950` (primary), `bg-zinc-900` (cards/surfaces)
+- Borders: `border-zinc-800/50` with transparency for depth
+- Text: White (primary), `text-zinc-400` (secondary), `text-zinc-500` (tertiary)
+- Interactive hover: `hover:bg-zinc-800`, `hover:border-zinc-700`
+- Opacity modifiers: `/50`, `/70` for layering
+
+**Typography:**
+
+- Headings: Large and bold (`text-4xl`-`text-5xl`, `font-bold`)
+- Body: `text-zinc-400` with `leading-relaxed`
+- Labels: `text-sm`, `font-medium`
+- Clear hierarchy with size and weight variations
+
+**Layout & Spacing:**
+
+- Centered content: `max-w-4xl mx-auto`
+- Consistent padding: `px-6 lg:px-8`, `py-16 md:py-24`
+- Vertical rhythm: `space-y-6`, `space-y-8`
+- Responsive breakpoints: md, lg
+
+**Components:**
+
+- Rounded corners: `rounded-xl` (cards), `rounded-lg` (buttons)
+- Cards: `bg-zinc-900/50` with subtle borders and hover states
+- Buttons: `bg-zinc-800` with hover lift effects
+- Loading states: Spinner animations with zinc colors
+
+**Interactions:**
+
+- All transitions: `transition-all duration-200`
+- Hover states: Color shifts + micro-animations (translate-x-1)
+- Group hover: Parent-child coordinated effects
+- Disabled states: `disabled:opacity-50 disabled:cursor-not-allowed`
+
+**Visual Effects:**
+
+- Grayscale images with low opacity (`opacity-20 grayscale`)
+- Gradient overlays: `bg-gradient-to-br from-zinc-800 to-zinc-900`
+- Subtle shadows on featured content
+- Background patterns at low opacity for texture
+
+**Do:**
+
+- Use zinc palette exclusively for neutrals
+- Maintain 50/70 opacity for layering depth
+- Add smooth transitions to all interactive elements
+- Use group-hover for coordinated animations
+- Keep borders subtle with transparency
+
+**Don't:**
+
+- Mix other neutral palettes (slate, gray, stone)
+- Use sharp transitions or jarring animations
+- Overcomplicate with too many colors
+- Forget disabled/loading states

@@ -50,8 +50,10 @@ class BlockQuery
     foreach ($foundPosts as $item) {
       // Update users lists
       if ($query->type == "user") {
-        $allUsers[] = $item->data;
-        $item = $item->data;
+        // Sanitize user data to remove sensitive fields
+        $userData = self::sanitize_user_data($item->data);
+        $allUsers[] = $userData;
+        $item = $userData;
       }
 
       // Update sites list
@@ -425,5 +427,34 @@ class BlockQuery
       "order" => "DESC",
       "orderBy" => "date",
     ];
+  }
+
+  /**
+   * Sanitizes user data to remove sensitive fields
+   *
+   * @param object $userData - The user data object
+   * @return object Sanitized user data without sensitive fields
+   * @since 3.5.09
+   */
+  private static function sanitize_user_data($userData)
+  {
+    // Convert to array for easier manipulation
+    $sanitized = (array) $userData;
+
+    // Remove sensitive fields that should never be exposed
+    $sensitiveFields = [
+      "user_pass",
+      "user_activation_key",
+      "user_status",
+    ];
+
+    foreach ($sensitiveFields as $field) {
+      if (isset($sanitized[$field])) {
+        unset($sanitized[$field]);
+      }
+    }
+
+    // Convert back to object
+    return (object) $sanitized;
   }
 }

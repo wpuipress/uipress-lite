@@ -69,6 +69,11 @@ class uip_ajax
     // Check security nonce and 'DOING_AJAX' global
     Ajax::check_referer();
 
+    // Check user has permission to manage options
+    if (!current_user_can("manage_options")) {
+      Ajax::error(__("You do not have permission to perform this action", "uipress-lite"));
+    }
+
     $menuItems = json_decode(stripslashes($_POST["new_items"]));
     $menuItems = Sanitize::clean_input_with_code($menuItems);
     $menuid = sanitize_text_field($_POST["menu_id"]);
@@ -106,6 +111,11 @@ class uip_ajax
   {
     // Check security nonce and 'DOING_AJAX' global
     Ajax::check_referer();
+
+    // Check user has permission to manage options
+    if (!current_user_can("manage_options")) {
+      Ajax::error(__("You do not have permission to perform this action", "uipress-lite"));
+    }
 
     $menuItems = json_decode(stripslashes($_POST["new_items"]));
     $menuItems = Sanitize::clean_input_with_code($menuItems);
@@ -154,6 +164,11 @@ class uip_ajax
     // Check security nonce and 'DOING_AJAX' global
     Ajax::check_referer();
 
+    // Check user has permission to manage options
+    if (!current_user_can("manage_options")) {
+      Ajax::error(__("You do not have permission to perform this action", "uipress-lite"));
+    }
+
     $options = json_decode(stripslashes($_POST["options"]));
     $options = Sanitize::clean_input_with_code($options);
 
@@ -184,6 +199,11 @@ class uip_ajax
     // Check security nonce and 'DOING_AJAX' global
     Ajax::check_referer();
 
+    // Check user has permission to manage options
+    if (!current_user_can("manage_options")) {
+      Ajax::error(__("You do not have permission to perform this action", "uipress-lite"));
+    }
+
     // Get new key
     $options = UipOptions::get("remote-sync");
     $options["key"] = uniqid("uip-", true);
@@ -206,6 +226,11 @@ class uip_ajax
   {
     // Check security nonce and 'DOING_AJAX' global
     Ajax::check_referer();
+
+    // Check user has permission to manage options
+    if (!current_user_can("manage_options")) {
+      Ajax::error(__("You do not have permission to perform this action", "uipress-lite"));
+    }
 
     $options = json_decode(stripslashes($_POST["options"]));
     $options = Sanitize::clean_input_with_code($options);
@@ -241,6 +266,11 @@ class uip_ajax
     // Check security nonce and 'DOING_AJAX' global
     Ajax::check_referer();
 
+    // Check user has permission to manage options
+    if (!current_user_can("manage_options")) {
+      Ajax::error(__("You do not have permission to perform this action", "uipress-lite"));
+    }
+
     $options = UipOptions::get("remote-sync");
 
     if (!$options || !is_array($options)) {
@@ -267,6 +297,11 @@ class uip_ajax
   {
     // Check security nonce and 'DOING_AJAX' global
     Ajax::check_referer();
+
+    // Check user has permission to manage options
+    if (!current_user_can("manage_options")) {
+      Ajax::error(__("You do not have permission to perform this action", "uipress-lite"));
+    }
 
     $content = json_decode(stripslashes($_POST["content"]));
     $content = Sanitize::clean_input_with_code($content);
@@ -309,6 +344,11 @@ class uip_ajax
     // Check security nonce and 'DOING_AJAX' global
     Ajax::check_referer();
 
+    // Check user has permission to manage options
+    if (!current_user_can("manage_options")) {
+      Ajax::error(__("You do not have permission to perform this action", "uipress-lite"));
+    }
+
     $options = json_decode(stripslashes($_POST["options"]));
     $options = Sanitize::clean_input_with_code($options);
 
@@ -337,6 +377,11 @@ class uip_ajax
   {
     // Check security nonce and 'DOING_AJAX' global
     Ajax::check_referer();
+
+    // Check user has permission to manage options
+    if (!current_user_can("manage_options")) {
+      Ajax::error(__("You do not have permission to perform this action", "uipress-lite"));
+    }
 
     $messages = json_decode(stripslashes($_POST["messages"]));
     $messages = Sanitize::clean_input_with_code($messages);
@@ -398,6 +443,11 @@ class uip_ajax
     // Check security nonce and 'DOING_AJAX' global
     Ajax::check_referer();
 
+    // Check user has permission to manage options
+    if (!current_user_can("manage_options")) {
+      Ajax::error(__("You do not have permission to perform this action", "uipress-lite"));
+    }
+
     $option = json_decode(stripslashes($_POST["option"]));
     $option = Sanitize::clean_input_with_code($option);
     $optionName = sanitize_text_field($_POST["optionName"]);
@@ -433,6 +483,11 @@ class uip_ajax
       Ajax::error(__("Corrupt query. Unable to loop posts", "uipress-lite"));
     }
 
+    // Check user has permission to query users (prevents sensitive data exposure)
+    if (isset($query->type) && $query->type == "user" && !current_user_can("list_users")) {
+      Ajax::error(__("You do not have permission to perform this action", "uipress-lite"));
+    }
+
     $formattedQuery = BlockQuery::run($query, $blockString, $page, $search);
     wp_send_json($formattedQuery);
   }
@@ -445,6 +500,11 @@ class uip_ajax
   {
     // Check security nonce and 'DOING_AJAX' global
     Ajax::check_referer();
+
+    // Check user has permission to manage options
+    if (!current_user_can("manage_options")) {
+      Ajax::error(__("You do not have permission to perform this action", "uipress-lite"));
+    }
 
     $templateID = sanitize_text_field($_POST["template_id"]);
 
@@ -471,6 +531,11 @@ class uip_ajax
     // Check security nonce and 'DOING_AJAX' global
     Ajax::check_referer();
 
+    // Check user has permission to manage options
+    if (!current_user_can("manage_options")) {
+      Ajax::error(__("You do not have permission to perform this action", "uipress-lite"));
+    }
+
     $uid = sanitize_text_field($_POST["uid"]);
 
     if (!$uid) {
@@ -492,6 +557,11 @@ class uip_ajax
   {
     // Check security nonce and 'DOING_AJAX' global
     Ajax::check_referer();
+
+    // Ensure user is logged in
+    if (!is_user_logged_in()) {
+      Ajax::error(__("You must be logged in to perform this action", "uipress-lite"));
+    }
 
     $data = json_decode(stripslashes($_POST["formData"]));
     $data = Sanitize::clean_input_with_code($data);
@@ -699,6 +769,11 @@ class uip_ajax
     // Check security nonce and 'DOING_AJAX' global
     Ajax::check_referer();
 
+    // Check user has permission to manage options
+    if (!current_user_can("manage_options")) {
+      Ajax::error(__("You do not have permission to perform this action", "uipress-lite"));
+    }
+
     $data = json_decode(stripslashes($_POST["formData"]));
     $data = Sanitize::clean_input_with_code($data);
 
@@ -822,6 +897,11 @@ class uip_ajax
     // Check security nonce and 'DOING_AJAX' global
     Ajax::check_referer();
 
+    // Ensure user is logged in
+    if (!is_user_logged_in()) {
+      Ajax::error(__("You must be logged in to perform this action", "uipress-lite"));
+    }
+
     $key = sanitize_text_field($_POST["key"]);
 
     $userid = get_current_user_id();
@@ -842,6 +922,11 @@ class uip_ajax
   {
     // Check security nonce and 'DOING_AJAX' global
     Ajax::check_referer();
+
+    // Ensure user is logged in
+    if (!is_user_logged_in()) {
+      Ajax::error(__("You must be logged in to perform this action", "uipress-lite"));
+    }
 
     $key = sanitize_text_field($_POST["key"]);
 
