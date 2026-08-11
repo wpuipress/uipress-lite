@@ -3,8 +3,8 @@ Contributors: markuipress
 Tags: admin theme, custom dashboard, google analytics, woocommerce analytics, white label
 Requires at least: 6.0
 Requires PHP: 7.4
-Tested up to: 6.8
-Stable tag: 3.5.09
+Tested up to: 7.0
+Stable tag: 3.5.10
 License: GPLv2 or later
 
 Effortless custom WordPress admin dashboards.
@@ -54,6 +54,12 @@ Upload the UiPress plugin to your blog, activate it, and then navigate to the ui
 1, 2, 3: You're done!
 
 == Changelog ==
+
+= 3.5.10 =
+* Release Date 10 August 2026*
+
+* Fix: Fixed admin app failing to load on recent WordPress versions due to a script tag encoding conflict with WordPress core
+* Updated tested up to WordPress 7.0
 
 = 3.5.09 =
 * Release Date 19 November 2025*

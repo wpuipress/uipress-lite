@@ -1,0 +1,9 @@
+{
+    "name": "blakmarkit/uipress-lite",
+    "description": "UiPress Lite — WordPress admin dashboard/theme builder. Fork of the abandoned wpuipress/uipress-lite, maintained here.",
+    "keywords": ["wordpress", "plugin", "admin", "dashboard"],
+    "homepage": "https://github.com/blakmarkit/uipress-lite",
+    "license": "GPL-2.0-or-later",
+    "type": "wordpress-plugin",
+    "require": {}
+}
