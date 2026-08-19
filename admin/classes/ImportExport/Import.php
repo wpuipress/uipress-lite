@@ -2,6 +2,7 @@
 namespace UipressLite\Classes\ImportExport;
 use UipressLite\Classes\PostTypes\UiTemplates;
 use UipressLite\Classes\App\UipOptions;
+use UipressLite\Classes\Utils\URL;
 
 !defined("ABSPATH") ? exit() : "";
 
@@ -47,7 +48,13 @@ class Import
       return $returndata;
     }
 
-    $url = $path . "?key=" . $key . "&sync_options=" . wp_json_encode($types);
+    if (!URL::is_safe_remote_url($path)) {
+      $returndata["error"] = true;
+      $returndata["message"] = __("Remote URL is not allowed", "uipress-lite");
+      return $returndata;
+    }
+
+    $url = $path . "?key=" . rawurlencode($key) . "&sync_options=" . rawurlencode(wp_json_encode($types));
 
     $response = wp_remote_get($url);
 
@@ -151,6 +158,8 @@ class Import
       update_post_meta($existingID, "uip-template-excludes-roles", $template->excludesRoles);
       update_post_meta($existingID, "uip-template-excludes-users", $template->excludesUsers);
     }
+
+    UiTemplates::refresh_form_email_recipients();
   }
 
   /**

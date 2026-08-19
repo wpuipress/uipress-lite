@@ -33,6 +33,9 @@ export const metadata = {
       styleType: "style",
       class: ".uip-admin-toolbar",
       presets: {
+        style: {
+          background: "transparent",
+        },
         flexLayout: {
           direction: "row",
           distribute: "start",

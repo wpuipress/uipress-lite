@@ -18,8 +18,12 @@ class BlockQuery
     // Post type query
     if ($query->type == "post") {
       $postQuery = new \WP_Query($queryArgs);
-      $totalFound = $postQuery->found_posts;
-      $foundPosts = $postQuery->get_posts();
+      $foundPosts = array_values(
+        array_filter($postQuery->get_posts(), function ($item) {
+          return current_user_can("read_post", $item->ID);
+        })
+      );
+      $totalFound = count($foundPosts);
       $totalPages = $postQuery->max_num_pages;
     }
 
@@ -93,7 +97,9 @@ class BlockQuery
 
     $returndata["success"] = true;
     $returndata["message"] = __("Query fetched", "uipress-lite");
-    $returndata["args"] = $queryArgs;
+    if (current_user_can("manage_options")) {
+      $returndata["args"] = $queryArgs;
+    }
 
     return $returndata;
   }
@@ -280,11 +286,16 @@ class BlockQuery
     $query = (object) array_merge((array) $queryDefaults, (array) $query);
 
     if ($query->type == "post") {
+      $status = $query->status;
+      if (!current_user_can("read_private_posts") || $status === "") {
+        $status = "publish";
+      }
+
       $args = [
         "post_type" => $query->postType,
-        "posts_per_page" => $query->perPage,
+        "posts_per_page" => min(absint($query->perPage), 50),
         "paged" => $page,
-        "post_status" => $query->status,
+        "post_status" => $status,
         "order" => $query->order,
         "orderby" => $query->orderBy,
       ];
@@ -294,7 +305,7 @@ class BlockQuery
     }
     if ($query->type == "user" || $query->type == "site") {
       $args = [
-        "number" => $query->perPage,
+        "number" => min(absint($query->perPage), 50),
         "paged" => $page,
         "order" => $query->order,
         "orderby" => $query->orderBy,

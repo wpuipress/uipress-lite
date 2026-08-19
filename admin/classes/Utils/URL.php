@@ -6,6 +6,66 @@ namespace UipressLite\Classes\Utils;
 class URL
 {
   /**
+   * Returns whether a remote URL is safe to request (blocks private/loopback hosts)
+   *
+   * @param string $url URL to validate
+   * @return bool
+   * @since 3.5.11
+   */
+  public static function is_safe_remote_url($url)
+  {
+    $url = esc_url_raw($url);
+    $parts = wp_parse_url($url);
+
+    if (empty($parts["scheme"]) || empty($parts["host"])) {
+      return false;
+    }
+
+    if (!in_array($parts["scheme"], ["http", "https"], true)) {
+      return false;
+    }
+
+    $host = strtolower($parts["host"]);
+    if (in_array($host, ["localhost", "127.0.0.1", "::1", "0.0.0.0"], true)) {
+      return false;
+    }
+
+    if (preg_match("/\.(local|internal|localhost|lan|home)$/", $host)) {
+      return false;
+    }
+
+    $ips = [];
+    if (filter_var($host, FILTER_VALIDATE_IP)) {
+      $ips[] = $host;
+    } else {
+      $resolved = gethostbynamel($host);
+      if (is_array($resolved)) {
+        $ips = $resolved;
+      }
+    }
+
+    foreach ($ips as $ip) {
+      if (self::is_private_ip($ip)) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  /**
+   * Returns whether an IP address is private, reserved, or link-local
+   *
+   * @param string $ip IPv4 or IPv6 address
+   * @return bool
+   * @since 3.5.11
+   */
+  private static function is_private_ip($ip)
+  {
+    return false === filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE);
+  }
+
+  /**
    * Returns the current URL
    *
    * @return string

@@ -83,7 +83,7 @@ class MultisiteTemplateHandler
   {
     // If we switched to the main site, restore the current site
     if (self::$switched) {
-      switch_to_blog(self::$current_site_id);
+      restore_current_blog();
       self::$switched = false;
     }
 

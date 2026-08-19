@@ -211,6 +211,10 @@ class ErrorLog
       return;
     }
 
+    if (is_array($lines) && count($lines) > 5000) {
+      $lines = array_slice($lines, -5000);
+    }
+
     foreach ($lines as $currentLine) {
       $currentLine = str_replace(PHP_EOL, "", $currentLine);
       if (!isset($currentLine[0])) {

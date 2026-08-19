@@ -18,6 +18,133 @@ class UiTemplates
     $postTypeArgs = self::return_post_type_args();
     register_post_type("uip-ui-template", $postTypeArgs);
     self::uip_register_template_meta_fields();
+    self::restrict_rest_access();
+  }
+
+  /**
+   * Registers REST guards for UI CPTs once
+   *
+   * @return void
+   * @since 3.5.11
+   */
+  public static function restrict_rest_access()
+  {
+    static $registered = false;
+    if ($registered) {
+      return;
+    }
+    $registered = true;
+
+    add_filter("rest_pre_dispatch", ["UipressLite\Classes\PostTypes\UiTemplates", "guard_rest_request"], 5, 3);
+  }
+
+  /**
+   * Guards UI template, pattern, and admin menu REST requests
+   *
+   * @param mixed            $result  Existing REST result
+   * @param \WP_REST_Server  $server  REST server
+   * @param \WP_REST_Request $request Request object
+   * @return mixed
+   * @since 3.5.11
+   */
+  public static function guard_rest_request($result, $server, $request)
+  {
+    $route = $request->get_route();
+    $protected = ["/wp/v2/uip-ui-template", "/wp/v2/uip-ui-pattern", "/wp/v2/uip-admin-menu"];
+    $matches = false;
+
+    foreach ($protected as $base) {
+      if (strpos($route, $base) === 0) {
+        $matches = true;
+        break;
+      }
+    }
+
+    if (!$matches) {
+      return $result;
+    }
+
+    if (!is_user_logged_in()) {
+      return new \WP_Error("rest_forbidden", __("You must be logged in to access this resource.", "uipress-lite"), ["status" => 401]);
+    }
+
+    $method = $request->get_method();
+    if (in_array($method, ["POST", "PUT", "PATCH", "DELETE"], true) && !current_user_can("manage_options")) {
+      return new \WP_Error("rest_forbidden", __("You do not have permission to perform this action", "uipress-lite"), ["status" => 403]);
+    }
+
+    return $result;
+  }
+
+  /**
+   * Returns allowed form email recipients from saved templates and site admin email
+   *
+   * @return array
+   * @since 3.5.11
+   */
+  public static function get_allowed_form_recipients()
+  {
+    $stored = get_option("uip-form-email-recipients", false);
+    if (!is_array($stored)) {
+      $stored = self::refresh_form_email_recipients();
+    }
+
+    $allowed = array_merge([get_option("admin_email")], $stored);
+    $allowed = apply_filters("uipress_allowed_form_email_recipients", $allowed);
+
+    return array_values(array_unique(array_filter($allowed, "is_email")));
+  }
+
+  /**
+   * Rebuilds the stored allowlist of form recipient emails from published templates
+   *
+   * @return array
+   * @since 3.5.11
+   */
+  public static function refresh_form_email_recipients()
+  {
+    $emails = [];
+    $query = self::list(["perPage" => -1, "search" => ""]);
+
+    foreach ($query->get_posts() as $post) {
+      $content = get_post_meta($post->ID, "uip-ui-template", true);
+      $emails = array_merge($emails, self::extract_emails_from_value($content));
+    }
+
+    $emails = array_values(array_unique(array_filter($emails, "is_email")));
+    update_option("uip-form-email-recipients", $emails);
+
+    return $emails;
+  }
+
+  /**
+   * Recursively collects emailAddress values from template content
+   *
+   * @param mixed $value Template content or nested value
+   * @return array
+   * @since 3.5.11
+   */
+  private static function extract_emails_from_value($value)
+  {
+    $emails = [];
+
+    if (is_object($value)) {
+      $value = (array) $value;
+    }
+
+    if (!is_array($value)) {
+      return $emails;
+    }
+
+    foreach ($value as $key => $nested) {
+      if ($key === "emailAddress" && is_string($nested) && is_email($nested)) {
+        $emails[] = $nested;
+      }
+
+      $emails = array_merge($emails, self::extract_emails_from_value($nested));
+    }
+
+    return $emails;
   }
 
   /**
@@ -81,7 +208,7 @@ class UiTemplates
         ];
       },
       "update_callback" => function ($value, $post) {
-        if (!current_user_can("edit_posts")) {
+        if (!current_user_can("manage_options")) {
           return false;
         }
 
@@ -450,6 +577,7 @@ class UiTemplates
     self::update_template_for($templateID, $template->globalSettings->rolesAndUsers);
     self::update_template_excludes($templateID, $template->globalSettings->excludesRolesAndUsers);
     self::update_settings($templateID, $template->globalSettings, $template->globalSettings->type, $multisite, $template->content);
+    self::refresh_form_email_recipients();
 
     return true;
   }

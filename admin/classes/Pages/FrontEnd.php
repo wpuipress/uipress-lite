@@ -48,6 +48,11 @@ class FrontEnd
       return;
     }
 
+    $templates = UiTemplates::get_template_for_user("ui-front-template", 1);
+    if (empty($templates)) {
+      return;
+    }
+
     self::output_template();
     self::add_hooks();
   }

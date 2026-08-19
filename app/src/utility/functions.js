@@ -227,15 +227,42 @@ export const formatDateString = (dateString) => {
 };
 
 /**
+ * Decodes HTML entities in a string.
+ * WordPress 7+ encodes script attributes via the HTML API, which double-encodes
+ * values that were already passed through esc_attr() (e.g. &quot; → &amp;quot;).
+ *
+ * @param {string} value - Possibly entity-encoded string
+ * @returns {string} Decoded string
+ * @since 3.5.11
+ */
+export const decodeHtmlEntities = (value) => {
+  if (typeof value !== "string" || !value.includes("&")) {
+    return value;
+  }
+
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(value, "text/html");
+  return doc.documentElement.textContent;
+};
+
+/**
  * Parses data and converts specific true false values to Boolean
  *
+ * @param {string} data - JSON string, optionally HTML-entity encoded
+ * @returns {Object} Parsed data or empty object on failure
  * @since 3.0.0
  */
 export function uipParseJson(data) {
+  const reviver = (k, v) => (v === "uiptrue" ? true : v === "uipfalse" ? false : v === "uipblank" ? "" : v);
+
   try {
-    return JSON.parse(data, (k, v) => (v === "uiptrue" ? true : v === "uipfalse" ? false : v === "uipblank" ? "" : v));
+    return JSON.parse(data, reviver);
   } catch (err) {
-    return {};
+    try {
+      return JSON.parse(decodeHtmlEntities(data), reviver);
+    } catch {
+      return {};
+    }
   }
 }
 

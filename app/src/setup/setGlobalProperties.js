@@ -1,4 +1,5 @@
 import { config } from "@/store/app/constants.js";
+import { decodeHtmlEntities } from "@/utility/functions.js";
 
 export const setGlobalProperties = (appStore) => {
   // Get script tag
@@ -22,7 +23,7 @@ export const setGlobalProperties = (appStore) => {
   const isAdmin = scriptTag.getAttribute("is-admin");
   let roles = scriptTag.getAttribute("user-roles");
 
-  roles = JSON.parse(roles);
+  roles = JSON.parse(decodeHtmlEntities(roles));
 
   // Update store properties
   appStore.updateState("restBase", restBase);

@@ -10,6 +10,7 @@ use UipressLite\Classes\App\UserPreferences;
 use UipressLite\Classes\Utils\Users;
 use UipressLite\Classes\Utils\Objects;
 use UipressLite\Classes\Scripts\AdminMenu;
+use UipressLite\Classes\PostTypes\UiTemplates;
 
 !defined("ABSPATH") ? exit() : "";
 
@@ -206,7 +207,7 @@ class uip_ajax
 
     // Get new key
     $options = UipOptions::get("remote-sync");
-    $options["key"] = uniqid("uip-", true);
+    $options["key"] = Export::generate_sync_key();
     UipOptions::update("remote-sync", $options);
 
     $returndata = [];
@@ -275,7 +276,7 @@ class uip_ajax
 
     if (!$options || !is_array($options)) {
       $options = [];
-      $options["key"] = uniqid("uip-", true);
+      $options["key"] = Export::generate_sync_key();
       UipOptions::update("remote-sync", $options);
     }
 
@@ -473,7 +474,7 @@ class uip_ajax
     Ajax::check_referer();
 
     $query = json_decode(stripslashes($_POST["query"]));
-    $query = Sanitize::clean_input_with_code($query);
+    $query = Sanitize::clean_input($query);
 
     $blockString = sanitize_text_field($_POST["blockString"]);
     $page = sanitize_text_field($_POST["page"]);
@@ -485,6 +486,10 @@ class uip_ajax
 
     // Check user has permission to query users (prevents sensitive data exposure)
     if (isset($query->type) && $query->type == "user" && !current_user_can("list_users")) {
+      Ajax::error(__("You do not have permission to perform this action", "uipress-lite"));
+    }
+
+    if (isset($query->type) && $query->type == "site" && !current_user_can("manage_sites")) {
       Ajax::error(__("You do not have permission to perform this action", "uipress-lite"));
     }
 
@@ -564,7 +569,7 @@ class uip_ajax
     }
 
     $data = json_decode(stripslashes($_POST["formData"]));
-    $data = Sanitize::clean_input_with_code($data);
+    $data = Sanitize::clean_input($data);
 
     $objectOrSingle = sanitize_text_field($_POST["objectOrSingle"]);
 
@@ -579,12 +584,19 @@ class uip_ajax
 
     // save as object
     if ($objectOrSingle == "object") {
+      if (Users::is_protected_meta_key($userMetaObjectKey)) {
+        Ajax::error(__("This meta key cannot be updated", "uipress-lite"));
+      }
       update_user_meta($userID, $userMetaObjectKey, $data);
     }
 
     // Save as keys
     if ($objectOrSingle == "single") {
       foreach ($data as $key => $value) {
+        $key = sanitize_key($key);
+        if (!$key || Users::is_protected_meta_key($key)) {
+          Ajax::error(__("This meta key cannot be updated", "uipress-lite"));
+        }
         update_user_meta($userID, $key, $value);
       }
     }
@@ -624,11 +636,17 @@ class uip_ajax
     // Check security nonce and 'DOING_AJAX' global
     Ajax::check_referer();
 
+    if (!is_user_logged_in()) {
+      Ajax::error(__("You must be logged in to perform this action", "uipress-lite"));
+    }
+
+    Ajax::rate_limit("form_email", 5, 900);
+
     $data = json_decode(stripslashes($_POST["formData"]));
-    $data = Sanitize::clean_input_with_code($data);
+    $data = Sanitize::clean_input($data);
 
     $emailTemplate = stripslashes($_POST["emailTemplate"]);
-    $emailTemplate = Sanitize::clean_input_with_code($emailTemplate);
+    $emailTemplate = wp_kses_post($emailTemplate);
 
     $emailSubject = sanitize_text_field($_POST["emailSubject"]);
     $emailTo = sanitize_email($_POST["emailTo"]);
@@ -638,23 +656,32 @@ class uip_ajax
       Ajax::error(__("Config error: Recipient email is not valid", "uipress-lite"));
     }
 
+    if (!in_array($emailTo, UiTemplates::get_allowed_form_recipients(), true)) {
+      Ajax::error(__("Recipient email is not allowed", "uipress-lite"));
+    }
+
     // Bail if no email template
     if ($emailTemplate == "") {
       Ajax::error(__("Config error: No email template set", "uipress-lite"));
     }
 
     // Handle dynamic data
-    foreach ($data as $key => $value) {
-      $emailTemplate = str_replace("{{" . $key . "}}", $value, $emailTemplate);
+    if (is_object($data) || is_array($data)) {
+      foreach ($data as $key => $value) {
+        $safe = is_scalar($value) ? esc_html((string) $value) : "";
+        $emailTemplate = str_replace("{{" . $key . "}}", $safe, $emailTemplate);
+      }
     }
+
+    $emailTemplate = wp_kses_post($emailTemplate);
 
     $subject = $emailSubject;
     $content = $emailTemplate;
-    $replyTo = $emailTo;
     $blogname = get_bloginfo("name");
+    $from = sanitize_email(get_option("admin_email"));
 
-    $headers[] = "From: {$blogname} <{$emailTo}>";
-    $headers[] = "Reply-To: {$emailTo}";
+    $headers[] = "From: {$blogname} <{$from}>";
+    $headers[] = "Reply-To: {$from}";
     $headers[] = "Content-Type: text/html; charset=UTF-8";
 
     $wrap = '<table style="box-sizing:border-box;border-color:inherit;text-indent:0;padding:0;margin:64px auto;width:464px"><tbody>';
@@ -684,7 +711,7 @@ class uip_ajax
     Ajax::check_referer();
 
     $formKeys = json_decode(stripslashes($_POST["formKeys"]));
-    $formKeys = Sanitize::clean_input_with_code($formKeys);
+    $formKeys = Sanitize::clean_input($formKeys);
 
     $saveType = sanitize_text_field($_POST["saveType"]);
     $objectOrSingle = sanitize_text_field($_POST["objectOrSingle"]);
@@ -704,6 +731,10 @@ class uip_ajax
 
       if ($objectOrSingle == "single") {
         foreach ($formKeys as $key) {
+          $key = sanitize_key($key);
+          if (!$key || Users::is_protected_meta_key($key)) {
+            continue;
+          }
           $value = get_user_meta($userID, $key, true);
           $data[$key] = $value;
         }
@@ -775,12 +806,13 @@ class uip_ajax
     }
 
     $data = json_decode(stripslashes($_POST["formData"]));
-    $data = Sanitize::clean_input_with_code($data);
+    $data = Sanitize::clean_input($data);
 
     $userFunction = sanitize_text_field($_POST["userFunction"]);
+    $allowedFunctions = apply_filters("uipress_allowed_form_functions", []);
 
-    if (!function_exists($userFunction)) {
-      Ajax::error(__('Passed function doesn\'t exist', "uipress-lite"));
+    if (!$userFunction || !is_array($allowedFunctions) || !in_array($userFunction, $allowedFunctions, true) || !function_exists($userFunction)) {
+      Ajax::error(__("This PHP function is not allowed", "uipress-lite"));
     }
 
     // Try to start user supplied function
@@ -835,13 +867,17 @@ class uip_ajax
     $typesHolder = [];
 
     foreach ($foundPosts as $item) {
+      if (!current_user_can("read_post", $item->ID)) {
+        continue;
+      }
+
       $temp = [];
 
       $modified = get_the_modified_date("U", $item->ID);
       $humandate = human_time_diff($modified, strtotime(gmdate("Y-D-M"))) . " " . __("ago", "uipress-lite");
       $author_id = get_post_field("post_author", $item->ID);
       $user = get_user_by("id", $author_id);
-      $username = $user->user_login;
+      $username = $user ? $user->user_login : "";
 
       $pt = get_post_type($item->ID);
       $post_type_obj = get_post_type_object($pt);
@@ -931,7 +967,7 @@ class uip_ajax
     $key = sanitize_text_field($_POST["key"]);
 
     $newValue = json_decode(stripslashes($_POST["value"]));
-    $newValue = Sanitize::clean_input_with_code($newValue);
+    $newValue = Sanitize::clean_input($newValue);
 
     UserPreferences::update($key, $newValue);
 
@@ -1026,12 +1062,16 @@ class uip_ajax
     if (!is_array($types) || empty($types)) {
       $types = "post";
     }
+
+    $postStatus = current_user_can("read_private_posts") ? "any" : "publish";
+    $perPage = min(absint($perPage), 50);
+
     //Get template
     $args = [
       "post_type" => $types,
       "posts_per_page" => $perPage,
       "paged" => $page,
-      "post_status" => "any",
+      "post_status" => $postStatus,
       "s" => $string,
     ];
 
@@ -1047,13 +1087,17 @@ class uip_ajax
     $columns = [];
 
     foreach ($foundPosts as $item) {
+      if (!current_user_can("read_post", $item->ID)) {
+        continue;
+      }
+
       $temp = [];
 
       $modified = get_the_modified_date("U", $item->ID);
       $humandate = human_time_diff($modified, strtotime(gmdate("Y-D-M"))) . " " . __("ago", "uipress-lite");
       $author_id = get_post_field("post_author", $item->ID);
       $user = get_user_by("id", $author_id);
-      $username = $user->user_login;
+      $username = $user ? $user->user_login : "";
       $pt = get_post_type($item->ID);
 
       $post_type_obj = get_post_type_object(get_post_type($item->ID));
@@ -1095,7 +1139,7 @@ class uip_ajax
       $temp["tags"] = $tags;
       $temp["id"] = $item->ID;
 
-      if ($userCols) {
+      if ($userCols && current_user_can("edit_post", $item->ID)) {
         foreach ($userCols as $col) {
           if ($col->type == "meta") {
             $temp[$col->name] = get_post_meta($item->ID, $col->name, true);
@@ -1207,13 +1251,17 @@ class uip_ajax
     $formattedPosts = [];
 
     foreach ($foundPosts as $item) {
+      if (!current_user_can("read_post", $item->ID)) {
+        continue;
+      }
+
       $temp = [];
 
       $modified = get_the_modified_date("U", $item->ID);
       $humandate = human_time_diff($modified, strtotime(gmdate("Y-D-M"))) . " " . __("ago", "uipress-lite");
       $author_id = get_post_field("post_author", $item->ID);
       $user = get_user_by("id", $author_id);
-      $username = $user->user_login;
+      $username = $user ? $user->user_login : "";
 
       $post_type_obj = get_post_type_object(get_post_type($item->ID));
 
@@ -1244,6 +1292,10 @@ class uip_ajax
     // Check security nonce and 'DOING_AJAX' global
     Ajax::check_referer();
 
+    if (!current_user_can("edit_posts")) {
+      Ajax::error(__("You do not have permission to perform this action", "uipress-lite"));
+    }
+
     $keys = Posts::get_meta_keys_for_post_type("post");
 
     $returndata["keys"] = $keys;
@@ -1265,6 +1317,10 @@ class uip_ajax
     $args = [];
     $output = "objects";
     $operator = "and";
+
+    if (!current_user_can("edit_posts")) {
+      $args["public"] = true;
+    }
 
     $post_types = get_post_types($args, $output, $operator);
 
@@ -1292,6 +1348,10 @@ class uip_ajax
   {
     // Check security nonce and 'DOING_AJAX' global
     Ajax::check_referer();
+
+    if (!current_user_can("list_users")) {
+      Ajax::error(__("You do not have permission to perform this action", "uipress-lite"));
+    }
 
     $term = sanitize_text_field($_POST["searchString"]);
     $page = isset($_POST["page"]) ? sanitize_text_field($_POST["page"]) : 1;

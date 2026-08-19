@@ -6,6 +6,36 @@ namespace UipressLite\Classes\Utils;
 class Sanitize
 {
   /**
+   * Sanitises untrusted input without allowing script or iframe markup
+   *
+   * @param mixed $values Input value to clean
+   * @return mixed Cleaned input value
+   * @since 3.5.11
+   */
+  public static function clean_input($values)
+  {
+    if (is_object($values)) {
+      foreach ($values as $index => $in) {
+        $values->$index = self::clean_input($in);
+      }
+      return $values;
+    }
+
+    if (is_array($values)) {
+      foreach ($values as $index => $in) {
+        $values[$index] = self::clean_input($in);
+      }
+      return $values;
+    }
+
+    if (!is_string($values) || $values === "") {
+      return $values;
+    }
+
+    return wp_kses_post($values);
+  }
+
+  /**
    * Sanitises and strips tags of input from user without losing code
    *
    * @param mixed $values - input value to clean

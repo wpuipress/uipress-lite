@@ -69,7 +69,7 @@ class Export
     register_rest_route("uipress/v1", "/export", [
       "methods" => "GET",
       "callback" => ["UipressLite\Classes\ImportExport\Export", "rest_export_response"],
-      "permission_callback" => "__return_true",
+      "permission_callback" => ["UipressLite\Classes\ImportExport\Export", "rest_export_permission"],
       "args" => [
         "key" => [
           "validate_callback" => function ($param, $request, $key) {
@@ -83,6 +83,29 @@ class Export
         ],
       ],
     ]);
+  }
+
+  /**
+   * Permission callback for the remote export endpoint
+   *
+   * @return bool
+   * @since 3.5.11
+   */
+  public static function rest_export_permission()
+  {
+    $siteOptions = UipOptions::get("remote-sync");
+    return isset($siteOptions["hostEnabled"]) && $siteOptions["hostEnabled"] == "uiptrue";
+  }
+
+  /**
+   * Generates a cryptographic remote-sync key
+   *
+   * @return string
+   * @since 3.5.11
+   */
+  public static function generate_sync_key()
+  {
+    return wp_generate_password(64, false, false);
   }
 
   /**
@@ -102,18 +125,18 @@ class Export
 
     $siteOptions = UipOptions::get("remote-sync");
 
-    if (!$key || !$options || !isset($siteOptions["key"])) {
+    if (!$key || !$options || !isset($siteOptions["key"]) || !isset($siteOptions["hostEnabled"]) || $siteOptions["hostEnabled"] != "uiptrue") {
       $returndata = [];
       $returndata["error"] = true;
       $returndata["message"] = __("Incorrect key", "uipress-lite");
-      return new \WP_REST_Response($returndata, 200);
+      return new \WP_REST_Response($returndata, 401);
     }
 
-    if ($siteOptions["key"] != $key) {
+    if (!hash_equals((string) $siteOptions["key"], (string) $key)) {
       $returndata = [];
       $returndata["error"] = true;
       $returndata["message"] = __("Incorrect key", "uipress-lite");
-      return new \WP_REST_Response($returndata, 200);
+      return new \WP_REST_Response($returndata, 401);
     }
 
     $export = self::get($options);

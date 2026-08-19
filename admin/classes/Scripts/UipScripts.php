@@ -194,8 +194,9 @@ class UipScripts
     $styles = UipOptions::get("theme-styles", true);
     $styles = is_object($styles) ? $styles : new \stdClass();
 
+    $restricted = $template_type === "ui-front-template";
     $options = [
-      "options" => Sanitize::clean_input_with_code(AppOptions::get_options()),
+      "options" => Sanitize::clean_input_with_code(AppOptions::get_options($restricted)),
       "userPrefs" => Sanitize::clean_input_with_code(UserPreferences::get()),
       "themeStyles" => Sanitize::clean_input_with_code($styles),
     ];
@@ -216,21 +217,24 @@ class UipScripts
     // Cache key
     $cache_key = self::get_cache_key();
 
+    // WordPress 7+ encodes script attributes via the HTML API. Do not pre-escape
+    // with esc_attr()/esc_url() — that double-encodes entities (e.g. &quot; → &amp;quot;)
+    // and breaks JSON.parse() in the browser. Older WP still escapes once in wp_get_script_tag().
     $scriptData = [
       "id" => "uip-app-data",
-      "rest-base" => esc_url($rest_base),
-      "rest-nonce" => esc_attr($rest_nonce),
-      "user-roles" => esc_attr(json_encode($roles)),
-      "cache-key" => esc_attr($cache_key),
-      "plugin-base" => esc_url($base_url),
-      "admin-url" => esc_url($admin_url),
-      "site-url" => esc_url($site_url),
-      "is-admin" => esc_attr($is_admin),
-      "template-type" => esc_attr($template_type),
-      "template-id" => esc_attr($template_id),
-      "user-id" => esc_attr($current_user->ID),
-      "user-name" => esc_attr($current_user->user_name),
-      "site-id" => esc_attr(get_current_blog_id()),
+      "rest-base" => esc_url_raw($rest_base),
+      "rest-nonce" => $rest_nonce,
+      "user-roles" => wp_json_encode($roles),
+      "cache-key" => $cache_key,
+      "plugin-base" => esc_url_raw($base_url),
+      "admin-url" => esc_url_raw($admin_url),
+      "site-url" => esc_url_raw($site_url),
+      "is-admin" => $is_admin ? "1" : "0",
+      "template-type" => $template_type,
+      "template-id" => $template_id ?? "",
+      "user-id" => $current_user->ID,
+      "user-name" => $current_user->user_name ?? "",
+      "site-id" => get_current_blog_id(),
       "uip_ajax" => wp_json_encode(
         [
           "ajax_url" => $ajaxURL,
@@ -252,6 +256,11 @@ class UipScripts
     $variableFormatter = '
       var ajaxHolder = document.getElementById("uip-app-data");
       var ajaxData = ajaxHolder.getAttribute("uip_ajax");
+      if (ajaxData && ajaxData.indexOf("&") !== -1) {
+        var entityDecoder = document.createElement("textarea");
+        entityDecoder.innerHTML = ajaxData;
+        ajaxData = entityDecoder.value;
+      }
       const uip_ajax = JSON.parse(ajaxData, (key, value) => {
         if (value === "1" || value === "true" || value === 1) return true;
         if (value === "0" || value === "false" || value === 0) return false;

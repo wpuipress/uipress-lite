@@ -6,6 +6,47 @@ namespace UipressLite\Classes\Utils;
 class Users
 {
   /**
+   * Returns whether a user meta key is protected from form writes
+   *
+   * @param string $key Meta key to check
+   * @return bool
+   * @since 3.5.11
+   */
+  public static function is_protected_meta_key($key)
+  {
+    $key = strtolower((string) $key);
+    if ($key === "") {
+      return true;
+    }
+
+    global $wpdb;
+    $protected = [
+      "session_tokens",
+      "wp_capabilities",
+      "wp_user_level",
+      "default_password_nag",
+      "use_ssl",
+      "wp_user-settings",
+      "wp_user-settings-time",
+      "uip-prefs",
+      $wpdb->get_blog_prefix() . "capabilities",
+      $wpdb->get_blog_prefix() . "user_level",
+      $wpdb->base_prefix . "capabilities",
+      $wpdb->base_prefix . "user_level",
+    ];
+
+    if (in_array($key, $protected, true)) {
+      return true;
+    }
+
+    if (preg_match("/(_capabilities|_user_level|_user_roles|session_tokens)$/", $key)) {
+      return true;
+    }
+
+    return (bool) apply_filters("uipress_is_protected_user_meta", false, $key);
+  }
+
+  /**
    * Returns list of formatted users
    *
    * @param string $searchterm - search term

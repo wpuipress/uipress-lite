@@ -44,7 +44,6 @@ class uip_ui_builder extends uip_app
     add_action("plugins_loaded", [$this, "add_ui_builder_actions"], 2);
     add_action("init", [$this, "create_builder_post_types"]);
     add_action("rest_init", [$this, "create_builder_post_types"]);
-    add_filter("kses_allowed_protocols", [$this, "allow_data_in_kses"]);
   }
 
   /**
@@ -110,6 +109,8 @@ class uip_ui_builder extends uip_app
     if (!$onBuilderPage) {
       return;
     }
+
+    add_filter("kses_allowed_protocols", [$this, "allow_data_in_kses"]);
 
     // Triggers pro actions for builder
     do_action("uipress/app/start");
@@ -228,7 +229,7 @@ class uip_ui_builder extends uip_app
   public function uip_save_from_wizard()
   {
     // Check security nonce and 'DOING_AJAX' global
-    Ajax::check_referer();
+    Ajax::check_referer("manage_options");
 
     $options = json_decode(stripslashes($_POST["settings"]));
     $options = Sanitize::clean_input_with_code($options);
@@ -333,7 +334,7 @@ class uip_ui_builder extends uip_app
   public function uip_save_global_settings()
   {
     // Check security nonce and 'DOING_AJAX' global
-    Ajax::check_referer();
+    Ajax::check_referer("manage_options");
 
     $decoded = json_decode(stripslashes($_POST["settings"]));
     $options = Sanitize::clean_input_with_code($decoded);
@@ -360,7 +361,7 @@ class uip_ui_builder extends uip_app
   public function uip_get_global_settings()
   {
     // Check security nonce and 'DOING_AJAX' global
-    Ajax::check_referer();
+    Ajax::check_referer("manage_options");
 
     // Get site settings
     $options = UipOptions::get("site-settings");
@@ -380,7 +381,7 @@ class uip_ui_builder extends uip_app
   public function uip_create_new_ui_template()
   {
     // Check security nonce and 'DOING_AJAX' global
-    Ajax::check_referer();
+    Ajax::check_referer("manage_options");
 
     // The type of ui-template to create
     $type = sanitize_text_field($_POST["templateType"]);
@@ -411,7 +412,7 @@ class uip_ui_builder extends uip_app
   public function uip_get_ui_templates()
   {
     // Check security nonce and 'DOING_AJAX' global
-    Ajax::check_referer();
+    Ajax::check_referer("manage_options");
 
     $search = sanitize_text_field($_POST["search"]);
 
@@ -440,7 +441,7 @@ class uip_ui_builder extends uip_app
   public function uip_get_ui_template()
   {
     // Check security nonce and 'DOING_AJAX' global
-    Ajax::check_referer();
+    Ajax::check_referer("manage_options");
 
     $templateID = sanitize_text_field($_POST["templateID"]);
 
@@ -484,7 +485,7 @@ class uip_ui_builder extends uip_app
   public function uip_get_ui_styles()
   {
     // Check security nonce and 'DOING_AJAX' global
-    Ajax::check_referer();
+    Ajax::check_referer("manage_options");
 
     $styles = UipOptions::get("theme-styles");
     $styles = is_object($styles) ? $styles : new stdClass();
@@ -505,7 +506,7 @@ class uip_ui_builder extends uip_app
   public function uip_delete_ui_template()
   {
     // Check security nonce and 'DOING_AJAX' global
-    Ajax::check_referer();
+    Ajax::check_referer("manage_options");
 
     // Update Cache key to invalidate local storage cached templates
     $cache_key = bin2hex(random_bytes(6));
@@ -537,7 +538,7 @@ class uip_ui_builder extends uip_app
   public function uip_update_ui_template_status()
   {
     // Check security nonce and 'DOING_AJAX' global
-    Ajax::check_referer();
+    Ajax::check_referer("manage_options");
 
     $templateID = sanitize_text_field($_POST["templateid"]);
     $status = sanitize_text_field($_POST["status"]);
@@ -574,7 +575,7 @@ class uip_ui_builder extends uip_app
   public function uip_duplicate_ui_template()
   {
     // Check security nonce and 'DOING_AJAX' global
-    Ajax::check_referer();
+    Ajax::check_referer("manage_options");
 
     // Update Cache key to invalidate local storage cached templates
     $cache_key = bin2hex(random_bytes(6));
@@ -613,7 +614,7 @@ class uip_ui_builder extends uip_app
   public function uip_save_ui_template()
   {
     // Check security nonce and 'DOING_AJAX' global
-    Ajax::check_referer();
+    Ajax::check_referer("manage_options");
 
     // Sanitise inputs
     $template = json_decode(stripslashes($_POST["template"]));
@@ -644,7 +645,7 @@ class uip_ui_builder extends uip_app
   public function uip_save_user_styles()
   {
     // Check security nonce and 'DOING_AJAX' global
-    Ajax::check_referer();
+    Ajax::check_referer("manage_options");
 
     $styles = json_decode(stripslashes($_POST["styles"]));
     $styles = Sanitize::clean_input_with_code($styles);
@@ -668,7 +669,7 @@ class uip_ui_builder extends uip_app
   public function uip_sync_ui_pattern()
   {
     // Check security nonce and 'DOING_AJAX' global
-    Ajax::check_referer();
+    Ajax::check_referer("manage_options");
 
     $pattern = json_decode(stripslashes($_POST["pattern"]));
     $pattern = Sanitize::clean_input_with_code($pattern);
@@ -735,7 +736,7 @@ class uip_ui_builder extends uip_app
   public function uip_save_ui_pattern()
   {
     // Check security nonce and 'DOING_AJAX' global
-    Ajax::check_referer();
+    Ajax::check_referer("manage_options");
 
     $pattern = json_decode(stripslashes($_POST["pattern"]));
     $pattern = Sanitize::clean_input_with_code($pattern);
@@ -776,7 +777,7 @@ class uip_ui_builder extends uip_app
   public function uip_search_posts_pages()
   {
     // Check security nonce and 'DOING_AJAX' global
-    Ajax::check_referer();
+    Ajax::check_referer("manage_options");
 
     // Sanitise search
     $string = sanitize_text_field($_POST["searchStr"]);
@@ -810,7 +811,7 @@ class uip_ui_builder extends uip_app
   public function uip_get_ui_patterns_list()
   {
     // Check security nonce and 'DOING_AJAX' global
-    Ajax::check_referer();
+    Ajax::check_referer("manage_options");
 
     // Get patterns list
     $options = ["perPage" => -1, "search" => ""];

@@ -9,10 +9,11 @@ class AppOptions
   /**
    * Returns app options
    *
+   * @param bool $restricted When true, omit plugin inventory and ACF options data
    * @return array
    * @since 3.2.13
    */
-  public static function get_options()
+  public static function get_options($restricted = false)
   {
     // Get mime types
     $all_mimes = get_allowed_mime_types();
@@ -32,16 +33,26 @@ class AppOptions
     $homeURL = get_home_url();
     $adminPath = str_replace($homeURL, "", $adminURL);
 
-    // Sometime this is called on the frontend and get_plugins may not exist
-    if (!function_exists("get_plugins")) {
-      require_once ABSPATH . "wp-admin/includes/plugin.php";
-    }
-
-    $all_plugins = get_plugins();
-
     $formattedPlugins = [];
-    foreach ($all_plugins as $key => $value) {
-      $formattedPlugins[] = $key;
+    $active_plugins = [];
+    $network_plugins = [];
+
+    if (!$restricted) {
+      // Sometime this is called on the frontend and get_plugins may not exist
+      if (!function_exists("get_plugins")) {
+        require_once ABSPATH . "wp-admin/includes/plugin.php";
+      }
+
+      $all_plugins = get_plugins();
+      foreach ($all_plugins as $key => $value) {
+        $formattedPlugins[] = $key;
+      }
+
+      $active_plugins = get_option("active_plugins");
+      if (is_multisite()) {
+        $network_plugins = get_site_option("active_sitewide_plugins");
+        $network_plugins = is_array($network_plugins) ? array_keys($network_plugins) : [];
+      }
     }
 
     $formattedPostStatus = [];
@@ -64,30 +75,20 @@ class AppOptions
     $operator = "and"; // 'and' or 'or'
     $taxonomies = get_taxonomies($args, $output, $operator);
 
-    // Get locally activated plugins
-    $active_plugins = get_option("active_plugins");
-
-    // Get network activated plugins (if in multisite)
-    $network_plugins = [];
-    if (is_multisite()) {
-      $network_plugins = get_site_option("active_sitewide_plugins");
-      $network_plugins = array_keys($network_plugins);
-    }
-
     $options["pluginURL"] = uip_plugin_url;
     $options["uipVersion"] = uip_plugin_version;
     $options["adminURL"] = $adminURL;
     $options["adminPath"] = $adminPath;
     $options["domain"] = get_home_url();
-    $options["dynamicData"] = self::getDynamicData();
+    $options["dynamicData"] = self::getDynamicData($restricted);
     $options["maxUpload"] = wp_max_upload_size();
     $options["uploadTypes"] = $cleanTypes;
     $options["locale"] = str_replace("_", "-", get_locale());
     $options["multisite"] = is_multisite();
     $options["networkActivated"] = is_plugin_active_for_network(uip_plugin_path_name . "/uipress-lite.php");
     $options["primarySite"] = is_main_site();
-    $options["installedPlugins"] = $formattedPlugins;
-    $options["activePlugins"] = array_unique(array_merge($active_plugins, $network_plugins));
+    $options["installedPlugins"] = $restricted ? [] : $formattedPlugins;
+    $options["activePlugins"] = $restricted ? [] : array_unique(array_merge($active_plugins, $network_plugins));
     $options["post_statuses"] = $formattedPostStatus;
     $options["block_preset_styles"] = UipOptions::get("block_preset_styles");
     $options["site_name"] = get_bloginfo("name");
@@ -100,9 +101,10 @@ class AppOptions
   /**
    * Fetches dynamic data variable values
    *
+   * @param bool $restricted When true, skip ACF field dumps
    * @since 3.0.0
    */
-  public static function getDynamicData()
+  public static function getDynamicData($restricted = false)
   {
     $current_user = wp_get_current_user();
 
@@ -299,7 +301,7 @@ class AppOptions
       }
     }
 
-    if ($loginPage) {
+    if ($loginPage || $restricted) {
       return $options;
     }
     //All user meta
