@@ -1,7 +1,6 @@
 const fs = require("fs-extra");
 const path = require("path");
 const archiver = require("archiver");
-const glob = require("glob");
 
 // Function to get plugin version from the main plugin file
 function getPluginVersion(pluginFile) {
@@ -10,25 +9,36 @@ function getPluginVersion(pluginFile) {
   return versionMatch ? versionMatch[1].trim() : "unknown";
 }
 
-// Function to remove .DS_Store files recursively
-function removeDSStoreFiles(dir) {
-  const files = glob.sync("**/.DS_Store", { cwd: dir, dot: true });
-  files.forEach((file) => {
-    const filePath = path.join(dir, file);
-    fs.removeSync(filePath);
-    console.log(`Removed: ${filePath}`);
-  });
-}
+/** Hidden entries required at runtime and must stay in the packaged plugin. */
+const HIDDEN_KEEP = [".vite"];
 
-// Function to remove directories recursively
-function removeDirectories(dir, dirsToRemove) {
-  dirsToRemove.forEach((dirName) => {
-    const dirs = glob.sync(`**/${dirName}`, { cwd: dir, dot: true });
-    dirs.forEach((subDir) => {
-      const fullPath = path.join(dir, subDir);
+/**
+ * Recursively removes hidden files and directories (names starting with ".")
+ *
+ * @param {string} dir Directory to walk
+ * @returns {void}
+ */
+function removeHiddenEntries(dir) {
+  if (!fs.existsSync(dir)) {
+    return;
+  }
+
+  fs.readdirSync(dir, { withFileTypes: true }).forEach((entry) => {
+    const fullPath = path.join(dir, entry.name);
+
+    if (entry.name.startsWith(".")) {
+      if (HIDDEN_KEEP.includes(entry.name)) {
+        return;
+      }
+
       fs.removeSync(fullPath);
-      console.log(`Removed directory: ${fullPath}`);
-    });
+      console.log(`Removed hidden: ${fullPath}`);
+      return;
+    }
+
+    if (entry.isDirectory()) {
+      removeHiddenEntries(fullPath);
+    }
   });
 }
 
@@ -63,11 +73,8 @@ function cleanupFiles(dir, filesToRemove, dirsToClean, scriptName) {
     }
   });
 
-  // Remove .DS_Store files
-  removeDSStoreFiles(dir);
-
-  // Remove .git and .nova directories
-  removeDirectories(dir, [".git", ".nova"]);
+  // Remove .cursor, .vscode, .cursorrules, .git, .DS_Store, and any other hidden entries
+  removeHiddenEntries(dir);
 }
 
 // Function to create zip file
@@ -84,11 +91,17 @@ function createZipFile(sourceDir, outputFile, excludeFiles) {
       "**/*",
       {
         cwd: sourceDir,
-        ignore: [".DS_Store", ".git/**", ".nova/**", ...excludeFiles],
-        dot: true,
+        ignore: excludeFiles,
+        dot: false,
       },
       { prefix: "uipress-lite" }
     );
+
+    // Vite writes the runtime manifest to a hidden folder that glob skips when dot is false
+    const viteManifestDir = path.join(sourceDir, "app", "dist", ".vite");
+    if (fs.existsSync(viteManifestDir)) {
+      archive.directory(viteManifestDir, "uipress-lite/app/dist/.vite");
+    }
 
     archive.finalize();
   });
@@ -115,7 +128,12 @@ async function packagePlugin(pluginDir, pluginFile, scriptName) {
 
     // Clean up files in the uncompressed version
     console.log("Cleaning up files...");
-    cleanupFiles(uncompressedDir, [".gitignore"], [{ dir: "app", except: ["dist"] }], scriptName);
+    cleanupFiles(
+      uncompressedDir,
+      ["package.json", "package-lock.json", "node_modules"],
+      [{ dir: "app", except: ["dist"] }],
+      scriptName
+    );
 
     // Create zip file
     const zipFileName = `${pluginName}-${version}.zip`;

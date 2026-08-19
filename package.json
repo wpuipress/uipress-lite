@@ -1,0 +1,12 @@
+{
+  "name": "uipress-lite",
+  "private": true,
+  "description": "Packaging scripts for UiPress Lite",
+  "scripts": {
+    "package": "node package-plugin.js"
+  },
+  "dependencies": {
+    "archiver": "^7.0.1",
+    "fs-extra": "^11.2.0"
+  }
+}

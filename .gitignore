@@ -3,3 +3,7 @@
 
 # Ignore directory prefs
 .DS_STORE
+
+# Packaging script dependencies
+node_modules
+package-lock.json

@@ -1,6 +1,6 @@
 == Changelog ==
 
-= 3.5.11 =
+= 3.5.10 =
 * Release Date 19 August 2026*
 
 * Security: Added manage_options capability check to uip_save_global_settings and all ui builder AJAX actions (CVE-2026-2294)
