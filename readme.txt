@@ -1,10 +1,10 @@
 === UiPress lite | Effortless custom dashboards, admin themes and pages ===
 Contributors: markuipress
 Tags: admin theme, custom dashboard, google analytics, woocommerce analytics, white label
-Requires at least: 6.0
+Requires at least: 7.0
 Requires PHP: 7.4
-Tested up to: 6.8
-Stable tag: 3.5.09
+Tested up to: 7.01
+Stable tag: 3.5.10
 License: GPLv2 or later
 
 Effortless custom WordPress admin dashboards.
@@ -54,6 +54,21 @@ Upload the UiPress plugin to your blog, activate it, and then navigate to the ui
 1, 2, 3: You're done!
 
 == Changelog ==
+
+= 3.5.10 =
+* Release Date 19 August 2026*
+
+* Security: Added manage_options capability check to uip_save_global_settings and all ui builder AJAX actions (CVE-2026-2294)
+* Security: Pinned Quill to 2.0.2 to avoid XSS in HTML export (CVE-2025-15056)
+* Security: Blocked privileged user-meta writes from form submissions
+* Security: Restricted form email sending to template allowlisted recipients, rate limited requests, and stopped using the recipient as the From address
+* Security: PHP form actions now require an explicit uipress_allowed_form_functions allowlist
+* Security: Frontend app and AJAX nonce only load when a frontend template is assigned; plugin lists and ACF options are omitted from that payload
+* Security: Added capability checks to user, post, and site query AJAX handlers
+* Security: UI CPT REST routes require authentication; writes require manage_options
+* Security: Remote export uses a cryptographic key, hash_equals, and re-checks hostEnabled; remote import blocks private/loopback URLs
+* Security: Limited data: KSES protocol to the builder page and error log reads to the last 5000 lines
+* Fixed JSON parse error on WordPress 7 caused by HTML-encoded script attributes
 
 = 3.5.09 =
 * Release Date 19 November 2025*
