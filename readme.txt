@@ -11,7 +11,9 @@ Effortless custom WordPress admin dashboards.
 
 == Description ==
 
-A block based visual builder for the WordPress admin. Create admin pages, dashboards and WordPress admin themes with no code. From custom dashboards, profile pages to entire admin frameworks, the uiBuilder can do it all. Pre-made intuitive blocks and a library of professional templates make it super easy to transform the way your site users interact with your content.
+[UiPress](https://uipress.co/) is a block based visual builder for the WordPress admin. Create admin pages, dashboards and WordPress admin themes with no code. From custom dashboards, profile pages to entire admin frameworks, the uiBuilder can do it all. Pre-made intuitive blocks and a library of professional templates make it super easy to transform the way your site users interact with your content.
+
+Learn more, browse templates, and get documentation at [uipress.co](https://uipress.co/).
 
 ### Major features in ui press lite include:
 
@@ -45,7 +47,7 @@ Modernise the login experience for your site users with the ui press login page 
 
 ## The uiBuilder is a modern web app and is built with Vue.js
 
-UiPress has countless options and customisations built in including the option to override block templates. For those that want to go further we have a well documented and easy to use API for creating custom blocks, options and more.
+UiPress has countless options and customisations built in including the option to override block templates. For those that want to go further, the [UiPress developer API](https://uipress.co/) makes it easy to create custom blocks, options and more.
 
 == Installation ==
 
@@ -234,7 +236,7 @@ Upload the UiPress plugin to your blog, activate it, and then navigate to the ui
 * Added new dedicated licence manager to the site settings
 
 
-For older changelog entries, please see https://uipress.co/uipresschangelog/
+For older changelog entries, please see the [UiPress changelog](https://uipress.co/uipresschangelog/).
 
 To see uncompiled code see: https://github.com/wpuipress/uipress-lite
 
